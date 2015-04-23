@@ -17,7 +17,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import model.Account;
-import model.ServerResponse;
+import model.UserList;
+import model.VideoList;
 import model.User;
 import model.Video;
 
@@ -204,8 +205,14 @@ public class VimeoClient
             return;
         }
 
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("name", displayName);
+        parameters.put("email", email);
+        parameters.put("password", password);
+        parameters.put("scope", configuration.scope);
+
         final VimeoClient client = this;
-        this.vimeoService.join(displayName, email, password, configuration.clientID, configuration.clientSecret, configuration.scope, new Callback<Account>()
+        this.vimeoService.join(parameters, new Callback<Account>()
         {
             @Override
             public void success(Account account, Response response)
@@ -235,7 +242,7 @@ public class VimeoClient
         }
 
         final VimeoClient client = this;
-        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.clientSecret, configuration.scope, new Callback<Account>()
+        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope, new Callback<Account>()
         {
             @Override
             public void success(Account account, Response response)
@@ -256,12 +263,12 @@ public class VimeoClient
     public void logOut()
     {
         final VimeoClient client = this;
-        this.vimeoService.logOut(new Callback<ServerResponse>()
+        this.vimeoService.logOut(new Callback<VideoList>()
         {
             // TODO: We should set account to null immediately [AH]
 
             @Override
-            public void success(ServerResponse serverResponse, Response response)
+            public void success(VideoList serverResponse, Response response)
             {
                 client.account = null;
             }
@@ -276,9 +283,33 @@ public class VimeoClient
 
     // end region
 
+    // region Channels
+
+    public void fetchStaffPicks(final ContentCallback<VideoList> callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        this.vimeoService.fetchStaffPicks(new Callback<VideoList>()
+        {
+            @Override
+            public void success(VideoList videoList, Response response)
+            {
+                callback.success(videoList);
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                callback.failure(new Error(error.toString()));
+            }
+        });
+    }
+
+    // end region
+
     // region Videos
 
-    public void fetchVideos(String uri, final ContentCallback<ServerResponse> callback)
+    public void fetchVideos(String uri, final ContentCallback<VideoList> callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
@@ -289,12 +320,12 @@ public class VimeoClient
             return;
         }
 
-        this.vimeoService.fetchVideos(uri, new Callback<ServerResponse>()
+        this.vimeoService.fetchVideos(uri, new Callback<VideoList>()
         {
             @Override
-            public void success(ServerResponse serverResponse, Response response)
+            public void success(VideoList videoList, Response response)
             {
-                callback.success(serverResponse);
+                callback.success(videoList);
             }
 
             @Override
@@ -336,7 +367,7 @@ public class VimeoClient
 
     // region Users
 
-    public void fetchUsers(String uri, final ContentCallback<ServerResponse> callback)
+    public void fetchUsers(String uri, final ContentCallback<UserList> callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
@@ -347,12 +378,12 @@ public class VimeoClient
             return;
         }
 
-        this.vimeoService.fetchUsers(uri, new Callback<ServerResponse>()
+        this.vimeoService.fetchUsers(uri, new Callback<UserList>()
         {
             @Override
-            public void success(ServerResponse serverResponse, Response response)
+            public void success(UserList userList, Response response)
             {
-                callback.success(serverResponse);
+                callback.success(userList);
             }
 
             @Override

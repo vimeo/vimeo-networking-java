@@ -1,18 +1,21 @@
 package com.networking;
 
+import java.util.HashMap;
+
 import model.Account;
-import model.ServerResponse;
+import model.UserList;
+import model.VideoList;
 import model.User;
 import model.Video;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
-import retrofit.http.Query;
 
 /**
  * Created by alfredhanssen on 4/12/15.
@@ -28,60 +31,61 @@ public interface VimeoService
             Callback<Account> callback
     );
 
+    @FormUrlEncoded
     @POST("/oauth/authorize/client")
     void authorizeWithClientCredentialsGrant(
-            @Query("grant_type") String grantType,
-            @Query("scope") String scope,
+            @Field("grant_type") String grantType,
+            @Field("scope") String scope,
             Callback<Account> callback
     );
 
+    @POST("/users")
+    void join(
+            @Body HashMap<String, String> parameters,
+            Callback<Account> callback
+    );
+
+    @FormUrlEncoded
     @POST("/oauth/authorize/password")
     void logIn(
-            @Query("username") String email,
-            @Query("password") String password,
-            @Query("grant_type") String grantType,
-            @Query("client_secret") String clientSecret,
-            @Query("scope") String scope,
+            @Field("username") String email,
+            @Field("password") String password,
+            @Field("grant_type") String grantType,
+            @Field("scope") String scope,
             Callback<Account> callback
     );
 
     @DELETE("/tokens")
     void logOut(
-            Callback<ServerResponse> callback
+            Callback<VideoList> callback
     );
 
-    @POST("/users")
-    void join(
-            @Query("display_name") String displayName,
-            @Query("username") String email,
-            @Query("password") String password,
-            @Query("client_id") String clientID,
-            @Query("client_secret") String clientSecret,
-            @Query("scope") String scope,
-            Callback<Account> callback
+    @GET("/channels/staffpicks/videos")
+    void fetchStaffPicks(
+            Callback<VideoList> callback
     );
 
-    @GET("{uri}")
+    @GET("/{uri}")
     void fetchVideos(
-            @Path("uri") String uri,
-            Callback<ServerResponse> callback
+            @Path(value="uri", encode=false) String uri,
+            Callback<VideoList> callback
     );
 
-    @GET("{uri}")
+    @GET("/{uri}")
     void fetchVideo(
-            @Path("uri") String uri,
+            @Path(value="uri", encode=false) String uri,
             Callback<Video> callback
     );
 
-    @GET("{uri}")
+    @GET("/{uri}")
     void fetchUsers(
-            @Path("uri") String uri,
-            Callback<ServerResponse> callback
+            @Path(value="uri", encode=false) String uri,
+            Callback<UserList> callback
     );
 
-    @GET("{uri}")
+    @GET("/{uri}")
     void fetchUser(
-            @Path("uri") String uri,
+            @Path(value="uri", encode=false) String uri,
             Callback<User> callback
     );
 }
