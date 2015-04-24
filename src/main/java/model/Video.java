@@ -1,7 +1,5 @@
 package model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
 /**
@@ -9,6 +7,27 @@ import java.util.ArrayList;
  */
 public class Video
 {
+    public enum ContentRating // TODO: use this enum [AH] 4/24/2015
+    {
+        SAFE,
+        UNRATED,
+        NUDITY,
+        LANGUAGE,
+        DRUGS,
+        VIOLENCE
+    }
+
+    public enum LicenseValue // TODO: use this, https://developer.vimeo.com/api/playground/creativecommons [AH] 4/24/2015
+    {
+        ATTRIBUTION,
+        ATTRIBUTION_SHARE_ALIKE,
+        ATTRIBUTION_NO_DERIVATIVES,
+        ATTRIBUTION_NON_COMMERCIAL,
+        ATTRIBUTION_NON_COMMERCIAL_SHARE_ALIKE,
+        ATTRIBUTION_NON_COMMERCIAL_NO_DERIVATIVES,
+        PUBLIC_DOMAIN_DEDICATION
+    }
+
     public String uri;
     public String name;
     public String description;

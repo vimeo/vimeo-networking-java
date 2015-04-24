@@ -7,6 +7,7 @@ import com.google.common.base.Splitter;
 
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Credentials;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class VimeoClient
 
     private VimeoClientConfiguration configuration;
     private VimeoService vimeoService;
+    private Cache cache;
     private String currentCodeGrantState;
     private Account account;
 
@@ -58,6 +60,20 @@ public class VimeoClient
     {
         sharedInstance = new VimeoClient(configuration);
     }
+
+    /** Dangerous interceptor that rewrites the server's cache-control header. */
+    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor()
+    {
+        @Override
+        public com.squareup.okhttp.Response intercept(Chain chain) throws IOException
+        {
+            com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+
+            return originalResponse.newBuilder().header("Cache-Control", "public").build();
+        }
+    };
+
+    static int test = 0;
 
     private VimeoClient(final VimeoClientConfiguration configuration)
     {
@@ -74,6 +90,18 @@ public class VimeoClient
                 request.addHeader("User-Agent", client.getUserAgent());
                 request.addHeader("Accept", client.getAcceptHeader());
                 request.addHeader("Authorization", client.getAuthHeader());
+
+                if (test < 2)
+                {
+                    test++;
+                    int maxAge = 60; // read from cache for 1 minute
+                    request.addHeader("Cache-Control", "public, max-age=" + maxAge);
+                }
+                else
+                {
+                    int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
+                    request.addHeader("Cache-Control", "public, only-if-cached, max-stale=" + maxStale);
+                }
             }
         };
 
@@ -81,13 +109,15 @@ public class VimeoClient
         try
         {
             Integer cacheSize = 10 * 1024 * 1024; // TODO: this should be dynamic [AH]
-            Cache cache = new Cache(this.configuration.cacheDirectory, cacheSize);
+            this.cache = new Cache(this.configuration.cacheDirectory, cacheSize);
             okHttpClient.setCache(cache);
         }
         catch (IOException e)
         {
             System.out.println("Exception when creating cache: " + e.getMessage());
         }
+
+        okHttpClient.networkInterceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -294,6 +324,10 @@ public class VimeoClient
             @Override
             public void success(VideoList videoList, Response response)
             {
+                int requestCount = cache.getRequestCount();
+                int networkCount = cache.getNetworkCount();
+                int hitCount = cache.getHitCount();
+
                 callback.success(videoList);
             }
 

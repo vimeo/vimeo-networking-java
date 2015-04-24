@@ -14,6 +14,7 @@ import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
 
@@ -22,6 +23,7 @@ import retrofit.http.Path;
  */
 public interface VimeoService
 {
+//    @Headers("Cache-Control: no-cache, no-store")
     @FormUrlEncoded
     @POST("/oauth/access_token")
     void authenticateWithCodeGrant(
@@ -31,6 +33,7 @@ public interface VimeoService
             Callback<Account> callback
     );
 
+//    @Headers("Cache-Control: no-cache, no-store")
     @FormUrlEncoded
     @POST("/oauth/authorize/client")
     void authorizeWithClientCredentialsGrant(
@@ -39,12 +42,14 @@ public interface VimeoService
             Callback<Account> callback
     );
 
+//    @Headers("Cache-Control: no-cache, no-store")
     @POST("/users")
     void join(
             @Body HashMap<String, String> parameters,
             Callback<Account> callback
     );
 
+//    @Headers("Cache-Control: no-cache, no-store")
     @FormUrlEncoded
     @POST("/oauth/authorize/password")
     void logIn(
@@ -55,6 +60,7 @@ public interface VimeoService
             Callback<Account> callback
     );
 
+    @Headers("Cache-Control: no-cache, no-store")
     @DELETE("/tokens")
     void logOut(
             Callback<VideoList> callback
