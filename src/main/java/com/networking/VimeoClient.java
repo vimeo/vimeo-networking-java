@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.common.base.Splitter;
 
 import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
@@ -49,19 +50,10 @@ public class VimeoClient
     private String currentCodeGrantState;
     private Account account;
 
-    private static VimeoClient sharedInstance;
-
-    public static VimeoClient getInstance()
-    {
-        return sharedInstance;
-    }
-
-    public static void configure(VimeoClientConfiguration configuration)
-    {
-        sharedInstance = new VimeoClient(configuration);
-    }
-
-    /** Dangerous interceptor that rewrites the server's cache-control header. */
+    /** Dangerous interceptor that rewrites the server's cache-control header.
+     * We are using this for now because our server sets all Cache-Control headers to no-store
+     * [AH] 4/24/2015
+     * */
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor()
     {
         @Override
@@ -73,7 +65,17 @@ public class VimeoClient
         }
     };
 
-    static int test = 0;
+    private static VimeoClient sharedInstance;
+
+    public static VimeoClient getInstance()
+    {
+        return sharedInstance;
+    }
+
+    public static void configure(VimeoClientConfiguration configuration)
+    {
+        sharedInstance = new VimeoClient(configuration);
+    }
 
     private VimeoClient(final VimeoClientConfiguration configuration)
     {
@@ -90,18 +92,6 @@ public class VimeoClient
                 request.addHeader("User-Agent", client.getUserAgent());
                 request.addHeader("Accept", client.getAcceptHeader());
                 request.addHeader("Authorization", client.getAuthHeader());
-
-                if (test < 2)
-                {
-                    test++;
-                    int maxAge = 60; // read from cache for 1 minute
-                    request.addHeader("Cache-Control", "public, max-age=" + maxAge);
-                }
-                else
-                {
-                    int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
-                    request.addHeader("Cache-Control", "public, only-if-cached, max-stale=" + maxStale);
-                }
             }
         };
 
@@ -292,11 +282,11 @@ public class VimeoClient
 
     public void logOut()
     {
+        // TODO: We should set account to null immediately, rather than in the callback [AH]
+
         final VimeoClient client = this;
         this.vimeoService.logOut(new Callback<VideoList>()
         {
-            // TODO: We should set account to null immediately [AH]
-
             @Override
             public void success(VideoList serverResponse, Response response)
             {
@@ -315,144 +305,63 @@ public class VimeoClient
 
     // region Channels
 
-    public void fetchStaffPicks(final ContentCallback<VideoList> callback)
+    public void fetchStaffPicks(final Callback<VideoList> callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
-        this.vimeoService.fetchStaffPicks(new Callback<VideoList>()
-        {
-            @Override
-            public void success(VideoList videoList, Response response)
-            {
-                int requestCount = cache.getRequestCount();
-                int networkCount = cache.getNetworkCount();
-                int hitCount = cache.getHitCount();
-
-                callback.success(videoList);
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
+        this.vimeoService.fetchStaffPicks(callback);
     }
 
     // end region
 
-    // region Videos
+    // region Generic
 
-    public void fetchVideos(String uri, final ContentCallback<VideoList> callback)
+    public void fetchContent(String uri, CacheControl cacheControl, Callback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
         if (uri == null)
         {
-            callback.failure(new Error("Uri must not be null"));
+            callback.failure(null); // TODO: create error here
 
             return;
         }
 
-        this.vimeoService.fetchVideos(uri, new Callback<VideoList>()
+        String cacheHeaderValue = null;
+        if (cacheControl != null)
         {
-            @Override
-            public void success(VideoList videoList, Response response)
-            {
-                callback.success(videoList);
-            }
+            cacheHeaderValue = cacheControl.toString();
+        }
 
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
+        this.vimeoService.fetchContent(uri, cacheHeaderValue, callback);
     }
 
-    public void fetchVideo(String uri, final ContentCallback<Video> callback)
+    public void fetchCachedContent(String uri, Callback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
         if (uri == null)
         {
-            callback.failure(new Error("Uri must not be null"));
+            callback.failure(null); // TODO: create error here
 
             return;
         }
 
-        this.vimeoService.fetchVideo(uri, new Callback<Video>()
-        {
-            @Override
-            public void success(Video video, Response response)
-            {
-                callback.success(video);
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
+        this.vimeoService.fetchContent(uri, CacheControl.FORCE_CACHE.toString(), callback);
     }
 
-    // endregion
-
-    // region Users
-
-    public void fetchUsers(String uri, final ContentCallback<UserList> callback)
+    public void fetchNetworkContent(String uri, Callback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
         if (uri == null)
         {
-            callback.failure(new Error("Uri must not be null"));
+            callback.failure(null); // TODO: create error here
 
             return;
         }
 
-        this.vimeoService.fetchUsers(uri, new Callback<UserList>()
-        {
-            @Override
-            public void success(UserList userList, Response response)
-            {
-                callback.success(userList);
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
-    }
-
-    public void fetchUser(String uri, final ContentCallback<User> callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
-
-        if (uri == null)
-        {
-            callback.failure(new Error("Uri must not be null"));
-
-            return;
-        }
-
-        this.vimeoService.fetchUser(uri, new Callback<User>()
-        {
-            @Override
-            public void success(User user, Response response)
-            {
-                callback.success(user);
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
+        this.vimeoService.fetchContent(uri, CacheControl.FORCE_NETWORK.toString(), callback);
     }
 
     // end region

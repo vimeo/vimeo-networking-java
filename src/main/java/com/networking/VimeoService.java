@@ -14,6 +14,7 @@ import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -23,7 +24,6 @@ import retrofit.http.Path;
  */
 public interface VimeoService
 {
-//    @Headers("Cache-Control: no-cache, no-store")
     @FormUrlEncoded
     @POST("/oauth/access_token")
     void authenticateWithCodeGrant(
@@ -33,7 +33,6 @@ public interface VimeoService
             Callback<Account> callback
     );
 
-//    @Headers("Cache-Control: no-cache, no-store")
     @FormUrlEncoded
     @POST("/oauth/authorize/client")
     void authorizeWithClientCredentialsGrant(
@@ -42,14 +41,12 @@ public interface VimeoService
             Callback<Account> callback
     );
 
-//    @Headers("Cache-Control: no-cache, no-store")
     @POST("/users")
     void join(
             @Body HashMap<String, String> parameters,
             Callback<Account> callback
     );
 
-//    @Headers("Cache-Control: no-cache, no-store")
     @FormUrlEncoded
     @POST("/oauth/authorize/password")
     void logIn(
@@ -66,32 +63,23 @@ public interface VimeoService
             Callback<VideoList> callback
     );
 
+    // region Channels
+
     @GET("/channels/staffpicks/videos")
     void fetchStaffPicks(
             Callback<VideoList> callback
     );
 
-    @GET("/{uri}")
-    void fetchVideos(
-            @Path(value="uri", encode=false) String uri,
-            Callback<VideoList> callback
-    );
+    // end region
+
+    // region Generic
 
     @GET("/{uri}")
-    void fetchVideo(
+    void fetchContent(
             @Path(value="uri", encode=false) String uri,
-            Callback<Video> callback
+            @Header("Cache-Control") String cacheHeaderValue,
+            Callback callback
     );
 
-    @GET("/{uri}")
-    void fetchUsers(
-            @Path(value="uri", encode=false) String uri,
-            Callback<UserList> callback
-    );
-
-    @GET("/{uri}")
-    void fetchUser(
-            @Path(value="uri", encode=false) String uri,
-            Callback<User> callback
-    );
+    // end region
 }
