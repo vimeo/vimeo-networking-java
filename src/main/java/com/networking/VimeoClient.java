@@ -51,7 +51,7 @@ public class VimeoClient
     private Account account;
 
     /** Dangerous interceptor that rewrites the server's cache-control header.
-     * We are using this for now because our server sets all Cache-Control headers to no-store
+     * We are using this because our server sets all Cache-Control headers to no-store
      * [AH] 4/24/2015
      * */
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor()
@@ -305,11 +305,43 @@ public class VimeoClient
 
     // region Channels
 
-    public void fetchStaffPicks(final Callback<VideoList> callback)
+    public void fetchStaffPicks(Callback<VideoList> callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
         this.vimeoService.fetchStaffPicks(callback);
+    }
+
+    // end region
+
+    // region Search
+
+    public void searchVideos(String query, Callback<VideoList> callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (query == null || query.length() == 0)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.searchVideos(query, callback);
+    }
+
+    public void searchUsers(String query, Callback<UserList> callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (query == null || query.length() == 0)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.searchUsers(query, callback);
     }
 
     // end region

@@ -18,6 +18,7 @@ import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by alfredhanssen on 4/12/15.
@@ -68,6 +69,22 @@ public interface VimeoService
     @GET("/channels/staffpicks/videos")
     void fetchStaffPicks(
             Callback<VideoList> callback
+    );
+
+    // end region
+
+    // region Search
+
+    @GET("/videos")
+    void searchVideos(
+            @Query("query") String query,
+            Callback callback
+    );
+
+    @GET("/users")
+    void searchUsers(
+            @Query("query") String query,
+            Callback callback
     );
 
     // end region

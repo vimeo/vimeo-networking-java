@@ -33,6 +33,7 @@ public class Video
     public String description;
     public String link;
     public int duration;
+    public ArrayList<VideoFile> files;
     public int width;
     public int height;
     public Embed embed;
