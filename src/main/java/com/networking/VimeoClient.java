@@ -21,8 +21,6 @@ import java.util.UUID;
 import model.Account;
 import model.UserList;
 import model.VideoList;
-import model.User;
-import model.Video;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -44,7 +42,7 @@ public class VimeoClient
     private static final String PASSWORD_GRANT_TYPE = "password";
     private static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
-    private VimeoClientConfiguration configuration;
+    private Configuration configuration;
     private VimeoService vimeoService;
     private Cache cache;
     private String currentCodeGrantState;
@@ -69,15 +67,17 @@ public class VimeoClient
 
     public static VimeoClient getInstance()
     {
+        if (sharedInstance == null) throw new AssertionError("Instance must be configured before use");
+
         return sharedInstance;
     }
 
-    public static void configure(VimeoClientConfiguration configuration)
+    public static void configure(Configuration configuration)
     {
         sharedInstance = new VimeoClient(configuration);
     }
 
-    private VimeoClient(final VimeoClientConfiguration configuration)
+    private VimeoClient(final Configuration configuration)
     {
         if (configuration == null) throw new AssertionError("Configuration cannot be null");
 
@@ -89,7 +89,7 @@ public class VimeoClient
             @Override
             public void intercept(RequestFacade request)
             {
-                request.addHeader("User-Agent", client.getUserAgent());
+                request.addHeader("User-Agent", configuration.userAgentString);
                 request.addHeader("Accept", client.getAcceptHeader());
                 request.addHeader("Authorization", client.getAuthHeader());
             }
@@ -122,7 +122,35 @@ public class VimeoClient
                 .build();
 
         this.vimeoService = restAdapter.create(VimeoService.class);
+
+        Account account = this.configuration.accountStore.loadAccount();
+        this.setAccount(account);
     }
+
+    // region Accessors
+
+    public Account getAccount()
+    {
+        if (this.account == null) throw new AssertionError("Account should never be null");
+
+        return this.account;
+    }
+
+    public void setAccount(Account account)
+    {
+        if (account == null)
+        {
+            account = new Account();
+        }
+
+//        this.configuration.accountStore.saveAccount(account);
+
+        // TODO: Store in account manager [AH]
+
+        this.account = account;
+    }
+
+    // end region
 
     // region Authentication
 
@@ -130,7 +158,7 @@ public class VimeoClient
     {
         currentCodeGrantState = UUID.randomUUID().toString();
 
-        Map<String,String> map = new HashMap<String,String>();
+        Map<String,String> map = new HashMap<>();
         map.put("redirect_uri", this.configuration.codeGrantRedirectURI);
         map.put("response_type", CODE_GRANT_RESPONSE_TYPE);
         map.put("state", this.currentCodeGrantState);
@@ -143,7 +171,7 @@ public class VimeoClient
         return this.configuration.baseURLString + CODE_GRANT_PATH + "?" + uri;
     }
 
-    public void authenticateWithCodeGrant(String uri, final AuthCallback callback)
+    public void authenticateWithCodeGrant(String uri, AuthCallback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
@@ -173,45 +201,14 @@ public class VimeoClient
 
         String redirectURI = this.configuration.codeGrantRedirectURI;
 
-        final VimeoClient client = this;
-        this.vimeoService.authenticateWithCodeGrant(redirectURI, code, CODE_GRANT_TYPE, new Callback<Account>() {
-            @Override
-            public void success(Account account, Response response)
-            {
-                client.account = account;
-
-                callback.success();
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
+        this.vimeoService.authenticateWithCodeGrant(redirectURI, code, CODE_GRANT_TYPE, new AccountCallback(this, callback));
     }
 
     public void authorizeWithClientCredentialsGrant(final AuthCallback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
-        final VimeoClient client = this;
-        this.vimeoService.authorizeWithClientCredentialsGrant(CLIENT_CREDENTIALS_GRANT_TYPE, configuration.scope, new Callback<Account>()
-        {
-            @Override
-            public void success(Account account, Response response)
-            {
-                client.account = account;
-
-                callback.success();
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
+        this.vimeoService.authorizeWithClientCredentialsGrant(CLIENT_CREDENTIALS_GRANT_TYPE, configuration.scope, new AccountCallback(this, callback));
     }
 
     public void join(String displayName, String email, String password, final AuthCallback callback)
@@ -231,23 +228,7 @@ public class VimeoClient
         parameters.put("password", password);
         parameters.put("scope", configuration.scope);
 
-        final VimeoClient client = this;
-        this.vimeoService.join(parameters, new Callback<Account>()
-        {
-            @Override
-            public void success(Account account, Response response)
-            {
-                client.account = account;
-
-                callback.success();
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
+        this.vimeoService.join(parameters, new AccountCallback(this, callback));
     }
 
     public void logIn(String email, String password, final AuthCallback callback)
@@ -261,23 +242,22 @@ public class VimeoClient
             return;
         }
 
-        final VimeoClient client = this;
-        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope, new Callback<Account>()
+        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope, new AccountCallback(this, callback));
+    }
+
+    // Synchronous version to be used with Android AccountAuthenticator [AH]
+    public Account logIn(String email, String password)
+    {
+        if (email == null || email.length() == 0 || password == null || password.length() == 0)
         {
-            @Override
-            public void success(Account account, Response response)
-            {
-                client.account = account;
+            return null;
+        }
 
-                callback.success();
-            }
+        Account account = this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope);
 
-            @Override
-            public void failure(RetrofitError error)
-            {
-                callback.failure(new Error(error.toString()));
-            }
-        });
+        this.setAccount(account);
+
+        return account;
     }
 
     public void logOut()
@@ -285,20 +265,47 @@ public class VimeoClient
         // TODO: We should set account to null immediately, rather than in the callback [AH]
 
         final VimeoClient client = this;
-        this.vimeoService.logOut(new Callback<VideoList>()
+        this.vimeoService.logOut(new Callback<Object>()
         {
             @Override
-            public void success(VideoList serverResponse, Response response)
+            public void success(Object o, Response response)
             {
-                client.account = null;
+                client.setAccount(null);
             }
 
             @Override
             public void failure(RetrofitError error)
             {
-                client.account = null;
+                client.setAccount(null);
             }
         });
+    }
+
+    private static class AccountCallback implements Callback<Account>
+    {
+        private final VimeoClient client;
+        private final AuthCallback callback;
+
+        public AccountCallback(VimeoClient client, AuthCallback callback)
+        {
+            if (client == null || callback == null) throw new AssertionError("Client and Callback must not be null");
+
+            this.client = client;
+            this.callback = callback;
+        }
+
+        @Override
+        public void success(Account account, Response response)
+        {
+            this.client.setAccount(account);
+            this.callback.success();
+        }
+
+        @Override
+        public void failure(RetrofitError error)
+        {
+            callback.failure(new Error(error.toString()));
+        }
     }
 
     // end region
@@ -348,7 +355,7 @@ public class VimeoClient
 
     // region Generic
 
-    public void fetchContent(String uri, CacheControl cacheControl, Callback callback)
+    public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
@@ -365,7 +372,22 @@ public class VimeoClient
             cacheHeaderValue = cacheControl.toString();
         }
 
-        this.vimeoService.fetchContent(uri, cacheHeaderValue, callback);
+        this.vimeoService.fetchContent(uri, cacheHeaderValue, new Callback<Object>() {
+            @Override
+            public void success(Object o, Response response) {
+                Gson gson = new GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create();
+                String JSON = gson.toJson(o);
+                Object object = gson.fromJson(JSON, callback.getObjectType());
+                callback.success(object, response);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                callback.failure(error);
+            }
+        });
     }
 
     public void fetchCachedContent(String uri, Callback callback)

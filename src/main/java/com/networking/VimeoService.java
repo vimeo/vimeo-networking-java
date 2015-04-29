@@ -58,10 +58,20 @@ public interface VimeoService
             Callback<Account> callback
     );
 
+    // Synchronous version to be used with Android AccountAuthenticator [AH]
+    @FormUrlEncoded
+    @POST("/oauth/authorize/password")
+    Account logIn(
+            @Field("username") String email,
+            @Field("password") String password,
+            @Field("grant_type") String grantType,
+            @Field("scope") String scope
+    );
+
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("/tokens")
     void logOut(
-            Callback<VideoList> callback
+            Callback callback
     );
 
     // region Channels
@@ -78,13 +88,13 @@ public interface VimeoService
     @GET("/videos")
     void searchVideos(
             @Query("query") String query,
-            Callback callback
+            Callback<VideoList> callback
     );
 
     @GET("/users")
     void searchUsers(
             @Query("query") String query,
-            Callback callback
+            Callback<UserList> callback
     );
 
     // end region
@@ -95,7 +105,7 @@ public interface VimeoService
     void fetchContent(
             @Path(value="uri", encode=false) String uri,
             @Header("Cache-Control") String cacheHeaderValue,
-            Callback callback
+            Callback<Object> callback
     );
 
     // end region
