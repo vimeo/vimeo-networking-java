@@ -7,6 +7,7 @@ import com.google.common.base.Splitter;
 
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.CacheControl;
+import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
@@ -143,10 +144,6 @@ public class VimeoClient
             account = new Account();
         }
 
-//        this.configuration.accountStore.saveAccount(account);
-
-        // TODO: Store in account manager [AH]
-
         this.account = account;
     }
 
@@ -228,7 +225,7 @@ public class VimeoClient
         parameters.put("password", password);
         parameters.put("scope", configuration.scope);
 
-        this.vimeoService.join(parameters, new AccountCallback(this, callback));
+        this.vimeoService.join(parameters, new AccountCallback(this, email, password, callback));
     }
 
     public void logIn(String email, String password, final AuthCallback callback)
@@ -242,7 +239,7 @@ public class VimeoClient
             return;
         }
 
-        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope, new AccountCallback(this, callback));
+        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope, new AccountCallback(this, email, password, callback));
     }
 
     // Synchronous version to be used with Android AccountAuthenticator [AH]
@@ -257,10 +254,12 @@ public class VimeoClient
 
         this.setAccount(account);
 
+        this.configuration.accountStore.saveAccount(account, email, password);
+
         return account;
     }
 
-    public void logOut()
+    public void logOut(final Callback<Object> callback)
     {
         // TODO: We should set account to null immediately, rather than in the callback [AH]
 
@@ -270,13 +269,17 @@ public class VimeoClient
             @Override
             public void success(Object o, Response response)
             {
+                client.configuration.accountStore.deleteAccount(account);
                 client.setAccount(null);
+                callback.success(o, response);
             }
 
             @Override
             public void failure(RetrofitError error)
             {
+                client.configuration.accountStore.deleteAccount(account);
                 client.setAccount(null);
+                callback.failure(error);
             }
         });
     }
@@ -284,6 +287,8 @@ public class VimeoClient
     private static class AccountCallback implements Callback<Account>
     {
         private final VimeoClient client;
+        private String email;
+        private String password;
         private final AuthCallback callback;
 
         public AccountCallback(VimeoClient client, AuthCallback callback)
@@ -294,10 +299,21 @@ public class VimeoClient
             this.callback = callback;
         }
 
+        public AccountCallback(VimeoClient client, String email, String password, AuthCallback callback)
+        {
+            if (client == null || callback == null) throw new AssertionError("Client and Callback must not be null");
+
+            this.client = client;
+            this.email = email;
+            this.password = password;
+            this.callback = callback;
+        }
+
         @Override
         public void success(Account account, Response response)
         {
             this.client.setAccount(account);
+            this.client.configuration.accountStore.saveAccount(account, this.email, this.password);
             this.callback.success();
         }
 

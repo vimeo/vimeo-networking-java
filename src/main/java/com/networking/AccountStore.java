@@ -7,9 +7,9 @@ import model.Account;
  */
 public interface AccountStore
 {
-    public void saveAccount(Account account, String email, String password, boolean isAddingNewAccount);
-
     public Account loadAccount();
+
+    public void saveAccount(Account account, String email, String password);//, boolean isAddingNewAccount);
 
     public void deleteAccount(Account account);
 }

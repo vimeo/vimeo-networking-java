@@ -71,7 +71,7 @@ public interface VimeoService
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("/tokens")
     void logOut(
-            Callback callback
+            Callback<Object> callback
     );
 
     // region Channels
