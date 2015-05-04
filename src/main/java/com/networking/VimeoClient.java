@@ -261,7 +261,8 @@ public class VimeoClient
 
     public void logOut(final Callback<Object> callback)
     {
-        final VimeoClient client = this;
+        // TODO: make this a static inner class? [AH] 5/4/15
+
         this.vimeoService.logOut(new Callback<Object>()
         {
             @Override
@@ -284,8 +285,8 @@ public class VimeoClient
         });
 
         // Remove account immediately, but only after the auth header has been set (working properly?) [AH] 5/4/15
-        client.configuration.accountStore.deleteAccount(account);
-        client.setAccount(null);
+        this.configuration.accountStore.deleteAccount(account);
+        this.setAccount(null);
     }
 
     private static class AccountCallback implements Callback<Account>
@@ -392,6 +393,7 @@ public class VimeoClient
             cacheHeaderValue = cacheControl.toString();
         }
 
+        // TODO: make this a static inner class? [AH] 5/4/15
         this.vimeoService.fetchContent(uri, cacheHeaderValue, new Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
