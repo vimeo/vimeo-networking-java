@@ -261,27 +261,31 @@ public class VimeoClient
 
     public void logOut(final Callback<Object> callback)
     {
-        // TODO: We should set account to null immediately, rather than in the callback [AH]
-
         final VimeoClient client = this;
         this.vimeoService.logOut(new Callback<Object>()
         {
             @Override
             public void success(Object o, Response response)
             {
-                client.configuration.accountStore.deleteAccount(account);
-                client.setAccount(null);
-                callback.success(o, response);
+                if (callback != null)
+                {
+                    callback.success(o, response);
+                }
             }
 
             @Override
             public void failure(RetrofitError error)
             {
-                client.configuration.accountStore.deleteAccount(account);
-                client.setAccount(null);
-                callback.failure(error);
+                if (callback != null)
+                {
+                    callback.failure(error);
+                }
             }
         });
+
+        // Remove account immediately, but only after the auth header has been set (working properly?) [AH] 5/4/15
+        client.configuration.accountStore.deleteAccount(account);
+        client.setAccount(null);
     }
 
     private static class AccountCallback implements Callback<Account>
