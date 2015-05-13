@@ -376,6 +376,46 @@ public class VimeoClient
         this.vimeoService.editVideo(uri, parameters, callback);
     }
 
+    public void updateFollowUser(boolean follow, String uri, Callback callback)
+    {
+        if (follow)
+        {
+            this.followUser(uri, callback);
+        }
+        else
+        {
+            this.unfollowUser(uri, callback);
+        }
+    }
+
+    public void followUser(String uri, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.PUT(uri, callback);
+    }
+
+    public void unfollowUser(String uri, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.DELETE(uri, callback);
+    }
+
     // end region
 
     // region Search
@@ -430,7 +470,7 @@ public class VimeoClient
         }
 
         // TODO: make this a static inner class? [AH] 5/4/15
-        this.vimeoService.fetchContent(uri, cacheHeaderValue, new Callback<Object>() {
+        this.vimeoService.GET(uri, cacheHeaderValue, new Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
                 Gson gson = new GsonBuilder()
@@ -459,7 +499,7 @@ public class VimeoClient
             return;
         }
 
-        this.vimeoService.fetchContent(uri, CacheControl.FORCE_CACHE.toString(), callback);
+        this.vimeoService.GET(uri, CacheControl.FORCE_CACHE.toString(), callback);
     }
 
     public void fetchNetworkContent(String uri, Callback callback)
@@ -473,7 +513,7 @@ public class VimeoClient
             return;
         }
 
-        this.vimeoService.fetchContent(uri, CacheControl.FORCE_NETWORK.toString(), callback);
+        this.vimeoService.GET(uri, CacheControl.FORCE_NETWORK.toString(), callback);
     }
 
     // end region

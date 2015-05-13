@@ -18,6 +18,7 @@ import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.PATCH;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import retrofit.http.QueryMap;
@@ -114,8 +115,20 @@ public interface VimeoService
 
     // region Generic
 
+    @PUT("/{uri}")
+    void PUT(
+            @Path(value="uri", encode=false) String uri,
+            Callback<Object> callback
+    );
+
+    @DELETE("/{uri}")
+    void DELETE(
+            @Path(value="uri", encode=false) String uri,
+            Callback<Object> callback
+    );
+
     @GET("/{uri}")
-    void fetchContent(
+    void GET(
             @Path(value="uri", encode=false) String uri,
             @Header("Cache-Control") String cacheHeaderValue,
             Callback<Object> callback
