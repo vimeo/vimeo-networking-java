@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import model.Account;
+import model.Privacy;
 import model.UserList;
 import model.VideoList;
 
@@ -338,6 +339,41 @@ public class VimeoClient
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
         this.vimeoService.fetchStaffPicks(callback);
+    }
+
+    // end region
+
+    // region Editing
+
+    public void editVideo(String uri, String title, String description, Privacy.PrivacyValue privacyValue, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null || uri.length() == 0)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        if (title == null && description == null && privacyValue == null) // No point in editing video
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        String privacyString = Privacy.privacyStringFromValue(privacyValue);
+
+        HashMap<String, String> privacyMap = new HashMap<>();
+        privacyMap.put("view", privacyString);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("name", title);
+        parameters.put("description", description);
+        parameters.put("privacy", privacyMap);
+
+        this.vimeoService.editVideo(uri, parameters, callback);
     }
 
     // end region

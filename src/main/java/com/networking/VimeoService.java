@@ -16,9 +16,11 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.Headers;
+import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit.http.QueryMap;
 
 /**
  * Created by alfredhanssen on 4/12/15.
@@ -95,6 +97,17 @@ public interface VimeoService
     void searchUsers(
             @Query("query") String query,
             Callback<UserList> callback
+    );
+
+    // end region
+
+    // region Editing
+
+    @PATCH("/{uri}")
+    void editVideo(
+            @Path(value="uri", encode=false) String uri,
+            @Body HashMap<String, Object> parameters,
+            Callback<Object> callback
     );
 
     // end region
