@@ -343,6 +343,38 @@ public class VimeoClient
 
     // end region
 
+    // region Search
+
+    public void searchVideos(String query, Callback<VideoList> callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (query == null || query.length() == 0)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.searchVideos(query, callback);
+    }
+
+    public void searchUsers(String query, Callback<UserList> callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (query == null || query.length() == 0)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.searchUsers(query, callback);
+    }
+
+    // end region
+
     // region Editing
 
     public void editVideo(String uri, String title, String description, Privacy.PrivacyValue privacyValue, Callback callback)
@@ -369,11 +401,56 @@ public class VimeoClient
         privacyMap.put("view", privacyString);
 
         HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put("name", title);
-        parameters.put("description", description);
-        parameters.put("privacy", privacyMap);
+
+        if (title != null)
+        {
+            parameters.put("name", title);
+        }
+
+        if (description != null)
+        {
+            parameters.put("description", description);
+        }
+
+        if (privacyMap != null)
+        {
+            parameters.put("privacy", privacyMap);
+        }
 
         this.vimeoService.editVideo(uri, parameters, callback);
+    }
+
+    public void editUser(String uri, String name, String location, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null || uri.length() == 0)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        if (name == null && location == null) // No point in editing user
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        HashMap<String, Object> parameters = new HashMap<>();
+
+        if (name != null)
+        {
+            parameters.put("name", name);
+        }
+
+        if (location != null)
+        {
+            parameters.put("location", location);
+        }
+
+        this.vimeoService.editUser(uri, parameters, callback);
     }
 
     public void updateFollowUser(boolean follow, String uri, Callback callback)
@@ -414,38 +491,6 @@ public class VimeoClient
         }
 
         this.vimeoService.DELETE(uri, callback);
-    }
-
-    // end region
-
-    // region Search
-
-    public void searchVideos(String query, Callback<VideoList> callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
-
-        if (query == null || query.length() == 0)
-        {
-            callback.failure(null); // TODO: create error here
-
-            return;
-        }
-
-        this.vimeoService.searchVideos(query, callback);
-    }
-
-    public void searchUsers(String query, Callback<UserList> callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
-
-        if (query == null || query.length() == 0)
-        {
-            callback.failure(null); // TODO: create error here
-
-            return;
-        }
-
-        this.vimeoService.searchUsers(query, callback);
     }
 
     // end region

@@ -111,6 +111,13 @@ public interface VimeoService
             Callback<Object> callback
     );
 
+    @PATCH("/{uri}")
+    void editUser(
+            @Path(value="uri", encode=false) String uri,
+            @Body HashMap<String, Object> parameters,
+            Callback<Object> callback
+    );
+
     // end region
 
     // region Generic
