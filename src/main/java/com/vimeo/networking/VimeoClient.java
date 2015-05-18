@@ -168,7 +168,7 @@ public class VimeoClient
         return this.configuration.baseURLString + CODE_GRANT_PATH + "?" + uri;
     }
 
-    public void authenticateWithCodeGrant(String uri, com.vimeo.networking.AuthCallback callback)
+    public void authenticateWithCodeGrant(String uri, AuthCallback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
@@ -201,14 +201,14 @@ public class VimeoClient
         this.vimeoService.authenticateWithCodeGrant(redirectURI, code, CODE_GRANT_TYPE, new AccountCallback(this, callback));
     }
 
-    public void authorizeWithClientCredentialsGrant(final com.vimeo.networking.AuthCallback callback)
+    public void authorizeWithClientCredentialsGrant(final AuthCallback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
         this.vimeoService.authorizeWithClientCredentialsGrant(CLIENT_CREDENTIALS_GRANT_TYPE, configuration.scope, new AccountCallback(this, callback));
     }
 
-    public void join(String displayName, String email, String password, final com.vimeo.networking.AuthCallback callback)
+    public void join(String displayName, String email, String password, final AuthCallback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
@@ -228,7 +228,7 @@ public class VimeoClient
         this.vimeoService.join(parameters, new AccountCallback(this, email, password, callback));
     }
 
-    public void logIn(String email, String password, final com.vimeo.networking.AuthCallback callback)
+    public void logIn(String email, String password, final AuthCallback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
@@ -294,9 +294,9 @@ public class VimeoClient
         private final VimeoClient client;
         private String email;
         private String password;
-        private final com.vimeo.networking.AuthCallback callback;
+        private final AuthCallback callback;
 
-        public AccountCallback(VimeoClient client, com.vimeo.networking.AuthCallback callback)
+        public AccountCallback(VimeoClient client, AuthCallback callback)
         {
             if (client == null || callback == null) throw new AssertionError("Client and Callback must not be null");
 
@@ -304,7 +304,7 @@ public class VimeoClient
             this.callback = callback;
         }
 
-        public AccountCallback(VimeoClient client, String email, String password, com.vimeo.networking.AuthCallback callback)
+        public AccountCallback(VimeoClient client, String email, String password, AuthCallback callback)
         {
             if (client == null || callback == null) throw new AssertionError("Client and Callback must not be null");
 
@@ -496,7 +496,7 @@ public class VimeoClient
 
     // region Generic
 
-    public void fetchContent(String uri, CacheControl cacheControl, final com.vimeo.networking.ModelCallback callback)
+    public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback)
     {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
