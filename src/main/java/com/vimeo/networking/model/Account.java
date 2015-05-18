@@ -1,12 +1,8 @@
-package model;
+package com.vimeo.networking.model;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.io.Serializable;
-
-import model.User;
 
 /**
  * Created by alfredhanssen on 4/12/15.

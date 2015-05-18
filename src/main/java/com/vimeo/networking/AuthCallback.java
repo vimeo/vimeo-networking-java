@@ -1,4 +1,4 @@
-package com.networking;
+package com.vimeo.networking;
 
 /**
  * Created by alfredhanssen on 4/12/15.

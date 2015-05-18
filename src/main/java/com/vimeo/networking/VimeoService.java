@@ -1,12 +1,10 @@
-package com.networking;
+package com.vimeo.networking;
 
 import java.util.HashMap;
 
-import model.Account;
-import model.UserList;
-import model.VideoList;
-import model.User;
-import model.Video;
+import com.vimeo.networking.model.Account;
+import com.vimeo.networking.model.UserList;
+import com.vimeo.networking.model.VideoList;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -21,7 +19,6 @@ import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
-import retrofit.http.QueryMap;
 
 /**
  * Created by alfredhanssen on 4/12/15.

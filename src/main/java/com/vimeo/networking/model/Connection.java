@@ -1,4 +1,4 @@
-package model;
+package com.vimeo.networking.model;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.networking;
+package com.vimeo.networking;
 
 import java.io.File;
 

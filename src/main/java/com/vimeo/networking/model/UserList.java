@@ -1,15 +1,15 @@
-package model;
+package com.vimeo.networking.model;
 
 import java.util.ArrayList;
 
 /**
- * Created by alfredhanssen on 4/12/15.
+ * Created by hanssena on 4/23/15.
  */
-public class VideoList
+public class UserList
 {
     public int total;
     public int page;
     public int perPage;
     public Paging paging;
-    public ArrayList<Video> data;
+    public ArrayList<User> data;
 }

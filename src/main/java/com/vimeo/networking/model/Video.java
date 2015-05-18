@@ -1,7 +1,6 @@
-package model;
+package com.vimeo.networking.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by alfredhanssen on 4/12/15.
@@ -43,11 +42,11 @@ public class Video
     public String modifiedTime;
     public ArrayList<String> contentRating;
     public String license;
-    public Privacy privacy;
+    public com.vimeo.networking.model.Privacy privacy;
     public PictureCollection pictures;
     public ArrayList<Tag> tags;
     public StatsCollection stats;
     public Metadata metadata;
-    public User user;
+    public com.vimeo.networking.model.User user;
     public String status;
 }

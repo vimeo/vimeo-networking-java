@@ -1,6 +1,4 @@
-package model;
-
-import java.util.Date;
+package com.vimeo.networking.model;
 
 /**
  * Created by alfredhanssen on 4/25/15.

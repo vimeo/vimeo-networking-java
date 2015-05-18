@@ -1,4 +1,4 @@
-package model;
+package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 

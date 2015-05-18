@@ -1,6 +1,6 @@
-package com.networking;
+package com.vimeo.networking;
 
-import model.Account;
+import com.vimeo.networking.model.Account;
 
 /**
  * Created by hanssena on 4/27/15.
