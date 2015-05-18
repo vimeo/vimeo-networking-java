@@ -44,7 +44,7 @@ public class VimeoClient
     private static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
     private Configuration configuration;
-    private com.vimeo.networking.VimeoService vimeoService;
+    private VimeoService vimeoService;
     private Cache cache;
     private String currentCodeGrantState;
     private Account account;
@@ -122,7 +122,7 @@ public class VimeoClient
                 .setConverter(new GsonConverter(gson))
                 .build();
 
-        this.vimeoService = restAdapter.create(com.vimeo.networking.VimeoService.class);
+        this.vimeoService = restAdapter.create(VimeoService.class);
 
         Account account = this.configuration.accountStore.loadAccount();
         this.setAccount(account);
