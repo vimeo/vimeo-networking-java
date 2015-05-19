@@ -7,8 +7,7 @@ import com.google.gson.GsonBuilder;
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-public class Account
-{
+public class Account {
     //    private static final String TOKEN_TYPE_BEARER = "bearer";
 
     private String accessToken;
@@ -17,14 +16,15 @@ public class Account
     private User user;
     private String userJSON;
 
-    public Account()
-    {
+    public Account() {
 
     }
 
-    public Account(String accessToken, String tokenType, String scope, String userJSON)
-    {
-        if (accessToken == null || accessToken.length() == 0 || tokenType == null || tokenType.length() == 0 || scope == null || scope.length() == 0) throw new AssertionError("Account can only be created with token, tokenType, scope");
+    public Account(String accessToken, String tokenType, String scope, String userJSON) {
+        if (accessToken == null || accessToken.length() == 0 || tokenType == null ||
+            tokenType.length() == 0 || scope == null || scope.length() == 0) {
+            throw new AssertionError("Account can only be created with token, tokenType, scope");
+        }
 
         this.accessToken = accessToken;
         this.tokenType = tokenType;
@@ -37,40 +37,33 @@ public class Account
         this.user = gson.fromJson(userJSON, User.class);
     }
 
-    public boolean isAuthenticated()
-    {
+    public boolean isAuthenticated() {
         return (this.accessToken != null && this.accessToken.length() != 0);
     }
 
-    public String getAccessToken()
-    {
+    public String getAccessToken() {
         return this.accessToken;
     }
 
-    public String getTokenType()
-    {
+    public String getTokenType() {
         return this.tokenType;
     }
 
-    public String getScope()
-    {
+    public String getScope() {
         return this.scope;
     }
 
-    public User getUser()
-    {
+    public User getUser() {
         return this.user;
     }
 
     public String getUserJSON() // For AccountManager.userData [AH]
     {
-        if (this.user == null)
-        {
+        if (this.user == null) {
             return null;
         }
 
-        if (this.userJSON != null)
-        {
+        if (this.userJSON != null) {
             return this.userJSON;
         }
 

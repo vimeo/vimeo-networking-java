@@ -3,8 +3,8 @@ package com.vimeo.networking.model;
 /**
  * Created by hanssena on 4/23/15.
  */
-public class ConnectionCollection
-{
+public class ConnectionCollection {
+
     public Connection videos;
     public Connection comments;
     public Connection credits;

@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by alfredhanssen on 4/25/15.
  */
-public class VideoLog
-{
+public class VideoLog {
+
     public String load;
 
     public String play;

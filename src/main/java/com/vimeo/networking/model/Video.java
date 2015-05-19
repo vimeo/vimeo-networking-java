@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-public class Video
-{
+public class Video {
+
     public enum ContentRating // TODO: use this enum [AH] 4/24/2015
     {
         SAFE,

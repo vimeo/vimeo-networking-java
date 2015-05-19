@@ -5,8 +5,8 @@ import java.io.File;
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-public class Configuration
-{
+public class Configuration {
+
     private static final String DEFAULT_VERSION_STRING = "3.2";
 
     public String baseURLString;
@@ -20,8 +20,7 @@ public class Configuration
     public File cacheDirectory;
     public String userAgentString;
 
-    private Boolean isValid()
-    {
+    private Boolean isValid() {
         return (this.baseURLString != null && this.baseURLString.length() != 0 &&
                 this.clientID != null && this.clientID.length() != 0 &&
                 this.clientSecret != null && this.clientSecret.length() != 0 &&
@@ -29,8 +28,8 @@ public class Configuration
                 this.accountStore != null);
     }
 
-    public static class Builder
-    {
+    public static class Builder {
+
         private String baseURLString;
         private String clientID;
         private String clientSecret;
@@ -41,8 +40,8 @@ public class Configuration
         private File cacheDirectory;
         private String userAgentString;
 
-        public Builder(String baseURLString, String clientID, String clientSecret, String scope, AccountStore accountStore)
-        {
+        public Builder(String baseURLString, String clientID, String clientSecret, String scope,
+                       AccountStore accountStore) {
             this.baseURLString = baseURLString;
             this.clientID = clientID;
             this.clientSecret = clientSecret;
@@ -50,39 +49,36 @@ public class Configuration
             this.accountStore = accountStore;
         }
 
-        public Builder APIVersionString(String APIVersionString)
-        {
+        public Builder APIVersionString(String APIVersionString) {
             this.APIVersionString = APIVersionString;
             return this;
         }
 
-        public Builder cacheDirectory(File cacheDirectory)
-        {
+        public Builder cacheDirectory(File cacheDirectory) {
             this.cacheDirectory = cacheDirectory;
             return this;
         }
 
-        public Builder userAgentString(String userAgentString)
-        {
+        public Builder userAgentString(String userAgentString) {
             this.userAgentString = userAgentString;
             return this;
         }
 
-        public Configuration build() throws Exception
-        {
+        public Configuration build() throws Exception {
             return new Configuration(this);
         }
     }
 
-    private Configuration(Builder builder) throws Exception
-    {
+    private Configuration(Builder builder) throws Exception {
         this.baseURLString = builder.baseURLString;
         this.clientID = builder.clientID;
         this.clientSecret = builder.clientSecret;
         this.scope = builder.scope;
         this.accountStore = builder.accountStore;
 
-        if (!this.isValid()) throw new Exception("Built invalid VimeoClientConfiguration");
+        if (!this.isValid()) {
+            throw new Exception("Built invalid VimeoClientConfiguration");
+        }
 
         this.codeGrantRedirectURI = "vimeo" + clientID + "://auth";
 

@@ -34,8 +34,8 @@ import retrofit.converter.GsonConverter;
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-public class VimeoClient
-{
+public class VimeoClient {
+
     private static final String CODE_GRANT_PATH = "oauth/authorize";
     private static final String CODE_GRANT_RESPONSE_TYPE = "code";
     private static final String CODE_GRANT_STATE = "state";
@@ -49,15 +49,14 @@ public class VimeoClient
     private String currentCodeGrantState;
     private Account account;
 
-    /** Dangerous interceptor that rewrites the server's cache-control header.
+    /**
+     * Dangerous interceptor that rewrites the server's cache-control header.
      * We are using this because our server sets all Cache-Control headers to no-store
      * [AH] 4/24/2015
-     * */
-    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor()
-    {
+     */
+    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override
-        public com.squareup.okhttp.Response intercept(Chain chain) throws IOException
-        {
+        public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
             com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
 
             return originalResponse.newBuilder().header("Cache-Control", "public").build();
@@ -66,30 +65,29 @@ public class VimeoClient
 
     private static VimeoClient sharedInstance;
 
-    public static VimeoClient getInstance()
-    {
-        if (sharedInstance == null) throw new AssertionError("Instance must be configured before use");
+    public static VimeoClient getInstance() {
+        if (sharedInstance == null) {
+            throw new AssertionError("Instance must be configured before use");
+        }
 
         return sharedInstance;
     }
 
-    public static void configure(Configuration configuration)
-    {
+    public static void configure(Configuration configuration) {
         sharedInstance = new VimeoClient(configuration);
     }
 
-    private VimeoClient(final Configuration configuration)
-    {
-        if (configuration == null) throw new AssertionError("Configuration cannot be null");
+    private VimeoClient(final Configuration configuration) {
+        if (configuration == null) {
+            throw new AssertionError("Configuration cannot be null");
+        }
 
         this.configuration = configuration;
 
         final VimeoClient client = this;
-        RequestInterceptor requestInterceptor = new RequestInterceptor()
-        {
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
-            public void intercept(RequestFacade request)
-            {
+            public void intercept(RequestFacade request) {
                 request.addHeader("User-Agent", configuration.userAgentString);
                 request.addHeader("Accept", client.getAcceptHeader());
                 request.addHeader("Authorization", client.getAuthHeader());
@@ -97,14 +95,11 @@ public class VimeoClient
         };
 
         OkHttpClient okHttpClient = new OkHttpClient();
-        try
-        {
+        try {
             Integer cacheSize = 10 * 1024 * 1024; // TODO: this should be dynamic [AH]
             this.cache = new Cache(this.configuration.cacheDirectory, cacheSize);
             okHttpClient.setCache(cache);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("Exception when creating cache: " + e.getMessage());
         }
 
@@ -130,17 +125,16 @@ public class VimeoClient
 
     // region Accessors
 
-    public Account getAccount()
-    {
-        if (this.account == null) throw new AssertionError("Account should never be null");
+    public Account getAccount() {
+        if (this.account == null) {
+            throw new AssertionError("Account should never be null");
+        }
 
         return this.account;
     }
 
-    public void setAccount(Account account)
-    {
-        if (account == null)
-        {
+    public void setAccount(Account account) {
+        if (account == null) {
             account = new Account();
         }
 
@@ -151,11 +145,10 @@ public class VimeoClient
 
     // region Authentication
 
-    public String getCodeGrantAuthorizationURI()
-    {
+    public String getCodeGrantAuthorizationURI() {
         currentCodeGrantState = UUID.randomUUID().toString();
 
-        Map<String,String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         map.put("redirect_uri", this.configuration.codeGrantRedirectURI);
         map.put("response_type", CODE_GRANT_RESPONSE_TYPE);
         map.put("state", this.currentCodeGrantState);
@@ -168,12 +161,12 @@ public class VimeoClient
         return this.configuration.baseURLString + CODE_GRANT_PATH + "?" + uri;
     }
 
-    public void authenticateWithCodeGrant(String uri, AuthCallback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void authenticateWithCodeGrant(String uri, AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(new Error("Uri must not be null"));
 
             return;
@@ -181,12 +174,12 @@ public class VimeoClient
 
         // TODO: find a better way to do this [AH]
         String query = uri.split("\\?")[1];
-        Map<String, String> queryMap = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
+        Map<String, String> queryMap = Splitter.on('&').trimResults().withKeyValueSeparator("=")
+                                               .split(query);
         String code = queryMap.get(CODE_GRANT_RESPONSE_TYPE);
         String state = queryMap.get(CODE_GRANT_STATE);
 
-        if (code == null || state == null || !state.equals(this.currentCodeGrantState))
-        {
+        if (code == null || state == null || !state.equals(this.currentCodeGrantState)) {
             this.currentCodeGrantState = null;
 
             callback.failure(new Error("Code grant code is null or state has changed"));
@@ -198,22 +191,28 @@ public class VimeoClient
 
         String redirectURI = this.configuration.codeGrantRedirectURI;
 
-        this.vimeoService.authenticateWithCodeGrant(redirectURI, code, CODE_GRANT_TYPE, new AccountCallback(this, callback));
+        this.vimeoService.authenticateWithCodeGrant(redirectURI, code, CODE_GRANT_TYPE,
+                                                    new AccountCallback(this, callback));
     }
 
-    public void authorizeWithClientCredentialsGrant(final AuthCallback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void authorizeWithClientCredentialsGrant(final AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        this.vimeoService.authorizeWithClientCredentialsGrant(CLIENT_CREDENTIALS_GRANT_TYPE, configuration.scope, new AccountCallback(this, callback));
+        this.vimeoService.authorizeWithClientCredentialsGrant(CLIENT_CREDENTIALS_GRANT_TYPE,
+                                                              configuration.scope,
+                                                              new AccountCallback(this, callback));
     }
 
-    public void join(String displayName, String email, String password, final AuthCallback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void join(String displayName, String email, String password,
+                     final AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (displayName == null || displayName.length() == 0 || email == null || email.length() == 0 || password == null || password.length() == 0)
-        {
+        if (displayName == null || displayName.length() == 0 || email == null ||
+            email.length() == 0 || password == null || password.length() == 0) {
             callback.failure(new Error("displayName, email, password must be set"));
 
             return;
@@ -228,29 +227,29 @@ public class VimeoClient
         this.vimeoService.join(parameters, new AccountCallback(this, email, password, callback));
     }
 
-    public void logIn(String email, String password, final AuthCallback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void logIn(String email, String password, final AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (email == null || email.length() == 0 || password == null || password.length() == 0)
-        {
+        if (email == null || email.length() == 0 || password == null || password.length() == 0) {
             callback.failure(new Error("email, password must be set"));
 
             return;
         }
 
-        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope, new AccountCallback(this, email, password, callback));
+        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope,
+                                new AccountCallback(this, email, password, callback));
     }
 
     // Synchronous version to be used with Android AccountAuthenticator [AH]
-    public Account logIn(String email, String password)
-    {
-        if (email == null || email.length() == 0 || password == null || password.length() == 0)
-        {
+    public Account logIn(String email, String password) {
+        if (email == null || email.length() == 0 || password == null || password.length() == 0) {
             return null;
         }
 
-        Account account = this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope);
+        Account account = this.vimeoService
+                .logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope);
 
         this.setAccount(account);
 
@@ -259,26 +258,20 @@ public class VimeoClient
         return account;
     }
 
-    public void logOut(final Callback<Object> callback)
-    {
+    public void logOut(final Callback<Object> callback) {
         // TODO: make this a static inner class? [AH] 5/4/15
 
-        this.vimeoService.logOut(new Callback<Object>()
-        {
+        this.vimeoService.logOut(new Callback<Object>() {
             @Override
-            public void success(Object o, Response response)
-            {
-                if (callback != null)
-                {
+            public void success(Object o, Response response) {
+                if (callback != null) {
                     callback.success(o, response);
                 }
             }
 
             @Override
-            public void failure(RetrofitError error)
-            {
-                if (callback != null)
-                {
+            public void failure(RetrofitError error) {
+                if (callback != null) {
                     callback.failure(error);
                 }
             }
@@ -289,24 +282,27 @@ public class VimeoClient
         this.setAccount(null);
     }
 
-    private static class AccountCallback implements Callback<Account>
-    {
+    private static class AccountCallback implements Callback<Account> {
+
         private final VimeoClient client;
         private String email;
         private String password;
         private final AuthCallback callback;
 
-        public AccountCallback(VimeoClient client, AuthCallback callback)
-        {
-            if (client == null || callback == null) throw new AssertionError("Client and Callback must not be null");
+        public AccountCallback(VimeoClient client, AuthCallback callback) {
+            if (client == null || callback == null) {
+                throw new AssertionError("Client and Callback must not be null");
+            }
 
             this.client = client;
             this.callback = callback;
         }
 
-        public AccountCallback(VimeoClient client, String email, String password, AuthCallback callback)
-        {
-            if (client == null || callback == null) throw new AssertionError("Client and Callback must not be null");
+        public AccountCallback(VimeoClient client, String email, String password,
+                               AuthCallback callback) {
+            if (client == null || callback == null) {
+                throw new AssertionError("Client and Callback must not be null");
+            }
 
             this.client = client;
             this.email = email;
@@ -315,16 +311,14 @@ public class VimeoClient
         }
 
         @Override
-        public void success(Account account, Response response)
-        {
+        public void success(Account account, Response response) {
             this.client.setAccount(account);
             this.client.configuration.accountStore.saveAccount(account, this.email, this.password);
             this.callback.success();
         }
 
         @Override
-        public void failure(RetrofitError error)
-        {
+        public void failure(RetrofitError error) {
             callback.failure(new Error(error.toString()));
         }
     }
@@ -333,9 +327,10 @@ public class VimeoClient
 
     // region Channels
 
-    public void fetchStaffPicks(Callback<VideoList> callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void fetchStaffPicks(Callback<VideoList> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
         this.vimeoService.fetchStaffPicks(callback);
     }
@@ -344,12 +339,12 @@ public class VimeoClient
 
     // region Search
 
-    public void searchVideos(String query, Callback<VideoList> callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void searchVideos(String query, Callback<VideoList> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (query == null || query.length() == 0)
-        {
+        if (query == null || query.length() == 0) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -358,12 +353,12 @@ public class VimeoClient
         this.vimeoService.searchVideos(query, callback);
     }
 
-    public void searchUsers(String query, Callback<UserList> callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void searchUsers(String query, Callback<UserList> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (query == null || query.length() == 0)
-        {
+        if (query == null || query.length() == 0) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -376,18 +371,20 @@ public class VimeoClient
 
     // region Editing
 
-    public void editVideo(String uri, String title, String description, Privacy.PrivacyValue privacyValue, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void editVideo(String uri, String title, String description,
+                          Privacy.PrivacyValue privacyValue, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null || uri.length() == 0)
-        {
+        if (uri == null || uri.length() == 0) {
             callback.failure(null); // TODO: create error here
 
             return;
         }
 
-        if (title == null && description == null && privacyValue == null) // No point in editing video
+        if (title == null && description == null &&
+            privacyValue == null) // No point in editing video
         {
             callback.failure(null); // TODO: create error here
 
@@ -401,30 +398,27 @@ public class VimeoClient
 
         HashMap<String, Object> parameters = new HashMap<>();
 
-        if (title != null)
-        {
+        if (title != null) {
             parameters.put("name", title);
         }
 
-        if (description != null)
-        {
+        if (description != null) {
             parameters.put("description", description);
         }
 
-        if (privacyMap != null)
-        {
+        if (privacyMap != null) {
             parameters.put("privacy", privacyMap);
         }
 
         this.vimeoService.editVideo(uri, parameters, callback);
     }
 
-    public void editUser(String uri, String name, String location, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void editUser(String uri, String name, String location, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null || uri.length() == 0)
-        {
+        if (uri == null || uri.length() == 0) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -439,37 +433,31 @@ public class VimeoClient
 
         HashMap<String, Object> parameters = new HashMap<>();
 
-        if (name != null)
-        {
+        if (name != null) {
             parameters.put("name", name);
         }
 
-        if (location != null)
-        {
+        if (location != null) {
             parameters.put("location", location);
         }
 
         this.vimeoService.editUser(uri, parameters, callback);
     }
 
-    public void updateFollowUser(boolean follow, String uri, Callback callback)
-    {
-        if (follow)
-        {
+    public void updateFollowUser(boolean follow, String uri, Callback callback) {
+        if (follow) {
             this.followUser(uri, callback);
-        }
-        else
-        {
+        } else {
             this.unfollowUser(uri, callback);
         }
     }
 
-    public void followUser(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void followUser(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -478,12 +466,12 @@ public class VimeoClient
         this.vimeoService.PUT(uri, callback);
     }
 
-    public void unfollowUser(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void unfollowUser(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -496,20 +484,19 @@ public class VimeoClient
 
     // region Generic
 
-    public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
         }
 
         String cacheHeaderValue = null;
-        if (cacheControl != null)
-        {
+        if (cacheControl != null) {
             cacheHeaderValue = cacheControl.toString();
         }
 
@@ -532,12 +519,12 @@ public class VimeoClient
         });
     }
 
-    public void fetchCachedContent(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void fetchCachedContent(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -546,12 +533,12 @@ public class VimeoClient
         this.vimeoService.GET(uri, CacheControl.FORCE_CACHE.toString(), callback);
     }
 
-    public void fetchNetworkContent(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void fetchNetworkContent(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -564,26 +551,20 @@ public class VimeoClient
 
     // region HeaderValues
 
-    public String getUserAgent()
-    {
+    public String getUserAgent() {
         return "sample_user_agent";
     }
 
-    public String getAcceptHeader()
-    {
+    public String getAcceptHeader() {
         return "application/vnd.vimeo.*+json; version=" + this.configuration.APIVersionString;
     }
 
-    public String getAuthHeader()
-    {
+    public String getAuthHeader() {
         String credential = null;
 
-        if (this.account != null && this.account.isAuthenticated())
-        {
+        if (this.account != null && this.account.isAuthenticated()) {
             credential = "Bearer " + this.account.getAccessToken();
-        }
-        else
-        {
+        } else {
             credential = Credentials.basic(configuration.clientID, configuration.clientSecret);
         }
 
@@ -596,33 +577,26 @@ public class VimeoClient
 
     // TODO: This is shitty, revisit [AH]
 
-    static String urlEncodeUTF8(Map<String,String> map)
-    {
+    static String urlEncodeUTF8(Map<String, String> map) {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String,String> entry : map.entrySet())
-        {
-            if (sb.length() > 0)
-            {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (sb.length() > 0) {
                 sb.append("&");
             }
 
             sb.append(String.format("%s=%s",
-                    urlEncodeUTF8(entry.getKey()),
-                    urlEncodeUTF8(entry.getValue())
-            ));
+                                    urlEncodeUTF8(entry.getKey()),
+                                    urlEncodeUTF8(entry.getValue())
+                                   ));
         }
 
         return sb.toString();
     }
 
-    static String urlEncodeUTF8(String s)
-    {
-        try
-        {
+    static String urlEncodeUTF8(String s) {
+        try {
             return URLEncoder.encode(s, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             throw new UnsupportedOperationException(e);
         }
     }

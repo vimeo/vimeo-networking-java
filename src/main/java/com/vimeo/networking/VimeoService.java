@@ -23,8 +23,8 @@ import retrofit.http.Query;
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-public interface VimeoService
-{
+public interface VimeoService {
+
     @FormUrlEncoded
     @POST("/oauth/access_token")
     void authenticateWithCodeGrant(
@@ -32,7 +32,7 @@ public interface VimeoService
             @Field("code") String code,
             @Field("grant_type") String grantType,
             Callback<Account> callback
-    );
+                                  );
 
     @FormUrlEncoded
     @POST("/oauth/authorize/client")
@@ -40,13 +40,13 @@ public interface VimeoService
             @Field("grant_type") String grantType,
             @Field("scope") String scope,
             Callback<Account> callback
-    );
+                                            );
 
     @POST("/users")
     void join(
             @Body HashMap<String, String> parameters,
             Callback<Account> callback
-    );
+             );
 
     @FormUrlEncoded
     @POST("/oauth/authorize/password")
@@ -56,7 +56,7 @@ public interface VimeoService
             @Field("grant_type") String grantType,
             @Field("scope") String scope,
             Callback<Account> callback
-    );
+              );
 
     // Synchronous version to be used with Android AccountAuthenticator [AH]
     @FormUrlEncoded
@@ -66,20 +66,20 @@ public interface VimeoService
             @Field("password") String password,
             @Field("grant_type") String grantType,
             @Field("scope") String scope
-    );
+                 );
 
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("/tokens")
     void logOut(
             Callback<Object> callback
-    );
+               );
 
     // region Channels
 
     @GET("/channels/staffpicks/videos")
     void fetchStaffPicks(
             Callback<VideoList> callback
-    );
+                        );
 
     // end region
 
@@ -89,13 +89,13 @@ public interface VimeoService
     void searchVideos(
             @Query("query") String query,
             Callback<VideoList> callback
-    );
+                     );
 
     @GET("/users")
     void searchUsers(
             @Query("query") String query,
             Callback<UserList> callback
-    );
+                    );
 
     // end region
 
@@ -103,17 +103,17 @@ public interface VimeoService
 
     @PATCH("/{uri}")
     void editVideo(
-            @Path(value="uri", encode=false) String uri,
+            @Path(value = "uri", encode = false) String uri,
             @Body HashMap<String, Object> parameters,
             Callback<Object> callback
-    );
+                  );
 
     @PATCH("/{uri}")
     void editUser(
-            @Path(value="uri", encode=false) String uri,
+            @Path(value = "uri", encode = false) String uri,
             @Body HashMap<String, Object> parameters,
             Callback<Object> callback
-    );
+                 );
 
     // end region
 
@@ -121,22 +121,22 @@ public interface VimeoService
 
     @PUT("/{uri}")
     void PUT(
-            @Path(value="uri", encode=false) String uri,
+            @Path(value = "uri", encode = false) String uri,
             Callback<Object> callback
-    );
+            );
 
     @DELETE("/{uri}")
     void DELETE(
-            @Path(value="uri", encode=false) String uri,
+            @Path(value = "uri", encode = false) String uri,
             Callback<Object> callback
-    );
+               );
 
     @GET("/{uri}")
     void GET(
-            @Path(value="uri", encode=false) String uri,
+            @Path(value = "uri", encode = false) String uri,
             @Header("Cache-Control") String cacheHeaderValue,
             Callback<Object> callback
-    );
+            );
 
     // end region
 }
