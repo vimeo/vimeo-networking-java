@@ -30,9 +30,8 @@ public class Account {
         this.tokenType = tokenType;
         this.scope = scope;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                                     .create();
 
         this.user = gson.fromJson(userJSON, User.class);
     }
@@ -67,9 +66,8 @@ public class Account {
             return this.userJSON;
         }
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                                     .create();
 
         this.userJSON = gson.toJson(this.user);
 

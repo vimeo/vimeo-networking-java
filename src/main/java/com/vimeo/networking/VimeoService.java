@@ -27,116 +27,73 @@ public interface VimeoService {
 
     @FormUrlEncoded
     @POST("/oauth/access_token")
-    void authenticateWithCodeGrant(
-            @Field("redirect_uri") String redirectURI,
-            @Field("code") String code,
-            @Field("grant_type") String grantType,
-            Callback<Account> callback
-                                  );
+    void authenticateWithCodeGrant(@Field("redirect_uri") String redirectURI, @Field("code") String code,
+                                   @Field("grant_type") String grantType, Callback<Account> callback);
 
     @FormUrlEncoded
     @POST("/oauth/authorize/client")
-    void authorizeWithClientCredentialsGrant(
-            @Field("grant_type") String grantType,
-            @Field("scope") String scope,
-            Callback<Account> callback
-                                            );
+    void authorizeWithClientCredentialsGrant(@Field("grant_type") String grantType,
+                                             @Field("scope") String scope, Callback<Account> callback);
 
     @POST("/users")
-    void join(
-            @Body HashMap<String, String> parameters,
-            Callback<Account> callback
-             );
+    void join(@Body HashMap<String, String> parameters, Callback<Account> callback);
 
     @FormUrlEncoded
     @POST("/oauth/authorize/password")
-    void logIn(
-            @Field("username") String email,
-            @Field("password") String password,
-            @Field("grant_type") String grantType,
-            @Field("scope") String scope,
-            Callback<Account> callback
-              );
+    void logIn(@Field("username") String email, @Field("password") String password,
+               @Field("grant_type") String grantType, @Field("scope") String scope,
+               Callback<Account> callback);
 
     // Synchronous version to be used with Android AccountAuthenticator [AH]
     @FormUrlEncoded
     @POST("/oauth/authorize/password")
-    Account logIn(
-            @Field("username") String email,
-            @Field("password") String password,
-            @Field("grant_type") String grantType,
-            @Field("scope") String scope
-                 );
+    Account logIn(@Field("username") String email, @Field("password") String password,
+                  @Field("grant_type") String grantType, @Field("scope") String scope);
 
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("/tokens")
-    void logOut(
-            Callback<Object> callback
-               );
+    void logOut(Callback<Object> callback);
 
     // region Channels
 
     @GET("/channels/staffpicks/videos")
-    void fetchStaffPicks(
-            Callback<VideoList> callback
-                        );
+    void fetchStaffPicks(Callback<VideoList> callback);
 
     // end region
 
     // region Search
 
     @GET("/videos")
-    void searchVideos(
-            @Query("query") String query,
-            Callback<VideoList> callback
-                     );
+    void searchVideos(@Query("query") String query, Callback<VideoList> callback);
 
     @GET("/users")
-    void searchUsers(
-            @Query("query") String query,
-            Callback<UserList> callback
-                    );
+    void searchUsers(@Query("query") String query, Callback<UserList> callback);
 
     // end region
 
     // region Editing
 
     @PATCH("/{uri}")
-    void editVideo(
-            @Path(value = "uri", encode = false) String uri,
-            @Body HashMap<String, Object> parameters,
-            Callback<Object> callback
-                  );
+    void editVideo(@Path(value = "uri", encode = false) String uri, @Body HashMap<String, Object> parameters,
+                   Callback<Object> callback);
 
     @PATCH("/{uri}")
-    void editUser(
-            @Path(value = "uri", encode = false) String uri,
-            @Body HashMap<String, Object> parameters,
-            Callback<Object> callback
-                 );
+    void editUser(@Path(value = "uri", encode = false) String uri, @Body HashMap<String, Object> parameters,
+                  Callback<Object> callback);
 
     // end region
 
     // region Generic
 
     @PUT("/{uri}")
-    void PUT(
-            @Path(value = "uri", encode = false) String uri,
-            Callback<Object> callback
-            );
+    void PUT(@Path(value = "uri", encode = false) String uri, Callback<Object> callback);
 
     @DELETE("/{uri}")
-    void DELETE(
-            @Path(value = "uri", encode = false) String uri,
-            Callback<Object> callback
-               );
+    void DELETE(@Path(value = "uri", encode = false) String uri, Callback<Object> callback);
 
     @GET("/{uri}")
-    void GET(
-            @Path(value = "uri", encode = false) String uri,
-            @Header("Cache-Control") String cacheHeaderValue,
-            Callback<Object> callback
-            );
+    void GET(@Path(value = "uri", encode = false) String uri,
+             @Header("Cache-Control") String cacheHeaderValue, Callback<Object> callback);
 
     // end region
 }

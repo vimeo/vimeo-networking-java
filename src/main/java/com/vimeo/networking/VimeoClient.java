@@ -105,17 +105,14 @@ public class VimeoClient {
 
         okHttpClient.networkInterceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                                     .create();
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(configuration.baseURLString)
-                .setClient(new OkClient(okHttpClient))
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setRequestInterceptor(requestInterceptor)
-                .setConverter(new GsonConverter(gson))
-                .build();
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(configuration.baseURLString)
+                                                           .setClient(new OkClient(okHttpClient))
+                                                           .setLogLevel(RestAdapter.LogLevel.FULL)
+                                                           .setRequestInterceptor(requestInterceptor)
+                                                           .setConverter(new GsonConverter(gson)).build();
 
         this.vimeoService = restAdapter.create(VimeoService.class);
 
@@ -174,8 +171,7 @@ public class VimeoClient {
 
         // TODO: find a better way to do this [AH]
         String query = uri.split("\\?")[1];
-        Map<String, String> queryMap = Splitter.on('&').trimResults().withKeyValueSeparator("=")
-                                               .split(query);
+        Map<String, String> queryMap = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
         String code = queryMap.get(CODE_GRANT_RESPONSE_TYPE);
         String state = queryMap.get(CODE_GRANT_STATE);
 
@@ -200,13 +196,12 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        this.vimeoService.authorizeWithClientCredentialsGrant(CLIENT_CREDENTIALS_GRANT_TYPE,
-                                                              configuration.scope,
-                                                              new AccountCallback(this, callback));
+        this.vimeoService
+                .authorizeWithClientCredentialsGrant(CLIENT_CREDENTIALS_GRANT_TYPE, configuration.scope,
+                                                     new AccountCallback(this, callback));
     }
 
-    public void join(String displayName, String email, String password,
-                     final AuthCallback callback) {
+    public void join(String displayName, String email, String password, final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -248,8 +243,7 @@ public class VimeoClient {
             return null;
         }
 
-        Account account = this.vimeoService
-                .logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope);
+        Account account = this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope);
 
         this.setAccount(account);
 
@@ -298,8 +292,7 @@ public class VimeoClient {
             this.callback = callback;
         }
 
-        public AccountCallback(VimeoClient client, String email, String password,
-                               AuthCallback callback) {
+        public AccountCallback(VimeoClient client, String email, String password, AuthCallback callback) {
             if (client == null || callback == null) {
                 throw new AssertionError("Client and Callback must not be null");
             }
@@ -371,8 +364,8 @@ public class VimeoClient {
 
     // region Editing
 
-    public void editVideo(String uri, String title, String description,
-                          Privacy.PrivacyValue privacyValue, Callback callback) {
+    public void editVideo(String uri, String title, String description, Privacy.PrivacyValue privacyValue,
+                          Callback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -505,8 +498,7 @@ public class VimeoClient {
             @Override
             public void success(Object o, Response response) {
                 Gson gson = new GsonBuilder()
-                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                        .create();
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
                 callback.success(object, response);
@@ -584,10 +576,7 @@ public class VimeoClient {
                 sb.append("&");
             }
 
-            sb.append(String.format("%s=%s",
-                                    urlEncodeUTF8(entry.getKey()),
-                                    urlEncodeUTF8(entry.getValue())
-                                   ));
+            sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey()), urlEncodeUTF8(entry.getValue())));
         }
 
         return sb.toString();
