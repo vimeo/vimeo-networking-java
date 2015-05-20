@@ -140,6 +140,10 @@ public class VimeoClient {
         this.account = account;
     }
 
+    public void setBaseUrlString(String baseUrlString) {
+        this.configuration.baseURLString = baseUrlString;
+    }
+
     // end region
 
     // region Authentication
