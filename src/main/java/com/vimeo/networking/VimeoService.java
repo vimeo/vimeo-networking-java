@@ -21,8 +21,8 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
- * All available API calls that can be made using Retrofit
- *
+ * Interface of available API calls that can be made using Retrofit.
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  */
 public interface VimeoService {

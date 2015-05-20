@@ -1,15 +1,18 @@
 package com.vimeo.networking;
 
+import com.google.common.base.Splitter;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.common.base.Splitter;
-
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
+import com.vimeo.networking.model.Account;
+import com.vimeo.networking.model.Privacy;
+import com.vimeo.networking.model.UserList;
+import com.vimeo.networking.model.VideoList;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -17,11 +20,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import com.vimeo.networking.model.Account;
-import com.vimeo.networking.model.Privacy;
-import com.vimeo.networking.model.UserList;
-import com.vimeo.networking.model.VideoList;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -32,6 +30,8 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
 /**
+ * Client class used for making networking calls to Vimeo API.
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  */
 public class VimeoClient {
@@ -47,6 +47,7 @@ public class VimeoClient {
     private VimeoService vimeoService;
     private Cache cache;
     private String currentCodeGrantState;
+    /** Currently logged in user's Vimeo account */
     private Account account;
 
     /**
@@ -142,6 +143,16 @@ public class VimeoClient {
 
     // region Authentication
 
+    /**
+     * Provides a URI that can be opened in a web view that will prompt for login and permissions
+     * or used currently logged in users credentials.
+     * <p>
+     * If the user accepts your app, they are redirected to your redirect_uri along with two parameters:
+     * code and state
+     * <p>
+     * @return The URI that should be opened in a web view
+     * @see <a href="https://developer.vimeo.com/api/authentication#generate-redirect">Vimeo API Docs</a>
+     */
     public String getCodeGrantAuthorizationURI() {
         currentCodeGrantState = UUID.randomUUID().toString();
 
@@ -158,6 +169,15 @@ public class VimeoClient {
         return this.configuration.baseURLString + CODE_GRANT_PATH + "?" + uri;
     }
 
+
+    /**
+     * Authenticates the user from the codeGrantAuthorizationURI().
+     * <p>
+     * Exchanges the code for the access token.
+     * <p>
+     * @param uri  URI from {@link #getCodeGrantAuthorizationURI() getCodeGrantAuthorizationURI}
+     * @param callback  Callback pertaining to authentication
+     */
     public void authenticateWithCodeGrant(String uri, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
@@ -191,6 +211,13 @@ public class VimeoClient {
                                                     new AccountCallback(this, callback));
     }
 
+    /**
+     * Authorizes users who are not signed in.
+     * <p>
+     * Leaves User as null in {@link Account} model and populates the rest
+     * <p>
+     * @param callback  Callback pertaining to authentication
+     */
     public void authorizeWithClientCredentialsGrant(final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
@@ -237,7 +264,15 @@ public class VimeoClient {
                                 new AccountCallback(this, email, password, callback));
     }
 
-    // Synchronous version to be used with Android AccountAuthenticator [AH]
+    /**
+     * Synchronous version of login call
+     * <p>
+     * Useful when dealing with Android AccountAuthenticator [AH]
+     * <p>
+     * @param email  user's email address
+     * @param password  user's password
+     * @return  the account object since it is synchronous
+     */
     public Account logIn(String email, String password) {
         if (email == null || email.length() == 0 || password == null || password.length() == 0) {
             return null;
@@ -252,6 +287,12 @@ public class VimeoClient {
         return account;
     }
 
+
+    /**
+     * Must be called at some point to ensure that the tokens have been invalidated
+     * <p>
+     * @param callback  Callback for handling logout
+     */
     public void logOut(final Callback<Object> callback) {
         // TODO: make this a static inner class? [AH] 5/4/15
 
@@ -276,6 +317,11 @@ public class VimeoClient {
         this.setAccount(null);
     }
 
+    /**
+     * Class responsible for setting the account on successful authorization.
+     * <p>
+     * Sets the account on the {@link VimeoClient} as well as the {@link AccountStore}
+     */
     private static class AccountCallback implements Callback<Account> {
 
         private final VimeoClient client;
@@ -477,6 +523,13 @@ public class VimeoClient {
 
     // region Generic
 
+    /**
+     * A generic GET call that takes in the URI of the specific resource.
+     * <p>
+     * @param uri  URI of the resource to GET
+     * @param cacheControl  Cache control type
+     * @param callback  The callback for the specific model type of the resource
+     */
     public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");

@@ -3,7 +3,7 @@ package com.vimeo.networking;
 import java.io.File;
 
 /**
- * The configuration settings for making API call with Retrofit
+ * The configuration settings for making API call with Retrofit.
  * <p>
  * An instance of this class is used in the {@link VimeoClient}.
  * <p>
