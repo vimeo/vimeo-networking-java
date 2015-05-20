@@ -47,7 +47,7 @@ public class VimeoClient {
     private VimeoService vimeoService;
     private Cache cache;
     private String currentCodeGrantState;
-    /** Currently logged in user's Vimeo account */
+    /** Currently authenticated account */
     private Account account;
 
     /**
@@ -177,6 +177,7 @@ public class VimeoClient {
      * <p>
      * @param uri  URI from {@link #getCodeGrantAuthorizationURI() getCodeGrantAuthorizationURI}
      * @param callback  Callback pertaining to authentication
+     * @see <a href="https://developer.vimeo.com/api/authentication#generate-redirect">Vimeo API Docs</a>
      */
     public void authenticateWithCodeGrant(String uri, AuthCallback callback) {
         if (callback == null) {
@@ -212,7 +213,7 @@ public class VimeoClient {
     }
 
     /**
-     * Authorizes users who are not signed in.
+     * Authorizes users of the app who are not signed in.
      * <p>
      * Leaves User as null in {@link Account} model and populates the rest
      * <p>
@@ -289,7 +290,7 @@ public class VimeoClient {
 
 
     /**
-     * Must be called at some point to ensure that the tokens have been invalidated
+     * Must be called when user logs out to ensure that the tokens have been invalidated
      * <p>
      * @param callback  Callback for handling logout
      */
