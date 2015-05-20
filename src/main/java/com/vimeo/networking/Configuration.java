@@ -3,6 +3,10 @@ package com.vimeo.networking;
 import java.io.File;
 
 /**
+ * The configuration settings for making API call with Retrofit
+ * <p>
+ * An instance of this class is used in the {@link VimeoClient}.
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  */
 public class Configuration {
@@ -28,6 +32,9 @@ public class Configuration {
                 this.accountStore != null);
     }
 
+    /**
+     * Builder used to construct the Configuration
+     */
     public static class Builder {
 
         private String baseURLString;
