@@ -1,16 +1,14 @@
-package model;
+package com.vimeo.networking.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by alfredhanssen on 4/12/15.
  */
 
-public class User
-{
-    public enum AccountType
-    {
+public class User {
+
+    public enum AccountType {
         BASIC,
         PRO,
         PLUS,
@@ -28,22 +26,14 @@ public class User
     public ArrayList<Website> websites;
     public Metadata metadata;
 
-    public AccountType getAccountType()
-    {
-        if (this.account.equals("basic"))
-        {
+    public AccountType getAccountType() {
+        if (this.account.equals("basic")) {
             return AccountType.BASIC;
-        }
-        else if (this.account.equals("plus"))
-        {
+        } else if (this.account.equals("plus")) {
             return AccountType.PLUS;
-        }
-        else if (this.account.equals("pro"))
-        {
+        } else if (this.account.equals("pro")) {
             return AccountType.PRO;
-        }
-        else if (this.account.equals("staff"))
-        {
+        } else if (this.account.equals("staff")) {
             return AccountType.STAFF;
         }
 

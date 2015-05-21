@@ -1,14 +1,11 @@
-package model;
-
-import java.util.Date;
+package com.vimeo.networking.model;
 
 /**
  * Created by alfredhanssen on 4/25/15.
  */
-public class VideoFile
-{
-    public enum QualityValue
-    {
+public class VideoFile {
+
+    public enum QualityValue {
         HLS,
         HD,
         SD,
