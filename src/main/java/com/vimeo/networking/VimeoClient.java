@@ -98,8 +98,7 @@ public class VimeoClient {
 
         OkHttpClient okHttpClient = new OkHttpClient();
         try {
-            Integer cacheSize = 10 * 1024 * 1024; // TODO: this should be dynamic [AH]
-            this.cache = new Cache(this.configuration.cacheDirectory, cacheSize);
+            this.cache = new Cache(this.configuration.cacheDirectory, this.configuration.cacheSize);
             okHttpClient.setCache(cache);
         } catch (IOException e) {
             System.out.println("Exception when creating cache: " + e.getMessage());
@@ -570,32 +569,12 @@ public class VimeoClient {
         });
     }
 
-    public void fetchCachedContent(String uri, Callback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null) {
-            callback.failure(null); // TODO: create error here
-
-            return;
-        }
-
-        this.vimeoService.GET(uri, CacheControl.FORCE_CACHE.toString(), callback);
+    public void fetchCachedContent(String uri, ModelCallback callback) {
+        this.fetchContent(uri, CacheControl.FORCE_CACHE, callback);
     }
 
-    public void fetchNetworkContent(String uri, Callback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null) {
-            callback.failure(null); // TODO: create error here
-
-            return;
-        }
-
-        this.vimeoService.GET(uri, CacheControl.FORCE_NETWORK.toString(), callback);
+    public void fetchNetworkContent(String uri, ModelCallback callback) {
+        this.fetchContent(uri, CacheControl.FORCE_NETWORK, callback);
     }
 
     // end region
