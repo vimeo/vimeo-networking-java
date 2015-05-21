@@ -88,12 +88,12 @@ public interface VimeoService {
     @PATCH("/{uri}")
     void editVideo(@Path(value = "uri", encode = false) String uri,
                    @Body HashMap<String, Object> parameters,
-                   Callback<Object> callback);
+                   Callback callback);
 
     @PATCH("/{uri}")
     void editUser(@Path(value = "uri", encode = false) String uri,
                   @Body HashMap<String, Object> parameters,
-                  Callback<Object> callback);
+                  Callback callback);
 
     @POST("/{uri}")
     void comment(@Path(value = "uri", encode = false) String uri,
@@ -106,11 +106,11 @@ public interface VimeoService {
 
     @PUT("/{uri}")
     void PUT(@Path(value = "uri", encode = false) String uri,
-             Callback<Object> callback);
+             Callback callback);
 
     @DELETE("/{uri}")
     void DELETE(@Path(value = "uri", encode = false) String uri,
-                Callback<Object> callback);
+                Callback callback);
 
     @GET("/{uri}")
     void GET(@Path(value = "uri", encode = false) String uri,

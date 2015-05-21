@@ -183,7 +183,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(new Error("Uri must not be null"));
 
             return;
@@ -195,7 +195,7 @@ public class VimeoClient {
         String code = queryMap.get(CODE_GRANT_RESPONSE_TYPE);
         String state = queryMap.get(CODE_GRANT_STATE);
 
-        if (code.isEmpty() || state.isEmpty() || !state.equals(this.currentCodeGrantState)) {
+        if (code == null || code.isEmpty() || state == null || state.isEmpty() || !state.equals(this.currentCodeGrantState)) {
             this.currentCodeGrantState = null;
 
             callback.failure(new Error("Code grant code is null or state has changed"));
@@ -233,7 +233,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (displayName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() || password == null || password.isEmpty()) {
             callback.failure(new Error("displayName, email, password must be set"));
 
             return;
@@ -253,7 +253,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (email.isEmpty() || password.isEmpty()) {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             callback.failure(new Error("email, password must be set"));
 
             return;
@@ -273,7 +273,7 @@ public class VimeoClient {
      * @return  the account object since it is synchronous
      */
     public Account logIn(String email, String password) {
-        if (email.isEmpty() || password.isEmpty()) {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             return null;
         }
 
@@ -382,7 +382,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (query.isEmpty()) {
+        if (query == null || query.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -396,7 +396,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (query.isEmpty()) {
+        if (query == null || query.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -415,7 +415,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -444,9 +444,7 @@ public class VimeoClient {
             parameters.put("description", description);
         }
 
-        if (privacyMap != null) {
-            parameters.put("privacy", privacyMap);
-        }
+        parameters.put("privacy", privacyMap);
 
         this.vimeoService.editVideo(uri, parameters, callback);
     }
@@ -456,7 +454,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -495,7 +493,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -509,7 +507,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -530,7 +528,7 @@ public class VimeoClient {
     public void likeVideo(String uri, Callback callback) {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -542,7 +540,7 @@ public class VimeoClient {
     public void unlikeVideo(String uri, Callback callback) {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -563,7 +561,7 @@ public class VimeoClient {
     public void watchLaterVideo(String uri, Callback callback) {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -575,7 +573,7 @@ public class VimeoClient {
     public void unwatchLaterVideo(String uri, Callback callback) {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -587,7 +585,7 @@ public class VimeoClient {
     public void comment(String uri, String comment, Callback callback) {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
-        if (uri.isEmpty() || comment.isEmpty()) {
+        if (uri == null || uri.isEmpty() || comment == null || comment.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -599,7 +597,7 @@ public class VimeoClient {
     public void deleteVideo(String uri, Callback callback) {
         if (callback == null) throw new AssertionError("Callback cannot be null");
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -624,7 +622,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (uri.isEmpty()) {
+        if (uri == null || uri.isEmpty()) {
             callback.failure(null); // TODO: create error here
 
             return;
