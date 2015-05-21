@@ -97,8 +97,7 @@ public class VimeoClient {
 
         OkHttpClient okHttpClient = new OkHttpClient();
         try {
-            Integer cacheSize = 10 * 1024 * 1024; // TODO: this should be dynamic [AH]
-            this.cache = new Cache(this.configuration.cacheDirectory, cacheSize);
+            this.cache = new Cache(this.configuration.cacheDirectory, this.configuration.cacheSize);
             okHttpClient.setCache(cache);
         } catch (IOException e) {
             System.out.println("Exception when creating cache: " + e.getMessage());
