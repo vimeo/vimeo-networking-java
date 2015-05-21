@@ -564,32 +564,12 @@ public class VimeoClient {
         });
     }
 
-    public void fetchCachedContent(String uri, Callback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null) {
-            callback.failure(null); // TODO: create error here
-
-            return;
-        }
-
-        this.vimeoService.GET(uri, CacheControl.FORCE_CACHE.toString(), callback);
+    public void fetchCachedContent(String uri, ModelCallback callback) {
+        this.fetchContent(uri, CacheControl.FORCE_CACHE, callback);
     }
 
-    public void fetchNetworkContent(String uri, Callback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null) {
-            callback.failure(null); // TODO: create error here
-
-            return;
-        }
-
-        this.vimeoService.GET(uri, CacheControl.FORCE_NETWORK.toString(), callback);
+    public void fetchNetworkContent(String uri, ModelCallback callback) {
+        this.fetchContent(uri, CacheControl.FORCE_NETWORK, callback);
     }
 
     // end region
