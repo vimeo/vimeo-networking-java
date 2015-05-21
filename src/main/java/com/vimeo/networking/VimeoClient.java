@@ -31,7 +31,7 @@ import retrofit.converter.GsonConverter;
 
 /**
  * Client class used for making networking calls to Vimeo API.
- * <p>
+ * <p/>
  * Created by alfredhanssen on 4/12/15.
  */
 public class VimeoClient {
@@ -47,7 +47,9 @@ public class VimeoClient {
     private VimeoService vimeoService;
     private Cache cache;
     private String currentCodeGrantState;
-    /** Currently authenticated account */
+    /**
+     * Currently authenticated account
+     */
     private Account account;
 
     /**
@@ -145,10 +147,11 @@ public class VimeoClient {
     /**
      * Provides a URI that can be opened in a web view that will prompt for login and permissions
      * or used currently logged in users credentials.
-     * <p>
+     * <p/>
      * If the user accepts your app, they are redirected to your redirect_uri along with two parameters:
      * code and state
-     * <p>
+     * <p/>
+     *
      * @return The URI that should be opened in a web view
      * @see <a href="https://developer.vimeo.com/api/authentication#generate-redirect">Vimeo API Docs</a>
      */
@@ -171,11 +174,12 @@ public class VimeoClient {
 
     /**
      * Authenticates the user from the codeGrantAuthorizationURI().
-     * <p>
+     * <p/>
      * Exchanges the code for the access token.
-     * <p>
-     * @param uri  URI from {@link #getCodeGrantAuthorizationURI() getCodeGrantAuthorizationURI}
-     * @param callback  Callback pertaining to authentication
+     * <p/>
+     *
+     * @param uri      URI from {@link #getCodeGrantAuthorizationURI() getCodeGrantAuthorizationURI}
+     * @param callback Callback pertaining to authentication
      * @see <a href="https://developer.vimeo.com/api/authentication#generate-redirect">Vimeo API Docs</a>
      */
     public void authenticateWithCodeGrant(String uri, AuthCallback callback) {
@@ -213,10 +217,11 @@ public class VimeoClient {
 
     /**
      * Authorizes users of the app who are not signed in.
-     * <p>
+     * <p/>
      * Leaves User as null in {@link Account} model and populates the rest
-     * <p>
-     * @param callback  Callback pertaining to authentication
+     * <p/>
+     *
+     * @param callback Callback pertaining to authentication
      */
     public void authorizeWithClientCredentialsGrant(final AuthCallback callback) {
         if (callback == null) {
@@ -266,12 +271,13 @@ public class VimeoClient {
 
     /**
      * Synchronous version of login call
-     * <p>
+     * <p/>
      * Useful when dealing with Android AccountAuthenticator [AH]
-     * <p>
-     * @param email  user's email address
-     * @param password  user's password
-     * @return  the account object since it is synchronous
+     * <p/>
+     *
+     * @param email    user's email address
+     * @param password user's password
+     * @return the account object since it is synchronous
      */
     public Account logIn(String email, String password) {
         if (email == null || email.length() == 0 || password == null || password.length() == 0) {
@@ -290,8 +296,9 @@ public class VimeoClient {
 
     /**
      * Must be called when user logs out to ensure that the tokens have been invalidated
-     * <p>
-     * @param callback  Callback for handling logout
+     * <p/>
+     *
+     * @param callback Callback for handling logout
      */
     public void logOut(final Callback<Object> callback) {
         // TODO: make this a static inner class? [AH] 5/4/15
@@ -319,7 +326,7 @@ public class VimeoClient {
 
     /**
      * Class responsible for setting the account on successful authorization.
-     * <p>
+     * <p/>
      * Sets the account on the {@link VimeoClient} as well as the {@link AccountStore}
      */
     private static class AccountCallback implements Callback<Account> {
@@ -519,24 +526,20 @@ public class VimeoClient {
         this.vimeoService.DELETE(uri, callback);
     }
 
-    public void updateLikeVideo(boolean like, String uri, Callback callback)
-    {
-        if (like)
-        {
+    public void updateLikeVideo(boolean like, String uri, Callback callback) {
+        if (like) {
             this.likeVideo(uri, callback);
-        }
-        else
-        {
+        } else {
             this.unlikeVideo(uri, callback);
         }
     }
 
-    public void likeVideo(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void likeVideo(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -545,12 +548,12 @@ public class VimeoClient {
         this.vimeoService.PUT(uri, callback);
     }
 
-    public void unlikeVideo(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void unlikeVideo(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -559,24 +562,20 @@ public class VimeoClient {
         this.vimeoService.DELETE(uri, callback);
     }
 
-    public void updateWatchLaterVideo(boolean watchLater, String uri, Callback callback)
-    {
-        if (watchLater)
-        {
+    public void updateWatchLaterVideo(boolean watchLater, String uri, Callback callback) {
+        if (watchLater) {
             this.watchLaterVideo(uri, callback);
-        }
-        else
-        {
+        } else {
             this.unwatchLaterVideo(uri, callback);
         }
     }
 
-    public void watchLaterVideo(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void watchLaterVideo(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -585,12 +584,12 @@ public class VimeoClient {
         this.vimeoService.PUT(uri, callback);
     }
 
-    public void unwatchLaterVideo(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void unwatchLaterVideo(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -599,12 +598,12 @@ public class VimeoClient {
         this.vimeoService.DELETE(uri, callback);
     }
 
-    public void deleteVideo(String uri, Callback callback)
-    {
-        if (callback == null) throw new AssertionError("Callback cannot be null");
+    public void deleteVideo(String uri, Callback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
 
-        if (uri == null)
-        {
+        if (uri == null) {
             callback.failure(null); // TODO: create error here
 
             return;
@@ -619,10 +618,11 @@ public class VimeoClient {
 
     /**
      * A generic GET call that takes in the URI of the specific resource.
-     * <p>
-     * @param uri  URI of the resource to GET
-     * @param cacheControl  Cache control type
-     * @param callback  The callback for the specific model type of the resource
+     * <p/>
+     *
+     * @param uri          URI of the resource to GET
+     * @param cacheControl Cache control type
+     * @param callback     The callback for the specific model type of the resource
      */
     public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {
         if (callback == null) {
@@ -649,6 +649,49 @@ public class VimeoClient {
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
                 callback.success(object, response);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                callback.failure(error);
+            }
+        });
+    }
+
+    /**
+     * A generic POST call that takes in the URI of the specific resource.
+     * <p/>
+     *
+     * @param uri          URI of the resource to POST
+     * @param cacheControl Cache control type
+     * @param postBody     The body of the POST request
+     * @param callback     The callback for the specific model type of the resource
+     */
+    public void postContent(String uri, CacheControl cacheControl, HashMap<String, String> postBody,
+                            final Callback<Object> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (uri == null) {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        if (postBody == null) {
+            postBody = new HashMap<>();
+        }
+
+        String cacheHeaderValue = null;
+        if (cacheControl != null) {
+            cacheHeaderValue = cacheControl.toString();
+        }
+
+        this.vimeoService.POST(uri, cacheHeaderValue, postBody, new Callback<Object>() {
+            @Override
+            public void success(Object o, Response response) {
+                callback.success(o, response);
             }
 
             @Override

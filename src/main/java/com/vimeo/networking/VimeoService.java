@@ -1,10 +1,10 @@
 package com.vimeo.networking;
 
-import java.util.HashMap;
-
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
+
+import java.util.HashMap;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -22,7 +22,7 @@ import retrofit.http.Query;
 
 /**
  * Interface of available API calls that can be made using Retrofit.
- * <p>
+ * <p/>
  * Created by alfredhanssen on 4/12/15.
  */
 public interface VimeoService {
@@ -96,6 +96,11 @@ public interface VimeoService {
     @GET("/{uri}")
     void GET(@Path(value = "uri", encode = false) String uri,
              @Header("Cache-Control") String cacheHeaderValue, Callback<Object> callback);
+
+    @POST("/{uri}")
+    void POST(@Path(value = "uri", encode = false) String uri,
+              @Header("Cache-Control") String cacheHeaderValue, @Body HashMap<String, String> parameters,
+              Callback<Object> callback);
 
     // end region
 }
