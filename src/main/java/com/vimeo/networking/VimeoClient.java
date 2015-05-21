@@ -4,6 +4,8 @@ import com.google.common.base.Splitter;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Credentials;
@@ -28,6 +30,7 @@ import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
+import retrofit.mime.TypedByteArray;
 
 /**
  * Client class used for making networking calls to Vimeo API.
@@ -365,7 +368,15 @@ public class VimeoClient {
 
         @Override
         public void failure(RetrofitError error) {
-            callback.failure(new Error(error.toString()));
+            String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
+            String message = error.toString();
+            Gson gson = new Gson();
+            JsonElement element = gson.fromJson(json, JsonElement.class);
+            JsonObject jsonObj = element.getAsJsonObject();
+            if (jsonObj.has("error_description")) {
+                message = jsonObj.get("error_description").toString();
+            }
+            callback.failure(new Error(message));
         }
     }
 
