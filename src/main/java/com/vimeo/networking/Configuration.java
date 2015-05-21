@@ -22,7 +22,7 @@ public class Configuration {
     public String APIVersionString;
     public String codeGrantRedirectURI;
     public File cacheDirectory;
-    public Integer cacheSize;
+    public int cacheSize;
     public String userAgentString;
 
     private Boolean isValid() {
@@ -46,7 +46,7 @@ public class Configuration {
 
         private String APIVersionString = DEFAULT_VERSION_STRING;
         private File cacheDirectory;
-        private Integer cacheSize;
+        private int cacheSize;
         private String userAgentString;
 
         public Builder(String baseURLString, String clientID, String clientSecret, String scope,
@@ -68,7 +68,7 @@ public class Configuration {
             return this;
         }
 
-        public Builder cacheSize(Integer cacheSize) {
+        public Builder cacheSize(int cacheSize) {
             this.cacheSize = cacheSize;
             return this;
         }
