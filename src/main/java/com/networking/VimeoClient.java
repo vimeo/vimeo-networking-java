@@ -493,6 +493,100 @@ public class VimeoClient
         this.vimeoService.DELETE(uri, callback);
     }
 
+    public void updateLikeVideo(boolean like, String uri, Callback callback)
+    {
+        if (like)
+        {
+            this.likeVideo(uri, callback);
+        }
+        else
+        {
+            this.unlikeVideo(uri, callback);
+        }
+    }
+
+    public void likeVideo(String uri, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.PUT(uri, callback);
+    }
+
+    public void unlikeVideo(String uri, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.DELETE(uri, callback);
+    }
+
+    public void updateWatchLaterVideo(boolean watchLater, String uri, Callback callback)
+    {
+        if (watchLater)
+        {
+            this.watchLaterVideo(uri, callback);
+        }
+        else
+        {
+            this.unwatchLaterVideo(uri, callback);
+        }
+    }
+
+    public void watchLaterVideo(String uri, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.PUT(uri, callback);
+    }
+
+    public void unwatchLaterVideo(String uri, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.DELETE(uri, callback);
+    }
+
+    public void deleteVideo(String uri, Callback callback)
+    {
+        if (callback == null) throw new AssertionError("Callback cannot be null");
+
+        if (uri == null)
+        {
+            callback.failure(null); // TODO: create error here
+
+            return;
+        }
+
+        this.vimeoService.DELETE(uri, callback);
+    }
+
     // end region
 
     // region Generic
