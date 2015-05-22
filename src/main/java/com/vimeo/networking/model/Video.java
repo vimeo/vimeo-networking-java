@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by alfredhanssen on 4/12/15.
@@ -38,8 +39,8 @@ public class Video {
     public int height;
     public Embed embed;
     public String language;
-    public String createdTime;
-    public String modifiedTime;
+    public Date createdTime;
+    public Date modifiedTime;
     public ArrayList<String> contentRating;
     public String license;
     public com.vimeo.networking.model.Privacy privacy;
