@@ -21,4 +21,46 @@ public class FeaturesConfiguration {
 
     @SerializedName("chromecast_app_id")
     public String chromecastReceiverAppID;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FeaturesConfiguration that = (FeaturesConfiguration) o;
+
+        if (iapEnabled != that.iapEnabled) {
+            return false;
+        }
+        if (autoUploadEnabled != that.autoUploadEnabled) {
+            return false;
+        }
+        if (comScoreEnabled != that.comScoreEnabled) {
+            return false;
+        }
+        if (playTrackingEnabled != that.playTrackingEnabled) {
+            return false;
+        }
+        if (chromecastReceiverAppID != null && that.chromecastReceiverAppID != null) {
+            return chromecastReceiverAppID.equals(that.chromecastReceiverAppID);
+        }
+        else
+        {
+            return chromecastReceiverAppID == null && that.chromecastReceiverAppID == null;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (iapEnabled ? 1 : 0);
+        result = 31 * result + (autoUploadEnabled ? 1 : 0);
+        result = 31 * result + (comScoreEnabled ? 1 : 0);
+        result = 31 * result + (playTrackingEnabled ? 1 : 0);
+        result = 31 * result + (chromecastReceiverAppID != null ? chromecastReceiverAppID.hashCode() : 0);
+        return result;
+    }
 }
