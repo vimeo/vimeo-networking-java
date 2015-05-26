@@ -110,19 +110,42 @@ public class VimeoClient {
 
         okHttpClient.networkInterceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
 
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                                     .create();
-
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(configuration.baseURLString)
                                                            .setClient(new OkClient(okHttpClient))
                                                            .setLogLevel(RestAdapter.LogLevel.FULL)
                                                            .setRequestInterceptor(requestInterceptor)
-                                                           .setConverter(new GsonConverter(gson)).build();
+                                                           .setConverter(new GsonConverter(getGson())).build();
 
         this.vimeoService = restAdapter.create(VimeoService.class);
 
         Account account = this.configuration.accountStore.loadAccount();
         this.setAccount(account);
+    }
+
+    /**
+     * Static helper method that automatically applies the VimeoClient Gson preferences
+     * </p>
+     * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
+     * </p>
+     * @return Gson object that can be passed into a {@link GsonConverter}
+     */
+    public static Gson getGson() {
+        // Example date: "2015-05-21T14:24:03+00:00"
+        return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz").create();
+    }
+
+    /**
+     * Static helper method that automatically applies the VimeoClient Gson preferences
+     * </p>
+     * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
+     * </p>
+     * @return GsonBuilder that can be built upon and then created
+     */
+    public static GsonBuilder getGsonBuilder() {
+        // Example date: "2015-05-21T14:24:03+00:00"
+        return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
     }
 
     // region Accessors
@@ -671,8 +694,7 @@ public class VimeoClient {
         this.vimeoService.GET(uri, cacheHeaderValue, new Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
-                Gson gson = new GsonBuilder()
-                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+                Gson gson = getGson();
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
                 callback.success(object, response);

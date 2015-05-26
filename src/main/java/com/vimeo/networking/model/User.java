@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by alfredhanssen on 4/12/15.
@@ -20,7 +21,7 @@ public class User {
     public String link;
     public String location;
     public String bio;
-    public String createdTime;
+    public Date createdTime;
     public String account;
     public PictureCollection pictures;
     public ArrayList<Website> websites;
