@@ -39,6 +39,7 @@ import retrofit.mime.TypedByteArray;
  */
 public class VimeoClient {
 
+    public static final String VIMEO_BASE_URL_STRING = "https://api.vimeo.com/";
     private static final String CODE_GRANT_PATH = "oauth/authorize";
     private static final String CODE_GRANT_RESPONSE_TYPE = "code";
     private static final String CODE_GRANT_STATE = "state";
@@ -163,6 +164,10 @@ public class VimeoClient {
         }
 
         this.account = account;
+    }
+
+    public void setBaseUrlString(String baseUrlString) {
+        this.configuration.baseURLString = baseUrlString;
     }
 
     // end region
