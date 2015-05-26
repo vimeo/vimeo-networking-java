@@ -131,8 +131,7 @@ public class VimeoClient {
      */
     public static Gson getGson() {
         // Example date: "2015-05-21T14:24:03+00:00"
-        return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz").create();
+        return getGsonBuilder().create();
     }
 
     /**
