@@ -43,6 +43,7 @@ public class VimeoClient {
     private static final String CODE_GRANT_RESPONSE_TYPE = "code";
     private static final String CODE_GRANT_STATE = "state";
     private static final String CODE_GRANT_TYPE = "authorization_code";
+    private static final String FACEBOOK_GRANT_TYPE = "facebook";
     private static final String PASSWORD_GRANT_TYPE = "password";
     private static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
@@ -258,6 +259,23 @@ public class VimeoClient {
         this.vimeoService.join(parameters, new AccountCallback(this, email, password, callback));
     }
 
+    public void joinWithFacebookToken(String facebookToken, final AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (facebookToken == null || facebookToken.isEmpty()) {
+            callback.failure(new Error("facebookToken must be set"));
+            return;
+        }
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("token", facebookToken);
+        parameters.put("scope", configuration.scope);
+
+        this.vimeoService.join(parameters, new AccountCallback(this, callback));
+    }
+
     public void logIn(String email, String password, final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
@@ -295,6 +313,20 @@ public class VimeoClient {
         this.configuration.accountStore.saveAccount(account, email, password);
 
         return account;
+    }
+
+    public void loginWithFacebookToken(String facebookToken, final AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (facebookToken == null || facebookToken.isEmpty()) {
+            callback.failure(new Error("facebookToken must be set"));
+            return;
+        }
+
+        this.vimeoService.logInWithFacebook(FACEBOOK_GRANT_TYPE, facebookToken, configuration.scope,
+                                            new AccountCallback(this, callback));
     }
 
 
@@ -363,7 +395,11 @@ public class VimeoClient {
         @Override
         public void success(Account account, Response response) {
             this.client.setAccount(account);
-            this.client.configuration.accountStore.saveAccount(account, this.email, this.password);
+            if (account.getUser() != null && (this.email == null || this.email.isEmpty())) {
+                this.client.configuration.accountStore.saveAccount(account, account.getUser().name, null);
+            } else {
+                this.client.configuration.accountStore.saveAccount(account, this.email, this.password);
+            }
             this.callback.success();
         }
 
