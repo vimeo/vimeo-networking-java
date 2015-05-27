@@ -15,6 +15,7 @@ import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
+import com.vimeo.networking.model.error.VimeoError;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -23,12 +24,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.mime.TypedByteArray;
 
@@ -116,7 +115,8 @@ public class VimeoClient {
                                                            .setClient(new OkClient(okHttpClient))
                                                            .setLogLevel(RestAdapter.LogLevel.FULL)
                                                            .setRequestInterceptor(requestInterceptor)
-                                                           .setConverter(new GsonConverter(getGson())).build();
+                                                           .setConverter(new GsonConverter(getGson()))
+                                                           .build();
 
         this.vimeoService = restAdapter.create(VimeoService.class);
 
@@ -129,6 +129,7 @@ public class VimeoClient {
      * </p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
      * </p>
+     *
      * @return Gson object that can be passed into a {@link GsonConverter}
      */
     public static Gson getGson() {
@@ -141,6 +142,7 @@ public class VimeoClient {
      * </p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
      * </p>
+     *
      * @return GsonBuilder that can be built upon and then created
      */
     public static GsonBuilder getGsonBuilder() {
@@ -363,19 +365,19 @@ public class VimeoClient {
      *
      * @param callback Callback for handling logout
      */
-    public void logOut(final Callback<Object> callback) {
+    public void logOut(final VimeoCallback<Object> callback) {
         // TODO: make this a static inner class? [AH] 5/4/15
 
-        this.vimeoService.logOut(new Callback<Object>() {
+        this.vimeoService.logOut(new VimeoCallback<Object>() {
             @Override
-            public void success(Object o, Response response) {
+            public void success(Object o, VimeoResponse response) {
                 if (callback != null) {
                     callback.success(o, response);
                 }
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(VimeoError error) {
                 if (callback != null) {
                     callback.failure(error);
                 }
@@ -392,7 +394,7 @@ public class VimeoClient {
      * <p/>
      * Sets the account on the {@link VimeoClient} as well as the {@link AccountStore}
      */
-    private static class AccountCallback implements Callback<Account> {
+    private static class AccountCallback extends VimeoCallback<Account> {
 
         private final VimeoClient client;
         private String email;
@@ -420,7 +422,7 @@ public class VimeoClient {
         }
 
         @Override
-        public void success(Account account, Response response) {
+        public void success(Account account, VimeoResponse response) {
             this.client.setAccount(account);
             if (account.getUser() != null && (this.email == null || this.email.isEmpty())) {
                 this.client.configuration.accountStore.saveAccount(account, account.getUser().name, null);
@@ -431,8 +433,9 @@ public class VimeoClient {
         }
 
         @Override
-        public void failure(RetrofitError error) {
-            String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
+        public void failure(VimeoError error) {
+            String json = new String(
+                    ((TypedByteArray) error.getRetrofitError().getResponse().getBody()).getBytes());
             String message = error.toString();
             Gson gson = new Gson();
             JsonElement element = gson.fromJson(json, JsonElement.class);
@@ -448,7 +451,7 @@ public class VimeoClient {
 
     // region Channels
 
-    public void fetchStaffPicks(Callback<VideoList> callback) {
+    public void fetchStaffPicks(VimeoCallback<VideoList> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -460,13 +463,14 @@ public class VimeoClient {
 
     // region Search
 
-    public void searchVideos(String query, Callback<VideoList> callback) {
+    public void searchVideos(String query, VimeoCallback<VideoList> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (query == null || query.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/videos", new Throwable("Query cannot be empty!"))));
 
             return;
         }
@@ -474,13 +478,14 @@ public class VimeoClient {
         this.vimeoService.searchVideos(query, callback);
     }
 
-    public void searchUsers(String query, Callback<UserList> callback) {
+    public void searchUsers(String query, VimeoCallback<UserList> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (query == null || query.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/users", new Throwable("Query cannot be empty!"))));
 
             return;
         }
@@ -493,13 +498,14 @@ public class VimeoClient {
     // region Editing
 
     public void editVideo(String uri, String title, String description, Privacy.PrivacyValue privacyValue,
-                          Callback callback) {
+                          VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -507,7 +513,8 @@ public class VimeoClient {
         if (title == null && description == null &&
             privacyValue == null) // No point in editing video
         {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(RetrofitError.unexpectedError("/{uri}", new Throwable(
+                    "title, description, and privacyValue cannot be empty!"))));
 
             return;
         }
@@ -532,20 +539,22 @@ public class VimeoClient {
         this.vimeoService.editVideo(uri, parameters, callback);
     }
 
-    public void editUser(String uri, String name, String location, Callback callback) {
+    public void editUser(String uri, String name, String location, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
 
         if (name == null && location == null) // No point in editing user
         {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(RetrofitError.unexpectedError("/{uri}", new Throwable(
+                    "name and location cannot be empty!"))));
 
             return;
         }
@@ -563,7 +572,7 @@ public class VimeoClient {
         this.vimeoService.editUser(uri, parameters, callback);
     }
 
-    public void updateFollowUser(boolean follow, String uri, Callback callback) {
+    public void updateFollowUser(boolean follow, String uri, VimeoCallback callback) {
         if (follow) {
             this.followUser(uri, callback);
         } else {
@@ -571,13 +580,14 @@ public class VimeoClient {
         }
     }
 
-    public void followUser(String uri, Callback callback) {
+    public void followUser(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -585,13 +595,14 @@ public class VimeoClient {
         this.vimeoService.PUT(uri, callback);
     }
 
-    public void unfollowUser(String uri, Callback callback) {
+    public void unfollowUser(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -599,7 +610,7 @@ public class VimeoClient {
         this.vimeoService.DELETE(uri, callback);
     }
 
-    public void updateLikeVideo(boolean like, String uri, Callback callback) {
+    public void updateLikeVideo(boolean like, String uri, VimeoCallback callback) {
         if (like) {
             this.likeVideo(uri, callback);
         } else {
@@ -607,13 +618,14 @@ public class VimeoClient {
         }
     }
 
-    public void likeVideo(String uri, Callback callback) {
+    public void likeVideo(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -621,13 +633,14 @@ public class VimeoClient {
         this.vimeoService.PUT(uri, callback);
     }
 
-    public void unlikeVideo(String uri, Callback callback) {
+    public void unlikeVideo(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -635,7 +648,7 @@ public class VimeoClient {
         this.vimeoService.DELETE(uri, callback);
     }
 
-    public void updateWatchLaterVideo(boolean watchLater, String uri, Callback callback) {
+    public void updateWatchLaterVideo(boolean watchLater, String uri, VimeoCallback callback) {
         if (watchLater) {
             this.watchLaterVideo(uri, callback);
         } else {
@@ -643,14 +656,15 @@ public class VimeoClient {
         }
     }
 
-    public void watchLaterVideo(String uri, Callback callback) {
+    public void watchLaterVideo(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -658,14 +672,15 @@ public class VimeoClient {
         this.vimeoService.PUT(uri, callback);
     }
 
-    public void unwatchLaterVideo(String uri, Callback callback) {
+    public void unwatchLaterVideo(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -674,13 +689,14 @@ public class VimeoClient {
     }
 
 
-    public void comment(String uri, String comment, Callback callback) {
+    public void comment(String uri, String comment, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null || uri.isEmpty() || comment == null || comment.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -688,13 +704,14 @@ public class VimeoClient {
         this.vimeoService.comment(uri, comment, callback);
     }
 
-    public void deleteVideo(String uri, Callback callback) {
+    public void deleteVideo(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -720,7 +737,8 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -730,10 +748,9 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        // TODO: make this a static inner class? [AH] 5/4/15
-        this.vimeoService.GET(uri, cacheHeaderValue, new Callback<Object>() {
+        this.vimeoService.GET(uri, cacheHeaderValue, new VimeoCallback<Object>() {
             @Override
-            public void success(Object o, Response response) {
+            public void success(Object o, VimeoResponse response) {
                 Gson gson = getGson();
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
@@ -741,7 +758,7 @@ public class VimeoClient {
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(VimeoError error) {
                 callback.failure(error);
             }
         });
@@ -757,13 +774,14 @@ public class VimeoClient {
      * @param callback     The callback for the specific model type of the resource
      */
     public void postContent(String uri, CacheControl cacheControl, HashMap<String, String> postBody,
-                            final Callback<Object> callback) {
+                            final VimeoCallback<Object> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
         if (uri == null) {
-            callback.failure(null); // TODO: create error here
+            callback.failure(new VimeoError(
+                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
         }
@@ -777,14 +795,14 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        this.vimeoService.POST(uri, cacheHeaderValue, postBody, new Callback<Object>() {
+        this.vimeoService.POST(uri, cacheHeaderValue, postBody, new VimeoCallback<Object>() {
             @Override
-            public void success(Object o, Response response) {
+            public void success(Object o, VimeoResponse response) {
                 callback.success(o, response);
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(VimeoError error) {
                 callback.failure(error);
             }
         });
