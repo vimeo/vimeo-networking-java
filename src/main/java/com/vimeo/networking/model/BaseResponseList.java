@@ -13,5 +13,6 @@ public abstract class BaseResponseList<T> {
     public Paging paging;
     public ArrayList<T> data;
 
+    // TODO: maybe don't need
     public abstract Class getModelClass();
 }
