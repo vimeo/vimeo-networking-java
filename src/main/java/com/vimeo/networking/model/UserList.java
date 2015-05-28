@@ -5,11 +5,10 @@ import java.util.ArrayList;
 /**
  * Created by hanssena on 4/23/15.
  */
-public class UserList {
+public class UserList extends BaseResponseList<User> {
 
-    public int total;
-    public int page;
-    public int perPage;
-    public Paging paging;
-    public ArrayList<User> data;
+    @Override
+    public Class getModelClass() {
+        return User.class;
+    }
 }
