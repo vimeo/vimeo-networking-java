@@ -366,7 +366,6 @@ public class VimeoClient {
      * @param callback Callback for handling logout
      */
     public void logOut(final VimeoCallback<Object> callback) {
-        // TODO: make this a static inner class? [AH] 5/4/15
 
         this.vimeoService.logOut(new VimeoCallback<Object>() {
             @Override
