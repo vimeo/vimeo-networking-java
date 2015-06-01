@@ -8,7 +8,7 @@ import retrofit.client.Header;
 /**
  * Created by zetterstromk on 5/27/15.
  */
-public class VimeoError {
+public class VimeoError extends RuntimeException {
 
     private static final String AUTHENTICATION_HEADER = "WWW-Authenticate";
     private static final String AUTHENTICATION_TOKEN_ERROR = "Bearer error=\"invalid_token\"";
