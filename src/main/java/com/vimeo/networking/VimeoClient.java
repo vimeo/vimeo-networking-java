@@ -16,7 +16,9 @@ import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -734,6 +736,31 @@ public class VimeoClient {
         this.vimeoService.GET(uri, cacheHeaderValue, new Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
+
+                //Try to get response body
+                BufferedReader reader = null;
+                StringBuilder sb = new StringBuilder();
+                try {
+
+                    reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
+
+                    String line;
+
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                String result = sb.toString();
+
+
                 Gson gson = getGson();
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
