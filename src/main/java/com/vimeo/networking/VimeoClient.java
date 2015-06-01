@@ -17,9 +17,7 @@ import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.error.VimeoError;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -99,7 +97,6 @@ public class VimeoClient {
             public void intercept(RequestFacade request) {
                 request.addHeader("User-Agent", configuration.userAgentString);
                 request.addHeader("Accept", client.getAcceptHeader());
-                request.addHeader("Authorization", client.getAuthHeader());
             }
         };
 
@@ -247,7 +244,7 @@ public class VimeoClient {
 
         String redirectURI = this.configuration.codeGrantRedirectURI;
 
-        this.vimeoService.authenticateWithCodeGrant(redirectURI, code, CODE_GRANT_TYPE,
+        this.vimeoService.authenticateWithCodeGrant(getBasicAuthHeader(), redirectURI, code, CODE_GRANT_TYPE,
                                                     new AccountCallback(this, callback));
     }
 
@@ -265,7 +262,8 @@ public class VimeoClient {
         }
 
         this.vimeoService
-                .authorizeWithClientCredentialsGrant(CLIENT_CREDENTIALS_GRANT_TYPE, configuration.scope,
+                .authorizeWithClientCredentialsGrant(getBasicAuthHeader(), CLIENT_CREDENTIALS_GRANT_TYPE,
+                                                     configuration.scope,
                                                      new AccountCallback(this, callback));
     }
 
@@ -287,7 +285,8 @@ public class VimeoClient {
         parameters.put("password", password);
         parameters.put("scope", configuration.scope);
 
-        this.vimeoService.join(parameters, new AccountCallback(this, email, password, callback));
+        this.vimeoService
+                .join(getBasicAuthHeader(), parameters, new AccountCallback(this, email, password, callback));
     }
 
     public void joinWithFacebookToken(String facebookToken, final AuthCallback callback) {
@@ -304,7 +303,7 @@ public class VimeoClient {
         parameters.put("token", facebookToken);
         parameters.put("scope", configuration.scope);
 
-        this.vimeoService.join(parameters, new AccountCallback(this, callback));
+        this.vimeoService.join(getBasicAuthHeader(), parameters, new AccountCallback(this, callback));
     }
 
     public void logIn(String email, String password, final AuthCallback callback) {
@@ -318,8 +317,9 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope,
-                                new AccountCallback(this, email, password, callback));
+        this.vimeoService
+                .logIn(getBasicAuthHeader(), email, password, PASSWORD_GRANT_TYPE, configuration.scope,
+                       new AccountCallback(this, email, password, callback));
     }
 
     /**
@@ -337,7 +337,8 @@ public class VimeoClient {
             return null;
         }
 
-        Account account = this.vimeoService.logIn(email, password, PASSWORD_GRANT_TYPE, configuration.scope);
+        Account account = this.vimeoService
+                .logIn(getBasicAuthHeader(), email, password, PASSWORD_GRANT_TYPE, configuration.scope);
 
         this.setAccount(account);
 
@@ -356,8 +357,8 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.logInWithFacebook(FACEBOOK_GRANT_TYPE, facebookToken, configuration.scope,
-                                            new AccountCallback(this, callback));
+        this.vimeoService.logInWithFacebook(getBasicAuthHeader(), FACEBOOK_GRANT_TYPE, facebookToken,
+                                            configuration.scope, new AccountCallback(this, callback));
     }
 
 
@@ -369,7 +370,7 @@ public class VimeoClient {
      */
     public void logOut(final VimeoCallback<Object> callback) {
 
-        this.vimeoService.logOut(new VimeoCallback<Object>() {
+        this.vimeoService.logOut(getAuthHeader(), new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
                 if (callback != null) {
@@ -457,7 +458,7 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        this.vimeoService.fetchStaffPicks(callback);
+        this.vimeoService.fetchStaffPicks(getAuthHeader(), callback);
     }
 
     // end region
@@ -476,7 +477,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.searchVideos(query, callback);
+        this.vimeoService.searchVideos(getAuthHeader(), query, callback);
     }
 
     public void searchUsers(String query, VimeoCallback<UserList> callback) {
@@ -491,7 +492,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.searchUsers(query, callback);
+        this.vimeoService.searchUsers(getAuthHeader(), query, callback);
     }
 
     // end region
@@ -537,7 +538,7 @@ public class VimeoClient {
 
         parameters.put("privacy", privacyMap);
 
-        this.vimeoService.editVideo(uri, parameters, callback);
+        this.vimeoService.editVideo(getAuthHeader(), uri, parameters, callback);
     }
 
     public void editUser(String uri, String name, String location, VimeoCallback callback) {
@@ -570,7 +571,7 @@ public class VimeoClient {
             parameters.put("location", location);
         }
 
-        this.vimeoService.editUser(uri, parameters, callback);
+        this.vimeoService.editUser(getAuthHeader(), uri, parameters, callback);
     }
 
     public void updateFollowUser(boolean follow, String uri, VimeoCallback callback) {
@@ -593,7 +594,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.PUT(uri, callback);
+        this.vimeoService.PUT(getAuthHeader(), uri, callback);
     }
 
     public void unfollowUser(String uri, VimeoCallback callback) {
@@ -608,7 +609,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.DELETE(uri, callback);
+        this.vimeoService.DELETE(getAuthHeader(), uri, callback);
     }
 
     public void updateLikeVideo(boolean like, String uri, VimeoCallback callback) {
@@ -631,7 +632,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.PUT(uri, callback);
+        this.vimeoService.PUT(getAuthHeader(), uri, callback);
     }
 
     public void unlikeVideo(String uri, VimeoCallback callback) {
@@ -646,7 +647,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.DELETE(uri, callback);
+        this.vimeoService.DELETE(getAuthHeader(), uri, callback);
     }
 
     public void updateWatchLaterVideo(boolean watchLater, String uri, VimeoCallback callback) {
@@ -670,7 +671,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.PUT(uri, callback);
+        this.vimeoService.PUT(getAuthHeader(), uri, callback);
     }
 
     public void unwatchLaterVideo(String uri, VimeoCallback callback) {
@@ -686,7 +687,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.DELETE(uri, callback);
+        this.vimeoService.DELETE(getAuthHeader(), uri, callback);
     }
 
 
@@ -717,7 +718,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.DELETE(uri, callback);
+        this.vimeoService.DELETE(getAuthHeader(), uri, callback);
     }
 
     // end region
@@ -749,7 +750,7 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        this.vimeoService.GET(uri, cacheHeaderValue, new VimeoCallback<Object>() {
+        this.vimeoService.GET(getAuthHeader(), uri, cacheHeaderValue, new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
                 Gson gson = getGson();
@@ -796,7 +797,7 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        this.vimeoService.POST(uri, cacheHeaderValue, postBody, new VimeoCallback<Object>() {
+        this.vimeoService.POST(getAuthHeader(), uri, cacheHeaderValue, postBody, new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
                 callback.success(o, response);
@@ -835,10 +836,14 @@ public class VimeoClient {
         if (this.account != null && this.account.isAuthenticated()) {
             credential = "Bearer " + this.account.getAccessToken();
         } else {
-            credential = Credentials.basic(configuration.clientID, configuration.clientSecret);
+            credential = getBasicAuthHeader();
         }
 
         return credential;
+    }
+
+    private String getBasicAuthHeader() {
+        return Credentials.basic(configuration.clientID, configuration.clientSecret);
     }
 
     // end region
