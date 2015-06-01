@@ -1,14 +1,11 @@
 package com.vimeo.networking;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-
 /**
  * Abstract callback class for @param <T> type of model.
- * <p>
+ * <p/>
  * Created by hanssena on 4/27/15.
  */
-public abstract class ModelCallback<T> implements Callback<T> {
+public abstract class ModelCallback<T> extends VimeoCallback<T> {
 
     private Class objectType;
 
