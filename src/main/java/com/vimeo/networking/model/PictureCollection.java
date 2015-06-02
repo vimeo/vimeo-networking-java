@@ -1,12 +1,14 @@
 package com.vimeo.networking.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by hanssena on 4/23/15.
  */
-public class PictureCollection {
+public class PictureCollection implements Serializable {
 
+    private static final long serialVersionUID = -4495146309328278574L;
     public String uri;
     public boolean active;
     public ArrayList<Picture> sizes;
