@@ -3,6 +3,7 @@ package com.vimeo.networking.model.error;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit.RetrofitError;
@@ -11,10 +12,13 @@ import retrofit.client.Header;
 /**
  * Created by zetterstromk on 5/27/15.
  */
-public class VimeoError extends RuntimeException {
+public class VimeoError extends RuntimeException implements Serializable {
+
+    private static final long serialVersionUID = -5252307626841557962L;
 
     private static final String AUTHENTICATION_HEADER = "WWW-Authenticate";
     private static final String AUTHENTICATION_TOKEN_ERROR = "Bearer error=\"invalid_token\"";
+
     private RetrofitError retrofitError;
 
     @SerializedName("error")
