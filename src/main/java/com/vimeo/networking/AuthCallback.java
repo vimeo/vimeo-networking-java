@@ -1,5 +1,7 @@
 package com.vimeo.networking;
 
+import com.vimeo.networking.model.error.VimeoError;
+
 /**
  * Callback used specifically for authorization
  *
@@ -9,5 +11,5 @@ public interface AuthCallback {
 
     public void success();
 
-    public void failure(Error error);
+    public void failure(VimeoError error);
 }
