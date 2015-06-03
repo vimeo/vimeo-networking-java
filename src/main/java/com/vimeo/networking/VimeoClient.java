@@ -219,10 +219,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            VimeoErrorBody errorBody = new VimeoErrorBody();
-            errorBody.errorMessage = "uri must not be null";
-
-            callback.failure(new VimeoError(errorBody));
+            callback.failure(new VimeoError("uri must not be null"));
 
             return;
         }
@@ -237,10 +234,7 @@ public class VimeoClient {
             !state.equals(this.currentCodeGrantState)) {
             this.currentCodeGrantState = null;
 
-            VimeoErrorBody errorBody = new VimeoErrorBody();
-            errorBody.errorMessage = "Code grant code is null or state has changed";
-
-            callback.failure(new VimeoError(errorBody));
+            callback.failure(new VimeoError("Code grant code is null or state has changed"));
 
             return;
         }
@@ -291,7 +285,7 @@ public class VimeoClient {
             if (password == null || password.isEmpty()) {
                 invalidParameters.addProperty("password", "password must be set");
             }
-
+            errorBody.invalidParameters = invalidParameters;
             callback.failure(new VimeoError(errorBody));
 
             return;
@@ -319,7 +313,7 @@ public class VimeoClient {
             if (facebookToken == null || facebookToken.isEmpty()) {
                 invalidParameters.addProperty("token", "facebook token must be set");
             }
-
+            errorBody.invalidParameters = invalidParameters;
             callback.failure(new VimeoError(errorBody));
             return;
         }
@@ -346,7 +340,7 @@ public class VimeoClient {
             if (password == null || password.isEmpty()) {
                 invalidParameters.addProperty("password", "password must be set");
             }
-
+            errorBody.invalidParameters = invalidParameters;
             callback.failure(new VimeoError(errorBody));
 
             return;
@@ -394,7 +388,7 @@ public class VimeoClient {
             if (facebookToken == null || facebookToken.isEmpty()) {
                 invalidParameters.addProperty("token", "facebook token must be set");
             }
-
+            errorBody.invalidParameters = invalidParameters;
             callback.failure(new VimeoError(errorBody));
             return;
         }

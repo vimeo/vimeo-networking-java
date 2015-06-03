@@ -25,6 +25,12 @@ public class VimeoError extends RuntimeException {
         setErrorBody(body);
     }
 
+    public VimeoError(String errorMessage) {
+        if (this.errorBody == null) {
+            this.errorBody = new VimeoErrorBody(errorMessage);
+        }
+    }
+
     public RetrofitError getRetrofitError() {
         return retrofitError;
     }

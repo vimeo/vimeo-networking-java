@@ -19,4 +19,12 @@ public class VimeoErrorBody {
     @SerializedName("invalid_parameters")
     public JsonObject invalidParameters;
 
+    public VimeoErrorBody() {
+
+    }
+
+    public VimeoErrorBody(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
 }
