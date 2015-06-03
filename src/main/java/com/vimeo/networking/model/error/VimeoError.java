@@ -1,6 +1,7 @@
 package com.vimeo.networking.model.error;
 
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -15,20 +16,26 @@ public class VimeoError extends RuntimeException {
     private static final String AUTHENTICATION_HEADER = "WWW-Authenticate";
     private static final String AUTHENTICATION_TOKEN_ERROR = "Bearer error=\"invalid_token\"";
     private RetrofitError retrofitError;
-    private VimeoErrorBody errorBody;
 
-    public VimeoError(RetrofitError error) {
-        setRetrofitError(error);
-    }
+    @SerializedName("error")
+    private String errorMessage;
+    @SerializedName("link")
+    private String link;
+    @SerializedName("developer_message")
+    private String developerMessage;
+    @SerializedName("error_code")
+    private String errorCode;
+    @SerializedName("invalid_parameters")
+    private JsonObject invalidParameters;
 
-    public VimeoError(VimeoErrorBody body) {
-        setErrorBody(body);
+    //    public VimeoError(RetrofitError error) {
+//        setRetrofitError(error);
+//    }
+    public VimeoError() {
     }
 
     public VimeoError(String errorMessage) {
-        if (this.errorBody == null) {
-            this.errorBody = new VimeoErrorBody(errorMessage);
-        }
+        this.errorMessage = errorMessage;
     }
 
     public RetrofitError getRetrofitError() {
@@ -37,50 +44,47 @@ public class VimeoError extends RuntimeException {
 
     public void setRetrofitError(RetrofitError retrofitError) {
         this.retrofitError = retrofitError;
-        try {
-            this.errorBody = (VimeoErrorBody) this.retrofitError.getBodyAs(VimeoErrorBody.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    public void setErrorBody(VimeoErrorBody body) {
-        this.errorBody = body;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public String getLink() {
-        if (this.errorBody != null) {
-            return this.errorBody.link;
-        }
-        return null;
+        return this.link;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public String getErrorMessage() {
-        if (this.errorBody != null) {
-            return this.errorBody.errorMessage;
-        }
-        return null;
+        return this.errorMessage;
+    }
+
+    public void setDeveloperMessage(String developerMessage) {
+        this.developerMessage = developerMessage;
     }
 
     public String getDeveloperMessage() {
-        if (this.errorBody != null) {
-            return this.errorBody.developerMessage;
-        }
-        return null;
+        return this.developerMessage;
     }
 
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+
     public String getErrorCode() {
-        if (this.errorBody != null) {
-            return this.errorBody.errorCode;
-        }
-        return null;
+        return this.errorCode;
+    }
+
+    public void setInvalidParameters(JsonObject invalidParameters) {
+        this.invalidParameters = invalidParameters;
     }
 
     public JsonObject getInvalidParameters() {
-        if (this.errorBody != null) {
-            return this.errorBody.invalidParameters;
-        }
-        return null;
+        return this.invalidParameters;
     }
 
     public boolean isServiceUnavailable() {
