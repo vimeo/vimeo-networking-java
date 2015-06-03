@@ -1,12 +1,15 @@
 package com.vimeo.networking.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-public class Video {
+public class Video implements Serializable {
+
+    private static final long serialVersionUID = -1282907783845240057L;
 
     public enum ContentRating // TODO: use this enum [AH] 4/24/2015
     {

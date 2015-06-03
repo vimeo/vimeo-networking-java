@@ -1,9 +1,13 @@
 package com.vimeo.networking.model;
 
+import java.io.Serializable;
+
 /**
  * Created by hanssena on 4/23/15.
  */
-public class Privacy {
+public class Privacy implements Serializable {
+
+    private static final long serialVersionUID = -1679908652622815871L;
 
     public enum PrivacyValue // TODO: use this [AH] 4/24/2015
     {

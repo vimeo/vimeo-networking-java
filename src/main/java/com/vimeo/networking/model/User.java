@@ -1,5 +1,6 @@
 package com.vimeo.networking.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,7 +8,9 @@ import java.util.Date;
  * Created by alfredhanssen on 4/12/15.
  */
 
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -4112910222188194647L;
 
     public enum AccountType {
         BASIC,
