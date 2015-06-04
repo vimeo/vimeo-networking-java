@@ -5,12 +5,10 @@ package com.vimeo.networking.model;
  */
 public class VideoFile {
 
-    public enum QualityValue {
-        HLS,
-        HD,
-        SD,
-        MOBILE
-    }
+    public static final String HLS = "hls";
+    public static final String HD = "hd";
+    public static final String SD = "sd";
+    public static final String MOBILE = "mobile";
 
     public String expires;
     public int width;
@@ -20,4 +18,5 @@ public class VideoFile {
     public String quality;
     public String type;
     public VideoLog log;
+
 }
