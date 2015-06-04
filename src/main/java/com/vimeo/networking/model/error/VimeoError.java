@@ -31,10 +31,7 @@ public class VimeoError extends RuntimeException implements Serializable {
     private String errorCode;
     @SerializedName("invalid_parameters")
     private JsonObject invalidParameters;
-
-    //    public VimeoError(RetrofitError error) {
-//        setRetrofitError(error);
-//    }
+    
     public VimeoError() {
     }
 
