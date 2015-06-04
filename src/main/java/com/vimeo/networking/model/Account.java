@@ -4,11 +4,15 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.Serializable;
+
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-public class Account {
-//        private static final String TOKEN_TYPE_BEARER = "bearer";
+public class Account implements Serializable {
+
+    private static final long serialVersionUID = -8341071767843490585L;
+    //    private static final String TOKEN_TYPE_BEARER = "bearer";
 
     private String accessToken;
     private String tokenType;

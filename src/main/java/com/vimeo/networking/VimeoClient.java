@@ -4,7 +4,6 @@ import com.google.common.base.Splitter;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.CacheControl;
@@ -16,6 +15,7 @@ import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking.model.error.VimeoErrorBody;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -29,7 +29,6 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
-import retrofit.mime.TypedByteArray;
 
 /**
  * Client class used for making networking calls to Vimeo API.
@@ -220,7 +219,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new Error("Uri must not be null"));
+            callback.failure(new VimeoError("uri must not be null"));
 
             return;
         }
@@ -235,7 +234,7 @@ public class VimeoClient {
             !state.equals(this.currentCodeGrantState)) {
             this.currentCodeGrantState = null;
 
-            callback.failure(new Error("Code grant code is null or state has changed"));
+            callback.failure(new VimeoError("Code grant code is null or state has changed"));
 
             return;
         }
@@ -274,7 +273,20 @@ public class VimeoClient {
 
         if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() ||
             password == null || password.isEmpty()) {
-            callback.failure(new Error("displayName, email, password must be set"));
+            VimeoErrorBody errorBody = new VimeoErrorBody();
+            errorBody.errorMessage = "Name, email, and password must be set";
+            JsonObject invalidParameters = new JsonObject();
+            if (displayName == null || displayName.isEmpty()) {
+                invalidParameters.addProperty("name", "name must be set");
+            }
+            if (email == null || email.isEmpty()) {
+                invalidParameters.addProperty("email", "email must be set");
+            }
+            if (password == null || password.isEmpty()) {
+                invalidParameters.addProperty("password", "password must be set");
+            }
+            errorBody.invalidParameters = invalidParameters;
+            callback.failure(new VimeoError(errorBody));
 
             return;
         }
@@ -295,7 +307,14 @@ public class VimeoClient {
         }
 
         if (facebookToken == null || facebookToken.isEmpty()) {
-            callback.failure(new Error("facebookToken must be set"));
+            VimeoErrorBody errorBody = new VimeoErrorBody();
+            errorBody.errorMessage = "Facebook authentication error";
+            JsonObject invalidParameters = new JsonObject();
+            if (facebookToken == null || facebookToken.isEmpty()) {
+                invalidParameters.addProperty("token", "facebook token must be set");
+            }
+            errorBody.invalidParameters = invalidParameters;
+            callback.failure(new VimeoError(errorBody));
             return;
         }
 
@@ -312,7 +331,17 @@ public class VimeoClient {
         }
 
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            callback.failure(new Error("email, password must be set"));
+            VimeoErrorBody errorBody = new VimeoErrorBody();
+            errorBody.errorMessage = "Email and password must be set";
+            JsonObject invalidParameters = new JsonObject();
+            if (email == null || email.isEmpty()) {
+                invalidParameters.addProperty("username", "email must be set");
+            }
+            if (password == null || password.isEmpty()) {
+                invalidParameters.addProperty("password", "password must be set");
+            }
+            errorBody.invalidParameters = invalidParameters;
+            callback.failure(new VimeoError(errorBody));
 
             return;
         }
@@ -353,7 +382,14 @@ public class VimeoClient {
         }
 
         if (facebookToken == null || facebookToken.isEmpty()) {
-            callback.failure(new Error("facebookToken must be set"));
+            VimeoErrorBody errorBody = new VimeoErrorBody();
+            errorBody.errorMessage = "Facebook authentication error";
+            JsonObject invalidParameters = new JsonObject();
+            if (facebookToken == null || facebookToken.isEmpty()) {
+                invalidParameters.addProperty("token", "facebook token must be set");
+            }
+            errorBody.invalidParameters = invalidParameters;
+            callback.failure(new VimeoError(errorBody));
             return;
         }
 
@@ -436,16 +472,7 @@ public class VimeoClient {
 
         @Override
         public void failure(VimeoError error) {
-            String json = new String(
-                    ((TypedByteArray) error.getRetrofitError().getResponse().getBody()).getBytes());
-            String message = error.toString();
-            Gson gson = new Gson();
-            JsonElement element = gson.fromJson(json, JsonElement.class);
-            JsonObject jsonObj = element.getAsJsonObject();
-            if (jsonObj.has("error_description")) {
-                message = jsonObj.get("error_description").toString();
-            }
-            callback.failure(new Error(message));
+            callback.failure(error);
         }
     }
 
@@ -743,6 +770,13 @@ public class VimeoClient {
                     RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
 
             return;
+        }
+
+        // TODO: We shouldn't have to do this but Retrofit doesn't support removing the leading slash
+        // I asked a question on StackOverflow which we can keep our eye on.
+        // http://stackoverflow.com/questions/30623580/duplicate-slashes-in-retrofit-url [KV]
+        if (uri.charAt(0) == '/') {
+            uri = uri.substring(1);
         }
 
         String cacheHeaderValue = null;
