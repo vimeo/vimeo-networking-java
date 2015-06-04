@@ -751,6 +751,13 @@ public class VimeoClient {
             return;
         }
 
+        // TODO: We shouldn't have to do this but Retrofit doesn't support removing the leading slash
+        // I asked a question on StackOverflow which we can keep our eye on.
+        // http://stackoverflow.com/questions/30623580/duplicate-slashes-in-retrofit-url [KV]
+        if (uri.charAt(0) == '/') {
+            uri = uri.substring(1);
+        }
+
         String cacheHeaderValue = null;
         if (cacheControl != null) {
             cacheHeaderValue = cacheControl.toString();
