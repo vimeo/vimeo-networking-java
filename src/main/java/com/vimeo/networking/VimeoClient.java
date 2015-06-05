@@ -700,7 +700,7 @@ public class VimeoClient {
     }
 
 
-    public void comment(String uri, String comment, VimeoCallback callback) {
+    public void comment(String uri, String comment, VimeoCallback<Object> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -714,7 +714,7 @@ public class VimeoClient {
         this.vimeoService.comment(uri, comment, callback);
     }
 
-    public void deleteVideo(String uri, VimeoCallback callback) {
+    public void deleteVideo(String uri, VimeoCallback<Object> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }

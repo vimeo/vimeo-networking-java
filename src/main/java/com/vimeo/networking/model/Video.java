@@ -54,4 +54,33 @@ public class Video implements Serializable {
     public com.vimeo.networking.model.User user;
     public String status;
 
+    public boolean canLike() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isLiked() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
+            return metadata.interactions.like.added;
+        }
+        return false;
+    }
+
+    public boolean canWatchLater() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isWatchLater() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
+            return metadata.interactions.watchlater.added;
+        }
+        return false;
+    }
+
+
 }

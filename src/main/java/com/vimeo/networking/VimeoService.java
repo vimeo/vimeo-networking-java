@@ -105,11 +105,11 @@ public interface VimeoService {
 
     @PUT("/{uri}")
     void PUT(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-             Callback callback);
+             Callback<Object> callback);
 
     @DELETE("/{uri}")
     void DELETE(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                Callback callback);
+                Callback<Object> callback);
 
     @GET("/{uri}")
     void GET(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
