@@ -15,7 +15,6 @@ import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.error.VimeoError;
-import com.vimeo.networking.model.error.VimeoErrorBody;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -26,7 +25,6 @@ import java.util.UUID;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
@@ -273,8 +271,7 @@ public class VimeoClient {
 
         if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() ||
             password == null || password.isEmpty()) {
-            VimeoErrorBody errorBody = new VimeoErrorBody();
-            errorBody.errorMessage = "Name, email, and password must be set";
+            VimeoError error = new VimeoError("Name, email, and password must be set");
             JsonObject invalidParameters = new JsonObject();
             if (displayName == null || displayName.isEmpty()) {
                 invalidParameters.addProperty("name", "name must be set");
@@ -285,8 +282,8 @@ public class VimeoClient {
             if (password == null || password.isEmpty()) {
                 invalidParameters.addProperty("password", "password must be set");
             }
-            errorBody.invalidParameters = invalidParameters;
-            callback.failure(new VimeoError(errorBody));
+            error.setInvalidParameters(invalidParameters);
+            callback.failure(error);
 
             return;
         }
@@ -307,14 +304,13 @@ public class VimeoClient {
         }
 
         if (facebookToken == null || facebookToken.isEmpty()) {
-            VimeoErrorBody errorBody = new VimeoErrorBody();
-            errorBody.errorMessage = "Facebook authentication error";
+            VimeoError error = new VimeoError("Facebook authentication error");
             JsonObject invalidParameters = new JsonObject();
             if (facebookToken == null || facebookToken.isEmpty()) {
                 invalidParameters.addProperty("token", "facebook token must be set");
             }
-            errorBody.invalidParameters = invalidParameters;
-            callback.failure(new VimeoError(errorBody));
+            error.setInvalidParameters(invalidParameters);
+            callback.failure(error);
             return;
         }
 
@@ -331,8 +327,7 @@ public class VimeoClient {
         }
 
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            VimeoErrorBody errorBody = new VimeoErrorBody();
-            errorBody.errorMessage = "Email and password must be set";
+            VimeoError error = new VimeoError("Email and password must be set");
             JsonObject invalidParameters = new JsonObject();
             if (email == null || email.isEmpty()) {
                 invalidParameters.addProperty("username", "email must be set");
@@ -340,8 +335,8 @@ public class VimeoClient {
             if (password == null || password.isEmpty()) {
                 invalidParameters.addProperty("password", "password must be set");
             }
-            errorBody.invalidParameters = invalidParameters;
-            callback.failure(new VimeoError(errorBody));
+            error.setInvalidParameters(invalidParameters);
+            callback.failure(error);
 
             return;
         }
@@ -382,14 +377,13 @@ public class VimeoClient {
         }
 
         if (facebookToken == null || facebookToken.isEmpty()) {
-            VimeoErrorBody errorBody = new VimeoErrorBody();
-            errorBody.errorMessage = "Facebook authentication error";
+            VimeoError error = new VimeoError("Facebook authentication error");
             JsonObject invalidParameters = new JsonObject();
             if (facebookToken == null || facebookToken.isEmpty()) {
                 invalidParameters.addProperty("token", "facebook token must be set");
             }
-            errorBody.invalidParameters = invalidParameters;
-            callback.failure(new VimeoError(errorBody));
+            error.setInvalidParameters(invalidParameters);
+            callback.failure(error);
             return;
         }
 
@@ -498,8 +492,7 @@ public class VimeoClient {
         }
 
         if (query == null || query.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/videos", new Throwable("Query cannot be empty!"))));
+            callback.failure(new VimeoError("Query cannot be empty!"));
 
             return;
         }
@@ -513,8 +506,7 @@ public class VimeoClient {
         }
 
         if (query == null || query.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/users", new Throwable("Query cannot be empty!"))));
+            callback.failure(new VimeoError("Query cannot be empty!"));
 
             return;
         }
@@ -533,8 +525,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -542,8 +533,7 @@ public class VimeoClient {
         if (title == null && description == null &&
             privacyValue == null) // No point in editing video
         {
-            callback.failure(new VimeoError(RetrofitError.unexpectedError("/{uri}", new Throwable(
-                    "title, description, and privacyValue cannot be empty!"))));
+            callback.failure(new VimeoError("title, description, and privacyValue cannot be empty!"));
 
             return;
         }
@@ -574,16 +564,14 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
 
         if (name == null && location == null) // No point in editing user
         {
-            callback.failure(new VimeoError(RetrofitError.unexpectedError("/{uri}", new Throwable(
-                    "name and location cannot be empty!"))));
+            callback.failure(new VimeoError("name and location cannot be empty!"));
 
             return;
         }
@@ -615,8 +603,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -630,8 +617,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -653,8 +639,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -668,8 +653,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -692,8 +676,7 @@ public class VimeoClient {
 
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -708,8 +691,7 @@ public class VimeoClient {
 
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -724,8 +706,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty() || comment == null || comment.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -739,8 +720,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -766,8 +746,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }
@@ -816,8 +795,7 @@ public class VimeoClient {
         }
 
         if (uri == null) {
-            callback.failure(new VimeoError(
-                    RetrofitError.unexpectedError("/{uri}", new Throwable("uri cannot be empty!"))));
+            callback.failure(new VimeoError("uri cannot be empty!"));
 
             return;
         }

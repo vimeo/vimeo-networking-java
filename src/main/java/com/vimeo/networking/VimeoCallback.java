@@ -24,6 +24,16 @@ public abstract class VimeoCallback<T> implements Callback<T> {
 
     @Override
     public void failure(RetrofitError error) {
-        failure(new VimeoError(error));
+        VimeoError vimeoError = null;
+        try {
+            vimeoError = (VimeoError) error.getBodyAs(VimeoError.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (vimeoError == null) {
+            vimeoError = new VimeoError();
+        }
+        vimeoError.setRetrofitError(error);
+        failure(vimeoError);
     }
 }
