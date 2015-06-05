@@ -9,10 +9,14 @@ public class VideoFile implements Serializable {
 
     private static final long serialVersionUID = -5256416394912086020L;
 
-    public static final String HLS = "hls";
-    public static final String HD = "hd";
-    public static final String SD = "sd";
-    public static final String MOBILE = "mobile";
+    public static final String MIMETYPE_MP4 = "video/mp4";
+    public static final String MIMETYPE_WEBM = "video/webm"; // Flash
+    public static final String MIMETYPE_VP6 = "vp6/x-video"; // Flash
+
+    public static final String QUALITY_HLS = "hls";
+    public static final String QUALITY_HD = "hd";
+    public static final String QUALITY_SD = "sd";
+    public static final String QUALITY_MOBILE = "mobile";
 
     public String expires;
     public int width;
