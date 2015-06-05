@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by alfredhanssen on 4/25/15.
@@ -18,7 +19,7 @@ public class VideoFile implements Serializable {
     public static final String QUALITY_SD = "sd";
     public static final String QUALITY_MOBILE = "mobile";
 
-    public String expires;
+    public Date expires;
     public int width;
     public int height;
     public int size;
