@@ -53,4 +53,5 @@ public class Video implements Serializable {
     public Metadata metadata;
     public com.vimeo.networking.model.User user;
     public String status;
+
 }

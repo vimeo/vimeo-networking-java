@@ -9,4 +9,5 @@ public class Metadata implements Serializable {
 
     private static final long serialVersionUID = 6626539965452151962L;
     public ConnectionCollection connections;
+    public InteractionCollection interactions;
 }
