@@ -82,5 +82,23 @@ public class Video implements Serializable {
         return false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Video that = (Video) o;
+
+        return !(this.uri != null ? !this.uri.equals(that.uri) : that.uri != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.uri != null ? this.uri.hashCode() : 0;
+    }
 
 }

@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -608,7 +609,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.PUT(getAuthHeader(), uri, callback);
+        PUT(getAuthHeader(), uri, callback);
     }
 
     public void unfollowUser(String uri, VimeoCallback callback) {
@@ -622,7 +623,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.DELETE(getAuthHeader(), uri, callback);
+        DELETE(getAuthHeader(), uri, callback);
     }
 
     public void updateLikeVideo(boolean like, String uri, VimeoCallback callback) {
@@ -644,7 +645,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.PUT(getAuthHeader(), uri, callback);
+        PUT(getAuthHeader(), uri, callback);
     }
 
     public void unlikeVideo(String uri, VimeoCallback callback) {
@@ -658,7 +659,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.DELETE(getAuthHeader(), uri, callback);
+        DELETE(getAuthHeader(), uri, callback);
     }
 
     public void updateWatchLaterVideo(boolean watchLater, String uri, VimeoCallback callback) {
@@ -681,7 +682,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.PUT(getAuthHeader(), uri, callback);
+        PUT(getAuthHeader(), uri, callback);
     }
 
     public void unwatchLaterVideo(String uri, VimeoCallback callback) {
@@ -696,7 +697,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.DELETE(getAuthHeader(), uri, callback);
+        DELETE(getAuthHeader(), uri, callback);
     }
 
 
@@ -725,7 +726,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.DELETE(getAuthHeader(), uri, callback);
+        DELETE(getAuthHeader(), uri, callback);
     }
 
     // end region
@@ -751,19 +752,12 @@ public class VimeoClient {
             return;
         }
 
-        // TODO: We shouldn't have to do this but Retrofit doesn't support removing the leading slash
-        // I asked a question on StackOverflow which we can keep our eye on.
-        // http://stackoverflow.com/questions/30623580/duplicate-slashes-in-retrofit-url [KV]
-        if (uri.charAt(0) == '/') {
-            uri = uri.substring(1);
-        }
-
         String cacheHeaderValue = null;
         if (cacheControl != null) {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        this.vimeoService.GET(getAuthHeader(), uri, cacheHeaderValue, new VimeoCallback<Object>() {
+        GET(getAuthHeader(), uri, cacheHeaderValue, new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
                 Gson gson = getGson();
@@ -809,7 +803,7 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        this.vimeoService.POST(getAuthHeader(), uri, cacheHeaderValue, postBody, new VimeoCallback<Object>() {
+        POST(getAuthHeader(), uri, cacheHeaderValue, postBody, new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
                 callback.success(o, response);
@@ -883,6 +877,33 @@ public class VimeoClient {
         } catch (UnsupportedEncodingException e) {
             throw new UnsupportedOperationException(e);
         }
+    }
+
+    private void PUT(String authHeader, String uri, Callback<Object> callback) {
+        this.vimeoService.PUT(authHeader, validateUri(uri), callback);
+    }
+
+    private void GET(String authHeader, String uri, String cacheHeaderValue, Callback<Object> callback) {
+        this.vimeoService.GET(authHeader, validateUri(uri), cacheHeaderValue, callback);
+    }
+
+    private void DELETE(String authHeader, String uri, Callback<Object> callback) {
+        this.vimeoService.DELETE(authHeader, validateUri(uri), callback);
+    }
+
+    private void POST(String authHeader, String uri, String cacheHeaderValue,
+                      HashMap<String, String> parameters, Callback<Object> callback) {
+        this.vimeoService.POST(authHeader, validateUri(uri), cacheHeaderValue, parameters, callback);
+    }
+
+    private String validateUri(String uri) {
+        // TODO: We shouldn't have to do this but Retrofit doesn't support removing the leading slash
+        // I asked a question on StackOverflow which we can keep our eye on.
+        // http://stackoverflow.com/questions/30623580/duplicate-slashes-in-retrofit-url [KV]
+        if (uri.charAt(0) == '/') {
+            uri = uri.substring(1);
+        }
+        return uri;
     }
 
     // end region
