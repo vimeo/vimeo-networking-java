@@ -487,6 +487,37 @@ public class VimeoClient {
 
     // region Search
 
+    public void search(String uri, String query, final ModelCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (query == null || query.isEmpty()) {
+            callback.failure(new VimeoError("Query cannot be empty!"));
+
+            return;
+        }
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("Uri cannot be empty!"));
+
+            return;
+        }
+        this.vimeoService.search(getAuthHeader(), uri, query, new VimeoCallback<Object>() {
+            @Override
+            public void success(Object o, VimeoResponse response) {
+                Gson gson = getGson();
+                String JSON = gson.toJson(o);
+                Object object = gson.fromJson(JSON, callback.getObjectType());
+                callback.success(object, response);
+            }
+
+            @Override
+            public void failure(VimeoError error) {
+                callback.failure(error);
+            }
+        });
+    }
+
     public void searchVideos(String query, VimeoCallback<VideoList> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
