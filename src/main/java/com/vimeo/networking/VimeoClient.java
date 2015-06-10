@@ -487,7 +487,7 @@ public class VimeoClient {
 
     // region Search
 
-    public void search(String uri, String query, final ModelCallback callback) {
+    public void search(String uri, String query, CacheControl cacheControl, final ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -502,7 +502,12 @@ public class VimeoClient {
 
             return;
         }
-        this.vimeoService.search(getAuthHeader(), uri, query, new VimeoCallback<Object>() {
+        String cacheHeaderValue = null;
+        if (cacheControl != null) {
+            cacheHeaderValue = cacheControl.toString();
+        }
+
+        this.vimeoService.search(getAuthHeader(), uri, query, cacheHeaderValue, new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
                 Gson gson = getGson();

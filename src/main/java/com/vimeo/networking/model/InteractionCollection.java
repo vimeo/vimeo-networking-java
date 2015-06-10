@@ -10,4 +10,5 @@ public class InteractionCollection implements Serializable {
     private static final long serialVersionUID = 489519386122782640L;
     public Interaction watchlater;
     public Interaction like;
+    public Interaction follow;
 }

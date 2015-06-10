@@ -85,7 +85,8 @@ public interface VimeoService {
 
     @GET("/{uri}")
     void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                @Query("query") String query, Callback<Object> callback);
+                @Query("query") String query, @Header("Cache-Control") String cacheHeaderValue,
+                Callback<Object> callback);
     // end region
 
     // region Editing
