@@ -25,6 +25,8 @@ public class Configuration {
     public int cacheSize;
     public String userAgentString;
 
+    public TrustKeyStore trustKeyStore;
+
     private Boolean isValid() {
         return (this.baseURLString != null && this.baseURLString.length() != 0 &&
                 this.clientID != null && this.clientID.length() != 0 &&
@@ -48,6 +50,8 @@ public class Configuration {
         private File cacheDirectory;
         private int cacheSize;
         private String userAgentString;
+
+        private TrustKeyStore trustKeyStore;
 
         public Builder(String baseURLString, String clientID, String clientSecret, String scope,
                        AccountStore accountStore) {
@@ -78,6 +82,11 @@ public class Configuration {
             return this;
         }
 
+        public Builder trustStore(TrustKeyStore trustKeyStore) {
+            this.trustKeyStore = trustKeyStore;
+            return this;
+        }
+
         public Configuration build() throws Exception {
             return new Configuration(this);
         }
@@ -100,5 +109,7 @@ public class Configuration {
         this.cacheDirectory = builder.cacheDirectory;
         this.cacheSize = builder.cacheSize;
         this.userAgentString = builder.userAgentString;
+
+        this.trustKeyStore = builder.trustKeyStore;
     }
 }

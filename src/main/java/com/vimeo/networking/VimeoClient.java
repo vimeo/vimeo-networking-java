@@ -9,9 +9,9 @@ import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Privacy;
+import com.vimeo.networking.model.RetrofitClientBuilder;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.error.VimeoError;
@@ -26,7 +26,6 @@ import java.util.UUID;
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
 /**
@@ -98,18 +97,25 @@ public class VimeoClient {
             }
         };
 
-        OkHttpClient okHttpClient = new OkHttpClient();
         try {
             this.cache = new Cache(this.configuration.cacheDirectory, this.configuration.cacheSize);
-            okHttpClient.setCache(cache);
         } catch (IOException e) {
             System.out.println("Exception when creating cache: " + e.getMessage());
         }
 
-        okHttpClient.networkInterceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+        RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
+        retrofitClientBuilder.setCache(cache);
+        retrofitClientBuilder.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+        if (configuration.trustKeyStore != null) {
+            try {
+                retrofitClientBuilder.pinCertificates(configuration.trustKeyStore);
+            } catch (Exception e) {
+                System.out.println("Exception when pinning certificate: " + e.getMessage());
+            }
+        }
 
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(configuration.baseURLString)
-                                                           .setClient(new OkClient(okHttpClient))
+                                                           .setClient(retrofitClientBuilder.build())
                                                            .setLogLevel(RestAdapter.LogLevel.FULL)
                                                            .setRequestInterceptor(requestInterceptor)
                                                            .setConverter(new GsonConverter(getGson()))
