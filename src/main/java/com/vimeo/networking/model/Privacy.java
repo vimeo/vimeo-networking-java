@@ -1,5 +1,7 @@
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -11,16 +13,23 @@ public class Privacy implements Serializable {
 
     public enum PrivacyValue // TODO: use this [AH] 4/24/2015
     {
+        @SerializedName("nobody")
         NOBODY,
+        @SerializedName("users")
         USERS,
+        @SerializedName("anybody")
         ANYBODY,
+        @SerializedName("ptv")
         VOD, // "ptv"
+        @SerializedName("contacts")
         CONTACTS,
+        @SerializedName("password")
         PASSWORD,
+        @SerializedName("disable")
         DISABLE
     }
 
-    public String view;
+    public PrivacyValue view;
     public String embed;
     public boolean download;
     public boolean add;
