@@ -507,7 +507,7 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        this.vimeoService.search(getAuthHeader(), uri, query, cacheHeaderValue, new VimeoCallback<Object>() {
+        this.vimeoService.search(getAuthHeader(), validateUri(uri), query, cacheHeaderValue, new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
                 Gson gson = getGson();
