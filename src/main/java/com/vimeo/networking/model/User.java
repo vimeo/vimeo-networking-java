@@ -69,7 +69,7 @@ public class User implements Serializable {
 
         User that = (User) o;
 
-        return !(this.uri != null ? !this.uri.equals(that.uri) : that.uri != null);
+        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
     }
 
     @Override

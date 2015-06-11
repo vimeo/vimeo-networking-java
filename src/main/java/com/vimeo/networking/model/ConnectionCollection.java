@@ -23,4 +23,5 @@ public class ConnectionCollection implements Serializable {
     public Connection groups;
     public Connection portfolios;
     public Connection shared;
+    public Connection users;
 }

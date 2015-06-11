@@ -36,9 +36,9 @@ public class Channel implements Serializable {
         return false;
     }
 
-    public int followerCount() {
-        if (metadata != null && metadata.connections != null && metadata.connections.followers != null) {
-            return metadata.connections.followers.total;
+    public int userCount() {
+        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
+            return metadata.connections.users.total;
         }
         return 0;
     }
@@ -61,7 +61,7 @@ public class Channel implements Serializable {
 
         Channel that = (Channel) o;
 
-        return !(this.uri != null ? !this.uri.equals(that.uri) : that.uri != null);
+        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
     }
 
     @Override
