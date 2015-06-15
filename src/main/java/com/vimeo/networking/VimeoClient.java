@@ -493,6 +493,43 @@ public class VimeoClient {
 
     // region Search
 
+    public void search(String uri, String query, CacheControl cacheControl, final ModelCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (query == null || query.isEmpty()) {
+            callback.failure(new VimeoError("Query cannot be empty!"));
+
+            return;
+        }
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("Uri cannot be empty!"));
+
+            return;
+        }
+        String cacheHeaderValue = null;
+        if (cacheControl != null) {
+            cacheHeaderValue = cacheControl.toString();
+        }
+
+        this.vimeoService.search(getAuthHeader(), validateUri(uri), query, cacheHeaderValue,
+                                 new VimeoCallback<Object>() {
+                                     @Override
+                                     public void success(Object o, VimeoResponse response) {
+                                         Gson gson = getGson();
+                                         String JSON = gson.toJson(o);
+                                         Object object = gson.fromJson(JSON, callback.getObjectType());
+                                         callback.success(object, response);
+                                     }
+
+                                     @Override
+                                     public void failure(VimeoError error) {
+                                         callback.failure(error);
+                                     }
+                                 });
+    }
+
     public void searchVideos(String query, VimeoCallback<VideoList> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
@@ -596,15 +633,15 @@ public class VimeoClient {
         this.vimeoService.editUser(getAuthHeader(), uri, parameters, callback);
     }
 
-    public void updateFollowUser(boolean follow, String uri, VimeoCallback callback) {
+    public void updateFollow(boolean follow, String uri, VimeoCallback callback) {
         if (follow) {
-            this.followUser(uri, callback);
+            this.follow(uri, callback);
         } else {
-            this.unfollowUser(uri, callback);
+            this.unfollow(uri, callback);
         }
     }
 
-    public void followUser(String uri, VimeoCallback callback) {
+    public void follow(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -618,7 +655,7 @@ public class VimeoClient {
         PUT(getAuthHeader(), uri, callback);
     }
 
-    public void unfollowUser(String uri, VimeoCallback callback) {
+    public void unfollow(String uri, VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }

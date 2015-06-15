@@ -1,48 +1,26 @@
 package com.vimeo.networking.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by alfredhanssen on 4/12/15.
+ * Created by zetterstromk on 6/11/15.
  */
+public class Channel implements Serializable {
 
-public class User implements Serializable {
-
-    private static final long serialVersionUID = -4112910222188194647L;
-
-    public enum AccountType {
-        BASIC,
-        PRO,
-        PLUS,
-        STAFF
-    }
+    private static final long serialVersionUID = 3190410523525111858L;
 
     public String uri;
     public String name;
+    public String description;
     public String link;
-    public String location;
-    public String bio;
     public Date createdTime;
-    public String account;
+    public Date modifiedTime;
+    public User user;
     public PictureCollection pictures;
-    public ArrayList<Website> websites;
+    public PictureCollection header;
+    public Privacy privacy;
     public Metadata metadata;
-
-    public AccountType getAccountType() {
-        if (this.account.equals("basic")) {
-            return AccountType.BASIC;
-        } else if (this.account.equals("plus")) {
-            return AccountType.PLUS;
-        } else if (this.account.equals("pro")) {
-            return AccountType.PRO;
-        } else if (this.account.equals("staff")) {
-            return AccountType.STAFF;
-        }
-
-        return AccountType.BASIC;
-    }
 
     public boolean canFollow() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
@@ -58,6 +36,20 @@ public class User implements Serializable {
         return false;
     }
 
+    public int userCount() {
+        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
+            return metadata.connections.users.total;
+        }
+        return 0;
+    }
+
+    public int videoCount() {
+        if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
+            return metadata.connections.videos.total;
+        }
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -67,7 +59,7 @@ public class User implements Serializable {
             return false;
         }
 
-        User that = (User) o;
+        Channel that = (Channel) o;
 
         return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
     }

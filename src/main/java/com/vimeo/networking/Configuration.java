@@ -11,7 +11,7 @@ import java.io.File;
  */
 public class Configuration {
 
-    private static final String DEFAULT_VERSION_STRING = "3.2";
+    private static final String DEFAULT_VERSION_STRING = "3.3";
 
     public String baseURLString;
     public String clientID;
