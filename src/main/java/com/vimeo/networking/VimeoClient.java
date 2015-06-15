@@ -11,7 +11,6 @@ import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Privacy;
-import com.vimeo.networking.model.RetrofitClientBuilder;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.error.VimeoError;
