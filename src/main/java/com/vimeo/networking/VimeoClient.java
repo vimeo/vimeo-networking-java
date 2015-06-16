@@ -109,6 +109,7 @@ public class VimeoClient {
             try {
                 retrofitClientBuilder.pinCertificates();
             } catch (Exception e) {
+                // TODO: Do something louder with the possible NullPointerException from a null InputStream
                 System.out.println("Exception when pinning certificate: " + e.getMessage());
             }
         }

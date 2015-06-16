@@ -57,7 +57,7 @@ public class RetrofitClientBuilder {
 
     public RetrofitClientBuilder pinCertificates()
             throws NoSuchAlgorithmException, IOException, CertificateException, KeyStoreException,
-                   KeyManagementException, UnrecoverableKeyException {
+                   KeyManagementException, UnrecoverableKeyException, NullPointerException {
 
         // For full implementation refer to https://github.com/ikust/hello-pinnedcerts/blob/master/pinnedcerts/src/main/java/co/infinum/https/RetrofitClientBuilder.java
         // Current implementation: http://stackoverflow.com/questions/24006545/how-can-i-pin-a-certificate-with-square-okhttp
