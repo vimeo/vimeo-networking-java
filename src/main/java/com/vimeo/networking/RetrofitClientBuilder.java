@@ -5,6 +5,7 @@ import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.CookieHandler;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -30,6 +31,8 @@ import retrofit.client.OkClient;
  */
 public class RetrofitClientBuilder {
 
+    private static final String KEYSTORE_PASSWORD = "vimeo123";
+
     protected OkHttpClient okHttpClient = new OkHttpClient();
 
     public RetrofitClientBuilder setConnectionTimeout(int connectionTimeout) {
@@ -52,15 +55,16 @@ public class RetrofitClientBuilder {
         return this;
     }
 
-    public RetrofitClientBuilder pinCertificates(TrustKeyStore trustKeyStore)
+    public RetrofitClientBuilder pinCertificates()
             throws NoSuchAlgorithmException, IOException, CertificateException, KeyStoreException,
                    KeyManagementException, UnrecoverableKeyException {
 
         // For full implementation refer to https://github.com/ikust/hello-pinnedcerts/blob/master/pinnedcerts/src/main/java/co/infinum/https/RetrofitClientBuilder.java
         // Current implementation: http://stackoverflow.com/questions/24006545/how-can-i-pin-a-certificate-with-square-okhttp
         // [KV]
+        InputStream inputStream = this.getClass().getResourceAsStream("/keystore.bks");
         KeyStore trusted = KeyStore.getInstance("BKS"); // HttpClientBuilder.BOUNCY_CASTLE
-        trusted.load(trustKeyStore.mKeyStoreInputStream, trustKeyStore.mPassword.toCharArray());
+        trusted.load(inputStream, KEYSTORE_PASSWORD.toCharArray());
 
         TrustManagerFactory trustManagerFactory = TrustManagerFactory
                 .getInstance(TrustManagerFactory.getDefaultAlgorithm());
@@ -68,7 +72,7 @@ public class RetrofitClientBuilder {
 
         KeyManagerFactory keyManagerFactory = KeyManagerFactory
                 .getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        keyManagerFactory.init(trusted, trustKeyStore.mPassword.toCharArray());
+        keyManagerFactory.init(trusted, KEYSTORE_PASSWORD.toCharArray());
 
         SSLContext sslContext = SSLContext.getInstance("TLS"); // SSLSocketFactory.TLS
         sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);

@@ -105,9 +105,9 @@ public class VimeoClient {
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
         retrofitClientBuilder.setCache(cache);
         retrofitClientBuilder.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-        if (configuration.trustKeyStore != null) {
+        if (configuration.certPinningEnabled) {
             try {
-                retrofitClientBuilder.pinCertificates(configuration.trustKeyStore);
+//                retrofitClientBuilder.pinCertificates();
             } catch (Exception e) {
                 System.out.println("Exception when pinning certificate: " + e.getMessage());
             }

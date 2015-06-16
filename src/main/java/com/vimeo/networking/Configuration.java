@@ -25,7 +25,7 @@ public class Configuration {
     public int cacheSize;
     public String userAgentString;
 
-    public TrustKeyStore trustKeyStore;
+    public boolean certPinningEnabled;
 
     private Boolean isValid() {
         return (this.baseURLString != null && this.baseURLString.length() != 0 &&
@@ -51,7 +51,7 @@ public class Configuration {
         private int cacheSize;
         private String userAgentString;
 
-        private TrustKeyStore trustKeyStore;
+        private boolean certPinningEnabled = true;
 
         public Builder(String baseURLString, String clientID, String clientSecret, String scope,
                        AccountStore accountStore) {
@@ -82,8 +82,8 @@ public class Configuration {
             return this;
         }
 
-        public Builder trustStore(TrustKeyStore trustKeyStore) {
-            this.trustKeyStore = trustKeyStore;
+        public Builder enableCertPinning(boolean enabled) {
+            this.certPinningEnabled = enabled;
             return this;
         }
 
@@ -110,6 +110,6 @@ public class Configuration {
         this.cacheSize = builder.cacheSize;
         this.userAgentString = builder.userAgentString;
 
-        this.trustKeyStore = builder.trustKeyStore;
+        this.certPinningEnabled = builder.certPinningEnabled;
     }
 }
