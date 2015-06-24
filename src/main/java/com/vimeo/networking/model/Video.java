@@ -82,6 +82,14 @@ public class Video implements Serializable {
         return false;
     }
 
+    public int likeCount() {
+        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.likes != null)) {
+            return metadata.connections.likes.total;
+        }
+
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
