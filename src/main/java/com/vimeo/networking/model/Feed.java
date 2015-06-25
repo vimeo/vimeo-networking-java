@@ -33,6 +33,8 @@ public class Feed implements Serializable {
             return AttributionType.CHANNEL;
         } else if(type.equalsIgnoreCase("like")) {
             return AttributionType.LIKE;
+        } else if(type.equalsIgnoreCase("upload")) {
+            return AttributionType.UPLOAD;
         }
 
         return AttributionType.NONE;
