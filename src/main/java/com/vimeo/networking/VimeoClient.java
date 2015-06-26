@@ -493,7 +493,8 @@ public class VimeoClient {
 
     // region Search
 
-    public void search(String uri, String query, String sort, CacheControl cacheControl, final ModelCallback callback) {
+    public void search(String uri, String query, String sort, CacheControl cacheControl,
+                       final ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -800,7 +801,40 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        GET(getAuthHeader(), uri, cacheHeaderValue, new VimeoCallback<Object>() {
+        GET(getAuthHeader(), uri, null, cacheHeaderValue, new VimeoCallback<Object>() {
+            @Override
+            public void success(Object o, VimeoResponse response) {
+                Gson gson = getGson();
+                String JSON = gson.toJson(o);
+                Object object = gson.fromJson(JSON, callback.getObjectType());
+                callback.success(object, response);
+            }
+
+            @Override
+            public void failure(VimeoError error) {
+                callback.failure(error);
+            }
+        });
+    }
+
+    public void fetchContent(String uri, String sort, CacheControl cacheControl,
+                             final ModelCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+
+            return;
+        }
+
+        String cacheHeaderValue = null;
+        if (cacheControl != null) {
+            cacheHeaderValue = cacheControl.toString();
+        }
+
+        GET(getAuthHeader(), uri, sort, cacheHeaderValue, new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
                 Gson gson = getGson();
@@ -926,8 +960,13 @@ public class VimeoClient {
         this.vimeoService.PUT(authHeader, validateUri(uri), callback);
     }
 
-    private void GET(String authHeader, String uri, String cacheHeaderValue, Callback<Object> callback) {
-        this.vimeoService.GET(authHeader, validateUri(uri), cacheHeaderValue, callback);
+    private void GET(String authHeader, String uri, String sort, String cacheHeaderValue,
+                     Callback<Object> callback) {
+        if ((sort != null) && (sort.length() > 0)) {
+            this.vimeoService.GET(authHeader, validateUri(uri), sort, cacheHeaderValue, callback);
+        } else {
+            this.vimeoService.GET(authHeader, validateUri(uri), cacheHeaderValue, callback);
+        }
     }
 
     private void DELETE(String authHeader, String uri, Callback<Object> callback) {

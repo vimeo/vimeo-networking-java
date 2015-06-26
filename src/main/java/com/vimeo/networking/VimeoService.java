@@ -90,8 +90,8 @@ public interface VimeoService {
 
     @GET("/{uri}")
     void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                @Query("query") String query, @Query("sort") String sort, @Header("Cache-Control") String cacheHeaderValue,
-                Callback<Object> callback);
+                @Query("query") String query, @Query("sort") String sort,
+                @Header("Cache-Control") String cacheHeaderValue, Callback<Object> callback);
     // end region
 
     // region Editing
@@ -123,6 +123,11 @@ public interface VimeoService {
     @GET("/{uri}")
     void GET(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
              @Header("Cache-Control") String cacheHeaderValue, Callback<Object> callback);
+
+    @GET("/{uri}")
+    void GET(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
+             @Query("sort") String sort, @Header("Cache-Control") String cacheHeaderValue,
+             Callback<Object> callback);
 
     @POST("/{uri}")
     void POST(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
