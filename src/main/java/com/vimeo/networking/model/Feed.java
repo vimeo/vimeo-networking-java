@@ -18,7 +18,7 @@ public class Feed implements Serializable {
         GROUP,
         TAG,
         CREDIT,
-        NONE //TODO show we supply a default here? [KZ]
+        NONE
     }
 
     public String uri;
@@ -27,14 +27,22 @@ public class Feed implements Serializable {
     public Date time;
     public User user;   // from like type
     public Channel channel; // from channel type
+    public Tag tag;
+    public Group group;
 
     public AttributionType getType() {
-        if(type.equalsIgnoreCase("channel")) {
+        if (type.equalsIgnoreCase("channel")) {
             return AttributionType.CHANNEL;
-        } else if(type.equalsIgnoreCase("like")) {
+        } else if (type.equalsIgnoreCase("like")) {
             return AttributionType.LIKE;
-        } else if(type.equalsIgnoreCase("upload")) {
+        } else if (type.equalsIgnoreCase("upload")) {
             return AttributionType.UPLOAD;
+        } else if (type.equalsIgnoreCase("tag")) {
+            return AttributionType.TAG;
+        } else if (type.equalsIgnoreCase("group")) {
+            return AttributionType.GROUP;
+        } else if (type.equalsIgnoreCase("appearance")) {
+            return AttributionType.CREDIT;
         }
 
         return AttributionType.NONE;
