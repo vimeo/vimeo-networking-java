@@ -5,6 +5,7 @@ import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -19,6 +20,7 @@ import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit.http.QueryMap;
 
 /**
  * Interface of available API calls that can be made using Retrofit.
@@ -92,6 +94,11 @@ public interface VimeoService {
     void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
                 @Query("query") String query, @Query("sort") String sort,
                 @Header("Cache-Control") String cacheHeaderValue, Callback<Object> callback);
+
+    @GET("/{uri}")
+    void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
+                @QueryMap Map<String, String> filters, @Header("Cache-Control") String cacheHeaderValue,
+                Callback<Object> callback);
     // end region
 
     // region Editing

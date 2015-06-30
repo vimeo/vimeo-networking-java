@@ -531,6 +531,44 @@ public class VimeoClient {
                                  });
     }
 
+    public void search(String uri, Map<String, String> filters, CacheControl cacheControl,
+                       final ModelCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (filters == null || filters.isEmpty()) {
+            callback.failure(new VimeoError("Filter map cannot be empty!"));
+
+            return;
+        }
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("Uri cannot be empty!"));
+
+            return;
+        }
+        String cacheHeaderValue = null;
+        if (cacheControl != null) {
+            cacheHeaderValue = cacheControl.toString();
+        }
+
+        this.vimeoService.search(getAuthHeader(), validateUri(uri), filters, cacheHeaderValue,
+                                 new VimeoCallback<Object>() {
+                                     @Override
+                                     public void success(Object o, VimeoResponse response) {
+                                         Gson gson = getGson();
+                                         String JSON = gson.toJson(o);
+                                         Object object = gson.fromJson(JSON, callback.getObjectType());
+                                         callback.success(object, response);
+                                     }
+
+                                     @Override
+                                     public void failure(VimeoError error) {
+                                         callback.failure(error);
+                                     }
+                                 });
+    }
+
     public void searchVideos(String query, VimeoCallback<VideoList> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
