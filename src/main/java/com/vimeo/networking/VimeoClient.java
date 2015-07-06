@@ -945,7 +945,8 @@ public class VimeoClient {
         HashMap<String, String> queryMap = new HashMap<>();
         if (sort != null && !sort.isEmpty()) {
             queryMap.put("sort", sort);
-        } else if (fieldFilter != null && !fieldFilter.isEmpty()) {
+        }
+        if (fieldFilter != null && !fieldFilter.isEmpty()) {
             queryMap.put("fields", fieldFilter);
         }
         this.vimeoService.GET(authHeader, validateUri(uri), queryMap, cacheHeaderValue, callback);
