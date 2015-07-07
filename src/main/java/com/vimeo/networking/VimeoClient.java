@@ -889,18 +889,6 @@ public class VimeoClient {
         this.vimeoService.PUT(authHeader, validateUri(uri), callback);
     }
 
-//    private void GET(String authHeader, String uri, String cacheHeaderValue, Callback<Object> callback,
-//                     Map<String, String> queryMap) {
-//        HashMap<String, String> queryMap = new HashMap<>();
-//        if (sort != null && !sort.isEmpty()) {
-//            queryMap.put("sort", sort);
-//        }
-//        if (fieldFilter != null && !fieldFilter.isEmpty()) {
-//            queryMap.put("fields", fieldFilter);
-//        }
-//
-//    }
-
     private void DELETE(String authHeader, String uri, Callback<Object> callback) {
         this.vimeoService.DELETE(authHeader, validateUri(uri), callback);
     }
