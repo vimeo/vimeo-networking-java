@@ -1,8 +1,6 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.model.Account;
-import com.vimeo.networking.model.UserList;
-import com.vimeo.networking.model.VideoList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +17,6 @@ import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
-import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 /**
@@ -67,29 +64,6 @@ public interface VimeoService {
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("/tokens")
     void logOut(@Header("Authorization") String authHeader, Callback<Object> callback);
-
-    // region Channels
-
-    @GET("/channels/staffpicks/videos")
-    void fetchStaffPicks(@Header("Authorization") String authHeader, Callback<VideoList> callback);
-
-    // end region
-
-    // region Search
-
-    @GET("/videos")
-    void searchVideos(@Header("Authorization") String authHeader, @Query("query") String query,
-                      Callback<VideoList> callback);
-
-    @GET("/users")
-    void searchUsers(@Header("Authorization") String authHeader, @Query("query") String query,
-                     Callback<UserList> callback);
-
-    @GET("/{uri}")
-    void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                @Query("query") String query, @Query("sort") String sort, @Query("fields") String fields,
-                @Header("Cache-Control") String cacheHeaderValue, Callback<Object> callback);
-    // end region
 
     // region Editing
 
