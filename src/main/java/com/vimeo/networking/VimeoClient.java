@@ -756,7 +756,7 @@ public class VimeoClient {
         this.vimeoService.GET(getAuthHeader(), validateUri(uri), queryMap, cacheHeaderValue, localCallback);
     }
 
-    private void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {
+    public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {
         fetchContent(uri, cacheControl, callback, null, null, null);
     }
 
