@@ -34,20 +34,11 @@ import retrofit.converter.GsonConverter;
  */
 public class VimeoClient {
 
-    public static final String VIMEO_BASE_URL_STRING = "https://api.vimeo.com/";
-    private static final String CODE_GRANT_PATH = "oauth/authorize";
-    private static final String CODE_GRANT_RESPONSE_TYPE = "code";
-    private static final String CODE_GRANT_STATE = "state";
-    private static final String CODE_GRANT_TYPE = "authorization_code";
-    private static final String FACEBOOK_GRANT_TYPE = "facebook";
-    private static final String PASSWORD_GRANT_TYPE = "password";
-    private static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
-    private static final String SORT_DEFAULT = "default";
-
     private Configuration configuration;
     private VimeoService vimeoService;
     private Cache cache;
     private String currentCodeGrantState;
+
     /**
      * Currently authenticated account
      */
@@ -63,7 +54,7 @@ public class VimeoClient {
         public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
             com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
 
-            return originalResponse.newBuilder().header("Cache-Control", "public").build();
+            return originalResponse.newBuilder().header(Vimeo.HEADER_CACHE_CONTROL, "public").build();
         }
     };
 
@@ -92,8 +83,8 @@ public class VimeoClient {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("User-Agent", configuration.userAgentString);
-                request.addHeader("Accept", client.getAcceptHeader());
+                request.addHeader(Vimeo.HEADER_USER_AGENT, configuration.userAgentString);
+                request.addHeader(Vimeo.HEADER_ACCEPT, client.getAcceptHeader());
             }
         };
 
@@ -196,16 +187,16 @@ public class VimeoClient {
         currentCodeGrantState = UUID.randomUUID().toString();
 
         Map<String, String> map = new HashMap<>();
-        map.put("redirect_uri", this.configuration.codeGrantRedirectURI);
-        map.put("response_type", CODE_GRANT_RESPONSE_TYPE);
-        map.put("state", this.currentCodeGrantState);
-        map.put("scope", this.configuration.scope);
-        map.put("client_id", this.configuration.clientID);
+        map.put(Vimeo.PARAMETER_REDIRECT_URI, this.configuration.codeGrantRedirectURI);
+        map.put(Vimeo.PARAMETER_RESPONSE_TYPE, Vimeo.CODE_GRANT_RESPONSE_TYPE);
+        map.put(Vimeo.PARAMETER_STATE, this.currentCodeGrantState);
+        map.put(Vimeo.PARAMETER_SCOPE, this.configuration.scope);
+        map.put(Vimeo.PARAMETER_CLIENT_ID, this.configuration.clientID);
 
         String uri = urlEncodeUTF8(map);
 
         // TODO: find a better way to build a URL and query string [AH]
-        return this.configuration.baseURLString + CODE_GRANT_PATH + "?" + uri;
+        return this.configuration.baseURLString + Vimeo.CODE_GRANT_PATH + "?" + uri;
     }
 
 
@@ -233,8 +224,8 @@ public class VimeoClient {
         // TODO: find a better way to do this [AH]
         String query = uri.split("\\?")[1];
         Map<String, String> queryMap = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
-        String code = queryMap.get(CODE_GRANT_RESPONSE_TYPE);
-        String state = queryMap.get(CODE_GRANT_STATE);
+        String code = queryMap.get(Vimeo.CODE_GRANT_RESPONSE_TYPE);
+        String state = queryMap.get(Vimeo.CODE_GRANT_STATE);
 
         if (code == null || code.isEmpty() || state == null || state.isEmpty() ||
             !state.equals(this.currentCodeGrantState)) {
@@ -249,8 +240,9 @@ public class VimeoClient {
 
         String redirectURI = this.configuration.codeGrantRedirectURI;
 
-        this.vimeoService.authenticateWithCodeGrant(getBasicAuthHeader(), redirectURI, code, CODE_GRANT_TYPE,
-                                                    new AccountCallback(this, callback));
+        this.vimeoService
+                .authenticateWithCodeGrant(getBasicAuthHeader(), redirectURI, code, Vimeo.CODE_GRANT_TYPE,
+                                           new AccountCallback(this, callback));
     }
 
     /**
@@ -266,10 +258,10 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        this.vimeoService
-                .authorizeWithClientCredentialsGrant(getBasicAuthHeader(), CLIENT_CREDENTIALS_GRANT_TYPE,
-                                                     configuration.scope,
-                                                     new AccountCallback(this, callback));
+        this.vimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
+                                                              Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
+                                                              configuration.scope,
+                                                              new AccountCallback(this, callback));
     }
 
     public void join(String displayName, String email, String password, final AuthCallback callback) {
@@ -297,10 +289,10 @@ public class VimeoClient {
         }
 
         HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("name", displayName);
-        parameters.put("email", email);
-        parameters.put("password", password);
-        parameters.put("scope", configuration.scope);
+        parameters.put(Vimeo.PARAMETER_USERS_NAME, displayName);
+        parameters.put(Vimeo.PARAMETER_EMAIL, email);
+        parameters.put(Vimeo.PARAMETER_PASSWORD, password);
+        parameters.put(Vimeo.PARAMETER_SCOPE, configuration.scope);
 
         this.vimeoService
                 .join(getBasicAuthHeader(), parameters, new AccountCallback(this, email, password, callback));
@@ -323,8 +315,8 @@ public class VimeoClient {
         }
 
         HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("token", facebookToken);
-        parameters.put("scope", configuration.scope);
+        parameters.put(Vimeo.PARAMETER_TOKEN, facebookToken);
+        parameters.put(Vimeo.PARAMETER_SCOPE, configuration.scope);
 
         this.vimeoService.join(getBasicAuthHeader(), parameters, new AccountCallback(this, callback));
     }
@@ -350,7 +342,7 @@ public class VimeoClient {
         }
 
         this.vimeoService
-                .logIn(getBasicAuthHeader(), email, password, PASSWORD_GRANT_TYPE, configuration.scope,
+                .logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE, configuration.scope,
                        new AccountCallback(this, email, password, callback));
     }
 
@@ -370,7 +362,7 @@ public class VimeoClient {
         }
 
         Account account = this.vimeoService
-                .logIn(getBasicAuthHeader(), email, password, PASSWORD_GRANT_TYPE, configuration.scope);
+                .logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE, configuration.scope);
 
         this.setAccount(account);
 
@@ -395,7 +387,7 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.logInWithFacebook(getBasicAuthHeader(), FACEBOOK_GRANT_TYPE, facebookToken,
+        this.vimeoService.logInWithFacebook(getBasicAuthHeader(), Vimeo.FACEBOOK_GRANT_TYPE, facebookToken,
                                             configuration.scope, new AccountCallback(this, callback));
     }
 
@@ -494,9 +486,8 @@ public class VimeoClient {
             return;
         }
 
-        if (title == null && description == null &&
-            privacyValue == null) // No point in editing video
-        {
+        if (title == null && description == null && privacyValue == null) {
+            // No point in editing video
             callback.failure(new VimeoError("title, description, and privacyValue cannot be empty!"));
 
             return;
@@ -505,19 +496,19 @@ public class VimeoClient {
         String privacyString = Privacy.privacyStringFromValue(privacyValue);
 
         HashMap<String, String> privacyMap = new HashMap<>();
-        privacyMap.put("view", privacyString);
+        privacyMap.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyString);
 
         HashMap<String, Object> parameters = new HashMap<>();
 
         if (title != null) {
-            parameters.put("name", title);
+            parameters.put(Vimeo.PARAMETER_VIDEO_NAME, title);
         }
 
         if (description != null) {
-            parameters.put("description", description);
+            parameters.put(Vimeo.PARAMETER_VIDEO_DESCRIPTION, description);
         }
 
-        parameters.put("privacy", privacyMap);
+        parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
 
         this.vimeoService.editVideo(getAuthHeader(), uri, parameters, callback);
     }
@@ -543,11 +534,11 @@ public class VimeoClient {
         HashMap<String, Object> parameters = new HashMap<>();
 
         if (name != null) {
-            parameters.put("name", name);
+            parameters.put(Vimeo.PARAMETER_USERS_NAME, name);
         }
 
         if (location != null) {
-            parameters.put("location", location);
+            parameters.put(Vimeo.PARAMETER_USERS_LOCATION, location);
         }
 
         this.vimeoService.editUser(getAuthHeader(), uri, parameters, callback);
@@ -726,7 +717,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(new VimeoError("Uri cannot be empty!"));
             return;
         }
 
@@ -738,6 +729,7 @@ public class VimeoClient {
         VimeoCallback<Object> localCallback = new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
+                // TODO: this deserialization should happen on the background thread the request was made on
                 Gson gson = getGson();
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
@@ -752,13 +744,13 @@ public class VimeoClient {
 
         HashMap<String, String> queryMap = new HashMap<>();
         if (query != null && !query.isEmpty()) {
-            queryMap.put("query", query);
+            queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
         }
         if (sort != null && !sort.isEmpty()) {
-            queryMap.put("sort", sort);
+            queryMap.put(Vimeo.PARAMETER_GET_SORT, sort);
         }
         if (fieldFilter != null && !fieldFilter.isEmpty()) {
-            queryMap.put("fields", fieldFilter);
+            queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
         }
 
         this.vimeoService.GET(getAuthHeader(), validateUri(uri), queryMap, cacheHeaderValue, localCallback);
@@ -775,8 +767,7 @@ public class VimeoClient {
 
     public void fetchSortedContent(String uri, CacheControl cacheControl, ModelCallback callback,
                                    String fieldFilter) {
-        fetchContent(uri, cacheControl, callback, null, SORT_DEFAULT, fieldFilter);
-
+        fetchContent(uri, cacheControl, callback, null, Vimeo.SORT_DEFAULT, fieldFilter);
     }
 
     public void fetchCachedContent(String uri, ModelCallback callback) {
