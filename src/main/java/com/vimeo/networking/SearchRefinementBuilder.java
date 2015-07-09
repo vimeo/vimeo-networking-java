@@ -9,10 +9,15 @@ import java.util.Map;
 public class SearchRefinementBuilder {
 
     private final static int FIVE_MINUTES = 60 * 5; // 60 seconds * 5 minutes = 300 seconds
-    Map<String,String> parameterMap;
+    Map<String, String> parameterMap;
 
     public SearchRefinementBuilder() {
         parameterMap = new HashMap<>();
+    }
+
+    public SearchRefinementBuilder(Vimeo.RefineSort sort) {
+        parameterMap = new HashMap<>();
+        this.setSort(sort);
     }
 
     public SearchRefinementBuilder setSort(Vimeo.RefineSort sort) {
@@ -38,10 +43,17 @@ public class SearchRefinementBuilder {
         return setMinDuration(FIVE_MINUTES);
     }
 
+    // Example: ?filter=upload_date&filter_upload_date=day
     public SearchRefinementBuilder setUploadDateFilter(Vimeo.RefineUploadDate uploadDateFilter) {
-        // Example: ?filter=upload_date&filter_upload_date=day
-        parameterMap.put(Vimeo.PARAMETER_GET_FILTER, Vimeo.FILTER_UPLOAD);
-        parameterMap.put(Vimeo.PARAMETER_GET_UPLOAD_DATE_FILTER, uploadDateFilter.getText());
+        // Only include in refinement parameters if it's not ANYTIME
+        if (uploadDateFilter != Vimeo.RefineUploadDate.ANYTIME) {
+            parameterMap.put(Vimeo.PARAMETER_GET_FILTER, Vimeo.FILTER_UPLOAD);
+            parameterMap.put(Vimeo.PARAMETER_GET_UPLOAD_DATE_FILTER, uploadDateFilter.getText());
+        }
         return this;
+    }
+
+    public Map<String, String> build() {
+        return parameterMap;
     }
 }

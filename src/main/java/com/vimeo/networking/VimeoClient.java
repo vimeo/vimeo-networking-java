@@ -706,50 +706,40 @@ public class VimeoClient {
         };
     }
 
-    public void search(String uri, String query, final ModelCallback callback, @Nullable String sort,
-                       @Nullable String fieldFilter) {
+    public void search(String uri, String query, final ModelCallback callback,
+                       @Nullable Map<String, String> searchRefinement, @Nullable String fieldFilter) {
         if (query == null || query.isEmpty()) {
             callback.failure(new VimeoError("Query cannot be empty!"));
             return;
         }
 
+        // If no sort refinement specified, default to relevance
+        if (searchRefinement == null) {
+            searchRefinement = new SearchRefinementBuilder(Vimeo.RefineSort.RELEVANCE).build();
+        } else if (!searchRefinement.containsKey(Vimeo.PARAMETER_GET_SORT)) {
+            searchRefinement.put(Vimeo.PARAMETER_GET_SORT, Vimeo.RefineSort.RELEVANCE.getText());
+        }
+
         // Search always defaults to using the network
-        fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, sort, fieldFilter);
-    }
-
-    public void search(String uri, Map<String, String> filters, ModelCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (filters == null || filters.isEmpty()) {
-            callback.failure(new VimeoError("Filter map cannot be empty!"));
-            return;
-        }
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("Uri cannot be empty!"));
-            return;
-        }
-
-        this.vimeoService
-                .GET(getAuthHeader(), validateUri(uri), filters, CacheControl.FORCE_NETWORK.toString(),
-                     getRetrofitGetCallback(callback));
+        fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, searchRefinement, fieldFilter);
     }
 
     /**
      * A generic GET call that takes in the URI of the specific resource.
      * <p/>
      *
-     * @param uri          URI of the resource to GET
-     * @param cacheControl Cache control type
-     * @param callback     The callback for the specific model type of the resource
-     * @param query        Query string for hitting the search endpoint
-     * @param sort         The attribute to sort the GET request by (only relevant for lists)
-     * @param fieldFilter  The string of fields to include in the response (highly recommended!)
+     * @param uri              URI of the resource to GET
+     * @param cacheControl     Cache control type
+     * @param callback         The callback for the specific model type of the resource
+     * @param query            Query string for hitting the search endpoint
+     * @param searchRefinement Used to refine lists (generally for search) with sorts and filters
+     * @param fieldFilter      The string of fields to include in the response (highly recommended!)
+     * @link SearchRefinementBuilder
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     public void fetchContent(String uri, CacheControl cacheControl, ModelCallback callback,
-                             @Nullable String query, @Nullable String sort, @Nullable String fieldFilter) {
+                             @Nullable String query, @Nullable Map<String, String> searchRefinement,
+                             @Nullable String fieldFilter) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -764,12 +754,12 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        HashMap<String, String> queryMap = new HashMap<>();
+        Map<String, String> queryMap = new HashMap<>();
+        if (searchRefinement != null && !searchRefinement.isEmpty()) {
+            queryMap = searchRefinement;
+        }
         if (query != null && !query.isEmpty()) {
             queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
-        }
-        if (sort != null && !sort.isEmpty()) {
-            queryMap.put(Vimeo.PARAMETER_GET_SORT, sort);
         }
         if (fieldFilter != null && !fieldFilter.isEmpty()) {
             queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
@@ -790,7 +780,8 @@ public class VimeoClient {
 
     public void fetchSortedContent(String uri, CacheControl cacheControl, ModelCallback callback,
                                    String fieldFilter) {
-        fetchContent(uri, cacheControl, callback, null, Vimeo.SORT_DEFAULT, fieldFilter);
+        fetchContent(uri, cacheControl, callback, null,
+                     new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
     }
 
     public void fetchCachedContent(String uri, ModelCallback callback) {
