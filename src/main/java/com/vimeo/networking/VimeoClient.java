@@ -729,7 +729,8 @@ public class VimeoClient {
         VimeoCallback<Object> localCallback = new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
-                // TODO: this deserialization should happen on the background thread the request was made on
+                // TODO: This deserialization should happen on the background thread the request was made on
+                /** @link https://vimean.atlassian.net/browse/VA-251 */
                 Gson gson = getGson();
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
