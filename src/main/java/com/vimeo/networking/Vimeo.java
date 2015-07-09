@@ -74,6 +74,7 @@ public class Vimeo {
         POPULARITY(SORT_POPULAR),
         RECENT(SORT_DATE);
 
+
         private String text;
 
         RefineSort(String text) {

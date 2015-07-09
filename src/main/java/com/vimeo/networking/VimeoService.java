@@ -65,39 +65,6 @@ public interface VimeoService {
     @DELETE("/tokens")
     void logOut(@Header("Authorization") String authHeader, Callback<Object> callback);
    
-    /*// region Channels
-
-    @GET("/channels/staffpicks/videos")
-    void fetchStaffPicks(@Header("Authorization") String authHeader, Callback<VideoList> callback);
-
-    // end region
-
-    // region Search
-
-    @GET("/videos")
-    void searchVideos(@Header("Authorization") String authHeader, @Query("query") String query,
-                      Callback<VideoList> callback);
-
-    @GET("/users")
-    void searchUsers(@Header("Authorization") String authHeader, @Query("query") String query,
-                     Callback<UserList> callback);
-
-    @GET("/{uri}")
-    void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                @Query("query") String query, @Header("Cache-Control") String cacheHeaderValue,
-                Callback<Object> callback);
-
-    @GET("/{uri}")
-    void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                @Query("query") String query, @Query("sort") String sort,
-                @Header("Cache-Control") String cacheHeaderValue, Callback<Object> callback);
-
-    @GET("/{uri}")
-    void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                @QueryMap Map<String, String> filters, @Header("Cache-Control") String cacheHeaderValue,
-                Callback<Object> callback);
-    // end region */
-
     // region Editing
 
     @PATCH("/{uri}")
