@@ -1,0 +1,127 @@
+package com.vimeo.networking;
+
+/**
+ * Created by kylevenn on 7/7/15.
+ */
+public class Vimeo {
+
+    public static final String VIMEO_BASE_URL_STRING = "https://api.vimeo.com/";
+
+    // Grant Types
+    public static final String CODE_GRANT_PATH = "oauth/authorize";
+    public static final String CODE_GRANT_RESPONSE_TYPE = "code";
+    public static final String CODE_GRANT_STATE = "state";
+    public static final String CODE_GRANT_TYPE = "authorization_code";
+    public static final String FACEBOOK_GRANT_TYPE = "facebook";
+    public static final String PASSWORD_GRANT_TYPE = "password";
+    public static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
+
+    // Parameters
+    public static final String PARAMETER_REDIRECT_URI = "redirect_uri";
+    public static final String PARAMETER_RESPONSE_TYPE = "response_type";
+    public static final String PARAMETER_STATE = "state";
+    public static final String PARAMETER_SCOPE = "scope";
+    public static final String PARAMETER_TOKEN = "token";
+    public static final String PARAMETER_CLIENT_ID = "client_id";
+
+    public static final String PARAMETER_USERS_NAME = "name";
+    public static final String PARAMETER_EMAIL = "email";
+    public static final String PARAMETER_PASSWORD = "password";
+    public static final String PARAMETER_USERS_LOCATION = "location";
+
+    public static final String PARAMETER_VIDEO_VIEW = "view";
+    public static final String PARAMETER_VIDEO_NAME = "name";
+    public static final String PARAMETER_VIDEO_DESCRIPTION = "description";
+    public static final String PARAMETER_VIDEO_PRIVACY = "privacy";
+
+    // Header Parameters
+    public static final String HEADER_CACHE_CONTROL = "Cache-Control";
+    public static final String HEADER_USER_AGENT = "User-Agent";
+    public static final String HEADER_ACCEPT = "Accept";
+
+    // GET and Sorting Parameters
+    public static final String PARAMETER_GET_QUERY = "query";
+    public static final String PARAMETER_GET_SORT = "sort";
+    public static final String PARAMETER_GET_FIELD_FILTER = "fields";
+    public static final String PARAMETER_GET_LENGTH_MIN_DURATION = "min_duration";
+    public static final String PARAMETER_GET_LENGTH_MAX_DURATION = "max_duration";
+    public static final String PARAMETER_GET_FILTER = "filter";
+    public static final String PARAMETER_GET_UPLOAD_DATE_FILTER = "filter_upload_date";
+
+    // Sorting (sort) Values
+    public static final String SORT_DEFAULT = "default";
+    public static final String SORT_RELEVANCE = "relevant";
+    public static final String SORT_POPULAR = "popularity";
+    public static final String SORT_DATE = "date";
+
+    // Filter (filter) Values
+    public static final String FILTER_UPLOAD = "upload_date";
+    // Filter Upload Date Values
+    public static final String FILTER_UPLOAD_DATE_TODAY = "day";
+    public static final String FILTER_UPLOAD_DATE_WEEK = "week";
+    public static final String FILTER_UPLOAD_DATE_MONTH = "month";
+    public static final String FILTER_UPLOAD_DATE_YEAR = "year";
+
+    public enum RefineLength {
+        ANY,
+        UNDER_FIVE_MINUTES,
+        OVER_FIVE_MINUTES
+    }
+
+    public enum RefineSort {
+        DEFAULT(SORT_DEFAULT),
+        RELEVANCE(SORT_RELEVANCE),
+        POPULARITY(SORT_POPULAR),
+        RECENT(SORT_DATE);
+
+        private String text;
+
+        RefineSort(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return this.text;
+        }
+
+        public static RefineSort fromString(String text) {
+            if (text != null) {
+                for (RefineSort b : RefineSort.values()) {
+                    if (text.equalsIgnoreCase(b.text)) {
+                        return b;
+                    }
+                }
+            }
+            throw new IllegalArgumentException("No constant with text " + text + " found");
+        }
+    }
+
+    public enum RefineUploadDate {
+        ANYTIME(""),
+        TODAY(FILTER_UPLOAD_DATE_TODAY),
+        THIS_WEEK(FILTER_UPLOAD_DATE_WEEK),
+        THIS_MONTH(FILTER_UPLOAD_DATE_MONTH),
+        THIS_YEAR(FILTER_UPLOAD_DATE_YEAR);
+
+        private String text;
+
+        RefineUploadDate(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return this.text;
+        }
+
+        public static RefineUploadDate fromString(String text) {
+            if (text != null) {
+                for (RefineUploadDate b : RefineUploadDate.values()) {
+                    if (text.equalsIgnoreCase(b.text)) {
+                        return b;
+                    }
+                }
+            }
+            throw new IllegalArgumentException("No constant with text " + text + " found");
+        }
+    }
+}

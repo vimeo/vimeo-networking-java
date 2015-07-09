@@ -1,8 +1,6 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.model.Account;
-import com.vimeo.networking.model.UserList;
-import com.vimeo.networking.model.VideoList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +17,6 @@ import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
-import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 /**
@@ -67,8 +64,8 @@ public interface VimeoService {
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("/tokens")
     void logOut(@Header("Authorization") String authHeader, Callback<Object> callback);
-
-    // region Channels
+   
+    /*// region Channels
 
     @GET("/channels/staffpicks/videos")
     void fetchStaffPicks(@Header("Authorization") String authHeader, Callback<VideoList> callback);
@@ -99,7 +96,7 @@ public interface VimeoService {
     void search(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
                 @QueryMap Map<String, String> filters, @Header("Cache-Control") String cacheHeaderValue,
                 Callback<Object> callback);
-    // end region
+    // end region */
 
     // region Editing
 
@@ -129,11 +126,7 @@ public interface VimeoService {
 
     @GET("/{uri}")
     void GET(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-             @Header("Cache-Control") String cacheHeaderValue, Callback<Object> callback);
-
-    @GET("/{uri}")
-    void GET(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-             @Query("sort") String sort, @Header("Cache-Control") String cacheHeaderValue,
+             @QueryMap Map<String, String> options, @Header("Cache-Control") String cacheHeaderValue,
              Callback<Object> callback);
 
     @POST("/{uri}")

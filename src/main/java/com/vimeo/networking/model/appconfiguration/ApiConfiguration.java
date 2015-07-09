@@ -1,6 +1,6 @@
 package com.vimeo.networking.model.appconfiguration;
 
-import com.vimeo.networking.VimeoClient;
+import com.vimeo.networking.Vimeo;
 
 /**
  * Created by vennk on 5/20/15.
@@ -8,7 +8,7 @@ import com.vimeo.networking.VimeoClient;
 public class ApiConfiguration {
 
     // Default host so if not set (from no internet connection) then we still have a base url
-    public String host = VimeoClient.VIMEO_BASE_URL_STRING;
+    public String host = Vimeo.VIMEO_BASE_URL_STRING;
 
     @Override
     public boolean equals(Object o) {
