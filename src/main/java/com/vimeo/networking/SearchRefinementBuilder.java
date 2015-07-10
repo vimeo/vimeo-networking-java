@@ -21,7 +21,16 @@ public class SearchRefinementBuilder {
     }
 
     public SearchRefinementBuilder setSort(Vimeo.RefineSort sort) {
-        parameterMap.put(Vimeo.PARAMETER_GET_SORT, sort.getText());
+        switch (sort) {
+            case AZ:
+            case ZA:
+                parameterMap.put(Vimeo.PARAMETER_GET_SORT, Vimeo.SORT_ALPHABETICAL);
+                parameterMap.put(Vimeo.PARAMETER_GET_DIRECTION, sort.getText());
+                break;
+            default:
+                parameterMap.put(Vimeo.PARAMETER_GET_SORT, sort.getText());
+                break;
+        }
         return this;
     }
 

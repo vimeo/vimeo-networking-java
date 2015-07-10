@@ -42,6 +42,7 @@ public class Vimeo {
     // GET and Sorting Parameters
     public static final String PARAMETER_GET_QUERY = "query";
     public static final String PARAMETER_GET_SORT = "sort";
+    public static final String PARAMETER_GET_DIRECTION = "direction";
     public static final String PARAMETER_GET_FIELD_FILTER = "fields";
     public static final String PARAMETER_GET_LENGTH_MIN_DURATION = "min_duration";
     public static final String PARAMETER_GET_LENGTH_MAX_DURATION = "max_duration";
@@ -54,6 +55,10 @@ public class Vimeo {
     public static final String SORT_POPULAR = "popularity";
     public static final String SORT_DATE = "date";
     public static final String SORT_FOLLOWERS = "followers";
+    public static final String SORT_ALPHABETICAL = "alphabetical";
+    // Sort Direction Values
+    public static final String SORT_DIRECTION_ASCENDING = "asc";
+    public static final String SORT_DIRECTION_DESCENDING = "desc";
 
     // Filter (filter) Values
     public static final String FILTER_UPLOAD = "upload_date";
@@ -75,7 +80,10 @@ public class Vimeo {
         POPULARITY(SORT_POPULAR),
         RECENT(SORT_DATE),
         // Channels
-        FOLLOWERS(SORT_FOLLOWERS);
+        FOLLOWERS(SORT_FOLLOWERS),
+        // Users
+        AZ(SORT_DIRECTION_ASCENDING),
+        ZA(SORT_DIRECTION_DESCENDING);
 
 
         private String text;
