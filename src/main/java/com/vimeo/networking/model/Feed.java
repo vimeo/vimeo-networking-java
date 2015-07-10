@@ -18,6 +18,7 @@ public class Feed implements Serializable {
         GROUP,
         TAG,
         CREDIT,
+        SHARE,
         NONE
     }
 
@@ -43,6 +44,8 @@ public class Feed implements Serializable {
             return AttributionType.GROUP;
         } else if (type.equalsIgnoreCase("appearance")) {
             return AttributionType.CREDIT;
+        } else if (type.equalsIgnoreCase("share")) {
+            return AttributionType.SHARE;
         }
 
         return AttributionType.NONE;
