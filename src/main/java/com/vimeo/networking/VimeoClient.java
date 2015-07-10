@@ -728,17 +728,17 @@ public class VimeoClient {
      * A generic GET call that takes in the URI of the specific resource.
      * <p/>
      *
-     * @param uri              URI of the resource to GET
-     * @param cacheControl     Cache control type
-     * @param callback         The callback for the specific model type of the resource
-     * @param query            Query string for hitting the search endpoint
-     * @param searchRefinement Used to refine lists (generally for search) with sorts and filters
-     * @param fieldFilter      The string of fields to include in the response (highly recommended!)
+     * @param uri           URI of the resource to GET
+     * @param cacheControl  Cache control type
+     * @param callback      The callback for the specific model type of the resource
+     * @param query         Query string for hitting the search endpoint
+     * @param refinementMap Used to refine lists (generally for search) with sorts and filters
+     * @param fieldFilter   The string of fields to include in the response (highly recommended!)
      * @link SearchRefinementBuilder
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     public void fetchContent(String uri, CacheControl cacheControl, ModelCallback callback,
-                             @Nullable String query, @Nullable Map<String, String> searchRefinement,
+                             @Nullable String query, @Nullable Map<String, String> refinementMap,
                              @Nullable String fieldFilter) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
@@ -755,8 +755,8 @@ public class VimeoClient {
         }
 
         Map<String, String> queryMap = new HashMap<>();
-        if (searchRefinement != null && !searchRefinement.isEmpty()) {
-            queryMap = searchRefinement;
+        if (refinementMap != null && !refinementMap.isEmpty()) {
+            queryMap = refinementMap;
         }
         if (query != null && !query.isEmpty()) {
             queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);

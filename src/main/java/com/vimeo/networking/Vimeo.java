@@ -53,6 +53,7 @@ public class Vimeo {
     public static final String SORT_RELEVANCE = "relevant";
     public static final String SORT_POPULAR = "popularity";
     public static final String SORT_DATE = "date";
+    public static final String SORT_FOLLOWERS = "followers";
 
     // Filter (filter) Values
     public static final String FILTER_UPLOAD = "upload_date";
@@ -72,7 +73,9 @@ public class Vimeo {
         DEFAULT(SORT_DEFAULT),
         RELEVANCE(SORT_RELEVANCE),
         POPULARITY(SORT_POPULAR),
-        RECENT(SORT_DATE);
+        RECENT(SORT_DATE),
+        // Channels
+        FOLLOWERS(SORT_FOLLOWERS);
 
 
         private String text;
