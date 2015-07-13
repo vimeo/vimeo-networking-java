@@ -44,20 +44,6 @@ public class VimeoClient {
      */
     private Account account;
 
-    /**
-     * Dangerous interceptor that rewrites the server's cache-control header.
-     * We are using this because our server sets all Cache-Control headers to no-store
-     * [AH] 4/24/2015
-     */
-    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override
-        public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
-            com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-
-            return originalResponse.newBuilder().header(Vimeo.HEADER_CACHE_CONTROL, "public").build();
-        }
-    };
-
     private static VimeoClient sharedInstance;
 
     public static VimeoClient getInstance() {
@@ -96,7 +82,7 @@ public class VimeoClient {
 
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
         retrofitClientBuilder.setCache(cache);
-        retrofitClientBuilder.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+        retrofitClientBuilder.addNetworkInterceptor(getRewriteCacheControlInterceptor(configuration));
         if (configuration.certPinningEnabled) {
             try {
                 retrofitClientBuilder.pinCertificates();
@@ -144,6 +130,24 @@ public class VimeoClient {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
+    }
+
+    /**
+     * Dangerous interceptor that rewrites the server's cache-control header.
+     * We are using this because our server sets all Cache-Control headers to no-store
+     * [AH] 4/24/2015
+     */
+    public Interceptor getRewriteCacheControlInterceptor(final Configuration configuration) {
+        return new Interceptor() {
+            @Override
+            public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+                com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+
+                return originalResponse.newBuilder().header(Vimeo.HEADER_CACHE_CONTROL,
+                                                            String.format("public,max-age=%d",
+                                                                          configuration.cacheMaxAge)).build();
+            }
+        };
     }
 
     // region Accessors

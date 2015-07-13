@@ -4,14 +4,15 @@ import java.io.File;
 
 /**
  * The configuration object for making API call with Retrofit.
- * <p>
+ * <p/>
  * An instance of this class is used the initialize the {@link VimeoClient}.
- * <p>
+ * <p/>
  * Created by alfredhanssen on 4/12/15.
  */
 public class Configuration {
 
     private static final String DEFAULT_VERSION_STRING = "3.3";
+    private static final int DEFAULT_CACHE_MAX_AGE = 60; // Default to 60 seconds
 
     public String baseURLString;
     public String clientID;
@@ -23,6 +24,7 @@ public class Configuration {
     public String codeGrantRedirectURI;
     public File cacheDirectory;
     public int cacheSize;
+    public int cacheMaxAge; // in seconds
     public String userAgentString;
 
     public boolean certPinningEnabled;
@@ -49,6 +51,7 @@ public class Configuration {
         private String APIVersionString = DEFAULT_VERSION_STRING;
         private File cacheDirectory;
         private int cacheSize;
+        private int cacheMaxAge = DEFAULT_CACHE_MAX_AGE;
         private String userAgentString;
 
         private boolean certPinningEnabled = true;
@@ -74,6 +77,11 @@ public class Configuration {
 
         public Builder cacheSize(int cacheSize) {
             this.cacheSize = cacheSize;
+            return this;
+        }
+
+        public Builder cacheMaxAge(int cacheMaxAge) {
+            this.cacheMaxAge = cacheMaxAge;
             return this;
         }
 
@@ -108,6 +116,7 @@ public class Configuration {
         this.APIVersionString = builder.APIVersionString;
         this.cacheDirectory = builder.cacheDirectory;
         this.cacheSize = builder.cacheSize;
+        this.cacheMaxAge = builder.cacheMaxAge;
         this.userAgentString = builder.userAgentString;
 
         this.certPinningEnabled = builder.certPinningEnabled;
