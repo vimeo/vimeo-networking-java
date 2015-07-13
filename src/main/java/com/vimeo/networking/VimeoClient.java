@@ -19,6 +19,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
@@ -43,6 +44,20 @@ public class VimeoClient {
      * Currently authenticated account
      */
     private Account account;
+
+    /**
+     * Dangerous interceptor that rewrites the server's cache-control header.
+     * We are using this because our server sets all Cache-Control headers to no-store
+     * [AH] 4/24/2015
+     */
+    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
+        @Override
+        public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+            com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+
+            return originalResponse.newBuilder().header(Vimeo.HEADER_CACHE_CONTROL, "public").build();
+        }
+    };
 
     private static VimeoClient sharedInstance;
 
@@ -82,7 +97,7 @@ public class VimeoClient {
 
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
         retrofitClientBuilder.setCache(cache);
-        retrofitClientBuilder.addNetworkInterceptor(getRewriteCacheControlInterceptor(configuration));
+        retrofitClientBuilder.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
         if (configuration.certPinningEnabled) {
             try {
                 retrofitClientBuilder.pinCertificates();
@@ -133,21 +148,37 @@ public class VimeoClient {
     }
 
     /**
-     * Dangerous interceptor that rewrites the server's cache-control header.
-     * We are using this because our server sets all Cache-Control headers to no-store
-     * [AH] 4/24/2015
+     * Return a builder of the given cache control because for some reason this doesn't exist already.
+     * Useful for adding more attributes to an already defined {@link CacheControl}
+     *
+     * @param cacheControl The CacheControl to convert to a builder
+     * @return A builder with the same attributes as the CacheControl passed in
      */
-    public Interceptor getRewriteCacheControlInterceptor(final Configuration configuration) {
-        return new Interceptor() {
-            @Override
-            public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
-                com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+    public CacheControl.Builder getCacheControlBuilder(CacheControl cacheControl) {
+        CacheControl.Builder builder = new CacheControl.Builder();
+        if (cacheControl.maxAgeSeconds() > -1) {
+            builder.maxAge(cacheControl.maxAgeSeconds(), TimeUnit.SECONDS);
+        }
+        if (cacheControl.maxStaleSeconds() > -1) {
+            builder.maxStale(cacheControl.maxStaleSeconds(), TimeUnit.SECONDS);
+        }
+        if (cacheControl.minFreshSeconds() > -1) {
+            builder.minFresh(cacheControl.minFreshSeconds(), TimeUnit.SECONDS);
+        }
 
-                return originalResponse.newBuilder().header(Vimeo.HEADER_CACHE_CONTROL,
-                                                            String.format("public,max-age=%d",
-                                                                          configuration.cacheMaxAge)).build();
-            }
-        };
+        if (cacheControl.noCache()) {
+            builder.noCache();
+        }
+        if (cacheControl.noStore()) {
+            builder.noStore();
+        }
+        if (cacheControl.noTransform()) {
+            builder.noTransform();
+        }
+        if (cacheControl.onlyIfCached()) {
+            builder.onlyIfCached();
+        }
+        return builder;
     }
 
     // region Accessors
@@ -696,7 +727,7 @@ public class VimeoClient {
             @Override
             public void success(Object o, VimeoResponse response) {
                 // TODO: This deserialization should happen on the background thread the request was made on
-                /** @link https://vimean.atlassian.net/browse/VA-251 */
+                /** @see https://vimean.atlassian.net/browse/VA-251 */
                 Gson gson = getGson();
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
@@ -733,12 +764,12 @@ public class VimeoClient {
      * <p/>
      *
      * @param uri           URI of the resource to GET
-     * @param cacheControl  Cache control type
+     * @param cacheControl  Cache control type (includes max age and other cache policy information)
      * @param callback      The callback for the specific model type of the resource
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
-     * @link SearchRefinementBuilder
+     *                      {@link SearchRefinementBuilder}
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     public void fetchContent(String uri, CacheControl cacheControl, ModelCallback callback,
@@ -753,10 +784,18 @@ public class VimeoClient {
             return;
         }
 
-        String cacheHeaderValue = null;
+        // If no max age specified on CacheControl then set it to our default
         if (cacheControl != null) {
-            cacheHeaderValue = cacheControl.toString();
+            if (cacheControl.maxAgeSeconds() == -1 && !cacheControl.onlyIfCached()) {
+                CacheControl.Builder builder = getCacheControlBuilder(cacheControl);
+                builder.maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS);
+                cacheControl = builder.build();
+            }
+        } else {
+            cacheControl = new CacheControl.Builder().maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS)
+                                                     .build();
         }
+        String cacheHeaderValue = cacheControl.toString();
 
         Map<String, String> queryMap = new HashMap<>();
         if (refinementMap != null && !refinementMap.isEmpty()) {
@@ -769,7 +808,7 @@ public class VimeoClient {
             queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
         }
 
-        this.vimeoService.GET(getAuthHeader(), validateUri(uri), queryMap, cacheHeaderValue,
+        this.vimeoService.GET(getAuthHeader(), validateUri(uri), null, cacheHeaderValue,
                               getRetrofitGetCallback(callback));
     }
 
