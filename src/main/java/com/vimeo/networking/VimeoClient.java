@@ -784,11 +784,16 @@ public class VimeoClient {
             return;
         }
 
-        // If no max age specified on CacheControl then set it to our default
         if (cacheControl != null) {
-            if (cacheControl.maxAgeSeconds() == -1 && !cacheControl.onlyIfCached()) {
+            if (cacheControl.onlyIfCached()) {
                 CacheControl.Builder builder = getCacheControlBuilder(cacheControl);
-                builder.maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS);
+                // If no max age specified on CacheControl then set it to our default
+                if (cacheControl.maxAgeSeconds() == -1) {
+                    builder.maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS);
+                }
+                // CacheControl.FORCE_CACHE defaults stale to Integer.MAX so we need to overwrite it
+                // so that a max age can actually do it's job
+                builder.maxStale(0, TimeUnit.SECONDS);
                 cacheControl = builder.build();
             }
         } else {
@@ -808,7 +813,7 @@ public class VimeoClient {
             queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
         }
 
-        this.vimeoService.GET(getAuthHeader(), validateUri(uri), null, cacheHeaderValue,
+        this.vimeoService.GET(getAuthHeader(), validateUri(uri), queryMap, cacheHeaderValue,
                               getRetrofitGetCallback(callback));
     }
 
@@ -821,9 +826,15 @@ public class VimeoClient {
         fetchContent(uri, cacheControl, callback, null, null, fieldFilter);
     }
 
-    public void fetchSortedContent(String uri, CacheControl cacheControl, ModelCallback callback,
+    public void fetchNetworkSortedContent(String uri, ModelCallback callback,
                                    String fieldFilter) {
-        fetchContent(uri, cacheControl, callback, null,
+        fetchContent(uri, CacheControl.FORCE_NETWORK, callback, null,
+                     new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
+    }
+
+    public void fetchCachedSortedContent(String uri, ModelCallback callback,
+                                   String fieldFilter) {
+        fetchContent(uri, CacheControl.FORCE_CACHE, callback, null,
                      new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
     }
 
