@@ -787,12 +787,12 @@ public class VimeoClient {
         if (cacheControl != null) {
             if (cacheControl.onlyIfCached()) {
                 CacheControl.Builder builder = getCacheControlBuilder(cacheControl);
-                // If no max age specified on CacheControl then set it to our default
+                // If no max age specified on CacheControl then set it to our default [KV]
                 if (cacheControl.maxAgeSeconds() == -1) {
                     builder.maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS);
                 }
                 // CacheControl.FORCE_CACHE defaults stale to Integer.MAX so we need to overwrite it
-                // so that a max age can actually do it's job
+                // so that a max age can actually do it's job [KV]
                 builder.maxStale(0, TimeUnit.SECONDS);
                 cacheControl = builder.build();
             }
