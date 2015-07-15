@@ -269,27 +269,27 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-//        if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() ||
-//            password == null || password.isEmpty()) {
-//
-//            VimeoError error = new VimeoError("Name, email, and password must be set.");
-//
-//            if (displayName == null || displayName.isEmpty()) {
-//                error.addInvalidParameter(Vimeo.FIELD_NAME, ErrorCode.INVALID_INPUT_NO_NAME,
-//                                          "An empty or null name was provided.");
-//            }
-//            if (email == null || email.isEmpty()) {
-//                error.addInvalidParameter(Vimeo.FIELD_EMAIL, ErrorCode.INVALID_INPUT_NO_EMAIL,
-//                                          "An empty or null email was provided.");
-//            }
-//            if (password == null || password.isEmpty()) {
-//                error.addInvalidParameter(Vimeo.FIELD_PASSWORD, ErrorCode.INVALID_INPUT_NO_PASSWORD,
-//                                          "An empty or null password was provided.");
-//            }
-//            callback.failure(error);
-//
-//            return;
-//        }
+        if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() ||
+            password == null || password.isEmpty()) {
+
+            VimeoError error = new VimeoError("Name, email, and password must be set.");
+
+            if (displayName == null || displayName.isEmpty()) {
+                error.addInvalidParameter(Vimeo.FIELD_NAME, ErrorCode.INVALID_INPUT_NO_NAME,
+                                          "An empty or null name was provided.");
+            }
+            if (email == null || email.isEmpty()) {
+                error.addInvalidParameter(Vimeo.FIELD_EMAIL, ErrorCode.INVALID_INPUT_NO_EMAIL,
+                                          "An empty or null email was provided.");
+            }
+            if (password == null || password.isEmpty()) {
+                error.addInvalidParameter(Vimeo.FIELD_PASSWORD, ErrorCode.INVALID_INPUT_NO_PASSWORD,
+                                          "An empty or null password was provided.");
+            }
+            callback.failure(error);
+
+            return;
+        }
 
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_USERS_NAME, displayName);
