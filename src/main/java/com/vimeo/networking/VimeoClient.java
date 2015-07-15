@@ -19,6 +19,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
@@ -144,6 +145,40 @@ public class VimeoClient {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
+    }
+
+    /**
+     * Return a builder of the given cache control because for some reason this doesn't exist already.
+     * Useful for adding more attributes to an already defined {@link CacheControl}
+     *
+     * @param cacheControl The CacheControl to convert to a builder
+     * @return A builder with the same attributes as the CacheControl passed in
+     */
+    public CacheControl.Builder getCacheControlBuilder(CacheControl cacheControl) {
+        CacheControl.Builder builder = new CacheControl.Builder();
+        if (cacheControl.maxAgeSeconds() > -1) {
+            builder.maxAge(cacheControl.maxAgeSeconds(), TimeUnit.SECONDS);
+        }
+        if (cacheControl.maxStaleSeconds() > -1) {
+            builder.maxStale(cacheControl.maxStaleSeconds(), TimeUnit.SECONDS);
+        }
+        if (cacheControl.minFreshSeconds() > -1) {
+            builder.minFresh(cacheControl.minFreshSeconds(), TimeUnit.SECONDS);
+        }
+
+        if (cacheControl.noCache()) {
+            builder.noCache();
+        }
+        if (cacheControl.noStore()) {
+            builder.noStore();
+        }
+        if (cacheControl.noTransform()) {
+            builder.noTransform();
+        }
+        if (cacheControl.onlyIfCached()) {
+            builder.onlyIfCached();
+        }
+        return builder;
     }
 
     // region Accessors
@@ -696,7 +731,7 @@ public class VimeoClient {
             @Override
             public void success(Object o, VimeoResponse response) {
                 // TODO: This deserialization should happen on the background thread the request was made on
-                /** @link https://vimean.atlassian.net/browse/VA-251 */
+                /** @see https://vimean.atlassian.net/browse/VA-251 */
                 Gson gson = getGson();
                 String JSON = gson.toJson(o);
                 Object object = gson.fromJson(JSON, callback.getObjectType());
@@ -733,12 +768,12 @@ public class VimeoClient {
      * <p/>
      *
      * @param uri           URI of the resource to GET
-     * @param cacheControl  Cache control type
+     * @param cacheControl  Cache control type (includes max age and other cache policy information)
      * @param callback      The callback for the specific model type of the resource
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
-     * @link SearchRefinementBuilder
+     *                      {@link SearchRefinementBuilder}
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     public void fetchContent(String uri, CacheControl cacheControl, ModelCallback callback,
@@ -753,10 +788,23 @@ public class VimeoClient {
             return;
         }
 
-        String cacheHeaderValue = null;
         if (cacheControl != null) {
-            cacheHeaderValue = cacheControl.toString();
+            if (cacheControl.onlyIfCached()) {
+                CacheControl.Builder builder = getCacheControlBuilder(cacheControl);
+                // If no max age specified on CacheControl then set it to our default [KV]
+                if (cacheControl.maxAgeSeconds() == -1) {
+                    builder.maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS);
+                }
+                // CacheControl.FORCE_CACHE defaults stale to Integer.MAX so we need to overwrite it
+                // so that a max age can actually do it's job [KV]
+                builder.maxStale(0, TimeUnit.SECONDS);
+                cacheControl = builder.build();
+            }
+        } else {
+            cacheControl = new CacheControl.Builder().maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS)
+                                                     .build();
         }
+        String cacheHeaderValue = cacheControl.toString();
 
         Map<String, String> queryMap = new HashMap<>();
         if (refinementMap != null && !refinementMap.isEmpty()) {
@@ -782,9 +830,15 @@ public class VimeoClient {
         fetchContent(uri, cacheControl, callback, null, null, fieldFilter);
     }
 
-    public void fetchSortedContent(String uri, CacheControl cacheControl, ModelCallback callback,
+    public void fetchNetworkSortedContent(String uri, ModelCallback callback,
                                    String fieldFilter) {
-        fetchContent(uri, cacheControl, callback, null,
+        fetchContent(uri, CacheControl.FORCE_NETWORK, callback, null,
+                     new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
+    }
+
+    public void fetchCachedSortedContent(String uri, ModelCallback callback,
+                                   String fieldFilter) {
+        fetchContent(uri, CacheControl.FORCE_CACHE, callback, null,
                      new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
     }
 

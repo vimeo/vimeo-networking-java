@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 6/24/15.
  */
-public class Feed implements Serializable {
+public class FeedItem implements Serializable {
 
     private static final long serialVersionUID = -8744477085158366576L;
 
@@ -51,6 +51,24 @@ public class Feed implements Serializable {
         return AttributionType.NONE;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FeedItem that = (FeedItem) o;
+
+        return ((this.clip.uri != null && that.clip.uri != null) && this.clip.uri.equals(that.clip.uri));
+    }
+
+    @Override
+    public int hashCode() {
+        return this.clip.uri != null ? this.clip.uri.hashCode() : 0;
+    }
 
 }
 
