@@ -1,10 +1,12 @@
 package com.vimeo.networking.model.error;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import retrofit.RetrofitError;
 import retrofit.client.Header;
@@ -28,9 +30,9 @@ public class VimeoError extends RuntimeException implements Serializable {
     @SerializedName("developer_message")
     private String developerMessage;
     @SerializedName("error_code")
-    private String errorCode;
+    private ErrorCode errorCode;
     @SerializedName("invalid_parameters")
-    private JsonObject invalidParameters;
+    private List<InvalidParameter> invalidParameters;
 
     public VimeoError() {
     }
@@ -71,37 +73,40 @@ public class VimeoError extends RuntimeException implements Serializable {
         return this.developerMessage;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 
-
-    public String getErrorCode() {
-        return this.errorCode;
+    public ErrorCode getErrorCode() {
+        return errorCode == null ? ErrorCode.DEFAULT : this.errorCode;
     }
 
-    public void setInvalidParameters(JsonObject invalidParameters) {
+    public void setInvalidParameters(List<InvalidParameter> invalidParameters) {
         this.invalidParameters = invalidParameters;
     }
 
-    public JsonObject getInvalidParameters() {
+    public List<InvalidParameter> getInvalidParameters() {
         return this.invalidParameters;
     }
 
+    /**
+     * Returns the first invalid parameter in the parameter list
+     * @return First InvalidParameter in the invalid parameters array
+     */
+    @Nullable
+    public InvalidParameter getInvalidParameter() {
+        return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters
+                .get(0) : null;
+    }
+
     public boolean isServiceUnavailable() {
-        if ((retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
-            (retrofitError.getResponse().getStatus() == 503)) {
-            return true;
-        }
-        return false;
+        return (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
+               (retrofitError.getResponse().getStatus() == 503);
     }
 
     public boolean isForbiddenError() {
-        if ((retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
-            (retrofitError.getResponse().getStatus() == 403)) {
-            return true;
-        }
-        return false;
+        return (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
+               (retrofitError.getResponse().getStatus() == 403);
     }
 
     public boolean isInvalidTokenError() {
@@ -118,4 +123,11 @@ public class VimeoError extends RuntimeException implements Serializable {
         return false;
     }
 
+    public void addInvalidParameter(String field, ErrorCode code, String developerMessage) {
+        InvalidParameter invalidParameter = new InvalidParameter(field, code, developerMessage);
+        if (this.invalidParameters == null) {
+            invalidParameters = new ArrayList<>();
+        }
+        this.invalidParameters.add(invalidParameter);
+    }
 }

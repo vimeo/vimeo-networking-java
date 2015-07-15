@@ -68,6 +68,13 @@ public class Vimeo {
     public static final String FILTER_UPLOAD_DATE_MONTH = "month";
     public static final String FILTER_UPLOAD_DATE_YEAR = "year";
 
+    // Fields (for invalid params)
+    public static final String FIELD_NAME = "name";
+    public static final String FIELD_EMAIL = "email";
+    public static final String FIELD_PASSWORD = "password";
+    public static final String FIELD_TOKEN = "token";
+    public static final String FIELD_USERNAME = "username";
+
     public enum RefineLength {
         ANY,
         UNDER_FIVE_MINUTES,

@@ -4,13 +4,13 @@ import com.google.common.base.Splitter;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Privacy;
+import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
 
 import java.io.IOException;
@@ -269,24 +269,27 @@ public class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() ||
-            password == null || password.isEmpty()) {
-            VimeoError error = new VimeoError("Name, email, and password must be set");
-            JsonObject invalidParameters = new JsonObject();
-            if (displayName == null || displayName.isEmpty()) {
-                invalidParameters.addProperty("name", "name must be set");
-            }
-            if (email == null || email.isEmpty()) {
-                invalidParameters.addProperty("email", "email must be set");
-            }
-            if (password == null || password.isEmpty()) {
-                invalidParameters.addProperty("password", "password must be set");
-            }
-            error.setInvalidParameters(invalidParameters);
-            callback.failure(error);
-
-            return;
-        }
+//        if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() ||
+//            password == null || password.isEmpty()) {
+//
+//            VimeoError error = new VimeoError("Name, email, and password must be set.");
+//
+//            if (displayName == null || displayName.isEmpty()) {
+//                error.addInvalidParameter(Vimeo.FIELD_NAME, ErrorCode.INVALID_INPUT_NO_NAME,
+//                                          "An empty or null name was provided.");
+//            }
+//            if (email == null || email.isEmpty()) {
+//                error.addInvalidParameter(Vimeo.FIELD_EMAIL, ErrorCode.INVALID_INPUT_NO_EMAIL,
+//                                          "An empty or null email was provided.");
+//            }
+//            if (password == null || password.isEmpty()) {
+//                error.addInvalidParameter(Vimeo.FIELD_PASSWORD, ErrorCode.INVALID_INPUT_NO_PASSWORD,
+//                                          "An empty or null password was provided.");
+//            }
+//            callback.failure(error);
+//
+//            return;
+//        }
 
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_USERS_NAME, displayName);
@@ -304,12 +307,12 @@ public class VimeoClient {
         }
 
         if (facebookToken == null || facebookToken.isEmpty()) {
-            VimeoError error = new VimeoError("Facebook authentication error");
-            JsonObject invalidParameters = new JsonObject();
+            VimeoError error = new VimeoError("Facebook authentication error.");
+
             if (facebookToken == null || facebookToken.isEmpty()) {
-                invalidParameters.addProperty("token", "facebook token must be set");
+                error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                          "An empty or null Facebook access token was provided.");
             }
-            error.setInvalidParameters(invalidParameters);
             callback.failure(error);
             return;
         }
@@ -327,15 +330,16 @@ public class VimeoClient {
         }
 
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            VimeoError error = new VimeoError("Email and password must be set");
-            JsonObject invalidParameters = new JsonObject();
+            VimeoError error = new VimeoError("Email and password must be set.");
+
             if (email == null || email.isEmpty()) {
-                invalidParameters.addProperty("username", "email must be set");
+                error.addInvalidParameter(Vimeo.FIELD_USERNAME, ErrorCode.INVALID_INPUT_NO_EMAIL,
+                                          "An empty or null email was provided.");
             }
             if (password == null || password.isEmpty()) {
-                invalidParameters.addProperty("password", "password must be set");
+                error.addInvalidParameter(Vimeo.FIELD_PASSWORD, ErrorCode.INVALID_INPUT_NO_PASSWORD,
+                                          "An empty or null password was provided.");
             }
-            error.setInvalidParameters(invalidParameters);
             callback.failure(error);
 
             return;
@@ -377,12 +381,12 @@ public class VimeoClient {
         }
 
         if (facebookToken == null || facebookToken.isEmpty()) {
-            VimeoError error = new VimeoError("Facebook authentication error");
-            JsonObject invalidParameters = new JsonObject();
+            VimeoError error = new VimeoError("Facebook authentication error.");
+
             if (facebookToken == null || facebookToken.isEmpty()) {
-                invalidParameters.addProperty("token", "facebook token must be set");
+                error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                          "An empty or null Facebook access token was provided.");
             }
-            error.setInvalidParameters(invalidParameters);
             callback.failure(error);
             return;
         }
