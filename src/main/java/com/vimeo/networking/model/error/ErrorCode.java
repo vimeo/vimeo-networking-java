@@ -9,21 +9,35 @@ public enum ErrorCode {
     // The default code that will be returned if the code returned from the server isn't enumerated below
     // If that is the case, check the raw response for the code [KV]
     DEFAULT,
-    @SerializedName("4000")
+    @SerializedName("1000")
+    BAD_REQUEST,
+    @SerializedName("1001")
+    UNAUTHORIZED,
+    @SerializedName("1002")
+    FORBIDDEN,
+    @SerializedName("1003")
+    NOT_FOUND,
+    @SerializedName("1004")
+    INTERNAL_SERVER_ERROR,
+    @SerializedName("1005")
+    NOT_IMPLEMENTED,
+    @SerializedName("1006")
+    SERVICE_UNAVAILABLE,
+    @SerializedName("2000")
     MISSING_REQUIRED_HEADER,
-    @SerializedName("4001")
+    @SerializedName("2001")
     MISSING_REQUIRED_QUERY_PARAM,
-    @SerializedName("4002")
+    @SerializedName("2002")
     MISSING_REQUIRED_BODY,
-    @SerializedName("4100")
+    @SerializedName("2100")
     UNSUPPORTED_HEADER,
-    @SerializedName("4101")
+    @SerializedName("2101")
     UNSUPPORTED_QUERY_PARAM,
-    @SerializedName("4200")
+    @SerializedName("2200")
     INVALID_HEADER_VALUE,
-    @SerializedName("4201")
+    @SerializedName("2201")
     INVALID_QUERY_PARAM_VALUE,
-    @SerializedName("4202")
+    @SerializedName("2202")
     INVALID_URI,
     @SerializedName("4203")
     INVALID_AUTHENTICATION_INFO,
