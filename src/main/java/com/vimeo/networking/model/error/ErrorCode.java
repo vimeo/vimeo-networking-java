@@ -39,86 +39,96 @@ public enum ErrorCode {
     INVALID_QUERY_PARAM_VALUE,
     @SerializedName("2202")
     INVALID_URI,
-    @SerializedName("4203")
+    @SerializedName("2203")
     INVALID_AUTHENTICATION_INFO,
-    @SerializedName("4204")
+    @SerializedName("2204")
     INVALID_INPUT,
-    @SerializedName("4205")
+    @SerializedName("2205")
     INVALID_BODY,
-    @SerializedName("4206")
+    @SerializedName("2206")
     INVALID_ACCEPT_HEADER,
-    @SerializedName("4207")
+    @SerializedName("2207")
     INVALID_USERNAME_PASSWORD,
-    @SerializedName("4218")
+    @SerializedName("2217")
     INVALID_INPUT_EMAIL_TOO_LONG,
-    @SerializedName("4211")
+    @SerializedName("2211")
     INVALID_INPUT_PASSWORD_TOO_SHORT,
-    @SerializedName("4213")
+    @SerializedName("2212")
     INVALID_INPUT_PASSWORD_TOO_SIMPLE,
-    @SerializedName("4214")
+    @SerializedName("2213")
     INVALID_INPUT_PASSWORD_TOO_OBVIOUS,
-    @SerializedName("4219")
+    @SerializedName("2218")
     INVALID_INPUT_EMAIL_NOT_RECOGNIZED,
-    @SerializedName("4220")
+    @SerializedName("2219")
     INVALID_INPUT_PASSWORD_EMAIL_MISMATCH,
-    @SerializedName("4210")
+    @SerializedName("2210")
     INVALID_INPUT_NO_PASSWORD,
-    @SerializedName("4216")
+    @SerializedName("2215")
     INVALID_INPUT_NO_EMAIL,
-    @SerializedName("4217")
+    @SerializedName("2216")
     INVALID_INPUT_NO_RFC_822_EMAIL,
-    @SerializedName("4215")
+    @SerializedName("2214")
     INVALID_INPUT_NO_NAME,
-    @SerializedName("4209")
+    @SerializedName("2209")
     INVALID_INPUT_NAME_TOO_LONG,
-    @SerializedName("4303")
+    @SerializedName("2303")
     UNABLE_TO_CREATE_USER_INVALID_TOKEN,
-    @SerializedName("4306")
+    @SerializedName("2306")
     UNABLE_TO_CREATE_USER_NO_TOKEN,
-    @SerializedName("4304")
+    @SerializedName("2304")
     UNABLE_TO_CREATE_USER_NON_EXISTENT_PROPERTY,
-    @SerializedName("4305")
+    @SerializedName("2305")
     UNABLE_TO_CREATE_USER_MALFORMED_TOKEN,
-    @SerializedName("4307")
+    @SerializedName("2307")
     UNABLE_TO_CREATE_USER_TOKEN_CAN_NOT_DECRYPT,
-    @SerializedName("4308")
+    @SerializedName("2308")
     UNABLE_TO_CREATE_USER_TOKEN_TOO_LONG,
-    @SerializedName("4312")
+    @SerializedName("2312")
     UNABLE_TO_LOGIN_NO_TOKEN,
-    @SerializedName("4310")
+    @SerializedName("2310")
     UNABLE_TO_LOGIN_NON_EXISTENT_PROPERTY,
-    @SerializedName("4311")
+    @SerializedName("2311")
     UNABLE_TO_LOGIN_MALFORMED_TOKEN,
-    @SerializedName("4313")
+    @SerializedName("2313")
     UNABLE_TO_LOGIN_TOKEN_CAN_NOT_DECRYPT,
-    @SerializedName("4314")
+    @SerializedName("2314")
     UNABLE_TO_LOGIN_TOKEN_TOO_LONG,
-    @SerializedName("4221")
+    @SerializedName("2221")
     INVALID_INPUT_GRANT_TYPE,
-    @SerializedName("4315")
+    @SerializedName("2315")
     UNABLE_TO_CREATE_USER_CAN_NOT_VALIDATE_TOKEN,
-    @SerializedName("4208")
+    @SerializedName("2208")
     INVALID_NO_INPUT,
-    @SerializedName("4300")
+    @SerializedName("2300")
     INVALID_TOKEN,
-    @SerializedName("4301")
+    @SerializedName("2301")
     NON_EXISTENT_PROPERTY,
-    @SerializedName("4302")
+    @SerializedName("2302")
     MALFORMED_TOKEN,
-    @SerializedName("4400")
+    @SerializedName("2400")
     USER_EXISTS,
-    @SerializedName("4401")
+    @SerializedName("2401")
     EMAIL_BLOCKED,
-    @SerializedName("4402")
+    @SerializedName("2402")
     SPAMMER_USER,
-    @SerializedName("4403")
+    @SerializedName("2403")
     PURGATORY_USER,
-    @SerializedName("4404")
+    @SerializedName("2404")
     URL_UNAVAILABLE,
     @SerializedName("5000")
     OPERATION_TIMED_OUT,
     @SerializedName("5001")
     ACCESS_TOKEN_NOT_GENERATED,
     @SerializedName("5100")
-    USER_NOT_FOUND
+    USER_NOT_FOUND, // TODO: whattt
+    @SerializedName("4000")
+    METHOD_NOT_IMPLEMENTED,
+    @SerializedName("7000")
+    SERVER_BUSY,
+    @SerializedName("7100")
+    SERVER_OVERLOADED,
+    @SerializedName("8000")
+    INVALID_CREDENTIALS,
+    @SerializedName("8001")
+    UNAUTHORIZED_CLIENT
 }
