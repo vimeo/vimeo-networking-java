@@ -11,7 +11,7 @@ public class Privacy implements Serializable {
 
     private static final long serialVersionUID = -1679908652622815871L;
 
-    public enum PrivacyValue // TODO: use this [AH] 4/24/2015
+    public enum PrivacyValue
     {
         @SerializedName("nobody")
         NOBODY,

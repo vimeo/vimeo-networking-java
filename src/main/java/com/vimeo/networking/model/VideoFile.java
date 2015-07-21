@@ -1,5 +1,7 @@
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,24 +10,48 @@ import java.util.Date;
  */
 public class VideoFile implements Serializable {
 
+    public enum MimeType {
+        NONE,
+        @SerializedName("video/mp4")
+        MP4,
+        @SerializedName("video/webm")
+        WEBM, // Flash
+        @SerializedName("vp6/x-video")
+        VP6 // Flash
+    }
+
+    public enum VideoQuality {
+        NONE,
+        @SerializedName("hls")
+        HLS,
+        @SerializedName("hd")
+        HD,
+        @SerializedName("sd")
+        SD,
+        @SerializedName("mobile")
+        MOBILE
+    }
+
     private static final long serialVersionUID = -5256416394912086020L;
-
-    public static final String MIMETYPE_MP4 = "video/mp4";
-    public static final String MIMETYPE_WEBM = "video/webm"; // Flash
-    public static final String MIMETYPE_VP6 = "vp6/x-video"; // Flash
-
-    public static final String QUALITY_HLS = "hls";
-    public static final String QUALITY_HD = "hd";
-    public static final String QUALITY_SD = "sd";
-    public static final String QUALITY_MOBILE = "mobile";
 
     public Date expires;
     public int width;
     public int height;
     public int size;
     public String link;
-    public String quality;
-    public String type;
+    private VideoQuality quality;
+    private MimeType type;
     public VideoLog log;
 
+    public VideoQuality getQuality() {
+        return quality == null ? VideoQuality.NONE : quality;
+    }
+
+    public MimeType getType() {
+        return type == null ? MimeType.NONE : type;
+    }
+
+    public boolean isVP6() {
+        return getType() == MimeType.VP6;
+    }
 }
