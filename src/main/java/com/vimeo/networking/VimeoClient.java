@@ -19,11 +19,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
@@ -743,20 +738,8 @@ public class VimeoClient {
         return new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
-                Callable<Object> objectCallable = new GsonConversionCallable(getGson(), o,
-                                                                             callback.getObjectType());
-                ExecutorService pool = Executors.newFixedThreadPool(1);
-                Future<Object> future = pool.submit(objectCallable);
-                try {
-                    Object object = future.get();
-                    callback.success(object, response);
-                } catch (InterruptedException ie) {
-                    ie.printStackTrace();
-                    callback.failure(new VimeoError(ie.getLocalizedMessage()));
-                } catch (ExecutionException ee) {
-                    ee.printStackTrace();
-                    callback.failure(new VimeoError(ee.getLocalizedMessage()));
-                }
+                //Handle the gson parsing in another thread
+                new GsonConversionWorker(getGson(), o, callback, response).execute();
             }
 
             @Override
