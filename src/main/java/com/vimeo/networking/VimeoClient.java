@@ -19,6 +19,11 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
@@ -738,12 +743,20 @@ public class VimeoClient {
         return new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
-                // TODO: This deserialization should happen on the background thread the request was made on
-                /** @see https://vimean.atlassian.net/browse/VA-251 */
-                Gson gson = getGson();
-                String JSON = gson.toJson(o);
-                Object object = gson.fromJson(JSON, callback.getObjectType());
-                callback.success(object, response);
+                Callable<Object> objectCallable = new GsonConversionCallable(getGson(), o,
+                                                                             callback.getObjectType());
+                ExecutorService pool = Executors.newFixedThreadPool(1);
+                Future<Object> future = pool.submit(objectCallable);
+                try {
+                    Object object = future.get();
+                    callback.success(object, response);
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
+                    callback.failure(new VimeoError(ie.getLocalizedMessage()));
+                } catch (ExecutionException ee) {
+                    ee.printStackTrace();
+                    callback.failure(new VimeoError(ee.getLocalizedMessage()));
+                }
             }
 
             @Override
