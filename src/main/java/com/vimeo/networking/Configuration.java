@@ -19,6 +19,7 @@ public class Configuration {
     public String clientSecret;
     public String scope;
     public AccountStore accountStore;
+    public GsonDeserializer deserializer;
 
     public String APIVersionString;
     public String codeGrantRedirectURI;
@@ -47,6 +48,7 @@ public class Configuration {
         private String clientSecret;
         private String scope;
         private AccountStore accountStore;
+        private GsonDeserializer deserializer;
 
         private String APIVersionString = DEFAULT_VERSION_STRING;
         private File cacheDirectory;
@@ -57,12 +59,13 @@ public class Configuration {
         private boolean certPinningEnabled = true;
 
         public Builder(String baseURLString, String clientID, String clientSecret, String scope,
-                       AccountStore accountStore) {
+                       AccountStore accountStore, GsonDeserializer deserializer) {
             this.baseURLString = baseURLString;
             this.clientID = clientID;
             this.clientSecret = clientSecret;
             this.scope = scope;
             this.accountStore = accountStore;
+            this.deserializer = deserializer;
         }
 
         public Builder APIVersionString(String APIVersionString) {
@@ -106,6 +109,7 @@ public class Configuration {
         this.clientSecret = builder.clientSecret;
         this.scope = builder.scope;
         this.accountStore = builder.accountStore;
+        this.deserializer = builder.deserializer;
 
         if (!this.isValid()) {
             throw new Exception("Built invalid VimeoClientConfiguration");

@@ -23,8 +23,12 @@ public class GsonDeserializer {
      * @param response The VimeoResponse object
      */
     public void deserialize(Gson gson, Object object, ModelCallback callback, VimeoResponse response) {
-        String JSON = gson.toJson(object);
-        Object result = gson.fromJson(JSON, callback.getObjectType());
+        Object result = deserializeObject(gson, object, callback);
         callback.success(result, response);
+    }
+
+    public Object deserializeObject(Gson gson, Object object, ModelCallback callback) {
+        String JSON = gson.toJson(object);
+        return gson.fromJson(JSON, callback.getObjectType());
     }
 }
