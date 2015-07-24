@@ -36,6 +36,7 @@ import retrofit.converter.GsonConverter;
 public class VimeoClient {
 
     private Configuration configuration;
+    private GsonDeserializer deserializer;
     private VimeoService vimeoService;
     private Cache cache;
     private String currentCodeGrantState;
@@ -69,16 +70,21 @@ public class VimeoClient {
         return sharedInstance;
     }
 
-    public static void configure(Configuration configuration) {
-        sharedInstance = new VimeoClient(configuration);
+    public static void configure(Configuration configuration, GsonDeserializer deserializer) {
+        sharedInstance = new VimeoClient(configuration, deserializer);
     }
 
-    private VimeoClient(final Configuration configuration) {
+    private VimeoClient(final Configuration configuration, GsonDeserializer deserializer) {
         if (configuration == null) {
             throw new AssertionError("Configuration cannot be null");
         }
 
         this.configuration = configuration;
+
+        if(deserializer == null) {
+            deserializer = new GsonDeserializer();
+        }
+        this.deserializer = deserializer;
 
         final VimeoClient client = this;
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
@@ -738,8 +744,8 @@ public class VimeoClient {
         return new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
-                //Handle the gson parsing in another thread
-                new GsonConversionWorker(getGson(), o, callback, response).execute();
+                //Handle the gson parsing using a deserializer object
+                deserializer.deserialize(getGson(), o, callback, response);
             }
 
             @Override
