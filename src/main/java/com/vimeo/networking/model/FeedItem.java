@@ -62,7 +62,7 @@ public class FeedItem implements Serializable {
 
         FeedItem that = (FeedItem) o;
 
-        return ((this.clip.uri != null && that.clip.uri != null) && this.clip.uri.equals(that.clip.uri));
+        return ((this.clip != null && that.clip != null) && (this.clip.uri != null && that.clip.uri != null) && this.clip.uri.equals(that.clip.uri));
     }
 
     @Override

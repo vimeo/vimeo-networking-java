@@ -9,7 +9,7 @@ public class InvalidParameter {
 
     @SerializedName("field")
     private String field;
-    @SerializedName("code")
+    @SerializedName("error_code")
     private ErrorCode errorCode;
     @SerializedName("user_message")
     private String userMessage;

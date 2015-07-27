@@ -336,7 +336,8 @@ public class VimeoClient {
                 .join(getBasicAuthHeader(), parameters, new AccountCallback(this, email, password, callback));
     }
 
-    public void joinWithFacebookToken(String facebookToken, final AuthCallback callback) {
+    public void joinWithFacebookToken(final String facebookToken, final String email,
+                                      final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -356,10 +357,10 @@ public class VimeoClient {
         parameters.put(Vimeo.PARAMETER_TOKEN, facebookToken);
         parameters.put(Vimeo.PARAMETER_SCOPE, configuration.scope);
 
-        this.vimeoService.join(getBasicAuthHeader(), parameters, new AccountCallback(this, callback));
+        this.vimeoService.join(getBasicAuthHeader(), parameters, new AccountCallback(this, email, callback));
     }
 
-    public void logIn(String email, String password, final AuthCallback callback) {
+    public void logIn(final String email, final String password, final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -395,7 +396,7 @@ public class VimeoClient {
      * @param password user's password
      * @return the account object since it is synchronous
      */
-    public Account logIn(String email, String password) {
+    public Account logIn(final String email, final String password) {
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             return null;
         }
@@ -410,7 +411,8 @@ public class VimeoClient {
         return account;
     }
 
-    public void loginWithFacebookToken(String facebookToken, final AuthCallback callback) {
+    public void loginWithFacebookToken(final String facebookToken, final String email,
+                                       final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -427,7 +429,7 @@ public class VimeoClient {
         }
 
         this.vimeoService.logInWithFacebook(getBasicAuthHeader(), Vimeo.FACEBOOK_GRANT_TYPE, facebookToken,
-                                            configuration.scope, new AccountCallback(this, callback));
+                                            configuration.scope, new AccountCallback(this, email, callback));
     }
 
 
@@ -478,6 +480,16 @@ public class VimeoClient {
             }
 
             this.client = client;
+            this.callback = callback;
+        }
+
+        public AccountCallback(VimeoClient client, String email, AuthCallback callback) {
+            if (client == null || callback == null) {
+                throw new AssertionError("Client and Callback must not be null");
+            }
+
+            this.client = client;
+            this.email = email;
             this.callback = callback;
         }
 
@@ -730,12 +742,8 @@ public class VimeoClient {
         return new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
-                // TODO: This deserialization should happen on the background thread the request was made on
-                /** @see https://vimean.atlassian.net/browse/VA-251 */
-                Gson gson = getGson();
-                String JSON = gson.toJson(o);
-                Object object = gson.fromJson(JSON, callback.getObjectType());
-                callback.success(object, response);
+                //Handle the gson parsing using a deserializer object
+                configuration.deserializer.deserialize(getGson(), o, callback, response);
             }
 
             @Override
@@ -830,14 +838,12 @@ public class VimeoClient {
         fetchContent(uri, cacheControl, callback, null, null, fieldFilter);
     }
 
-    public void fetchNetworkSortedContent(String uri, ModelCallback callback,
-                                   String fieldFilter) {
+    public void fetchNetworkSortedContent(String uri, ModelCallback callback, String fieldFilter) {
         fetchContent(uri, CacheControl.FORCE_NETWORK, callback, null,
                      new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
     }
 
-    public void fetchCachedSortedContent(String uri, ModelCallback callback,
-                                   String fieldFilter) {
+    public void fetchCachedSortedContent(String uri, ModelCallback callback, String fieldFilter) {
         fetchContent(uri, CacheControl.FORCE_CACHE, callback, null,
                      new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
     }

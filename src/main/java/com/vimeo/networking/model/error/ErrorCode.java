@@ -61,15 +61,15 @@ public enum ErrorCode {
     INVALID_INPUT_EMAIL_NOT_RECOGNIZED,
     @SerializedName("2219")
     INVALID_INPUT_PASSWORD_EMAIL_MISMATCH,
-    @SerializedName("2210")
+    @SerializedName("2209")
     INVALID_INPUT_NO_PASSWORD,
     @SerializedName("2215")
     INVALID_INPUT_NO_EMAIL,
-    @SerializedName("2216")
-    INVALID_INPUT_NO_RFC_822_EMAIL,
     @SerializedName("2214")
+    INVALID_INPUT_NO_RFC_822_EMAIL,
+    @SerializedName("2215")
     INVALID_INPUT_NO_NAME,
-    @SerializedName("2209")
+    @SerializedName("2208")
     INVALID_INPUT_NAME_TOO_LONG,
     @SerializedName("2303")
     UNABLE_TO_CREATE_USER_INVALID_TOKEN,
