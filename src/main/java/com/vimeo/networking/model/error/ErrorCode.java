@@ -117,14 +117,14 @@ public enum ErrorCode {
     PURGATORY_USER,
     @SerializedName("2404")
     URL_UNAVAILABLE,
-    @SerializedName("5000")
+    @SerializedName("4000")
     OPERATION_TIMED_OUT,
     @SerializedName("5001")
     ACCESS_TOKEN_NOT_GENERATED,
-    @SerializedName("4000")
+    @SerializedName("6000")
     METHOD_NOT_IMPLEMENTED,
-    @SerializedName("1.5000")
-    RESOURCE_NOT_FOUND, // TODO: whattt
+    @SerializedName("5000")
+    RESOURCE_NOT_FOUND,
     @SerializedName("7000")
     SERVER_BUSY,
     @SerializedName("7100")
