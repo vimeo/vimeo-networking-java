@@ -47,27 +47,25 @@ public enum ErrorCode {
     INVALID_BODY,
     @SerializedName("2206")
     INVALID_ACCEPT_HEADER,
-    @SerializedName("2207")
-    INVALID_USERNAME_PASSWORD,
-    @SerializedName("2217")
+    @SerializedName("2216")
     INVALID_INPUT_EMAIL_TOO_LONG,
-    @SerializedName("2211")
+    @SerializedName("2210")
     INVALID_INPUT_PASSWORD_TOO_SHORT,
-    @SerializedName("2212")
+    @SerializedName("2211")
     INVALID_INPUT_PASSWORD_TOO_SIMPLE,
-    @SerializedName("2213")
+    @SerializedName("2212")
     INVALID_INPUT_PASSWORD_TOO_OBVIOUS,
-    @SerializedName("2218")
+    @SerializedName("2217")
     INVALID_INPUT_EMAIL_NOT_RECOGNIZED,
-    @SerializedName("2219")
+    @SerializedName("2218")
     INVALID_INPUT_PASSWORD_EMAIL_MISMATCH,
     @SerializedName("2209")
     INVALID_INPUT_NO_PASSWORD,
-    @SerializedName("2215")
-    INVALID_INPUT_NO_EMAIL,
     @SerializedName("2214")
-    INVALID_INPUT_NO_RFC_822_EMAIL,
+    INVALID_INPUT_NO_EMAIL,
     @SerializedName("2215")
+    INVALID_INPUT_NO_RFC_822_EMAIL,
+    @SerializedName("2213")
     INVALID_INPUT_NO_NAME,
     @SerializedName("2208")
     INVALID_INPUT_NAME_TOO_LONG,
@@ -93,11 +91,15 @@ public enum ErrorCode {
     UNABLE_TO_LOGIN_TOKEN_CAN_NOT_DECRYPT,
     @SerializedName("2314")
     UNABLE_TO_LOGIN_TOKEN_TOO_LONG,
-    @SerializedName("2221")
+    @SerializedName("2219")
     INVALID_INPUT_GRANT_TYPE,
+    @SerializedName("2220")
+    INVALID_INPUT_EMBED_TYPE,
+    @SerializedName("2221")
+    INVALID_INPUT_VIEW_TYPE,
     @SerializedName("2315")
     UNABLE_TO_CREATE_USER_CAN_NOT_VALIDATE_TOKEN,
-    @SerializedName("2208")
+    @SerializedName("2207")
     INVALID_NO_INPUT,
     @SerializedName("2300")
     INVALID_TOKEN,
@@ -119,10 +121,10 @@ public enum ErrorCode {
     OPERATION_TIMED_OUT,
     @SerializedName("5001")
     ACCESS_TOKEN_NOT_GENERATED,
-    @SerializedName("5100")
-    USER_NOT_FOUND, // TODO: whattt
     @SerializedName("4000")
     METHOD_NOT_IMPLEMENTED,
+    @SerializedName("1.5000")
+    RESOURCE_NOT_FOUND, // TODO: whattt
     @SerializedName("7000")
     SERVER_BUSY,
     @SerializedName("7100")
