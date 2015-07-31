@@ -1,5 +1,7 @@
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +34,20 @@ public class Video implements Serializable {
         PUBLIC_DOMAIN_DEDICATION
     }
 
+    public enum Status
+    {
+        @SerializedName("available")
+        AVAILABLE,
+        @SerializedName("uploading")
+        UPLOADING,
+        @SerializedName("transcoding")
+        TRANSCODING,
+        @SerializedName("uploading_error")
+        UPLOADING_ERROR,
+        @SerializedName("transcoding_error")
+        TRANSCODING_ERROR
+    }
+
     public String uri;
     public String name;
     public String description;
@@ -52,7 +68,7 @@ public class Video implements Serializable {
     public StatsCollection stats;
     public Metadata metadata;
     public com.vimeo.networking.model.User user;
-    public String status;
+    public Status status;
 
     public boolean canLike() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
