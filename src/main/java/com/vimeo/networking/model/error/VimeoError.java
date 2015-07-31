@@ -91,6 +91,7 @@ public class VimeoError extends RuntimeException implements Serializable {
 
     /**
      * Returns the first invalid parameter in the parameter list
+     *
      * @return First InvalidParameter in the invalid parameters array
      */
     @Nullable
@@ -100,17 +101,17 @@ public class VimeoError extends RuntimeException implements Serializable {
     }
 
     public boolean isServiceUnavailable() {
-        return (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
+        return (retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
                (retrofitError.getResponse().getStatus() == 503);
     }
 
     public boolean isForbiddenError() {
-        return (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
+        return (retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
                (retrofitError.getResponse().getStatus() == 403);
     }
 
     public boolean isInvalidTokenError() {
-        if ((retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
+        if ((retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
             (retrofitError.getResponse().getStatus() == 401)) {
             List<Header> headers = retrofitError.getResponse().getHeaders();
             for (Header header : headers) {
