@@ -706,7 +706,7 @@ public class VimeoClient {
     }
 
 
-    public void comment(String uri, String comment, VimeoCallback<Object> callback) {
+    public void comment(String uri, String comment, ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -717,7 +717,10 @@ public class VimeoClient {
             return;
         }
 
-        this.vimeoService.comment(uri, comment, callback);
+        HashMap<String, String> postBody = new HashMap<>();
+        postBody.put(Vimeo.PARAMETER_COMMENT_TEXT_BODY, comment);
+
+        this.vimeoService.comment(getAuthHeader(), validateUri(uri), postBody, getRetrofitCallback(callback));
     }
 
     public void deleteVideo(String uri, VimeoCallback<Object> callback) {
@@ -738,7 +741,7 @@ public class VimeoClient {
 
     // region GETs
 
-    private Callback<Object> getRetrofitGetCallback(final ModelCallback callback) {
+    private Callback<Object> getRetrofitCallback(final ModelCallback callback) {
         return new VimeoCallback<Object>() {
             @Override
             public void success(Object o, VimeoResponse response) {
@@ -826,7 +829,7 @@ public class VimeoClient {
         }
 
         this.vimeoService.GET(getAuthHeader(), validateUri(uri), queryMap, cacheHeaderValue,
-                              getRetrofitGetCallback(callback));
+                              getRetrofitCallback(callback));
     }
 
     public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {

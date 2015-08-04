@@ -64,20 +64,21 @@ public interface VimeoService {
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("/tokens")
     void logOut(@Header("Authorization") String authHeader, Callback<Object> callback);
-   
+
     // region Editing
 
     @PATCH("/{uri}")
     void editVideo(@Header("Authorization") String authHeader,
                    @Path(value = "uri", encode = false) String uri, @Body HashMap<String, Object> parameters,
-                   Callback callback);
+                   Callback<Object> callback);
 
     @PATCH("/{uri}")
     void editUser(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                  @Body HashMap<String, Object> parameters, Callback callback);
+                  @Body HashMap<String, Object> parameters, Callback<Object> callback);
 
     @POST("/{uri}")
-    void comment(@Path(value = "uri", encode = false) String uri, @Body String text, Callback callback);
+    void comment(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
+                 @Body HashMap<String, String> parameters, Callback<Object> callback);
 
     // end region
 
