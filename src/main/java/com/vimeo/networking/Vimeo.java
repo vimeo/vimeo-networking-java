@@ -34,6 +34,8 @@ public class Vimeo {
     public static final String PARAMETER_VIDEO_DESCRIPTION = "description";
     public static final String PARAMETER_VIDEO_PRIVACY = "privacy";
 
+    public static final String PARAMETER_COMMENT_TEXT_BODY = "text";
+
     // Header Parameters
     public static final String HEADER_CACHE_CONTROL = "Cache-Control";
     public static final String HEADER_USER_AGENT = "User-Agent";
