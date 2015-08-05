@@ -25,6 +25,12 @@ public class Comment implements Serializable {
     public User user;
     public Metadata metadata;
 
+    public int replyCount() {
+        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.replies != null)) {
+            return metadata.connections.replies.total;
+        }
+        return 0;
+    }
 
     @Override
     public boolean equals(Object o) {
