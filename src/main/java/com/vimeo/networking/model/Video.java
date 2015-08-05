@@ -34,18 +34,30 @@ public class Video implements Serializable {
         PUBLIC_DOMAIN_DEDICATION
     }
 
-    public enum Status
-    {
+    public enum Status {
+        NONE("N/A"),
         @SerializedName("available")
-        AVAILABLE,
+        AVAILABLE("available"),
         @SerializedName("uploading")
-        UPLOADING,
+        UPLOADING("uploading"),
         @SerializedName("transcoding")
-        TRANSCODING,
+        TRANSCODING("transcoding"),
         @SerializedName("uploading_error")
-        UPLOADING_ERROR,
+        UPLOADING_ERROR("uploading_error"),
         @SerializedName("transcoding_error")
-        TRANSCODING_ERROR
+        TRANSCODING_ERROR("transcoding_error");
+
+        private String string;
+
+        Status(String string) {
+            this.string = string;
+        }
+
+        @Override
+        // Overridden for analytics.
+        public String toString() {
+            return this.string;
+        }
     }
 
     public String uri;
@@ -68,7 +80,11 @@ public class Video implements Serializable {
     public StatsCollection stats;
     public Metadata metadata;
     public com.vimeo.networking.model.User user;
-    public Status status;
+    private Status status;
+
+    public Status getStatus() {
+        return status == null ? Status.NONE : status;
+    }
 
     public boolean canLike() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {

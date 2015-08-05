@@ -21,15 +21,27 @@ public class VideoFile implements Serializable {
     }
 
     public enum VideoQuality {
-        NONE,
+        NONE("N/A"),
         @SerializedName("hls")
-        HLS,
+        HLS("hls"),
         @SerializedName("hd")
-        HD,
+        HD("hd"),
         @SerializedName("sd")
-        SD,
+        SD("sd"),
         @SerializedName("mobile")
-        MOBILE
+        MOBILE("mobile");
+
+        private String string;
+
+        VideoQuality(String string) {
+            this.string = string;
+        }
+
+        @Override
+        // Overridden for analytics.
+        public String toString() {
+            return this.string;
+        }
     }
 
     private static final long serialVersionUID = -5256416394912086020L;

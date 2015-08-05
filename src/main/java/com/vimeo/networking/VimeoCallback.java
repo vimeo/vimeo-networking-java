@@ -5,7 +5,6 @@ import com.vimeo.networking.model.error.VimeoError;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 
 /**
  * Created by zetterstromk on 5/27/15.
@@ -25,12 +24,6 @@ public abstract class VimeoCallback<T> implements Callback<T> {
 
     @Override
     public void failure(RetrofitError error) {
-    // Useful code for debugging the raw response [KV]
-        String json = "";
-        if (error != null && error.getResponse() != null && error.getResponse().getBody() != null) {
-            json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
-        }
-
         VimeoError vimeoError = null;
         try {
             vimeoError = (VimeoError) error.getBodyAs(VimeoError.class);
