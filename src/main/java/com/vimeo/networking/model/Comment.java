@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.Vimeo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,6 +31,15 @@ public class Comment implements Serializable {
             return metadata.connections.replies.total;
         }
         return 0;
+    }
+
+    public boolean canReply() {
+        if ((metadata != null) && (metadata.connections != null) &&
+            (metadata.connections.replies != null) &&
+            (metadata.connections.replies.options != null)) {
+            return metadata.connections.replies.options.contains(Vimeo.OPTIONS_POST);
+        }
+        return false;
     }
 
     @Override

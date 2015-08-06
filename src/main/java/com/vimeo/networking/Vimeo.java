@@ -73,6 +73,8 @@ public class Vimeo {
 
     public static final String PAGE_SIZE_MAX = "100";
 
+    public static final String OPTIONS_POST = "POST";
+
     // Fields (for invalid params)
     public static final String FIELD_NAME = "name";
     public static final String FIELD_EMAIL = "email";
