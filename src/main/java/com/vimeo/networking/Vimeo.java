@@ -42,6 +42,7 @@ public class Vimeo {
     public static final String HEADER_ACCEPT = "Accept";
 
     // GET and Sorting Parameters
+    public static final String PARAMETER_GET_PAGE_SIZE = "per_page";
     public static final String PARAMETER_GET_QUERY = "query";
     public static final String PARAMETER_GET_SORT = "sort";
     public static final String PARAMETER_GET_DIRECTION = "direction";
@@ -69,6 +70,8 @@ public class Vimeo {
     public static final String FILTER_UPLOAD_DATE_WEEK = "week";
     public static final String FILTER_UPLOAD_DATE_MONTH = "month";
     public static final String FILTER_UPLOAD_DATE_YEAR = "year";
+
+    public static final String PAGE_SIZE_MAX = "100";
 
     // Fields (for invalid params)
     public static final String FIELD_NAME = "name";
