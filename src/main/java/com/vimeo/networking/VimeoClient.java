@@ -525,8 +525,8 @@ public class VimeoClient {
 
     // region Editing
 
-    public void editVideo(String uri, String title, String description, Privacy.PrivacyValue privacyValue,
-                          ModelCallback callback) {
+    public void editVideo(String uri, String title, String description, String password,
+                          Privacy.PrivacyValue privacyValue, ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -561,7 +561,15 @@ public class VimeoClient {
 
         parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
 
-        this.vimeoService.editVideo(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
+        if ((privacyValue == Privacy.PrivacyValue.PASSWORD) && ((password == null) || (password.isEmpty()))) {
+            callback.failure(new VimeoError("password is required for password privacy type"));
+            return;
+        } else if (privacyValue == Privacy.PrivacyValue.PASSWORD) {
+            parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
+        }
+
+        this.vimeoService
+                .editVideo(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
     }
 
     public void editUser(String uri, String name, String location, VimeoCallback callback) {

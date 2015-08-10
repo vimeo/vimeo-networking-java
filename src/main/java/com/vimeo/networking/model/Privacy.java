@@ -10,22 +10,28 @@ import java.io.Serializable;
 public class Privacy implements Serializable {
 
     private static final long serialVersionUID = -1679908652622815871L;
+    private static final String PRIVACY_NOBODY = "nobody";
+    private static final String PRIVACY_USERS = "users";
+    private static final String PRIVACY_ANYBODY = "anybody";
+    private static final String PRIVACY_VOD = "ptv";
+    private static final String PRIVACY_CONTACTS = "contacts";
+    private static final String PRIVACY_PASSWORD = "password";
+    private static final String PRIVACY_DISABLE = "disable";
 
-    public enum PrivacyValue
-    {
-        @SerializedName("nobody")
+    public enum PrivacyValue {
+        @SerializedName(PRIVACY_NOBODY)
         NOBODY,
-        @SerializedName("users")
+        @SerializedName(PRIVACY_USERS)
         USERS,
-        @SerializedName("anybody")
+        @SerializedName(PRIVACY_ANYBODY)
         ANYBODY,
-        @SerializedName("ptv")
+        @SerializedName(PRIVACY_VOD)
         VOD, // "ptv"
-        @SerializedName("contacts")
+        @SerializedName(PRIVACY_CONTACTS)
         CONTACTS,
-        @SerializedName("password")
+        @SerializedName(PRIVACY_PASSWORD)
         PASSWORD,
-        @SerializedName("disable")
+        @SerializedName(PRIVACY_DISABLE)
         DISABLE
     }
 
@@ -40,38 +46,63 @@ public class Privacy implements Serializable {
 
         switch (value) {
             case NOBODY:
-                privacyString = "nobody";
+                privacyString = PRIVACY_NOBODY;
                 break;
 
             case USERS:
-                privacyString = "users";
-                break;
-
-            case ANYBODY:
-                privacyString = "anybody";
+                privacyString = PRIVACY_USERS;
                 break;
 
             case VOD:
-                privacyString = "ptv";
+                privacyString = PRIVACY_VOD;
                 break;
 
             case CONTACTS:
-                privacyString = "contacts";
+                privacyString = PRIVACY_CONTACTS;
                 break;
 
             case PASSWORD:
-                privacyString = "password";
+                privacyString = PRIVACY_PASSWORD;
                 break;
 
             case DISABLE:
-                privacyString = "disable";
+                privacyString = PRIVACY_DISABLE;
                 break;
 
+            case ANYBODY:
             default:
-                privacyString = "anybody";
+                privacyString = PRIVACY_ANYBODY;
                 break;
         }
 
         return privacyString;
+    }
+
+    static public PrivacyValue privacyValueFromString(final String string) {
+        PrivacyValue privacyValue = PrivacyValue.ANYBODY;
+        switch (string) {
+            case PRIVACY_NOBODY:
+                privacyValue = PrivacyValue.NOBODY;
+                break;
+            case PRIVACY_USERS:
+                privacyValue = PrivacyValue.USERS;
+                break;
+            case PRIVACY_ANYBODY:
+                privacyValue = PrivacyValue.ANYBODY;
+                break;
+            case PRIVACY_VOD:
+                privacyValue = PrivacyValue.VOD;
+                break;
+            case PRIVACY_CONTACTS:
+                privacyValue = PrivacyValue.CONTACTS;
+                break;
+            case PRIVACY_PASSWORD:
+                privacyValue = PrivacyValue.PASSWORD;
+                break;
+            case PRIVACY_DISABLE:
+                privacyValue = PrivacyValue.DISABLE;
+                break;
+        }
+        return privacyValue;
     }
 }
