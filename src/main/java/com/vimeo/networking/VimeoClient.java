@@ -561,7 +561,8 @@ public class VimeoClient {
 
         parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
 
-        if ((privacyValue == Privacy.PrivacyValue.PASSWORD) && ((password == null) || (password.isEmpty()))) {
+        if ((privacyValue == Privacy.PrivacyValue.PASSWORD) &&
+            ((password == null) || (password.trim().isEmpty()))) {
             callback.failure(new VimeoError("password is required for password privacy type"));
             return;
         } else if (privacyValue == Privacy.PrivacyValue.PASSWORD) {
@@ -572,7 +573,7 @@ public class VimeoClient {
                 .editVideo(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
     }
 
-    public void editUser(String uri, String name, String location, VimeoCallback callback) {
+    public void editUser(String uri, String name, String location, ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -600,7 +601,8 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_USERS_LOCATION, location);
         }
 
-        this.vimeoService.editUser(getAuthHeader(), validateUri(uri), parameters, callback);
+        this.vimeoService
+                .editUser(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
     }
 
     public void updateFollow(boolean follow, String uri, VimeoCallback callback) {
