@@ -526,7 +526,7 @@ public class VimeoClient {
     // region Editing
 
     public void editVideo(String uri, String title, String description, Privacy.PrivacyValue privacyValue,
-                          VimeoCallback callback) {
+                          ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -561,7 +561,7 @@ public class VimeoClient {
 
         parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
 
-        this.vimeoService.editVideo(getAuthHeader(), uri, parameters, callback);
+        this.vimeoService.editVideo(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
     }
 
     public void editUser(String uri, String name, String location, VimeoCallback callback) {
@@ -592,7 +592,7 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_USERS_LOCATION, location);
         }
 
-        this.vimeoService.editUser(getAuthHeader(), uri, parameters, callback);
+        this.vimeoService.editUser(getAuthHeader(), validateUri(uri), parameters, callback);
     }
 
     public void updateFollow(boolean follow, String uri, VimeoCallback callback) {
