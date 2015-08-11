@@ -20,19 +20,40 @@ public class Privacy implements Serializable {
 
     public enum PrivacyValue {
         @SerializedName(PRIVACY_NOBODY)
-        NOBODY,
+        NOBODY(PRIVACY_NOBODY),
         @SerializedName(PRIVACY_USERS)
-        USERS,
+        USERS(PRIVACY_USERS),
         @SerializedName(PRIVACY_ANYBODY)
-        ANYBODY,
+        ANYBODY(PRIVACY_ANYBODY),
         @SerializedName(PRIVACY_VOD)
-        VOD, // "ptv"
+        VOD(PRIVACY_VOD), // "ptv"
         @SerializedName(PRIVACY_CONTACTS)
-        CONTACTS,
+        CONTACTS(PRIVACY_CONTACTS),
         @SerializedName(PRIVACY_PASSWORD)
-        PASSWORD,
+        PASSWORD(PRIVACY_PASSWORD),
         @SerializedName(PRIVACY_DISABLE)
-        DISABLE
+        DISABLE(PRIVACY_DISABLE);
+
+        private String text;
+
+        PrivacyValue(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return this.text;
+        }
+
+        public static PrivacyValue privacyValueFromString(String text) {
+            if (text != null) {
+                for (PrivacyValue privacyValue : PrivacyValue.values()) {
+                    if (text.equalsIgnoreCase(privacyValue.text)) {
+                        return privacyValue;
+                    }
+                }
+            }
+            return null;
+        }
     }
 
     public PrivacyValue view;
@@ -76,33 +97,5 @@ public class Privacy implements Serializable {
         }
 
         return privacyString;
-    }
-
-    static public PrivacyValue privacyValueFromString(final String string) {
-        PrivacyValue privacyValue = PrivacyValue.ANYBODY;
-        switch (string) {
-            case PRIVACY_NOBODY:
-                privacyValue = PrivacyValue.NOBODY;
-                break;
-            case PRIVACY_USERS:
-                privacyValue = PrivacyValue.USERS;
-                break;
-            case PRIVACY_ANYBODY:
-                privacyValue = PrivacyValue.ANYBODY;
-                break;
-            case PRIVACY_VOD:
-                privacyValue = PrivacyValue.VOD;
-                break;
-            case PRIVACY_CONTACTS:
-                privacyValue = PrivacyValue.CONTACTS;
-                break;
-            case PRIVACY_PASSWORD:
-                privacyValue = PrivacyValue.PASSWORD;
-                break;
-            case PRIVACY_DISABLE:
-                privacyValue = PrivacyValue.DISABLE;
-                break;
-        }
-        return privacyValue;
     }
 }
