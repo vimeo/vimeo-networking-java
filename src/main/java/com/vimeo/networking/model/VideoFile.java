@@ -49,7 +49,7 @@ public class VideoFile implements Serializable {
     public Date expires;
     public int width;
     public int height;
-    public int size;
+    public long size;
     public String link;
     private VideoQuality quality;
     private MimeType type;
