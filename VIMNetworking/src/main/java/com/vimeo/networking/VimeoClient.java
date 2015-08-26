@@ -16,6 +16,7 @@ import com.vimeo.networking.model.error.VimeoError;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -144,7 +145,10 @@ public class VimeoClient {
     public static GsonBuilder getGsonBuilder() {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
+                                .registerTypeAdapter(Date.class, ISO8601.getDateSerializer())
+                                .registerTypeAdapter(Date.class, ISO8601.getDateDeserializer());
+        /** Refer to {@link ISO8601} for explanation of deserialization */
+        // .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ")
     }
 
     /**
@@ -154,6 +158,7 @@ public class VimeoClient {
      * @param cacheControl The CacheControl to convert to a builder
      * @return A builder with the same attributes as the CacheControl passed in
      */
+
     public CacheControl.Builder getCacheControlBuilder(CacheControl cacheControl) {
         CacheControl.Builder builder = new CacheControl.Builder();
         if (cacheControl.maxAgeSeconds() > -1) {
