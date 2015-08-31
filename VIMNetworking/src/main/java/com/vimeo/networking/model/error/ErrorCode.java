@@ -97,6 +97,10 @@ public enum ErrorCode {
     INVALID_INPUT_EMBED_TYPE,
     @SerializedName("2221")
     INVALID_INPUT_VIEW_TYPE,
+    @SerializedName("2222")
+    INVALID_INPUT_VIDEO_PASSWORD_MISMATCH,
+    @SerializedName("2223")
+    INVALID_INPUT_VIDEO_NO_PASSWORD,
     @SerializedName("2315")
     UNABLE_TO_CREATE_USER_CAN_NOT_VALIDATE_TOKEN,
     @SerializedName("2207")
@@ -117,6 +121,12 @@ public enum ErrorCode {
     PURGATORY_USER,
     @SerializedName("2404")
     URL_UNAVAILABLE,
+    @SerializedName("2406")
+    USER_NOT_AUTHORIZED_TO_DELETE_ACCOUNT,
+    @SerializedName("2500")
+    APP_DOES_NOT_HAVE_DELETE_CAPABILITY,
+    @SerializedName("2501")
+    APP_DOES_NOT_HAVE_PROTECTED_VIDEO_CAPABILITY,
     @SerializedName("4000")
     OPERATION_TIMED_OUT,
     @SerializedName("5001")
