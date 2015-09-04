@@ -124,6 +124,18 @@ public class VimeoError extends RuntimeException implements Serializable {
         return false;
     }
 
+    public boolean isPasswordRequiredError() {
+        if (((getInvalidParameter() != null) &&
+             (getInvalidParameter().getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD)) ||
+            ((getInvalidParameter() != null) &&
+             (getInvalidParameter().getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH)) ||
+            (getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD) ||
+            (getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH)) {
+            return true;
+        }
+        return false;
+    }
+
     public void addInvalidParameter(String field, ErrorCode code, String developerMessage) {
         InvalidParameter invalidParameter = new InvalidParameter(field, code, developerMessage);
         if (this.invalidParameters == null) {
