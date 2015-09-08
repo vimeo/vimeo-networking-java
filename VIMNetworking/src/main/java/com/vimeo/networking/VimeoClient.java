@@ -620,132 +620,64 @@ public class VimeoClient {
     }
 
     public void follow(String uri, Map<String, String> options, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-        if (options == null) {
-            options = new HashMap<>();
-        }
-
-        PUT(getAuthHeader(), uri, options, callback);
+        putContent(uri, options, callback);
     }
 
     public void unfollow(String uri, Map<String, String> options, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        if (options == null) {
-            options = new HashMap<>();
-        }
-
-        DELETE(getAuthHeader(), uri, options, callback);
+        deleteContent(uri, options, callback);
     }
 
-    public void updateLikeVideo(boolean like, String uri, Map<String, String> options,
-                                VimeoCallback callback) {
+    public void updateLikeVideo(boolean like, String uri, @Nullable String password, VimeoCallback callback) {
         if (like) {
-            this.likeVideo(uri, options, callback);
+            this.likeVideo(uri, password, callback);
         } else {
-            this.unlikeVideo(uri, options, callback);
+            this.unlikeVideo(uri, password, callback);
         }
     }
 
-    public void likeVideo(String uri, Map<String, String> options, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
+    public void likeVideo(String uri, @Nullable String password, VimeoCallback callback) {
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        if (options == null) {
-            options = new HashMap<>();
-        }
-
-        PUT(getAuthHeader(), uri, options, callback);
+        putContent(uri, options, callback);
     }
 
-    public void unlikeVideo(String uri, Map<String, String> options, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
+    public void unlikeVideo(String uri, @Nullable String password, VimeoCallback callback) {
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-        if (options == null) {
-            options = new HashMap<>();
-        }
-
-        DELETE(getAuthHeader(), uri, options, callback);
+        deleteContent(uri, options, callback);
     }
 
-    public void updateWatchLaterVideo(boolean watchLater, String uri, Map<String, String> options,
+    public void updateWatchLaterVideo(boolean watchLater, String uri, @Nullable String password,
                                       VimeoCallback callback) {
         if (watchLater) {
-            this.watchLaterVideo(uri, options, callback);
+            this.watchLaterVideo(uri, password, callback);
         } else {
-            this.unwatchLaterVideo(uri, options, callback);
+            this.unwatchLaterVideo(uri, password, callback);
         }
     }
 
-    public void watchLaterVideo(String uri, Map<String, String> options, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
+    public void watchLaterVideo(String uri, @Nullable String password, VimeoCallback callback) {
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        if (options == null) {
-            options = new HashMap<>();
-        }
-
-        PUT(getAuthHeader(), uri, options, callback);
+        putContent(uri, options, callback);
     }
 
-    public void unwatchLaterVideo(String uri, Map<String, String> options, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
+    public void unwatchLaterVideo(String uri, @Nullable String password, VimeoCallback callback) {
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-        if (options == null) {
-            options = new HashMap<>();
-        }
-
-        DELETE(getAuthHeader(), uri, options, callback);
+        deleteContent(uri, options, callback);
     }
 
 
-    public void comment(String uri, String comment, Map<String, String> options, ModelCallback callback) {
+    public void comment(String uri, String comment, @Nullable String password, ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -756,8 +688,9 @@ public class VimeoClient {
             return;
         }
 
-        if (options == null) {
-            options = new HashMap<>();
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
 
         HashMap<String, String> postBody = new HashMap<>();
@@ -768,20 +701,7 @@ public class VimeoClient {
     }
 
     public void deleteVideo(String uri, Map<String, String> options, VimeoCallback<Object> callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-        if (options == null) {
-            options = new HashMap<>();
-        }
-
-        DELETE(getAuthHeader(), uri, options, callback);
+        deleteContent(uri, options, callback);
     }
 
     // end region
@@ -947,6 +867,43 @@ public class VimeoClient {
                 callback.failure(error);
             }
         });
+    }
+
+    public void putContent(String uri, @Nullable Map<String, String> options,
+                           VimeoCallback<Object> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+            return;
+        }
+
+        if (options == null) {
+            options = new HashMap<>();
+        }
+
+        PUT(getAuthHeader(), uri, options, callback);
+    }
+
+    public void deleteContent(String uri, @Nullable Map<String, String> options,
+                              VimeoCallback<Object> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+
+            return;
+        }
+        if (options == null) {
+            options = new HashMap<>();
+        }
+
+        DELETE(getAuthHeader(), uri, options, callback);
     }
 
     // end region
