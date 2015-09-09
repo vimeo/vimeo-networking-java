@@ -78,7 +78,8 @@ public interface VimeoService {
 
     @POST("/{uri}")
     void comment(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                 @Body HashMap<String, String> parameters, Callback<Object> callback);
+                 @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters,
+                 Callback<Object> callback);
 
     // end region
 
@@ -86,11 +87,11 @@ public interface VimeoService {
 
     @PUT("/{uri}")
     void PUT(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-             Callback<Object> callback);
+             @QueryMap Map<String, String> options, Callback<Object> callback);
 
     @DELETE("/{uri}")
     void DELETE(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                Callback<Object> callback);
+                @QueryMap Map<String, String> options, Callback<Object> callback);
 
     @GET("/{uri}")
     void GET(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
