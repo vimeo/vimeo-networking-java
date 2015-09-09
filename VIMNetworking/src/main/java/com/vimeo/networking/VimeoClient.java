@@ -619,109 +619,64 @@ public class VimeoClient {
     }
 
     public void follow(String uri, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        PUT(getAuthHeader(), uri, callback);
+        putContent(uri, null, callback);
     }
 
     public void unfollow(String uri, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        DELETE(getAuthHeader(), uri, callback);
+        deleteContent(uri, null, callback);
     }
 
-    public void updateLikeVideo(boolean like, String uri, VimeoCallback callback) {
+    public void updateLikeVideo(boolean like, String uri, @Nullable String password, VimeoCallback callback) {
         if (like) {
-            this.likeVideo(uri, callback);
+            this.likeVideo(uri, password, callback);
         } else {
-            this.unlikeVideo(uri, callback);
+            this.unlikeVideo(uri, password, callback);
         }
     }
 
-    public void likeVideo(String uri, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
+    public void likeVideo(String uri, @Nullable String password, VimeoCallback callback) {
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        PUT(getAuthHeader(), uri, callback);
+        putContent(uri, options, callback);
     }
 
-    public void unlikeVideo(String uri, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
+    public void unlikeVideo(String uri, @Nullable String password, VimeoCallback callback) {
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        DELETE(getAuthHeader(), uri, callback);
+        deleteContent(uri, options, callback);
     }
 
-    public void updateWatchLaterVideo(boolean watchLater, String uri, VimeoCallback callback) {
+    public void updateWatchLaterVideo(boolean watchLater, String uri, @Nullable String password,
+                                      VimeoCallback callback) {
         if (watchLater) {
-            this.watchLaterVideo(uri, callback);
+            this.watchLaterVideo(uri, password, callback);
         } else {
-            this.unwatchLaterVideo(uri, callback);
+            this.unwatchLaterVideo(uri, password, callback);
         }
     }
 
-    public void watchLaterVideo(String uri, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
+    public void watchLaterVideo(String uri, @Nullable String password, VimeoCallback callback) {
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        PUT(getAuthHeader(), uri, callback);
+        putContent(uri, options, callback);
     }
 
-    public void unwatchLaterVideo(String uri, VimeoCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
+    public void unwatchLaterVideo(String uri, @Nullable String password, VimeoCallback callback) {
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        DELETE(getAuthHeader(), uri, callback);
+        deleteContent(uri, options, callback);
     }
 
 
-    public void comment(String uri, String comment, ModelCallback callback) {
+    public void comment(String uri, String comment, @Nullable String password, ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -732,24 +687,20 @@ public class VimeoClient {
             return;
         }
 
+        Map<String, String> options = new HashMap<>();
+        if (password != null) {
+            options.put(Vimeo.PARAMETER_PASSWORD, password);
+        }
+
         HashMap<String, String> postBody = new HashMap<>();
         postBody.put(Vimeo.PARAMETER_COMMENT_TEXT_BODY, comment);
 
-        this.vimeoService.comment(getAuthHeader(), validateUri(uri), postBody, getRetrofitCallback(callback));
+        this.vimeoService
+                .comment(getAuthHeader(), validateUri(uri), options, postBody, getRetrofitCallback(callback));
     }
 
-    public void deleteVideo(String uri, VimeoCallback<Object> callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return;
-        }
-
-        DELETE(getAuthHeader(), uri, callback);
+    public void deleteVideo(String uri, Map<String, String> options, VimeoCallback<Object> callback) {
+        deleteContent(uri, options, callback);
     }
 
     // end region
@@ -917,6 +868,43 @@ public class VimeoClient {
         });
     }
 
+    public void putContent(String uri, @Nullable Map<String, String> options,
+                           VimeoCallback<Object> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+            return;
+        }
+
+        if (options == null) {
+            options = new HashMap<>();
+        }
+
+        PUT(getAuthHeader(), uri, options, callback);
+    }
+
+    public void deleteContent(String uri, @Nullable Map<String, String> options,
+                              VimeoCallback<Object> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+
+            return;
+        }
+        if (options == null) {
+            options = new HashMap<>();
+        }
+
+        DELETE(getAuthHeader(), uri, options, callback);
+    }
+
     // end region
 
     // region HeaderValues
@@ -972,12 +960,13 @@ public class VimeoClient {
         }
     }
 
-    private void PUT(String authHeader, String uri, Callback<Object> callback) {
-        this.vimeoService.PUT(authHeader, validateUri(uri), callback);
+    private void PUT(String authHeader, String uri, Map<String, String> options, Callback<Object> callback) {
+        this.vimeoService.PUT(authHeader, validateUri(uri), options, callback);
     }
 
-    private void DELETE(String authHeader, String uri, Callback<Object> callback) {
-        this.vimeoService.DELETE(authHeader, validateUri(uri), callback);
+    private void DELETE(String authHeader, String uri, Map<String, String> options,
+                        Callback<Object> callback) {
+        this.vimeoService.DELETE(authHeader, validateUri(uri), options, callback);
     }
 
     private void POST(String authHeader, String uri, String cacheHeaderValue,
