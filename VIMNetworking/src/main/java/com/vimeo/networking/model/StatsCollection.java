@@ -8,5 +8,5 @@ import java.io.Serializable;
 public class StatsCollection implements Serializable {
 
     private static final long serialVersionUID = -348202198117360187L;
-    public int plays;
+    public Integer plays;
 }
