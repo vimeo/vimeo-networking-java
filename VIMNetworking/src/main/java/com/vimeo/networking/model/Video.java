@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by alfredhanssen on 4/12/15.
  */
@@ -120,6 +122,16 @@ public class Video implements Serializable {
         }
 
         return 0;
+    }
+
+    @Nullable
+    public Integer playCount() {
+        if (stats != null) {
+            return stats.plays;
+        } else {
+            return null;
+        }
+
     }
 
     @Override
