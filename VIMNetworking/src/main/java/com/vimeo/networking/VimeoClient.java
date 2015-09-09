@@ -610,21 +610,20 @@ public class VimeoClient {
                 .editUser(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
     }
 
-    public void updateFollow(boolean follow, String uri, Map<String, String> options,
-                             VimeoCallback callback) {
+    public void updateFollow(boolean follow, String uri, VimeoCallback callback) {
         if (follow) {
-            this.follow(uri, options, callback);
+            this.follow(uri, callback);
         } else {
-            this.unfollow(uri, options, callback);
+            this.unfollow(uri, callback);
         }
     }
 
-    public void follow(String uri, Map<String, String> options, VimeoCallback callback) {
-        putContent(uri, options, callback);
+    public void follow(String uri, VimeoCallback callback) {
+        putContent(uri, null, callback);
     }
 
-    public void unfollow(String uri, Map<String, String> options, VimeoCallback callback) {
-        deleteContent(uri, options, callback);
+    public void unfollow(String uri, VimeoCallback callback) {
+        deleteContent(uri, null, callback);
     }
 
     public void updateLikeVideo(boolean like, String uri, @Nullable String password, VimeoCallback callback) {
