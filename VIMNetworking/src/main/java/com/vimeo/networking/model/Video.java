@@ -83,6 +83,7 @@ public class Video implements Serializable {
     public Metadata metadata;
     public com.vimeo.networking.model.User user;
     private Status status;
+    public VideoLog log;
 
     public Status getStatus() {
         return status == null ? Status.NONE : status;

@@ -855,17 +855,7 @@ public class VimeoClient {
             cacheHeaderValue = cacheControl.toString();
         }
 
-        POST(getAuthHeader(), uri, cacheHeaderValue, postBody, new VimeoCallback<Object>() {
-            @Override
-            public void success(Object o, VimeoResponse response) {
-                callback.success(o, response);
-            }
-
-            @Override
-            public void failure(VimeoError error) {
-                callback.failure(error);
-            }
-        });
+        POST(getAuthHeader(), uri, cacheHeaderValue, postBody, callback);
     }
 
     public void putContent(String uri, @Nullable Map<String, String> options,
