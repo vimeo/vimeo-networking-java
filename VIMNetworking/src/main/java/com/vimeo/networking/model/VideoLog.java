@@ -25,18 +25,18 @@ public class VideoLog implements Serializable {
     public String watchLater;
 
     public boolean isLoadEmpty() {
-        return load == null || load.isEmpty();
+        return load == null || load.trim().isEmpty();
     }
 
     public boolean isPlayEmpty() {
-        return play == null || play.isEmpty();
+        return play == null || play.trim().isEmpty();
     }
 
     public boolean isLikeEmpty() {
-        return like == null || like.isEmpty();
+        return like == null || like.trim().isEmpty();
     }
 
     public boolean isWatchLaterEmpty() {
-        return watchLater == null || watchLater.isEmpty();
+        return watchLater == null || watchLater.trim().isEmpty();
     }
 }
