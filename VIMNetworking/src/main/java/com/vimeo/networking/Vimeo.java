@@ -42,6 +42,15 @@ public class Vimeo {
     public static final String HEADER_USER_AGENT = "User-Agent";
     public static final String HEADER_ACCEPT = "Accept";
 
+    // Video Analytics Parameters
+    public static final String PARAMETER_SESSION_ID = "session_id";
+    public static final String PARAMETER_LOCALE = "locale";
+    public static final String PARAMETER_TIME = "time";
+    public static final String PARAMETER_QUALITY = "quality";
+    public static final String PARAMETER_DURATION = "duration";
+    public static final String PARAMETER_PROGRESS = "progress";
+    public static final String PARAMETER_BUTTON_STATE = "button_state";
+
     // GET and Sorting Parameters
     public static final String PARAMETER_GET_PAGE_SIZE = "per_page";
     public static final String PARAMETER_GET_QUERY = "query";

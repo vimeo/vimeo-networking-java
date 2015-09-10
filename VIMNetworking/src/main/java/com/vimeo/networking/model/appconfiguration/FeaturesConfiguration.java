@@ -17,7 +17,7 @@ public class FeaturesConfiguration {
     public boolean comScoreEnabled;
 
     @SerializedName("play_tracking")
-    public boolean playTrackingEnabled;
+    public boolean playTrackingEnabled = true; // Default to true
 
     @SerializedName("chromecast_app_id")
     public String chromecastReceiverAppID;
