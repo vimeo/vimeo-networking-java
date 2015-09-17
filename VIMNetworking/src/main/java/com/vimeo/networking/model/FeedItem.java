@@ -32,7 +32,6 @@ public class FeedItem implements Serializable {
 
     private static final long serialVersionUID = -8744477085158366576L;
 
-    //TODO I have only seen like/channel types, we need more types [KZ]
     public enum AttributionType {
         UPLOAD,
         LIKE,
@@ -52,6 +51,7 @@ public class FeedItem implements Serializable {
     public Channel channel; // from channel type
     public Tag tag;
     public Group group;
+    public Metadata metadata;
 
     public AttributionType getType() {
         if (type.equalsIgnoreCase("channel")) {
@@ -84,7 +84,8 @@ public class FeedItem implements Serializable {
 
         FeedItem that = (FeedItem) o;
 
-        return ((this.clip != null && that.clip != null) && (this.clip.uri != null && that.clip.uri != null) && this.clip.uri.equals(that.clip.uri));
+        return ((this.clip != null && that.clip != null) &&
+                (this.clip.uri != null && that.clip.uri != null) && this.clip.uri.equals(that.clip.uri));
     }
 
     @Override
