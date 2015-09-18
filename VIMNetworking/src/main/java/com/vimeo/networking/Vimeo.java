@@ -96,6 +96,7 @@ public class Vimeo {
     public static final String SORT_DIRECTION_DESCENDING = "desc";
 
     // Filter (filter) Values
+    public static final String FILTER_RELATED = "related";
     public static final String FILTER_UPLOAD = "upload_date";
     // Filter Upload Date Values
     public static final String FILTER_UPLOAD_DATE_TODAY = "day";
