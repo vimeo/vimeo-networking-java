@@ -48,4 +48,5 @@ public class ConnectionCollection implements Serializable {
     public Connection related;
     public Connection replies;
     public Connection users;
+    public Connection watchlater;
 }
