@@ -82,6 +82,10 @@ public class Account implements Serializable {
         return this.user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getUserJSON() // For AccountManager.userData [AH]
     {
         if (this.user == null) {
