@@ -53,6 +53,9 @@ public class User implements Serializable {
     public Metadata metadata;
 
     public AccountType getAccountType() {
+        if (this.account == null) {
+            return AccountType.BASIC;
+        }
         if (this.account.equals("basic")) {
             return AccountType.BASIC;
         } else if (this.account.equals("plus")) {
