@@ -600,7 +600,8 @@ public class VimeoClient {
                 .editVideo(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
     }
 
-    public void editUser(String uri, String name, String location, ModelCallback callback) {
+    public void editUser(String uri, @Nullable String name, @Nullable String location, @Nullable String bio,
+                         ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -611,9 +612,9 @@ public class VimeoClient {
             return;
         }
 
-        if (name == null && location == null) // No point in editing user
+        if (name == null && location == null && bio == null) // No point in editing user
         {
-            callback.failure(new VimeoError("name and location cannot be empty!"));
+            callback.failure(new VimeoError("name, location, and bio cannot all be empty!"));
 
             return;
         }
@@ -626,6 +627,10 @@ public class VimeoClient {
 
         if (location != null) {
             parameters.put(Vimeo.PARAMETER_USERS_LOCATION, location);
+        }
+
+        if (bio != null) {
+            parameters.put(Vimeo.PARAMETER_USERS_BIO, bio);
         }
 
         this.vimeoService
