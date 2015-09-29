@@ -54,6 +54,9 @@ public class User implements Serializable {
 
     public AccountType getAccountType() {
         if (this.account == null) {
+            //We should assume the account object could be null; also, a User object could be created with
+            // just a uri, then updated when fetched from the server, so account would be null until then.
+            // Scenario: deeplinking. [KZ] 9/29/15
             return AccountType.BASIC;
         }
         if (this.account.equals("basic")) {
