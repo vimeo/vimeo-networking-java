@@ -24,7 +24,6 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,9 +32,7 @@ import javax.annotation.Nullable;
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-public class Video implements Serializable {
-
-    private static final long serialVersionUID = -1282907783845240057L;
+public class Video extends BaseVideo {
 
     public enum ContentRating // TODO: use this enum [AH] 4/24/2015
     {
@@ -157,23 +154,17 @@ public class Video implements Serializable {
 
     }
 
+    @Nullable
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Video that = (Video) o;
-
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+    public Video getVideo() {
+        return this;
     }
 
     @Override
-    public int hashCode() {
-        return this.uri != null ? this.uri.hashCode() : 0;
+    public String getRelatedUri() {
+        if (metadata == null || metadata.connections == null || metadata.connections.related == null) {
+            return null;
+        }
+        return metadata.connections.related.uri;
     }
-
 }
