@@ -22,15 +22,12 @@
 
 package com.vimeo.networking.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by zetterstromk on 6/24/15.
  */
-public class FeedItem implements Serializable {
-
-    private static final long serialVersionUID = -8744477085158366576L;
+public class FeedItem extends BaseVideo {
 
     public enum AttributionType {
         UPLOAD,
@@ -53,6 +50,7 @@ public class FeedItem implements Serializable {
     public Group group;
     public Metadata metadata;
 
+    // TODO: this can use serializedname [basevid]
     public AttributionType getType() {
         if (type.equalsIgnoreCase("channel")) {
             return AttributionType.CHANNEL;
@@ -74,24 +72,17 @@ public class FeedItem implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        FeedItem that = (FeedItem) o;
-
-        return ((this.clip != null && that.clip != null) &&
-                (this.clip.uri != null && that.clip.uri != null) && this.clip.uri.equals(that.clip.uri));
+    public Video getVideo() {
+        return clip;
     }
 
     @Override
-    public int hashCode() {
-        return this.clip.uri != null ? this.clip.uri.hashCode() : 0;
+    public String getRelatedUri() {
+        if ((metadata == null) || (metadata.connections == null) ||
+            (metadata.connections.related == null)) {
+            return null;
+        }
+        return metadata.connections.related.uri;
     }
-
 }
 
