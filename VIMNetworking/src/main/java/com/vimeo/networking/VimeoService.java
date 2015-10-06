@@ -90,13 +90,8 @@ public interface VimeoService {
     // region Editing
 
     @PATCH("/{uri}")
-    void editVideo(@Header("Authorization") String authHeader,
-                   @Path(value = "uri", encode = false) String uri, @Body HashMap<String, Object> parameters,
-                   Callback<Object> callback);
-
-    @PATCH("/{uri}")
-    void editUser(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                  @Body HashMap<String, Object> parameters, Callback<Object> callback);
+    void edit(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
+              @Body HashMap<String, Object> parameters, Callback<Object> callback);
 
     @POST("/{uri}")
     void comment(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
@@ -104,6 +99,11 @@ public interface VimeoService {
                  Callback<Object> callback);
 
     // end region
+
+    @POST("/{uri}")
+    void createPictureResource(@Header("Authorization") String authHeader,
+                               @Path(value = "uri", encode = false) String uri,
+                               @Body String emptyBody, Callback<Object> callback);
 
     // region Generic
 

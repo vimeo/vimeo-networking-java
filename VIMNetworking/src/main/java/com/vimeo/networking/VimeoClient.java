@@ -31,6 +31,7 @@ import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
 import com.vimeo.networking.model.Account;
+import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
@@ -596,8 +597,7 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
         }
 
-        this.vimeoService
-                .editVideo(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
+        this.vimeoService.edit(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
     }
 
     public void editUser(String uri, @Nullable String name, @Nullable String location, @Nullable String bio,
@@ -633,8 +633,59 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_USERS_BIO, bio);
         }
 
+        this.vimeoService.edit(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
+    }
+
+    /**
+     * Create a picture resource using the given uri
+     *
+     * @param uri      should be in the format /videos/{video_id}/pictures or /user/{user_id}/pictures
+     *                 The Uri should be obtained from metadata.connections.pictures.uri
+     * @param callback The ModelCallback containing PictureResource data
+     */
+    public void createPictureResource(String uri, ModelCallback<PictureResource> callback) {
+        if (uri == null || uri.trim().isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+            return;
+        }
+
+        // Body is empty, but cannot be null
         this.vimeoService
-                .editUser(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
+                .createPictureResource(getAuthHeader(), validateUri(uri), "", getRetrofitCallback(callback));
+    }
+
+    /**
+     * Activate a picture resource
+     *
+     * @param uri      The Uri that is found in the PictureResource returned from
+     *                 {@link #createPictureResource(String, ModelCallback)}
+     * @param callback
+     */
+    public void activatePictureResource(String uri, ModelCallback callback) {
+        if (uri == null || uri.trim().isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+            return;
+        }
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put(Vimeo.PARAMETER_ACTIVE, true);
+        this.vimeoService.edit(getAuthHeader(), validateUri(uri), parameters, getRetrofitCallback(callback));
+    }
+
+    /**
+     * Delete a picture resource
+     * This is helpful if your activation or upload step fails - you can delete the resource allocated
+     *
+     * @param uri      The Uri that is found in the PictureResource returned from
+     *                 {@link #createPictureResource(String, ModelCallback)}
+     * @param callback
+     */
+    public void deletePictureResource(String uri, VimeoCallback callback) {
+        if (uri == null || uri.trim().isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+            return;
+        }
+
+        DELETE(getAuthHeader(), uri, null, callback);
     }
 
     public void updateFollow(boolean follow, String uri, VimeoCallback callback) {
