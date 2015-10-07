@@ -34,7 +34,7 @@ import java.io.File;
 public class Configuration {
 
     private static final String DEFAULT_VERSION_STRING = "3.3";
-    private static final int DEFAULT_CACHE_MAX_AGE = 60; // Default to 60 seconds
+    private static final int DEFAULT_CACHE_MAX_AGE = 60 * 60; // Default to 60 minutes
 
     public String baseURLString;
     public String clientID;

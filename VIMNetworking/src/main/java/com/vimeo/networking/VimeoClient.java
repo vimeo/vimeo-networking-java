@@ -143,6 +143,14 @@ public class VimeoClient {
         this.setAccount(account);
     }
 
+    public void clearRequestCache() {
+        try {
+            this.cache.evictAll();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
      * </p>
