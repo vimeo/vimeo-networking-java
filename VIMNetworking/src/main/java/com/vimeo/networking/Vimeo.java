@@ -60,6 +60,8 @@ public class Vimeo {
 
     public static final String PARAMETER_COMMENT_TEXT_BODY = "text";
 
+    public static final String PARAMETER_ACTIVE = "active";
+
     // Header Parameters
     public static final String HEADER_CACHE_CONTROL = "Cache-Control";
     public static final String HEADER_USER_AGENT = "User-Agent";
