@@ -638,6 +638,8 @@ public class VimeoClient {
 
     /**
      * Create a picture resource using the given uri
+     * <p/>
+     * For more in depth documentation on this flow, see https://developer.vimeo.com/api/upload/pictures
      *
      * @param uri      should be in the format /videos/{video_id}/pictures or /user/{user_id}/pictures
      *                 The Uri should be obtained from metadata.connections.pictures.uri
