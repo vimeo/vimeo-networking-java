@@ -86,6 +86,20 @@ public class User implements Serializable {
         return false;
     }
 
+    public int videoCount() {
+        if((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
+            return metadata.connections.videos.total;
+        }
+        return 0;
+    }
+
+    public int followerCount() {
+        if((metadata != null) && (metadata.connections != null) && (metadata.connections.followers != null)) {
+            return metadata.connections.followers.total;
+        }
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
