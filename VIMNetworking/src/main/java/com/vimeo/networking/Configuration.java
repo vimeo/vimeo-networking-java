@@ -22,6 +22,9 @@
 
 package com.vimeo.networking;
 
+import com.vimeo.networking.logging.NetworkingLogger;
+import com.vimeo.networking.logging.NetworkingLoggerInterface;
+
 import java.io.File;
 
 /**
@@ -52,6 +55,7 @@ public class Configuration {
     public String userAgentString;
 
     public boolean certPinningEnabled;
+    public NetworkingLoggerInterface networkingLogger;
 
     private Boolean isValid() {
         return (this.baseURLString != null && this.baseURLString.length() != 0 &&
@@ -80,6 +84,8 @@ public class Configuration {
         private String userAgentString;
 
         private boolean certPinningEnabled = true;
+        // Default to the stock logger which just prints - this makes it optional
+        public NetworkingLoggerInterface networkingLogger = new NetworkingLogger();
 
         public Builder(String baseURLString, String clientID, String clientSecret, String scope,
                        AccountStore accountStore, GsonDeserializer deserializer) {
@@ -121,6 +127,11 @@ public class Configuration {
             return this;
         }
 
+        public Builder networkingLogger(NetworkingLoggerInterface networkingLogger) {
+            this.networkingLogger = networkingLogger;
+            return this;
+        }
+
         public Configuration build() throws Exception {
             return new Configuration(this);
         }
@@ -147,5 +158,6 @@ public class Configuration {
         this.userAgentString = builder.userAgentString;
 
         this.certPinningEnabled = builder.certPinningEnabled;
+        this.networkingLogger = builder.networkingLogger;
     }
 }
