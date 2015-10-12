@@ -22,6 +22,9 @@
 
 package com.vimeo.networking;
 
+import com.vimeo.networking.logging.NetworkingLogger;
+import com.vimeo.networking.logging.NetworkingLoggerInterface;
+
 import java.io.File;
 
 /**
@@ -34,7 +37,8 @@ import java.io.File;
 public class Configuration {
 
     private static final String DEFAULT_VERSION_STRING = "3.3";
-    private static final int DEFAULT_CACHE_MAX_AGE = 60; // Default to 60 seconds
+    // TODO: this cache length should be set from appconfig to match video file invalidation 10/7/15 [KV]
+    private static final int DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2; // Default to 2 hours
 
     public String baseURLString;
     public String clientID;
@@ -51,6 +55,7 @@ public class Configuration {
     public String userAgentString;
 
     public boolean certPinningEnabled;
+    public NetworkingLoggerInterface networkingLogger;
 
     private Boolean isValid() {
         return (this.baseURLString != null && this.baseURLString.length() != 0 &&
@@ -79,6 +84,8 @@ public class Configuration {
         private String userAgentString;
 
         private boolean certPinningEnabled = true;
+        // Default to the stock logger which just prints - this makes it optional
+        public NetworkingLoggerInterface networkingLogger = new NetworkingLogger();
 
         public Builder(String baseURLString, String clientID, String clientSecret, String scope,
                        AccountStore accountStore, GsonDeserializer deserializer) {
@@ -120,6 +127,11 @@ public class Configuration {
             return this;
         }
 
+        public Builder networkingLogger(NetworkingLoggerInterface networkingLogger) {
+            this.networkingLogger = networkingLogger;
+            return this;
+        }
+
         public Configuration build() throws Exception {
             return new Configuration(this);
         }
@@ -146,5 +158,6 @@ public class Configuration {
         this.userAgentString = builder.userAgentString;
 
         this.certPinningEnabled = builder.certPinningEnabled;
+        this.networkingLogger = builder.networkingLogger;
     }
 }

@@ -116,7 +116,7 @@ public class VimeoClient {
         try {
             this.cache = new Cache(this.configuration.cacheDirectory, this.configuration.cacheSize);
         } catch (IOException e) {
-            System.out.println("Exception when creating cache: " + e.getMessage());
+            this.configuration.networkingLogger.e("Exception when creating cache: " + e.getMessage(), e);
         }
 
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
@@ -126,8 +126,8 @@ public class VimeoClient {
             try {
                 retrofitClientBuilder.pinCertificates();
             } catch (Exception e) {
-                // TODO: Do something louder with the possible NullPointerException from a null InputStream
-                System.out.println("Exception when pinning certificate: " + e.getMessage());
+                this.configuration.networkingLogger
+                        .e("Exception when pinning certificate: " + e.getMessage(), e);
             }
         }
 
@@ -142,6 +142,14 @@ public class VimeoClient {
 
         Account account = this.configuration.accountStore.loadAccount();
         this.setAccount(account);
+    }
+
+    public void clearRequestCache() {
+        try {
+            this.cache.evictAll();
+        } catch (IOException e) {
+            configuration.networkingLogger.e("Cache clearing error: " + e.getMessage(), e);
+        }
     }
 
     /**
