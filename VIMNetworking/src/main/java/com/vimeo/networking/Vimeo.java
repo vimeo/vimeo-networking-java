@@ -40,7 +40,6 @@ public class Vimeo {
 
     // Endpoints
     public static final String ENDPOINT_ME = "me";
-    public static final String ENDPOINT_CREATE_UPLOAD_TICKET = "me/videos";
 
     // Parameters
     public static final String PARAMETER_REDIRECT_URI = "redirect_uri";
