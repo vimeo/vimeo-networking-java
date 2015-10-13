@@ -91,12 +91,6 @@ public class Vimeo {
     public static final String PARAMETER_GET_FILTER = "filter";
     public static final String PARAMETER_GET_UPLOAD_DATE_FILTER = "filter_upload_date";
 
-    // Upload Parameters
-    public static final String PARAMETER_UPLOAD_TYPE = "type";
-
-    // Upload Values
-    public static final String STREAMING = "streaming";
-
     // Sorting (sort) Values
     public static final String SORT_DEFAULT = "default";
     public static final String SORT_RELEVANCE = "relevant";

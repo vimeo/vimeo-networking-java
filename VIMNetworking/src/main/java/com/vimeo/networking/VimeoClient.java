@@ -851,16 +851,6 @@ public class VimeoClient {
         });
     }
 
-    public void createUploadTicket(final ModelCallback<UploadTicket> uploadTicketModelCallback) {
-        HashMap<String, String> postBody = new HashMap<>();
-        postBody.put(Vimeo.PARAMETER_UPLOAD_TYPE, Vimeo.STREAMING);
-        postContent(Vimeo.ENDPOINT_CREATE_UPLOAD_TICKET, null, postBody, uploadTicketModelCallback);
-    }
-
-    public void completeUpload(String completeUri, ModelCallback callback) {
-        deleteContent(completeUri, callback);
-    }
-
     // end region
 
     /**
