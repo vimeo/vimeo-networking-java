@@ -38,6 +38,10 @@ public class Vimeo {
     public static final String PASSWORD_GRANT_TYPE = "password";
     public static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
+    // Endpoints
+    public static final String ENDPOINT_ME = "me";
+    public static final String ENDPOINT_CREATE_UPLOAD_TICKET = "me/videos";
+
     // Parameters
     public static final String PARAMETER_REDIRECT_URI = "redirect_uri";
     public static final String PARAMETER_RESPONSE_TYPE = "response_type";
@@ -86,6 +90,12 @@ public class Vimeo {
     public static final String PARAMETER_GET_LENGTH_MAX_DURATION = "max_duration";
     public static final String PARAMETER_GET_FILTER = "filter";
     public static final String PARAMETER_GET_UPLOAD_DATE_FILTER = "filter_upload_date";
+
+    // Upload Parameters
+    public static final String PARAMETER_UPLOAD_TYPE = "type";
+
+    // Upload Values
+    public static final String STREAMING = "streaming";
 
     // Sorting (sort) Values
     public static final String SORT_DEFAULT = "default";

@@ -107,11 +107,10 @@ public class User implements Serializable {
 
     // Returns -1 if there is no space object on this user
     public long getFreeUploadSpace() {
-        if (uploadQuota != null && uploadQuota.space != null) {
-            return uploadQuota.space.free;
-        } else {
-            return -1;
+        if (uploadQuota != null) {
+            return uploadQuota.getFreeUploadSpace();
         }
+        return -1;
     }
 
     @Override
