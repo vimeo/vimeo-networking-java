@@ -3,10 +3,14 @@ package com.vimeo.networking.model.Upload;
 
 import com.vimeo.networking.Vimeo;
 
+import java.io.Serializable;
+
 /**
  * Created by kylevenn on 8/19/15.
  */
-public class UploadQuota {
+public class UploadQuota implements Serializable {
+
+    private static final long serialVersionUID = 4050488085481972886L;
 
     public Space space;
     public Quota quota;
