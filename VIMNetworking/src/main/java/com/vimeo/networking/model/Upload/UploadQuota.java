@@ -1,6 +1,8 @@
 package com.vimeo.networking.model.Upload;
 
 
+import com.vimeo.networking.Vimeo;
+
 /**
  * Created by kylevenn on 8/19/15.
  */
@@ -14,7 +16,7 @@ public class UploadQuota {
         if (space != null) {
             return space.free;
         } else {
-            return -1;
+            return Vimeo.NOT_FOUND;
         }
     }
 }

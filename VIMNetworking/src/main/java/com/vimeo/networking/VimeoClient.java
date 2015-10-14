@@ -34,7 +34,6 @@ import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.Upload.UploadQuota;
-import com.vimeo.networking.model.Upload.UploadTicket;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
