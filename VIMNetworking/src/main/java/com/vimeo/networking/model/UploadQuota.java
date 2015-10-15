@@ -1,4 +1,4 @@
-package com.vimeo.networking.model.Upload;
+package com.vimeo.networking.model;
 
 
 import com.vimeo.networking.Vimeo;
@@ -13,7 +13,7 @@ public class UploadQuota implements Serializable {
     private static final long serialVersionUID = 4050488085481972886L;
 
     public Space space;
-    public Quota quota;
+    public com.vimeo.networking.model.Quota quota;
 
     // Returns -1 if there is no space object on this user
     public long getFreeUploadSpace() {

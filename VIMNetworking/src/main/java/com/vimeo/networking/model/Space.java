@@ -1,4 +1,4 @@
-package com.vimeo.networking.model.Upload;
+package com.vimeo.networking.model;
 
 import java.io.Serializable;
 

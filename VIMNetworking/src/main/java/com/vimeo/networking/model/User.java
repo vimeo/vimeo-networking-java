@@ -23,7 +23,6 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.Upload.UploadQuota;
 
 import java.io.Serializable;
 import java.util.ArrayList;
