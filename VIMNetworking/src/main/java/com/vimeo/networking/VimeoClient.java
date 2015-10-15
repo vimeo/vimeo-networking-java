@@ -33,7 +33,6 @@ import com.squareup.okhttp.Interceptor;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.Privacy;
-import com.vimeo.networking.model.Upload.UploadQuota;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
@@ -830,27 +829,12 @@ public class VimeoClient {
         fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, searchRefinement, fieldFilter);
     }
 
-    // region Upload
-
-    public void getCurrentUser(final ModelCallback<User> callback) {
-        fetchContent(Vimeo.ENDPOINT_ME, null, callback);
+    // TODO: this may end up living in VIMUpload 10/15/15 [KV]
+    public void getCurrentUser(ModelCallback<User> callback) {
+        // Endpoints
+        String ENDPOINT_ME = "me";
+        fetchContent(ENDPOINT_ME, null, callback);
     }
-
-    public void getUploadQuota(final ModelCallback<UploadQuota> callback) {
-        fetchContent(Vimeo.ENDPOINT_ME, null, new ModelCallback<User>(User.class) {
-            @Override
-            public void success(User user, VimeoResponse response) {
-                callback.success(user.uploadQuota, response);
-            }
-
-            @Override
-            public void failure(VimeoError error) {
-                callback.failure(error);
-            }
-        });
-    }
-
-    // end region
 
     /**
      * A generic GET call that takes in the URI of the specific resource.

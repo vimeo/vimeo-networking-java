@@ -105,6 +105,10 @@ public class User implements Serializable {
         return 0;
     }
 
+    public UploadQuota getUploadQuota() {
+        return uploadQuota;
+    }
+
     // Returns -1 if there is no space object on this user
     public long getFreeUploadSpace() {
         if (uploadQuota != null) {
