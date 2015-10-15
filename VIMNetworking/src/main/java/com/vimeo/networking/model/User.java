@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +53,8 @@ public class User implements Serializable {
     public PictureCollection pictures;
     public ArrayList<Website> websites;
     public Metadata metadata;
+    @SerializedName("upload_quota")
+    public UploadQuota uploadQuota;
 
     public AccountType getAccountType() {
         if (this.account == null) {
@@ -98,6 +102,18 @@ public class User implements Serializable {
             return metadata.connections.followers.total;
         }
         return 0;
+    }
+
+    public UploadQuota getUploadQuota() {
+        return uploadQuota;
+    }
+
+    // Returns -1 if there is no space object on this user
+    public long getFreeUploadSpace() {
+        if (uploadQuota != null) {
+            return uploadQuota.getFreeUploadSpace();
+        }
+        return -1;
     }
 
     @Override

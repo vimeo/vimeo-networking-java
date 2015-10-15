@@ -29,6 +29,9 @@ public class Vimeo {
 
     public static final String VIMEO_BASE_URL_STRING = "https://api.vimeo.com/";
 
+    // Global Constants
+    public static final int NOT_FOUND = -1;
+
     // Grant Types
     public static final String CODE_GRANT_PATH = "oauth/authorize";
     public static final String CODE_GRANT_RESPONSE_TYPE = "code";
