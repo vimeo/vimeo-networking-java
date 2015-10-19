@@ -901,11 +901,12 @@ public class VimeoClient {
         };
     }
 
-    public void search(String uri, String query, final ModelCallback callback,
-                       @Nullable Map<String, String> searchRefinement, @Nullable String fieldFilter) {
+    @Nullable
+    public Call<Object> search(String uri, String query, final ModelCallback callback,
+                               @Nullable Map<String, String> searchRefinement, @Nullable String fieldFilter) {
         if (query == null || query.isEmpty()) {
             callback.failure(new VimeoError("Query cannot be empty!"));
-            return;
+            return null;
         }
 
         // If no sort refinement specified, default to relevance
@@ -916,7 +917,7 @@ public class VimeoClient {
         }
 
         // Search always defaults to using the network
-        fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, searchRefinement, fieldFilter);
+        return fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, searchRefinement, fieldFilter);
     }
 
     // TODO: this may end up living in VIMUpload 10/15/15 [KV]
