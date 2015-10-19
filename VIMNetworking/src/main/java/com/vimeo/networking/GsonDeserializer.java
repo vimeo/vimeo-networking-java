@@ -36,17 +36,16 @@ public class GsonDeserializer {
      * Deserialize the json and call a callback method.
      * <p/>
      * Override this method to perform custom deserialization. For example,
-     *  on Android, you may want to use a AsyncTask to do this work on
+     * on Android, you may want to use a AsyncTask to do this work on
      * <p/>
      *
-     * @param gson The Gson object do do the lifting
-     * @param object The Object object deserialize
+     * @param gson     The Gson object do do the lifting
+     * @param object   The Object object deserialize
      * @param callback The callback to call (and get the object type from)
-     * @param response The VimeoResponse object
      */
-    public void deserialize(Gson gson, Object object, ModelCallback callback, VimeoResponse response) {
+    public void deserialize(Gson gson, Object object, ModelCallback callback) {
         Object result = deserializeObject(gson, object, callback);
-        callback.success(result, response);
+        callback.success(result);
     }
 
     public Object deserializeObject(Gson gson, Object object, ModelCallback callback) {

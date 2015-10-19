@@ -34,7 +34,7 @@ import retrofit.Response;
  */
 public abstract class VimeoCallback<T> implements Callback<T> {
 
-    public abstract void success(T t, VimeoResponse response);
+    public abstract void success(T t);
 
     public abstract void failure(VimeoError error);
 
@@ -43,7 +43,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
         // response.isSuccess() is true if the response code is 2xx
         if (response.isSuccess()) {
             T t = response.body();
-            success(t, new VimeoResponse(response));
+            success(t);
         } else {
             VimeoError vimeoError = new VimeoError();
             vimeoError.setResponse(response);

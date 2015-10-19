@@ -109,7 +109,7 @@ public class VimeoClient {
         this.configuration = configuration;
 
         final VimeoClient client = this;
-        
+
         this.cache = new Cache(this.configuration.cacheDirectory, this.configuration.cacheSize);
 
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
@@ -519,9 +519,9 @@ public class VimeoClient {
         Call<Object> call = this.vimeoService.logOut(getAuthHeader());
         call.enqueue(new VimeoCallback<Object>() {
             @Override
-            public void success(Object o, VimeoResponse response) {
+            public void success(Object o) {
                 if (callback != null) {
-                    callback.success(o, response);
+                    callback.success(o);
                 }
             }
 
@@ -582,7 +582,7 @@ public class VimeoClient {
         }
 
         @Override
-        public void success(Account account, VimeoResponse response) {
+        public void success(Account account) {
             this.client.setAccount(account);
             if (account.getUser() != null && (this.email == null || this.email.isEmpty())) {
                 this.client.configuration.accountStore.saveAccount(account, account.getUser().name, null);
@@ -854,9 +854,9 @@ public class VimeoClient {
     private Callback<Object> getRetrofitCallback(final ModelCallback callback) {
         return new VimeoCallback<Object>() {
             @Override
-            public void success(Object o, VimeoResponse response) {
+            public void success(Object o) {
                 //Handle the gson parsing using a deserializer object
-                configuration.deserializer.deserialize(getGson(), o, callback, response);
+                configuration.deserializer.deserialize(getGson(), o, callback);
             }
 
             @Override
@@ -946,11 +946,8 @@ public class VimeoClient {
             queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
         }
 
-        System.out.println("********************************x");
-        System.out.println(uri);
-        String inUri = validateUri(uri);
-        System.out.println(inUri);
-        Call<Object> call = this.vimeoService.GET(getAuthHeader(), inUri, queryMap, cacheHeaderValue);
+        Call<Object> call =
+                this.vimeoService.GET(getAuthHeader(), validateUri(uri), queryMap, cacheHeaderValue);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
