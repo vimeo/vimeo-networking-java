@@ -30,8 +30,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import retrofit.RetrofitError;
-import retrofit.client.Header;
+import retrofit.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.
@@ -43,7 +42,7 @@ public class VimeoError extends RuntimeException implements Serializable {
     private static final String AUTHENTICATION_HEADER = "WWW-Authenticate";
     private static final String AUTHENTICATION_TOKEN_ERROR = "Bearer error=\"invalid_token\"";
 
-    private RetrofitError retrofitError;
+    private Response response;
 
     @SerializedName("error")
     private String errorMessage;
@@ -63,12 +62,12 @@ public class VimeoError extends RuntimeException implements Serializable {
         this.errorMessage = errorMessage;
     }
 
-    public RetrofitError getRetrofitError() {
-        return retrofitError;
+    public Response getResponse() {
+        return response;
     }
 
-    public void setRetrofitError(RetrofitError retrofitError) {
-        this.retrofitError = retrofitError;
+    public void setResponse(Response response) {
+        this.response = response;
     }
 
     public void setLink(String link) {
@@ -118,27 +117,23 @@ public class VimeoError extends RuntimeException implements Serializable {
      */
     @Nullable
     public InvalidParameter getInvalidParameter() {
-        return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters
-                .get(0) : null;
+        return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters.get(
+                0) : null;
     }
 
     public boolean isServiceUnavailable() {
-        return (retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
-               (retrofitError.getResponse().getStatus() == 503);
+        return (response != null) && (response.code() == 503);
     }
 
     public boolean isForbiddenError() {
-        return (retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
-               (retrofitError.getResponse().getStatus() == 403);
+        return (response != null) && (response.code() == 403);
     }
 
     public boolean isInvalidTokenError() {
-        if ((retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
-            (retrofitError.getResponse().getStatus() == 401)) {
-            List<Header> headers = retrofitError.getResponse().getHeaders();
-            for (Header header : headers) {
-                if (header.getName().equals(AUTHENTICATION_HEADER) &&
-                    header.getValue().equals(AUTHENTICATION_TOKEN_ERROR)) {
+        if ((response != null) && (response.code() == 401)) {
+            List<String> headers = response.headers().values(AUTHENTICATION_HEADER);
+            for (String header : headers) {
+                if (header.equals(AUTHENTICATION_TOKEN_ERROR)) {
                     return true;
                 }
             }

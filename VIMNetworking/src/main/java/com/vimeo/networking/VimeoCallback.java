@@ -25,8 +25,7 @@ package com.vimeo.networking;
 import com.vimeo.networking.model.error.VimeoError;
 
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.
@@ -40,22 +39,24 @@ public abstract class VimeoCallback<T> implements Callback<T> {
     public abstract void failure(VimeoError error);
 
     @Override
-    public void success(T t, Response response) {
-        success(t, new VimeoResponse(response));
+    public void onResponse(Response<T> response) {
+        // response.isSuccess() is true if the response code is 2xx
+        if (response.isSuccess()) {
+            T t = response.body();
+            success(t, new VimeoResponse(response));
+        } else {
+            VimeoError vimeoError = new VimeoError();
+            vimeoError.setResponse(response);
+            failure(vimeoError);
+        }
     }
 
     @Override
-    public void failure(RetrofitError error) {
-        VimeoError vimeoError = null;
-        try {
-            vimeoError = (VimeoError) error.getBodyAs(VimeoError.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (vimeoError == null) {
-            vimeoError = new VimeoError();
-        }
-        vimeoError.setRetrofitError(error);
+    public void onFailure(Throwable t) {
+        // handle execution failures like no internet connectivity
+        t.printStackTrace();
+        VimeoError vimeoError = new VimeoError();
+        vimeoError.setDeveloperMessage(t.getMessage());
         failure(vimeoError);
     }
 }

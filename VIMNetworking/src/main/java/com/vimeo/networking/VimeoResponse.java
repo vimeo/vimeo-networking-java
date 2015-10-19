@@ -22,7 +22,7 @@
 
 package com.vimeo.networking;
 
-import retrofit.client.Response;
+import retrofit.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.
