@@ -48,6 +48,12 @@ import retrofit.http.QueryMap;
  */
 public interface VimeoService {
 
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Authentication
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Authentication">
     @FormUrlEncoded
     @POST("oauth/access_token")
     Call<Account> authenticateWithCodeGrant(@Header("Authorization") String authHeader,
@@ -79,28 +85,45 @@ public interface VimeoService {
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("tokens")
     Call<Object> logOut(@Header("Authorization") String authHeader);
+    // </editor-fold>
 
-    // region Editing
-
+    /**
+     * ----------------------------------------------------------------------------------------------------
+     * Editing
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Editing">
     @PATCH("{uri}")
     Call<Object> edit(@Header("Authorization") String authHeader,
                       @Path(value = "uri", encoded = true) String uri,
                       @Body HashMap<String, Object> parameters);
 
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * POSTs
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="POSTs">
     @POST("{uri}")
     Call<Object> comment(@Header("Authorization") String authHeader,
                          @Path(value = "uri", encoded = true) String uri,
                          @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters);
 
-    // end region
 
     @POST("{uri}")
     Call<Object> createPictureResource(@Header("Authorization") String authHeader,
                                        @Path(value = "uri", encoded = false) String uri,
                                        @Body String emptyBodyack);
+    // </editor-fold>
 
-    // region Generic
-
+    /**
+     * ---------------------------------------------------------------------------------------------------
+     * Generic Region
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Generic Region">
     @PUT("{uri}")
     Call<Object> PUT(@Header("Authorization") String authHeader,
                      @Path(value = "uri", encoded = true) String uri, @QueryMap Map<String, String> options);
@@ -120,6 +143,5 @@ public interface VimeoService {
                       @Path(value = "uri", encoded = true) String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
                       @Body HashMap<String, String> parameters);
-
-    // end region
+    // </editor-fold>
 }

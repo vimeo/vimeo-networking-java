@@ -74,6 +74,12 @@ public class VimeoClient {
     private Account account;
 
     /**
+     * -----------------------------------------------------------------------------------------------------
+     * Configuration
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Configuration">
+    /**
      * Dangerous interceptor that rewrites the server's cache-control header.
      * We are using this because our server sets all Cache-Control headers to no-store
      * [AH] 4/24/2015
@@ -228,7 +234,6 @@ public class VimeoClient {
         return builder;
     }
 
-    // region Accessors
 
     public Account getAccount() {
         if (this.account == null) {
@@ -250,9 +255,14 @@ public class VimeoClient {
         this.configuration.baseURLString = baseUrlString;
     }
 
-    // end region
+    // </editor-fold>
 
-    // region Authentication
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Authentication
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Authentication">
 
     /**
      * Provides a URI that can be opened in a web view that will prompt for login and permissions
@@ -598,10 +608,14 @@ public class VimeoClient {
         }
     }
 
-    // end region
+    // </editor-fold>
 
-    // region Editing
-
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Editing (Video, User)
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Editing (Video, User)">
     @Nullable
     public Call<Object> editVideo(String uri, String title, String description, String password,
                                   Privacy.PrivacyValue privacyValue, ModelCallback callback) {
@@ -692,6 +706,15 @@ public class VimeoClient {
         return call;
     }
 
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Pictures
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Pictures">
+
     /**
      * Create a picture resource using the given uri
      * <p/>
@@ -751,6 +774,14 @@ public class VimeoClient {
         deleteContent(uri, callback);
     }
 
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Video actions (Like, Watch Later, Commenting)
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Video actions (Like, Watch Later, Commenting)">
     public void updateFollow(boolean follow, String uri, ModelCallback callback) {
         if (follow) {
             this.follow(uri, callback);
@@ -843,13 +874,17 @@ public class VimeoClient {
         return call;
     }
 
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Gets, posts, puts, deletes
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Gets, posts, puts, deletes">
     public void deleteVideo(String uri, Map<String, String> options, ModelCallback callback) {
         deleteContent(uri, options, callback);
     }
-
-    // end region
-
-    // region GETs
 
     private Callback<Object> getRetrofitCallback(final ModelCallback callback) {
         return new VimeoCallback<Object>() {
@@ -952,31 +987,37 @@ public class VimeoClient {
         return call;
     }
 
-    public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {
-        fetchContent(uri, cacheControl, callback, null, null, null);
+    @Nullable
+    public Call<Object> fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {
+        return fetchContent(uri, cacheControl, callback, null, null, null);
     }
 
-    public void fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback,
-                             String fieldFilter) {
-        fetchContent(uri, cacheControl, callback, null, null, fieldFilter);
+    @Nullable
+    public Call<Object> fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback,
+                                     String fieldFilter) {
+        return fetchContent(uri, cacheControl, callback, null, null, fieldFilter);
     }
 
-    public void fetchNetworkSortedContent(String uri, ModelCallback callback, String fieldFilter) {
-        fetchContent(uri, CacheControl.FORCE_NETWORK, callback, null,
-                     new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
+    @Nullable
+    public Call<Object> fetchNetworkSortedContent(String uri, ModelCallback callback, String fieldFilter) {
+        return fetchContent(uri, CacheControl.FORCE_NETWORK, callback, null,
+                            new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
     }
 
-    public void fetchCachedSortedContent(String uri, ModelCallback callback, String fieldFilter) {
-        fetchContent(uri, CacheControl.FORCE_CACHE, callback, null,
-                     new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
+    @Nullable
+    public Call<Object> fetchCachedSortedContent(String uri, ModelCallback callback, String fieldFilter) {
+        return fetchContent(uri, CacheControl.FORCE_CACHE, callback, null,
+                            new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
     }
 
-    public void fetchCachedContent(String uri, ModelCallback callback) {
-        this.fetchContent(uri, CacheControl.FORCE_CACHE, callback);
+    @Nullable
+    public Call<Object> fetchCachedContent(String uri, ModelCallback callback) {
+        return this.fetchContent(uri, CacheControl.FORCE_CACHE, callback);
     }
 
-    public void fetchNetworkContent(String uri, ModelCallback callback) {
-        this.fetchContent(uri, CacheControl.FORCE_NETWORK, callback);
+    @Nullable
+    public Call<Object> fetchNetworkContent(String uri, ModelCallback callback) {
+        return this.fetchContent(uri, CacheControl.FORCE_NETWORK, callback);
     }
 
     /**
@@ -988,8 +1029,9 @@ public class VimeoClient {
      * @param postBody     The body of the POST request
      * @param callback     The callback for the specific model type of the resource
      */
-    public void postContent(String uri, CacheControl cacheControl, HashMap<String, String> postBody,
-                            final VimeoCallback callback) {
+    @Nullable
+    public Call<Object> postContent(String uri, CacheControl cacheControl, HashMap<String, String> postBody,
+                                    final VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -997,7 +1039,7 @@ public class VimeoClient {
         if (uri == null) {
             callback.failure(new VimeoError("uri cannot be empty!"));
 
-            return;
+            return null;
         }
 
         if (postBody == null) {
@@ -1010,10 +1052,12 @@ public class VimeoClient {
         }
 
         // Don't use the deserialization callback because we don't get objects returned with post
-        POST(getAuthHeader(), uri, cacheHeaderValue, postBody, callback);
+        return POST(getAuthHeader(), uri, cacheHeaderValue, postBody, callback);
     }
 
-    public void putContent(String uri, @Nullable Map<String, String> options, ModelCallback callback) {
+    @Nullable
+    public Call<Object> putContent(String uri, @Nullable Map<String, String> options,
+                                   ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1021,17 +1065,19 @@ public class VimeoClient {
 
         if (uri == null || uri.isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
-            return;
+            return null;
         }
 
         if (options == null) {
             options = new HashMap<>();
         }
 
-        PUT(getAuthHeader(), uri, options, getRetrofitCallback(callback));
+        return PUT(getAuthHeader(), uri, options, getRetrofitCallback(callback));
     }
 
-    public void deleteContent(String uri, @Nullable Map<String, String> options, ModelCallback callback) {
+    @Nullable
+    public Call<Object> deleteContent(String uri, @Nullable Map<String, String> options,
+                                      ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1039,23 +1085,49 @@ public class VimeoClient {
         if (uri == null || uri.isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
 
-            return;
+            return null;
         }
         if (options == null) {
             options = new HashMap<>();
         }
 
-        DELETE(getAuthHeader(), uri, options, getRetrofitCallback(callback));
+        return DELETE(getAuthHeader(), uri, options, getRetrofitCallback(callback));
     }
 
     public void deleteContent(String uri, ModelCallback callback) {
         deleteContent(uri, null, callback);
     }
 
-    // end region
+    private Call<Object> PUT(String authHeader, String uri, Map<String, String> options,
+                             Callback<Object> callback) {
+        Call<Object> call = this.vimeoService.PUT(authHeader, validateUri(uri), options);
+        call.enqueue(callback);
+        return call;
+    }
 
-    // region HeaderValues
+    private Call<Object> DELETE(String authHeader, String uri, Map<String, String> options,
+                                Callback<Object> callback) {
+        Call<Object> call = this.vimeoService.DELETE(authHeader, validateUri(uri), options);
+        call.enqueue(callback);
+        return call;
+    }
 
+    private Call<Object> POST(String authHeader, String uri, String cacheHeaderValue,
+                              HashMap<String, String> parameters, Callback<Object> callback) {
+        Call<Object> call =
+                this.vimeoService.POST(authHeader, validateUri(uri), cacheHeaderValue, parameters);
+        call.enqueue(callback);
+        return call;
+    }
+
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Header values
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Header values">
     public String getUserAgent() {
         return "sample_user_agent";
     }
@@ -1080,12 +1152,16 @@ public class VimeoClient {
         return Credentials.basic(configuration.clientID, configuration.clientSecret);
     }
 
-    // end region
+    // </editor-fold>
 
-    // region Utilities
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Utilities
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Utilities">
 
     // TODO: This is shitty, revisit [AH]
-
     static String urlEncodeUTF8(Map<String, String> map) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -1107,24 +1183,6 @@ public class VimeoClient {
         }
     }
 
-    private void PUT(String authHeader, String uri, Map<String, String> options, Callback<Object> callback) {
-        Call<Object> call = this.vimeoService.PUT(authHeader, validateUri(uri), options);
-        call.enqueue(callback);
-    }
-
-    private void DELETE(String authHeader, String uri, Map<String, String> options,
-                        Callback<Object> callback) {
-        Call<Object> call = this.vimeoService.DELETE(authHeader, validateUri(uri), options);
-        call.enqueue(callback);
-    }
-
-    private void POST(String authHeader, String uri, String cacheHeaderValue,
-                      HashMap<String, String> parameters, Callback<Object> callback) {
-        Call<Object> call =
-                this.vimeoService.POST(authHeader, validateUri(uri), cacheHeaderValue, parameters);
-        call.enqueue(callback);
-    }
-
     private String validateUri(String uri) {
         // TODO: We shouldn't have to do this but Retrofit doesn't support removing the leading slash
         // I asked a question on StackOverflow which we can keep our eye on.
@@ -1135,6 +1193,6 @@ public class VimeoClient {
         return uri;
     }
 
-    // end region
+    // </editor-fold>
 
 }

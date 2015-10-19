@@ -48,7 +48,7 @@ public class GsonDeserializer {
         callback.success(result);
     }
 
-    public Object deserializeObject(Gson gson, Object object, ModelCallback callback) {
+    protected Object deserializeObject(Gson gson, Object object, ModelCallback callback) {
         String JSON = gson.toJson(object);
         return gson.fromJson(JSON, callback.getObjectType());
     }
