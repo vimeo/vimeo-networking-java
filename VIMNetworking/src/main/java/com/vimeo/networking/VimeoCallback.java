@@ -25,6 +25,8 @@ package com.vimeo.networking;
 import com.vimeo.networking.model.error.VimeoError;
 
 import retrofit.Callback;
+import retrofit.Converter;
+import retrofit.GsonConverterFactory;
 import retrofit.Response;
 
 /**
@@ -45,7 +47,19 @@ public abstract class VimeoCallback<T> implements Callback<T> {
             T t = response.body();
             success(t);
         } else {
-            VimeoError vimeoError = new VimeoError();
+            VimeoError vimeoError = null;
+            if (response.errorBody() != null) {
+                try {
+                    Converter<VimeoError> errorConverter =
+                            (Converter<VimeoError>) GsonConverterFactory.create().get(VimeoError.class);
+                    vimeoError = errorConverter.fromBody(response.errorBody());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (vimeoError == null) {
+                vimeoError = new VimeoError();
+            }
             vimeoError.setResponse(response);
             failure(vimeoError);
         }
