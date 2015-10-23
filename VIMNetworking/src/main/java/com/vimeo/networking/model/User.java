@@ -23,6 +23,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.Vimeo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -91,17 +92,35 @@ public class User implements Serializable {
     }
 
     public int videoCount() {
-        if((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
+        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
             return metadata.connections.videos.total;
         }
         return 0;
     }
 
     public int followerCount() {
-        if((metadata != null) && (metadata.connections != null) && (metadata.connections.followers != null)) {
+        if ((metadata != null) && (metadata.connections != null) &&
+            (metadata.connections.followers != null)) {
             return metadata.connections.followers.total;
         }
         return 0;
+    }
+
+    public boolean isPlusOrPro() {
+        boolean plusOrPro = false;
+        if (((getAccountType() == AccountType.PLUS) || (getAccountType() == AccountType.PRO))) {
+            plusOrPro = true;
+        }
+        return plusOrPro;
+    }
+
+    public boolean canUploadPicture() {
+        if ((metadata != null) && (metadata.connections != null) &&
+            (metadata.connections.pictures != null) &&
+            (metadata.connections.pictures.options != null)) {
+            return metadata.connections.pictures.options.contains(Vimeo.OPTIONS_POST);
+        }
+        return false;
     }
 
     public UploadQuota getUploadQuota() {
