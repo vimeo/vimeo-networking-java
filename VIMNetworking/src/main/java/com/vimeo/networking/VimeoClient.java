@@ -33,6 +33,7 @@ import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.Privacy;
@@ -131,6 +132,7 @@ public class VimeoClient {
         }
 
         OkHttpClient okHttpClient = retrofitClientBuilder.build();
+        okHttpClient.interceptors().add(new LoggingInterceptor());
         okHttpClient.interceptors().add(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
