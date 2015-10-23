@@ -35,6 +35,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Account;
+import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.User;
@@ -851,8 +852,8 @@ public class VimeoClient {
 
 
     @Nullable
-    public Call<Object> comment(String uri, String comment, @Nullable String password,
-                                ModelCallback callback) {
+    public Call<Comment> comment(String uri, String comment, @Nullable String password,
+                                ModelCallback<Comment> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -871,8 +872,8 @@ public class VimeoClient {
         HashMap<String, String> postBody = new HashMap<>();
         postBody.put(Vimeo.PARAMETER_COMMENT_TEXT_BODY, comment);
 
-        Call<Object> call = this.vimeoService.comment(getAuthHeader(), validateUri(uri), options, postBody);
-        call.enqueue(getRetrofitCallback(callback));
+        Call<Comment> call = this.vimeoService.comment(getAuthHeader(), validateUri(uri), options, postBody);
+        call.enqueue(callback);
         return call;
     }
 

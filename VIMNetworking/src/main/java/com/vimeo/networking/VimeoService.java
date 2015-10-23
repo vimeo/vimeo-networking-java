@@ -23,6 +23,7 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.model.Account;
+import com.vimeo.networking.model.Comment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -107,7 +108,7 @@ public interface VimeoService {
      */
     // <editor-fold desc="POSTs">
     @POST("{uri}")
-    Call<Object> comment(@Header("Authorization") String authHeader,
+    Call<Comment> comment(@Header("Authorization") String authHeader,
                          @Path(value = "uri", encoded = true) String uri,
                          @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters);
 
@@ -115,7 +116,7 @@ public interface VimeoService {
     @POST("{uri}")
     Call<Object> createPictureResource(@Header("Authorization") String authHeader,
                                        @Path(value = "uri", encoded = false) String uri,
-                                       @Body String emptyBodyack);
+                                       @Body String emptyBody);
     // </editor-fold>
 
     /**
