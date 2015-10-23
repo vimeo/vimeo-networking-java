@@ -67,7 +67,13 @@ public abstract class VimeoCallback<T> implements Callback<T> {
 
     @Override
     public void onFailure(Throwable t) {
-        // handle execution failures like no internet connectivity
+        /* handle execution failures
+         * Failures may include:
+         *      No Internet
+         *      Socket issues
+         *      Cancelled request (cancelling may also lead to socket issues if request has been made)
+         *      Retrofit deserialization errors in which Retrofit cannot determine the response
+         */
         t.printStackTrace();
         VimeoError vimeoError = new VimeoError();
         vimeoError.setDeveloperMessage(t.getMessage());
