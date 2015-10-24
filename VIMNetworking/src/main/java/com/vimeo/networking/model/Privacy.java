@@ -83,41 +83,4 @@ public class Privacy implements Serializable {
     public boolean download;
     public boolean add;
     public String comments;
-
-    static public String privacyStringFromValue(PrivacyValue value) {
-        String privacyString = null;
-
-        switch (value) {
-            case NOBODY:
-                privacyString = PRIVACY_NOBODY;
-                break;
-
-            case USERS:
-                privacyString = PRIVACY_USERS;
-                break;
-
-            case VOD:
-                privacyString = PRIVACY_VOD;
-                break;
-
-            case CONTACTS:
-                privacyString = PRIVACY_CONTACTS;
-                break;
-
-            case PASSWORD:
-                privacyString = PRIVACY_PASSWORD;
-                break;
-
-            case DISABLE:
-                privacyString = PRIVACY_DISABLE;
-                break;
-
-            case ANYBODY:
-            default:
-                privacyString = PRIVACY_ANYBODY;
-                break;
-        }
-
-        return privacyString;
-    }
 }
