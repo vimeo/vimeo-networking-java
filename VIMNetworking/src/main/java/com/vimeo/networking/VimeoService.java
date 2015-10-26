@@ -22,8 +22,10 @@
 
 package com.vimeo.networking;
 
+import com.squareup.okhttp.RequestBody;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Comment;
+import com.vimeo.networking.model.PictureResource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -114,9 +116,9 @@ public interface VimeoService {
 
 
     @POST("{uri}")
-    Call<Object> createPictureResource(@Header("Authorization") String authHeader,
-                                       @Path(value = "uri", encoded = false) String uri,
-                                       @Body String emptyBody);
+    Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader,
+                                       @Path(value = "uri", encoded = true) String uri,
+                                       @Body RequestBody body);
     // </editor-fold>
 
     /**

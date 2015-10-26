@@ -32,7 +32,9 @@ import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Comment;
@@ -147,6 +149,19 @@ public class VimeoClient {
                         .build();
 
                 Response response = chain.proceed(request);
+
+                // TODO: This is a known issue with Beta 1 - the response parsing by Retrofit will fail
+                // if there is an empty body. We should remove this when we can upgrade to a later beta, that
+                // can handle Call<Void> as a response to a service call. The use case here is for password
+                // resets using the POST method. 10/26/15 [KZ]
+                String bodyString = response.body().string();
+                if (bodyString.isEmpty()) {
+                    bodyString = "{}";
+                }
+                response = response.newBuilder()
+                        .body(ResponseBody.create(response.body().contentType(), bodyString))
+                        .build();
+                // END TODO
 
                 // Customize or return the response
                 return response;
@@ -728,15 +743,20 @@ public class VimeoClient {
      * @param callback The ModelCallback containing PictureResource data
      */
     @Nullable
-    public Call<Object> createPictureResource(String uri, ModelCallback<PictureResource> callback) {
+    public Call<PictureResource> createPictureResource(String uri, ModelCallback<PictureResource> callback) {
         if (uri == null || uri.trim().isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
         }
 
-        // Body is empty, but cannot be null
-        Call<Object> call = this.vimeoService.createPictureResource(getAuthHeader(), validateUri(uri), "");
-        call.enqueue(getRetrofitCallback(callback));
+        // TODO we need to pass an empty body here; Retrofit doesn't allow an empty body or an empty String
+        // as a body, so we need to create our own RequestBody that is empty. If/when Retrofit decides to
+        // change this, we should revisit this. [KZ] 10/26/15
+        RequestBody body =
+                RequestBody.create(com.squareup.okhttp.MediaType.parse("text/plain; charset=utf-8"), "");
+        Call<PictureResource> call =
+                this.vimeoService.createPictureResource(getAuthHeader(), validateUri(uri), body);
+        call.enqueue(callback);
         return call;
     }
 
@@ -853,7 +873,7 @@ public class VimeoClient {
 
     @Nullable
     public Call<Comment> comment(String uri, String comment, @Nullable String password,
-                                ModelCallback<Comment> callback) {
+                                 ModelCallback<Comment> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
