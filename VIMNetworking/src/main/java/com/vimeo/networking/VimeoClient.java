@@ -654,7 +654,7 @@ public class VimeoClient {
             return null;
         }
 
-        String privacyString = Privacy.privacyStringFromValue(privacyValue);
+        String privacyString = privacyValue.getText();
 
         HashMap<String, String> privacyMap = new HashMap<>();
         privacyMap.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyString);

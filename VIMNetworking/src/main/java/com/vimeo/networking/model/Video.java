@@ -111,6 +111,10 @@ public class Video implements Serializable {
         return status == null ? Status.NONE : status;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public boolean canLike() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
             return true;
