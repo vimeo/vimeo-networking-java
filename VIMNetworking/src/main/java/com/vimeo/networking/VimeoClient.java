@@ -23,13 +23,11 @@
 package com.vimeo.networking;
 
 import com.google.common.base.Splitter;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -43,11 +41,9 @@ import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -90,8 +86,8 @@ public class VimeoClient {
      */
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override
-        public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
-            com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+        public Response intercept(Chain chain) throws IOException {
+            Response originalResponse = chain.proceed(chain.request());
 
             return originalResponse.newBuilder().header(Vimeo.HEADER_CACHE_CONTROL, "public").build();
         }
@@ -170,7 +166,7 @@ public class VimeoClient {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(configuration.baseURLString)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(getGson()))
+                .addConverterFactory(GsonConverterFactory.create(VimeoNetworkUtil.getGson()))
                 .build();
 
         this.vimeoService = retrofit.create(VimeoService.class);
@@ -185,36 +181,6 @@ public class VimeoClient {
         } catch (IOException e) {
             configuration.networkingLogger.e("Cache clearing error: " + e.getMessage(), e);
         }
-    }
-
-    /**
-     * Static helper method that automatically applies the VimeoClient Gson preferences
-     * </p>
-     * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
-     * </p>
-     *
-     * @return Gson object that can be passed into a {@link GsonConverterFactory} create() method
-     */
-    public static Gson getGson() {
-        // Example date: "2015-05-21T14:24:03+00:00"
-        return getGsonBuilder().create();
-    }
-
-    /**
-     * Static helper method that automatically applies the VimeoClient Gson preferences
-     * </p>
-     * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
-     * </p>
-     *
-     * @return GsonBuilder that can be built upon and then created
-     */
-    public static GsonBuilder getGsonBuilder() {
-        // Example date: "2015-05-21T14:24:03+00:00"
-        return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapter(Date.class, ISO8601.getDateSerializer())
-                .registerTypeAdapter(Date.class, ISO8601.getDateDeserializer());
-        /** Refer to {@link ISO8601} for explanation of deserialization */
-        // .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ")
     }
 
     /**
@@ -303,7 +269,7 @@ public class VimeoClient {
         map.put(Vimeo.PARAMETER_SCOPE, this.configuration.scope);
         map.put(Vimeo.PARAMETER_CLIENT_ID, this.configuration.clientID);
 
-        String uri = urlEncodeUTF8(map);
+        String uri = VimeoNetworkUtil.urlEncodeUTF8(map);
 
         // TODO: find a better way to build a URL and query string [AH]
         return this.configuration.baseURLString + Vimeo.CODE_GRANT_PATH + "?" + uri;
@@ -647,7 +613,7 @@ public class VimeoClient {
             return null;
         }
 
-        if (title == null && description == null && privacyValue == null) {
+        if (description == null && privacyValue == null) {
             // No point in editing video
             callback.failure(new VimeoError("title, description, and privacyValue cannot be empty!"));
 
@@ -679,7 +645,7 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
         }
 
-        Call<Object> call = this.vimeoService.edit(getAuthHeader(), validateUri(uri), parameters);
+        Call<Object> call = this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
         call.enqueue(getRetrofitCallback(callback));
 
         return call;
@@ -719,7 +685,7 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_USERS_BIO, bio);
         }
 
-        Call<Object> call = this.vimeoService.edit(getAuthHeader(), validateUri(uri), parameters);
+        Call<Object> call = this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -752,10 +718,9 @@ public class VimeoClient {
         // TODO we need to pass an empty body here; Retrofit doesn't allow an empty body or an empty String
         // as a body, so we need to create our own RequestBody that is empty. If/when Retrofit decides to
         // change this, we should revisit this. [KZ] 10/26/15
-        RequestBody body =
-                RequestBody.create(com.squareup.okhttp.MediaType.parse("text/plain; charset=utf-8"), "");
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), "");
         Call<PictureResource> call =
-                this.vimeoService.createPictureResource(getAuthHeader(), validateUri(uri), body);
+                this.vimeoService.createPictureResource(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), body);
         call.enqueue(callback);
         return call;
     }
@@ -775,7 +740,7 @@ public class VimeoClient {
         }
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_ACTIVE, true);
-        Call<Object> call = this.vimeoService.edit(getAuthHeader(), validateUri(uri), parameters);
+        Call<Object> call = this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -892,7 +857,8 @@ public class VimeoClient {
         HashMap<String, String> postBody = new HashMap<>();
         postBody.put(Vimeo.PARAMETER_COMMENT_TEXT_BODY, comment);
 
-        Call<Comment> call = this.vimeoService.comment(getAuthHeader(), validateUri(uri), options, postBody);
+        Call<Comment> call =
+                this.vimeoService.comment(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), options, postBody);
         call.enqueue(callback);
         return call;
     }
@@ -914,7 +880,7 @@ public class VimeoClient {
             @Override
             public void success(Object o) {
                 //Handle the gson parsing using a deserializer object
-                configuration.deserializer.deserialize(getGson(), o, callback);
+                configuration.deserializer.deserialize(VimeoNetworkUtil.getGson(), o, callback);
             }
 
             @Override
@@ -1005,8 +971,8 @@ public class VimeoClient {
             queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
         }
 
-        Call<Object> call =
-                this.vimeoService.GET(getAuthHeader(), validateUri(uri), queryMap, cacheHeaderValue);
+        Call<Object> call = this.vimeoService.GET(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), queryMap,
+                                                  cacheHeaderValue);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -1124,22 +1090,22 @@ public class VimeoClient {
 
     private Call<Object> PUT(String authHeader, String uri, Map<String, String> options,
                              Callback<Object> callback) {
-        Call<Object> call = this.vimeoService.PUT(authHeader, validateUri(uri), options);
+        Call<Object> call = this.vimeoService.PUT(authHeader, VimeoNetworkUtil.validateUri(uri), options);
         call.enqueue(callback);
         return call;
     }
 
     private Call<Object> DELETE(String authHeader, String uri, Map<String, String> options,
                                 Callback<Object> callback) {
-        Call<Object> call = this.vimeoService.DELETE(authHeader, validateUri(uri), options);
+        Call<Object> call = this.vimeoService.DELETE(authHeader, VimeoNetworkUtil.validateUri(uri), options);
         call.enqueue(callback);
         return call;
     }
 
     private Call<Object> POST(String authHeader, String uri, String cacheHeaderValue,
                               HashMap<String, String> parameters, Callback<Object> callback) {
-        Call<Object> call =
-                this.vimeoService.POST(authHeader, validateUri(uri), cacheHeaderValue, parameters);
+        Call<Object> call = this.vimeoService.POST(authHeader, VimeoNetworkUtil.validateUri(uri), cacheHeaderValue,
+                                                   parameters);
         call.enqueue(callback);
         return call;
     }
@@ -1175,48 +1141,5 @@ public class VimeoClient {
     private String getBasicAuthHeader() {
         return Credentials.basic(configuration.clientID, configuration.clientSecret);
     }
-
     // </editor-fold>
-
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Utilities
-     * -----------------------------------------------------------------------------------------------------
-     */
-    // <editor-fold desc="Utilities">
-
-    // TODO: This is shitty, revisit [AH]
-    static String urlEncodeUTF8(Map<String, String> map) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (sb.length() > 0) {
-                sb.append("&");
-            }
-
-            sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey()), urlEncodeUTF8(entry.getValue())));
-        }
-
-        return sb.toString();
-    }
-
-    static String urlEncodeUTF8(String s) {
-        try {
-            return URLEncoder.encode(s, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new UnsupportedOperationException(e);
-        }
-    }
-
-    private String validateUri(String uri) {
-        // TODO: We shouldn't have to do this but Retrofit doesn't support removing the leading slash
-        // I asked a question on StackOverflow which we can keep our eye on.
-        // http://stackoverflow.com/questions/30623580/duplicate-slashes-in-retrofit-url [KV]
-        if (uri.charAt(0) == '/') {
-            uri = uri.substring(1);
-        }
-        return uri;
-    }
-
-    // </editor-fold>
-
 }

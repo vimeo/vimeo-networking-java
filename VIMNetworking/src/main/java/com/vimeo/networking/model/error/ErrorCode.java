@@ -212,5 +212,5 @@ public enum ErrorCode {
     @SerializedName("3405")
     USER_NOT_ALLOWED_TO_SET_USERS_CLIP_PRIVACY,
     @SerializedName("4003")
-    UPLOAD_TICKET_CREATION_ERROR,
+    UPLOAD_TICKET_CREATION_ERROR
 }

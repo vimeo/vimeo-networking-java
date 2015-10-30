@@ -77,6 +77,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
         t.printStackTrace();
         VimeoError vimeoError = new VimeoError();
         vimeoError.setDeveloperMessage(t.getMessage());
+        vimeoError.setIsNetworkError(true);
         failure(vimeoError);
     }
 }
