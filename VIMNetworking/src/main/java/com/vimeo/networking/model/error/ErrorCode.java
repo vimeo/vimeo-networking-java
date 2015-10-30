@@ -25,12 +25,17 @@ package com.vimeo.networking.model.error;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * All the error codes that can come back from the Vimeo Api.
+ * <p/>
+ * Vimean reference: {@link <a href="https://docs.google.com/a/vimeo.com/spreadsheets/d/1DlkbeOFDuogvwyG2QDqExqBd_Yb3M7w7ku25AJN7QU0/edit?usp=sharing">Spreadsheet</a>}
  * Created by kylevenn on 7/15/15.
  */
 public enum ErrorCode {
     // The default code that will be returned if the code returned from the server isn't enumerated below
     // If that is the case, check the raw response for the code [KV]
     DEFAULT,
+
+    // ---- General Codes ----
     @SerializedName("1000")
     BAD_REQUEST,
     @SerializedName("1001")
@@ -69,6 +74,8 @@ public enum ErrorCode {
     INVALID_BODY,
     @SerializedName("2206")
     INVALID_ACCEPT_HEADER,
+
+    // ---- Auth Input ----
     @SerializedName("2216")
     INVALID_INPUT_EMAIL_TOO_LONG,
     @SerializedName("2210")
@@ -164,5 +171,46 @@ public enum ErrorCode {
     @SerializedName("8000")
     INVALID_CREDENTIALS,
     @SerializedName("8001")
-    UNAUTHORIZED_CLIENT
+    UNAUTHORIZED_CLIENT,
+
+    // ---- Video Settings Inputs ----
+    @SerializedName("2230")
+    INVALID_INPUT_BAD_UPLOAD_TYPE,
+    @SerializedName("2231")
+    INVALID_INPUT_NO_CLIP_NAME,
+    @SerializedName("2232")
+    INVALID_INPUT_BAD_CLIP_PRIVACY_VIEW,
+    @SerializedName("2233")
+    INVALID_INPUT_CLIP_PRIVACY_PASSWORD_MISSING_PASSWORD2233,
+    @SerializedName("2234")
+    INVALID_INPUT_BAD_LICENSE_TYPE,
+    @SerializedName("2235")
+    INVALID_INPUT_BAD_LANGUAGE_TYPE,
+    @SerializedName("2236")
+    INVALID_INPUT_BAD_REVIEW_LINK,
+    @SerializedName("2237")
+    INVALID_INPUT_BAD_CLIP_PRIVACY_ADD,
+    @SerializedName("2238")
+    INVALID_INPUT_BAD_CLIP_PRIVACY_DOWNLOAD,
+    @SerializedName("2239")
+    INVALID_INPUT_BAD_CLIP_PRIVACY_EMBED,
+    @SerializedName("2240")
+    INVALID_INPUT_BAD_CLIP_PRIVACY_COMMENTS,
+
+    @SerializedName("8002")
+    UNABLE_TO_UPLOAD_VIDEO_MISSING_USER_ID_FOR_AUTHENTICATION_TOKEN,
+    @SerializedName("3400")
+    USER_NOT_ALLOWED_TO_UPLOAD_VIDEO_UNVERIFIED_EMAIL,
+    @SerializedName("3401")
+    USER_NOT_ALLOWED_TO_UPGRADE_TO_1080_VIDEO,
+    @SerializedName("3402")
+    USER_NOT_ALLOWED_TO_SET_PUBLIC_OR_NOBODY_CLIP_PRIVACY,
+    @SerializedName("3403")
+    USER_NOT_ALLOWED_TO_SET_CLIP_PRIVACY_DISABLE,
+    @SerializedName("3404")
+    USER_NOT_ALLOWED_TO_SET_CONTACTS_CLIP_PRIVACY,
+    @SerializedName("3405")
+    USER_NOT_ALLOWED_TO_SET_USERS_CLIP_PRIVACY,
+    @SerializedName("4003")
+    UPLOAD_TICKET_CREATION_ERROR,
 }
