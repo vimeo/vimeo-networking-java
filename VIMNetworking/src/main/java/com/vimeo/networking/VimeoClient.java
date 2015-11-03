@@ -131,6 +131,8 @@ public class VimeoClient {
         }
 
         OkHttpClient okHttpClient = retrofitClientBuilder.build();
+        okHttpClient.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(this.configuration.timeout, TimeUnit.SECONDS);
         okHttpClient.interceptors().add(new LoggingInterceptor());
         okHttpClient.interceptors().add(new Interceptor() {
             @Override

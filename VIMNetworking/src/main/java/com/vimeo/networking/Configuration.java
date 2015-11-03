@@ -39,6 +39,7 @@ public class Configuration {
     private static final String DEFAULT_VERSION_STRING = "3.3";
     // TODO: this cache length should be set from appconfig to match video file invalidation 10/7/15 [KV]
     private static final int DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2; // Default to 2 hours
+    private static final int DEFAULT_TIMEOUT = 60; // seconds
 
     public String baseURLString;
     public String clientID;
@@ -53,6 +54,8 @@ public class Configuration {
     public int cacheSize;
     public int cacheMaxAge; // in seconds
     public String userAgentString;
+
+    public int timeout; // in seconds
 
     public boolean certPinningEnabled;
     public NetworkingLoggerInterface networkingLogger;
@@ -82,6 +85,8 @@ public class Configuration {
         private int cacheSize;
         private int cacheMaxAge = DEFAULT_CACHE_MAX_AGE;
         private String userAgentString;
+
+        public int timeout = DEFAULT_TIMEOUT;
 
         private boolean certPinningEnabled = true;
         // Default to the stock logger which just prints - this makes it optional
@@ -122,6 +127,11 @@ public class Configuration {
             return this;
         }
 
+        public Builder timeout(int timeout) {
+            this.timeout = timeout;
+            return this;
+        }
+
         public Builder enableCertPinning(boolean enabled) {
             this.certPinningEnabled = enabled;
             return this;
@@ -156,6 +166,8 @@ public class Configuration {
         this.cacheSize = builder.cacheSize;
         this.cacheMaxAge = builder.cacheMaxAge;
         this.userAgentString = builder.userAgentString;
+
+        this.timeout = builder.timeout;
 
         this.certPinningEnabled = builder.certPinningEnabled;
         this.networkingLogger = builder.networkingLogger;
