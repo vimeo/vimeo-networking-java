@@ -55,6 +55,8 @@ public class VimeoError extends RuntimeException implements Serializable {
     @SerializedName("invalid_parameters")
     private List<InvalidParameter> invalidParameters;
 
+    private boolean isNetworkError;
+
     public VimeoError() {
     }
 
@@ -119,6 +121,20 @@ public class VimeoError extends RuntimeException implements Serializable {
     public InvalidParameter getInvalidParameter() {
         return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters.get(
                 0) : null;
+    }
+
+    public void setIsNetworkError(boolean isNetworkError) {
+        this.isNetworkError = isNetworkError;
+    }
+
+    /**
+     * True if the error was from poor connectivity, closed sockets, or any other issue with the networking
+     * layer of the request.
+     *
+     * @return {@link #isNetworkError}
+     */
+    public boolean isNetworkError() {
+        return isNetworkError;
     }
 
     public boolean isServiceUnavailable() {
