@@ -915,7 +915,7 @@ public class VimeoClient {
     public void getCurrentUser(ModelCallback<User> callback) {
         // Endpoints
         String ENDPOINT_ME = "me";
-        fetchContent(ENDPOINT_ME, null, callback);
+        fetchContent(ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback);
     }
 
     /**

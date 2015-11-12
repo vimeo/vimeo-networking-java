@@ -69,7 +69,9 @@ public class Video implements Serializable {
         @SerializedName("uploading_error")
         UPLOADING_ERROR("uploading_error"),
         @SerializedName("transcoding_error")
-        TRANSCODING_ERROR("transcoding_error");
+        TRANSCODING_ERROR("transcoding_error"),
+        @SerializedName("quota_exceeded")
+        QUOTA_EXCEEDED("quota_exceeded");
 
         private String string;
 
