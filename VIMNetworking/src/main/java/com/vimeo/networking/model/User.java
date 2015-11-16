@@ -29,6 +29,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by alfredhanssen on 4/12/15.
  */
@@ -77,31 +79,98 @@ public class User implements Serializable {
         return AccountType.BASIC;
     }
 
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Follow Accessors/Helpers
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Follow Accessors/Helpers">
     public boolean canFollow() {
+        return getFollowInteraction() != null;
+    }
+
+    public boolean isFollowing() {
+        return getFollowInteraction() != null && metadata.interactions.follow.added;
+    }
+
+    @Nullable
+    public Interaction getFollowInteraction() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
+            return metadata.interactions.follow;
+        }
+        return null;
+    }
+
+    @Nullable
+    public Connection getFollowingConnection() {
+        if (metadata != null && metadata.connections != null) {
+            return metadata.connections.following;
+        }
+        return null;
+    }
+
+    @Nullable
+    public Connection getFollowersConnection() {
+        if (metadata != null && metadata.connections != null) {
+            return metadata.connections.followers;
+        }
+        return null;
+    }
+
+    public int getFollowerCount() {
+        if (getFollowersConnection() != null) {
+            return getFollowersConnection().total;
+        }
+        return 0;
+    }
+
+    public int getFollowingCount() {
+        if (getFollowingConnection() != null) {
+            return getFollowingConnection().total;
+        }
+        return 0;
+    }
+
+    // TODO: The below methods might be better suited in UserUtils 11/15/15 [KV]
+    // Object modification shouldn't really be condoned...unless it should?
+    // Returns if it was able to successfully change the count
+    public boolean changeFollowerCount(boolean follow) {
+        if (getFollowersConnection() != null) {
+            if (follow) {
+                getFollowersConnection().total += 1;
+            } else {
+                getFollowersConnection().total -= 1;
+            }
             return true;
         }
         return false;
     }
 
-    public boolean isFollowing() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return metadata.interactions.follow.added;
+    // Returns if it was able to successfully increment the count
+    public boolean changeFollowingCount(boolean follow) {
+        if (getFollowingConnection() != null) {
+            if (follow) {
+                getFollowingConnection().total += 1;
+            } else {
+                getFollowingConnection().total -= 1;
+            }
+            return true;
         }
         return false;
     }
 
-    public int videoCount() {
+    public boolean changeFollowStatus(boolean follow) {
+        if (getFollowInteraction() != null) {
+            getFollowInteraction().added = follow;
+            return true;
+        }
+        return false;
+    }
+    // </editor-fold>
+
+    public int getVideoCount() {
         if ((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
             return metadata.connections.videos.total;
-        }
-        return 0;
-    }
-
-    public int followerCount() {
-        if ((metadata != null) && (metadata.connections != null) &&
-            (metadata.connections.followers != null)) {
-            return metadata.connections.followers.total;
         }
         return 0;
     }
