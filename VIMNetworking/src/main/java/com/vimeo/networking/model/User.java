@@ -168,6 +168,13 @@ public class User implements Serializable {
     }
     // </editor-fold>
 
+    public ArrayList<Picture> getPictures() {
+        if (pictures == null || pictures.sizes == null) {
+            return new ArrayList<>();
+        }
+        return pictures.sizes;
+    }
+
     public int getVideoCount() {
         if ((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
             return metadata.connections.videos.total;
