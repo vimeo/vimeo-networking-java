@@ -131,40 +131,19 @@ public class User implements Serializable {
         return 0;
     }
 
-    // TODO: The below methods might be better suited in UserUtils 11/15/15 [KV]
-    // Object modification shouldn't really be condoned...unless it should?
-    // Returns if it was able to successfully change the count
-    public boolean changeFollowerCount(boolean follow) {
-        if (getFollowersConnection() != null) {
-            if (follow) {
-                getFollowersConnection().total += 1;
-            } else {
-                getFollowersConnection().total -= 1;
-            }
-            return true;
+    @Nullable
+    public Connection getLikesConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.likes != null) {
+            return metadata.connections.likes;
         }
-        return false;
+        return null;
     }
 
-    // Returns if it was able to successfully increment the count
-    public boolean changeFollowingCount(boolean follow) {
-        if (getFollowingConnection() != null) {
-            if (follow) {
-                getFollowingConnection().total += 1;
-            } else {
-                getFollowingConnection().total -= 1;
-            }
-            return true;
+    public int getLikesCount() {
+        if (getLikesConnection() != null) {
+            return getLikesConnection().total;
         }
-        return false;
-    }
-
-    public boolean changeFollowStatus(boolean follow) {
-        if (getFollowInteraction() != null) {
-            getFollowInteraction().added = follow;
-            return true;
-        }
-        return false;
+        return 0;
     }
     // </editor-fold>
 

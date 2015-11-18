@@ -161,11 +161,18 @@ public class Video implements Serializable {
         return getLikeInteraction() != null && metadata.interactions.like.added;
     }
 
-    public int likeCount() {
+    @Nullable
+    public Connection getLikesConnection() {
         if ((metadata != null) && (metadata.connections != null) && (metadata.connections.likes != null)) {
-            return metadata.connections.likes.total;
+            return metadata.connections.likes;
         }
+        return null;
+    }
 
+    public int likeCount() {
+        if (getLikesConnection() != null) {
+            return getLikesConnection().total;
+        }
         return 0;
     }
     // </editor-fold>
