@@ -117,20 +117,13 @@ public class Video implements Serializable {
         this.status = status;
     }
 
-    public boolean canLike() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
-            return true;
-        }
-        return false;
-    }
 
-    public boolean isLiked() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
-            return metadata.interactions.like.added;
-        }
-        return false;
-    }
-
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Watch Later Accessors
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Watch Later Accessors">
     public boolean canWatchLater() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
             return true;
@@ -144,6 +137,29 @@ public class Video implements Serializable {
         }
         return false;
     }
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Likes Accessors
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Likes">
+    @Nullable
+    public Interaction getLikeInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
+            return metadata.interactions.like;
+        }
+        return null;
+    }
+
+    public boolean canLike() {
+        return getLikeInteraction() != null;
+    }
+
+    public boolean isLiked() {
+        return getLikeInteraction() != null && metadata.interactions.like.added;
+    }
 
     public int likeCount() {
         if ((metadata != null) && (metadata.connections != null) && (metadata.connections.likes != null)) {
@@ -152,6 +168,7 @@ public class Video implements Serializable {
 
         return 0;
     }
+    // </editor-fold>
 
     @Nullable
     public Integer playCount() {
