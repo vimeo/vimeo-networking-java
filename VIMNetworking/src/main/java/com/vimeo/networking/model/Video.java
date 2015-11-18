@@ -124,18 +124,28 @@ public class Video implements Serializable {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Watch Later Accessors">
-    public boolean canWatchLater() {
+    @Nullable
+    public Interaction getWatchLaterInteraction() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
-            return true;
+            return metadata.interactions.watchlater;
         }
-        return false;
+        return null;
+    }
+
+    public boolean canWatchLater() {
+        return getWatchLaterInteraction() != null;
     }
 
     public boolean isWatchLater() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
-            return metadata.interactions.watchlater.added;
+        return getWatchLaterInteraction() != null && getWatchLaterInteraction().added;
+    }
+
+    @Nullable
+    public Connection getWatchLaterConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.watchlater != null) {
+            return metadata.connections.watchlater;
         }
-        return false;
+        return null;
     }
     // </editor-fold>
 
@@ -158,7 +168,7 @@ public class Video implements Serializable {
     }
 
     public boolean isLiked() {
-        return getLikeInteraction() != null && metadata.interactions.like.added;
+        return getLikeInteraction() != null && getLikeInteraction().added;
     }
 
     @Nullable

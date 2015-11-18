@@ -81,10 +81,10 @@ public class User implements Serializable {
 
     /**
      * -----------------------------------------------------------------------------------------------------
-     * Follow Accessors/Helpers
+     * Interaction Accessors/Helpers
      * -----------------------------------------------------------------------------------------------------
      */
-    // <editor-fold desc="Follow Accessors/Helpers">
+    // <editor-fold desc="Accessors/Helpers">
     public boolean canFollow() {
         return getFollowInteraction() != null;
     }
@@ -144,6 +144,14 @@ public class User implements Serializable {
             return getLikesConnection().total;
         }
         return 0;
+    }
+
+    @Nullable
+    public Connection getWatchLaterConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.watchlater != null) {
+            return metadata.connections.watchlater;
+        }
+        return null;
     }
     // </editor-fold>
 
