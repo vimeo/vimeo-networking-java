@@ -604,7 +604,8 @@ public class VimeoClient {
     // <editor-fold desc="Editing (Video, User)">
     @Nullable
     public Call<Object> editVideo(String uri, String title, String description, String password,
-                                  Privacy.PrivacyValue privacyValue, ModelCallback callback) {
+                                  Privacy.PrivacyValue privacyValue,
+                                  @Nullable HashMap<String, Object> parameters, ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -627,7 +628,9 @@ public class VimeoClient {
         HashMap<String, String> privacyMap = new HashMap<>();
         privacyMap.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyString);
 
-        HashMap<String, Object> parameters = new HashMap<>();
+        if (parameters == null) {
+            parameters = new HashMap<>();
+        }
 
         if (title != null) {
             parameters.put(Vimeo.PARAMETER_VIDEO_NAME, title);
@@ -647,7 +650,8 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
         }
 
-        Call<Object> call = this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
+        Call<Object> call =
+                this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
         call.enqueue(getRetrofitCallback(callback));
 
         return call;
@@ -687,7 +691,8 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_USERS_BIO, bio);
         }
 
-        Call<Object> call = this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
+        Call<Object> call =
+                this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -722,7 +727,8 @@ public class VimeoClient {
         // change this, we should revisit this. [KZ] 10/26/15
         RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), "");
         Call<PictureResource> call =
-                this.vimeoService.createPictureResource(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), body);
+                this.vimeoService.createPictureResource(getAuthHeader(), VimeoNetworkUtil.validateUri(uri),
+                                                        body);
         call.enqueue(callback);
         return call;
     }
@@ -742,7 +748,8 @@ public class VimeoClient {
         }
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_ACTIVE, true);
-        Call<Object> call = this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
+        Call<Object> call =
+                this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -860,7 +867,8 @@ public class VimeoClient {
         postBody.put(Vimeo.PARAMETER_COMMENT_TEXT_BODY, comment);
 
         Call<Comment> call =
-                this.vimeoService.comment(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), options, postBody);
+                this.vimeoService.comment(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), options,
+                                          postBody);
         call.enqueue(callback);
         return call;
     }
@@ -973,8 +981,9 @@ public class VimeoClient {
             queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
         }
 
-        Call<Object> call = this.vimeoService.GET(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), queryMap,
-                                                  cacheHeaderValue);
+        Call<Object> call =
+                this.vimeoService.GET(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), queryMap,
+                                      cacheHeaderValue);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -1106,8 +1115,9 @@ public class VimeoClient {
 
     private Call<Object> POST(String authHeader, String uri, String cacheHeaderValue,
                               HashMap<String, String> parameters, Callback<Object> callback) {
-        Call<Object> call = this.vimeoService.POST(authHeader, VimeoNetworkUtil.validateUri(uri), cacheHeaderValue,
-                                                   parameters);
+        Call<Object> call =
+                this.vimeoService.POST(authHeader, VimeoNetworkUtil.validateUri(uri), cacheHeaderValue,
+                                       parameters);
         call.enqueue(callback);
         return call;
     }
