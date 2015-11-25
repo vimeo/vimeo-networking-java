@@ -919,7 +919,7 @@ public class VimeoClient {
         return fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, searchRefinement, fieldFilter);
     }
 
-    public void getCurrentUser(ModelCallback<User> callback) {
+    public void fetchCurrentUser(ModelCallback<User> callback) {
         // Endpoints
         fetchContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback);
     }
