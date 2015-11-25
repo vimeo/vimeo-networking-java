@@ -117,41 +117,75 @@ public class Video implements Serializable {
         this.status = status;
     }
 
-    public boolean canLike() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
-            return true;
-        }
-        return false;
-    }
 
-    public boolean isLiked() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
-            return metadata.interactions.like.added;
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Watch Later Accessors
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Watch Later Accessors">
+    @Nullable
+    public Interaction getWatchLaterInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
+            return metadata.interactions.watchlater;
         }
-        return false;
+        return null;
     }
 
     public boolean canWatchLater() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
-            return true;
-        }
-        return false;
+        return getWatchLaterInteraction() != null;
     }
 
     public boolean isWatchLater() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
-            return metadata.interactions.watchlater.added;
+        return getWatchLaterInteraction() != null && getWatchLaterInteraction().added;
+    }
+
+    @Nullable
+    public Connection getWatchLaterConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.watchlater != null) {
+            return metadata.connections.watchlater;
         }
-        return false;
+        return null;
+    }
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Likes Accessors
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Likes">
+    @Nullable
+    public Interaction getLikeInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
+            return metadata.interactions.like;
+        }
+        return null;
+    }
+
+    public boolean canLike() {
+        return getLikeInteraction() != null;
+    }
+
+    public boolean isLiked() {
+        return getLikeInteraction() != null && getLikeInteraction().added;
+    }
+
+    @Nullable
+    public Connection getLikesConnection() {
+        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.likes != null)) {
+            return metadata.connections.likes;
+        }
+        return null;
     }
 
     public int likeCount() {
-        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.likes != null)) {
-            return metadata.connections.likes.total;
+        if (getLikesConnection() != null) {
+            return getLikesConnection().total;
         }
-
         return 0;
     }
+    // </editor-fold>
 
     @Nullable
     public Integer playCount() {
@@ -168,7 +202,7 @@ public class Video implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || !(o instanceof Video)) {
             return false;
         }
 

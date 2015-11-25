@@ -25,6 +25,8 @@ package com.vimeo.networking.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by zetterstromk on 6/11/15.
  */
@@ -44,15 +46,28 @@ public class Channel implements Serializable {
     public Privacy privacy;
     public Metadata metadata;
 
-    public boolean canFollow() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return true;
+    @Nullable
+    public Connection getFollowersConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.followers != null) {
+            return metadata.connections.followers;
         }
-        return false;
+        return null;
+    }
+
+    @Nullable
+    public Interaction getFollowInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
+            return metadata.interactions.follow;
+        }
+        return null;
+    }
+
+    public boolean canFollow() {
+        return getFollowInteraction() == null;
     }
 
     public boolean isFollowing() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
+        if (getFollowInteraction() != null) {
             return metadata.interactions.follow.added;
         }
         return false;
