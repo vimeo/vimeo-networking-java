@@ -162,8 +162,16 @@ public class User implements Serializable {
         return pictures.sizes;
     }
 
-    public int getVideoCount() {
+    @Nullable
+    public Connection getVideosConnection() {
         if ((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
+            return metadata.connections.videos;
+        }
+        return null;
+    }
+
+    public int getVideoCount() {
+        if (getVideosConnection() != null) {
             return metadata.connections.videos.total;
         }
         return 0;
