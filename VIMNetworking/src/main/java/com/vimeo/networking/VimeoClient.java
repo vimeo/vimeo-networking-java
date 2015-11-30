@@ -919,11 +919,9 @@ public class VimeoClient {
         return fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, searchRefinement, fieldFilter);
     }
 
-    // TODO: this may end up living in VIMUpload 10/15/15 [KV]
-    public void getCurrentUser(ModelCallback<User> callback) {
+    public void fetchCurrentUser(ModelCallback<User> callback) {
         // Endpoints
-        String ENDPOINT_ME = "me";
-        fetchContent(ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback);
+        fetchContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback);
     }
 
     /**
