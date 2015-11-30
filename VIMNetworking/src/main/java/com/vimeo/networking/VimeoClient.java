@@ -114,10 +114,24 @@ public class VimeoClient {
 
         this.configuration = configuration;
 
-        final VimeoClient client = this;
-
         this.cache = new Cache(this.configuration.cacheDirectory, this.configuration.cacheSize);
 
+        Retrofit retrofit = createRetrofit();
+
+        this.vimeoService = retrofit.create(VimeoService.class);
+
+        Account account = this.configuration.accountStore.loadAccount();
+        this.setAccount(account);
+    }
+
+    private Retrofit createRetrofit() {
+        return new Retrofit.Builder().baseUrl(configuration.baseURLString)
+                .client(createOkHttpClient())
+                .addConverterFactory(GsonConverterFactory.create(VimeoNetworkUtil.getGson()))
+                .build();
+    }
+
+    private OkHttpClient createOkHttpClient() {
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
         retrofitClientBuilder.setCache(cache);
         retrofitClientBuilder.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
@@ -129,7 +143,6 @@ public class VimeoClient {
                                                       e);
             }
         }
-
         OkHttpClient okHttpClient = retrofitClientBuilder.build();
         okHttpClient.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS);
         okHttpClient.setConnectTimeout(this.configuration.timeout, TimeUnit.SECONDS);
@@ -142,7 +155,7 @@ public class VimeoClient {
                 // Customize the request
                 Request request = original.newBuilder()
                         .header(Vimeo.HEADER_USER_AGENT, configuration.userAgentString)
-                        .header(Vimeo.HEADER_ACCEPT, client.getAcceptHeader())
+                        .header(Vimeo.HEADER_ACCEPT, getAcceptHeader())
                         .method(original.method(), original.body())
                         .build();
 
@@ -166,15 +179,7 @@ public class VimeoClient {
             }
         });
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(configuration.baseURLString)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(VimeoNetworkUtil.getGson()))
-                .build();
-
-        this.vimeoService = retrofit.create(VimeoService.class);
-
-        Account account = this.configuration.accountStore.loadAccount();
-        this.setAccount(account);
+        return okHttpClient;
     }
 
     public void clearRequestCache() {
@@ -237,8 +242,8 @@ public class VimeoClient {
         this.account = account;
     }
 
-    public void setBaseUrlString(String baseUrlString) {
-        this.configuration.baseURLString = baseUrlString;
+    public Configuration getConfiguration() {
+        return this.configuration;
     }
 
     // </editor-fold>
