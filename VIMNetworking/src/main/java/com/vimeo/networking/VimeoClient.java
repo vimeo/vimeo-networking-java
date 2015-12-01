@@ -351,6 +351,28 @@ public class VimeoClient {
         return call;
     }
 
+    /**
+     * Exchange OAuth1 token/secret combination for a new OAuth2 token
+     *
+     * @param callback    Callback pertaining to authentication
+     * @param token       An OAuth1 token
+     * @param tokenSecret An OAuth1 token secret
+     * @return The Account
+     */
+    public Call<Account> exchangeOAuthOneToken(final String token,
+                                               final String tokenSecret, final AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        Call<Account> call =
+                this.vimeoService.exchangeOAuthOneToken(getBasicAuthHeader(), Vimeo.OAUTH_ONE_GRANT_TYPE,
+                                                        token, tokenSecret, configuration.scope);
+        call.enqueue(new AccountCallback(this, callback));
+        return call;
+    }
+
+
     @Nullable
     public Call<Account> join(String displayName, String email, String password,
                               final AuthCallback callback) {
