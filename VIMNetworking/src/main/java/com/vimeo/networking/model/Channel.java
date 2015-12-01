@@ -54,6 +54,13 @@ public class Channel implements Serializable {
         return null;
     }
 
+    public int getFollowerCount() {
+        if (getFollowersConnection() != null) {
+            return getFollowersConnection().total;
+        }
+        return 0;
+    }
+
     @Nullable
     public Interaction getFollowInteraction() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
@@ -63,7 +70,7 @@ public class Channel implements Serializable {
     }
 
     public boolean canFollow() {
-        return getFollowInteraction() == null;
+        return getFollowInteraction() != null;
     }
 
     public boolean isFollowing() {
@@ -80,9 +87,17 @@ public class Channel implements Serializable {
         return 0;
     }
 
-    public int videoCount() {
+    @Nullable
+    public Connection getVideosConnection() {
         if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
-            return metadata.connections.videos.total;
+            return metadata.connections.videos;
+        }
+        return null;
+    }
+
+    public int getVideoCount() {
+        if (getVideosConnection() != null) {
+            return getVideosConnection().total;
         }
         return 0;
     }
