@@ -23,6 +23,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.Vimeo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -195,6 +196,18 @@ public class Video implements Serializable {
             return null;
         }
 
+    }
+
+    public String recommendationsUri() {
+        String recommendationsUri = null;
+        if (metadata != null && metadata.connections != null &&
+            metadata.connections.recommendations != null) {
+            recommendationsUri = metadata.connections.recommendations.uri;
+        }
+        if (recommendationsUri == null) {
+            recommendationsUri = uri + Vimeo.ENDPOINT_RECOMMENDATIONS;
+        }
+        return recommendationsUri;
     }
 
     @Override

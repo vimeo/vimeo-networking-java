@@ -43,6 +43,7 @@ public class Vimeo {
 
     // Endpoints
     public static final String ENDPOINT_ME = "me";
+    public static final String ENDPOINT_RECOMMENDATIONS = "/recommendations";
 
     // Parameters
     public static final String PARAMETER_REDIRECT_URI = "redirect_uri";
