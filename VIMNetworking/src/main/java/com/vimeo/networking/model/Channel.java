@@ -47,18 +47,11 @@ public class Channel implements Serializable {
     public Metadata metadata;
 
     @Nullable
-    public Connection getFollowersConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.followers != null) {
-            return metadata.connections.followers;
+    public Connection getUsersConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
+            return metadata.connections.users;
         }
         return null;
-    }
-
-    public int getFollowerCount() {
-        if (getFollowersConnection() != null) {
-            return getFollowersConnection().total;
-        }
-        return 0;
     }
 
     @Nullable
@@ -80,9 +73,9 @@ public class Channel implements Serializable {
         return false;
     }
 
-    public int userCount() {
-        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
-            return metadata.connections.users.total;
+    public int getFollowerCount() {
+        if (getUsersConnection() != null) {
+            return getUsersConnection().total;
         }
         return 0;
     }

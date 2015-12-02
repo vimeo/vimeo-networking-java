@@ -180,6 +180,14 @@ public class Video implements Serializable {
         return null;
     }
 
+    @Nullable
+    public Connection getRelatedConnection() {
+        if ((metadata != null) && (metadata.connections != null)) {
+            return metadata.connections.related;
+        }
+        return null;
+    }
+
     public int likeCount() {
         if (getLikesConnection() != null) {
             return getLikesConnection().total;
