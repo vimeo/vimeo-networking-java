@@ -40,6 +40,7 @@ public class Vimeo {
     public static final String FACEBOOK_GRANT_TYPE = "facebook";
     public static final String PASSWORD_GRANT_TYPE = "password";
     public static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
+    public static final String OAUTH_ONE_GRANT_TYPE = "vimeo_oauth1";
 
     // Endpoints
     public static final String ENDPOINT_ME = "me";

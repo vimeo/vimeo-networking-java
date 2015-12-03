@@ -88,6 +88,13 @@ public interface VimeoService {
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("tokens")
     Call<Object> logOut(@Header("Authorization") String authHeader);
+
+    @FormUrlEncoded
+    @POST("oauth/authorize/vimeo_oauth1")
+    Call<Account> exchangeOAuthOneToken(@Header("Authorization") String authHeader,
+                                        @Field("grant_type") String grantType, @Field("token") String token,
+                                        @Field("token_secret") String tokenSecret,
+                                        @Field("scope") String scope);
     // </editor-fold>
 
     /**
@@ -111,14 +118,14 @@ public interface VimeoService {
     // <editor-fold desc="POSTs">
     @POST("{uri}")
     Call<Comment> comment(@Header("Authorization") String authHeader,
-                         @Path(value = "uri", encoded = true) String uri,
-                         @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters);
+                          @Path(value = "uri", encoded = true) String uri,
+                          @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters);
 
 
     @POST("{uri}")
     Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader,
-                                       @Path(value = "uri", encoded = true) String uri,
-                                       @Body RequestBody body);
+                                                @Path(value = "uri", encoded = true) String uri,
+                                                @Body RequestBody body);
     // </editor-fold>
 
     /**
