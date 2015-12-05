@@ -54,20 +54,22 @@ public class FeedItem implements Serializable {
     public Metadata metadata;
 
     public AttributionType getType() {
-        if (type.equalsIgnoreCase("channel")) {
-            return AttributionType.CHANNEL;
-        } else if (type.equalsIgnoreCase("like")) {
-            return AttributionType.LIKE;
-        } else if (type.equalsIgnoreCase("upload")) {
-            return AttributionType.UPLOAD;
-        } else if (type.equalsIgnoreCase("tag")) {
-            return AttributionType.TAG;
-        } else if (type.equalsIgnoreCase("group")) {
-            return AttributionType.GROUP;
-        } else if (type.equalsIgnoreCase("appearance")) {
-            return AttributionType.CREDIT;
-        } else if (type.equalsIgnoreCase("share")) {
-            return AttributionType.SHARE;
+        if (type != null) {
+            if (type.equalsIgnoreCase("channel")) {
+                return AttributionType.CHANNEL;
+            } else if (type.equalsIgnoreCase("like")) {
+                return AttributionType.LIKE;
+            } else if (type.equalsIgnoreCase("upload")) {
+                return AttributionType.UPLOAD;
+            } else if (type.equalsIgnoreCase("tag")) {
+                return AttributionType.TAG;
+            } else if (type.equalsIgnoreCase("group")) {
+                return AttributionType.GROUP;
+            } else if (type.equalsIgnoreCase("appearance")) {
+                return AttributionType.CREDIT;
+            } else if (type.equalsIgnoreCase("share")) {
+                return AttributionType.SHARE;
+            }
         }
 
         return AttributionType.NONE;
