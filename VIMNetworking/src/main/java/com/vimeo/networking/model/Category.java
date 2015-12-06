@@ -25,6 +25,8 @@ package com.vimeo.networking.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by zetterstromk on 8/20/15.
  */
@@ -40,16 +42,51 @@ public class Category implements Serializable {
     public Category parent;
     public Metadata metadata;
 
-    public int userCount() {
-        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
-            return metadata.connections.users.total;
+    @Nullable
+    public Connection getVideosConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
+            return metadata.connections.videos;
+        }
+        return null;
+    }
+
+    public int getVideoCount() {
+        if (getVideosConnection() != null) {
+            return getVideosConnection().total;
         }
         return 0;
     }
 
-    public int videoCount() {
-        if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
-            return metadata.connections.videos.total;
+    @Nullable
+    public Interaction getFollowInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
+            return metadata.interactions.follow;
+        }
+        return null;
+    }
+
+    public boolean canFollow() {
+        return getFollowInteraction() != null;
+    }
+
+    public boolean isFollowing() {
+        if (getFollowInteraction() != null) {
+            return metadata.interactions.follow.added;
+        }
+        return false;
+    }
+
+    @Nullable
+    public Connection getUserConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
+            return metadata.connections.users;
+        }
+        return null;
+    }
+
+    public int getFollowerCount() {
+        if (getUserConnection() != null) {
+            return getUserConnection().total;
         }
         return 0;
     }
