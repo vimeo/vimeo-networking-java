@@ -42,9 +42,17 @@ public class Category implements Serializable {
     public Category parent;
     public Metadata metadata;
 
-    public int videoCount() {
+    @Nullable
+    public Connection getVideosConnection() {
         if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
-            return metadata.connections.videos.total;
+            return metadata.connections.videos;
+        }
+        return null;
+    }
+
+    public int getVideoCount() {
+        if (getVideosConnection() != null) {
+            return getVideosConnection().total;
         }
         return 0;
     }
