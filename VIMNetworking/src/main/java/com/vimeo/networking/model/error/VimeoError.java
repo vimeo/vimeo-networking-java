@@ -55,13 +55,20 @@ public class VimeoError extends RuntimeException implements Serializable {
     @SerializedName("invalid_parameters")
     private List<InvalidParameter> invalidParameters;
 
+    private Exception exception;
+
     private boolean isNetworkError;
 
     public VimeoError() {
     }
 
     public VimeoError(String errorMessage) {
-        this.errorMessage = errorMessage;
+        this.developerMessage = errorMessage;
+    }
+
+    public VimeoError(String errorMessage, Exception exception) {
+        this.developerMessage = errorMessage;
+        this.exception = exception;
     }
 
     public Response getResponse() {

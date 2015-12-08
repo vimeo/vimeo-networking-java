@@ -28,6 +28,7 @@ import com.vimeo.networking.Vimeo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -109,6 +110,7 @@ public class Video implements Serializable {
     public com.vimeo.networking.model.User user;
     private Status status;
     public VideoLog log;
+    public List<Category> categories;
 
     public Status getStatus() {
         return status == null ? Status.NONE : status;
