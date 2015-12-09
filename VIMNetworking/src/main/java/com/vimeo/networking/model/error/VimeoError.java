@@ -23,6 +23,7 @@
 package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.Vimeo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class VimeoError extends RuntimeException implements Serializable {
     private List<InvalidParameter> invalidParameters;
 
     private Exception exception;
+    private int httpStatusCode = Vimeo.NOT_FOUND;
 
     private boolean isNetworkError;
 
@@ -128,6 +130,25 @@ public class VimeoError extends RuntimeException implements Serializable {
     public InvalidParameter getInvalidParameter() {
         return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters.get(
                 0) : null;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+
+    public int getHttpStatusCode() {
+        if (response != null) {
+            return response.code();
+        }
+        return httpStatusCode;
+    }
+
+    public void setHttpStatusCode(int httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 
     public void setIsNetworkError(boolean isNetworkError) {
