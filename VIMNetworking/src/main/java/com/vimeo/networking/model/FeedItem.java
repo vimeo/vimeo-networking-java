@@ -35,6 +35,7 @@ public class FeedItem implements Serializable {
     public enum AttributionType {
         UPLOAD,
         LIKE,
+        CATEGORY,
         CHANNEL,
         GROUP,
         TAG,
@@ -49,13 +50,16 @@ public class FeedItem implements Serializable {
     public Date time;
     public User user;   // from like type
     public Channel channel; // from channel type
+    public Category category;
     public Tag tag;
     public Group group;
     public Metadata metadata;
 
     public AttributionType getType() {
         if (type != null) {
-            if (type.equalsIgnoreCase("channel")) {
+            if (type.equalsIgnoreCase("category")) {
+                return AttributionType.CATEGORY;
+            } else if (type.equalsIgnoreCase("channel")) {
                 return AttributionType.CHANNEL;
             } else if (type.equalsIgnoreCase("like")) {
                 return AttributionType.LIKE;
