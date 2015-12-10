@@ -630,8 +630,8 @@ public class VimeoClient {
      */
     // <editor-fold desc="Editing (Video, User)">
     @Nullable
-    public Call<Object> editVideo(String uri, String title, String description, String password,
-                                  Privacy.PrivacyValue privacyValue,
+    public Call<Object> editVideo(String uri, String title, String description, @Nullable String password,
+                                  @Nullable Privacy.PrivacyValue privacyValue,
                                   @Nullable HashMap<String, Object> parameters, ModelCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
@@ -643,17 +643,13 @@ public class VimeoClient {
             return null;
         }
 
+        // TODO: error text below suggests we need to check title == null here, do we? [AH] 12/10/2015
         if (description == null && privacyValue == null) {
             // No point in editing video
             callback.failure(new VimeoError("title, description, and privacyValue cannot be empty!"));
 
             return null;
         }
-
-        String privacyString = privacyValue.getText();
-
-        HashMap<String, String> privacyMap = new HashMap<>();
-        privacyMap.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyString);
 
         if (parameters == null) {
             parameters = new HashMap<>();
@@ -667,14 +663,21 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_VIDEO_DESCRIPTION, description);
         }
 
-        parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
+        if (privacyValue != null) {
+            if (privacyValue == Privacy.PrivacyValue.PASSWORD) {
+                if (password == null) {
+                    callback.failure(new VimeoError("Password cannot be null password privacy type"));
 
-        if ((privacyValue == Privacy.PrivacyValue.PASSWORD) &&
-            ((password == null) || (password.trim().isEmpty()))) {
-            callback.failure(new VimeoError("password is required for password privacy type"));
-            return null;
-        } else if (privacyValue == Privacy.PrivacyValue.PASSWORD) {
-            parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
+                    return null;
+                }
+
+                parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
+            }
+
+            String privacyString = privacyValue.getText();
+            HashMap<String, String> privacyMap = new HashMap<>();
+            privacyMap.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyString);
+            parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
         }
 
         Call<Object> call =
