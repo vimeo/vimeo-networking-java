@@ -644,7 +644,7 @@ public class VimeoClient {
         }
 
         // TODO: error text below suggests we need to check title == null here, do we? [AH] 12/10/2015
-        if (description == null && privacyValue == null) {
+        if (title == null && description == null && privacyValue == null) {
             // No point in editing video
             callback.failure(new VimeoError("title, description, and privacyValue cannot be empty!"));
 
