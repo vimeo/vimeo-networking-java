@@ -143,10 +143,15 @@ public class VimeoClient {
                                                       e);
             }
         }
+
+        boolean shouldLog = false;
+
         OkHttpClient okHttpClient = retrofitClientBuilder.build();
         okHttpClient.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS);
         okHttpClient.setConnectTimeout(this.configuration.timeout, TimeUnit.SECONDS);
-        okHttpClient.interceptors().add(new LoggingInterceptor());
+        if (shouldLog) {
+            okHttpClient.interceptors().add(new LoggingInterceptor());
+        }
         okHttpClient.interceptors().add(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -359,8 +364,8 @@ public class VimeoClient {
      * @param tokenSecret An OAuth1 token secret
      * @return The Account
      */
-    public Call<Account> exchangeOAuthOneToken(final String token,
-                                               final String tokenSecret, final AuthCallback callback) {
+    public Call<Account> exchangeOAuthOneToken(final String token, final String tokenSecret,
+                                               final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
