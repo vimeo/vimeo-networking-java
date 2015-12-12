@@ -45,6 +45,7 @@ public class ConnectionCollection implements Serializable {
     public Connection groups;
     public Connection portfolios;
     public Connection shared;
+    public Connection recommendations;
     public Connection related;
     public Connection replies;
     public Connection users;

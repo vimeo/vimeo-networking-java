@@ -35,6 +35,7 @@ public class FeedItem implements Serializable {
     public enum AttributionType {
         UPLOAD,
         LIKE,
+        CATEGORY,
         CHANNEL,
         GROUP,
         TAG,
@@ -49,25 +50,30 @@ public class FeedItem implements Serializable {
     public Date time;
     public User user;   // from like type
     public Channel channel; // from channel type
+    public Category category;
     public Tag tag;
     public Group group;
     public Metadata metadata;
 
     public AttributionType getType() {
-        if (type.equalsIgnoreCase("channel")) {
-            return AttributionType.CHANNEL;
-        } else if (type.equalsIgnoreCase("like")) {
-            return AttributionType.LIKE;
-        } else if (type.equalsIgnoreCase("upload")) {
-            return AttributionType.UPLOAD;
-        } else if (type.equalsIgnoreCase("tag")) {
-            return AttributionType.TAG;
-        } else if (type.equalsIgnoreCase("group")) {
-            return AttributionType.GROUP;
-        } else if (type.equalsIgnoreCase("appearance")) {
-            return AttributionType.CREDIT;
-        } else if (type.equalsIgnoreCase("share")) {
-            return AttributionType.SHARE;
+        if (type != null) {
+            if (type.equalsIgnoreCase("category")) {
+                return AttributionType.CATEGORY;
+            } else if (type.equalsIgnoreCase("channel")) {
+                return AttributionType.CHANNEL;
+            } else if (type.equalsIgnoreCase("like")) {
+                return AttributionType.LIKE;
+            } else if (type.equalsIgnoreCase("upload")) {
+                return AttributionType.UPLOAD;
+            } else if (type.equalsIgnoreCase("tag")) {
+                return AttributionType.TAG;
+            } else if (type.equalsIgnoreCase("group")) {
+                return AttributionType.GROUP;
+            } else if (type.equalsIgnoreCase("appearance")) {
+                return AttributionType.CREDIT;
+            } else if (type.equalsIgnoreCase("share")) {
+                return AttributionType.SHARE;
+            }
         }
 
         return AttributionType.NONE;

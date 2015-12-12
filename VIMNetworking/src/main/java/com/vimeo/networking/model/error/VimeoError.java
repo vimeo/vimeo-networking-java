@@ -23,6 +23,7 @@
 package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.Vimeo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,8 +31,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import retrofit.RetrofitError;
-import retrofit.client.Header;
+import retrofit.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.
@@ -43,7 +43,7 @@ public class VimeoError extends RuntimeException implements Serializable {
     private static final String AUTHENTICATION_HEADER = "WWW-Authenticate";
     private static final String AUTHENTICATION_TOKEN_ERROR = "Bearer error=\"invalid_token\"";
 
-    private RetrofitError retrofitError;
+    private Response response;
 
     @SerializedName("error")
     private String errorMessage;
@@ -56,19 +56,29 @@ public class VimeoError extends RuntimeException implements Serializable {
     @SerializedName("invalid_parameters")
     private List<InvalidParameter> invalidParameters;
 
+    private Exception exception;
+    private int httpStatusCode = Vimeo.NOT_FOUND;
+
+    private boolean isNetworkError;
+
     public VimeoError() {
     }
 
     public VimeoError(String errorMessage) {
-        this.errorMessage = errorMessage;
+        this.developerMessage = errorMessage;
     }
 
-    public RetrofitError getRetrofitError() {
-        return retrofitError;
+    public VimeoError(String errorMessage, Exception exception) {
+        this.developerMessage = errorMessage;
+        this.exception = exception;
     }
 
-    public void setRetrofitError(RetrofitError retrofitError) {
-        this.retrofitError = retrofitError;
+    public Response getResponse() {
+        return response;
+    }
+
+    public void setResponse(Response response) {
+        this.response = response;
     }
 
     public void setLink(String link) {
@@ -118,27 +128,56 @@ public class VimeoError extends RuntimeException implements Serializable {
      */
     @Nullable
     public InvalidParameter getInvalidParameter() {
-        return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters
-                .get(0) : null;
+        return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters.get(
+                0) : null;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+
+    public int getHttpStatusCode() {
+        if (response != null) {
+            return response.code();
+        }
+        return httpStatusCode;
+    }
+
+    public void setHttpStatusCode(int httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
+    }
+
+    public void setIsNetworkError(boolean isNetworkError) {
+        this.isNetworkError = isNetworkError;
+    }
+
+    /**
+     * True if the error was from poor connectivity, closed sockets, or any other issue with the networking
+     * layer of the request.
+     *
+     * @return {@link #isNetworkError}
+     */
+    public boolean isNetworkError() {
+        return isNetworkError;
     }
 
     public boolean isServiceUnavailable() {
-        return (retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
-               (retrofitError.getResponse().getStatus() == 503);
+        return (response != null) && (response.code() == 503);
     }
 
     public boolean isForbiddenError() {
-        return (retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
-               (retrofitError.getResponse().getStatus() == 403);
+        return (response != null) && (response.code() == 403);
     }
 
     public boolean isInvalidTokenError() {
-        if ((retrofitError != null) && (retrofitError.getKind() == RetrofitError.Kind.HTTP) &&
-            (retrofitError.getResponse().getStatus() == 401)) {
-            List<Header> headers = retrofitError.getResponse().getHeaders();
-            for (Header header : headers) {
-                if (header.getName().equals(AUTHENTICATION_HEADER) &&
-                    header.getValue().equals(AUTHENTICATION_TOKEN_ERROR)) {
+        if ((response != null) && (response.code() == 401)) {
+            List<String> headers = response.headers().values(AUTHENTICATION_HEADER);
+            for (String header : headers) {
+                if (header.equals(AUTHENTICATION_TOKEN_ERROR)) {
                     return true;
                 }
             }

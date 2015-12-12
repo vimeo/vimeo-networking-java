@@ -23,10 +23,12 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.Vimeo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -69,7 +71,9 @@ public class Video implements Serializable {
         @SerializedName("uploading_error")
         UPLOADING_ERROR("uploading_error"),
         @SerializedName("transcoding_error")
-        TRANSCODING_ERROR("transcoding_error");
+        TRANSCODING_ERROR("transcoding_error"),
+        @SerializedName("quota_exceeded")
+        QUOTA_EXCEEDED("quota_exceeded");
 
         private String string;
 
@@ -106,46 +110,93 @@ public class Video implements Serializable {
     public com.vimeo.networking.model.User user;
     private Status status;
     public VideoLog log;
+    public List<Category> categories;
 
     public Status getStatus() {
         return status == null ? Status.NONE : status;
     }
 
-    public boolean canLike() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
-            return true;
-        }
-        return false;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public boolean isLiked() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
-            return metadata.interactions.like.added;
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Watch Later Accessors
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Watch Later Accessors">
+    @Nullable
+    public Interaction getWatchLaterInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
+            return metadata.interactions.watchlater;
         }
-        return false;
+        return null;
     }
 
     public boolean canWatchLater() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
-            return true;
-        }
-        return false;
+        return getWatchLaterInteraction() != null;
     }
 
     public boolean isWatchLater() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
-            return metadata.interactions.watchlater.added;
+        return getWatchLaterInteraction() != null && getWatchLaterInteraction().added;
+    }
+
+    @Nullable
+    public Connection getWatchLaterConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.watchlater != null) {
+            return metadata.connections.watchlater;
         }
-        return false;
+        return null;
+    }
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Likes Accessors
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Likes">
+    @Nullable
+    public Interaction getLikeInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
+            return metadata.interactions.like;
+        }
+        return null;
+    }
+
+    public boolean canLike() {
+        return getLikeInteraction() != null;
+    }
+
+    public boolean isLiked() {
+        return getLikeInteraction() != null && getLikeInteraction().added;
+    }
+
+    @Nullable
+    public Connection getLikesConnection() {
+        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.likes != null)) {
+            return metadata.connections.likes;
+        }
+        return null;
+    }
+
+    @Nullable
+    public Connection getRelatedConnection() {
+        if ((metadata != null) && (metadata.connections != null)) {
+            return metadata.connections.related;
+        }
+        return null;
     }
 
     public int likeCount() {
-        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.likes != null)) {
-            return metadata.connections.likes.total;
+        if (getLikesConnection() != null) {
+            return getLikesConnection().total;
         }
-
         return 0;
     }
+    // </editor-fold>
 
     @Nullable
     public Integer playCount() {
@@ -157,12 +208,24 @@ public class Video implements Serializable {
 
     }
 
+    public String recommendationsUri() {
+        String recommendationsUri = null;
+        if (metadata != null && metadata.connections != null &&
+            metadata.connections.recommendations != null) {
+            recommendationsUri = metadata.connections.recommendations.uri;
+        }
+        if (recommendationsUri == null) {
+            recommendationsUri = uri + Vimeo.ENDPOINT_RECOMMENDATIONS;
+        }
+        return recommendationsUri;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || !(o instanceof Video)) {
             return false;
         }
 

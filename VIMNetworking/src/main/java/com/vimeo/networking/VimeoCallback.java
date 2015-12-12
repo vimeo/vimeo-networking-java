@@ -25,8 +25,9 @@ package com.vimeo.networking;
 import com.vimeo.networking.model.error.VimeoError;
 
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Converter;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.
@@ -35,27 +36,48 @@ import retrofit.client.Response;
  */
 public abstract class VimeoCallback<T> implements Callback<T> {
 
-    public abstract void success(T t, VimeoResponse response);
+    public abstract void success(T t);
 
     public abstract void failure(VimeoError error);
 
     @Override
-    public void success(T t, Response response) {
-        success(t, new VimeoResponse(response));
+    public void onResponse(Response<T> response) {
+        // response.isSuccess() is true if the response code is 2xx
+        if (response.isSuccess()) {
+            T t = response.body();
+            success(t);
+        } else {
+            VimeoError vimeoError = null;
+            if (response.errorBody() != null) {
+                try {
+                    Converter<VimeoError> errorConverter =
+                            (Converter<VimeoError>) GsonConverterFactory.create().get(VimeoError.class);
+                    vimeoError = errorConverter.fromBody(response.errorBody());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (vimeoError == null) {
+                vimeoError = new VimeoError();
+            }
+            vimeoError.setResponse(response);
+            failure(vimeoError);
+        }
     }
 
     @Override
-    public void failure(RetrofitError error) {
-        VimeoError vimeoError = null;
-        try {
-            vimeoError = (VimeoError) error.getBodyAs(VimeoError.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (vimeoError == null) {
-            vimeoError = new VimeoError();
-        }
-        vimeoError.setRetrofitError(error);
+    public void onFailure(Throwable t) {
+        /* handle execution failures
+         * Failures may include:
+         *      No Internet
+         *      Socket issues
+         *      Cancelled request (cancelling may also lead to socket issues if request has been made)
+         *      Retrofit deserialization errors in which Retrofit cannot determine the response
+         */
+        t.printStackTrace();
+        VimeoError vimeoError = new VimeoError();
+        vimeoError.setDeveloperMessage(t.getMessage());
+        vimeoError.setIsNetworkError(true);
         failure(vimeoError);
     }
 }

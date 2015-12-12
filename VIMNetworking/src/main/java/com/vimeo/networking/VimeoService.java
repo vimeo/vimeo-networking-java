@@ -22,12 +22,15 @@
 
 package com.vimeo.networking;
 
+import com.squareup.okhttp.RequestBody;
 import com.vimeo.networking.model.Account;
+import com.vimeo.networking.model.Comment;
+import com.vimeo.networking.model.PictureResource;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit.Callback;
+import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.Field;
@@ -48,82 +51,107 @@ import retrofit.http.QueryMap;
  */
 public interface VimeoService {
 
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Authentication
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Authentication">
     @FormUrlEncoded
-    @POST("/oauth/access_token")
-    void authenticateWithCodeGrant(@Header("Authorization") String authHeader,
-                                   @Field("redirect_uri") String redirectURI, @Field("code") String code,
-                                   @Field("grant_type") String grantType, Callback<Account> callback);
+    @POST("oauth/access_token")
+    Call<Account> authenticateWithCodeGrant(@Header("Authorization") String authHeader,
+                                            @Field("redirect_uri") String redirectURI,
+                                            @Field("code") String code,
+                                            @Field("grant_type") String grantType);
 
     @FormUrlEncoded
-    @POST("/oauth/authorize/client")
-    void authorizeWithClientCredentialsGrant(@Header("Authorization") String authHeader,
-                                             @Field("grant_type") String grantType,
-                                             @Field("scope") String scope, Callback<Account> callback);
+    @POST("oauth/authorize/client")
+    Call<Account> authorizeWithClientCredentialsGrant(@Header("Authorization") String authHeader,
+                                                      @Field("grant_type") String grantType,
+                                                      @Field("scope") String scope);
 
-    @POST("/users")
-    void join(@Header("Authorization") String authHeader, @Body HashMap<String, String> parameters,
-              Callback<Account> callback);
-
-    @FormUrlEncoded
-    @POST("/oauth/authorize/password")
-    void logIn(@Header("Authorization") String authHeader, @Field("username") String email,
-               @Field("password") String password, @Field("grant_type") String grantType,
-               @Field("scope") String scope, Callback<Account> callback);
-
-    // Synchronous version to be used with Android AccountAuthenticator [AH]
-    @FormUrlEncoded
-    @POST("/oauth/authorize/password")
-    Account logIn(@Header("Authorization") String authHeader, @Field("username") String email,
-                  @Field("password") String password, @Field("grant_type") String grantType,
-                  @Field("scope") String scope);
+    @POST("users")
+    Call<Account> join(@Header("Authorization") String authHeader, @Body HashMap<String, String> parameters);
 
     @FormUrlEncoded
-    @POST("/oauth/authorize/facebook")
-    void logInWithFacebook(@Header("Authorization") String authHeader, @Field("grant_type") String grantType,
-                           @Field("token") String token, @Field("scope") String scope,
-                           Callback<Account> callback);
+    @POST("oauth/authorize/password")
+    Call<Account> logIn(@Header("Authorization") String authHeader, @Field("username") String email,
+                        @Field("password") String password, @Field("grant_type") String grantType,
+                        @Field("scope") String scope);
+
+    @FormUrlEncoded
+    @POST("oauth/authorize/facebook")
+    Call<Account> logInWithFacebook(@Header("Authorization") String authHeader,
+                                    @Field("grant_type") String grantType, @Field("token") String token,
+                                    @Field("scope") String scope);
 
     @Headers("Cache-Control: no-cache, no-store")
-    @DELETE("/tokens")
-    void logOut(@Header("Authorization") String authHeader, Callback<Object> callback);
+    @DELETE("tokens")
+    Call<Object> logOut(@Header("Authorization") String authHeader);
 
-    // region Editing
+    @FormUrlEncoded
+    @POST("oauth/authorize/vimeo_oauth1")
+    Call<Account> exchangeOAuthOneToken(@Header("Authorization") String authHeader,
+                                        @Field("grant_type") String grantType, @Field("token") String token,
+                                        @Field("token_secret") String tokenSecret,
+                                        @Field("scope") String scope);
+    // </editor-fold>
 
-    @PATCH("/{uri}")
-    void edit(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-              @Body HashMap<String, Object> parameters, Callback<Object> callback);
+    /**
+     * ----------------------------------------------------------------------------------------------------
+     * Editing
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Editing">
+    @PATCH("{uri}")
+    Call<Object> edit(@Header("Authorization") String authHeader,
+                      @Path(value = "uri", encoded = true) String uri,
+                      @Body HashMap<String, Object> parameters);
 
-    @POST("/{uri}")
-    void comment(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                 @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters,
-                 Callback<Object> callback);
+    // </editor-fold>
 
-    // end region
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * POSTs
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="POSTs">
+    @POST("{uri}")
+    Call<Comment> comment(@Header("Authorization") String authHeader,
+                          @Path(value = "uri", encoded = true) String uri,
+                          @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters);
 
-    @POST("/{uri}")
-    void createPictureResource(@Header("Authorization") String authHeader,
-                               @Path(value = "uri", encode = false) String uri,
-                               @Body String emptyBody, Callback<Object> callback);
 
-    // region Generic
+    @POST("{uri}")
+    Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader,
+                                                @Path(value = "uri", encoded = true) String uri,
+                                                @Body RequestBody body);
+    // </editor-fold>
 
-    @PUT("/{uri}")
-    void PUT(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-             @QueryMap Map<String, String> options, Callback<Object> callback);
+    /**
+     * ---------------------------------------------------------------------------------------------------
+     * Generic Region
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Generic Region">
+    @PUT("{uri}")
+    Call<Object> PUT(@Header("Authorization") String authHeader,
+                     @Path(value = "uri", encoded = true) String uri, @QueryMap Map<String, String> options);
 
-    @DELETE("/{uri}")
-    void DELETE(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-                @QueryMap Map<String, String> options, Callback<Object> callback);
+    @DELETE("{uri}")
+    Call<Object> DELETE(@Header("Authorization") String authHeader,
+                        @Path(value = "uri", encoded = true) String uri,
+                        @QueryMap Map<String, String> options);
 
-    @GET("/{uri}")
-    void GET(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-             @QueryMap Map<String, String> options, @Header("Cache-Control") String cacheHeaderValue,
-             Callback<Object> callback);
+    @GET("{uri}")
+    Call<Object> GET(@Header("Authorization") String authHeader,
+                     @Path(value = "uri", encoded = true) String uri, @QueryMap Map<String, String> options,
+                     @Header("Cache-Control") String cacheHeaderValue);
 
-    @POST("/{uri}")
-    void POST(@Header("Authorization") String authHeader, @Path(value = "uri", encode = false) String uri,
-              @Header("Cache-Control") String cacheHeaderValue, @Body HashMap<String, String> parameters,
-              Callback<Object> callback);
-
-    // end region
+    @POST("{uri}")
+    Call<Object> POST(@Header("Authorization") String authHeader,
+                      @Path(value = "uri", encoded = true) String uri,
+                      @Header("Cache-Control") String cacheHeaderValue,
+                      @Body HashMap<String, String> parameters);
+    // </editor-fold>
 }

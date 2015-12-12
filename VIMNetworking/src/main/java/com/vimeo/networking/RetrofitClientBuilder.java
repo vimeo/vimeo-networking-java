@@ -44,8 +44,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import retrofit.client.OkClient;
-
 /**
  * Builder for creating Square OkHttpClient with pinned certificate that can be used with Retrofit.
  * </p>
@@ -139,8 +137,8 @@ public class RetrofitClientBuilder {
         return this;
     }
 
-    public OkClient build() {
-        return new OkClient(okHttpClient);
+    public OkHttpClient build() {
+        return okHttpClient;
     }
 
 

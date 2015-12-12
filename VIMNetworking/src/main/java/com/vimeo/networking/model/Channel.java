@@ -25,6 +25,8 @@ package com.vimeo.networking.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by zetterstromk on 6/11/15.
  */
@@ -44,30 +46,51 @@ public class Channel implements Serializable {
     public Privacy privacy;
     public Metadata metadata;
 
-    public boolean canFollow() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return true;
+    @Nullable
+    public Connection getUsersConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
+            return metadata.connections.users;
         }
-        return false;
+        return null;
+    }
+
+    @Nullable
+    public Interaction getFollowInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
+            return metadata.interactions.follow;
+        }
+        return null;
+    }
+
+    public boolean canFollow() {
+        return getFollowInteraction() != null;
     }
 
     public boolean isFollowing() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
+        if (getFollowInteraction() != null) {
             return metadata.interactions.follow.added;
         }
         return false;
     }
 
-    public int userCount() {
-        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
-            return metadata.connections.users.total;
+    public int getFollowerCount() {
+        if (getUsersConnection() != null) {
+            return getUsersConnection().total;
         }
         return 0;
     }
 
-    public int videoCount() {
+    @Nullable
+    public Connection getVideosConnection() {
         if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
-            return metadata.connections.videos.total;
+            return metadata.connections.videos;
+        }
+        return null;
+    }
+
+    public int getVideoCount() {
+        if (getVideosConnection() != null) {
+            return getVideosConnection().total;
         }
         return 0;
     }

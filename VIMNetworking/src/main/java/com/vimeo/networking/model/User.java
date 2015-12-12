@@ -29,6 +29,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by alfredhanssen on 4/12/15.
  */
@@ -77,31 +79,100 @@ public class User implements Serializable {
         return AccountType.BASIC;
     }
 
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Interaction Accessors/Helpers
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Accessors/Helpers">
     public boolean canFollow() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return true;
-        }
-        return false;
+        return getFollowInteraction() != null;
     }
 
     public boolean isFollowing() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return metadata.interactions.follow.added;
-        }
-        return false;
+        return getFollowInteraction() != null && metadata.interactions.follow.added;
     }
 
-    public int videoCount() {
-        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
-            return metadata.connections.videos.total;
+    @Nullable
+    public Interaction getFollowInteraction() {
+        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
+            return metadata.interactions.follow;
+        }
+        return null;
+    }
+
+    @Nullable
+    public Connection getFollowingConnection() {
+        if (metadata != null && metadata.connections != null) {
+            return metadata.connections.following;
+        }
+        return null;
+    }
+
+    @Nullable
+    public Connection getFollowersConnection() {
+        if (metadata != null && metadata.connections != null) {
+            return metadata.connections.followers;
+        }
+        return null;
+    }
+
+    public int getFollowerCount() {
+        if (getFollowersConnection() != null) {
+            return getFollowersConnection().total;
         }
         return 0;
     }
 
-    public int followerCount() {
-        if ((metadata != null) && (metadata.connections != null) &&
-            (metadata.connections.followers != null)) {
-            return metadata.connections.followers.total;
+    public int getFollowingCount() {
+        if (getFollowingConnection() != null) {
+            return getFollowingConnection().total;
+        }
+        return 0;
+    }
+
+    @Nullable
+    public Connection getLikesConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.likes != null) {
+            return metadata.connections.likes;
+        }
+        return null;
+    }
+
+    public int getLikesCount() {
+        if (getLikesConnection() != null) {
+            return getLikesConnection().total;
+        }
+        return 0;
+    }
+
+    @Nullable
+    public Connection getWatchLaterConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.watchlater != null) {
+            return metadata.connections.watchlater;
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    public ArrayList<Picture> getPictures() {
+        if (pictures == null || pictures.sizes == null) {
+            return new ArrayList<>();
+        }
+        return pictures.sizes;
+    }
+
+    @Nullable
+    public Connection getVideosConnection() {
+        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
+            return metadata.connections.videos;
+        }
+        return null;
+    }
+
+    public int getVideoCount() {
+        if (getVideosConnection() != null) {
+            return metadata.connections.videos.total;
         }
         return 0;
     }
