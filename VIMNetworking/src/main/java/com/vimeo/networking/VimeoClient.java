@@ -613,7 +613,9 @@ public class VimeoClient {
         public void success(Account account) {
             this.client.setAccount(account);
             if (account.getUser() != null && (this.email == null || this.email.isEmpty())) {
-                this.client.configuration.accountStore.saveAccount(account, account.getUser().name, null);
+                String name =
+                        (account.getUser().name != null) ? account.getUser().name : account.getUser().uri;
+                this.client.configuration.accountStore.saveAccount(account, name, null);
             } else {
                 this.client.configuration.accountStore.saveAccount(account, this.email, this.password);
             }
