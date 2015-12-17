@@ -613,7 +613,11 @@ public class VimeoClient {
         public void success(Account account) {
             this.client.setAccount(account);
             if (account.getUser() != null && (this.email == null || this.email.isEmpty())) {
-                this.client.configuration.accountStore.saveAccount(account, account.getUser().name, null);
+                // We must always have a `name` field, which is used by the Android Account Manager for
+                // display in the device Settings -> Accounts [KZ] 12/17/15
+                String name =
+                        (account.getUser().name != null) ? account.getUser().name : account.getUser().uri;
+                this.client.configuration.accountStore.saveAccount(account, name, null);
             } else {
                 this.client.configuration.accountStore.saveAccount(account, this.email, this.password);
             }
