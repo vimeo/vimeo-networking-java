@@ -33,13 +33,25 @@ import java.util.Date;
 public class VideoFile implements Serializable {
 
     public enum MimeType {
-        NONE,
+        NONE("None"),
         @SerializedName("video/mp4")
-        MP4,
+        MP4("video/mp4"),
         @SerializedName("video/webm")
-        WEBM, // Flash
+        WEBM("video/webm"), // Flash
         @SerializedName("vp6/x-video")
-        VP6 // Flash
+        VP6("vp6/x-video"); // Flash
+
+        private String string;
+
+        MimeType(String string) {
+            this.string = string;
+        }
+
+        @Override
+        // Overridden for analytics.
+        public String toString() {
+            return this.string;
+        }
     }
 
     public enum VideoQuality {
