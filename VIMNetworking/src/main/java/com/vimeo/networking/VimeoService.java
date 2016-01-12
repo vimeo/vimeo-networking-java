@@ -22,7 +22,6 @@
 
 package com.vimeo.networking;
 
-import com.squareup.okhttp.RequestBody;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
@@ -30,19 +29,20 @@ import com.vimeo.networking.model.PictureResource;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit.Call;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.GET;
-import retrofit.http.Header;
-import retrofit.http.Headers;
-import retrofit.http.PATCH;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import retrofit.http.QueryMap;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 /**
  * Interface of available API calls that can be made using Retrofit.
@@ -103,9 +103,8 @@ public interface VimeoService {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Editing">
-    @PATCH("{uri}")
-    Call<Object> edit(@Header("Authorization") String authHeader,
-                      @Path(value = "uri", encoded = true) String uri,
+    @PATCH
+    Call<Object> edit(@Header("Authorization") String authHeader, @Url String uri,
                       @Body HashMap<String, Object> parameters);
 
     // </editor-fold>
@@ -116,15 +115,13 @@ public interface VimeoService {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="POSTs">
-    @POST("{uri}")
-    Call<Comment> comment(@Header("Authorization") String authHeader,
-                          @Path(value = "uri", encoded = true) String uri,
+    @POST
+    Call<Comment> comment(@Header("Authorization") String authHeader, @Url String uri,
                           @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters);
 
 
-    @POST("{uri}")
-    Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader,
-                                                @Path(value = "uri", encoded = true) String uri,
+    @POST
+    Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader, @Url String uri,
                                                 @Body RequestBody body);
     // </editor-fold>
 
@@ -134,23 +131,20 @@ public interface VimeoService {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Generic Region">
-    @PUT("{uri}")
-    Call<Object> PUT(@Header("Authorization") String authHeader,
-                     @Path(value = "uri", encoded = true) String uri, @QueryMap Map<String, String> options);
+    @PUT
+    Call<Object> PUT(@Header("Authorization") String authHeader, @Url String uri,
+                     @QueryMap Map<String, String> options);
 
-    @DELETE("{uri}")
-    Call<Object> DELETE(@Header("Authorization") String authHeader,
-                        @Path(value = "uri", encoded = true) String uri,
+    @DELETE
+    Call<Object> DELETE(@Header("Authorization") String authHeader, @Url String uri,
                         @QueryMap Map<String, String> options);
 
-    @GET("{uri}")
-    Call<Object> GET(@Header("Authorization") String authHeader,
-                     @Path(value = "uri", encoded = true) String uri, @QueryMap Map<String, String> options,
-                     @Header("Cache-Control") String cacheHeaderValue);
+    @GET
+    Call<Object> GET(@Header("Authorization") String authHeader, @Url String uri,
+                     @QueryMap Map<String, String> options, @Header("Cache-Control") String cacheHeaderValue);
 
-    @POST("{uri}")
-    Call<Object> POST(@Header("Authorization") String authHeader,
-                      @Path(value = "uri", encoded = true) String uri,
+    @POST
+    Call<Object> POST(@Header("Authorization") String authHeader, @Url String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
                       @Body HashMap<String, String> parameters);
     // </editor-fold>

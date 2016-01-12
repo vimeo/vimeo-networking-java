@@ -23,16 +23,6 @@
 package com.vimeo.networking;
 
 import com.google.common.base.Splitter;
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.CacheControl;
-import com.squareup.okhttp.Credentials;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Comment;
@@ -51,10 +41,20 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Credentials;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
 
 /**
  * Client class used for making networking calls to Vimeo API.
@@ -67,6 +67,7 @@ public class VimeoClient {
     private VimeoService vimeoService;
     private Cache cache;
     private String currentCodeGrantState;
+    private Retrofit retrofit;
 
     /**
      * Currently authenticated account
@@ -116,7 +117,7 @@ public class VimeoClient {
 
         this.cache = new Cache(this.configuration.cacheDirectory, this.configuration.cacheSize);
 
-        Retrofit retrofit = createRetrofit();
+        this.retrofit = createRetrofit();
 
         this.vimeoService = retrofit.create(VimeoService.class);
 
@@ -144,15 +145,16 @@ public class VimeoClient {
             }
         }
 
-        boolean shouldLog = false;
+        boolean shouldLog = true;
 
-        OkHttpClient okHttpClient = retrofitClientBuilder.build();
-        okHttpClient.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS);
-        okHttpClient.setConnectTimeout(this.configuration.timeout, TimeUnit.SECONDS);
+        OkHttpClient okHttpClient =
+                retrofitClientBuilder.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS)
+                        .setConnectionTimeout(this.configuration.timeout, TimeUnit.SECONDS)
+                        .build();
         if (shouldLog) {
-            okHttpClient.interceptors().add(new LoggingInterceptor());
+            okHttpClient = okHttpClient.newBuilder().addInterceptor(new LoggingInterceptor()).build();
         }
-        okHttpClient.interceptors().add(new Interceptor() {
+        okHttpClient = okHttpClient.newBuilder().addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
@@ -182,7 +184,7 @@ public class VimeoClient {
                 // Customize or return the response
                 return response;
             }
-        });
+        }).build();
 
         return okHttpClient;
     }
@@ -193,6 +195,10 @@ public class VimeoClient {
         } catch (IOException e) {
             configuration.networkingLogger.e("Cache clearing error: " + e.getMessage(), e);
         }
+    }
+
+    public Retrofit getRetrofit() {
+        return this.retrofit;
     }
 
     /**
@@ -495,7 +501,7 @@ public class VimeoClient {
 
         Account account = null;
         try {
-            retrofit.Response<Account> response = call.execute();
+            retrofit2.Response<Account> response = call.execute();
             if (response.isSuccess()) {
                 account = response.body();
             }

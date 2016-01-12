@@ -22,13 +22,8 @@
 
 package com.vimeo.networking;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.CookieHandler;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -44,6 +39,10 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.Cache;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+
 /**
  * Builder for creating Square OkHttpClient with pinned certificate that can be used with Retrofit.
  * </p>
@@ -55,23 +54,23 @@ public class RetrofitClientBuilder {
 
     protected OkHttpClient okHttpClient = new OkHttpClient();
 
-    public RetrofitClientBuilder setConnectionTimeout(int connectionTimeout) {
-        okHttpClient.setConnectTimeout(connectionTimeout, TimeUnit.MILLISECONDS);
+    public RetrofitClientBuilder setConnectionTimeout(int connectionTimeout, TimeUnit timeUnit) {
+        okHttpClient = okHttpClient.newBuilder().connectTimeout(connectionTimeout, timeUnit).build();
         return this;
     }
 
-    public RetrofitClientBuilder setCookieStore(CookieHandler cookieHandler) {
-        okHttpClient.setCookieHandler(cookieHandler);
+    public RetrofitClientBuilder setReadTimeout(int readTimeout, TimeUnit timeUnit) {
+        okHttpClient = okHttpClient.newBuilder().readTimeout(readTimeout, timeUnit).build();
         return this;
     }
 
     public RetrofitClientBuilder setCache(Cache cache) {
-        okHttpClient.setCache(cache);
+        okHttpClient = okHttpClient.newBuilder().cache(cache).build();
         return this;
     }
 
     public RetrofitClientBuilder addNetworkInterceptor(Interceptor interceptor) {
-        okHttpClient.networkInterceptors().add(interceptor);
+        okHttpClient = okHttpClient.newBuilder().addNetworkInterceptor(interceptor).build();
         return this;
     }
 
@@ -86,18 +85,18 @@ public class RetrofitClientBuilder {
         KeyStore trusted = KeyStore.getInstance("BKS"); // HttpClientBuilder.BOUNCY_CASTLE
         trusted.load(inputStream, KEYSTORE_PASSWORD.toCharArray());
 
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory
-                .getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        TrustManagerFactory trustManagerFactory =
+                TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(trusted);
 
-        KeyManagerFactory keyManagerFactory = KeyManagerFactory
-                .getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        KeyManagerFactory keyManagerFactory =
+                KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         keyManagerFactory.init(trusted, KEYSTORE_PASSWORD.toCharArray());
 
         SSLContext sslContext = SSLContext.getInstance("TLS"); // SSLSocketFactory.TLS
         sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
 
-        okHttpClient.setSslSocketFactory(sslContext.getSocketFactory());
+        okHttpClient = okHttpClient.newBuilder().sslSocketFactory(sslContext.getSocketFactory()).build();
 
         return this;
     }
@@ -132,7 +131,7 @@ public class RetrofitClientBuilder {
         SSLContext sc = SSLContext.getInstance("TLS");
         sc.init(null, trustAllCerts, new java.security.SecureRandom());
 
-        okHttpClient.setSslSocketFactory(sc.getSocketFactory());
+        okHttpClient = okHttpClient.newBuilder().sslSocketFactory(sc.getSocketFactory()).build();
 
         return this;
     }

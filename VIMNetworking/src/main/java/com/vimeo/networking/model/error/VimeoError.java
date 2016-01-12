@@ -31,7 +31,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import retrofit.Response;
+import retrofit2.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.

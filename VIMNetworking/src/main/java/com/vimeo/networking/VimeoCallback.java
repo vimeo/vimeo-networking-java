@@ -24,10 +24,12 @@ package com.vimeo.networking;
 
 import com.vimeo.networking.model.error.VimeoError;
 
-import retrofit.Callback;
-import retrofit.Converter;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
+import java.lang.annotation.Annotation;
+
+import okhttp3.ResponseBody;
+import retrofit2.Callback;
+import retrofit2.Converter;
+import retrofit2.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.
@@ -50,9 +52,10 @@ public abstract class VimeoCallback<T> implements Callback<T> {
             VimeoError vimeoError = null;
             if (response.errorBody() != null) {
                 try {
-                    Converter<VimeoError> errorConverter =
-                            (Converter<VimeoError>) GsonConverterFactory.create().get(VimeoError.class);
-                    vimeoError = errorConverter.fromBody(response.errorBody());
+                    Converter<ResponseBody, VimeoError> errorConverter = VimeoClient.getInstance()
+                            .getRetrofit()
+                            .responseBodyConverter(VimeoError.class, new Annotation[0]);
+                    vimeoError = errorConverter.convert(response.errorBody());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

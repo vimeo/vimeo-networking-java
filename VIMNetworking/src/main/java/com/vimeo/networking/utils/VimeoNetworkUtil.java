@@ -33,7 +33,7 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Map;
 
-import retrofit.GsonConverterFactory;
+import retrofit2.GsonConverterFactory;
 
 /**
  * A utility class that can eventually be shared across various retrofit/vimeo-api reliant libraries
