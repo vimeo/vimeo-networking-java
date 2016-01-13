@@ -60,6 +60,7 @@ public class VimeoError extends RuntimeException implements Serializable {
     private int httpStatusCode = Vimeo.NOT_FOUND;
 
     private boolean isNetworkError;
+    private boolean isCanceledError = false;
 
     public VimeoError() {
     }
@@ -163,6 +164,14 @@ public class VimeoError extends RuntimeException implements Serializable {
      */
     public boolean isNetworkError() {
         return isNetworkError;
+    }
+
+    public void setIsCanceledError(boolean isCanceledError) {
+        this.isCanceledError = isCanceledError;
+    }
+
+    public boolean isCanceledError() {
+        return isCanceledError;
     }
 
     public boolean isServiceUnavailable() {

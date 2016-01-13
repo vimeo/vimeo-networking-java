@@ -26,7 +26,10 @@ import com.vimeo.networking.model.error.VimeoError;
 
 import java.lang.annotation.Annotation;
 
+import javax.annotation.Nullable;
+
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Converter;
 import retrofit2.Response;
@@ -41,6 +44,13 @@ public abstract class VimeoCallback<T> implements Callback<T> {
     public abstract void success(T t);
 
     public abstract void failure(VimeoError error);
+
+    @Nullable
+    private Call call;
+
+    public void setCall(Call call) {
+        this.call = call;
+    }
 
     @Override
     public void onResponse(Response<T> response) {
@@ -80,7 +90,9 @@ public abstract class VimeoCallback<T> implements Callback<T> {
         t.printStackTrace();
         VimeoError vimeoError = new VimeoError();
         vimeoError.setDeveloperMessage(t.getMessage());
-        vimeoError.setIsNetworkError(true);
+        boolean wasCancelled = call != null && call.isCanceled();
+        vimeoError.setIsCanceledError(wasCancelled);
+        vimeoError.setIsNetworkError(!wasCancelled);
         failure(vimeoError);
     }
 }
