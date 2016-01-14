@@ -90,9 +90,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
         t.printStackTrace();
         VimeoError vimeoError = new VimeoError();
         vimeoError.setDeveloperMessage(t.getMessage());
-        boolean wasCancelled = call != null && call.isCanceled();
-        vimeoError.setIsCanceledError(wasCancelled);
-        vimeoError.setIsNetworkError(!wasCancelled);
+        vimeoError.setIsCanceledError(call != null && call.isCanceled());
         failure(vimeoError);
     }
 }

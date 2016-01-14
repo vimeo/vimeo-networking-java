@@ -144,7 +144,7 @@ public class VimeoClient {
             }
         }
 
-        boolean shouldLog = true;
+        boolean shouldLog = false;
 
         OkHttpClient okHttpClient =
                 retrofitClientBuilder.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS)
