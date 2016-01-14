@@ -146,14 +146,12 @@ public class VimeoClient {
 
         boolean shouldLog = false;
 
-        OkHttpClient okHttpClient =
-                retrofitClientBuilder.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS)
-                        .setConnectionTimeout(this.configuration.timeout, TimeUnit.SECONDS)
-                        .build();
+        retrofitClientBuilder.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS)
+                .setConnectionTimeout(this.configuration.timeout, TimeUnit.SECONDS);
         if (shouldLog) {
-            okHttpClient = okHttpClient.newBuilder().addInterceptor(new LoggingInterceptor()).build();
+            retrofitClientBuilder.addInterceptor(new LoggingInterceptor()).build();
         }
-        okHttpClient = okHttpClient.newBuilder().addInterceptor(new Interceptor() {
+        retrofitClientBuilder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
@@ -183,9 +181,9 @@ public class VimeoClient {
                 // Customize or return the response
                 return response;
             }
-        }).build();
+        });
 
-        return okHttpClient;
+        return retrofitClientBuilder.build();
     }
 
     public void clearRequestCache() {
