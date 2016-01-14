@@ -24,10 +24,15 @@ package com.vimeo.networking;
 
 import com.vimeo.networking.model.error.VimeoError;
 
-import retrofit.Callback;
-import retrofit.Converter;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
+import java.lang.annotation.Annotation;
+
+import javax.annotation.Nullable;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Converter;
+import retrofit2.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.
@@ -40,6 +45,13 @@ public abstract class VimeoCallback<T> implements Callback<T> {
 
     public abstract void failure(VimeoError error);
 
+    @Nullable
+    private Call call;
+
+    public void setCall(Call call) {
+        this.call = call;
+    }
+
     @Override
     public void onResponse(Response<T> response) {
         // response.isSuccess() is true if the response code is 2xx
@@ -50,9 +62,10 @@ public abstract class VimeoCallback<T> implements Callback<T> {
             VimeoError vimeoError = null;
             if (response.errorBody() != null) {
                 try {
-                    Converter<VimeoError> errorConverter =
-                            (Converter<VimeoError>) GsonConverterFactory.create().get(VimeoError.class);
-                    vimeoError = errorConverter.fromBody(response.errorBody());
+                    Converter<ResponseBody, VimeoError> errorConverter = VimeoClient.getInstance()
+                            .getRetrofit()
+                            .responseBodyConverter(VimeoError.class, new Annotation[0]);
+                    vimeoError = errorConverter.convert(response.errorBody());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -77,7 +90,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
         t.printStackTrace();
         VimeoError vimeoError = new VimeoError();
         vimeoError.setDeveloperMessage(t.getMessage());
-        vimeoError.setIsNetworkError(true);
+        vimeoError.setIsCanceledError(call != null && call.isCanceled());
         failure(vimeoError);
     }
 }
