@@ -22,13 +22,8 @@
 
 package com.vimeo.networking;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.CookieHandler;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -36,13 +31,20 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
+
+import okhttp3.Cache;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 
 /**
  * Builder for creating Square OkHttpClient with pinned certificate that can be used with Retrofit.
@@ -52,26 +54,41 @@ import javax.net.ssl.X509TrustManager;
 public class RetrofitClientBuilder {
 
     private static final String KEYSTORE_PASSWORD = "vimeo123";
+    private static final int NO_TIMEOUT = -1;
 
-    protected OkHttpClient okHttpClient = new OkHttpClient();
+    private int connectionTimeout = NO_TIMEOUT;
+    private TimeUnit connectionTimeoutTimeUnit;
+    private int readTimeout = NO_TIMEOUT;
+    private TimeUnit readTimeoutTimeUnit;
+    private Cache cache;
+    private List<Interceptor> interceptorList = new ArrayList<>();
+    private List<Interceptor> networkInterceptorList = new ArrayList<>();
+    private SSLSocketFactory sSLSocketFactory;
 
-    public RetrofitClientBuilder setConnectionTimeout(int connectionTimeout) {
-        okHttpClient.setConnectTimeout(connectionTimeout, TimeUnit.MILLISECONDS);
+    public RetrofitClientBuilder setConnectionTimeout(int connectionTimeout, TimeUnit timeUnit) {
+        this.connectionTimeout = connectionTimeout;
+        this.connectionTimeoutTimeUnit = timeUnit;
         return this;
     }
 
-    public RetrofitClientBuilder setCookieStore(CookieHandler cookieHandler) {
-        okHttpClient.setCookieHandler(cookieHandler);
+    public RetrofitClientBuilder setReadTimeout(int readTimeout, TimeUnit timeUnit) {
+        this.readTimeout = readTimeout;
+        this.readTimeoutTimeUnit = timeUnit;
         return this;
     }
 
     public RetrofitClientBuilder setCache(Cache cache) {
-        okHttpClient.setCache(cache);
+        this.cache = cache;
         return this;
     }
 
     public RetrofitClientBuilder addNetworkInterceptor(Interceptor interceptor) {
-        okHttpClient.networkInterceptors().add(interceptor);
+        networkInterceptorList.add(interceptor);
+        return this;
+    }
+
+    public RetrofitClientBuilder addInterceptor(Interceptor interceptor) {
+        interceptorList.add(interceptor);
         return this;
     }
 
@@ -86,18 +103,18 @@ public class RetrofitClientBuilder {
         KeyStore trusted = KeyStore.getInstance("BKS"); // HttpClientBuilder.BOUNCY_CASTLE
         trusted.load(inputStream, KEYSTORE_PASSWORD.toCharArray());
 
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory
-                .getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        TrustManagerFactory trustManagerFactory =
+                TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(trusted);
 
-        KeyManagerFactory keyManagerFactory = KeyManagerFactory
-                .getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        KeyManagerFactory keyManagerFactory =
+                KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         keyManagerFactory.init(trusted, KEYSTORE_PASSWORD.toCharArray());
 
         SSLContext sslContext = SSLContext.getInstance("TLS"); // SSLSocketFactory.TLS
         sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
 
-        okHttpClient.setSslSocketFactory(sslContext.getSocketFactory());
+        sSLSocketFactory = sslContext.getSocketFactory();
 
         return this;
     }
@@ -132,13 +149,33 @@ public class RetrofitClientBuilder {
         SSLContext sc = SSLContext.getInstance("TLS");
         sc.init(null, trustAllCerts, new java.security.SecureRandom());
 
-        okHttpClient.setSslSocketFactory(sc.getSocketFactory());
+        sSLSocketFactory = sc.getSocketFactory();
 
         return this;
     }
 
     public OkHttpClient build() {
-        return okHttpClient;
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (connectionTimeout != NO_TIMEOUT) {
+            builder.connectTimeout(connectionTimeout, connectionTimeoutTimeUnit);
+        }
+        if (readTimeout != NO_TIMEOUT) {
+            builder.readTimeout(readTimeout, readTimeoutTimeUnit);
+        }
+        if (cache != null) {
+            builder.cache(cache);
+        }
+        for (Interceptor interceptor : networkInterceptorList) {
+            builder.addNetworkInterceptor(interceptor);
+        }
+        for (Interceptor interceptor : interceptorList) {
+            builder.addInterceptor(interceptor);
+        }
+        if (sSLSocketFactory != null) {
+            builder.sslSocketFactory(sSLSocketFactory);
+        }
+
+        return builder.build();
     }
 
 
