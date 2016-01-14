@@ -31,7 +31,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import retrofit.Response;
+import retrofit2.Response;
 
 /**
  * Created by zetterstromk on 5/27/15.
@@ -59,7 +59,7 @@ public class VimeoError extends RuntimeException implements Serializable {
     private Exception exception;
     private int httpStatusCode = Vimeo.NOT_FOUND;
 
-    private boolean isNetworkError;
+    private boolean isCanceledError = false;
 
     public VimeoError() {
     }
@@ -151,10 +151,6 @@ public class VimeoError extends RuntimeException implements Serializable {
         this.httpStatusCode = httpStatusCode;
     }
 
-    public void setIsNetworkError(boolean isNetworkError) {
-        this.isNetworkError = isNetworkError;
-    }
-
     /**
      * True if the error was from poor connectivity, closed sockets, or any other issue with the networking
      * layer of the request.
@@ -162,7 +158,15 @@ public class VimeoError extends RuntimeException implements Serializable {
      * @return {@link #isNetworkError}
      */
     public boolean isNetworkError() {
-        return isNetworkError;
+        return !isCanceledError;
+    }
+
+    public void setIsCanceledError(boolean isCanceledError) {
+        this.isCanceledError = isCanceledError;
+    }
+
+    public boolean isCanceledError() {
+        return isCanceledError;
     }
 
     public boolean isServiceUnavailable() {
