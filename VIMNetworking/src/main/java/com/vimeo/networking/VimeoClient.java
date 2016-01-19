@@ -860,7 +860,7 @@ public class VimeoClient {
         if (password != null) {
             options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-        return putContent(uri, options, callback, false);
+        return putContent(uri, options, callback, true);
     }
 
     public Call<Object> unlikeVideo(String uri, @Nullable String password, ModelCallback callback) {
@@ -885,7 +885,7 @@ public class VimeoClient {
         if (password != null) {
             options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-        return putContent(uri, options, callback, false);
+        return putContent(uri, options, callback, true);
     }
 
     public Call<Object> unwatchLaterVideo(String uri, @Nullable String password, ModelCallback callback) {
