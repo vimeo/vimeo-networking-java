@@ -545,10 +545,12 @@ public class VimeoClient {
      *
      * @param callback Callback for handling logout
      */
-    public Call<Object> logOut(final VimeoCallback<Object> callback) {
+    public Call<Object> logOut(@Nullable final VimeoCallback<Object> callback) {
 
         Call<Object> call = this.vimeoService.logOut(getAuthHeader());
-        callback.setCall(call);
+        if (callback != null) {
+            callback.setCall(call);
+        }
         call.enqueue(new VimeoCallback<Object>() {
             @Override
             public void success(Object o) {
