@@ -23,14 +23,12 @@
 package com.vimeo.networking;
 
 import com.google.gson.Gson;
+import com.vimeo.networking.callbacks.ModelCallback;
 
 /**
  * Created by zetterstromk on 7/24/15.
  */
 public class GsonDeserializer {
-
-    public GsonDeserializer() {
-    }
 
     /**
      * Deserialize the json and call a callback method.
@@ -43,12 +41,12 @@ public class GsonDeserializer {
      * @param object   The Object object deserialize
      * @param callback The callback to call (and get the object type from)
      */
-    public void deserialize(Gson gson, Object object, ModelCallback callback) {
+    public void deserialize(Gson gson, Object object, ModelCallback<Object> callback) {
         Object result = deserializeObject(gson, object, callback);
         callback.success(result);
     }
 
-    protected Object deserializeObject(Gson gson, Object object, ModelCallback callback) {
+    protected Object deserializeObject(Gson gson, Object object, ModelCallback<Object> callback) {
         String JSON = gson.toJson(object);
         return gson.fromJson(JSON, callback.getObjectType());
     }

@@ -40,7 +40,7 @@ public class LoggingInterceptor implements Interceptor {
         Request request = chain.request();
 
         long t1 = System.nanoTime();
-        NetworkingLogger logger = new NetworkingLogger();
+        DebugLogger logger = new DebugLogger();
         logger.i(String.format("Sending request %s on %s", request.url(), chain.connection()));
         logger.i("Method: " + request.method());
         try {

@@ -20,13 +20,14 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking;
+package com.vimeo.networking.callbacks;
 
+import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.model.error.VimeoError;
 
-import java.lang.annotation.Annotation;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import java.lang.annotation.Annotation;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -35,9 +36,9 @@ import retrofit2.Converter;
 import retrofit2.Response;
 
 /**
- * Created by zetterstromk on 5/27/15.
- * <p/>
  * This class allows intercepting and analyzing of the responses for errors and invalid tokens
+ * <p/>
+ * Created by zetterstromk on 5/27/15.
  */
 public abstract class VimeoCallback<T> implements Callback<T> {
 

@@ -22,13 +22,13 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.logging.NetworkingLogger;
-import com.vimeo.networking.logging.NetworkingLoggerInterface;
+import com.vimeo.networking.logging.DebugLogger;
+import com.vimeo.networking.logging.DebugLoggerInterface;
 
 import java.io.File;
 
 /**
- * The configuration object for making API call with Retrofit.
+ * The configuration object for making API calls with Retrofit.
  * <p/>
  * An instance of this class is used the initialize the {@link VimeoClient}.
  * <p/>
@@ -40,6 +40,7 @@ public class Configuration {
     // TODO: this cache length should be set from appconfig to match video file invalidation 10/7/15 [KV]
     private static final int DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2; // Default to 2 hours
     private static final int DEFAULT_TIMEOUT = 60; // seconds
+    private static final String DEFAULT_USER_AGENT = "sample_user_agent";
 
     public String baseURLString;
     public String clientID;
@@ -48,7 +49,7 @@ public class Configuration {
     public AccountStore accountStore;
     public GsonDeserializer deserializer;
 
-    public String APIVersionString;
+    public String apiVersionString;
     public String codeGrantRedirectURI;
     public File cacheDirectory;
     public int cacheSize;
@@ -58,13 +59,13 @@ public class Configuration {
     public int timeout; // in seconds
 
     public boolean certPinningEnabled;
-    public NetworkingLoggerInterface networkingLogger;
+    public DebugLoggerInterface debugLogger;
 
-    private Boolean isValid() {
-        return (this.baseURLString != null && this.baseURLString.length() != 0 &&
-                this.clientID != null && this.clientID.length() != 0 &&
-                this.clientSecret != null && this.clientSecret.length() != 0 &&
-                this.scope != null && this.scope.length() != 0 &&
+    private boolean isValid() {
+        return (this.baseURLString != null && !this.baseURLString.isEmpty() &&
+                this.clientID != null && !this.clientID.isEmpty() &&
+                this.clientSecret != null && !this.clientSecret.isEmpty() &&
+                this.scope != null && !this.scope.isEmpty() &&
                 this.accountStore != null);
     }
 
@@ -80,18 +81,18 @@ public class Configuration {
         private AccountStore accountStore;
         private GsonDeserializer deserializer;
 
-        private String APIVersionString = DEFAULT_VERSION_STRING;
+        private String apiVersionString = DEFAULT_VERSION_STRING;
         private File cacheDirectory;
         private int cacheSize;
         private int cacheMaxAge = DEFAULT_CACHE_MAX_AGE;
-        private String userAgentString;
-
+        private String userAgentString = DEFAULT_USER_AGENT;
         public int timeout = DEFAULT_TIMEOUT;
 
         private boolean certPinningEnabled = true;
         // Default to the stock logger which just prints - this makes it optional
-        public NetworkingLoggerInterface networkingLogger = new NetworkingLogger();
+        public DebugLoggerInterface debugLogger = new DebugLogger();
 
+        // TODO: make accountstore optional, deserializer comment
         public Builder(String baseURLString, String clientID, String clientSecret, String scope,
                        AccountStore accountStore, GsonDeserializer deserializer) {
             this.baseURLString = baseURLString;
@@ -102,32 +103,32 @@ public class Configuration {
             this.deserializer = deserializer;
         }
 
-        public Builder APIVersionString(String APIVersionString) {
-            this.APIVersionString = APIVersionString;
+        public Builder setApiVersionString(String APIVersionString) {
+            this.apiVersionString = APIVersionString;
             return this;
         }
 
-        public Builder cacheDirectory(File cacheDirectory) {
+        public Builder setCacheDirectory(File cacheDirectory) {
             this.cacheDirectory = cacheDirectory;
             return this;
         }
 
-        public Builder cacheSize(int cacheSize) {
+        public Builder setCacheSize(int cacheSize) {
             this.cacheSize = cacheSize;
             return this;
         }
 
-        public Builder cacheMaxAge(int cacheMaxAge) {
+        public Builder setCacheMaxAge(int cacheMaxAge) {
             this.cacheMaxAge = cacheMaxAge;
             return this;
         }
 
-        public Builder userAgentString(String userAgentString) {
+        public Builder setUserAgentString(String userAgentString) {
             this.userAgentString = userAgentString;
             return this;
         }
 
-        public Builder timeout(int timeout) {
+        public Builder setTimeout(int timeout) {
             this.timeout = timeout;
             return this;
         }
@@ -137,8 +138,8 @@ public class Configuration {
             return this;
         }
 
-        public Builder networkingLogger(NetworkingLoggerInterface networkingLogger) {
-            this.networkingLogger = networkingLogger;
+        public Builder setDebugLogger(DebugLoggerInterface debugLogger) {
+            this.debugLogger = debugLogger;
             return this;
         }
 
@@ -161,7 +162,7 @@ public class Configuration {
 
         this.codeGrantRedirectURI = "vimeo" + clientID + "://auth";
 
-        this.APIVersionString = builder.APIVersionString;
+        this.apiVersionString = builder.apiVersionString;
         this.cacheDirectory = builder.cacheDirectory;
         this.cacheSize = builder.cacheSize;
         this.cacheMaxAge = builder.cacheMaxAge;
@@ -170,6 +171,6 @@ public class Configuration {
         this.timeout = builder.timeout;
 
         this.certPinningEnabled = builder.certPinningEnabled;
-        this.networkingLogger = builder.networkingLogger;
+        this.debugLogger = builder.debugLogger;
     }
 }

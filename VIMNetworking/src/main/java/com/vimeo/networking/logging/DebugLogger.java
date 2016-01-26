@@ -3,7 +3,7 @@ package com.vimeo.networking.logging;
 /**
  * Created by kylevenn on 10/9/15.
  */
-public class NetworkingLogger implements NetworkingLoggerInterface {
+public class DebugLogger implements DebugLoggerInterface {
 
     @Override
     public void e(String error) {

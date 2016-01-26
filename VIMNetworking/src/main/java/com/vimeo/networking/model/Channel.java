@@ -22,10 +22,10 @@
 
 package com.vimeo.networking.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.annotation.Nullable;
 
 /**
  * Created by zetterstromk on 6/11/15.

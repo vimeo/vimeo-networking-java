@@ -23,10 +23,12 @@
 package com.vimeo.networking.model.appconfiguration;
 
 /**
- * Created by vennk on 5/20/15.
+ * An object returned from the /configs endpoint. This is a way for the api to specify configuration for our application
+ * <p/>
+ * Created by kylevenn on 5/20/15.
  */
 public class AppConfiguration {
-    
+
     public FacebookConfiguration facebook;
     public ApiConfiguration api;
     public FeaturesConfiguration features;

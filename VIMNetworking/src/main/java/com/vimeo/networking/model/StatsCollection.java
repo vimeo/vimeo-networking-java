@@ -22,9 +22,9 @@
 
 package com.vimeo.networking.model;
 
-import java.io.Serializable;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import java.io.Serializable;
 
 /**
  * Created by hanssena on 4/23/15.

@@ -25,11 +25,11 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.annotation.Nullable;
 
 /**
  * Created by alfredhanssen on 4/12/15.

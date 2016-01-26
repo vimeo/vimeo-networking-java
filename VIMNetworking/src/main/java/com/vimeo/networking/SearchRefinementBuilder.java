@@ -22,10 +22,15 @@
 
 package com.vimeo.networking;
 
+import com.vimeo.networking.callbacks.ModelCallback;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * A builder for constructing the parameter map that should be sent along with {@link VimeoClient#search(String, String, ModelCallback, Map, String)}.
+ * This is used to refine any of your searches. It returns a map so you can add additional parameters to it.
+ * <p/>
  * Created by kylevenn on 7/9/15.
  */
 public class SearchRefinementBuilder {

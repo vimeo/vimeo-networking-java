@@ -28,6 +28,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -147,7 +148,7 @@ public class RetrofitClientBuilder {
 
         // Install the all-trusting trust manager
         SSLContext sc = SSLContext.getInstance("TLS");
-        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        sc.init(null, trustAllCerts, new SecureRandom());
 
         sSLSocketFactory = sc.getSocketFactory();
 

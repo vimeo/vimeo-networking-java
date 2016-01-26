@@ -25,7 +25,9 @@ package com.vimeo.networking.model.appconfiguration;
 import com.vimeo.networking.Vimeo;
 
 /**
- * Created by vennk on 5/20/15.
+ * An object returned from the /configs endpoint to specify the host base url for api requests
+ * <p/>
+ * Created by kylevenn on 5/20/15.
  */
 public class ApiConfiguration {
 

@@ -25,6 +25,12 @@ package com.vimeo.networking.model.error;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Similar to {@link VimeoError} object, this holds error codes/error messages relevant to a specific invalid field.
+ * <p/>
+ * Example: If an invalid email is passed to the login call (doesn't include an '@' symbol), there will be an
+ * instance of this object in the {@link VimeoError#invalidParameters} list of the {@link VimeoError} response with
+ * {@link InvalidParameter#field} set to "email"
+ * <p/>
  * Created by kylevenn on 7/15/15.
  */
 public class InvalidParameter {

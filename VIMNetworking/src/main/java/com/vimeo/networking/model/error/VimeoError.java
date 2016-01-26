@@ -25,18 +25,20 @@ package com.vimeo.networking.model.error;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 
-import java.io.Serializable;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import retrofit2.Response;
 
 /**
+ * This class represents an error response from the Vimeo API. It holds useful getters to understand
+ * why your request might have failed.
+ * <p/>
  * Created by zetterstromk on 5/27/15.
  */
-public class VimeoError extends RuntimeException implements Serializable {
+public class VimeoError extends RuntimeException {
 
     private static final long serialVersionUID = -5252307626841557962L;
 

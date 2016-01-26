@@ -29,7 +29,6 @@ import com.vimeo.networking.model.PictureResource;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -121,8 +120,10 @@ public interface VimeoService {
 
 
     @POST
-    Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader, @Url String uri,
-                                                @Body RequestBody body);
+    Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader, @Url String uri);
+
+    @POST
+    Call<Void> emptyResponsePost(@Header("Authorization") String authHeader, @Url String uri);
     // </editor-fold>
 
     /**

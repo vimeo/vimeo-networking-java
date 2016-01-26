@@ -1,9 +1,12 @@
 apply plugin: 'java'
 
+repositories {
+    jcenter()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.intellij:annotations:12.0@jar'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-    compile 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
-    compile 'com.google.guava:guava:12.0'
 }

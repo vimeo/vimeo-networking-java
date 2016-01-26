@@ -28,15 +28,16 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
+import okhttp3.HttpUrl;
 import retrofit2.GsonConverterFactory;
 
 /**
  * A utility class that can eventually be shared across various retrofit/vimeo-api reliant libraries
+ * <p/>
  * Created by kylevenn on 10/30/15.
  */
 public class VimeoNetworkUtil {
@@ -71,36 +72,51 @@ public class VimeoNetworkUtil {
         // .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ")
     }
 
+    /**
+     * Returns a simple query map from a provided uri. The simple map enforces there is exactly one value for
+     * every name (multiple values for the same name are regularly allowed in a set of parameters)
+     *
+     * @param uri a uri optionally with a query
+     * @return a query map with a one to one mapping of names to values or empty {@link HashMap<String,String>}
+     * if no parameters are found on the uri
+     */
+    public static HashMap<String, String> getSimpleQueryMap(String uri) {
+        HashMap<String, String> queryMap = new HashMap<>();
+        HttpUrl httpUrl = HttpUrl.parse(uri);
+        if (httpUrl == null) {
+            return queryMap;
+        }
 
-    // TODO: This is shitty, revisit [AH]
-    public static String urlEncodeUTF8(Map<String, String> map) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (sb.length() > 0) {
-                sb.append("&");
+        for (String name : httpUrl.queryParameterNames()) {
+            // Iterate over all the names and generate a simplified map of parameters
+            List<String> paramValues = httpUrl.queryParameterValues(name);
+            if (!paramValues.isEmpty()) {
+                // If the values list isn't empty, then let's just take the first value associated with the key
+                queryMap.put(name, paramValues.get(0));
             }
-
-            sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey()), urlEncodeUTF8(entry.getValue())));
         }
-
-        return sb.toString();
+        return queryMap;
     }
 
-    public static String urlEncodeUTF8(String s) {
-        try {
-            return URLEncoder.encode(s, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new UnsupportedOperationException(e);
-        }
-    }
-
-    public static String validateUri(String uri) {
-        // TODO: We shouldn't have to do this but Retrofit doesn't support removing the leading slash
-        // I asked a question on StackOverflow which we can keep our eye on.
-        // http://stackoverflow.com/questions/30623580/duplicate-slashes-in-retrofit-url [KV]
-        if (uri.charAt(0) == '/') {
-            uri = uri.substring(1);
-        }
-        return uri;
-    }
+//    // TODO: This is not the greatest, revisit [AH]
+//    public static String urlEncodeUTF8(Map<String, String> map) {
+//        StringBuilder sb = new StringBuilder();
+//        for (Map.Entry<String, String> entry : map.entrySet()) {
+//            if (sb.length() > 0) {
+//                sb.append("&");
+//            }
+//
+//            sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey()), urlEncodeUTF8(entry.getValue())));
+//        }
+//
+//        return sb.toString();
+//    }
+//
+//    public static String urlEncodeUTF8(String s) {
+//        try {
+//            return URLEncoder.encode(s, "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            throw new UnsupportedOperationException(e);
+//        }
+//    }
 }

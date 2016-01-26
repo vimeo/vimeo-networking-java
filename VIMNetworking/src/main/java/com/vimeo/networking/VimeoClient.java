@@ -22,7 +22,9 @@
 
 package com.vimeo.networking;
 
-import com.google.common.base.Splitter;
+import com.vimeo.networking.callbacks.AuthCallback;
+import com.vimeo.networking.callbacks.ModelCallback;
+import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Comment;
@@ -33,24 +35,22 @@ import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Nullable;
-
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Credentials;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
@@ -79,6 +79,7 @@ public class VimeoClient {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Configuration">
+
     /**
      * Dangerous interceptor that rewrites the server's cache-control header.
      * We are using this because our server sets all Cache-Control headers to no-store
@@ -107,7 +108,7 @@ public class VimeoClient {
         sharedInstance = new VimeoClient(configuration);
     }
 
-    private VimeoClient(final Configuration configuration) {
+    private VimeoClient(Configuration configuration) {
         if (configuration == null) {
             throw new AssertionError("Configuration cannot be null");
         }
@@ -139,8 +140,7 @@ public class VimeoClient {
             try {
                 retrofitClientBuilder.pinCertificates();
             } catch (Exception e) {
-                this.configuration.networkingLogger.e("Exception when pinning certificate: " + e.getMessage(),
-                                                      e);
+                this.configuration.debugLogger.e("Exception when pinning certificate: " + e.getMessage(), e);
             }
         }
 
@@ -163,23 +163,8 @@ public class VimeoClient {
                         .method(original.method(), original.body())
                         .build();
 
-                Response response = chain.proceed(request);
-
-                // TODO: This is a known issue with Beta 1 - the response parsing by Retrofit will fail
-                // if there is an empty body. We should remove this when we can upgrade to a later beta, that
-                // can handle Call<Void> as a response to a service call. The use case here is for password
-                // resets using the POST method. 10/26/15 [KZ]
-                String bodyString = response.body().string();
-                if (bodyString.isEmpty()) {
-                    bodyString = "{}";
-                }
-                response = response.newBuilder()
-                        .body(ResponseBody.create(response.body().contentType(), bodyString))
-                        .build();
-                // END TODO
-
                 // Customize or return the response
-                return response;
+                return chain.proceed(request);
             }
         });
 
@@ -190,7 +175,7 @@ public class VimeoClient {
         try {
             this.cache.evictAll();
         } catch (IOException e) {
-            configuration.networkingLogger.e("Cache clearing error: " + e.getMessage(), e);
+            configuration.debugLogger.e("Cache clearing error: " + e.getMessage(), e);
         }
     }
 
@@ -253,7 +238,6 @@ public class VimeoClient {
     public Configuration getConfiguration() {
         return this.configuration;
     }
-
     // </editor-fold>
 
     /**
@@ -268,8 +252,7 @@ public class VimeoClient {
      * or used currently logged in users credentials.
      * <p/>
      * If the user accepts your app, they are redirected to your redirect_uri along with two parameters:
-     * code and state
-     * <p/>
+     * {@link Vimeo#CODE_GRANT_RESPONSE_TYPE} or {@link Vimeo#CODE_GRANT_STATE}
      *
      * @return The URI that should be opened in a web view
      * @see <a href="https://developer.vimeo.com/api/authentication#generate-redirect">Vimeo API Docs</a>
@@ -277,27 +260,28 @@ public class VimeoClient {
     public String getCodeGrantAuthorizationURI() {
         currentCodeGrantState = UUID.randomUUID().toString();
 
-        Map<String, String> map = new HashMap<>();
-        map.put(Vimeo.PARAMETER_REDIRECT_URI, this.configuration.codeGrantRedirectURI);
-        map.put(Vimeo.PARAMETER_RESPONSE_TYPE, Vimeo.CODE_GRANT_RESPONSE_TYPE);
-        map.put(Vimeo.PARAMETER_STATE, this.currentCodeGrantState);
-        map.put(Vimeo.PARAMETER_SCOPE, this.configuration.scope);
-        map.put(Vimeo.PARAMETER_CLIENT_ID, this.configuration.clientID);
-
-        String uri = VimeoNetworkUtil.urlEncodeUTF8(map);
-
-        // TODO: find a better way to build a URL and query string [AH]
-        return this.configuration.baseURLString + Vimeo.CODE_GRANT_PATH + "?" + uri;
+        // TODO: TEST
+        // Will look like the following: https://api.vimeo.com/oauth/authorize?<UTF8 encoded params>
+        HttpUrl baseUrl = HttpUrl.parse(this.configuration.baseURLString);
+        HttpUrl uri = new HttpUrl.Builder().scheme(baseUrl.scheme())
+                .host(baseUrl.host())
+                .encodedPath(Vimeo.CODE_GRANT_PATH)
+                .addQueryParameter(Vimeo.PARAMETER_REDIRECT_URI, this.configuration.codeGrantRedirectURI)
+                .addQueryParameter(Vimeo.PARAMETER_RESPONSE_TYPE, Vimeo.CODE_GRANT_RESPONSE_TYPE)
+                .addQueryParameter(Vimeo.PARAMETER_STATE, this.currentCodeGrantState)
+                .addQueryParameter(Vimeo.PARAMETER_SCOPE, this.configuration.scope)
+                .addQueryParameter(Vimeo.PARAMETER_CLIENT_ID, this.configuration.clientID)
+                .build();
+        return uri.toString();
     }
 
 
     /**
-     * Authenticates the user from the codeGrantAuthorizationURI().
+     * Authenticates the user from the {@link #getCodeGrantAuthorizationURI()}.
      * <p/>
      * Exchanges the code for the access token.
-     * <p/>
      *
-     * @param uri      URI from {@link #getCodeGrantAuthorizationURI() getCodeGrantAuthorizationURI}
+     * @param uri      URI from {@link #getCodeGrantAuthorizationURI()}
      * @param callback Callback pertaining to authentication
      * @see <a href="https://developer.vimeo.com/api/authentication#generate-redirect">Vimeo API Docs</a>
      */
@@ -313,9 +297,8 @@ public class VimeoClient {
             return null;
         }
 
-        // TODO: find a better way to do this [AH]
-        String query = uri.split("\\?")[1];
-        Map<String, String> queryMap = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
+        // TODO: TEST
+        Map<String, String> queryMap = VimeoNetworkUtil.getSimpleQueryMap(uri);
         String code = queryMap.get(Vimeo.CODE_GRANT_RESPONSE_TYPE);
         String state = queryMap.get(Vimeo.CODE_GRANT_STATE);
 
@@ -347,7 +330,7 @@ public class VimeoClient {
      *
      * @param callback Callback pertaining to authentication
      */
-    public Call<Account> authorizeWithClientCredentialsGrant(final AuthCallback callback) {
+    public Call<Account> authorizeWithClientCredentialsGrant(AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -367,8 +350,7 @@ public class VimeoClient {
      * @param tokenSecret An OAuth1 token secret
      * @return The Account
      */
-    public Call<Account> exchangeOAuthOneToken(final String token, final String tokenSecret,
-                                               final AuthCallback callback) {
+    public Call<Account> exchangeOAuthOneToken(String token, String tokenSecret, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -382,8 +364,7 @@ public class VimeoClient {
 
 
     @Nullable
-    public Call<Account> join(String displayName, String email, String password,
-                              final AuthCallback callback) {
+    public Call<Account> join(String displayName, String email, String password, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -422,8 +403,7 @@ public class VimeoClient {
     }
 
     @Nullable
-    public Call<Account> joinWithFacebookToken(final String facebookToken, final String email,
-                                               final AuthCallback callback) {
+    public Call<Account> joinWithFacebookToken(String facebookToken, String email, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -449,7 +429,7 @@ public class VimeoClient {
     }
 
     @Nullable
-    public Call<Account> logIn(final String email, final String password, final AuthCallback callback) {
+    public Call<Account> logIn(String email, String password, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -481,13 +461,12 @@ public class VimeoClient {
      * Synchronous version of login call
      * <p/>
      * Useful when dealing with Android AccountAuthenticator [AH]
-     * <p/>
      *
      * @param email    user's email address
      * @param password user's password
      * @return the account object since it is synchronous
      */
-    public Account logIn(final String email, final String password) {
+    public Account logIn(String email, String password) {
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             return null;
         }
@@ -514,8 +493,7 @@ public class VimeoClient {
     }
 
     @Nullable
-    public Call<Account> loginWithFacebookToken(final String facebookToken, final String email,
-                                                final AuthCallback callback) {
+    public Call<Account> loginWithFacebookToken(String facebookToken, String email, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -635,7 +613,6 @@ public class VimeoClient {
             callback.failure(error);
         }
     }
-
     // </editor-fold>
 
     /**
@@ -647,7 +624,8 @@ public class VimeoClient {
     @Nullable
     public Call<Object> editVideo(String uri, String title, String description, @Nullable String password,
                                   @Nullable Privacy.PrivacyValue privacyValue,
-                                  @Nullable HashMap<String, Object> parameters, ModelCallback callback) {
+                                  @Nullable HashMap<String, Object> parameters,
+                                  ModelCallback<Object> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -658,9 +636,9 @@ public class VimeoClient {
             return null;
         }
 
-        // TODO: error text below suggests we need to check title == null here, do we? [AH] 12/10/2015
         if (title == null && description == null && privacyValue == null) {
-            // No point in editing video
+            // The fields above can be null individually, but if they're all null there is no point
+            // in making the request 1/26/16 [KV]
             callback.failure(new VimeoError("title, description, and privacyValue cannot be empty!"));
 
             return null;
@@ -695,8 +673,7 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
         }
 
-        Call<Object> call =
-                this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
+        Call<Object> call = this.vimeoService.edit(getAuthHeader(), uri, parameters);
         callback.setCall(call);
         call.enqueue(getRetrofitCallback(callback));
 
@@ -705,7 +682,7 @@ public class VimeoClient {
 
     @Nullable
     public Call<Object> editUser(String uri, @Nullable String name, @Nullable String location,
-                                 @Nullable String bio, ModelCallback callback) {
+                                 @Nullable String bio, ModelCallback<Object> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -737,8 +714,7 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_USERS_BIO, bio);
         }
 
-        Call<Object> call =
-                this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
+        Call<Object> call = this.vimeoService.edit(getAuthHeader(), uri, parameters);
         callback.setCall(call);
         call.enqueue(getRetrofitCallback(callback));
         return call;
@@ -769,13 +745,7 @@ public class VimeoClient {
             return null;
         }
 
-        // TODO we need to pass an empty body here; Retrofit doesn't allow an empty body or an empty String
-        // as a body, so we need to create our own RequestBody that is empty. If/when Retrofit decides to
-        // change this, we should revisit this. [KZ] 10/26/15
-        RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), "");
-        Call<PictureResource> call =
-                this.vimeoService.createPictureResource(getAuthHeader(), VimeoNetworkUtil.validateUri(uri),
-                                                        body);
+        Call<PictureResource> call = this.vimeoService.createPictureResource(getAuthHeader(), uri);
         callback.setCall(call);
         call.enqueue(callback);
         return call;
@@ -784,9 +754,8 @@ public class VimeoClient {
     /**
      * Activate a picture resource
      *
-     * @param uri      The Uri that is found in the PictureResource returned from
-     *                 {@link #createPictureResource(String, ModelCallback)}
-     * @param callback
+     * @param uri The Uri that is found in the PictureResource returned from
+     *            {@link #createPictureResource(String, ModelCallback)}
      */
     @Nullable
     public Call<Object> activatePictureResource(String uri, ModelCallback callback) {
@@ -796,8 +765,7 @@ public class VimeoClient {
         }
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_ACTIVE, true);
-        Call<Object> call =
-                this.vimeoService.edit(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), parameters);
+        Call<Object> call = this.vimeoService.edit(getAuthHeader(), uri, parameters);
         callback.setCall(call);
         call.enqueue(getRetrofitCallback(callback));
         return call;
@@ -807,9 +775,8 @@ public class VimeoClient {
      * Delete a picture resource
      * This is helpful if your activation or upload step fails - you can delete the resource allocated
      *
-     * @param uri      The Uri that is found in the PictureResource returned from
-     *                 {@link #createPictureResource(String, ModelCallback)}
-     * @param callback
+     * @param uri The Uri that is found in the PictureResource returned from
+     *            {@link #createPictureResource(String, ModelCallback)}
      */
     public void deletePictureResource(String uri, ModelCallback callback) {
         if (uri == null || uri.trim().isEmpty()) {
@@ -920,9 +887,7 @@ public class VimeoClient {
         HashMap<String, String> postBody = new HashMap<>();
         postBody.put(Vimeo.PARAMETER_COMMENT_TEXT_BODY, comment);
 
-        Call<Comment> call =
-                this.vimeoService.comment(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), options,
-                                          postBody);
+        Call<Comment> call = this.vimeoService.comment(getAuthHeader(), uri, options, postBody);
         callback.setCall(call);
         call.enqueue(callback);
         return call;
@@ -940,11 +905,11 @@ public class VimeoClient {
         deleteContent(uri, options, callback, true);
     }
 
-    private VimeoCallback<Object> getRetrofitCallback(final ModelCallback callback) {
+    private VimeoCallback<Object> getRetrofitCallback(final ModelCallback<Object> callback) {
         return new VimeoCallback<Object>() {
             @Override
             public void success(Object o) {
-                //Handle the gson parsing using a deserializer object
+                // Handle the gson parsing using a deserializer object
                 configuration.deserializer.deserialize(VimeoNetworkUtil.getGson(), o, callback);
             }
 
@@ -956,7 +921,7 @@ public class VimeoClient {
     }
 
     @Nullable
-    public Call<Object> search(String uri, String query, final ModelCallback callback,
+    public Call<Object> search(String uri, String query, ModelCallback callback,
                                @Nullable Map<String, String> searchRefinement, @Nullable String fieldFilter) {
         if (query == null || query.isEmpty()) {
             callback.failure(new VimeoError("Query cannot be empty!"));
@@ -981,7 +946,6 @@ public class VimeoClient {
 
     /**
      * A generic GET call that takes in the URI of the specific resource.
-     * <p/>
      *
      * @param uri           URI of the resource to GET
      * @param cacheControl  Cache control type (includes max age and other cache policy information)
@@ -1034,21 +998,19 @@ public class VimeoClient {
             queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
         }
 
-        Call<Object> call =
-                this.vimeoService.GET(getAuthHeader(), VimeoNetworkUtil.validateUri(uri), queryMap,
-                                      cacheHeaderValue);
+        Call<Object> call = this.vimeoService.GET(getAuthHeader(), uri, queryMap, cacheHeaderValue);
         callback.setCall(call);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
 
     @Nullable
-    public Call<Object> fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback) {
+    public Call<Object> fetchContent(String uri, CacheControl cacheControl, ModelCallback callback) {
         return fetchContent(uri, cacheControl, callback, null, null, null);
     }
 
     @Nullable
-    public Call<Object> fetchContent(String uri, CacheControl cacheControl, final ModelCallback callback,
+    public Call<Object> fetchContent(String uri, CacheControl cacheControl, ModelCallback callback,
                                      String fieldFilter) {
         return fetchContent(uri, cacheControl, callback, null, null, fieldFilter);
     }
@@ -1077,7 +1039,6 @@ public class VimeoClient {
 
     /**
      * A generic POST call that takes in the URI of the specific resource.
-     * <p/>
      *
      * @param uri          URI of the resource to POST
      * @param cacheControl Cache control type
@@ -1086,7 +1047,7 @@ public class VimeoClient {
      */
     @Nullable
     public Call<Object> postContent(String uri, CacheControl cacheControl, HashMap<String, String> postBody,
-                                    final VimeoCallback callback) {
+                                    VimeoCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1108,6 +1069,32 @@ public class VimeoClient {
 
         // Don't use the deserialization callback because we don't get objects returned with post
         return POST(getAuthHeader(), uri, cacheHeaderValue, postBody, callback);
+    }
+
+    /**
+     * A POST call where the API doesn't return any response body. This is only handled by Retrofit
+     * if you specify a Void object response type.
+     * Example: Forgot password call
+     *
+     * @param uri      URI of the resource to POST
+     * @param callback The callback for the specific model type of the resource
+     */
+    @Nullable
+    public Call<Void> emptyResponsePost(String uri, VimeoCallback<Void> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (uri == null) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+
+            return null;
+        }
+
+        Call<Void> call = this.vimeoService.emptyResponsePost(getAuthHeader(), uri);
+        callback.setCall(call);
+        call.enqueue(callback);
+        return call;
     }
 
     @Nullable
@@ -1159,7 +1146,7 @@ public class VimeoClient {
 
     private Call<Object> PUT(String authHeader, String uri, Map<String, String> options,
                              VimeoCallback<Object> callback, boolean enqueue) {
-        Call<Object> call = this.vimeoService.PUT(authHeader, VimeoNetworkUtil.validateUri(uri), options);
+        Call<Object> call = this.vimeoService.PUT(authHeader, uri, options);
         callback.setCall(call);
         if (enqueue) {
             call.enqueue(callback);
@@ -1169,7 +1156,7 @@ public class VimeoClient {
 
     private Call<Object> DELETE(String authHeader, String uri, Map<String, String> options,
                                 VimeoCallback<Object> callback, boolean enqueue) {
-        Call<Object> call = this.vimeoService.DELETE(authHeader, VimeoNetworkUtil.validateUri(uri), options);
+        Call<Object> call = this.vimeoService.DELETE(authHeader, uri, options);
         callback.setCall(call);
         if (enqueue) {
             call.enqueue(callback);
@@ -1179,9 +1166,7 @@ public class VimeoClient {
 
     private Call<Object> POST(String authHeader, String uri, String cacheHeaderValue,
                               HashMap<String, String> parameters, VimeoCallback<Object> callback) {
-        Call<Object> call =
-                this.vimeoService.POST(authHeader, VimeoNetworkUtil.validateUri(uri), cacheHeaderValue,
-                                       parameters);
+        Call<Object> call = this.vimeoService.POST(authHeader, uri, cacheHeaderValue, parameters);
         callback.setCall(call);
         call.enqueue(callback);
         return call;
@@ -1196,15 +1181,15 @@ public class VimeoClient {
      */
     // <editor-fold desc="Header values">
     public String getUserAgent() {
-        return "sample_user_agent";
+        return this.configuration.userAgentString;
     }
 
     public String getAcceptHeader() {
-        return "application/vnd.vimeo.*+json; version=" + this.configuration.APIVersionString;
+        return "application/vnd.vimeo.*+json; version=" + this.configuration.apiVersionString;
     }
 
     public String getAuthHeader() {
-        String credential = null;
+        String credential;
 
         if (this.account != null && this.account.isAuthenticated()) {
             credential = "Bearer " + this.account.getAccessToken();

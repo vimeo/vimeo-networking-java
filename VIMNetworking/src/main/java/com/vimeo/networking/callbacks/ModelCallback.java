@@ -20,18 +20,22 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking;
-
-import com.vimeo.networking.model.error.VimeoError;
+package com.vimeo.networking.callbacks;
 
 /**
- * Callback used specifically for authorization
- *
- * Created by alfredhanssen on 4/12/15.
+ * Abstract callback class for @param <T> type of model.
+ * <p/>
+ * Created by hanssena on 4/27/15.
  */
-public interface AuthCallback {
+public abstract class ModelCallback<T> extends VimeoCallback<T> {
 
-    public void success();
+    private Class objectType;
 
-    public void failure(VimeoError error);
+    public ModelCallback(Class objectType) {
+        this.objectType = objectType;
+    }
+
+    public Class getObjectType() {
+        return this.objectType;
+    }
 }

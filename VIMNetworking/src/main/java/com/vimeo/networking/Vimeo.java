@@ -23,6 +23,8 @@
 package com.vimeo.networking;
 
 /**
+ * The constants class for Vimeo API calls. This includes parameters, fields, and defaults
+ * <p/>
  * Created by kylevenn on 7/7/15.
  */
 public class Vimeo {
@@ -33,7 +35,7 @@ public class Vimeo {
     public static final int NOT_FOUND = -1;
 
     // Grant Types
-    public static final String CODE_GRANT_PATH = "oauth/authorize";
+    public static final String CODE_GRANT_PATH = "/oauth/authorize";
     public static final String CODE_GRANT_RESPONSE_TYPE = "code";
     public static final String CODE_GRANT_STATE = "state";
     public static final String CODE_GRANT_TYPE = "authorization_code";
