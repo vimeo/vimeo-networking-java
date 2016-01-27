@@ -22,10 +22,16 @@
 
 package com.vimeo.networking;
 
+import com.vimeo.networking.Vimeo.LogLevel;
 import com.vimeo.networking.logging.DebugLogger;
 import com.vimeo.networking.logging.DebugLoggerInterface;
+import com.vimeo.networking.model.VimeoAccount;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+
+import okhttp3.Cache;
 
 /**
  * The configuration object for making API calls with Retrofit.
@@ -37,8 +43,10 @@ import java.io.File;
 public class Configuration {
 
     private static final String DEFAULT_VERSION_STRING = "3.3";
-    // TODO: this cache length should be set from appconfig to match video file invalidation 10/7/15 [KV]
+    // Potentially set max_age to match the age of video expiration 10/7/15 [KV]
     private static final int DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2; // Default to 2 hours
+    // If implementing on Android, it will be cleared when space is needed automatically 1/27/16 [KV]
+    private static final int DEFAULT_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
     private static final int DEFAULT_TIMEOUT = 60; // seconds
     private static final String DEFAULT_USER_AGENT = "sample_user_agent";
 
@@ -46,27 +54,98 @@ public class Configuration {
     public String clientID;
     public String clientSecret;
     public String scope;
-    public AccountStore accountStore;
+
+    @Nullable
+    private AccountStore accountStore;
     public GsonDeserializer deserializer;
 
     public String apiVersionString;
     public String codeGrantRedirectURI;
-    public File cacheDirectory;
-    public int cacheSize;
-    public int cacheMaxAge; // in seconds
     public String userAgentString;
 
+    @Nullable
+    public File cacheDirectory;
+    public int cacheSize;
+
+    public int cacheMaxAge; // in seconds
     public int timeout; // in seconds
 
     public boolean certPinningEnabled;
     public DebugLoggerInterface debugLogger;
+    public LogLevel logLevel;
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Accessors
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Accessors">
+    @Nullable
+    public Cache getCache() {
+        if (cacheDirectory == null) {
+            return null;
+        }
+        return new Cache(cacheDirectory, cacheSize);
+    }
+
+    public void saveAccount(VimeoAccount account, String email, String password) {
+        if (accountStore != null) {
+            accountStore.saveAccount(account, email, password);
+        }
+    }
+
+    public void deleteAccount(VimeoAccount account) {
+        if (accountStore != null) {
+            accountStore.deleteAccount(account);
+        }
+    }
+
+    public VimeoAccount loadAccount() {
+        if (accountStore == null) {
+            return null;
+        }
+        return accountStore.loadAccount();
+    }
+    // </editor-fold>
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Builder
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Builder">
+    private Configuration(Builder builder) {
+        this.baseURLString = builder.baseURLString;
+        this.clientID = builder.clientID;
+        this.clientSecret = builder.clientSecret;
+        this.scope = builder.scope;
+        this.accountStore = builder.accountStore;
+        this.deserializer = builder.deserializer;
+
+        if (!this.isValid()) {
+            throw new AssertionError("Built invalid VimeoClientConfiguration");
+        }
+
+        this.codeGrantRedirectURI = "vimeo" + clientID + "://auth";
+
+        this.apiVersionString = builder.apiVersionString;
+        this.cacheDirectory = builder.cacheDirectory;
+        this.cacheSize = builder.cacheSize;
+        this.cacheMaxAge = builder.cacheMaxAge;
+        this.userAgentString = builder.userAgentString;
+
+        this.timeout = builder.timeout;
+
+        this.certPinningEnabled = builder.certPinningEnabled;
+        this.debugLogger = builder.debugLogger;
+        this.logLevel = builder.logLevel;
+    }
 
     private boolean isValid() {
         return (this.baseURLString != null && !this.baseURLString.isEmpty() &&
                 this.clientID != null && !this.clientID.isEmpty() &&
                 this.clientSecret != null && !this.clientSecret.isEmpty() &&
-                this.scope != null && !this.scope.isEmpty() &&
-                this.accountStore != null);
+                this.scope != null && !this.scope.isEmpty());
     }
 
     /**
@@ -79,11 +158,11 @@ public class Configuration {
         private String clientSecret;
         private String scope;
         private AccountStore accountStore;
-        private GsonDeserializer deserializer;
+        private GsonDeserializer deserializer = new GsonDeserializer();
 
         private String apiVersionString = DEFAULT_VERSION_STRING;
         private File cacheDirectory;
-        private int cacheSize;
+        private int cacheSize = DEFAULT_CACHE_SIZE;
         private int cacheMaxAge = DEFAULT_CACHE_MAX_AGE;
         private String userAgentString = DEFAULT_USER_AGENT;
         public int timeout = DEFAULT_TIMEOUT;
@@ -91,20 +170,48 @@ public class Configuration {
         private boolean certPinningEnabled = true;
         // Default to the stock logger which just prints - this makes it optional
         public DebugLoggerInterface debugLogger = new DebugLogger();
+        public LogLevel logLevel = LogLevel.DEBUG;
 
-        // TODO: make accountstore optional, deserializer comment
-        public Builder(String baseURLString, String clientID, String clientSecret, String scope,
-                       AccountStore accountStore, GsonDeserializer deserializer) {
+        public Builder(String baseURLString, String clientID, String clientSecret, String scope) {
+            this(baseURLString, clientID, clientSecret, scope, null, null);
+        }
+
+        /**
+         * The constructor for the Configuration Builder. Only the last two arguments are optional but it is
+         * highly recommended that you pass in a deserializer since, without one, deserialization will occur
+         * on the main thread (which can be a lengthy operation)
+         *
+         * @param baseURLString The base url pointing to the Vimeo api. Something like: {@link Vimeo#VIMEO_BASE_URL_STRING}
+         * @param clientId      The client id provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
+         * @param clientSecret  The client secret provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
+         * @param scope         Space separated list of <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
+         *                      <p/>
+         *                      Example: "private public create"
+         * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Androids <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">Account Manager</a>
+         * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread
+         */
+        public Builder(String baseURLString, String clientId, String clientSecret, String scope,
+                       @Nullable AccountStore accountStore, @Nullable GsonDeserializer deserializer) {
             this.baseURLString = baseURLString;
-            this.clientID = clientID;
+            this.clientID = clientId;
             this.clientSecret = clientSecret;
             this.scope = scope;
             this.accountStore = accountStore;
             this.deserializer = deserializer;
         }
 
-        public Builder setApiVersionString(String APIVersionString) {
-            this.apiVersionString = APIVersionString;
+        public Builder setAccountStore(AccountStore accountStore) {
+            this.accountStore = accountStore;
+            return this;
+        }
+
+        public Builder setGsonDeserializer(GsonDeserializer deserializer) {
+            this.deserializer = deserializer;
+            return this;
+        }
+
+        public Builder setApiVersionString(String apiVersionString) {
+            this.apiVersionString = apiVersionString;
             return this;
         }
 
@@ -143,34 +250,14 @@ public class Configuration {
             return this;
         }
 
-        public Configuration build() throws Exception {
+        public Builder setLogLevel(LogLevel level) {
+            this.logLevel = level;
+            return this;
+        }
+
+        public Configuration build() {
             return new Configuration(this);
         }
     }
-
-    private Configuration(Builder builder) throws Exception {
-        this.baseURLString = builder.baseURLString;
-        this.clientID = builder.clientID;
-        this.clientSecret = builder.clientSecret;
-        this.scope = builder.scope;
-        this.accountStore = builder.accountStore;
-        this.deserializer = builder.deserializer;
-
-        if (!this.isValid()) {
-            throw new Exception("Built invalid VimeoClientConfiguration");
-        }
-
-        this.codeGrantRedirectURI = "vimeo" + clientID + "://auth";
-
-        this.apiVersionString = builder.apiVersionString;
-        this.cacheDirectory = builder.cacheDirectory;
-        this.cacheSize = builder.cacheSize;
-        this.cacheMaxAge = builder.cacheMaxAge;
-        this.userAgentString = builder.userAgentString;
-
-        this.timeout = builder.timeout;
-
-        this.certPinningEnabled = builder.certPinningEnabled;
-        this.debugLogger = builder.debugLogger;
-    }
+    // </editor-fold>
 }

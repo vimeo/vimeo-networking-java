@@ -77,6 +77,9 @@ public class Vimeo {
     public static final String HEADER_USER_AGENT = "User-Agent";
     public static final String HEADER_ACCEPT = "Accept";
 
+    // Header Values
+    public static final String HEADER_CACHE_PUBLIC = "public";
+
     // Video Analytics Parameters
     public static final String PARAMETER_SESSION_ID = "session_id";
     public static final String PARAMETER_LOCALE = "locale";
@@ -195,5 +198,10 @@ public class Vimeo {
             }
             throw new IllegalArgumentException("No constant with text " + text + " found");
         }
+    }
+
+    public enum LogLevel {
+        // 0      1       2     3
+        VERBOSE, DEBUG, ERROR, NONE
     }
 }

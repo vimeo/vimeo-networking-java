@@ -22,7 +22,7 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.model.Account;
+import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
 
@@ -58,29 +58,29 @@ public interface VimeoService {
     // <editor-fold desc="Authentication">
     @FormUrlEncoded
     @POST("oauth/access_token")
-    Call<Account> authenticateWithCodeGrant(@Header("Authorization") String authHeader,
+    Call<VimeoAccount> authenticateWithCodeGrant(@Header("Authorization") String authHeader,
                                             @Field("redirect_uri") String redirectURI,
                                             @Field("code") String code,
                                             @Field("grant_type") String grantType);
 
     @FormUrlEncoded
     @POST("oauth/authorize/client")
-    Call<Account> authorizeWithClientCredentialsGrant(@Header("Authorization") String authHeader,
+    Call<VimeoAccount> authorizeWithClientCredentialsGrant(@Header("Authorization") String authHeader,
                                                       @Field("grant_type") String grantType,
                                                       @Field("scope") String scope);
 
     @POST("users")
-    Call<Account> join(@Header("Authorization") String authHeader, @Body HashMap<String, String> parameters);
+    Call<VimeoAccount> join(@Header("Authorization") String authHeader, @Body HashMap<String, String> parameters);
 
     @FormUrlEncoded
     @POST("oauth/authorize/password")
-    Call<Account> logIn(@Header("Authorization") String authHeader, @Field("username") String email,
+    Call<VimeoAccount> logIn(@Header("Authorization") String authHeader, @Field("username") String email,
                         @Field("password") String password, @Field("grant_type") String grantType,
                         @Field("scope") String scope);
 
     @FormUrlEncoded
     @POST("oauth/authorize/facebook")
-    Call<Account> logInWithFacebook(@Header("Authorization") String authHeader,
+    Call<VimeoAccount> logInWithFacebook(@Header("Authorization") String authHeader,
                                     @Field("grant_type") String grantType, @Field("token") String token,
                                     @Field("scope") String scope);
 
@@ -90,7 +90,7 @@ public interface VimeoService {
 
     @FormUrlEncoded
     @POST("oauth/authorize/vimeo_oauth1")
-    Call<Account> exchangeOAuthOneToken(@Header("Authorization") String authHeader,
+    Call<VimeoAccount> exchangeOAuthOneToken(@Header("Authorization") String authHeader,
                                         @Field("grant_type") String grantType, @Field("token") String token,
                                         @Field("token_secret") String tokenSecret,
                                         @Field("scope") String scope);

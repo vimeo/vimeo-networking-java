@@ -29,9 +29,12 @@ import com.google.gson.GsonBuilder;
 import java.io.Serializable;
 
 /**
+ * This class represents an authenticated account with Vimeo. It can be through client credentials or a
+ * truly authenticated {@link User}
+ * <p/>
  * Created by alfredhanssen on 4/12/15.
  */
-public class Account implements Serializable {
+public class VimeoAccount implements Serializable {
 
     private static final long serialVersionUID = -8341071767843490585L;
     //    private static final String TOKEN_TYPE_BEARER = "bearer";
@@ -42,13 +45,13 @@ public class Account implements Serializable {
     private User user;
     private String userJSON;
 
-    public Account() {
+    public VimeoAccount() {
 
     }
 
-    public Account(String accessToken, String tokenType, String scope, String userJSON) {
-        if (accessToken == null || accessToken.length() == 0 || tokenType == null ||
-            tokenType.length() == 0 || scope == null || scope.length() == 0) {
+    public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
+        if (accessToken == null || accessToken.isEmpty() || tokenType == null ||
+            tokenType.isEmpty() || scope == null || scope.isEmpty()) {
             throw new AssertionError("Account can only be created with token, tokenType, scope");
         }
 
@@ -57,13 +60,13 @@ public class Account implements Serializable {
         this.scope = scope;
 
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                                     .create();
+                .create();
 
         this.user = gson.fromJson(userJSON, User.class);
     }
 
     public boolean isAuthenticated() {
-        return (this.accessToken != null && this.accessToken.length() != 0);
+        return (this.accessToken != null && !this.accessToken.isEmpty());
     }
 
     public String getAccessToken() {
@@ -97,7 +100,7 @@ public class Account implements Serializable {
         }
 
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                                     .create();
+                .create();
 
         this.userJSON = gson.toJson(this.user);
 

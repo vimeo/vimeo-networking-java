@@ -22,8 +22,17 @@
 
 package com.vimeo.networking.logging;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.vimeo.networking.Configuration;
+import com.vimeo.networking.Vimeo.LogLevel;
+import com.vimeo.networking.VimeoClient;
+
 import java.io.IOException;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -31,40 +40,104 @@ import okhttp3.ResponseBody;
 import okio.Buffer;
 
 /**
+ * An interceptor for logging the requests and responses for each individual call. This class relies on the
+ * {@link LogLevel} passed into the {@link Configuration.Builder} which initialized {@link VimeoClient}
+ * <p/>
  * Created by zetterstromk on 10/23/15.
  */
 public class LoggingInterceptor implements Interceptor {
 
+    private DebugLoggerInterface logger;
+    private int logLevel;
+
+    public LoggingInterceptor(DebugLoggerInterface logger, LogLevel logLevel) {
+        this.logger = logger;
+        this.logLevel = logLevel.ordinal();
+    }
+
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
+        if (logLevel <= LogLevel.DEBUG.ordinal()) {
+            Request request = chain.request();
 
-        long t1 = System.nanoTime();
-        DebugLogger logger = new DebugLogger();
-        logger.i(String.format("Sending request %s on %s", request.url(), chain.connection()));
-        logger.i("Method: " + request.method());
-        try {
-            if (request.body() != null) {
-                final Request copy = request.newBuilder().build();
-                final Buffer buffer = new Buffer();
-                copy.body().writeTo(buffer);
-                logger.i("Request Body: " + buffer.readUtf8());
+            HttpUrl httpUrl = request.url();
+
+            long t1 = System.nanoTime();
+            logger.d("--------- REQUEST ---------");
+            logger.d("METHOD: " + request.method());
+            logger.d("ENDPOINT: " + httpUrl.encodedPath());
+            try {
+                if (request.body() != null && shouldLogVerbose()) {
+                    logger.v("QUERY: " + httpUrl.query());
+                    logger.v("--------- REQUEST BODY ---------");
+                    Request copy = request.newBuilder().build();
+                    Buffer requestBuffer = new Buffer();
+                    copy.body().writeTo(requestBuffer);
+                    verboseLogLongJson(requestBuffer.readUtf8());
+                    logger.v("--------- REQUEST BODY END ---------");
+                }
+            } catch (Exception e) {
+                logger.e("Exception in LoggingInterceptor", e);
             }
-        } catch (final IOException e) {
+            logger.d("--------- REQUEST END ---------");
+
+            Response response = chain.proceed(request);
+            long t2 = System.nanoTime();
+
+            logger.d("--------- RESPONSE ---------");
+            logger.d("ENDPOINT: " + httpUrl.encodedPath());
+            logger.d("STATUS CODE: " + response.code());
+            logger.d(String.format("REQUEST TIME: %.1fms", (t2 - t1) / 1e6d));
+
+            String responseBodyString = response.body().string();
+            if (shouldLogVerbose()) {
+                logger.v("--------- RESPONSE BODY ---------");
+                verboseLogLongJson(responseBodyString);
+                logger.v("--------- RESPONSE BODY END ---------");
+            }
+            logger.d("--------- RESPONSE END ---------");
+
+            // You need to reconstruct the body because it can only be read once 1/27/16 [KV]
+            return response.newBuilder()
+                    .body(ResponseBody.create(response.body().contentType(), responseBodyString))
+                    .build();
+        } else {
+            return chain.proceed(chain.request());
         }
-
-        Response response = chain.proceed(request);
-
-        String bodyString = response.body().string();
-        logger.i("Response Body: " + bodyString);
-        response = response.newBuilder()
-                .body(ResponseBody.create(response.body().contentType(), bodyString))
-                .build();
-
-        long t2 = System.nanoTime();
-        logger.i(String.format("Received response for %s in %.1fms", response.request().url(),
-                               (t2 - t1) / 1e6d));
-
-        return response;
     }
+
+    private boolean shouldLogVerbose() {
+        return logLevel <= LogLevel.VERBOSE.ordinal();
+    }
+
+    private void verboseLogLongJson(String jsonString) {
+        int maxLogSize = 1000;
+        String veryLongString = toPrettyFormat(jsonString);
+        for (int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
+            int start = i * maxLogSize;
+            int end = (i + 1) * maxLogSize;
+            end = end > veryLongString.length() ? veryLongString.length() : end;
+            logger.v(veryLongString.substring(start, end));
+        }
+    }
+
+    /**
+     * Convert a JSON string to pretty print version
+     *
+     * @param jsonString
+     */
+    private String toPrettyFormat(String jsonString) {
+        String prettyString = "";
+        try {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(jsonString).getAsJsonObject();
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            prettyString = gson.toJson(json);
+        } catch (Exception e) {
+            logger.e("Error making body pretty response/request");
+        }
+        return prettyString;
+    }
+
 }

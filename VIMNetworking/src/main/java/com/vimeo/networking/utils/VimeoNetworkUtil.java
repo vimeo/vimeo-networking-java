@@ -31,7 +31,9 @@ import com.google.gson.GsonBuilder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.CacheControl;
 import okhttp3.HttpUrl;
 import retrofit2.GsonConverterFactory;
 
@@ -46,7 +48,6 @@ public class VimeoNetworkUtil {
      * Static helper method that automatically applies the VimeoClient Gson preferences
      * </p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
-     * </p>
      *
      * @return Gson object that can be passed into a {@link GsonConverterFactory} create() method
      */
@@ -59,7 +60,6 @@ public class VimeoNetworkUtil {
      * Static helper method that automatically applies the VimeoClient Gson preferences
      * </p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
-     * </p>
      *
      * @return GsonBuilder that can be built upon and then created
      */
@@ -98,25 +98,38 @@ public class VimeoNetworkUtil {
         return queryMap;
     }
 
-//    // TODO: This is not the greatest, revisit [AH]
-//    public static String urlEncodeUTF8(Map<String, String> map) {
-//        StringBuilder sb = new StringBuilder();
-//        for (Map.Entry<String, String> entry : map.entrySet()) {
-//            if (sb.length() > 0) {
-//                sb.append("&");
-//            }
-//
-//            sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey()), urlEncodeUTF8(entry.getValue())));
-//        }
-//
-//        return sb.toString();
-//    }
-//
-//    public static String urlEncodeUTF8(String s) {
-//        try {
-//            return URLEncoder.encode(s, "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            throw new UnsupportedOperationException(e);
-//        }
-//    }
+    /**
+     * Return a builder of the given cache control because for some reason this doesn't exist already.
+     * Useful for adding more attributes to an already defined {@link CacheControl}
+     *
+     * @param cacheControl The CacheControl to convert to a builder
+     * @return A builder with the same attributes as the CacheControl passed in
+     */
+
+    public static CacheControl.Builder getCacheControlBuilder(CacheControl cacheControl) {
+        CacheControl.Builder builder = new CacheControl.Builder();
+        if (cacheControl.maxAgeSeconds() > -1) {
+            builder.maxAge(cacheControl.maxAgeSeconds(), TimeUnit.SECONDS);
+        }
+        if (cacheControl.maxStaleSeconds() > -1) {
+            builder.maxStale(cacheControl.maxStaleSeconds(), TimeUnit.SECONDS);
+        }
+        if (cacheControl.minFreshSeconds() > -1) {
+            builder.minFresh(cacheControl.minFreshSeconds(), TimeUnit.SECONDS);
+        }
+
+        if (cacheControl.noCache()) {
+            builder.noCache();
+        }
+        if (cacheControl.noStore()) {
+            builder.noStore();
+        }
+        if (cacheControl.noTransform()) {
+            builder.noTransform();
+        }
+        if (cacheControl.onlyIfCached()) {
+            builder.onlyIfCached();
+        }
+        return builder;
+    }
 }

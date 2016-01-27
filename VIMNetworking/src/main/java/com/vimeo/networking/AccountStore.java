@@ -22,7 +22,7 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.model.Account;
+import com.vimeo.networking.model.VimeoAccount;
 
 /**
  * Interface responsible for handling the creation, deletion, and loading of Vimeo accounts on the client.
@@ -31,9 +31,9 @@ import com.vimeo.networking.model.Account;
  */
 public interface AccountStore {
 
-    Account loadAccount();
+    VimeoAccount loadAccount();
 
-    void saveAccount(Account account, String email, String password);//, boolean isAddingNewAccount);
+    void saveAccount(VimeoAccount vimeoAccount, String email, String password);//, boolean isAddingNewAccount);
 
-    void deleteAccount(Account account);
+    void deleteAccount(VimeoAccount vimeoAccount);
 }

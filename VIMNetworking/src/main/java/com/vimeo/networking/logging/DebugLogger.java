@@ -17,7 +17,12 @@ public class DebugLogger implements DebugLoggerInterface {
     }
 
     @Override
-    public void i(String info) {
-        System.out.println(info);
+    public void d(String debug) {
+        System.out.println(debug);
+    }
+
+    @Override
+    public void v(String verbose) {
+        System.out.println(verbose);
     }
 }

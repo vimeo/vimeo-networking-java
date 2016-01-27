@@ -9,5 +9,7 @@ public interface DebugLoggerInterface {
 
     void e(String error, Exception exception);
 
-    void i(String info);
+    void d(String debug);
+
+    void v(String verbose);
 }

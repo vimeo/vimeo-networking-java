@@ -26,6 +26,16 @@ import com.google.gson.Gson;
 import com.vimeo.networking.callbacks.ModelCallback;
 
 /**
+ * To be able to keep our api calls generic, we need to handle deserialization ourselves (Retrofit calls
+ * require a class to be declared up front). Since this is a Java library and we don't have access to
+ * the UI thread, consumers of this library will need to provide their own implementation of deserialization
+ * on a background thread and calling their callback on the platform's main/UI thread
+ * <p/>
+ * For Android, you can achieve this task by extending this class and calling {@link GsonDeserializer#deserializeObject}
+ * on any background thread and {@link ModelCallback#success(Object)} on their UI thread.
+ * <p/>
+ * By default, this class will just deserialize objects and callback on the calling thread.
+ * <p/>
  * Created by zetterstromk on 7/24/15.
  */
 public class GsonDeserializer {

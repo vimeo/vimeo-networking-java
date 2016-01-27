@@ -22,15 +22,16 @@
 
 package com.vimeo.networking;
 
+import com.google.gson.Gson;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.LoggingInterceptor;
-import com.vimeo.networking.model.Account;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.User;
+import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
@@ -59,19 +60,23 @@ import retrofit2.Retrofit;
  * Client class used for making networking calls to Vimeo API.
  * <p/>
  * Created by alfredhanssen on 4/12/15.
+ *
+ * @see <a href="https://developer.vimeo.com/api">The Vimeo API Docs</a>
  */
 public class VimeoClient {
 
     private Configuration configuration;
     private VimeoService vimeoService;
+    @Nullable
     private Cache cache;
     private String currentCodeGrantState;
     private Retrofit retrofit;
+    private Gson gson;
 
     /**
      * Currently authenticated account
      */
-    private Account account;
+    private VimeoAccount vimeoAccount;
 
     /**
      * -----------------------------------------------------------------------------------------------------
@@ -79,20 +84,6 @@ public class VimeoClient {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Configuration">
-
-    /**
-     * Dangerous interceptor that rewrites the server's cache-control header.
-     * We are using this because our server sets all Cache-Control headers to no-store
-     * [AH] 4/24/2015
-     */
-    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Response originalResponse = chain.proceed(chain.request());
-
-            return originalResponse.newBuilder().header(Vimeo.HEADER_CACHE_CONTROL, "public").build();
-        }
-    };
 
     private static VimeoClient sharedInstance;
 
@@ -104,7 +95,7 @@ public class VimeoClient {
         return sharedInstance;
     }
 
-    public static void configure(Configuration configuration) {
+    public static void initialize(Configuration configuration) {
         sharedInstance = new VimeoClient(configuration);
     }
 
@@ -114,29 +105,59 @@ public class VimeoClient {
         }
 
         this.configuration = configuration;
-
-        this.cache = new Cache(this.configuration.cacheDirectory, this.configuration.cacheSize);
-
+        this.gson = VimeoNetworkUtil.getGson();
+        this.cache = this.configuration.getCache();
         this.retrofit = createRetrofit();
-
         this.vimeoService = retrofit.create(VimeoService.class);
 
-        Account account = this.configuration.accountStore.loadAccount();
-        this.setAccount(account);
+        VimeoAccount vimeoAccount = this.configuration.loadAccount();
+        this.setVimeoAccount(vimeoAccount);
     }
 
     private Retrofit createRetrofit() {
         return new Retrofit.Builder().baseUrl(configuration.baseURLString)
                 .client(createOkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create(VimeoNetworkUtil.getGson()))
+                .addConverterFactory(GsonConverterFactory.create(this.gson))
                 .build();
     }
 
     private OkHttpClient createOkHttpClient() {
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
-        retrofitClientBuilder.setCache(cache);
-        retrofitClientBuilder.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+        retrofitClientBuilder.setCache(cache)
+                .addNetworkInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        // Rewrite the server's cache-control header because are server sets all Cache-Control
+                        // headers to no-store [AH] 4/24/2015
+                        return chain.proceed(chain.request())
+                                .newBuilder()
+                                .header(Vimeo.HEADER_CACHE_CONTROL, Vimeo.HEADER_CACHE_PUBLIC)
+                                .build();
+                    }
+                })
+                .setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS)
+                .setConnectionTimeout(this.configuration.timeout, TimeUnit.SECONDS)
+                .addInterceptor(
+                        new LoggingInterceptor(this.configuration.debugLogger, this.configuration.logLevel))
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request original = chain.request();
+
+                        // Customize the request to add the user agent and accept header to all of them
+                        Request request = original.newBuilder()
+                                .header(Vimeo.HEADER_USER_AGENT, configuration.userAgentString)
+                                .header(Vimeo.HEADER_ACCEPT, getAcceptHeader())
+                                .method(original.method(), original.body())
+                                .build();
+
+                        // Customize or return the response
+                        return chain.proceed(request);
+                    }
+                });
+
         if (configuration.certPinningEnabled) {
+            // Try and pin certificates to prevent man-in-the-middle attacks (if pinning is enabled)
             try {
                 retrofitClientBuilder.pinCertificates();
             } catch (Exception e) {
@@ -144,36 +165,16 @@ public class VimeoClient {
             }
         }
 
-        boolean shouldLog = false;
-
-        retrofitClientBuilder.setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS)
-                .setConnectionTimeout(this.configuration.timeout, TimeUnit.SECONDS);
-        if (shouldLog) {
-            retrofitClientBuilder.addInterceptor(new LoggingInterceptor()).build();
-        }
-        retrofitClientBuilder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                // Customize the request
-                Request request = original.newBuilder()
-                        .header(Vimeo.HEADER_USER_AGENT, configuration.userAgentString)
-                        .header(Vimeo.HEADER_ACCEPT, getAcceptHeader())
-                        .method(original.method(), original.body())
-                        .build();
-
-                // Customize or return the response
-                return chain.proceed(request);
-            }
-        });
-
         return retrofitClientBuilder.build();
     }
 
     public void clearRequestCache() {
         try {
-            this.cache.evictAll();
+            if (this.cache != null) {
+                this.cache.evictAll();
+            } else {
+                configuration.debugLogger.e("Attempt to clear null cache");
+            }
         } catch (IOException e) {
             configuration.debugLogger.e("Cache clearing error: " + e.getMessage(), e);
         }
@@ -183,56 +184,20 @@ public class VimeoClient {
         return this.retrofit;
     }
 
-    /**
-     * Return a builder of the given cache control because for some reason this doesn't exist already.
-     * Useful for adding more attributes to an already defined {@link CacheControl}
-     *
-     * @param cacheControl The CacheControl to convert to a builder
-     * @return A builder with the same attributes as the CacheControl passed in
-     */
-
-    public CacheControl.Builder getCacheControlBuilder(CacheControl cacheControl) {
-        CacheControl.Builder builder = new CacheControl.Builder();
-        if (cacheControl.maxAgeSeconds() > -1) {
-            builder.maxAge(cacheControl.maxAgeSeconds(), TimeUnit.SECONDS);
-        }
-        if (cacheControl.maxStaleSeconds() > -1) {
-            builder.maxStale(cacheControl.maxStaleSeconds(), TimeUnit.SECONDS);
-        }
-        if (cacheControl.minFreshSeconds() > -1) {
-            builder.minFresh(cacheControl.minFreshSeconds(), TimeUnit.SECONDS);
-        }
-
-        if (cacheControl.noCache()) {
-            builder.noCache();
-        }
-        if (cacheControl.noStore()) {
-            builder.noStore();
-        }
-        if (cacheControl.noTransform()) {
-            builder.noTransform();
-        }
-        if (cacheControl.onlyIfCached()) {
-            builder.onlyIfCached();
-        }
-        return builder;
-    }
-
-
-    public Account getAccount() {
-        if (this.account == null) {
+    public VimeoAccount getVimeoAccount() {
+        if (this.vimeoAccount == null) {
             throw new AssertionError("Account should never be null");
         }
 
-        return this.account;
+        return this.vimeoAccount;
     }
 
-    public void setAccount(Account account) {
-        if (account == null) {
-            account = new Account();
+    public void setVimeoAccount(@Nullable VimeoAccount vimeoAccount) {
+        if (vimeoAccount == null) {
+            vimeoAccount = new VimeoAccount();
         }
 
-        this.account = account;
+        this.vimeoAccount = vimeoAccount;
     }
 
     public Configuration getConfiguration() {
@@ -286,7 +251,7 @@ public class VimeoClient {
      * @see <a href="https://developer.vimeo.com/api/authentication#generate-redirect">Vimeo API Docs</a>
      */
     @Nullable
-    public Call<Account> authenticateWithCodeGrant(String uri, AuthCallback callback) {
+    public Call<VimeoAccount> authenticateWithCodeGrant(String uri, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -315,7 +280,7 @@ public class VimeoClient {
 
         String redirectURI = this.configuration.codeGrantRedirectURI;
 
-        Call<Account> call =
+        Call<VimeoAccount> call =
                 this.vimeoService.authenticateWithCodeGrant(getBasicAuthHeader(), redirectURI, code,
                                                             Vimeo.CODE_GRANT_TYPE);
         call.enqueue(new AccountCallback(this, callback));
@@ -325,19 +290,18 @@ public class VimeoClient {
     /**
      * Authorizes users of the app who are not signed in.
      * <p/>
-     * Leaves User as null in {@link Account} model and populates the rest
-     * <p/>
+     * Leaves User as null in {@link VimeoAccount} model and populates the rest
      *
      * @param callback Callback pertaining to authentication
      */
-    public Call<Account> authorizeWithClientCredentialsGrant(AuthCallback callback) {
+    public Call<VimeoAccount> authorizeWithClientCredentialsGrant(AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
-        Call<Account> call = this.vimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
-                                                                                   Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
-                                                                                   configuration.scope);
+        Call<VimeoAccount> call = this.vimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
+                                                                                        Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
+                                                                                        configuration.scope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -350,12 +314,12 @@ public class VimeoClient {
      * @param tokenSecret An OAuth1 token secret
      * @return The Account
      */
-    public Call<Account> exchangeOAuthOneToken(String token, String tokenSecret, AuthCallback callback) {
+    public Call<VimeoAccount> exchangeOAuthOneToken(String token, String tokenSecret, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
 
-        Call<Account> call =
+        Call<VimeoAccount> call =
                 this.vimeoService.exchangeOAuthOneToken(getBasicAuthHeader(), Vimeo.OAUTH_ONE_GRANT_TYPE,
                                                         token, tokenSecret, configuration.scope);
         call.enqueue(new AccountCallback(this, callback));
@@ -364,7 +328,7 @@ public class VimeoClient {
 
 
     @Nullable
-    public Call<Account> join(String displayName, String email, String password, AuthCallback callback) {
+    public Call<VimeoAccount> join(String displayName, String email, String password, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -397,13 +361,14 @@ public class VimeoClient {
         parameters.put(Vimeo.PARAMETER_PASSWORD, password);
         parameters.put(Vimeo.PARAMETER_SCOPE, configuration.scope);
 
-        Call<Account> call = this.vimeoService.join(getBasicAuthHeader(), parameters);
+        Call<VimeoAccount> call = this.vimeoService.join(getBasicAuthHeader(), parameters);
         call.enqueue(new AccountCallback(this, email, password, callback));
         return call;
     }
 
     @Nullable
-    public Call<Account> joinWithFacebookToken(String facebookToken, String email, AuthCallback callback) {
+    public Call<VimeoAccount> joinWithFacebookToken(String facebookToken, String email,
+                                                    AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -423,13 +388,13 @@ public class VimeoClient {
         parameters.put(Vimeo.PARAMETER_TOKEN, facebookToken);
         parameters.put(Vimeo.PARAMETER_SCOPE, configuration.scope);
 
-        Call<Account> call = this.vimeoService.join(getBasicAuthHeader(), parameters);
+        Call<VimeoAccount> call = this.vimeoService.join(getBasicAuthHeader(), parameters);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
 
     @Nullable
-    public Call<Account> logIn(String email, String password, AuthCallback callback) {
+    public Call<VimeoAccount> logIn(String email, String password, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -450,7 +415,7 @@ public class VimeoClient {
             return null;
         }
 
-        Call<Account> call =
+        Call<VimeoAccount> call =
                 this.vimeoService.logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE,
                                         configuration.scope);
         call.enqueue(new AccountCallback(this, email, password, callback));
@@ -466,34 +431,35 @@ public class VimeoClient {
      * @param password user's password
      * @return the account object since it is synchronous
      */
-    public Account logIn(String email, String password) {
+    public VimeoAccount logIn(String email, String password) {
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             return null;
         }
 
-        Call<Account> call =
+        Call<VimeoAccount> call =
                 this.vimeoService.logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE,
                                         configuration.scope);
 
-        Account account = null;
+        VimeoAccount vimeoAccount = null;
         try {
-            retrofit2.Response<Account> response = call.execute();
+            retrofit2.Response<VimeoAccount> response = call.execute();
             if (response.isSuccess()) {
-                account = response.body();
+                vimeoAccount = response.body();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        this.setAccount(account);
+        this.setVimeoAccount(vimeoAccount);
 
-        this.configuration.accountStore.saveAccount(account, email, password);
+        this.configuration.saveAccount(vimeoAccount, email, password);
 
-        return account;
+        return vimeoAccount;
     }
 
     @Nullable
-    public Call<Account> loginWithFacebookToken(String facebookToken, String email, AuthCallback callback) {
+    public Call<VimeoAccount> loginWithFacebookToken(String facebookToken, String email,
+                                                     AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -509,7 +475,7 @@ public class VimeoClient {
             return null;
         }
 
-        Call<Account> call =
+        Call<VimeoAccount> call =
                 this.vimeoService.logInWithFacebook(getBasicAuthHeader(), Vimeo.FACEBOOK_GRANT_TYPE,
                                                     facebookToken, configuration.scope);
         call.enqueue(new AccountCallback(this, email, callback));
@@ -546,8 +512,8 @@ public class VimeoClient {
         });
 
         // Remove account immediately, but only after the auth header has been set (working properly?) [AH] 5/4/15
-        this.configuration.accountStore.deleteAccount(account);
-        this.setAccount(null);
+        this.configuration.deleteAccount(vimeoAccount);
+        this.setVimeoAccount(null);
         return call;
     }
 
@@ -556,7 +522,7 @@ public class VimeoClient {
      * <p/>
      * Sets the account on the {@link VimeoClient} as well as the {@link AccountStore}
      */
-    private static class AccountCallback extends VimeoCallback<Account> {
+    private static class AccountCallback extends VimeoCallback<VimeoAccount> {
 
         private final VimeoClient client;
         private String email;
@@ -594,16 +560,16 @@ public class VimeoClient {
         }
 
         @Override
-        public void success(Account account) {
-            this.client.setAccount(account);
-            if (account.getUser() != null && (this.email == null || this.email.isEmpty())) {
+        public void success(VimeoAccount vimeoAccount) {
+            this.client.setVimeoAccount(vimeoAccount);
+            if (vimeoAccount.getUser() != null && (this.email == null || this.email.isEmpty())) {
                 // We must always have a `name` field, which is used by the Android Account Manager for
                 // display in the device Settings -> Accounts [KZ] 12/17/15
-                String name =
-                        (account.getUser().name != null) ? account.getUser().name : account.getUser().uri;
-                this.client.configuration.accountStore.saveAccount(account, name, null);
+                String name = (vimeoAccount.getUser().name !=
+                               null) ? vimeoAccount.getUser().name : vimeoAccount.getUser().uri;
+                this.client.configuration.saveAccount(vimeoAccount, name, null);
             } else {
-                this.client.configuration.accountStore.saveAccount(account, this.email, this.password);
+                this.client.configuration.saveAccount(vimeoAccount, this.email, this.password);
             }
             this.callback.success();
         }
@@ -910,7 +876,7 @@ public class VimeoClient {
             @Override
             public void success(Object o) {
                 // Handle the gson parsing using a deserializer object
-                configuration.deserializer.deserialize(VimeoNetworkUtil.getGson(), o, callback);
+                configuration.deserializer.deserialize(gson, o, callback);
             }
 
             @Override
@@ -971,7 +937,7 @@ public class VimeoClient {
 
         if (cacheControl != null) {
             if (cacheControl.onlyIfCached()) {
-                CacheControl.Builder builder = getCacheControlBuilder(cacheControl);
+                CacheControl.Builder builder = VimeoNetworkUtil.getCacheControlBuilder(cacheControl);
                 // If no max age specified on CacheControl then set it to our default [KV]
                 if (cacheControl.maxAgeSeconds() == -1) {
                     builder.maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS);
@@ -1191,8 +1157,8 @@ public class VimeoClient {
     public String getAuthHeader() {
         String credential;
 
-        if (this.account != null && this.account.isAuthenticated()) {
-            credential = "Bearer " + this.account.getAccessToken();
+        if (this.vimeoAccount != null && this.vimeoAccount.isAuthenticated()) {
+            credential = "Bearer " + this.vimeoAccount.getAccessToken();
         } else {
             credential = getBasicAuthHeader();
         }
@@ -1201,7 +1167,7 @@ public class VimeoClient {
     }
 
     private String getBasicAuthHeader() {
-        return Credentials.basic(configuration.clientID, configuration.clientSecret);
+        return Credentials.basic(this.configuration.clientID, this.configuration.clientSecret);
     }
     // </editor-fold>
 }
