@@ -271,7 +271,7 @@ public class VimeoClient {
             !state.equals(this.currentCodeGrantState)) {
             this.currentCodeGrantState = null;
 
-            callback.failure(new VimeoError("Code grant code is null or state has changed"));
+            callback.failure(new VimeoError("Code grant code/state is null or state has changed"));
 
             return null;
         }

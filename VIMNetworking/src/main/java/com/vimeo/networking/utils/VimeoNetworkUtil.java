@@ -28,13 +28,15 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CacheControl;
-import okhttp3.HttpUrl;
 import retrofit2.GsonConverterFactory;
 
 /**
@@ -76,26 +78,29 @@ public class VimeoNetworkUtil {
      * Returns a simple query map from a provided uri. The simple map enforces there is exactly one value for
      * every name (multiple values for the same name are regularly allowed in a set of parameters)
      *
-     * @param uri a uri optionally with a query
+     * @param uri a uri, optionally with a query
      * @return a query map with a one to one mapping of names to values or empty {@link HashMap<String,String>}
      * if no parameters are found on the uri
+     * @see <a href="http://stackoverflow.com/a/13592567/1759443">StackOverflow</a>
      */
-    public static HashMap<String, String> getSimpleQueryMap(String uri) {
-        HashMap<String, String> queryMap = new HashMap<>();
-        HttpUrl httpUrl = HttpUrl.parse(uri);
-        if (httpUrl == null) {
-            return queryMap;
+    public static Map<String, String> getSimpleQueryMap(String uri) {
+        final Map<String, String> query_pairs = new LinkedHashMap<>();
+        try {
+            String query = uri.split("\\?")[1];
+            String[] pairs = query.split("&");
+            for (String pair : pairs) {
+                int idx = pair.indexOf("=");
+                query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
+                                URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+            }
+            return query_pairs;
+        } catch (UnsupportedEncodingException e) {
+            // Just print the trace, we don't want to crash the app. If you ever get an empty query params
+            // map back, then we know there was a malformed URL returned from the api (or a failure) 1/27/16 [KV]
+            e.printStackTrace();
         }
 
-        for (String name : httpUrl.queryParameterNames()) {
-            // Iterate over all the names and generate a simplified map of parameters
-            List<String> paramValues = httpUrl.queryParameterValues(name);
-            if (!paramValues.isEmpty()) {
-                // If the values list isn't empty, then let's just take the first value associated with the key
-                queryMap.put(name, paramValues.get(0));
-            }
-        }
-        return queryMap;
+        return query_pairs;
     }
 
     /**

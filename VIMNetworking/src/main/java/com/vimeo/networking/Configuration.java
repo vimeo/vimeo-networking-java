@@ -126,7 +126,7 @@ public class Configuration {
             throw new AssertionError("Built invalid VimeoClientConfiguration");
         }
 
-        this.codeGrantRedirectURI = "vimeo" + clientID + "://auth";
+        this.codeGrantRedirectURI = builder.codeGrantRedirectUri;
 
         this.apiVersionString = builder.apiVersionString;
         this.cacheDirectory = builder.cacheDirectory;
@@ -166,6 +166,8 @@ public class Configuration {
         private int cacheMaxAge = DEFAULT_CACHE_MAX_AGE;
         private String userAgentString = DEFAULT_USER_AGENT;
         public int timeout = DEFAULT_TIMEOUT;
+
+        public String codeGrantRedirectUri = "vimeo" + clientID + "://auth";
 
         private boolean certPinningEnabled = true;
         // Default to the stock logger which just prints - this makes it optional
@@ -207,6 +209,11 @@ public class Configuration {
 
         public Builder setGsonDeserializer(GsonDeserializer deserializer) {
             this.deserializer = deserializer;
+            return this;
+        }
+
+        public Builder setCodeGrantRedirectUri(String redirectUri) {
+            this.codeGrantRedirectUri = redirectUri;
             return this;
         }
 
