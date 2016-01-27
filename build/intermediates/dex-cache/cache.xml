@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/vennk/Development/Vimeo-Android/VIMNetworking-Java/VIMNetworking/build/libs/VIMNetworking.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="bf5f81bfd746ab36a9dacfa68bcf4acb0ecfe528">
+        <dex dex="/Users/vennk/Development/Vimeo-Android/VIMNetworking-Java/example/build/intermediates/pre-dexed/debug/VIMNetworking_fd22c9ae844e4bd2aff3627c72a381cffde88111.jar" />
+    </item>
+
+</items>
