@@ -42,7 +42,7 @@ import okhttp3.Cache;
  */
 public class Configuration {
 
-    private static final String DEFAULT_VERSION_STRING = "3.3";
+    private static final String DEFAULT_VERSION_STRING = "3.2";
     // Potentially set max_age to match the age of video expiration 10/7/15 [KV]
     private static final int DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2; // Default to 2 hours
     // If implementing on Android, it will be cleared when space is needed automatically 1/27/16 [KV]

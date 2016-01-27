@@ -5,7 +5,7 @@
         jar="/Users/vennk/Development/Vimeo-Android/VIMNetworking-Java/VIMNetworking/build/libs/VIMNetworking.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="bf5f81bfd746ab36a9dacfa68bcf4acb0ecfe528">
+        sha1="8af8b37b607a96cdf2152b7b436f2f3ef3a4db9c">
         <dex dex="/Users/vennk/Development/Vimeo-Android/VIMNetworking-Java/example/build/intermediates/pre-dexed/debug/VIMNetworking_fd22c9ae844e4bd2aff3627c72a381cffde88111.jar" />
     </item>
 
