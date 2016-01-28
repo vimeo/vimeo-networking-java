@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.model.Privacy.PrivacyValue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,6 +59,8 @@ public class User implements Serializable {
     public Metadata metadata;
     @SerializedName("upload_quota")
     public UploadQuota uploadQuota;
+    @Nullable
+    protected Preferences preferences;
 
     public AccountType getAccountType() {
         if (this.account == null) {
@@ -185,6 +188,16 @@ public class User implements Serializable {
         return plusOrPro;
     }
 
+    @Nullable
+    public PrivacyValue getPreferredVideoPrivacyValue() {
+        PrivacyValue privacyValue = null;
+        if (getPreferences() != null && getPreferences().getVideos() != null &&
+            getPreferences().getVideos().getPrivacy() != null) {
+            privacyValue = PrivacyValue.privacyValueFromString(getPreferences().getVideos().getPrivacy());
+        }
+        return privacyValue;
+    }
+
     public boolean canUploadPicture() {
         if ((metadata != null) && (metadata.connections != null) &&
             (metadata.connections.pictures != null) &&
@@ -205,6 +218,55 @@ public class User implements Serializable {
         }
         return -1;
     }
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Getters
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Getters">
+    public String getUri() {
+        return uri;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public ArrayList<Website> getWebsites() {
+        return websites;
+    }
+
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    @Nullable
+    public Preferences getPreferences() {
+        return preferences;
+    }
+
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
