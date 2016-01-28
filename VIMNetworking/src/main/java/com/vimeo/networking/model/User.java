@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.model.Privacy.PrivacyValue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -185,6 +186,16 @@ public class User implements Serializable {
             plusOrPro = true;
         }
         return plusOrPro;
+    }
+
+    @Nullable
+    public PrivacyValue getPreferredVideoPrivacyValue() {
+        PrivacyValue privacyValue = null;
+        if (getPreferences() != null && getPreferences().getVideos() != null &&
+            getPreferences().getVideos().getPrivacy() != null) {
+            privacyValue = PrivacyValue.privacyValueFromString(getPreferences().getVideos().getPrivacy());
+        }
+        return privacyValue;
     }
 
     public boolean canUploadPicture() {
