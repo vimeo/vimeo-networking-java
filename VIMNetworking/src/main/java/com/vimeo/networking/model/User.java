@@ -58,6 +58,8 @@ public class User implements Serializable {
     public Metadata metadata;
     @SerializedName("upload_quota")
     public UploadQuota uploadQuota;
+    @Nullable
+    protected Preferences preferences;
 
     public AccountType getAccountType() {
         if (this.account == null) {
@@ -205,6 +207,55 @@ public class User implements Serializable {
         }
         return -1;
     }
+
+    /**
+     * -----------------------------------------------------------------------------------------------------
+     * Getters
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Getters">
+    public String getUri() {
+        return uri;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public ArrayList<Website> getWebsites() {
+        return websites;
+    }
+
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    @Nullable
+    public Preferences getPreferences() {
+        return preferences;
+    }
+
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
