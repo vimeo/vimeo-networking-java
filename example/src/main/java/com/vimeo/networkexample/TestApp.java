@@ -1,4 +1,4 @@
-package com.vimeo.example;
+package com.vimeo.networkexample;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.vimeo.example.vimeonetworking.AndroidGsonDeserializer;
-import com.vimeo.example.vimeonetworking.NetworkingLogger;
-import com.vimeo.example.vimeonetworking.TestAccountStore;
+import com.vimeo.networkexample.vimeonetworking.AndroidGsonDeserializer;
+import com.vimeo.networkexample.vimeonetworking.NetworkingLogger;
+import com.vimeo.networkexample.vimeonetworking.TestAccountStore;
 import com.vimeo.networking.Configuration;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.Vimeo.LogLevel;
@@ -42,8 +42,7 @@ public class TestApp extends Application {
                 new Configuration.Builder(Vimeo.VIMEO_BASE_URL_STRING, clientId, clientSecret, SCOPE,
                                           testAccountStore, new AndroidGsonDeserializer());
         configBuilder.setCacheDirectory(this.getCacheDir())
-                .setUserAgentString(getUserAgentString(this))
-                .setDebugLogger(new NetworkingLogger())
+                .setUserAgentString(getUserAgentString(this)).setDebugLogger(new NetworkingLogger())
                 // Used for oauth flow
                 .setCodeGrantRedirectUri(codeGrantRedirectUri);
 

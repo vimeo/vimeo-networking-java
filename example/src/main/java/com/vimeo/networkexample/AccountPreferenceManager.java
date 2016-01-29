@@ -1,4 +1,4 @@
-package com.vimeo.example;
+package com.vimeo.networkexample;
 
 import android.content.Context;
 import android.content.SharedPreferences;

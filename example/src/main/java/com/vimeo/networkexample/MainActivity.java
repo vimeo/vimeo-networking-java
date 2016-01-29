@@ -1,4 +1,4 @@
-package com.vimeo.example;
+package com.vimeo.networkexample;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

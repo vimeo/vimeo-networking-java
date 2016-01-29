@@ -1,4 +1,4 @@
-package com.vimeo.example.vimeonetworking;
+package com.vimeo.networkexample.vimeonetworking;
 
 import android.util.Log;
 

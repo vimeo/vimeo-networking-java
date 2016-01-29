@@ -1,4 +1,4 @@
-package com.vimeo.example.vimeonetworking;
+package com.vimeo.networkexample.vimeonetworking;
 
 import android.Manifest.permission;
 import android.accounts.AccountManager;
@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.RequiresPermission;
 
-import com.vimeo.example.AccountPreferenceManager;
-import com.vimeo.example.TestApp;
+import com.vimeo.networkexample.AccountPreferenceManager;
+import com.vimeo.networkexample.TestApp;
 import com.vimeo.networking.AccountStore;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.model.VimeoAccount;
@@ -30,7 +30,7 @@ public class TestAccountStore implements AccountStore {
         }
 
         // NOTE: You can use the account manager in the below methods to hook into the Android Accounts
-        mAccountManager = AccountManager.get(context);
+//        mAccountManager = AccountManager.get(context);
     }
 
     @Override
