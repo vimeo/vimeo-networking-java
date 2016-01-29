@@ -8,7 +8,7 @@ import android.os.Build;
 
 import com.vimeo.example.vimeonetworking.AndroidGsonDeserializer;
 import com.vimeo.example.vimeonetworking.NetworkingLogger;
-import com.vimeo.example.vimeonetworking.VimeoAccountStore;
+import com.vimeo.example.vimeonetworking.TestAccountStore;
 import com.vimeo.networking.Configuration;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.Vimeo.LogLevel;
@@ -24,17 +24,23 @@ public class TestApp extends Application {
             "lAKQo0uemD0XiOTJrCobvMzJGWNzTC9UVuJmO0CzdMxP8uNd64XEJTcjP3SW2gFardLe/Ov1Lr+xsotdoYjtk4OXYyMizCR6CbRj4nCm4HYOJuHjkxUwg2HaJQRj0RqG";
     private static final String SCOPE = "private public create edit delete interact";
 
+    private static Context mContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        mContext = this;
+
+        AccountPreferenceManager.initializeInstance(mContext);
+
         // <editor-fold desc="Vimeo API Library Initialization">
         String codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" +
                                       getString(R.string.deeplink_redirect_host);
-        VimeoAccountStore vimeoAccountStore = new VimeoAccountStore(this.getApplicationContext());
+        TestAccountStore testAccountStore = new TestAccountStore(this.getApplicationContext());
         Configuration.Builder configBuilder =
                 new Configuration.Builder(Vimeo.VIMEO_BASE_URL_STRING, CLIENT_ID, CLIENT_SECRET, SCOPE,
-                                          vimeoAccountStore, new AndroidGsonDeserializer());
+                                          testAccountStore, new AndroidGsonDeserializer());
         configBuilder.setCacheDirectory(this.getCacheDir())
                 .setUserAgentString(getUserAgentString(this))
                 .setDebugLogger(new NetworkingLogger())
@@ -48,6 +54,10 @@ public class TestApp extends Application {
         }
         VimeoClient.initialize(configBuilder.build());
         // </editor-fold>
+    }
+
+    public static Context getAppContext() {
+        return mContext;
     }
 
     public static String getUserAgentString(Context context) {

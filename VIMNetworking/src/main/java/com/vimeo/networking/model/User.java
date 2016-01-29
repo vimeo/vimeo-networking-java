@@ -203,7 +203,7 @@ public class User implements Serializable {
         if (uploadQuota != null) {
             return uploadQuota.getFreeUploadSpace();
         }
-        return -1;
+        return Vimeo.NOT_FOUND;
     }
 
     @Override

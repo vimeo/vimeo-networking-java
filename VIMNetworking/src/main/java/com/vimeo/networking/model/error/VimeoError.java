@@ -104,6 +104,9 @@ public class VimeoError extends RuntimeException {
     }
 
     public String getDeveloperMessage() {
+        if (this.developerMessage == null || this.developerMessage.isEmpty()) {
+            return this.errorMessage;
+        }
         return this.developerMessage;
     }
 
