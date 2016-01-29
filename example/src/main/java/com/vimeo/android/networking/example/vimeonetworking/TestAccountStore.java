@@ -1,4 +1,4 @@
-package com.vimeo.networkexample.vimeonetworking;
+package com.vimeo.android.networking.example.vimeonetworking;
 
 import android.Manifest.permission;
 import android.accounts.AccountManager;
@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.RequiresPermission;
 
-import com.vimeo.networkexample.AccountPreferenceManager;
-import com.vimeo.networkexample.TestApp;
+import com.vimeo.android.networking.example.AccountPreferenceManager;
+import com.vimeo.android.networking.example.TestApp;
 import com.vimeo.networking.AccountStore;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.model.VimeoAccount;

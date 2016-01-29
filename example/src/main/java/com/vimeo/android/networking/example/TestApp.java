@@ -1,4 +1,4 @@
-package com.vimeo.networkexample;
+package com.vimeo.android.networking.example;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.vimeo.networkexample.vimeonetworking.AndroidGsonDeserializer;
-import com.vimeo.networkexample.vimeonetworking.NetworkingLogger;
-import com.vimeo.networkexample.vimeonetworking.TestAccountStore;
+import com.vimeo.android.networking.example.vimeonetworking.AndroidGsonDeserializer;
+import com.vimeo.android.networking.example.vimeonetworking.NetworkingLogger;
+import com.vimeo.android.networking.example.vimeonetworking.TestAccountStore;
 import com.vimeo.networking.Configuration;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.Vimeo.LogLevel;

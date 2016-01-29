@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.vimeo.networkexample"
+    package="com.vimeo.android.networking.example"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>

@@ -142,10 +142,10 @@ public class Configuration {
     }
 
     private boolean isValid() {
-        return (this.baseURLString != null && !this.baseURLString.isEmpty() &&
-                this.clientID != null && !this.clientID.isEmpty() &&
-                this.clientSecret != null && !this.clientSecret.isEmpty() &&
-                this.scope != null && !this.scope.isEmpty());
+        return (this.baseURLString != null && !this.baseURLString.trim().isEmpty() &&
+                this.clientID != null && !this.clientID.trim().isEmpty() &&
+                this.clientSecret != null && !this.clientSecret.trim().isEmpty() &&
+                this.scope != null && !this.scope.trim().isEmpty());
     }
 
     /**
