@@ -22,9 +22,10 @@
 
 package com.vimeo.networking.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
-import javax.annotation.Nullable;
 
 /**
  * This model holds on to certain User preferences that may have been set by a user
