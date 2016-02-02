@@ -1,9 +1,15 @@
-# VIMNetworking-Java
-The Vimeo Java (Android) SDK
+# vimeo-networking-java
+vimeo-networking is a Java networking library used for interacting with the Vimeo API. The example provided in this project shows the implementation in the context of an Android app.
+
+## Getting Started
+
+## Example
 
 ## License
 
-`VIMNetworking-Java` is available under the MIT license. See the LICENSE file for more info.
+`vimeo-networking-java` is available under the MIT license. See the LICENSE file for more info.
+
+## Contributions
 
 ## Questions?
 
