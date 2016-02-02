@@ -7,7 +7,7 @@ vimeo-networking is a Java networking library used for interacting with the Vime
 
 ## License
 
-`VIMNetworking-Java` is available under the MIT license. See the LICENSE file for more info.
+`vimeo-networking` is available under the MIT license. See the LICENSE file for more info.
 
 ## Contributions
 
