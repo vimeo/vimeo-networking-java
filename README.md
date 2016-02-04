@@ -1,11 +1,22 @@
 # vimeo-networking
 vimeo-networking is a Java networking library used for interacting with the Vimeo API. The example provided in this project shows the implementation in the context of an Android app.
 
+## Contents
+* [Getting Started](#getting-started)
+      * [Gradle](#gradle)
+      * [Submodule](#submodule)
+      * [Initialization](#initialization)
+      * [Authentication](#authentication)
+      * [Sample Requests](#sample-requests)
+* [Found an Issue?](#found-an-issue)
+* [Questions](#questions)
+* [License](#license)
+
 ## Getting Started
-For a more indepth look at the usage, refer to the [example Android app](example).
+For a more in depth look at the usage, refer to the [example Android app](example). The example project includes implementation of all of the below features.
 
 ### Gradle
-Specify the dependency in your `build.gradle` file (make sure `jcenter()` included as a repository)
+Specify the dependency in your `build.gradle` file (make sure `jcenter()` is included as a repository)
 ```groovy
 compile 'com.vimeo.networking:vimeo-networking:1.0.0'
 ```
@@ -21,23 +32,18 @@ compile project(':vimeo-networking-java:vimeo-networking')
 ```
 
 ### Initialization
-On app launch, configure `VimeoClient` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary. This authentication can include client credentials or user authentication.
+On app launch, configure `VimeoClient` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary. This authentication can include client credentials or authentication via code grant.
 ```java
 Configuration.Builder configBuilder =
       new Configuration.Builder(Vimeo.VIMEO_BASE_URL_STRING, clientId, clientSecret, SCOPE,
                                 testAccountStore, new AndroidGsonDeserializer())
           .setCacheDirectory(this.getCacheDir())
-          .setCodeGrantRedirectUri(codeGrantRedirectUri);
 ```
-We highly recommend providing a deserializer, cache directory, and code grant redirect uri.
-* The deserializer allows for deserialization a background thread.
-* The cache directory is to allow caching of requests.
-* The grant redirect uri allows you to utilize our [Code Grant Auth](https://developer.vimeo.com/api/authentication#generate-redirect) flow. 
-  * For Android apps, this will most likely be a deeplink back to your application.
-
+Setting the cache directory and deserializer are optional but highly recommended.
+* The deserializer allows for deserialization on a background thread. Without it, object deserialization will occur on the main (UI) thread. This can be bad for performance if the API response bodies are large.
+* The cache directory is to allow caching of requests. Without it, no requests will be cached and all other cache settings will be ignored.
 
 ### Authentication 
-
 All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/api/authentication). This means that before making requests to the API you must authenticate and obtain an access token. Two authentication methods are provided: 
 
 1. [Client credentials grant](https://developer.vimeo.com/api/authentication#unauthenticated-requests): This mechanism allows your application to access publicly accessible content on Vimeo. 
@@ -76,7 +82,7 @@ String uri = VimeoClient.getInstance().getCodeGrantAuthorizationURI();
 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 startActivity(browserIntent);
 ```
-3) The web browswer will open and the user will be presented with a webpage asking them to grant access based on the `scope` that you specified in your `ClientBuilder` above.  
+3) The web browser will open and the user will be presented with a webpage asking them to grant access based on the `scope` that you specified in your `ClientBuilder` above.  
 
 4) Add an intent filter to listen for the deeplink and then call `VimeoClient#authenticateWithCodeGrant(...)` passing in the `Uri` retrieved from `Uri uri = getIntent().getData();`
 
