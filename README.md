@@ -7,7 +7,6 @@ vimeo-networking is a Java networking library used for interacting with the Vime
       * [Submodule](#submodule)
       * [Initialization](#initialization)
       * [Authentication](#authentication)
-      * [Request Basics](#request-basics)
 * [Requests](#requests)
      * [Callbacks](#callbacks)
      * [Cache Strategy](#cache-strategy)
