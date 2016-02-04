@@ -41,7 +41,7 @@ import okio.Buffer;
 
 /**
  * An interceptor for logging the requests and responses for each individual call. This class relies on the
- * {@link LogLevel} passed into the {@link Configuration.Builder} which initialized {@link VimeoClient}
+ * {@link LogLevel} passed into the {@link Configuration} which initialized {@link VimeoClient}
  * <p/>
  * Created by zetterstromk on 10/23/15.
  */

@@ -79,7 +79,7 @@ public class VimeoNetworkUtil {
      * every name (multiple values for the same name are regularly allowed in a set of parameters)
      *
      * @param uri a uri, optionally with a query
-     * @return a query map with a one to one mapping of names to values or empty {@link HashMap<String,String>}
+     * @return a query map with a one to one mapping of names to values or empty {@link HashMap}
      * if no parameters are found on the uri
      * @see <a href="http://stackoverflow.com/a/13592567/1759443">StackOverflow</a>
      */
