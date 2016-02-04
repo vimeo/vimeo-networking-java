@@ -7,7 +7,11 @@ vimeo-networking is a Java networking library used for interacting with the Vime
       * [Submodule](#submodule)
       * [Initialization](#initialization)
       * [Authentication](#authentication)
-      * [Sample Requests](#sample-requests)
+      * [Request Basics](#request-basics)
+* [Requests](#requests)
+     * [Callbacks](#callbacks)
+     * [Cache Strategy](#cache-strategy)
+     * [Sample Requests](#sample-requests)
 * [Found an Issue?](#found-an-issue)
 * [Questions](#questions)
 * [License](#license)
@@ -58,19 +62,20 @@ private void authenticateWithClientCredentials() {
     VimeoClient.getInstance().authorizeWithClientCredentialsGrant(new AuthCallback() {
         @Override
         public void success() {
-            toast("Client Credentials Authorization Success");
+           String accessToken = VimeoClient.getInstance().getVimeoAccount().getAccessToken();
+           toast("Client Credentials Authorization Success with Access Token: " + accessToken);
         }
 
         @Override
         public void failure(VimeoError error) {
-            toast("Client Credentials Authorization Failure");
+           String errorMessage = error.getDeveloperMessage();
+           toast("Client Credentials Authorization Failure: " + errorMessage);
         }
     });
 }
 ```
 
 #### OAuth Authorization Code Grant
-
 1) Set up a redirect url scheme:
 Navigate to your app target settings > Info > URL Types.  Add a new URL Type, and under url scheme enter `vimeo{CLIENT_KEY}` (ex: if your CLIENT_KEY is `1234`, enter `vimeo1234`).  This allows Vimeo to redirect back into your app after authorization.  
 
@@ -78,29 +83,72 @@ You also need to add this redirect URL to your app on the Vimeo API site.  Under
 
 2) Open the authorization URL in the web browser: 
 ```java
-String uri = VimeoClient.getInstance().getCodeGrantAuthorizationURI();
-Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-startActivity(browserIntent);
+private void onLoginClick() {
+     // Go To Web For Code Grant Auth
+     String uri = VimeoClient.getInstance().getCodeGrantAuthorizationURI();
+     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+     startActivity(browserIntent);
+}
 ```
 3) The web browser will open and the user will be presented with a webpage asking them to grant access based on the `scope` that you specified in your `ClientBuilder` above.  
 
 4) Add an intent filter to listen for the deeplink and then call `VimeoClient#authenticateWithCodeGrant(...)` passing in the `Uri` retrieved from `Uri uri = getIntent().getData();`
 
-### Sample Request For Staff Picks
-```java
-  VimeoClient.getInstance().fetchNetworkContent(STAFF_PICKS_VIDEO_URI, new ModelCallback<VideoList>(VideoList.class) {
-      @Override
-      public void success(VideoList videoList) {
-          if (videoList != null && videoList.data != null) {
-            toast("Staff Picks Success!");
-          }
-      }
+*You can find examples of these methods in [MainActivity.java of the example app](example/src/main/java/com/vimeo/android/networking/example/MainActivity.java)
 
-      @Override
-      public void failure(VimeoError error) {
-          toast("Staff Picks Failure :(");
-      }
-  });
+## Requests
+With `vimeo-networking` configured and authenticated, you’re ready to start making requests to the Vimeo API.
+
+### Callbacks
+We created a layer on top of Retrofit's `Callback<T>` called `ModelCallback<T>`. This class tells our fetch, post, etc methods what type of object you'd like in your response. To use it, you'll have to pass in a `Class` object into its constructor as well as the class name as the generic.
+Here is an example where our response is of the type `Video`.
+```java
+new ModelCallback<Video>(Video.class) {
+     ...
+}
+```
+
+### Cache Strategy
+We offer a host of convenience methods to make simple POST, GET, and PUT requests as simple as possible. These methods can be seen in [VimeoClient.java](vimeo-networking/src/main/java/com/vimeo/networking/VimeoClient.java#L926). An example can be seen [below](#staff-picks) with a call to `fetchNetworkContent(...)`.
+
+You can also specify your own caching stategy with the below method:
+```java
+Call<Object> fetchContent(String uri, CacheControl cacheControl, ModelCallback callback)
+```
+The method can take `CacheControl.FORCE_NETWORK` which will always skip the cache and pull directly from the API. Or it can take `CacheControl.FORCE_CACHE` which will always pull from the locally stored cache (if you specified a cache directory).
+
+### Sample Requests
+#### Staff Picks
+The below request will fetch the staff 
+```java
+VimeoClient.getInstance().fetchNetworkContent(STAFF_PICKS_VIDEO_URI, new ModelCallback<VideoList>(VideoList.class) {
+ @Override
+ public void success(VideoList videoList) {
+     // It's good practice to always make sure that the values the API sends us aren't null
+     if (videoList != null && videoList.data != null) {
+          toast("Staff Picks Success!");
+     }
+ }
+
+ @Override
+ public void failure(VimeoError error) {
+     toast("Staff Picks Failure :(");
+ }
+});
+```
+#### Currently Authenticated User
+```java
+VimeoClient.getInstance().fetchCurrentUser(new ModelCallback<User>(User.class) {
+ @Override
+ public void success(User user) {
+     // Update UI with information about the current user
+ }
+ 
+ @Override
+ public void error(VimeoError error) {
+     // Log the error and update the UI to tell the user there was an error
+ }
+});
 ```
 
 ## Found an Issue?
