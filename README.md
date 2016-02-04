@@ -92,9 +92,24 @@ private void onLoginClick() {
 ```
 3) The web browser will open and the user will be presented with a webpage asking them to grant access based on the `scope` that you specified in your `ClientBuilder` above.  
 
-4) Add an intent filter to listen for the deeplink and then call `VimeoClient#authenticateWithCodeGrant(...)` passing in the `Uri` retrieved from `Uri uri = getIntent().getData();`
+4) Add an intent filter to your activity in the [`AndroidManifest`](example/src/main/AndroidManifest.xml) to listen for the deeplink.
+```xml
+<intent-filter>
+      <action android:name="android.intent.action.VIEW"/>
+     
+      <category android:name="android.intent.category.DEFAULT"/>
+      <category android:name="android.intent.category.BROWSABLE"/>
+     
+     <!-- vimeo{CLIENT_KEY} -->
+      <data android:scheme="@string/deeplink_redirect_scheme"/>
+      <!-- auth -->
+      <data android:host="@string/deeplink_redirect_host"/>
+</intent-filter>
+```
 
-*You can find examples of these methods in [MainActivity.java of the example app](example/src/main/java/com/vimeo/android/networking/example/MainActivity.java)
+5) Then call `VimeoClient#authenticateWithCodeGrant(...)` passing in the `Uri` retrieved from `Uri uri = getIntent().getData();` which will be supplied from the intent filter.
+
+*You can find an example of both stategies in [MainActivity.java of the example app](example/src/main/java/com/vimeo/android/networking/example/MainActivity.java)
 
 ## Requests
 With `vimeo-networking` configured and authenticated, you’re ready to start making requests to the Vimeo API.
