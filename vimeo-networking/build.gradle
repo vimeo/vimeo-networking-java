@@ -15,6 +15,21 @@ dependencies {
 group = 'com.vimeo.networking'
 version = '1.0.0'
 
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
 // Requires apply plugin: maven-publish
 publishing {
     publications {
@@ -25,6 +40,9 @@ publishing {
             groupId project.group
             artifactId 'vimeo-networking'
             version project.version
+
+            artifact sourcesJar
+            artifact javadocJar
         }
     }
 }
@@ -40,7 +58,7 @@ allprojects {
                 user = properties.getProperty('bintray.user')
                 key = properties.getProperty('bintray.apikey')
                 publications = ['mavenJava']
-                dryRun = true // Whether to run this as dry-run, without deploying
+                dryRun = false // Whether to run this as dry-run, without deploying
                 pkg {
                     repo = 'maven'
                     name = 'vimeo-networking'
