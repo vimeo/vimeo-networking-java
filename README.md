@@ -30,7 +30,7 @@ We recommend using JCenter, but if you'd like to use the library as a submodule:
 ```
 git submodule add git@github.com:vimeo/vimeo-networking-java.git
 ```
-Then in your Gradle use:
+Then in your `build.gradle` use:
 ```groovy
 compile project(':vimeo-networking-java:vimeo-networking')
 ```
@@ -99,6 +99,34 @@ private void onLoginClick() {
 ## Requests
 With `vimeo-networking` configured and authenticated, you’re ready to start making requests to the Vimeo API.
 
+### Standard Request Methods
+You can access the below methods through `VimeoClient.getInstance()`.
+
+For making GET requests:
+```java
+public Call<Object> fetchContent(String uri, CacheControl cacheControl, ModelCallback callback,
+                                 @Nullable String query, @Nullable Map<String, String> refinementMap,
+                                 @Nullable String fieldFilter)
+```
+
+For making POST requests:
+```java
+public Call<Object> postContent(String uri, CacheControl cacheControl, HashMap<String, String> postBody,
+                                VimeoCallback callback)
+```
+
+For making PUT requests:
+```java
+public Call<Object> putContent(String uri, @Nullable Map<String, String> options, ModelCallback callback,
+                               boolean enqueue)
+```
+
+For making DELETE requests:
+```java
+public Call<Object> deleteContent(String uri, @Nullable Map<String, String> options,
+                                  ModelCallback callback, boolean enqueue)
+```
+
 ### Callbacks
 We created a layer on top of Retrofit's `Callback<T>` called `ModelCallback<T>`. This class tells our fetch, post, etc methods what type of object you'd like in your response. To use it, you'll have to pass in a `Class` object into its constructor as well as the class name as the generic.
 Here is an example where our response is of the type `Video`.
@@ -119,35 +147,35 @@ The method can take `CacheControl.FORCE_NETWORK` which will always skip the cach
 
 ### Sample Requests
 #### Staff Picks
-The below request will fetch the staff 
+The below request will fetch the staff picks list.
 ```java
 VimeoClient.getInstance().fetchNetworkContent(STAFF_PICKS_VIDEO_URI, new ModelCallback<VideoList>(VideoList.class) {
- @Override
- public void success(VideoList videoList) {
-     // It's good practice to always make sure that the values the API sends us aren't null
-     if (videoList != null && videoList.data != null) {
-          toast("Staff Picks Success!");
+     @Override
+     public void success(VideoList videoList) {
+          // It's good practice to always make sure that the values the API sends us aren't null
+          if (videoList != null && videoList.data != null) {
+               toast("Staff Picks Success!");
+          }
      }
- }
-
- @Override
- public void failure(VimeoError error) {
-     toast("Staff Picks Failure :(");
- }
+     
+     @Override
+     public void failure(VimeoError error) {
+          toast("Staff Picks Failure :(");
+     }
 });
 ```
 #### Currently Authenticated User
 ```java
 VimeoClient.getInstance().fetchCurrentUser(new ModelCallback<User>(User.class) {
- @Override
- public void success(User user) {
-     // Update UI with information about the current user
- }
- 
- @Override
- public void error(VimeoError error) {
-     // Log the error and update the UI to tell the user there was an error
- }
+     @Override
+     public void success(User user) {
+          // Update UI with information about the current user
+     }
+     
+     @Override
+     public void error(VimeoError error) {
+          // Log the error and update the UI to tell the user there was an error
+     }
 });
 ```
 
