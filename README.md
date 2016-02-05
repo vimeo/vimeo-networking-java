@@ -35,8 +35,20 @@ compile project(':vimeo-networking-java:vimeo-networking')
 ```
 
 ### Initialization
-On app launch, configure `VimeoClient` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary. This authentication can include client credentials or authentication via code grant.
+On app launch, configure `VimeoClient` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary. This authentication can include [client credentials](#client-credentials-grant) or authentication via [code grant](#oauth-authorization-code-grant). 
+
+If you choose to pass in an `AccountStore`, the authenticated account will automatically be persisted. Once authentication is complete, you can access the persisted `VimeoAccount` object through `VimeoClient#getVimeoAccount()`. For a basic implementation of an `AccountStore`, please refer to [this file in the example app](example/src/main/java/com/vimeo/android/networking/example/vimeonetworking/TestAccountStore.java)
 ```java
+  /**
+    * @param baseURLString The base url pointing to the Vimeo api. Something like: {@link Vimeo#VIMEO_BASE_URL_STRING}
+    * @param clientId      The client id provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
+    * @param clientSecret  The client secret provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
+    * @param scope         Space separated list of <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
+    *                      <p/>
+    *                      Example: "private public create"
+    * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Androids <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">Account Manager</a>
+    * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread
+    */
 Configuration.Builder configBuilder =
       new Configuration.Builder(Vimeo.VIMEO_BASE_URL_STRING, clientId, clientSecret, SCOPE,
                                 testAccountStore, new AndroidGsonDeserializer())
@@ -174,7 +186,8 @@ VimeoClient.getInstance().fetchNetworkContent(STAFF_PICKS_VIDEO_URI, new ModelCa
      
      @Override
      public void failure(VimeoError error) {
-          toast("Staff Picks Failure :(");
+          String errorMessage = error.getDeveloperMessage();
+          toast("Staff Picks Failure :( " + errorMessage);
      }
 });
 ```
