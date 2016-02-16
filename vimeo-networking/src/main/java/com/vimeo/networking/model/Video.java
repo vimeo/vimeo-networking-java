@@ -60,23 +60,32 @@ public class Video implements Serializable {
         PUBLIC_DOMAIN_DEDICATION
     }
 
+    private static final String STATUS_NONE = "N/A";
+    private static final String STATUS_AVAILABLE = "available";
+    private static final String STATUS_UPLOADING = "uploading";
+    private static final String STATUS_TRANSCODE_STARTING = "transcode_starting";
+    private static final String STATUS_TRANSCODING = "transcoding";
+    private static final String STATUS_UPLOADING_ERROR = "uploading_error";
+    private static final String STATUS_TRANSCODING_ERROR = "transcoding_error";
+    private static final String STATUS_QUOTA_EXCEEDED = "quota_exceeded";
+
     public enum Status {
-        NONE("N/A"),
-        @SerializedName("available")
-        AVAILABLE("available"),
-        @SerializedName("uploading")
-        UPLOADING("uploading"),
-        @SerializedName("transcode_starting")
-        TRANSCODE_STARTING("transcode_starting"),
-        @SerializedName("transcoding")
-        TRANSCODING("transcoding"),
+        NONE(STATUS_NONE),
+        @SerializedName(STATUS_AVAILABLE)
+        AVAILABLE(STATUS_AVAILABLE),
+        @SerializedName(STATUS_UPLOADING)
+        UPLOADING(STATUS_UPLOADING),
+        @SerializedName(STATUS_TRANSCODE_STARTING)
+        TRANSCODE_STARTING(STATUS_TRANSCODE_STARTING),
+        @SerializedName(STATUS_TRANSCODING)
+        TRANSCODING(STATUS_TRANSCODING),
         // Errors
-        @SerializedName("uploading_error")
-        UPLOADING_ERROR("uploading_error"),
-        @SerializedName("transcoding_error")
-        TRANSCODING_ERROR("transcoding_error"),
-        @SerializedName("quota_exceeded")
-        QUOTA_EXCEEDED("quota_exceeded");
+        @SerializedName(STATUS_UPLOADING_ERROR)
+        UPLOADING_ERROR(STATUS_UPLOADING_ERROR),
+        @SerializedName(STATUS_TRANSCODING_ERROR)
+        TRANSCODING_ERROR(STATUS_TRANSCODING_ERROR),
+        @SerializedName(STATUS_QUOTA_EXCEEDED)
+        QUOTA_EXCEEDED(STATUS_QUOTA_EXCEEDED);
 
         private String string;
 
