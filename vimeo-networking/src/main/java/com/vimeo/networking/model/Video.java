@@ -66,8 +66,11 @@ public class Video implements Serializable {
         AVAILABLE("available"),
         @SerializedName("uploading")
         UPLOADING("uploading"),
+        @SerializedName("transcode_starting")
+        TRANSCODE_STARTING("transcode_starting"),
         @SerializedName("transcoding")
         TRANSCODING("transcoding"),
+        // Errors
         @SerializedName("uploading_error")
         UPLOADING_ERROR("uploading_error"),
         @SerializedName("transcoding_error")
@@ -102,17 +105,25 @@ public class Video implements Serializable {
     public Date modifiedTime;
     public ArrayList<String> contentRating;
     public String license;
-    public com.vimeo.networking.model.Privacy privacy;
+    public Privacy privacy;
     public PictureCollection pictures;
     public ArrayList<Tag> tags;
     public StatsCollection stats;
     public Metadata metadata;
-    public com.vimeo.networking.model.User user;
+    public User user;
     private Status status;
     public VideoLog log;
     public List<Category> categories;
 
+    /**
+     * This getter is always guaranteed to return a {@link Status}, {@link Status#NONE if null}. If the Status
+     * is equal to {@link Status#TRANSCODE_STARTING} then we'll just return the Status {@link Status#TRANSCODING}
+     * since they're functionally equivalent from a client-side perspective.
+     */
     public Status getStatus() {
+        if (status == Status.TRANSCODE_STARTING) {
+            return Status.TRANSCODING;
+        }
         return status == null ? Status.NONE : status;
     }
 
