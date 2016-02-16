@@ -60,20 +60,32 @@ public class Video implements Serializable {
         PUBLIC_DOMAIN_DEDICATION
     }
 
+    private static final String STATUS_NONE = "N/A";
+    private static final String STATUS_AVAILABLE = "available";
+    private static final String STATUS_UPLOADING = "uploading";
+    private static final String STATUS_TRANSCODE_STARTING = "transcode_starting";
+    private static final String STATUS_TRANSCODING = "transcoding";
+    private static final String STATUS_UPLOADING_ERROR = "uploading_error";
+    private static final String STATUS_TRANSCODING_ERROR = "transcoding_error";
+    private static final String STATUS_QUOTA_EXCEEDED = "quota_exceeded";
+
     public enum Status {
-        NONE("N/A"),
-        @SerializedName("available")
-        AVAILABLE("available"),
-        @SerializedName("uploading")
-        UPLOADING("uploading"),
-        @SerializedName("transcoding")
-        TRANSCODING("transcoding"),
-        @SerializedName("uploading_error")
-        UPLOADING_ERROR("uploading_error"),
-        @SerializedName("transcoding_error")
-        TRANSCODING_ERROR("transcoding_error"),
-        @SerializedName("quota_exceeded")
-        QUOTA_EXCEEDED("quota_exceeded");
+        NONE(STATUS_NONE),
+        @SerializedName(STATUS_AVAILABLE)
+        AVAILABLE(STATUS_AVAILABLE),
+        @SerializedName(STATUS_UPLOADING)
+        UPLOADING(STATUS_UPLOADING),
+        @SerializedName(STATUS_TRANSCODE_STARTING)
+        TRANSCODE_STARTING(STATUS_TRANSCODE_STARTING),
+        @SerializedName(STATUS_TRANSCODING)
+        TRANSCODING(STATUS_TRANSCODING),
+        // Errors
+        @SerializedName(STATUS_UPLOADING_ERROR)
+        UPLOADING_ERROR(STATUS_UPLOADING_ERROR),
+        @SerializedName(STATUS_TRANSCODING_ERROR)
+        TRANSCODING_ERROR(STATUS_TRANSCODING_ERROR),
+        @SerializedName(STATUS_QUOTA_EXCEEDED)
+        QUOTA_EXCEEDED(STATUS_QUOTA_EXCEEDED);
 
         private String string;
 
@@ -102,18 +114,38 @@ public class Video implements Serializable {
     public Date modifiedTime;
     public ArrayList<String> contentRating;
     public String license;
-    public com.vimeo.networking.model.Privacy privacy;
+    public Privacy privacy;
     public PictureCollection pictures;
     public ArrayList<Tag> tags;
     public StatsCollection stats;
     public Metadata metadata;
-    public com.vimeo.networking.model.User user;
+    public User user;
     private Status status;
     public VideoLog log;
     public List<Category> categories;
 
-    public Status getStatus() {
+    /**
+     * This will return the value as it's given to us from the API (or {@link Status#NONE if null}). Unlike
+     * {@link Video#getStatus()}, this will return all known statuses for a video (including {@link Status#TRANSCODE_STARTING}.
+     * <p/>
+     * For a more simplified representation of the video status, use {@link Video#getStatus()}.
+     */
+    public Status getRawStatus() {
         return status == null ? Status.NONE : status;
+    }
+
+    /**
+     * This getter is always guaranteed to return a {@link Status}, {@link Status#NONE if null}. If the Status
+     * is equal to {@link Status#TRANSCODE_STARTING} then we'll just return the Status {@link Status#TRANSCODING}
+     * since they're functionally equivalent from a client-side perspective.
+     * <p/>
+     * For an all-inclusive getter of the video status, use {@link Video#getRawStatus()}.
+     */
+    public Status getStatus() {
+        if (status == Status.TRANSCODE_STARTING) {
+            return Status.TRANSCODING;
+        }
+        return getRawStatus();
     }
 
     public void setStatus(Status status) {
