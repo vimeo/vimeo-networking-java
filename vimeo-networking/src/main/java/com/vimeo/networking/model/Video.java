@@ -116,15 +116,27 @@ public class Video implements Serializable {
     public List<Category> categories;
 
     /**
+     * This will return the value as it's given to us from the API (or {@link Status#NONE if null}). Unlike
+     * {@link Video#getStatus()}, this will return all known statuses for a video (including {@link Status#TRANSCODE_STARTING}.
+     * <p/>
+     * For a more simplified representation of the video status, use {@link Video#getStatus()}.
+     */
+    public Status getRawStatus() {
+        return status == null ? Status.NONE : status;
+    }
+
+    /**
      * This getter is always guaranteed to return a {@link Status}, {@link Status#NONE if null}. If the Status
      * is equal to {@link Status#TRANSCODE_STARTING} then we'll just return the Status {@link Status#TRANSCODING}
      * since they're functionally equivalent from a client-side perspective.
+     * <p/>
+     * For an all-inclusive getter of the video status, use {@link Video#getRawStatus()}.
      */
     public Status getStatus() {
         if (status == Status.TRANSCODE_STARTING) {
             return Status.TRANSCODING;
         }
-        return status == null ? Status.NONE : status;
+        return getRawStatus();
     }
 
     public void setStatus(Status status) {
