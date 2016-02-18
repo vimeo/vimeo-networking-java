@@ -163,7 +163,9 @@ public class VimeoError extends RuntimeException {
      * @return {@link #isNetworkError}
      */
     public boolean isNetworkError() {
-        return !isCanceledError;
+        // Response will be null if the VimeoCallback#onFailure was called (which will be due to issues
+        // in the networking layer 2/17/16 [KV]
+        return !isCanceledError && response == null;
     }
 
     public void setIsCanceledError(boolean isCanceledError) {
