@@ -127,14 +127,22 @@ public class VimeoError extends RuntimeException {
     }
 
     /**
-     * Returns the first invalid parameter in the parameter list
+     * Returns the first invalid parameter in the {@link #invalidParameters} list
      *
      * @return First InvalidParameter in the invalid parameters array
      */
     @Nullable
     public InvalidParameter getInvalidParameter() {
-        return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters.get(
-                0) : null;
+        return invalidParameters != null && !invalidParameters.isEmpty() ? invalidParameters.get(0) : null;
+    }
+
+    /**
+     * Returns the error code for the first invalid parameter in the {@link #invalidParameters} list
+     * or null if none exists.
+     */
+    @Nullable
+    public ErrorCode getInvalidParameterErrorCode() {
+        return getInvalidParameter() != null ? getInvalidParameter().getErrorCode() : null;
     }
 
     public Exception getException() {
