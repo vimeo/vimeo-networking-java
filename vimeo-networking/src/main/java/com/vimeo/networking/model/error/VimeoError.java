@@ -127,14 +127,22 @@ public class VimeoError extends RuntimeException {
     }
 
     /**
-     * Returns the first invalid parameter in the parameter list
+     * Returns the first invalid parameter in the {@link #invalidParameters} list
      *
      * @return First InvalidParameter in the invalid parameters array
      */
     @Nullable
     public InvalidParameter getInvalidParameter() {
-        return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters.get(
-                0) : null;
+        return invalidParameters != null && !invalidParameters.isEmpty() ? invalidParameters.get(0) : null;
+    }
+
+    /**
+     * Returns the error code for the first invalid parameter in the {@link #invalidParameters} list
+     * or null if none exists.
+     */
+    @Nullable
+    public ErrorCode getInvalidParameterErrorCode() {
+        return getInvalidParameter() != null ? getInvalidParameter().getErrorCode() : null;
     }
 
     public Exception getException() {
@@ -163,7 +171,9 @@ public class VimeoError extends RuntimeException {
      * @return {@link #isNetworkError}
      */
     public boolean isNetworkError() {
-        return !isCanceledError;
+        // Response will be null if the VimeoCallback#onFailure was called (which will be due to issues
+        // in the networking layer 2/17/16 [KV]
+        return !isCanceledError && response == null;
     }
 
     public void setIsCanceledError(boolean isCanceledError) {
