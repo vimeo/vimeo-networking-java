@@ -36,6 +36,7 @@ import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -910,6 +911,47 @@ public class VimeoClient {
         fetchContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback);
     }
 
+
+    /**
+     * A generic synchronous GET call. Unless implementing your own threading,
+     * use {@link #fetchContent(String, CacheControl, ModelCallback, String, Map, String)}
+     *
+     * @param uri           URI of the resource to GET
+     * @param cacheControl  Cache control type (includes max age and other cache policy information)
+     * @param query         Query string for hitting the search endpoint
+     * @param refinementMap Used to refine lists (generally for search) with sorts and filters
+     * @param fieldFilter   The string of fields to include in the response (highly recommended!)
+     * @return the Retrofit {@link retrofit2.Response} object
+     */
+    @Nullable
+    public retrofit2.Response<Object> fetchContentSync(String uri, CacheControl cacheControl,
+                                                       @Nullable String query,
+                                                       @Nullable Map<String, String> refinementMap,
+                                                       @Nullable String fieldFilter) {
+        if (uri == null || uri.isEmpty()) {
+            throw new AssertionError("uri cannot be null or empty");
+        }
+        String cacheHeaderValue = createCacheControlString(cacheControl);
+
+        Map<String, String> queryMap = new HashMap<>();
+        if (refinementMap != null && !refinementMap.isEmpty()) {
+            queryMap = refinementMap;
+        }
+        if (query != null && !query.isEmpty()) {
+            queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
+        }
+        if (fieldFilter != null && !fieldFilter.isEmpty()) {
+            queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
+        }
+
+        Call<Object> call = this.vimeoService.GET(getAuthHeader(), uri, queryMap, cacheHeaderValue);
+        try {
+            return call.execute();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     /**
      * A generic GET call that takes in the URI of the specific resource.
      *
@@ -935,23 +977,7 @@ public class VimeoClient {
             return null;
         }
 
-        if (cacheControl != null) {
-            if (cacheControl.onlyIfCached()) {
-                CacheControl.Builder builder = VimeoNetworkUtil.getCacheControlBuilder(cacheControl);
-                // If no max age specified on CacheControl then set it to our default [KV]
-                if (cacheControl.maxAgeSeconds() == -1) {
-                    builder.maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS);
-                }
-                // CacheControl.FORCE_CACHE defaults stale to Integer.MAX so we need to overwrite it
-                // so that a max age can actually do it's job [KV]
-                builder.maxStale(0, TimeUnit.SECONDS);
-                cacheControl = builder.build();
-            }
-        } else {
-            cacheControl =
-                    new CacheControl.Builder().maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS).build();
-        }
-        String cacheHeaderValue = cacheControl.toString();
+        String cacheHeaderValue = createCacheControlString(cacheControl);
 
         Map<String, String> queryMap = new HashMap<>();
         if (refinementMap != null && !refinementMap.isEmpty()) {
@@ -1168,6 +1194,27 @@ public class VimeoClient {
 
     private String getBasicAuthHeader() {
         return Credentials.basic(this.configuration.clientID, this.configuration.clientSecret);
+    }
+
+    @NotNull
+    private String createCacheControlString(@Nullable CacheControl cacheControl) {
+        if (cacheControl != null) {
+            if (cacheControl.onlyIfCached()) {
+                CacheControl.Builder builder = VimeoNetworkUtil.getCacheControlBuilder(cacheControl);
+                // If no max age specified on CacheControl then set it to our default [KV]
+                if (cacheControl.maxAgeSeconds() == -1) {
+                    builder.maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS);
+                }
+                // CacheControl.FORCE_CACHE defaults stale to Integer.MAX so we need to overwrite it
+                // so that a max age can actually do it's job [KV]
+                builder.maxStale(0, TimeUnit.SECONDS);
+                cacheControl = builder.build();
+            }
+        } else {
+            cacheControl =
+                    new CacheControl.Builder().maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS).build();
+        }
+        return cacheControl.toString();
     }
     // </editor-fold>
 }
