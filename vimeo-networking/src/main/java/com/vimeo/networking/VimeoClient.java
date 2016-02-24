@@ -933,16 +933,7 @@ public class VimeoClient {
         }
         String cacheHeaderValue = createCacheControlString(cacheControl);
 
-        Map<String, String> queryMap = new HashMap<>();
-        if (refinementMap != null && !refinementMap.isEmpty()) {
-            queryMap = refinementMap;
-        }
-        if (query != null && !query.isEmpty()) {
-            queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
-        }
-        if (fieldFilter != null && !fieldFilter.isEmpty()) {
-            queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
-        }
+        Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
 
         Call<Object> call = this.vimeoService.GET(getAuthHeader(), uri, queryMap, cacheHeaderValue);
         try {
@@ -979,16 +970,7 @@ public class VimeoClient {
 
         String cacheHeaderValue = createCacheControlString(cacheControl);
 
-        Map<String, String> queryMap = new HashMap<>();
-        if (refinementMap != null && !refinementMap.isEmpty()) {
-            queryMap = refinementMap;
-        }
-        if (query != null && !query.isEmpty()) {
-            queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
-        }
-        if (fieldFilter != null && !fieldFilter.isEmpty()) {
-            queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
-        }
+        Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
 
         Call<Object> call = this.vimeoService.GET(getAuthHeader(), uri, queryMap, cacheHeaderValue);
         callback.setCall(call);
@@ -1215,6 +1197,23 @@ public class VimeoClient {
                     new CacheControl.Builder().maxAge(configuration.cacheMaxAge, TimeUnit.SECONDS).build();
         }
         return cacheControl.toString();
+    }
+
+    @NotNull
+    private Map<String, String> createQueryMap(@Nullable String query,
+                                               @Nullable Map<String, String> refinementMap,
+                                               @Nullable String fieldFilter) {
+        Map<String, String> queryMap = new HashMap<>();
+        if (refinementMap != null && !refinementMap.isEmpty()) {
+            queryMap = refinementMap;
+        }
+        if (query != null && !query.isEmpty()) {
+            queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
+        }
+        if (fieldFilter != null && !fieldFilter.isEmpty()) {
+            queryMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
+        }
+        return queryMap;
     }
     // </editor-fold>
 }
