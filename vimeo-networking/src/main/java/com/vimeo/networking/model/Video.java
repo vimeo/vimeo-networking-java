@@ -123,6 +123,8 @@ public class Video implements Serializable {
     private Status status;
     public VideoLog log;
     public List<Category> categories;
+    @Nullable
+    private String password;
 
     /**
      * This will return the value as it's given to us from the API (or {@link Status#NONE if null}). Unlike
@@ -250,6 +252,19 @@ public class Video implements Serializable {
             recommendationsUri = uri + Vimeo.ENDPOINT_RECOMMENDATIONS;
         }
         return recommendationsUri;
+    }
+
+    /**
+     * The password for the video, only sent when the following conditions are true
+     * 1. The privacy is set to password
+     * 2. The user making the request owns the video
+     * 3. The application making the request is granted access to view this field
+     *
+     * @return the password if applicable
+     */
+    @Nullable
+    public String getPassword() {
+        return password;
     }
 
     @Override

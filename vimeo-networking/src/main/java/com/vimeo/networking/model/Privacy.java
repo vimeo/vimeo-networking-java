@@ -39,6 +39,7 @@ public class Privacy implements Serializable {
     private static final String PRIVACY_CONTACTS = "contacts";
     private static final String PRIVACY_PASSWORD = "password";
     private static final String PRIVACY_DISABLE = "disable";
+    private static final String PRIVACY_UNLISTED = "unlisted";
 
     public enum PrivacyValue {
         @SerializedName(PRIVACY_NOBODY)
@@ -53,6 +54,8 @@ public class Privacy implements Serializable {
         CONTACTS(PRIVACY_CONTACTS),
         @SerializedName(PRIVACY_PASSWORD)
         PASSWORD(PRIVACY_PASSWORD),
+        @SerializedName(PRIVACY_UNLISTED)
+        UNLISTED(PRIVACY_UNLISTED),
         @SerializedName(PRIVACY_DISABLE)
         DISABLE(PRIVACY_DISABLE);
 
