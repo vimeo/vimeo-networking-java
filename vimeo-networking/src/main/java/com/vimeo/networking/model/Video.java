@@ -255,10 +255,12 @@ public class Video implements Serializable {
     }
 
     /**
-     * The password for the video, only sent when the following conditions are true
-     * 1. The privacy is set to password
-     * 2. The user making the request owns the video
-     * 3. The application making the request is granted access to view this field
+     * The password for the video, only sent when the following conditions are true:
+     * <ul>
+     * <ol>The privacy is set to password</ol>
+     * <ol>The user making the request owns the video</ol>
+     * <ol>The application making the request is granted access to view this field</ol>
+     * </ul>
      *
      * @return the password if applicable
      */
