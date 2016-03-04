@@ -128,14 +128,16 @@ public class LoggingInterceptor implements Interceptor {
      */
     private String toPrettyFormat(String jsonString) {
         String prettyString = "";
-        try {
-            JsonParser parser = new JsonParser();
-            JsonObject json = parser.parse(jsonString).getAsJsonObject();
+        if (jsonString != null && !jsonString.isEmpty()) {
+            try {
+                JsonParser parser = new JsonParser();
+                JsonObject json = parser.parse(jsonString).getAsJsonObject();
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            prettyString = gson.toJson(json);
-        } catch (Exception e) {
-            logger.e("Error making body pretty response/request");
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                prettyString = gson.toJson(json);
+            } catch (Exception e) {
+                logger.e("Error making body pretty response/request");
+            }
         }
         return prettyString;
     }

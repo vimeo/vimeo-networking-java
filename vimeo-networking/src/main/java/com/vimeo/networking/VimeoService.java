@@ -22,9 +22,9 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
+import com.vimeo.networking.model.VimeoAccount;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,30 +59,31 @@ public interface VimeoService {
     @FormUrlEncoded
     @POST("oauth/access_token")
     Call<VimeoAccount> authenticateWithCodeGrant(@Header("Authorization") String authHeader,
-                                            @Field("redirect_uri") String redirectURI,
-                                            @Field("code") String code,
-                                            @Field("grant_type") String grantType);
+                                                 @Field("redirect_uri") String redirectURI,
+                                                 @Field("code") String code,
+                                                 @Field("grant_type") String grantType);
 
     @FormUrlEncoded
     @POST("oauth/authorize/client")
     Call<VimeoAccount> authorizeWithClientCredentialsGrant(@Header("Authorization") String authHeader,
-                                                      @Field("grant_type") String grantType,
-                                                      @Field("scope") String scope);
+                                                           @Field("grant_type") String grantType,
+                                                           @Field("scope") String scope);
 
     @POST("users")
-    Call<VimeoAccount> join(@Header("Authorization") String authHeader, @Body HashMap<String, String> parameters);
+    Call<VimeoAccount> join(@Header("Authorization") String authHeader,
+                            @Body HashMap<String, String> parameters);
 
     @FormUrlEncoded
     @POST("oauth/authorize/password")
     Call<VimeoAccount> logIn(@Header("Authorization") String authHeader, @Field("username") String email,
-                        @Field("password") String password, @Field("grant_type") String grantType,
-                        @Field("scope") String scope);
+                             @Field("password") String password, @Field("grant_type") String grantType,
+                             @Field("scope") String scope);
 
     @FormUrlEncoded
     @POST("oauth/authorize/facebook")
     Call<VimeoAccount> logInWithFacebook(@Header("Authorization") String authHeader,
-                                    @Field("grant_type") String grantType, @Field("token") String token,
-                                    @Field("scope") String scope);
+                                         @Field("grant_type") String grantType, @Field("token") String token,
+                                         @Field("scope") String scope);
 
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("tokens")
@@ -91,9 +92,10 @@ public interface VimeoService {
     @FormUrlEncoded
     @POST("oauth/authorize/vimeo_oauth1")
     Call<VimeoAccount> exchangeOAuthOneToken(@Header("Authorization") String authHeader,
-                                        @Field("grant_type") String grantType, @Field("token") String token,
-                                        @Field("token_secret") String tokenSecret,
-                                        @Field("scope") String scope);
+                                             @Field("grant_type") String grantType,
+                                             @Field("token") String token,
+                                             @Field("token_secret") String tokenSecret,
+                                             @Field("scope") String scope);
     // </editor-fold>
 
     /**
@@ -123,7 +125,8 @@ public interface VimeoService {
     Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader, @Url String uri);
 
     @POST
-    Call<Void> emptyResponsePost(@Header("Authorization") String authHeader, @Url String uri);
+    Call<Void> emptyResponsePost(@Header("Authorization") String authHeader, @Url String uri,
+                                 @Body HashMap<String, String> parameters);
     // </editor-fold>
 
     /**
