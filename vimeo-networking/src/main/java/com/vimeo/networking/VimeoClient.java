@@ -1051,10 +1051,12 @@ public class VimeoClient {
      * Example: Forgot password call
      *
      * @param uri      URI of the resource to POST
+     * @param postBody The body of the POST request
      * @param callback The callback for the specific model type of the resource
      */
     @Nullable
-    public Call<Void> emptyResponsePost(String uri, VimeoCallback<Void> callback) {
+    public Call<Void> emptyResponsePost(String uri, @Nullable HashMap<String, String> postBody,
+                                        VimeoCallback<Void> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1065,7 +1067,11 @@ public class VimeoClient {
             return null;
         }
 
-        Call<Void> call = this.vimeoService.emptyResponsePost(getAuthHeader(), uri);
+        if (postBody == null) {
+            postBody = new HashMap<>();
+        }
+
+        Call<Void> call = this.vimeoService.emptyResponsePost(getAuthHeader(), uri, postBody);
         callback.setCall(call);
         call.enqueue(callback);
         return call;
