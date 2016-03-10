@@ -2,6 +2,8 @@
 vimeo-networking is a Java networking library used for interacting with the Vimeo API. The example provided in this project shows the implementation in the context of an Android app.
 
 ## Contents
+* [Prerequisites](#prerequisites)
+      * [API Registration](#api-registration)
 * [Getting Started](#getting-started)
       * [Gradle](#gradle)
       * [Submodule](#submodule)
@@ -14,6 +16,17 @@ vimeo-networking is a Java networking library used for interacting with the Vime
 * [Found an Issue?](#found-an-issue)
 * [Questions](#questions)
 * [License](#license)
+
+## Prerequisites
+In order to get started with using this library, there are a few prerequisites you need to satisfy, namely, creating a Vimeo account and registering an app with the API.
+
+### API Registration
+In order to use this library and the Vimeo API, you will need an application registered with the Vimeo API. If you do not already have an application registered, you can do so [here](https://developer.vimeo.com/apps). If you do not have a Vimeo account, you will be prompted to sign up before registration.
+
+After you have an application registered, you will have access to a few critical pieces of information required for [initialization](#initialization) - the client identifier and client secret. These will both be located in the Authentication tab once you select your app from the [list here](https://developer.vimeo.com/apps)
+
+More information about this and other API questions can be found on the [API homepage](https://developer.vimeo.com/api)
+
 
 ## Getting Started
 For a more in depth look at the usage, refer to the [example Android app](example). The example project includes implementation of all of the below features.
