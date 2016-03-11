@@ -23,9 +23,9 @@ In order to get started with using this library, there are a few prerequisites y
 ### API Registration
 In order to use this library and the Vimeo API, you will need an application registered with the Vimeo API. If you do not already have an application registered, you can do so [here](https://developer.vimeo.com/apps). If you do not have a Vimeo account, you will be prompted to sign up before registration.
 
-After you have an application registered, you will have access to a few critical pieces of information required for [initialization](#initialization) - the client identifier and client secret. These will both be located in the Authentication tab once you select your app from the [list here](https://developer.vimeo.com/apps)
+After you have an application registered, you will have access to a few critical pieces of information required for [initialization](#initialization) - the client identifier and client secret. These will both be located in the Authentication tab once you select your app from the [list here](https://developer.vimeo.com/apps).
 
-More information about this and other API questions can be found on the [API homepage](https://developer.vimeo.com/api)
+More information about this and other API questions can be found on the [API homepage](https://developer.vimeo.com/api).
 
 
 ## Getting Started
