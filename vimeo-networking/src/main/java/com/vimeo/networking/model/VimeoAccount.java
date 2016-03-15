@@ -26,6 +26,8 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -45,24 +47,8 @@ public class VimeoAccount implements Serializable {
     private User user;
     private String userJSON;
 
-    public VimeoAccount() {
-
-    }
-
-    public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
-        if (accessToken == null || accessToken.isEmpty() || tokenType == null ||
-            tokenType.isEmpty() || scope == null || scope.isEmpty()) {
-            throw new AssertionError("Account can only be created with token, tokenType, scope");
-        }
-
+    public VimeoAccount(@Nullable String accessToken) {
         this.accessToken = accessToken;
-        this.tokenType = tokenType;
-        this.scope = scope;
-
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        this.user = gson.fromJson(userJSON, User.class);
     }
 
     public boolean isAuthenticated() {
@@ -81,6 +67,7 @@ public class VimeoAccount implements Serializable {
         return this.scope;
     }
 
+    @Nullable
     public User getUser() {
         return this.user;
     }
@@ -89,6 +76,7 @@ public class VimeoAccount implements Serializable {
         this.user = user;
     }
 
+    @Nullable
     public String getUserJSON() // For AccountManager.userData [AH]
     {
         if (this.user == null) {

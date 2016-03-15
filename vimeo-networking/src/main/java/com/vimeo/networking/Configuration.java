@@ -55,6 +55,8 @@ public class Configuration {
     public String clientSecret;
     public String scope;
 
+    public String accessToken;
+
     @Nullable
     private AccountStore accountStore;
     public GsonDeserializer deserializer;
@@ -100,6 +102,7 @@ public class Configuration {
         }
     }
 
+    @Nullable
     public VimeoAccount loadAccount() {
         if (accountStore == null) {
             return null;
@@ -119,6 +122,9 @@ public class Configuration {
         this.clientID = builder.clientID;
         this.clientSecret = builder.clientSecret;
         this.scope = builder.scope;
+
+        this.accessToken = builder.accessToken;
+
         this.accountStore = builder.accountStore;
         this.deserializer = builder.deserializer;
 
@@ -142,10 +148,12 @@ public class Configuration {
     }
 
     private boolean isValid() {
-        return (this.baseURLString != null && !this.baseURLString.trim().isEmpty() &&
-                this.clientID != null && !this.clientID.trim().isEmpty() &&
-                this.clientSecret != null && !this.clientSecret.trim().isEmpty() &&
-                this.scope != null && !this.scope.trim().isEmpty());
+        return this.baseURLString != null && (!this.baseURLString.trim().isEmpty() &&
+                                              this.clientID != null && !this.clientID.trim().isEmpty() &&
+                                              this.clientSecret != null &&
+                                              !this.clientSecret.trim().isEmpty() &&
+                                              this.scope != null && !this.scope.trim().isEmpty()) ||
+               (this.accessToken != null && !this.accessToken.trim().isEmpty());
     }
 
     /**
@@ -157,6 +165,9 @@ public class Configuration {
         private String clientID;
         private String clientSecret;
         private String scope;
+
+        private String accessToken;
+
         private AccountStore accountStore;
         private GsonDeserializer deserializer = new GsonDeserializer();
 
@@ -173,6 +184,21 @@ public class Configuration {
         // Default to the stock logger which just prints - this makes it optional
         public DebugLoggerInterface debugLogger = new DebugLogger();
         public LogLevel logLevel = LogLevel.DEBUG;
+
+        /**
+         * The most basic builder constructor. If you've only provided an access token, you'll only be able to
+         * make requests for the given access token's account.
+         * <p/>
+         * If you'd like the ability to switch accounts, you'll have to set a client id and client secret.
+         * If you'd like the ability to persist accounts, you'll have to set an account store
+         *
+         * @param baseURLString The base url pointing to the Vimeo api. Something like: {@link Vimeo#VIMEO_BASE_URL_STRING}
+         * @param accessToken   Token provided by the Vimeo developer console
+         */
+        public Builder(String baseURLString, String accessToken) {
+            this.baseURLString = baseURLString;
+            this.accessToken = accessToken;
+        }
 
         public Builder(String baseURLString, String clientID, String clientSecret, String scope) {
             this(baseURLString, clientID, clientSecret, scope, null, null);
@@ -200,6 +226,13 @@ public class Configuration {
             this.scope = scope;
             this.accountStore = accountStore;
             this.deserializer = deserializer;
+        }
+
+        /** If you used the basic Builder access token constructor but have the intent of */
+        public Builder setClientIdAndSecret(String clientId, String clientSecret) {
+            this.clientID = clientId;
+            this.clientSecret = clientSecret;
+            return this;
         }
 
         public Builder setAccountStore(AccountStore accountStore) {
