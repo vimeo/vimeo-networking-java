@@ -88,6 +88,8 @@ String accessToken = getString(R.string.access_token);
 return new Configuration.Builder(Vimeo.VIMEO_BASE_URL_STRING, accessToken);
 ```
 
+After providing the access token, if you'd like to have access to the associated `User` object you'll need to make a call to `VimeoClient#fetchCurrentUser`. If you're using an account store, you can update the `VimeoAccount` with the new `User` object.
+
 *Note: You will not be able to log out of the account associated with the access token provided to the `Configuration.Builder`
 
 ### Authentication 
