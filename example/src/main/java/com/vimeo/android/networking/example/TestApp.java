@@ -22,7 +22,8 @@ public class TestApp extends Application {
     private static final String SCOPE = "private public create edit delete interact";
 
     private static final boolean IS_DEBUG_BUILD = false;
-    private static final boolean ACCESS_TOKEN_PROVIDED = true;
+    // Switch to true to see how access token auth works.
+    private static final boolean ACCESS_TOKEN_PROVIDED = false;
 
     private static Context mContext;
 
