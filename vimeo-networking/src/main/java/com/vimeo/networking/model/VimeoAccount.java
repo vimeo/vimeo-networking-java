@@ -51,6 +51,22 @@ public class VimeoAccount implements Serializable {
         this.accessToken = accessToken;
     }
 
+    public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
+        if (accessToken == null || accessToken.isEmpty() || tokenType == null ||
+            tokenType.isEmpty() || scope == null || scope.isEmpty()) {
+            throw new AssertionError("Account can only be created with token, tokenType, scope");
+        }
+
+        this.accessToken = accessToken;
+        this.tokenType = tokenType;
+        this.scope = scope;
+
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        this.user = gson.fromJson(userJSON, User.class);
+    }
+
     public boolean isAuthenticated() {
         return (this.accessToken != null && !this.accessToken.isEmpty());
     }

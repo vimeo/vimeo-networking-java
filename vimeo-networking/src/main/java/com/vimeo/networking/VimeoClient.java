@@ -499,7 +499,8 @@ public class VimeoClient {
     public Call<Object> logOut(@Nullable final VimeoCallback<Object> callback) {
         // If you've provided an access token to the configuration builder, we're assuming that you wouldn't
         // want to be able to log out of it, because this would invalidate the constant you've provided us.
-        if (configuration.accessToken.equals(vimeoAccount.getAccessToken())) {
+        if (configuration.accessToken != null &&
+            configuration.accessToken.equals(vimeoAccount.getAccessToken())) {
             if (callback != null) {
                 callback.failure(new VimeoError(
                         "You can't log out of the account provided through the configuration builder"));
