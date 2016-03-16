@@ -13,7 +13,7 @@ dependencies {
 }
 
 group = 'com.vimeo.networking'
-version = '1.0.0'
+version = '1.0.1'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -71,8 +71,7 @@ allprojects {
                     publicDownloadNumbers = true
                     version {
                         name = project.version
-                        desc = 'The first deploy of the vimeo networking library.'
-                        //            vcsTag = '1.0.0'
+                        vcsTag = project.version
                     }
                 }
             }
