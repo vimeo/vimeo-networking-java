@@ -34,7 +34,7 @@ For a more in depth look at the usage, refer to the [example Android app](exampl
 ### Gradle
 Specify the dependency in your `build.gradle` file (make sure `jcenter()` is included as a repository)
 ```groovy
-compile 'com.vimeo.networking:vimeo-networking:1.0.0'
+compile 'com.vimeo.networking:vimeo-networking:1.0.1'
 ```
 
 ### Submodule
