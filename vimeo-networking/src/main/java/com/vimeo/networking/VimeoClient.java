@@ -66,6 +66,7 @@ import retrofit2.Retrofit;
  */
 public class VimeoClient {
 
+    @NotNull
     private Configuration configuration;
     private VimeoService vimeoService;
     @Nullable
@@ -195,10 +196,17 @@ public class VimeoClient {
 
     public void setVimeoAccount(@Nullable VimeoAccount vimeoAccount) {
         if (vimeoAccount == null) {
-            vimeoAccount = new VimeoAccount();
+            vimeoAccount = new VimeoAccount(this.configuration.accessToken);
+            this.configuration.saveAccount(vimeoAccount, null, null);
         }
 
         this.vimeoAccount = vimeoAccount;
+    }
+
+    /** Sets the {@link #vimeoAccount} field as well as triggering the saveAccount event for the account store */
+    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email, String password) {
+        setVimeoAccount(vimeoAccount);
+        this.configuration.saveAccount(vimeoAccount, email, password);
     }
 
     public Configuration getConfiguration() {
@@ -289,9 +297,10 @@ public class VimeoClient {
     }
 
     /**
-     * Authorizes users of the app who are not signed in.
+     * Authorizes users of the app who are not signed in. This call requires a client id and client secret to be
+     * set on the initial Configuration.
      * <p/>
-     * Leaves User as null in {@link VimeoAccount} model and populates the rest
+     * Leaves User as null in {@link VimeoAccount} model and populates the rest.
      *
      * @param callback Callback pertaining to authentication
      */
@@ -451,9 +460,7 @@ public class VimeoClient {
             e.printStackTrace();
         }
 
-        this.setVimeoAccount(vimeoAccount);
-
-        this.configuration.saveAccount(vimeoAccount, email, password);
+        saveAccount(vimeoAccount, email, password);
 
         return vimeoAccount;
     }
@@ -491,7 +498,17 @@ public class VimeoClient {
      * @param callback Callback for handling logout
      */
     public Call<Object> logOut(@Nullable final VimeoCallback<Object> callback) {
-
+        // If you've provided an access token to the configuration builder, we're assuming that you wouldn't
+        // want to be able to log out of it, because this would invalidate the constant you've provided us.
+        if (configuration.accessToken != null &&
+            configuration.accessToken.equals(vimeoAccount.getAccessToken())) {
+            if (callback != null) {
+                callback.failure(new VimeoError(
+                        "You can't log out of the account provided through the configuration builder. " +
+                        "This is to ensure the access token generated in the developer console isn't accidentally invalidated. "));
+            }
+            return null;
+        }
         Call<Object> call = this.vimeoService.logOut(getAuthHeader());
         if (callback != null) {
             callback.setCall(call);
@@ -562,15 +579,14 @@ public class VimeoClient {
 
         @Override
         public void success(VimeoAccount vimeoAccount) {
-            this.client.setVimeoAccount(vimeoAccount);
             if (vimeoAccount.getUser() != null && (this.email == null || this.email.isEmpty())) {
                 // We must always have a `name` field, which is used by the Android Account Manager for
                 // display in the device Settings -> Accounts [KZ] 12/17/15
                 String name = (vimeoAccount.getUser().name !=
                                null) ? vimeoAccount.getUser().name : vimeoAccount.getUser().uri;
-                this.client.configuration.saveAccount(vimeoAccount, name, null);
+                this.client.saveAccount(vimeoAccount, name, null);
             } else {
-                this.client.configuration.saveAccount(vimeoAccount, this.email, this.password);
+                this.client.saveAccount(vimeoAccount, this.email, this.password);
             }
             this.callback.success();
         }

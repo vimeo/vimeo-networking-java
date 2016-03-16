@@ -26,6 +26,8 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -45,8 +47,8 @@ public class VimeoAccount implements Serializable {
     private User user;
     private String userJSON;
 
-    public VimeoAccount() {
-
+    public VimeoAccount(@Nullable String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
@@ -81,6 +83,7 @@ public class VimeoAccount implements Serializable {
         return this.scope;
     }
 
+    @Nullable
     public User getUser() {
         return this.user;
     }
@@ -89,6 +92,7 @@ public class VimeoAccount implements Serializable {
         this.user = user;
     }
 
+    @Nullable
     public String getUserJSON() // For AccountManager.userData [AH]
     {
         if (this.user == null) {
