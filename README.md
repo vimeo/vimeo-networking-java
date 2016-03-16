@@ -58,7 +58,6 @@ On app launch, configure `VimeoClient` with your client key, secret, and scope s
 If you choose to pass in an `AccountStore`, the authenticated account will automatically be persisted. Once authentication is complete, you can access the persisted `VimeoAccount` object through `VimeoClient#getVimeoAccount()`. For a basic implementation of an `AccountStore`, please refer to [this file in the example app](example/src/main/java/com/vimeo/android/networking/example/vimeonetworking/TestAccountStore.java)
 ```java
   /**
-    * @param baseURLString The base url pointing to the Vimeo api. Something like: {@link Vimeo#VIMEO_BASE_URL_STRING}
     * @param clientId      The client id provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
     * @param clientSecret  The client secret provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
     * @param scope         Space separated list of <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
@@ -68,7 +67,7 @@ If you choose to pass in an `AccountStore`, the authenticated account will autom
     * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread
     */
 Configuration.Builder configBuilder =
-      new Configuration.Builder(Vimeo.VIMEO_BASE_URL_STRING, clientId, clientSecret, SCOPE,
+      new Configuration.Builder(clientId, clientSecret, SCOPE,
                                 testAccountStore, new AndroidGsonDeserializer())
           .setCacheDirectory(this.getCacheDir())
 ```
@@ -78,6 +77,7 @@ Setting the cache directory and deserializer are optional but highly recommended
 
 #### Configuration Builder for Apps with Only One Developer Account
 You can skip the need for [client credentials](#client-credentials-grant) or [code grant](#oauth-authorization-code-grant) requests if you provide an access token up front. With this access token you'll be able to make any requests that the access token's scope allows.
+You will NOT be able to switch accounts if you only supply the access token. To do that, refer to the above section.
 
 You can generate an access token in the Authentication tab once you select your app from the [list here](https://developer.vimeo.com/apps).
 
@@ -85,12 +85,13 @@ Once you have the access token, you can easily initialize your `VimeoClient` ins
  
 ```java
 String accessToken = getString(R.string.access_token);
-return new Configuration.Builder(Vimeo.VIMEO_BASE_URL_STRING, accessToken);
+return new Configuration.Builder(accessToken);
 ```
 
 After providing the access token, if you'd like to have access to the associated `User` object you'll need to make a call to `VimeoClient#fetchCurrentUser`. If you're using an account store, you can update the `VimeoAccount` with the new `User` object.
 
-*Note: You will not be able to log out of the account associated with the access token provided to the `Configuration.Builder`
+*Note: You will not be able to log out of the account associated with the access token provided to the `Configuration.Builder`. This is because we wouldn't want anyone to accidentally invalidate/delete the token which is being used to authenticate users in a production application. You will still be able to delete the token via the web [developer console](https://developer.vimeo.com/apps/).
+If this seems like restricting functionality, please log an issue to the [issue tracker](https://github.com/vimeo/vimeo-networking-java/issues).
 
 ### Authentication 
 All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/api/authentication). This means that before making requests to the API you must authenticate and obtain an access token. Two authentication methods are provided: 
@@ -102,7 +103,7 @@ All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/a
 #### Client Credentials Grant
 ```java
 // You can't make any requests to the api without an access token. This will get you a basic
-// "Client Credentials" grant which will allow you to make requests
+// "Client Credentials" grant which will allow you to make requests. This requires a client id and client secret.
 private void authenticateWithClientCredentials() {
     VimeoClient.getInstance().authorizeWithClientCredentialsGrant(new AuthCallback() {
         @Override

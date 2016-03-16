@@ -297,9 +297,10 @@ public class VimeoClient {
     }
 
     /**
-     * Authorizes users of the app who are not signed in.
+     * Authorizes users of the app who are not signed in. This call requires a client id and client secret to be
+     * set on the initial Configuration.
      * <p/>
-     * Leaves User as null in {@link VimeoAccount} model and populates the rest
+     * Leaves User as null in {@link VimeoAccount} model and populates the rest.
      *
      * @param callback Callback pertaining to authentication
      */
@@ -503,7 +504,8 @@ public class VimeoClient {
             configuration.accessToken.equals(vimeoAccount.getAccessToken())) {
             if (callback != null) {
                 callback.failure(new VimeoError(
-                        "You can't log out of the account provided through the configuration builder"));
+                        "You can't log out of the account provided through the configuration builder. " +
+                        "This is to ensure the access token generated in the developer console isn't accidentally invalidated. "));
             }
             return null;
         }
