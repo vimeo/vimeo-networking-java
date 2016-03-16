@@ -91,12 +91,13 @@ public class FeedItem implements Serializable {
         FeedItem that = (FeedItem) o;
 
         return ((this.clip != null && that.clip != null) &&
-                (this.clip.uri != null && that.clip.uri != null) && this.clip.uri.equals(that.clip.uri));
+                (this.clip.getResourceKey() != null && that.clip.getResourceKey() != null) &&
+                this.clip.getResourceKey().equals(that.clip.getResourceKey()));
     }
 
     @Override
     public int hashCode() {
-        return this.clip.uri != null ? this.clip.uri.hashCode() : 0;
+        return this.clip.getResourceKey() != null ? this.clip.getResourceKey().hashCode() : 0;
     }
 
 }

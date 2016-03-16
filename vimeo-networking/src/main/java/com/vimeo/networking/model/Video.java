@@ -291,7 +291,7 @@ public class Video implements Serializable {
 
     @Override
     public int hashCode() {
-        return this.uri != null ? this.uri.hashCode() : 0;
+        return this.resourceKey != null ? this.resourceKey.hashCode() : 0;
     }
 
 }
