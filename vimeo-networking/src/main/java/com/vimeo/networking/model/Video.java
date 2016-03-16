@@ -125,6 +125,7 @@ public class Video implements Serializable {
     public List<Category> categories;
     @Nullable
     private String password;
+    private String resourceKey;
 
     /**
      * This will return the value as it's given to us from the API (or {@link Status#NONE if null}). Unlike
@@ -269,6 +270,10 @@ public class Video implements Serializable {
         return password;
     }
 
+    public String getResourceKey() {
+        return resourceKey;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -280,7 +285,8 @@ public class Video implements Serializable {
 
         Video that = (Video) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return (this.resourceKey != null && that.resourceKey != null) &&
+               this.resourceKey.equals(that.resourceKey);
     }
 
     @Override
