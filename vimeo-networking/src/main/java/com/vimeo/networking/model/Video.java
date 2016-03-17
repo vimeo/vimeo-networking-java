@@ -274,6 +274,10 @@ public class Video implements Serializable {
         return resourceKey;
     }
 
+    public void setResourceKey(String resourceKey) {
+        this.resourceKey = resourceKey;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
