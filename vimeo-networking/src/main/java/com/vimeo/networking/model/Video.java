@@ -127,6 +127,11 @@ public class Video implements Serializable {
     private String password;
 
     /**
+     * the resource_key field is the unique identifier for a Video object. It may be used for object comparison.
+     */
+    private String resourceKey;
+
+    /**
      * This will return the value as it's given to us from the API (or {@link Status#NONE if null}). Unlike
      * {@link Video#getStatus()}, this will return all known statuses for a video (including {@link Status#TRANSCODE_STARTING}.
      * <p/>
@@ -269,6 +274,14 @@ public class Video implements Serializable {
         return password;
     }
 
+    public String getResourceKey() {
+        return resourceKey;
+    }
+
+    public void setResourceKey(String resourceKey) {
+        this.resourceKey = resourceKey;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -280,12 +293,13 @@ public class Video implements Serializable {
 
         Video that = (Video) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return (this.resourceKey != null && that.resourceKey != null) &&
+               this.resourceKey.equals(that.resourceKey);
     }
 
     @Override
     public int hashCode() {
-        return this.uri != null ? this.uri.hashCode() : 0;
+        return this.resourceKey != null ? this.resourceKey.hashCode() : 0;
     }
 
 }
