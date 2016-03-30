@@ -31,6 +31,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.User;
+import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
@@ -880,6 +881,14 @@ public class VimeoClient {
         return call;
     }
 
+    @Nullable
+    public retrofit2.Response<Video> fetchVideoSync(String uri) {
+        try {
+            return vimeoService.getVideo(getAuthHeader(), uri).execute();
+        } catch (IOException e) {
+            return null;
+        }
+    }
     // </editor-fold>
 
     /**

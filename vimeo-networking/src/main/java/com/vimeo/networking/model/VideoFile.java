@@ -88,6 +88,9 @@ public class VideoFile implements Serializable {
     private VideoQuality quality;
     private MimeType type;
     public VideoLog log;
+    /** The md5 provides us with a way to uniquely identify video files at {@link #link} */
+    @SerializedName("md5")
+    public String md5;
 
     public VideoQuality getQuality() {
         return quality == null ? VideoQuality.NONE : quality;
