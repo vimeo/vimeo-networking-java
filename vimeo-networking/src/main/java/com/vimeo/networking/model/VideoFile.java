@@ -103,4 +103,10 @@ public class VideoFile implements Serializable {
     public boolean isVP6() {
         return getType() == MimeType.VP6;
     }
+
+    /** @return true if this VideoFile doesn't have an expired field or if the expires date is before the current date */
+    public boolean isExpired() {
+        // If expires is null, we should probably refresh the video object regardless [KV] 3/31/16
+        return expires == null || expires.before(new Date());
+    }
 }
