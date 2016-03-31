@@ -884,11 +884,8 @@ public class VimeoClient {
     @Nullable
     public retrofit2.Response<Video> fetchVideoSync(String uri, @Nullable String fieldFilter) {
         try {
-            HashMap<String, String> paramMap = new HashMap<>();
-            if (fieldFilter != null) {
-                paramMap.put(Vimeo.PARAMETER_GET_FIELD_FILTER, fieldFilter);
-            }
-            return vimeoService.getVideo(getAuthHeader(), uri, paramMap).execute();
+            return vimeoService.getVideo(getAuthHeader(), uri, createQueryMap(null, null, fieldFilter))
+                    .execute();
         } catch (IOException e) {
             return null;
         }

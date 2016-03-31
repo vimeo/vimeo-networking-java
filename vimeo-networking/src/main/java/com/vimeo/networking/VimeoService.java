@@ -136,7 +136,7 @@ public interface VimeoService {
     // <editor-fold desc="Concrete Region">
     @GET
     Call<Video> getVideo(@Header("Authorization") String authHeader, @Url String uri,
-                         @Body HashMap<String, String> parameters);
+                         @QueryMap Map<String, String> options);
     // </editor-fold>
 
     /**
