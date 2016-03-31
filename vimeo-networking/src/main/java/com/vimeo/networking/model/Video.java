@@ -100,6 +100,7 @@ public class Video implements Serializable {
         }
     }
 
+    // Note: if you rename any fields, GSON serialization of persisted videos may break. [KV] 3/31/16
     public String uri;
     public String name;
     public String description;
@@ -279,7 +280,7 @@ public class Video implements Serializable {
             return null;
         }
         for (VideoFile file : files) {
-            if (file != null && file.md5.equals(md5)) {
+            if (file != null && file.md5 != null && file.md5.equals(md5)) {
                 return file;
             }
         }
