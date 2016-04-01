@@ -242,19 +242,23 @@ VimeoClient.getInstance().fetchCurrentUser(new ModelCallback<User>(User.class) {
 ```
 
 ## Found an Issue?
-Please file any and all issues found in this library to the git [issue tracker](https://github.com/vimeo/vimeo-networking-java/issues)
+
+Please file it in the git [issue tracker](https://github.com/vimeo/vimeo-networking-java/issues).
 
 ## Want to Contribute?
-If you'd like to contribute, please follow our guidelines found in [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## Questions?
-
-Tweet at us here: @vimeoapi
-
-Post on [Stackoverflow](http://stackoverflow.com/questions/tagged/vimeo-android) with the tag `vimeo-android`
-
-Get in touch [here](https://Vimeo.com/help/contact)
+If you'd like to contribute, please follow our guidelines found in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-`vimeo-networking-java` is available under the MIT license. See the LICENSE file for more info.
+`vimeo-networking-java` is available under the MIT license. See the [LICENSE](LICENSE.md) file for more info.
+
+## Questions?
+
+Tweet at us here: [@vimeoapi](https://twitter.com/vimeoapi).
+
+Post on [Stackoverflow](http://stackoverflow.com/questions/tagged/vimeo-android) with the tag `vimeo-android`.
+
+Get in touch [here](https://vimeo.com/help/contact).
+
+Interested in working at Vimeo? We're [hiring](https://vimeo.com/jobs)!
