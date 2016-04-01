@@ -24,6 +24,7 @@ package com.vimeo.networking;
 
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
+import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 
 import java.util.HashMap;
@@ -129,10 +130,19 @@ public interface VimeoService {
                                  @Body HashMap<String, String> parameters);
     // </editor-fold>
 
+    // -----------------------------------------------------------------------------------------------------
+    // Concrete Region
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Concrete Region">
+    @GET
+    Call<Video> getVideo(@Header("Authorization") String authHeader, @Url String uri,
+                         @QueryMap Map<String, String> options);
+    // </editor-fold>
+
     /**
      * ---------------------------------------------------------------------------------------------------
      * Generic Region
-     * -----------------------------------------------------------------------------------------------------
+     * ---------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Generic Region">
     @PUT

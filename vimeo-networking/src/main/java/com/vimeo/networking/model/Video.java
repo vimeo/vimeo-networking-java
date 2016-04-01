@@ -100,6 +100,7 @@ public class Video implements Serializable {
         }
     }
 
+    // Note: if you rename any fields, GSON serialization of persisted videos may break. [KV] 3/31/16
     public String uri;
     public String name;
     public String description;
@@ -126,10 +127,26 @@ public class Video implements Serializable {
     @Nullable
     private String password;
 
-    /**
-     * the resource_key field is the unique identifier for a Video object. It may be used for object comparison.
-     */
+    /** The resource_key field is the unique identifier for a Video object. It may be used for object comparison. */
     private String resourceKey;
+
+    // -----------------------------------------------------------------------------------------------------
+    // Resource Key
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Resource Key">
+    public String getResourceKey() {
+        return resourceKey;
+    }
+
+    public void setResourceKey(String resourceKey) {
+        this.resourceKey = resourceKey;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Status
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Status">
 
     /**
      * This will return the value as it's given to us from the API (or {@link Status#NONE if null}). Unlike
@@ -158,14 +175,13 @@ public class Video implements Serializable {
     public void setStatus(Status status) {
         this.status = status;
     }
+    // </editor-fold>
 
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Watch Later Accessors
-     * -----------------------------------------------------------------------------------------------------
-     */
-    // <editor-fold desc="Watch Later Accessors">
+    // -----------------------------------------------------------------------------------------------------
+    // Watch Later
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Watch Later">
     @Nullable
     public Interaction getWatchLaterInteraction() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
@@ -191,12 +207,10 @@ public class Video implements Serializable {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Likes Accessors
-     * -----------------------------------------------------------------------------------------------------
-     */
-    // <editor-fold desc="Likes">
+    // -----------------------------------------------------------------------------------------------------
+    // Likes
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Like">
     @Nullable
     public Interaction getLikeInteraction() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
@@ -237,6 +251,15 @@ public class Video implements Serializable {
     }
     // </editor-fold>
 
+    // -----------------------------------------------------------------------------------------------------
+    // Stats
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Stats">
+
+    /**
+     * @return the number of plays this Videohas . It will return <code>null</code> if the owner of the video
+     * has specified that they want to hide play count.
+     */
     @Nullable
     public Integer playCount() {
         if (stats != null) {
@@ -244,9 +267,31 @@ public class Video implements Serializable {
         } else {
             return null;
         }
-
     }
+    // </editor-fold>
 
+    // -----------------------------------------------------------------------------------------------------
+    // Files
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Files">
+    @Nullable
+    public VideoFile getVideoFileForMd5(String md5) {
+        if (files == null) {
+            return null;
+        }
+        for (VideoFile file : files) {
+            if (file != null && file.md5 != null && file.md5.equals(md5)) {
+                return file;
+            }
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Recommendation
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Recommendation">
     public String recommendationsUri() {
         String recommendationsUri = null;
         if (metadata != null && metadata.connections != null &&
@@ -258,6 +303,12 @@ public class Video implements Serializable {
         }
         return recommendationsUri;
     }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Password
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Password">
 
     /**
      * The password for the video, only sent when the following conditions are true:
@@ -273,15 +324,12 @@ public class Video implements Serializable {
     public String getPassword() {
         return password;
     }
+    // </editor-fold>
 
-    public String getResourceKey() {
-        return resourceKey;
-    }
-
-    public void setResourceKey(String resourceKey) {
-        this.resourceKey = resourceKey;
-    }
-
+    // -----------------------------------------------------------------------------------------------------
+    // Equals/Hashcode
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Equals/Hashcode">
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -301,5 +349,5 @@ public class Video implements Serializable {
     public int hashCode() {
         return this.resourceKey != null ? this.resourceKey.hashCode() : 0;
     }
-
+    // </editor-fold>
 }
