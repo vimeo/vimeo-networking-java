@@ -251,7 +251,7 @@ If you'd like to contribute, please follow our guidelines found in [CONTRIBUTING
 
 ## License
 
-`vimeo-networking-java` is available under the MIT license. See the [LICENSE](LICENSE.md) file for more info.
+`vimeo-networking-java` is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
 
 ## Questions?
 
