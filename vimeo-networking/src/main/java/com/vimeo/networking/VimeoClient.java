@@ -201,18 +201,30 @@ public class VimeoClient {
             // just a token in it. Otherwise we'll want to leave the persisted account as null.
             vimeoAccount = new VimeoAccount(this.configuration.accessToken);
             if (this.configuration.accessToken != null) {
-                this.configuration.saveAccount(vimeoAccount, null, null);
+                this.configuration.saveAccount(vimeoAccount, null);
             }
         }
 
         this.vimeoAccount = vimeoAccount;
     }
 
-    /** Sets the {@link #vimeoAccount} field as well as triggering the saveAccount event for the account store */
+    /**
+     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
+     * <p/>
+     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
+     * application sessions.
+     */
+    @Deprecated
     public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email, String password) {
-        setVimeoAccount(vimeoAccount);
-        this.configuration.saveAccount(vimeoAccount, email, password);
+        saveAccount(vimeoAccount, email);
     }
+
+    /** Sets the {@link #vimeoAccount} field as well as triggering the saveAccount event for the account store */
+    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email) {
+        setVimeoAccount(vimeoAccount);
+        this.configuration.saveAccount(vimeoAccount, email);
+    }
+
 
     public Configuration getConfiguration() {
         return this.configuration;
@@ -377,7 +389,7 @@ public class VimeoClient {
         parameters.put(Vimeo.PARAMETER_SCOPE, configuration.scope);
 
         Call<VimeoAccount> call = this.vimeoService.join(getBasicAuthHeader(), parameters);
-        call.enqueue(new AccountCallback(this, email, password, callback));
+        call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
 
@@ -433,7 +445,7 @@ public class VimeoClient {
         Call<VimeoAccount> call =
                 this.vimeoService.logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE,
                                         configuration.scope);
-        call.enqueue(new AccountCallback(this, email, password, callback));
+        call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
 
@@ -465,7 +477,7 @@ public class VimeoClient {
             e.printStackTrace();
         }
 
-        saveAccount(vimeoAccount, email, password);
+        saveAccount(vimeoAccount, email);
 
         return vimeoAccount;
     }
@@ -549,7 +561,6 @@ public class VimeoClient {
 
         private final VimeoClient client;
         private String email;
-        private String password;
         private final AuthCallback callback;
 
         public AccountCallback(VimeoClient client, AuthCallback callback) {
@@ -571,15 +582,15 @@ public class VimeoClient {
             this.callback = callback;
         }
 
+        /**
+         * @deprecated use {@link #AccountCallback(VimeoClient, String, AuthCallback)} instead
+         * <p/>
+         * We find no use in storing the password when you can persist the {@link VimeoAccount} across
+         * application sessions.
+         */
+        @Deprecated
         public AccountCallback(VimeoClient client, String email, String password, AuthCallback callback) {
-            if (client == null || callback == null) {
-                throw new AssertionError("Client and Callback must not be null");
-            }
-
-            this.client = client;
-            this.email = email;
-            this.password = password;
-            this.callback = callback;
+            this(client, email, callback);
         }
 
         @Override
@@ -589,9 +600,9 @@ public class VimeoClient {
                 // display in the device Settings -> Accounts [KZ] 12/17/15
                 String name = (vimeoAccount.getUser().name !=
                                null) ? vimeoAccount.getUser().name : vimeoAccount.getUser().uri;
-                this.client.saveAccount(vimeoAccount, name, null);
+                this.client.saveAccount(vimeoAccount, name);
             } else {
-                this.client.saveAccount(vimeoAccount, this.email, this.password);
+                this.client.saveAccount(vimeoAccount, this.email);
             }
             this.callback.success();
         }
