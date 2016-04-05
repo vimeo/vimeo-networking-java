@@ -90,9 +90,20 @@ public class Configuration {
         return new Cache(cacheDirectory, cacheSize);
     }
 
+    /**
+     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
+     * <p/>
+     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
+     * application sessions.
+     */
+    @Deprecated
     public void saveAccount(VimeoAccount account, String email, String password) {
+        saveAccount(account, email);
+    }
+
+    public void saveAccount(VimeoAccount account, String email) {
         if (accountStore != null) {
-            accountStore.saveAccount(account, email, password);
+            accountStore.saveAccount(account, email);
         }
     }
 

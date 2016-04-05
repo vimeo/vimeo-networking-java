@@ -33,7 +33,16 @@ public interface AccountStore {
 
     VimeoAccount loadAccount();
 
-    void saveAccount(VimeoAccount vimeoAccount, String email, String password);//, boolean isAddingNewAccount);
+    /**
+     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
+     * <p/>
+     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
+     * application sessions.
+     */
+    @Deprecated
+    void saveAccount(VimeoAccount vimeoAccount, String email, String password);
+
+    void saveAccount(VimeoAccount vimeoAccount, String email);
 
     void deleteAccount(VimeoAccount vimeoAccount);
 }

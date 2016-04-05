@@ -26,12 +26,12 @@ import com.vimeo.networking.model.error.VimeoError;
 
 /**
  * Callback used specifically for authorization
- *
+ * <p/>
  * Created by alfredhanssen on 4/12/15.
  */
 public interface AuthCallback {
 
-    public void success();
+    void success();
 
-    public void failure(VimeoError error);
+    void failure(VimeoError error);
 }
