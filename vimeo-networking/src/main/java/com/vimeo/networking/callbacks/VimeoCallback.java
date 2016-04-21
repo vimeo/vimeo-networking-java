@@ -46,11 +46,23 @@ public abstract class VimeoCallback<T> implements Callback<T> {
 
     public abstract void failure(VimeoError error);
 
+    public VimeoCallback() {
+    }
+
+    public VimeoCallback(@Nullable Call call) {
+        this.call = call;
+    }
+
     @Nullable
     private Call call;
 
-    public void setCall(Call call) {
+    public void setCall(@Nullable Call call) {
         this.call = call;
+    }
+
+    @Nullable
+    public Call getCall() {
+        return call;
     }
 
     @Override
@@ -91,6 +103,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
         t.printStackTrace();
         VimeoError vimeoError = new VimeoError();
         vimeoError.setDeveloperMessage(t.getMessage());
+        vimeoError.setErrorMessage(t.getMessage());
         vimeoError.setIsCanceledError(call != null && call.isCanceled());
         failure(vimeoError);
     }
