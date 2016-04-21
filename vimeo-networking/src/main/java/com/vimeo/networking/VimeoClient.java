@@ -914,7 +914,7 @@ public class VimeoClient {
     }
 
     private VimeoCallback<Object> getRetrofitCallback(final ModelCallback<Object> callback) {
-        return new VimeoCallback<Object>() {
+        return new VimeoCallback<Object>(callback.getCall()) {
             @Override
             public void success(Object o) {
                 // Handle the gson parsing using a deserializer object
