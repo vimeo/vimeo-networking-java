@@ -106,10 +106,12 @@ public class Video implements Serializable {
     public String description;
     public String link;
     public int duration;
+    @Deprecated
     public ArrayList<VideoFile> files;
     public int width;
     public int height;
-    public Embed embed;
+    @Deprecated
+    public com.vimeo.networking.model.Embed embed;
     public String language;
     public Date createdTime;
     public Date modifiedTime;
@@ -122,10 +124,13 @@ public class Video implements Serializable {
     public Metadata metadata;
     public User user;
     private Status status;
+    @Deprecated
     public VideoLog log;
     public List<Category> categories;
     @Nullable
     private String password;
+    @Nullable
+    private String reviewLink;
 
     /** The resource_key field is the unique identifier for a Video object. It may be used for object comparison. */
     private String resourceKey;
@@ -323,6 +328,16 @@ public class Video implements Serializable {
     @Nullable
     public String getPassword() {
         return password;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Review Link
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Review Link">
+    @Nullable
+    public String getReviewLink() {
+        return reviewLink;
     }
     // </editor-fold>
 

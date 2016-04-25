@@ -22,18 +22,44 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.embed;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
 /**
- * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.embed.Embed}.
+ * Logo data contained in {@link Embed} objects. These are here to allow you to edit a video's embed settings.
  * <p/>
- * Created by hanssena on 4/23/15.
+ * Created by zetterstromk on 4/25/16.
  */
-@Deprecated
-public class Embed implements Serializable {
+public class EmbedLogos implements Serializable {
 
-    private static final long serialVersionUID = 7145437300195734964L;
-    public String html;
+    private static final long serialVersionUID = -6946192139468749658L;
+    private boolean vimeo;
+    @Nullable
+    private EmbedCustomLogos custom;
+
+    public boolean isVimeo() {
+        return vimeo;
+    }
+
+    /**
+     * @param vimeo Show or hide the vimeo logo
+     */
+    public void setVimeo(boolean vimeo) {
+        this.vimeo = vimeo;
+    }
+
+    @Nullable
+    public EmbedCustomLogos getCustom() {
+        return custom;
+    }
+
+    /**
+     * @param custom {@link EmbedCustomLogos}
+     */
+    public void setCustom(@Nullable EmbedCustomLogos custom) {
+        this.custom = custom;
+    }
 }

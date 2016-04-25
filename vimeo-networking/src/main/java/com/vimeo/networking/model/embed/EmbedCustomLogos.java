@@ -22,18 +22,56 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.embed;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
 /**
- * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.embed.Embed}.
+ * Custom field in {@link EmbedLogos}. These are here to allow you to edit a video's embed settings.
  * <p/>
- * Created by hanssena on 4/23/15.
+ * Created by zetterstromk on 4/25/16.
  */
-@Deprecated
-public class Embed implements Serializable {
+public class EmbedCustomLogos implements Serializable {
 
-    private static final long serialVersionUID = 7145437300195734964L;
-    public String html;
+    private static final long serialVersionUID = -8919686101651093878L;
+    private boolean active;
+    @Nullable
+    private String link;
+    private boolean sticky;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active Show or hide your custom logo
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Nullable
+    public String getLink() {
+        return link;
+    }
+
+    /**
+     * @param link A url that your user will navigate to if they click your custom logo
+     */
+    public void setLink(@Nullable String link) {
+        this.link = link;
+    }
+
+    public boolean isSticky() {
+        return sticky;
+    }
+
+    /**
+     * @param sticky Always show the custom logo, or hide it after time with the rest of the UI
+     */
+    public void setSticky(boolean sticky) {
+        this.sticky = sticky;
+    }
 }

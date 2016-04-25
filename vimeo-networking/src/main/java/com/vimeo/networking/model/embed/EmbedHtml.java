@@ -22,18 +22,37 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.embed;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
 /**
- * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.embed.Embed}.
+ * Representation of the html data within a {@link Embed} object. This contains the necessary iframe html for
+ * embedding. This is for getting
  * <p/>
- * Created by hanssena on 4/23/15.
+ * Created by zetterstromk on 4/25/16.
  */
-@Deprecated
-public class Embed implements Serializable {
+public class EmbedHtml implements Serializable {
 
-    private static final long serialVersionUID = 7145437300195734964L;
-    public String html;
+    private static final long serialVersionUID = 3752755790501317766L;
+
+    private int width;
+    private int height;
+    @Nullable
+    private String html;
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    @Nullable
+    public String getHtml() {
+        return html;
+    }
 }
