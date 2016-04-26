@@ -155,8 +155,7 @@ public class Play implements Serializable {
         }
         return null;
     }
-
-
+    
     @Nullable
     public String getLikeLoggingUrl() {
         if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
