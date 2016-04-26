@@ -23,6 +23,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.playback.VideoLog;
 
 import org.jetbrains.annotations.Nullable;
 

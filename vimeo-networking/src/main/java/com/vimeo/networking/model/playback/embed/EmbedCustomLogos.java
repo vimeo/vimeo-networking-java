@@ -22,60 +22,56 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.embed;
+package com.vimeo.networking.model.playback.embed;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
 /**
- * Title representation of an {@link Embed} object. These are here to allow you to edit a video's embed settings.
+ * Custom field in {@link EmbedLogos}. These are here to allow you to edit a video's embed settings.
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
-public class EmbedTitle implements Serializable {
+public class EmbedCustomLogos implements Serializable {
 
-    private static final long serialVersionUID = -2543724237726304625L;
+    private static final long serialVersionUID = -8919686101651093878L;
+    private boolean active;
     @Nullable
-    private String name;
-    @Nullable
-    private String owner;
-    @Nullable
-    private String portrait;
+    private String link;
+    private boolean sticky;
 
-    @Nullable
-    public String getName() {
-        return name;
+    public boolean isActive() {
+        return active;
     }
 
     /**
-     * @param name Show, hide, or let the user decide if the video title shows on the video
+     * @param active Show or hide your custom logo
      */
-    public void setName(@Nullable String name) {
-        this.name = name;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Nullable
-    public String getOwner() {
-        return owner;
+    public String getLink() {
+        return link;
     }
 
     /**
-     * @param owner Show, hide, or let the user decide if the owners information shows on the video
+     * @param link A url that your user will navigate to if they click your custom logo
      */
-    public void setOwner(@Nullable String owner) {
-        this.owner = owner;
+    public void setLink(@Nullable String link) {
+        this.link = link;
     }
 
-    @Nullable
-    public String getPortrait() {
-        return portrait;
+    public boolean isSticky() {
+        return sticky;
     }
 
     /**
-     * @param portrait Show, hide, or let the user decide if the owners portrait shows on the video
+     * @param sticky Always show the custom logo, or hide it after time with the rest of the UI
      */
-    public void setPortrait(@Nullable String portrait) {
-        this.portrait = portrait;
+    public void setSticky(boolean sticky) {
+        this.sticky = sticky;
     }
 }

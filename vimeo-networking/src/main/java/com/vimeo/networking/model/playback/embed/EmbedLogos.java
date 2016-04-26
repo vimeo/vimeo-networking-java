@@ -22,37 +22,44 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.embed;
+package com.vimeo.networking.model.playback.embed;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
 /**
- * Representation of the html data within a {@link Embed} object. This contains the necessary iframe html for
- * embedding. This is for getting
+ * Logo data contained in {@link Embed} objects. These are here to allow you to edit a video's embed settings.
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
-public class EmbedHtml implements Serializable {
+public class EmbedLogos implements Serializable {
 
-    private static final long serialVersionUID = 3752755790501317766L;
-
-    private int width;
-    private int height;
+    private static final long serialVersionUID = -6946192139468749658L;
+    private boolean vimeo;
     @Nullable
-    private String html;
+    private EmbedCustomLogos custom;
 
-    public int getWidth() {
-        return width;
+    public boolean isVimeo() {
+        return vimeo;
     }
 
-    public int getHeight() {
-        return height;
+    /**
+     * @param vimeo Show or hide the vimeo logo
+     */
+    public void setVimeo(boolean vimeo) {
+        this.vimeo = vimeo;
     }
 
     @Nullable
-    public String getHtml() {
-        return html;
+    public EmbedCustomLogos getCustom() {
+        return custom;
+    }
+
+    /**
+     * @param custom {@link EmbedCustomLogos}
+     */
+    public void setCustom(@Nullable EmbedCustomLogos custom) {
+        this.custom = custom;
     }
 }

@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.playback;
 
 import java.io.Serializable;
 
 /**
- * Detail on the progress in to a play.
+ * Detail on the progress of a play.
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */

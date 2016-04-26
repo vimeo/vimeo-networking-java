@@ -27,7 +27,7 @@ package com.vimeo.networking.model;
 import java.io.Serializable;
 
 /**
- * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.embed.Embed}.
+ * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.playback.embed.Embed}.
  * <p/>
  * Created by hanssena on 4/23/15.
  */

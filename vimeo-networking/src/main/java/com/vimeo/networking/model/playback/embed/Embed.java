@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.embed;
+package com.vimeo.networking.model.playback.embed;
 
 import org.jetbrains.annotations.Nullable;
 

@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.model.playback.Play;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -124,8 +125,6 @@ public class Video implements Serializable {
     public Metadata metadata;
     public User user;
     private Status status;
-    @Deprecated
-    public VideoLog log;
     public List<Category> categories;
     @Nullable
     private String password;

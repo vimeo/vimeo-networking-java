@@ -22,10 +22,11 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.playback;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.embed.Embed;
+import com.vimeo.networking.model.VideoFile;
+import com.vimeo.networking.model.playback.embed.Embed;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -134,6 +135,67 @@ public class Play implements Serializable {
             count += getProgressiveVideoFiles().size();
         }
         return count;
+    }
+
+
+    @Nullable
+    public String getLoadLoggingUrl() {
+        if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
+            !getHlsVideoFile().getLog().isLoadEmpty()) {
+            return getHlsVideoFile().getLog().getLoadLoggingUrl();
+        } else if (getDashVideoFile() != null &&
+                   getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isLoadEmpty()) {
+            return getDashVideoFile().getLog().getLoadLoggingUrl();
+        } else if (getProgressiveVideoFiles() != null) {
+            for (VideoFile videoFile : getProgressiveVideoFiles()) {
+                if (videoFile.getLog() != null && !videoFile.getLog().isLoadEmpty()) {
+                    return videoFile.getLog().getLoadLoggingUrl();
+                }
+            }
+        }
+        return null;
+    }
+
+
+    @Nullable
+    public String getLikeLoggingUrl() {
+        if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
+            !getHlsVideoFile().getLog().isLikeEmpty()) {
+            return getHlsVideoFile().getLog().getLikeLoggingUrl();
+        } else if (getDashVideoFile() != null &&
+                   getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isLikeEmpty()) {
+            return getDashVideoFile().getLog().getLikeLoggingUrl();
+        } else if (getProgressiveVideoFiles() != null) {
+            for (VideoFile videoFile : getProgressiveVideoFiles()) {
+                if (videoFile.getLog() != null && !videoFile.getLog().isLikeEmpty()) {
+                    return videoFile.getLog().getLikeLoggingUrl();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public String getWatchLaterLoggingUrl() {
+        if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
+            !getHlsVideoFile().getLog().isWatchLaterEmpty()) {
+            return getHlsVideoFile().getLog().getWatchLaterLoggingUrl();
+        } else if (getDashVideoFile() != null &&
+                   getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isWatchLaterEmpty()) {
+            return getDashVideoFile().getLog().getWatchLaterLoggingUrl();
+        } else if (getProgressiveVideoFiles() != null) {
+            for (VideoFile videoFile : getProgressiveVideoFiles()) {
+                if (videoFile.getLog() != null && !videoFile.getLog().isWatchLaterEmpty()) {
+                    return videoFile.getLog().getWatchLaterLoggingUrl();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    private VideoLog getVideoLogForFile(@Nullable VideoFile videoFile) {
+        return videoFile != null ? videoFile.getLog() : null;
     }
     // </editor-fold>
 }
