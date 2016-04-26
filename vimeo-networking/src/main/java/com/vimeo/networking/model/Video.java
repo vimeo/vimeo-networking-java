@@ -131,6 +131,10 @@ public class Video implements Serializable {
     private String password;
     @Nullable
     private String reviewLink;
+    @Nullable
+    private Play play;
+    @Nullable
+    private ArrayList<VideoFile> download;
 
     /** The resource_key field is the unique identifier for a Video object. It may be used for object comparison. */
     private String resourceKey;
@@ -281,11 +285,12 @@ public class Video implements Serializable {
     // <editor-fold desc="Files">
     @Nullable
     public VideoFile getVideoFileForMd5(String md5) {
-        if (files == null) {
+        // Only Progressive video files have an md5
+        if (play == null || play.getProgressiveVideoFiles() == null) {
             return null;
         }
-        for (VideoFile file : files) {
-            if (file != null && file.md5 != null && file.md5.equals(md5)) {
+        for (VideoFile file : play.getProgressiveVideoFiles()) {
+            if (file != null && file.getMd5() != null && file.getMd5().equals(md5)) {
                 return file;
             }
         }
@@ -338,6 +343,26 @@ public class Video implements Serializable {
     @Nullable
     public String getReviewLink() {
         return reviewLink;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Play object, which holds the playback and embed controls
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Play object, which holds the playback and embed controls">
+    @Nullable
+    public Play getPlay() {
+        return play;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Download - an array of VideoFile objects that may be downloaded
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Download">
+    @Nullable
+    public ArrayList<VideoFile> getDownload() {
+        return download;
     }
     // </editor-fold>
 

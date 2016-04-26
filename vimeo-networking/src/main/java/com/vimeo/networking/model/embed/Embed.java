@@ -44,7 +44,7 @@ public class Embed implements Serializable {
     @Nullable
     private String uri;
     @Nullable
-    public EmbedHtml html;
+    private EmbedHtml html;
     @Nullable
     private EmbedButtons buttons;
     @Nullable

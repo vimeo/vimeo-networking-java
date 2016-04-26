@@ -27,38 +27,56 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
+ * Logging endpoints. This class is NOT consumable by the general public.
+ * <p/>
  * Created by alfredhanssen on 4/25/15.
  */
 public class VideoLog implements Serializable {
 
     private static final long serialVersionUID = -4646869969374079276L;
     // URL for the "load" event
-    public String load;
+    private String loadLink;
 
     // URL for the "play" event
-    public String play;
+    private String playLink;
 
-    // URL for the "like_press" event
-    @SerializedName("like_press")
-    public String like;
+    // URL for the "like_press_link" event
+    @SerializedName("like_press_link")
+    private String likeLink;
 
-    // URL for the "watchlater_press" event
-    @SerializedName("watchlater_press")
-    public String watchLater;
+    // URL for the "watchlater_press_link" event
+    @SerializedName("watchlater_press_link")
+    private String watchLaterLink;
+
+    public String getLoadLoggingUrl() {
+        return loadLink;
+    }
 
     public boolean isLoadEmpty() {
-        return load == null || load.trim().isEmpty();
+        return loadLink == null || loadLink.trim().isEmpty();
     }
 
     public boolean isPlayEmpty() {
-        return play == null || play.trim().isEmpty();
+        return playLink == null || playLink.trim().isEmpty();
+    }
+
+    public String getPlayLoggingUrl() {
+        return playLink;
     }
 
     public boolean isLikeEmpty() {
-        return like == null || like.trim().isEmpty();
+        return likeLink == null || likeLink.trim().isEmpty();
+    }
+
+    public String getLikeLoggingUrl() {
+        return likeLink;
     }
 
     public boolean isWatchLaterEmpty() {
-        return watchLater == null || watchLater.trim().isEmpty();
+        return watchLaterLink == null || watchLaterLink.trim().isEmpty();
+    }
+
+    public String getWatchLaterLoggingUrl() {
+        return watchLaterLink;
     }
 }
