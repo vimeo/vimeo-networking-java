@@ -13,6 +13,8 @@ vimeo-networking is a Java networking library used for interacting with the Vime
      * [Callbacks](#callbacks)
      * [Cache Strategy](#cache-strategy)
      * [Sample Requests](#sample-requests)
+* [FAQs](#faqs)
+     * [How do I play a video?](#how-do-i-play-a-video)
 * [Found an Issue?](#found-an-issue)
 * [Questions](#questions)
 * [License](#license)
@@ -239,6 +241,36 @@ VimeoClient.getInstance().fetchCurrentUser(new ModelCallback<User>(User.class) {
           // Log the error and update the UI to tell the user there was an error
      }
 });
+```
+
+## FAQs
+### How do I play a video?
+Once you have a ```Video``` object you have two choices - embed or play natively. All consumers of this library will be able to access the embed data, however, in order to play videos natively (for example, in a VideoView or using ExoPlayer on Android) you must have access to the ```VideoFile``` links - this is restricted to users with Vimeo PRO accounts accessing their own videos.
+#### Embed
+All consumers of this library will have access to a video's embed html. Once you request a video you can get access to this as such:
+```java
+WebView webview = ...; // obtain a handle to your webview
+Video video = ...; // obtain a video in a manner described in the Requests section
+String html = video.embed != null ? video.embed.html : null;
+if(html != null) {
+     // html is in the form "<iframe .... ></iframe>"
+     webview.loadData(html, "text/html", "utf-8");
+}
+```
+#### Native playback
+If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS, Dash, or progressive streaming video files through a video's ```Play``` object. 
+```java
+VideoFile hlsFile = video.getPlay() != null ? video.getPlay().getHlsVideoFile() : null;
+if(hlsFile != null) {
+     String hlsLink = hlsFile.getLink();
+     // load HLS link
+}
+ArrayList<VideoFile> progressiveFiles = video.getPlay() != null ? video.getPlay().getProgressiveVideoFiles() : null;
+if(progressiveFiles != null && !progressiveFiles.isEmpty()) {
+     VideoFile progressiveStream = progressiveFiles.get(0); // you could sort these files by size, fps, width/height
+     String link = progressiveStream.getLink();
+     // load link
+}
 ```
 
 ## Found an Issue?
