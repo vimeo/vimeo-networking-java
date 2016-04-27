@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.model.playback.Play;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -106,10 +107,12 @@ public class Video implements Serializable {
     public String description;
     public String link;
     public int duration;
+    @Deprecated
     public ArrayList<VideoFile> files;
     public int width;
     public int height;
-    public Embed embed;
+    @Deprecated
+    public com.vimeo.networking.model.Embed embed;
     public String language;
     public Date createdTime;
     public Date modifiedTime;
@@ -122,10 +125,15 @@ public class Video implements Serializable {
     public Metadata metadata;
     public User user;
     private Status status;
-    public VideoLog log;
     public List<Category> categories;
     @Nullable
     private String password;
+    @Nullable
+    private String reviewLink;
+    @Nullable
+    private Play play;
+    @Nullable
+    private ArrayList<VideoFile> download;
 
     /** The resource_key field is the unique identifier for a Video object. It may be used for object comparison. */
     private String resourceKey;
@@ -276,11 +284,12 @@ public class Video implements Serializable {
     // <editor-fold desc="Files">
     @Nullable
     public VideoFile getVideoFileForMd5(String md5) {
-        if (files == null) {
+        // Only Progressive video files have an md5
+        if (play == null || play.getProgressiveVideoFiles() == null) {
             return null;
         }
-        for (VideoFile file : files) {
-            if (file != null && file.md5 != null && file.md5.equals(md5)) {
+        for (VideoFile file : play.getProgressiveVideoFiles()) {
+            if (file != null && file.getMd5() != null && file.getMd5().equals(md5)) {
                 return file;
             }
         }
@@ -323,6 +332,36 @@ public class Video implements Serializable {
     @Nullable
     public String getPassword() {
         return password;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Review Link
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Review Link">
+    @Nullable
+    public String getReviewLink() {
+        return reviewLink;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Play object, which holds the playback and embed controls
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Play object, which holds the playback and embed controls">
+    @Nullable
+    public Play getPlay() {
+        return play;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Download - an array of VideoFile objects that may be downloaded
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Download">
+    @Nullable
+    public ArrayList<VideoFile> getDownload() {
+        return download;
     }
     // </editor-fold>
 

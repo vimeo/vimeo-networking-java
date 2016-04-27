@@ -22,18 +22,28 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.playback;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 /**
- * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.playback.embed.Embed}.
+ * Detail on the progress of a play.
  * <p/>
- * Created by hanssena on 4/23/15.
+ * Created by zetterstromk on 4/25/16.
  */
-@Deprecated
-public class Embed implements Serializable {
+public class PlayProgress implements Serializable {
 
-    private static final long serialVersionUID = 7145437300195734964L;
-    public String html;
+    private static final long serialVersionUID = -3745271302058282379L;
+
+    @SerializedName("seconds")
+    private int mSeconds;
+
+    /**
+     * @return where the user has progressed to in the video, in seconds
+     */
+    public int getSeconds() {
+        return mSeconds;
+    }
 }

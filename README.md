@@ -13,6 +13,9 @@ vimeo-networking is a Java networking library used for interacting with the Vime
      * [Callbacks](#callbacks)
      * [Cache Strategy](#cache-strategy)
      * [Sample Requests](#sample-requests)
+* [FAQs](#faqs)
+     * [How do I get a video that I own?](#how-do-i-get-a-video-that-i-own)
+     * [How do I play a video?](#how-do-i-play-a-video)
 * [Found an Issue?](#found-an-issue)
 * [Questions](#questions)
 * [License](#license)
@@ -239,6 +242,86 @@ VimeoClient.getInstance().fetchCurrentUser(new ModelCallback<User>(User.class) {
           // Log the error and update the UI to tell the user there was an error
      }
 });
+```
+
+## FAQs
+### How do I get a video that I own?
+You can either request a ```Video``` object on it's own or request a list of videos (```VideoList```).
+#### Requesting a single video
+To request a single video, you will need to know its uri. For this reason, requesting a single video is most helpful when you already have a copy of it and just need to refresh your local copy with the copy that exists on the Vimeo servers.
+```java
+String uri = ...;// the video uri; if you have a Video, this is video.uri
+VimeoClient.getInstance().fetchNetworkContent(uri, new ModelCallback<Video>(Video.class) {
+     @Override
+     public void success(Video video) {
+          // use the video
+     }
+     
+     @Override
+     public void failure(VimeoError error) {
+          // voice the error
+     }
+});
+```
+
+#### Requesting a list of videos
+In order to get a list of your own videos you will need a uri from one of two ways:
+
+As the authenticated user, just use the /me/videos endpoint:
+```java
+String uri = "/me/videos";
+```
+In the second manner, you must have a handle to your ```User``` object; you can get a list of videos a users owns as such:
+```java
+User user = ...; // get a handle to the User object
+String uri;
+if(user.getVideosConnection() != null) {
+     uri = user.getVideosConnection().uri; 
+}
+```
+
+Then you can use the uri to get a list of videos
+```java
+String uri = ...; // obtained using one of the above methods
+VimeoClient.getInstance().fetchNetworkContent(uri, new ModelCallback<VideoList>(VideoList.class) {
+     @Override
+     public void success(VideoList videoList) {
+          if (videoList != null && videoList.data != null && !videoList.data.isEmpty()) {
+               Video video = videoList.data.get(0); // just an example of getting the first video
+          }
+     }
+     
+     @Override
+     public void failure(VimeoError error) {
+          // voice the error
+     }
+});
+```
+
+### How do I play a video?
+Once you have a ```Video``` object you have two choices - embed or play natively. All consumers of this library will be able to access the embed data, however, in order to play videos natively (for example, in a VideoView or using ExoPlayer on Android) you must have access to the ```VideoFile``` links - this is restricted to users with Vimeo PRO accounts accessing their own videos.
+#### Embed
+All consumers of this library will have access to a video's embed html. Once you request a video you can get access to this as such:
+```java
+Video video = ...; // obtain a video in a manner described in the Requests section
+String html = video.embed != null ? video.embed.html : null;
+if(html != null) {
+     // html is in the form "<iframe .... ></iframe>"
+     // load the html, for instance, if using a WebView on Android, you can perform the following:
+     WebView webview = ...; // obtain a handle to your webview
+     webview.loadData(html, "text/html", "utf-8");
+}
+```
+#### Native playback
+If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array. 
+```java
+Video video = ...; // obtain a video you own as described above
+ArrayList<VideoFile> videoFiles = video.files;
+if(videoFiles != null && !videoFiles.isEmpty()) {
+     VideoFile videoFile = videoFiles.get(0); // you could sort these files by size, fps, width/height
+     String link = videoFile.getLink();
+     // load link
+}
 ```
 
 ## Found an Issue?

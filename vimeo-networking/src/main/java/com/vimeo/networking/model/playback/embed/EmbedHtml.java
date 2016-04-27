@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2015 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,45 +22,42 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.playback.embed;
 
 import com.google.gson.annotations.SerializedName;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
 /**
- * Created by alfredhanssen on 4/25/15.
+ * Representation of the html data within a {@link Embed} object. This contains the necessary iframe html for
+ * embedding. This is for getting
+ * <p/>
+ * Created by zetterstromk on 4/25/16.
  */
-public class VideoLog implements Serializable {
+public class EmbedHtml implements Serializable {
 
-    private static final long serialVersionUID = -4646869969374079276L;
-    // URL for the "load" event
-    public String load;
+    private static final long serialVersionUID = 3752755790501317766L;
 
-    // URL for the "play" event
-    public String play;
+    @SerializedName("width")
+    private int mWidth;
+    @SerializedName("height")
+    private int mHeight;
+    @Nullable
+    @SerializedName("html")
+    private String mHtml;
 
-    // URL for the "like_press" event
-    @SerializedName("like_press")
-    public String like;
-
-    // URL for the "watchlater_press" event
-    @SerializedName("watchlater_press")
-    public String watchLater;
-
-    public boolean isLoadEmpty() {
-        return load == null || load.trim().isEmpty();
+    public int getWidth() {
+        return mWidth;
     }
 
-    public boolean isPlayEmpty() {
-        return play == null || play.trim().isEmpty();
+    public int getHeight() {
+        return mHeight;
     }
 
-    public boolean isLikeEmpty() {
-        return like == null || like.trim().isEmpty();
-    }
-
-    public boolean isWatchLaterEmpty() {
-        return watchLater == null || watchLater.trim().isEmpty();
+    @Nullable
+    public String getHtml() {
+        return mHtml;
     }
 }
