@@ -39,20 +39,20 @@ public class EmbedLogos implements Serializable {
 
     private static final long serialVersionUID = -6946192139468749658L;
     @SerializedName("vimeo")
-    private boolean mVimeo;
+    private boolean mVimeoLogoVisible;
     @Nullable
     @SerializedName("custom")
     private EmbedCustomLogos mCustom;
 
-    public boolean isVimeo() {
-        return mVimeo;
+    public boolean isVimeoLogoVisible() {
+        return mVimeoLogoVisible;
     }
 
     /**
-     * @param vimeo Show or hide the vimeo logo
+     * @param visible Show or hide the vimeo logo
      */
-    public void setVimeo(boolean vimeo) {
-        this.mVimeo = vimeo;
+    public void setVimeoLogo(boolean visible) {
+        this.mVimeoLogoVisible = visible;
     }
 
     @Nullable

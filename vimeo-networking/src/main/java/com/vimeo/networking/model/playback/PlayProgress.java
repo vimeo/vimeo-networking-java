@@ -36,12 +36,12 @@ import java.io.Serializable;
 public class PlayProgress implements Serializable {
 
     private static final long serialVersionUID = -3745271302058282379L;
-    
+
     @SerializedName("seconds")
     private int mSeconds;
 
     /**
-     * @return where the user has progressed to in the video, in mSeconds
+     * @return where the user has progressed to in the video, in seconds
      */
     public int getSeconds() {
         return mSeconds;
