@@ -69,54 +69,60 @@ public class Play implements Serializable {
     }
 
     @Nullable
-    private Embed embed;
+    @SerializedName("embed")
+    private Embed mEmbed;
     @Nullable
-    private VideoFile hls;
+    @SerializedName("hls")
+    private VideoFile mHls;
     @Nullable
-    private VideoFile dash;
+    @SerializedName("dash")
+    private VideoFile mDash;
     @Nullable
-    private ArrayList<VideoFile> progressive;
+    @SerializedName("progressive")
+    private ArrayList<VideoFile> mProgressive;
     @Nullable
-    private PlayProgress progress;
+    @SerializedName("progress")
+    private PlayProgress mProgress;
     @Nullable
-    private Status status;
+    @SerializedName("status")
+    private Status mStatus;
 
     @Nullable
     public Embed getEmbed() {
-        return embed;
+        return mEmbed;
     }
 
     public void setEmbed(@Nullable Embed embed) {
-        this.embed = embed;
+        this.mEmbed = embed;
     }
 
     @Nullable
     public VideoFile getHlsVideoFile() {
-        return hls;
+        return mHls;
     }
 
     @Nullable
     public VideoFile getDashVideoFile() {
-        return dash;
+        return mDash;
     }
 
     @Nullable
     public ArrayList<VideoFile> getProgressiveVideoFiles() {
-        return progressive;
+        return mProgressive;
     }
 
     @Nullable
     public PlayProgress getProgress() {
-        return progress;
+        return mProgress;
     }
 
     public void setProgress(@Nullable PlayProgress progress) {
-        this.progress = progress;
+        this.mProgress = progress;
     }
 
     @Nullable
     public Status getStatus() {
-        return status;
+        return mStatus;
     }
 
     // -----------------------------------------------------------------------------------------------------

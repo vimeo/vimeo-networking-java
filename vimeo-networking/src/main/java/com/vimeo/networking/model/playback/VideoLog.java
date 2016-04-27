@@ -37,48 +37,50 @@ public class VideoLog implements Serializable {
 
     private static final long serialVersionUID = -4646869969374079276L;
     // URL for the "load" event
-    private String loadLink;
+    @SerializedName("load_link")
+    private String mLoadLink;
 
     // URL for the "play" event
-    private String playLink;
+    @SerializedName("play_link")
+    private String mPlayLink;
 
     // URL for the "like_press_link" event
     @SerializedName("like_press_link")
-    private String likeLink;
+    private String mLikePressLink;
 
     // URL for the "watchlater_press_link" event
     @SerializedName("watchlater_press_link")
-    private String watchLaterLink;
+    private String mWatchLaterPressLink;
 
     public String getLoadLoggingUrl() {
-        return loadLink;
+        return mLoadLink;
     }
 
     public boolean isLoadEmpty() {
-        return loadLink == null || loadLink.trim().isEmpty();
+        return mLoadLink == null || mLoadLink.trim().isEmpty();
     }
 
     public boolean isPlayEmpty() {
-        return playLink == null || playLink.trim().isEmpty();
+        return mPlayLink == null || mPlayLink.trim().isEmpty();
     }
 
     public String getPlayLoggingUrl() {
-        return playLink;
+        return mPlayLink;
     }
 
     public boolean isLikeEmpty() {
-        return likeLink == null || likeLink.trim().isEmpty();
+        return mLikePressLink == null || mLikePressLink.trim().isEmpty();
     }
 
     public String getLikeLoggingUrl() {
-        return likeLink;
+        return mLikePressLink;
     }
 
     public boolean isWatchLaterEmpty() {
-        return watchLaterLink == null || watchLaterLink.trim().isEmpty();
+        return mWatchLaterPressLink == null || mWatchLaterPressLink.trim().isEmpty();
     }
 
     public String getWatchLaterLoggingUrl() {
-        return watchLaterLink;
+        return mWatchLaterPressLink;
     }
 }
