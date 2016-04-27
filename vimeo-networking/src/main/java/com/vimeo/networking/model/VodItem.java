@@ -36,92 +36,83 @@ import java.util.Date;
  * This class represents the model for a Video On Demand (VOD) container
  * Created by rigbergh on 4/25/16.
  */
-public class VodItem implements Serializable{
-    public enum VodType {
-        FILM,
-        SERIES,
-        UNKNOWN;
-        private static String S_FILM = "film";
-        private static String S_SERIES = "series";
+@SuppressWarnings("unused")
+public class VodItem implements Serializable {
 
-        public static VodType from(@NotNull String type){
-            if(type.equalsIgnoreCase(S_FILM)){
-                return FILM;
-            } else if(type.equalsIgnoreCase(S_SERIES)){
-                return SERIES;
-            }
-            return UNKNOWN;
+    private static final String S_FILM = "film";
+    private static final String S_SERIES = "series";
+
+    public enum VodType {
+        @SerializedName(S_FILM)
+        FILM(S_FILM),
+        @SerializedName(S_SERIES)
+        SERIES(S_SERIES);
+
+        private final String mType;
+
+        VodType(@NotNull String type) {
+            mType = type;
         }
 
         @Override
         public String toString() {
-            if(this == FILM){
-                return S_FILM;
-            } else if(this == SERIES){
-                return S_SERIES;
-            }
-            return null;
+            return mType;
         }
     }
 
-    private static class Publish implements Serializable{
+    public static class Publish implements Serializable {
 
         private static final long serialVersionUID = -994389241935894370L;
 
-        @SuppressWarnings("unused")
         @Nullable
         @SerializedName("time")
-        public Date time;
+        private Date mTime;
+
+        @Nullable
+        public Date getTime() {
+            return mTime;
+        }
+
     }
 
     private static final long serialVersionUID = 8360150766347816073L;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("name")
     private String mName;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("description")
     private String mDescription;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("type")
-    private String mType;
+    private VodType mType;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("link")
     private String mLink;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("publish")
     private Publish mPublish;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("pictures")
     private PictureCollection mPictures;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("metadata")
     private Metadata mMetadata;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("user")
     private User mUser;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("film")
     private Video mFilm;
 
-    @SuppressWarnings("unused")
     @Nullable
     @SerializedName("trailer")
     private Video mTrailer;
@@ -162,20 +153,18 @@ public class VodItem implements Serializable{
     }
 
     @Nullable
-    @SuppressWarnings("unused")
     public Video getFilm() {
         return mFilm;
     }
 
     @Nullable
-    @SuppressWarnings("unused")
     public Video getTrailer() {
         return mTrailer;
     }
 
-    @NotNull
-    public VodType getType(){
-        return mType == null ? VodType.UNKNOWN : VodType.from(mType);
+    @Nullable
+    public VodType getType() {
+        return mType;
     }
 
     public void setName(@Nullable String name) {
@@ -187,7 +176,7 @@ public class VodItem implements Serializable{
     }
 
     public void setType(@Nullable VodType type) {
-        mType = type.toString();
+        mType = type;
     }
 
     public void setLink(@Nullable String link) {
