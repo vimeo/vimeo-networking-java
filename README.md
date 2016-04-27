@@ -258,17 +258,12 @@ if(html != null) {
 }
 ```
 #### Native playback
-If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS, Dash, or progressive streaming video files through a video's ```Play``` object. 
+If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array. 
 ```java
-VideoFile hlsFile = video.getPlay() != null ? video.getPlay().getHlsVideoFile() : null;
-if(hlsFile != null) {
-     String hlsLink = hlsFile.getLink();
-     // load HLS link
-}
-ArrayList<VideoFile> progressiveFiles = video.getPlay() != null ? video.getPlay().getProgressiveVideoFiles() : null;
-if(progressiveFiles != null && !progressiveFiles.isEmpty()) {
-     VideoFile progressiveStream = progressiveFiles.get(0); // you could sort these files by size, fps, width/height
-     String link = progressiveStream.getLink();
+ArrayList<VideoFile> videoFiles = video.files;
+if(videoFiles != null && !videoFiles.isEmpty()) {
+     VideoFile videoFile = videoFiles.get(0); // you could sort these files by size, fps, width/height
+     String link = videoFile.getLink();
      // load link
 }
 ```
