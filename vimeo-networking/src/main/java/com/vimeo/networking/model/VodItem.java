@@ -128,11 +128,6 @@ public class VodItem implements Serializable {
     }
 
     @Nullable
-    public String getLink() {
-        return mLink;
-    }
-
-    @Nullable
     public Publish getPublish() {
         return mPublish;
     }
@@ -205,5 +200,23 @@ public class VodItem implements Serializable {
 
     public void setTrailer(@Nullable Video trailer) {
         mTrailer = trailer;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || !(obj instanceof VodItem)) {
+            return false;
+        }
+        VideoFile that = (VideoFile) obj;
+
+        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
+    }
+
+    @Override
+    public int hashCode() {
+        return mLink != null ? mLink.hashCode() : 0;
     }
 }
