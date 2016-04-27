@@ -25,10 +25,10 @@
 package com.vimeo.networking.model;
 
 /**
+ * A list of {@link VodItem} objects
  * Created by rigbergh on 4/25/16.
  */
 public class VodList extends BaseResponseList<VodItem> {
-
     @Override
     public Class getModelClass() {
         return VodItem.class;
