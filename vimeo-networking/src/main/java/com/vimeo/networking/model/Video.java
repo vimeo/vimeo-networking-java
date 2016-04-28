@@ -366,6 +366,34 @@ public class Video implements Serializable {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
+    // VOD
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="VOD">
+    // TODO: Most of this is all for testing. Redo when API is ready 4/28/16 [KZ]
+    private boolean mIsTrailer;
+
+    // TODO: Remove setter 4/28/16 [KZ]
+    public void setTrailer(boolean isTrailer) {
+        mIsTrailer = isTrailer;
+    }
+
+    public boolean isTrailer() {
+        return mIsTrailer; // FIXME: 4/28/16
+    }
+
+    private boolean mIsVod;
+
+    // TODO: remove setter 4/28/16 [KZ]
+    public void setVod(boolean isVod) {
+        mIsVod = isVod;
+    }
+
+    public boolean isVod() {
+        return mIsVod; // FIXME: 4/28/16
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
     // Equals/Hashcode
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Equals/Hashcode">
