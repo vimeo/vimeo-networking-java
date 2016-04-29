@@ -114,6 +114,9 @@ public class Vimeo {
     // Filter (filter) Values
     public static final String FILTER_RELATED = "related";
     public static final String FILTER_UPLOAD = "upload_date";
+    public static final String FILTER_VOD_RENTALS = "rented";
+    public static final String FILTER_VOD_SUBSCRIPTIONS = "subscription";
+    public static final String FILTER_VOD_PURCHASES = "purchased";
     // Filter Upload Date Values
     public static final String FILTER_UPLOAD_DATE_TODAY = "day";
     public static final String FILTER_UPLOAD_DATE_WEEK = "week";
