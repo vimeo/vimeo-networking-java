@@ -158,6 +158,11 @@ public class VodItem implements Serializable {
     }
 
     @Nullable
+    public String getLink() {
+        return mLink;
+    }
+
+    @Nullable
     public VodType getType() {
         return mType;
     }
@@ -172,10 +177,6 @@ public class VodItem implements Serializable {
 
     public void setType(@Nullable VodType type) {
         mType = type;
-    }
-
-    public void setLink(@Nullable String link) {
-        mLink = link;
     }
 
     public void setPublish(@Nullable Publish publish) {
@@ -210,7 +211,7 @@ public class VodItem implements Serializable {
         if (obj == null || !(obj instanceof VodItem)) {
             return false;
         }
-        VideoFile that = (VideoFile) obj;
+        VodItem that = (VodItem) obj;
 
         return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
     }
