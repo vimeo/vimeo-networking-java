@@ -135,7 +135,7 @@ public class VideoFile implements Serializable {
     private VideoQuality quality;
     @Nullable
     private MimeType type;
-    private int fps;
+    private double fps;
     /** width will be made private in a future release - use {@link #getWidth()} instead */
     @Deprecated
     public int width;
@@ -185,7 +185,7 @@ public class VideoFile implements Serializable {
         return size;
     }
 
-    public int getFps() {
+    public double getFps() {
         return fps;
     }
 

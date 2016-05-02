@@ -61,6 +61,15 @@ public class Video implements Serializable {
         PUBLIC_DOMAIN_DEDICATION
     }
 
+    public enum VodVideoType {
+        NONE,
+        TRAILER,
+        RENTAL,
+        SUBSCRIPTION,
+        PURCHASE,
+        EXTRA
+    }
+
     private static final String STATUS_NONE = "N/A";
     private static final String STATUS_AVAILABLE = "available";
     private static final String STATUS_UPLOADING = "uploading";
@@ -362,6 +371,36 @@ public class Video implements Serializable {
     @Nullable
     public ArrayList<VideoFile> getDownload() {
         return download;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // VOD
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="VOD">
+    private VodVideoType mVodVideoType = VodVideoType.NONE;
+
+    // TODO: Some of this is all for testing. Redo when API is ready 4/28/16 [KZ]
+    public void setVodVideoType(VodVideoType vodVideoType) {
+        mVodVideoType = vodVideoType;
+    }
+
+    public VodVideoType getVodVideoType() {
+        return mVodVideoType;
+    }
+
+    @Nullable
+    public Date getVodExpiration() {
+        return null; // FIXME: 4/28/16
+    }
+
+    public boolean isTrailer() {
+        return mVodVideoType == VodVideoType.TRAILER;
+    }
+
+
+    public boolean isVod() {
+        return mVodVideoType != VodVideoType.NONE;
     }
     // </editor-fold>
 
