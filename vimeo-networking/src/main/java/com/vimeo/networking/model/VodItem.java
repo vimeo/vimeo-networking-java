@@ -143,6 +143,22 @@ public class VodItem implements Serializable {
     }
 
     @Nullable
+    public InteractionCollection getInteractions() {
+        if (mMetadata != null) {
+            return mMetadata.interactions;
+        }
+        return null;
+    }
+
+    @Nullable
+    public ConnectionCollection getConnections() {
+        if (mMetadata != null) {
+            return mMetadata.connections;
+        }
+        return null;
+    }
+
+    @Nullable
     public User getUser() {
         return mUser;
     }

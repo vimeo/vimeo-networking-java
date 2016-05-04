@@ -22,32 +22,83 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
+ * Stores a collection of Connection objects.
  * Created by hanssena on 4/23/15.
  */
 public class ConnectionCollection implements Serializable {
 
     private static final long serialVersionUID = -4523270955994232839L;
+    @Nullable
+    @SerializedName("videos")
     public Connection videos;
+    @Nullable
+    @SerializedName("comments")
     public Connection comments;
+    @Nullable
+    @SerializedName("credits")
     public Connection credits;
+    @Nullable
+    @SerializedName("likes")
     public Connection likes;
+    @Nullable
+    @SerializedName("pictures")
     public Connection pictures;
+    @Nullable
+    @SerializedName("texttracks")
     public Connection texttracks;
+    @Nullable
+    @SerializedName("activities")
     public Connection activities;
+    @Nullable
+    @SerializedName("albums")
     public Connection albums;
+    @Nullable
+    @SerializedName("channels")
     public Connection channels;
+    @Nullable
+    @SerializedName("feed")
     public Connection feed;
+    @Nullable
+    @SerializedName("followers")
     public Connection followers;
+    @Nullable
+    @SerializedName("following")
     public Connection following;
+    @Nullable
+    @SerializedName("groups")
     public Connection groups;
+    @Nullable
+    @SerializedName("portfolios")
     public Connection portfolios;
+    @Nullable
+    @SerializedName("shared")
     public Connection shared;
+    @Nullable
+    @SerializedName("recommendations")
     public Connection recommendations;
+    @Nullable
+    @SerializedName("related")
     public Connection related;
+    @Nullable
+    @SerializedName("replies")
     public Connection replies;
+    @Nullable
+    @SerializedName("users")
     public Connection users;
+    @Nullable
+    @SerializedName("watchlater")
     public Connection watchlater;
+    @Nullable
+    @SerializedName("ondemand")
+    public Connection ondemand;
+    @Nullable
+    @SerializedName("trailer")
+    public Connection trailer;
 }
