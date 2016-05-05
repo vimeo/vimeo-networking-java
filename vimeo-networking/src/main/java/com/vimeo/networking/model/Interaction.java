@@ -22,16 +22,59 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * This model object represents an Interaction.
  * Created by zetterstromk on 6/5/15.
  */
 public class Interaction implements Serializable {
 
     private static final long serialVersionUID = 2033767841952340400L;
+    private static final String STREAM_PURCHASED = "purchased";
+    private static final String STREAM_RESTRICTED = "restricted";
+    private static final String STREAM_AVAILABLE = "available";
+    private static final String STREAM_UNAVAILABLE = "unavailable";
+
+    public enum Stream {
+        @SerializedName(STREAM_PURCHASED)
+        PURCHASED(STREAM_PURCHASED), // you have purchased it (without using a promo code)
+        @SerializedName(STREAM_RESTRICTED)
+        RESTRICTED(STREAM_RESTRICTED), // you don't have it, can't purchase it in this country
+        @SerializedName(STREAM_AVAILABLE)
+        AVAILABLE(STREAM_AVAILABLE), // you don't have it, can purchase it
+        @SerializedName(STREAM_UNAVAILABLE)
+        UNAVAILABLE(STREAM_UNAVAILABLE); // you don't have it, can't purchase it
+
+        private final String mName;
+
+        Stream(String name) {
+            mName = name;
+        }
+
+        @Override
+        public String toString() {
+            return mName;
+        }
+    }
+
+    @SerializedName("added")
     public boolean added;
-    public Date addedDate;
+    @Nullable
+    @SerializedName("added_time")
+    public Date addedTime;
+    @Nullable
+    @SerializedName("uri")
     public String uri;
+    @Nullable
+    @SerializedName("stream")
+    public Stream stream;
+    @Nullable
+    @SerializedName("expiration")
+    public Date expiration;
 }

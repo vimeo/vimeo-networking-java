@@ -105,6 +105,7 @@ public class Vimeo {
     public static final String SORT_RELEVANCE = "relevant";
     public static final String SORT_POPULAR = "popularity";
     public static final String SORT_DATE = "date";
+    public static final String SORT_PURCHASE_TIME = "purchase_time";
     public static final String SORT_FOLLOWERS = "followers";
     public static final String SORT_ALPHABETICAL = "alphabetical";
     // Sort Direction Values

@@ -22,15 +22,35 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
+ * A collection of Interaction objects.
  * Created by zetterstromk on 6/5/15.
  */
 public class InteractionCollection implements Serializable {
 
     private static final long serialVersionUID = 489519386122782640L;
+    @Nullable
+    @SerializedName("watchlater")
     public Interaction watchlater;
+    @Nullable
+    @SerializedName("like")
     public Interaction like;
+    @Nullable
+    @SerializedName("follow")
     public Interaction follow;
+    @Nullable
+    @SerializedName("buy")
+    public Interaction buy;
+    @Nullable
+    @SerializedName("rent")
+    public Interaction rent;
+    @Nullable
+    @SerializedName("subscribe")
+    public Interaction subscribe;
 }

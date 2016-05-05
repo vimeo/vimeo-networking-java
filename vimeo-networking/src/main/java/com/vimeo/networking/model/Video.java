@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.model.Interaction.Stream;
 import com.vimeo.networking.model.playback.Play;
 
 import org.jetbrains.annotations.Nullable;
@@ -34,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * A model class representing a Video.
  * Created by alfredhanssen on 4/12/15.
  */
 public class Video implements Serializable {
@@ -67,7 +69,7 @@ public class Video implements Serializable {
         RENTAL,
         SUBSCRIPTION,
         PURCHASE,
-        EXTRA
+        UNKNOWN
     }
 
     private static final String STATUS_NONE = "N/A";
@@ -378,29 +380,68 @@ public class Video implements Serializable {
     // VOD
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="VOD">
-    private VodVideoType mVodVideoType = VodVideoType.NONE;
-
-    // TODO: Some of this is all for testing. Redo when API is ready 4/28/16 [KZ]
-    public void setVodVideoType(VodVideoType vodVideoType) {
-        mVodVideoType = vodVideoType;
+    public VodVideoType getVodVideoType() {
+        if (isVod()) {
+            if (isTrailer()) {
+                return VodVideoType.TRAILER;
+            }
+            if (isRental()) {
+                return VodVideoType.RENTAL;
+            }
+            if (isSubscription()) {
+                return VodVideoType.SUBSCRIPTION;
+            }
+            if (isPurchase()) {
+                return VodVideoType.PURCHASE;
+            }
+            // it is a VOD, but it was not purchased.
+            // it is either the user's own video or promo code access or possibly an extra on a series
+            // regardless, we don't have a way to determine it at this point 5/4/16 [HR]
+            return VodVideoType.UNKNOWN;
+        }
+        return VodVideoType.NONE;
     }
 
-    public VodVideoType getVodVideoType() {
-        return mVodVideoType;
+    private boolean isPurchased(Interaction interaction) {
+        return (interaction != null && interaction.stream == Stream.PURCHASED);
     }
 
     @Nullable
     public Date getVodExpiration() {
-        return null; // FIXME: 4/28/16
+        if (metadata != null && metadata.interactions != null) {
+            InteractionCollection interactions = metadata.interactions;
+            if (isPurchased(interactions.rent) && interactions.rent.expiration != null) {
+                return interactions.rent.expiration;
+            }
+            if (isPurchased(interactions.subscribe)) {
+                return interactions.subscribe.expiration;
+            }
+        }
+        return null;
+    }
+
+    private boolean isPossiblePurchase() {
+        return (isVod() && !isTrailer() && metadata != null && metadata.interactions != null);
+    }
+
+    public boolean isRental() {
+        return (isPossiblePurchase() && isPurchased(metadata.interactions.rent));
+    }
+
+    public boolean isSubscription() {
+        return (isPossiblePurchase() && isPurchased(metadata.interactions.subscribe));
+    }
+
+    public boolean isPurchase() {
+        return (isPossiblePurchase() && isPurchased(metadata.interactions.buy));
     }
 
     public boolean isTrailer() {
-        return mVodVideoType == VodVideoType.TRAILER;
+        return (isVod() && metadata.connections.trailer == null);
     }
 
-
     public boolean isVod() {
-        return mVodVideoType != VodVideoType.NONE;
+        return (metadata != null && metadata.connections != null && metadata.connections.ondemand != null);
     }
     // </editor-fold>
 
@@ -428,4 +469,5 @@ public class Video implements Serializable {
         return this.resourceKey != null ? this.resourceKey.hashCode() : 0;
     }
     // </editor-fold>
+
 }
