@@ -45,9 +45,9 @@ public class Connection implements Serializable {
     @SerializedName("total")
     public int total;
     @SerializedName("main_total")
-    public int main_total;
+    public int mainTotal;
     @SerializedName("extra_total")
-    public int extra_total;
+    public int extraTotal;
     @SerializedName("viewable_total")
-    public int viewable_total;
+    public int viewableTotal;
 }

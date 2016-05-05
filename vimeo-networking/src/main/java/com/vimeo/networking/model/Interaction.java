@@ -43,13 +43,13 @@ public class Interaction implements Serializable {
 
     public enum Stream {
         @SerializedName(STREAM_PURCHASED)
-        PURCHASED(STREAM_PURCHASED),
+        PURCHASED(STREAM_PURCHASED), // you have purchased it (without using a promo code)
         @SerializedName(STREAM_RESTRICTED)
-        RESTRICTED(STREAM_RESTRICTED),
+        RESTRICTED(STREAM_RESTRICTED), // you don't have it, can't purchase it in this country
         @SerializedName(STREAM_AVAILABLE)
-        AVAILABLE(STREAM_AVAILABLE),
+        AVAILABLE(STREAM_AVAILABLE), // you don't have it, can purchase it
         @SerializedName(STREAM_UNAVAILABLE)
-        UNAVAILABLE(STREAM_UNAVAILABLE);
+        UNAVAILABLE(STREAM_UNAVAILABLE); // you don't have it, can't purchase it
 
         private final String mName;
 
@@ -66,8 +66,8 @@ public class Interaction implements Serializable {
     @SerializedName("added")
     public boolean added;
     @Nullable
-    @SerializedName("addedDate")
-    public Date addedDate;
+    @SerializedName("added_time")
+    public Date addedTime;
     @Nullable
     @SerializedName("uri")
     public String uri;
