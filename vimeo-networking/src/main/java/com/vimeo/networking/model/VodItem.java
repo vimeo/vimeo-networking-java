@@ -177,6 +177,13 @@ public class VodItem implements Serializable {
         return mType;
     }
 
+    public int getViewableVideoCount() {
+        if (mMetadata != null && mMetadata.connections != null && mMetadata.connections.videos != null) {
+            return mMetadata.connections.videos.viewableTotal;
+        }
+        return 0;
+    }
+
     public void setName(@Nullable String name) {
         mName = name;
     }
