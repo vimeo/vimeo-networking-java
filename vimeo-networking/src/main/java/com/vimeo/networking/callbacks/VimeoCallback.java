@@ -25,8 +25,6 @@ package com.vimeo.networking.callbacks;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.model.error.VimeoError;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.lang.annotation.Annotation;
 
 import okhttp3.ResponseBody;
@@ -47,22 +45,6 @@ public abstract class VimeoCallback<T> implements Callback<T> {
     public abstract void failure(VimeoError error);
 
     public VimeoCallback() {
-    }
-
-    public VimeoCallback(@Nullable Call call) {
-        this.call = call;
-    }
-
-    @Nullable
-    private Call call;
-
-    public void setCall(@Nullable Call call) {
-        this.call = call;
-    }
-
-    @Nullable
-    public Call getCall() {
-        return call;
     }
 
     @Override
