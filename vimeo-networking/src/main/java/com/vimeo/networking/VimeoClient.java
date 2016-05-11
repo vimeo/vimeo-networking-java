@@ -55,8 +55,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
-import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Client class used for making networking calls to Vimeo API.
@@ -470,7 +470,7 @@ public class VimeoClient {
         VimeoAccount vimeoAccount = null;
         try {
             retrofit2.Response<VimeoAccount> response = call.execute();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 vimeoAccount = response.body();
             }
         } catch (IOException e) {

@@ -66,9 +66,9 @@ public abstract class VimeoCallback<T> implements Callback<T> {
     }
 
     @Override
-    public void onResponse(Response<T> response) {
+    public void onResponse(Call<T> call, Response<T> response) {
         // response.isSuccess() is true if the response code is 2xx
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             T t = response.body();
             success(t);
         } else {
@@ -92,7 +92,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<T> call, Throwable t) {
         /* handle execution failures
          * Failures may include:
          *      No Internet
