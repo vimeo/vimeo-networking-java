@@ -55,8 +55,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
-import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Client class used for making networking calls to Vimeo API.
@@ -470,7 +470,7 @@ public class VimeoClient {
         VimeoAccount vimeoAccount = null;
         try {
             retrofit2.Response<VimeoAccount> response = call.execute();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 vimeoAccount = response.body();
             }
         } catch (IOException e) {
@@ -527,9 +527,6 @@ public class VimeoClient {
             return null;
         }
         Call<Object> call = this.vimeoService.logOut(getAuthHeader());
-        if (callback != null) {
-            callback.setCall(call);
-        }
         call.enqueue(new VimeoCallback<Object>() {
             @Override
             public void success(Object o) {
@@ -673,7 +670,6 @@ public class VimeoClient {
         }
 
         Call<Object> call = this.vimeoService.edit(getAuthHeader(), uri, parameters);
-        callback.setCall(call);
         call.enqueue(getRetrofitCallback(callback));
 
         return call;
@@ -714,7 +710,6 @@ public class VimeoClient {
         }
 
         Call<Object> call = this.vimeoService.edit(getAuthHeader(), uri, parameters);
-        callback.setCall(call);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -745,7 +740,6 @@ public class VimeoClient {
         }
 
         Call<PictureResource> call = this.vimeoService.createPictureResource(getAuthHeader(), uri);
-        callback.setCall(call);
         call.enqueue(callback);
         return call;
     }
@@ -765,7 +759,6 @@ public class VimeoClient {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_ACTIVE, true);
         Call<Object> call = this.vimeoService.edit(getAuthHeader(), uri, parameters);
-        callback.setCall(call);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -887,7 +880,6 @@ public class VimeoClient {
         postBody.put(Vimeo.PARAMETER_COMMENT_TEXT_BODY, comment);
 
         Call<Comment> call = this.vimeoService.comment(getAuthHeader(), uri, options, postBody);
-        callback.setCall(call);
         call.enqueue(callback);
         return call;
     }
@@ -914,7 +906,7 @@ public class VimeoClient {
     }
 
     private VimeoCallback<Object> getRetrofitCallback(final ModelCallback<Object> callback) {
-        return new VimeoCallback<Object>(callback.getCall()) {
+        return new VimeoCallback<Object>() {
             @Override
             public void success(Object o) {
                 // Handle the gson parsing using a deserializer object
@@ -1014,7 +1006,6 @@ public class VimeoClient {
         Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
 
         Call<Object> call = this.vimeoService.GET(getAuthHeader(), uri, queryMap, cacheHeaderValue);
-        callback.setCall(call);
         call.enqueue(getRetrofitCallback(callback));
         return call;
     }
@@ -1113,7 +1104,6 @@ public class VimeoClient {
         }
 
         Call<Void> call = this.vimeoService.emptyResponsePost(getAuthHeader(), uri, postBody);
-        callback.setCall(call);
         call.enqueue(callback);
         return call;
     }
@@ -1168,7 +1158,6 @@ public class VimeoClient {
     private Call<Object> PUT(String authHeader, String uri, Map<String, String> options,
                              VimeoCallback<Object> callback, boolean enqueue) {
         Call<Object> call = this.vimeoService.PUT(authHeader, uri, options);
-        callback.setCall(call);
         if (enqueue) {
             call.enqueue(callback);
         }
@@ -1178,7 +1167,6 @@ public class VimeoClient {
     private Call<Object> DELETE(String authHeader, String uri, Map<String, String> options,
                                 VimeoCallback<Object> callback, boolean enqueue) {
         Call<Object> call = this.vimeoService.DELETE(authHeader, uri, options);
-        callback.setCall(call);
         if (enqueue) {
             call.enqueue(callback);
         }
@@ -1188,7 +1176,6 @@ public class VimeoClient {
     private Call<Object> POST(String authHeader, String uri, String cacheHeaderValue,
                               HashMap<String, String> parameters, VimeoCallback<Object> callback) {
         Call<Object> call = this.vimeoService.POST(authHeader, uri, cacheHeaderValue, parameters);
-        callback.setCall(call);
         call.enqueue(callback);
         return call;
     }
