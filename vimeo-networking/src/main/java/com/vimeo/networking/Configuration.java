@@ -64,10 +64,8 @@ public class Configuration {
     private AccountStore accountStore;
     public GsonDeserializer deserializer;
 
-    @Nullable
-    public List<Interceptor> networkInterceptors;
-    @Nullable
-    public List<Interceptor> interceptors;
+    public final List<Interceptor> networkInterceptors = new ArrayList<>();
+    public final List<Interceptor> interceptors = new ArrayList<>();
 
     public String apiVersionString;
     public String codeGrantRedirectURI;
@@ -164,8 +162,8 @@ public class Configuration {
         this.certPinningEnabled = builder.certPinningEnabled;
         this.debugLogger = builder.debugLogger;
         this.logLevel = builder.logLevel;
-        this.networkInterceptors = builder.networkInterceptors;
-        this.interceptors = builder.interceptors;
+        this.networkInterceptors.addAll(builder.networkInterceptors);
+        this.interceptors.addAll(builder.interceptors);
     }
 
     private boolean isValid() {
@@ -199,8 +197,8 @@ public class Configuration {
         private String userAgentString = DEFAULT_USER_AGENT;
         public int timeout = DEFAULT_TIMEOUT;
 
-        private List<Interceptor> networkInterceptors;
-        private List<Interceptor> interceptors;
+        private final List<Interceptor> networkInterceptors = new ArrayList<>();
+        private final List<Interceptor> interceptors = new ArrayList<>();
 
         public String codeGrantRedirectUri = "vimeo" + clientID + "://auth";
 
@@ -341,7 +339,6 @@ public class Configuration {
 
         public Builder addNetworkInterceptor(Interceptor interceptor) {
             if (interceptor != null) {
-                this.networkInterceptors = new ArrayList<>();
                 this.networkInterceptors.add(interceptor);
             }
             return this;
@@ -349,14 +346,13 @@ public class Configuration {
 
         public Builder addNetworkInterceptors(List<Interceptor> interceptors) {
             if (interceptors != null) {
-                this.networkInterceptors = new ArrayList<>(interceptors);
+                this.networkInterceptors.addAll(interceptors);
             }
             return this;
         }
 
         public Builder addInterceptor(Interceptor interceptor) {
             if (interceptor != null) {
-                this.interceptors = new ArrayList<>();
                 this.interceptors.add(interceptor);
             }
             return this;
@@ -364,7 +360,7 @@ public class Configuration {
 
         public Builder addInterceptors(List<Interceptor> interceptors) {
             if (interceptors != null) {
-                this.interceptors = new ArrayList<>(interceptors);
+                this.interceptors.addAll(interceptors);
             }
             return this;
         }
