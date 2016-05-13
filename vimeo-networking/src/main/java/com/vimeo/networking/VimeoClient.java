@@ -159,6 +159,13 @@ public class VimeoClient {
                     }
                 });
 
+        if (this.configuration.networkInterceptors != null) {
+            retrofitClientBuilder.addNetworkInterceptors(this.configuration.networkInterceptors);
+        }
+        if (this.configuration.interceptors != null) {
+            retrofitClientBuilder.addInterceptors(this.configuration.interceptors);
+        }
+
         if (configuration.certPinningEnabled) {
             // Try and pin certificates to prevent man-in-the-middle attacks (if pinning is enabled)
             try {

@@ -22,8 +22,6 @@
 
 package com.vimeo.networking;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyManagementException;
@@ -59,8 +57,6 @@ public class RetrofitClientBuilder {
     private static final String KEYSTORE_PASSWORD = "vimeo123";
     private static final int NO_TIMEOUT = -1;
 
-    private static Interceptor sDebugInterceptor;
-
     private int connectionTimeout = NO_TIMEOUT;
     private TimeUnit connectionTimeoutTimeUnit;
     private int readTimeout = NO_TIMEOUT;
@@ -69,19 +65,6 @@ public class RetrofitClientBuilder {
     private List<Interceptor> interceptorList = new ArrayList<>();
     private List<Interceptor> networkInterceptorList = new ArrayList<>();
     private SSLSocketFactory sSLSocketFactory;
-
-    /**
-     * Add an Interceptor that will be added to all
-     * {@link OkHttpClient} that are built by this builder.
-     * This will be used as a network interceptor to
-     * intercept all network traffic.
-     *
-     * @param debugInterceptor the interceptor to use as a
-     *                         debug interceptor. Can be null.
-     */
-    public static void setDebugInterceptor(@Nullable Interceptor debugInterceptor) {
-        sDebugInterceptor = debugInterceptor;
-    }
 
     public RetrofitClientBuilder setConnectionTimeout(int connectionTimeout, TimeUnit timeUnit) {
         this.connectionTimeout = connectionTimeout;
@@ -105,8 +88,18 @@ public class RetrofitClientBuilder {
         return this;
     }
 
+    public RetrofitClientBuilder addNetworkInterceptors(List<Interceptor> interceptors) {
+        networkInterceptorList.addAll(interceptors);
+        return this;
+    }
+
     public RetrofitClientBuilder addInterceptor(Interceptor interceptor) {
         interceptorList.add(interceptor);
+        return this;
+    }
+
+    public RetrofitClientBuilder addInterceptors(List<Interceptor> interceptors) {
+        interceptorList.addAll(interceptors);
         return this;
     }
 
@@ -185,9 +178,6 @@ public class RetrofitClientBuilder {
         }
         for (Interceptor interceptor : networkInterceptorList) {
             builder.addNetworkInterceptor(interceptor);
-        }
-        if (sDebugInterceptor != null) {
-            builder.addNetworkInterceptor(sDebugInterceptor);
         }
         for (Interceptor interceptor : interceptorList) {
             builder.addInterceptor(interceptor);
