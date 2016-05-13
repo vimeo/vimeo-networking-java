@@ -157,7 +157,9 @@ public class VimeoClient {
                         // Customize or return the response
                         return chain.proceed(request);
                     }
-                });
+                })
+                .addNetworkInterceptors(this.configuration.networkInterceptors)
+                .addInterceptors(this.configuration.interceptors);
 
         if (configuration.certPinningEnabled) {
             // Try and pin certificates to prevent man-in-the-middle attacks (if pinning is enabled)

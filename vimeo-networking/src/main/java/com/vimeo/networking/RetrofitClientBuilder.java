@@ -88,8 +88,18 @@ public class RetrofitClientBuilder {
         return this;
     }
 
+    public RetrofitClientBuilder addNetworkInterceptors(List<Interceptor> interceptors) {
+        networkInterceptorList.addAll(interceptors);
+        return this;
+    }
+
     public RetrofitClientBuilder addInterceptor(Interceptor interceptor) {
         interceptorList.add(interceptor);
+        return this;
+    }
+
+    public RetrofitClientBuilder addInterceptors(List<Interceptor> interceptors) {
+        interceptorList.addAll(interceptors);
         return this;
     }
 

@@ -30,8 +30,11 @@ import com.vimeo.networking.model.VimeoAccount;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 
 /**
  * The configuration object for making API calls with Retrofit.
@@ -60,6 +63,9 @@ public class Configuration {
     @Nullable
     private AccountStore accountStore;
     public GsonDeserializer deserializer;
+
+    public final List<Interceptor> networkInterceptors = new ArrayList<>();
+    public final List<Interceptor> interceptors = new ArrayList<>();
 
     public String apiVersionString;
     public String codeGrantRedirectURI;
@@ -156,6 +162,8 @@ public class Configuration {
         this.certPinningEnabled = builder.certPinningEnabled;
         this.debugLogger = builder.debugLogger;
         this.logLevel = builder.logLevel;
+        this.networkInterceptors.addAll(builder.networkInterceptors);
+        this.interceptors.addAll(builder.interceptors);
     }
 
     private boolean isValid() {
@@ -188,6 +196,9 @@ public class Configuration {
         private int cacheMaxAge = DEFAULT_CACHE_MAX_AGE;
         private String userAgentString = DEFAULT_USER_AGENT;
         public int timeout = DEFAULT_TIMEOUT;
+
+        private final List<Interceptor> networkInterceptors = new ArrayList<>();
+        private final List<Interceptor> interceptors = new ArrayList<>();
 
         public String codeGrantRedirectUri = "vimeo" + clientID + "://auth";
 
@@ -323,6 +334,34 @@ public class Configuration {
 
         public Builder setLogLevel(LogLevel level) {
             this.logLevel = level;
+            return this;
+        }
+
+        public Builder addNetworkInterceptor(Interceptor interceptor) {
+            if (interceptor != null) {
+                this.networkInterceptors.add(interceptor);
+            }
+            return this;
+        }
+
+        public Builder addNetworkInterceptors(List<Interceptor> interceptors) {
+            if (interceptors != null) {
+                this.networkInterceptors.addAll(interceptors);
+            }
+            return this;
+        }
+
+        public Builder addInterceptor(Interceptor interceptor) {
+            if (interceptor != null) {
+                this.interceptors.add(interceptor);
+            }
+            return this;
+        }
+
+        public Builder addInterceptors(List<Interceptor> interceptors) {
+            if (interceptors != null) {
+                this.interceptors.addAll(interceptors);
+            }
             return this;
         }
 
