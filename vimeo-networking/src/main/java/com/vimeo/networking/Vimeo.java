@@ -108,6 +108,7 @@ public class Vimeo {
     public static final String SORT_PURCHASE_TIME = "purchase_time";
     public static final String SORT_FOLLOWERS = "followers";
     public static final String SORT_ALPHABETICAL = "alphabetical";
+    public static final String SORT_MANUAL = "manual";
     // Sort Direction Values
     public static final String SORT_DIRECTION_ASCENDING = "asc";
     public static final String SORT_DIRECTION_DESCENDING = "desc";
