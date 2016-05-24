@@ -184,6 +184,14 @@ public class VodItem implements Serializable {
         return 0;
     }
 
+    @Nullable
+    public String getVideosUri() {
+        if (mMetadata != null && mMetadata.connections != null && mMetadata.connections.videos != null) {
+            return mMetadata.connections.videos.uri;
+        }
+        return null;
+    }
+
     public void setName(@Nullable String name) {
         mName = name;
     }
