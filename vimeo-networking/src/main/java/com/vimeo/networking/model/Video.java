@@ -127,6 +127,7 @@ public class Video implements Serializable {
     public String language;
     public Date createdTime;
     public Date modifiedTime;
+    public Date releaseTime;
     public ArrayList<String> contentRating;
     public String license;
     public Privacy privacy;
