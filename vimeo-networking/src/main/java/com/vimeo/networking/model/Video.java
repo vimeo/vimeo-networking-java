@@ -38,6 +38,7 @@ import java.util.List;
  * A model class representing a Video.
  * Created by alfredhanssen on 4/12/15.
  */
+@SuppressWarnings("unused")
 public class Video implements Serializable {
 
     private static final long serialVersionUID = -1282907783845240057L;
@@ -99,16 +100,16 @@ public class Video implements Serializable {
         @SerializedName(STATUS_QUOTA_EXCEEDED)
         QUOTA_EXCEEDED(STATUS_QUOTA_EXCEEDED);
 
-        private String string;
+        private final String mString;
 
         Status(String string) {
-            this.string = string;
+            mString = string;
         }
 
         @Override
         // Overridden for analytics.
         public String toString() {
-            return this.string;
+            return mString;
         }
     }
 
@@ -381,19 +382,40 @@ public class Video implements Serializable {
     // VOD
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="VOD">
+
+    /**
+     * A VOD video can have multiple purchase types active at once, this is a convenience method that
+     * picks one of them based on the following priority:
+     * 1) trailer
+     * 2) purchased
+     * 3) both rental and subscription? choose the later expiration, expirations equal? choose subscription
+     * 4) subscription
+     * 5) rental
+     *
+     * @return the VodVideoType of the video or {@code VodVideoType.NONE} if it is not a VOD video or
+     * {@code VodVideoType.UNKNOWN} if it is a VOD video that is not marked as rented, subscribed or bought
+     */
     public VodVideoType getVodVideoType() {
         if (isVod()) {
             if (isTrailer()) {
                 return VodVideoType.TRAILER;
             }
-            if (isRental()) {
-                return VodVideoType.RENTAL;
+            if (isPurchase()) {
+                return VodVideoType.PURCHASE;
+            }
+            // rentals or subscriptions that have been purchased will always have an expiration date
+            Date rentalExpires = getRentalExpiration();
+            Date subscriptionExpires = getSubscriptionExpiration();
+            if (rentalExpires != null && subscriptionExpires != null) {
+                if (rentalExpires.after(subscriptionExpires)) {
+                    return VodVideoType.RENTAL;
+                }
             }
             if (isSubscription()) {
                 return VodVideoType.SUBSCRIPTION;
             }
-            if (isPurchase()) {
-                return VodVideoType.PURCHASE;
+            if (isRental()) {
+                return VodVideoType.RENTAL;
             }
             // it is a VOD, but it was not purchased.
             // it is either the user's own video or promo code access or possibly an extra on a series
@@ -403,19 +425,30 @@ public class Video implements Serializable {
         return VodVideoType.NONE;
     }
 
-    private boolean isPurchased(Interaction interaction) {
+    private static boolean isPurchased(Interaction interaction) {
         return (interaction != null && interaction.stream == Stream.PURCHASED);
     }
 
+    /**
+     * Returns the date the VOD video will expire. In the event that a video is both rented and subscribed,
+     * this will return the later expiration date. If they are equal, subscription date will be returned.
+     * @return the expiration date or null if there is no expiration
+     */
     @Nullable
     public Date getVodExpiration() {
-        if (metadata != null && metadata.interactions != null) {
-            InteractionCollection interactions = metadata.interactions;
-            if (isPurchased(interactions.rent) && interactions.rent.expiration != null) {
-                return interactions.rent.expiration;
-            }
-            if (isPurchased(interactions.subscribe)) {
-                return interactions.subscribe.expiration;
+        if (isVod()) {
+            Date rentalExpires = getRentalExpiration();
+            Date subscriptionExpires = getSubscriptionExpiration();
+            if (rentalExpires != null && subscriptionExpires != null) {
+                if (rentalExpires.after(subscriptionExpires)) {
+                    return rentalExpires;
+                } else {
+                    return subscriptionExpires;
+                }
+            } else if (rentalExpires != null) {
+                return rentalExpires;
+            } else if (subscriptionExpires != null) {
+                return subscriptionExpires;
             }
         }
         return null;
@@ -423,6 +456,26 @@ public class Video implements Serializable {
 
     private boolean isPossiblePurchase() {
         return (isVod() && !isTrailer() && metadata != null && metadata.interactions != null);
+    }
+
+    @Nullable
+    public Date getRentalExpiration() {
+        if (isRental()) {
+            // isRental will validate and prevent possible npes
+            assert metadata.interactions.rent != null;
+            return metadata.interactions.rent.expiration;
+        }
+        return null;
+    }
+
+    @Nullable
+    public Date getSubscriptionExpiration() {
+        if (isSubscription()) {
+            // isSubscription will validate and prevent possible npes
+            assert metadata.interactions.subscribe != null;
+            return metadata.interactions.subscribe.expiration;
+        }
+        return null;
     }
 
     public boolean isRental() {

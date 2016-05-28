@@ -75,6 +75,6 @@ public class Interaction implements Serializable {
     @SerializedName("stream")
     public Stream stream;
     @Nullable
-    @SerializedName("expiration")
+    @SerializedName("expires_time")
     public Date expiration;
 }
