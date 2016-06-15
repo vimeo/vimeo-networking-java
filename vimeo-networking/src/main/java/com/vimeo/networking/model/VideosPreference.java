@@ -22,13 +22,21 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * Preferences for videos
+ * <p/>
  * Created by zetterstromk on 1/28/16.
  */
 public class VideosPreference implements Serializable {
@@ -50,5 +58,55 @@ public class VideosPreference implements Serializable {
     @Nullable
     public String getPrivacy() {
         return privacy;
+    }
+
+    public static class VideosPreferenceTypeAdapter extends TypeAdapter<VideosPreference> {
+
+        @Override
+        public void write(JsonWriter out, VideosPreference value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("VideosPreference null in write()");
+                out.endObject();
+                return;
+            }
+            if (value.privacy != null) {
+                out.name("privacy").value(value.privacy);
+            }
+            if (value.password != null) {
+                out.name("password").value(value.password);
+            }
+
+            out.endObject();
+        }
+
+        @Override
+        public VideosPreference read(JsonReader in) throws IOException {
+            final VideosPreference videosPreference = new VideosPreference();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "privacy":
+                        videosPreference.privacy = in.nextString();
+                        break;
+                    case "password":
+                        videosPreference.password = in.nextString();
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return videosPreference;
+        }
     }
 }

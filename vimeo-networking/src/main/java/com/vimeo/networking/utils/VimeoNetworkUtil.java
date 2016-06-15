@@ -27,6 +27,21 @@ package com.vimeo.networking.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.vimeo.networking.model.Comment;
+import com.vimeo.networking.model.Connection;
+import com.vimeo.networking.model.ConnectionCollection;
+import com.vimeo.networking.model.Interaction;
+import com.vimeo.networking.model.InteractionCollection;
+import com.vimeo.networking.model.Metadata;
+import com.vimeo.networking.model.Picture;
+import com.vimeo.networking.model.PictureCollection;
+import com.vimeo.networking.model.Preferences;
+import com.vimeo.networking.model.Quota;
+import com.vimeo.networking.model.Space;
+import com.vimeo.networking.model.UploadQuota;
+import com.vimeo.networking.model.User;
+import com.vimeo.networking.model.VideosPreference;
+import com.vimeo.networking.model.Website;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -48,7 +63,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * <p/>
  * Created by kylevenn on 10/30/15.
  */
-public class VimeoNetworkUtil {
+public final class VimeoNetworkUtil {
+
+    private VimeoNetworkUtil() {
+    }
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
@@ -73,7 +91,23 @@ public class VimeoNetworkUtil {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(Date.class, ISO8601.getDateSerializer())
-                .registerTypeAdapter(Date.class, ISO8601.getDateDeserializer());
+                .registerTypeAdapter(Date.class, ISO8601.getDateDeserializer())
+                .registerTypeAdapter(Interaction.class, new Interaction.InteractionTypeAdapter())
+                .registerTypeAdapterFactory(new InteractionCollection.Factory())
+                .registerTypeAdapter(Connection.class, new Connection.ConnectionTypeAdapter())
+                .registerTypeAdapterFactory(new ConnectionCollection.Factory())
+                .registerTypeAdapter(Picture.class, new Picture.PictureTypeAdapter())
+                .registerTypeAdapterFactory(new PictureCollection.Factory())
+                .registerTypeAdapterFactory(new Metadata.Factory())
+                .registerTypeAdapter(VideosPreference.class,
+                                     new VideosPreference.VideosPreferenceTypeAdapter())
+                .registerTypeAdapterFactory(new Preferences.Factory())
+                .registerTypeAdapter(Website.class, new Website.WebsiteTypeAdapter())
+                .registerTypeAdapter(Quota.class, new Quota.QuotaTypeAdapter())
+                .registerTypeAdapter(Space.class, new Space.SpaceTypeAdapter())
+                .registerTypeAdapterFactory(new UploadQuota.Factory())
+                .registerTypeAdapterFactory(new User.Factory())
+                .registerTypeAdapterFactory(new Comment.Factory());
         /** Refer to {@link ISO8601} for explanation of deserialization */
         // .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ")
     }

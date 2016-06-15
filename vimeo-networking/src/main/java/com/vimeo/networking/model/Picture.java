@@ -22,9 +22,17 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
+
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * Model representing a picture
  * Created by hanssena on 4/23/15.
  */
 public class Picture implements Serializable {
@@ -33,4 +41,57 @@ public class Picture implements Serializable {
     public int width;
     public int height;
     public String link;
+
+    public static class PictureTypeAdapter extends TypeAdapter<Picture> {
+
+        @Override
+        public void write(JsonWriter out, Picture value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("Picture null in write()");
+                out.endObject();
+                return;
+            }
+            out.name("width").value(value.width);
+            out.name("height").value(value.height);
+            if (value.link != null) {
+                out.name("link").value(value.link);
+            }
+            out.endObject();
+        }
+
+        @Override
+        public Picture read(JsonReader in) throws IOException {
+            final Picture picture = new Picture();
+
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "width":
+                        picture.width = in.nextInt();
+                        break;
+                    case "height":
+                        picture.height = in.nextInt();
+                        break;
+                    case "link":
+                        picture.link = in.nextString();
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+
+            return picture;
+        }
+    }
 }

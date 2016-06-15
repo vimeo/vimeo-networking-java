@@ -22,11 +22,20 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
+import com.vimeo.networking.utils.EnumTypeAdapter;
+import com.vimeo.networking.utils.ISO8601;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -77,4 +86,81 @@ public class Interaction implements Serializable {
     @Nullable
     @SerializedName("expires_time")
     public Date expiration;
+
+    public static class InteractionTypeAdapter extends TypeAdapter<Interaction> {
+
+        private final static EnumTypeAdapter<Stream> sStreamEnumTypeAdapter =
+                new EnumTypeAdapter<>(Stream.class);
+
+        @Override
+        public void write(JsonWriter out, Interaction value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("Interaction null in write()");
+                out.endObject();
+                return;
+            }
+            out.name("added").value(value.added);
+            if (value.addedTime != null) {
+                out.name("added_time").value(ISO8601.fromDate(value.addedTime));
+            }
+            if (value.uri != null) {
+                out.name("uri").value(value.uri);
+            }
+            if (value.stream != null) {
+                out.name("stream").value(value.stream.toString());
+            }
+            if (value.expiration != null) {
+                out.name("expires_time").value(ISO8601.fromDate(value.expiration));
+            }
+
+            out.endObject();
+        }
+
+        @Override
+        public Interaction read(JsonReader in) throws IOException {
+            final Interaction interaction = new Interaction();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "uri":
+                        interaction.uri = in.nextString();
+                        break;
+                    case "added":
+                        interaction.added = in.nextBoolean();
+                        break;
+                    case "added_time":
+                        try {
+                            interaction.addedTime = ISO8601.toDate(in.nextString());
+                        } catch (ParseException e) {
+                            ClientLogger.e("Error parsing Interaction", e);
+                        }
+                        break;
+                    case "stream":
+                        interaction.stream = sStreamEnumTypeAdapter.read(in);
+                        break;
+                    case "expires_time":
+                        try {
+                            interaction.expiration = ISO8601.toDate(in.nextString());
+                        } catch (ParseException e) {
+                            ClientLogger.e("Error parsing Interaction", e);
+                        }
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return interaction;
+        }
+    }
 }

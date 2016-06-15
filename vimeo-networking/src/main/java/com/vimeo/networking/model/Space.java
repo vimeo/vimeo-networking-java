@@ -24,9 +24,17 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
+
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * Space for uploads
  * Created by kylevenn on 8/19/15.
  */
 public class Space implements Serializable {
@@ -36,4 +44,54 @@ public class Space implements Serializable {
     public long free;
     public long max;
     public long used;
+
+    public static class SpaceTypeAdapter extends TypeAdapter<Space> {
+
+        @Override
+        public void write(JsonWriter out, Space value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("Space null in write()");
+                out.endObject();
+                return;
+            }
+            out.name("free").value(value.free);
+            out.name("max").value(value.max);
+            out.name("used").value(value.used);
+
+            out.endObject();
+        }
+
+        @Override
+        public Space read(JsonReader in) throws IOException {
+            final Space space = new Space();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "free":
+                        space.free = in.nextLong();
+                        break;
+                    case "max":
+                        space.max = in.nextLong();
+                        break;
+                    case "used":
+                        space.used = in.nextLong();
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return space;
+        }
+    }
 }

@@ -22,9 +22,17 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
+
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * Model representing a website
  * Created by hanssena on 4/23/15.
  */
 public class Website implements Serializable {
@@ -33,4 +41,60 @@ public class Website implements Serializable {
     public String name;
     public String link;
     public String description;
+
+    public static class WebsiteTypeAdapter extends TypeAdapter<Website> {
+
+        @Override
+        public void write(JsonWriter out, Website value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("Website null in write()");
+                out.endObject();
+                return;
+            }
+            if (value.name != null) {
+                out.name("name").value(value.name);
+            }
+            if (value.link != null) {
+                out.name("link").value(value.link);
+            }
+            if (value.description != null) {
+                out.name("description").value(value.description);
+            }
+
+            out.endObject();
+        }
+
+        @Override
+        public Website read(JsonReader in) throws IOException {
+            final Website website = new Website();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "name":
+                        website.name = in.nextString();
+                        break;
+                    case "link":
+                        website.link = in.nextString();
+                        break;
+                    case "description":
+                        website.description = in.nextString();
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return website;
+        }
+    }
 }

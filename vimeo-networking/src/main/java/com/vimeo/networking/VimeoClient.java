@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.logging.DebugLoggerInterface;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
@@ -208,6 +209,10 @@ public class VimeoClient {
         }
 
         this.vimeoAccount = vimeoAccount;
+    }
+
+    public DebugLoggerInterface getDebugLogger() {
+        return this.configuration.debugLogger;
     }
 
     /**
