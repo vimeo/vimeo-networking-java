@@ -22,13 +22,58 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.vimeo.networking.model.Comment.CommentTypeAdapter;
+import com.vimeo.networking.model.Paging.PagingTypeAdapter;
+
+import org.jetbrains.annotations.NotNull;
+
 /**
+ * Response list for Comments
  * Created by zetterstromk on 7/31/15.
  */
 public class CommentList extends BaseResponseList<Comment> {
 
+    private static final long serialVersionUID = 6740876679750722757L;
+
     @Override
     public Class getModelClass() {
         return Comment.class;
+    }
+
+    public static class CommentListTypeAdapter extends BaseResponseTypeAdapter<CommentList> {
+
+        public CommentListTypeAdapter(@NotNull PagingTypeAdapter pagingTypeAdapter,
+                                      @NotNull CommentTypeAdapter typeAdapter) {
+            super(pagingTypeAdapter, typeAdapter);
+        }
+
+        @Override
+        protected CommentList createResponseListObject() {
+            return new CommentList();
+        }
+    }
+
+    public static class Factory implements TypeAdapterFactory {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken) {
+            if (CommentList.class.isAssignableFrom(typeToken.getRawType())) {
+                TypeAdapter pagingTypeAdapter = gson.getAdapter(Paging.class);
+                TypeAdapter commentTypeAdapter = gson.getAdapter(Comment.class);
+                if (pagingTypeAdapter instanceof PagingTypeAdapter &&
+                    commentTypeAdapter instanceof CommentTypeAdapter) {
+                    return (TypeAdapter<T>) new CommentListTypeAdapter((PagingTypeAdapter) pagingTypeAdapter,
+                                                                       (CommentTypeAdapter) commentTypeAdapter);
+                }
+            }
+
+            // by returning null, Gson will never check this factory if it can handle this TypeToken again [KZ] 6/15/16
+            return null;
+        }
     }
 }

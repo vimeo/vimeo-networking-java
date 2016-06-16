@@ -24,8 +24,14 @@
 
 package com.vimeo.networking.model.playback;
 
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -82,5 +88,67 @@ public class VideoLog implements Serializable {
 
     public String getWatchLaterLoggingUrl() {
         return mWatchLaterPressLink;
+    }
+
+    public static class VideoLogTypeAdapter extends TypeAdapter<VideoLog> {
+
+        @Override
+        public void write(JsonWriter out, VideoLog value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("VideoLog null in write()");
+                out.endObject();
+                return;
+            }
+            if (value.mLoadLink != null) {
+                out.name("load_link").value(value.mLoadLink);
+            }
+            if (value.mPlayLink != null) {
+                out.name("play_link").value(value.mPlayLink);
+            }
+            if (value.mLikePressLink != null) {
+                out.name("like_press_link").value(value.mLikePressLink);
+            }
+            if (value.mWatchLaterPressLink != null) {
+                out.name("watchlater_press_link").value(value.mWatchLaterPressLink);
+            }
+
+            out.endObject();
+        }
+
+        @Override
+        public VideoLog read(JsonReader in) throws IOException {
+            final VideoLog videoLog = new VideoLog();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "load_link":
+                        videoLog.mLoadLink = in.nextString();
+                        break;
+                    case "play_link":
+                        videoLog.mPlayLink = in.nextString();
+                        break;
+                    case "like_press_link":
+                        videoLog.mLikePressLink = in.nextString();
+                        break;
+                    case "watchlater_press_link":
+                        videoLog.mWatchLaterPressLink = in.nextString();
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return videoLog;
+        }
     }
 }

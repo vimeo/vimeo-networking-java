@@ -67,7 +67,9 @@ public class Connection implements Serializable {
                 out.endObject();
                 return;
             }
-            out.name("uri").value(value.uri);
+            if (value.uri != null) {
+                out.name("uri").value(value.uri);
+            }
             if (value.options != null) {
                 out.name("options").beginArray();
                 for (final String option : value.options) {

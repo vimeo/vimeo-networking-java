@@ -25,9 +25,19 @@ package com.vimeo.networking.model;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
+import com.vimeo.networking.model.User.UserTypeAdapter;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -46,6 +56,10 @@ public class VimeoAccount implements Serializable {
     private String scope;
     private User user;
     private String userJSON;
+
+    private VimeoAccount() {
+        // Needed for TypeAdapter read
+    }
 
     public VimeoAccount(@Nullable String accessToken) {
         this.accessToken = accessToken;
@@ -93,8 +107,7 @@ public class VimeoAccount implements Serializable {
     }
 
     @Nullable
-    public String getUserJSON() // For AccountManager.userData [AH]
-    {
+    public String getUserJSON() { // For AccountManager.userData [AH]
         if (this.user == null) {
             return null;
         }
@@ -103,11 +116,98 @@ public class VimeoAccount implements Serializable {
             return this.userJSON;
         }
 
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new User.Factory()).create();
 
         this.userJSON = gson.toJson(this.user);
 
         return this.userJSON;
+    }
+
+    public static class VimeoAccountTypeAdapter extends TypeAdapter<VimeoAccount> {
+
+        @NotNull
+        private final UserTypeAdapter mUserTypeAdapter;
+
+        public VimeoAccountTypeAdapter(@NotNull UserTypeAdapter userTypeAdapter) {
+            mUserTypeAdapter = userTypeAdapter;
+        }
+
+        @Override
+        public void write(JsonWriter out, VimeoAccount value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("VimeoAccount null in write()");
+                out.endObject();
+                return;
+            }
+            if (value.accessToken != null) {
+                out.name("access_token").value(value.accessToken);
+            }
+            if (value.tokenType != null) {
+                out.name("token_type").value(value.tokenType);
+            }
+            if (value.scope != null) {
+                out.name("scope").value(value.scope);
+            }
+            if (value.user != null) {
+                out.name("user");
+                mUserTypeAdapter.write(out, value.user);
+            }
+            out.endObject();
+        }
+
+        @Override
+        public VimeoAccount read(JsonReader in) throws IOException {
+            final VimeoAccount vimeoAccount = new VimeoAccount();
+
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "access_token":
+                        vimeoAccount.accessToken = in.nextString();
+                        break;
+                    case "token_type":
+                        vimeoAccount.tokenType = in.nextString();
+                        break;
+                    case "scope":
+                        vimeoAccount.scope = in.nextString();
+                        break;
+                    case "user":
+                        vimeoAccount.user = mUserTypeAdapter.read(in);
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+
+            return vimeoAccount;
+        }
+    }
+
+    public static class Factory implements TypeAdapterFactory {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+            if (VimeoAccount.class.isAssignableFrom(type.getRawType())) {
+                TypeAdapter typeAdapter = gson.getAdapter(User.class);
+                if (typeAdapter instanceof UserTypeAdapter) {
+                    return (TypeAdapter<T>) new VimeoAccountTypeAdapter((UserTypeAdapter) typeAdapter);
+                }
+            }
+
+            // by returning null, Gson will never check this factory if it can handle this TypeToken again [KZ] 6/15/16
+            return null;
+        }
     }
 }

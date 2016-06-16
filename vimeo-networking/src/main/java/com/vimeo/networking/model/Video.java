@@ -22,14 +22,37 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.logging.ClientLogger;
+import com.vimeo.networking.model.Category.CategoryTypeAdapter;
+import com.vimeo.networking.model.Embed.EmbedTypeAdapter;
 import com.vimeo.networking.model.Interaction.Stream;
+import com.vimeo.networking.model.Metadata.MetadataTypeAdapter;
+import com.vimeo.networking.model.PictureCollection.PictureCollectionTypeAdapter;
+import com.vimeo.networking.model.Privacy.PrivacyTypeAdapter;
+import com.vimeo.networking.model.StatsCollection.StatsCollectionTypeAdapter;
+import com.vimeo.networking.model.Tag.TagTypeAdapter;
+import com.vimeo.networking.model.User.UserTypeAdapter;
+import com.vimeo.networking.model.VideoFile.VideoFileTypeAdapter;
 import com.vimeo.networking.model.playback.Play;
+import com.vimeo.networking.model.playback.Play.PlayTypeAdapter;
+import com.vimeo.networking.utils.EnumTypeAdapter;
+import com.vimeo.networking.utils.ISO8601;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -432,6 +455,7 @@ public class Video implements Serializable {
     /**
      * Returns the date the VOD video will expire. In the event that a video is both rented and subscribed,
      * this will return the later expiration date. If they are equal, subscription date will be returned.
+     *
      * @return the expiration date or null if there is no expiration
      */
     @Nullable
@@ -524,4 +548,362 @@ public class Video implements Serializable {
     }
     // </editor-fold>
 
+    @SuppressWarnings("deprecation")
+    public static class VideoTypeAdapter extends TypeAdapter<Video> {
+
+        private final static EnumTypeAdapter<Status> sStatusEnumTypeAdapter =
+                new EnumTypeAdapter<>(Status.class);
+
+        @NotNull
+        private final VideoFileTypeAdapter mVideoFileTypeAdapter;
+        @NotNull
+        private final EmbedTypeAdapter mEmbedTypeAdapter;
+        @NotNull
+        private final PrivacyTypeAdapter mPrivacyTypeAdapter;
+        @NotNull
+        private final TagTypeAdapter mTagTypeAdapter;
+        @NotNull
+        private final StatsCollectionTypeAdapter mStatsCollectionTypeAdapter;
+        @NotNull
+        private final PictureCollectionTypeAdapter mPictureCollectionTypeAdapter;
+        @NotNull
+        private final MetadataTypeAdapter mMetadataTypeAdapter;
+        @NotNull
+        private final UserTypeAdapter mUserTypeAdapter;
+        @NotNull
+        private final CategoryTypeAdapter mCategoryTypeAdapter;
+        @NotNull
+        private final PlayTypeAdapter mPlayTypeAdapter;
+
+        public VideoTypeAdapter(@NotNull VideoFileTypeAdapter videoFileTypeAdapter,
+                                @NotNull EmbedTypeAdapter embedTypeAdapter,
+                                @NotNull PrivacyTypeAdapter privacyTypeAdapter,
+                                @NotNull TagTypeAdapter tagTypeAdapter,
+                                @NotNull StatsCollectionTypeAdapter statsCollectionTypeAdapter,
+                                @NotNull PictureCollectionTypeAdapter pictureCollectionTypeAdapter,
+                                @NotNull MetadataTypeAdapter metadataTypeAdapter,
+                                @NotNull UserTypeAdapter userTypeAdapter,
+                                @NotNull CategoryTypeAdapter categoryTypeAdapter,
+                                @NotNull PlayTypeAdapter playTypeAdapter) {
+            mVideoFileTypeAdapter = videoFileTypeAdapter;
+            mEmbedTypeAdapter = embedTypeAdapter;
+            mPrivacyTypeAdapter = privacyTypeAdapter;
+            mTagTypeAdapter = tagTypeAdapter;
+            mStatsCollectionTypeAdapter = statsCollectionTypeAdapter;
+            mPictureCollectionTypeAdapter = pictureCollectionTypeAdapter;
+            mMetadataTypeAdapter = metadataTypeAdapter;
+            mUserTypeAdapter = userTypeAdapter;
+            mCategoryTypeAdapter = categoryTypeAdapter;
+            mPlayTypeAdapter = playTypeAdapter;
+        }
+
+        @Override
+        public void write(JsonWriter out, Video value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("Video null in write()");
+                out.endObject();
+                return;
+            }
+
+            if (value.uri != null) {
+                out.name("uri").value(value.uri);
+            }
+            if (value.name != null) {
+                out.name("name").value(value.name);
+            }
+            if (value.description != null) {
+                out.name("description").value(value.description);
+            }
+            if (value.link != null) {
+                out.name("link").value(value.link);
+            }
+            out.name("duration").value(value.duration);
+            if (value.files != null) {
+                out.name("files").beginArray();
+                for (final VideoFile videoFile : value.files) {
+                    mVideoFileTypeAdapter.write(out, videoFile);
+                }
+                out.endArray();
+            }
+            out.name("width").value(value.width);
+            out.name("height").value(value.height);
+            if (value.embed != null) {
+                out.name("embed");
+                mEmbedTypeAdapter.write(out, value.embed);
+            }
+            if (value.language != null) {
+                out.name("language").value(value.language);
+            }
+            if (value.createdTime != null) {
+                out.name("created_time").value(ISO8601.fromDate(value.createdTime));
+            }
+            if (value.modifiedTime != null) {
+                out.name("modified_time").value(ISO8601.fromDate(value.modifiedTime));
+            }
+            if (value.releaseTime != null) {
+                out.name("release_time").value(ISO8601.fromDate(value.releaseTime));
+            }
+            if (value.contentRating != null) {
+                out.name("content_rating").beginArray();
+                for (final String option : value.contentRating) {
+                    out.value(option);
+                }
+                out.endArray();
+            }
+            if (value.license != null) {
+                out.name("license").value(value.license);
+            }
+            if (value.privacy != null) {
+                out.name("privacy");
+                mPrivacyTypeAdapter.write(out, value.privacy);
+            }
+            if (value.pictures != null) {
+                out.name("pictures");
+                mPictureCollectionTypeAdapter.write(out, value.pictures);
+            }
+            if (value.tags != null) {
+                out.name("tags").beginArray();
+                for (final Tag tag : value.tags) {
+                    mTagTypeAdapter.write(out, tag);
+                }
+                out.endArray();
+            }
+            if (value.stats != null) {
+                out.name("stats");
+                mStatsCollectionTypeAdapter.write(out, value.stats);
+            }
+            if (value.metadata != null) {
+                out.name("metadata");
+                mMetadataTypeAdapter.write(out, value.metadata);
+            }
+            if (value.user != null) {
+                out.name("user");
+                mUserTypeAdapter.write(out, value.user);
+            }
+            if (value.status != null) {
+                out.name("status");
+                sStatusEnumTypeAdapter.write(out, value.status);
+            }
+            if (value.categories != null) {
+                out.name("categories").beginArray();
+                for (final Category category : value.categories) {
+                    mCategoryTypeAdapter.write(out, category);
+                }
+                out.endArray();
+            }
+            if (value.password != null) {
+                out.name("password").value(value.password);
+            }
+            if (value.reviewLink != null) {
+                out.name("review_link").value(value.reviewLink);
+            }
+            if (value.play != null) {
+                out.name("play");
+                mPlayTypeAdapter.write(out, value.play);
+
+            }
+            if (value.download != null) {
+                out.name("download").beginArray();
+                for (final VideoFile videoFile : value.download) {
+                    mVideoFileTypeAdapter.write(out, videoFile);
+                }
+                out.endArray();
+            }
+            if (value.resourceKey != null) {
+                out.name("resource_key").value(value.resourceKey);
+            }
+
+            out.endObject();
+        }
+
+        @Override
+        public Video read(JsonReader in) throws IOException {
+            final Video video = new Video();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "uri":
+                        video.uri = in.nextString();
+                        break;
+                    case "name":
+                        video.name = in.nextString();
+                        break;
+                    case "description":
+                        video.description = in.nextString();
+                        break;
+                    case "link":
+                        video.link = in.nextString();
+                        break;
+                    case "duration":
+                        video.duration = in.nextInt();
+                        break;
+                    case "files":
+                        in.beginArray();
+                        video.files = new ArrayList<>();
+                        while (in.hasNext()) {
+                            video.files.add(mVideoFileTypeAdapter.read(in));
+                        }
+                        in.endArray();
+                        break;
+                    case "width":
+                        video.width = in.nextInt();
+                        break;
+                    case "height":
+                        video.height = in.nextInt();
+                        break;
+                    case "embed":
+                        video.embed = mEmbedTypeAdapter.read(in);
+                        break;
+                    case "language":
+                        video.language = in.nextString();
+                        break;
+                    case "created_time":
+                        try {
+                            video.createdTime = ISO8601.toDate(in.nextString());
+                        } catch (ParseException e) {
+                            ClientLogger.e("Error parsing Video date", e);
+                        }
+                        break;
+                    case "modified_time":
+                        try {
+                            video.modifiedTime = ISO8601.toDate(in.nextString());
+                        } catch (ParseException e) {
+                            ClientLogger.e("Error parsing Video date", e);
+                        }
+                        break;
+                    case "release_time":
+                        try {
+                            video.releaseTime = ISO8601.toDate(in.nextString());
+                        } catch (ParseException e) {
+                            ClientLogger.e("Error parsing Video date", e);
+                        }
+                        break;
+                    case "content_rating":
+                        in.beginArray();
+                        video.contentRating = new ArrayList<>();
+                        while (in.hasNext()) {
+                            video.contentRating.add(in.nextString());
+                        }
+                        in.endArray();
+                        break;
+                    case "license":
+                        video.license = in.nextString();
+                        break;
+                    case "privacy":
+                        video.privacy = mPrivacyTypeAdapter.read(in);
+                        break;
+                    case "pictures":
+                        video.pictures = mPictureCollectionTypeAdapter.read(in);
+                        break;
+                    case "tags":
+                        in.beginArray();
+                        video.tags = new ArrayList<>();
+                        while (in.hasNext()) {
+                            video.tags.add(mTagTypeAdapter.read(in));
+                        }
+                        in.endArray();
+                        break;
+                    case "stats":
+                        video.stats = mStatsCollectionTypeAdapter.read(in);
+                        break;
+                    case "metadata":
+                        video.metadata = mMetadataTypeAdapter.read(in);
+                        break;
+                    case "user":
+                        video.user = mUserTypeAdapter.read(in);
+                        break;
+                    case "status":
+                        video.status = sStatusEnumTypeAdapter.read(in);
+                        break;
+                    case "categories":
+                        in.beginArray();
+                        video.categories = new ArrayList<>();
+                        while (in.hasNext()) {
+                            video.categories.add(mCategoryTypeAdapter.read(in));
+                        }
+                        in.endArray();
+                        break;
+                    case "password":
+                        video.password = in.nextString();
+                        break;
+                    case "review_link":
+                        video.reviewLink = in.nextString();
+                        break;
+                    case "play":
+                        video.play = mPlayTypeAdapter.read(in);
+                        break;
+                    case "download":
+                        in.beginArray();
+                        video.download = new ArrayList<>();
+                        while (in.hasNext()) {
+                            video.download.add(mVideoFileTypeAdapter.read(in));
+                        }
+                        in.endArray();
+                        break;
+                    case "resource_key":
+                        video.resourceKey = in.nextString();
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return video;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public static class Factory implements TypeAdapterFactory {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken) {
+            if (Video.class.isAssignableFrom(typeToken.getRawType())) {
+                TypeAdapter videoFileTypeAdapter = gson.getAdapter(VideoFile.class);
+                TypeAdapter embedTypeAdapter = gson.getAdapter(Embed.class);
+                TypeAdapter privacyTypeAdapter = gson.getAdapter(Privacy.class);
+                TypeAdapter tagTypeAdapter = gson.getAdapter(Tag.class);
+                TypeAdapter statsCollectionTypeAdapter = gson.getAdapter(StatsCollection.class);
+                TypeAdapter pictureCollectionTypeAdapter = gson.getAdapter(PictureCollection.class);
+                TypeAdapter metadataTypeAdapter = gson.getAdapter(Metadata.class);
+                TypeAdapter userTypeAdapter = gson.getAdapter(User.class);
+                TypeAdapter categoryTypeAdapter = gson.getAdapter(Category.class);
+                TypeAdapter playTypeAdapter = gson.getAdapter(Play.class);
+                if (videoFileTypeAdapter instanceof VideoFileTypeAdapter &&
+                    embedTypeAdapter instanceof EmbedTypeAdapter &&
+                    privacyTypeAdapter instanceof PrivacyTypeAdapter &&
+                    tagTypeAdapter instanceof TagTypeAdapter &&
+                    statsCollectionTypeAdapter instanceof StatsCollectionTypeAdapter &&
+                    pictureCollectionTypeAdapter instanceof PictureCollectionTypeAdapter &&
+                    metadataTypeAdapter instanceof MetadataTypeAdapter &&
+                    userTypeAdapter instanceof UserTypeAdapter &&
+                    categoryTypeAdapter instanceof CategoryTypeAdapter &&
+                    playTypeAdapter instanceof PlayTypeAdapter) {
+                    return (TypeAdapter<T>) new VideoTypeAdapter((VideoFileTypeAdapter) videoFileTypeAdapter,
+                                                                 (EmbedTypeAdapter) embedTypeAdapter,
+                                                                 (PrivacyTypeAdapter) privacyTypeAdapter,
+                                                                 (TagTypeAdapter) tagTypeAdapter,
+                                                                 (StatsCollectionTypeAdapter) statsCollectionTypeAdapter,
+                                                                 (PictureCollectionTypeAdapter) pictureCollectionTypeAdapter,
+                                                                 (MetadataTypeAdapter) metadataTypeAdapter,
+                                                                 (UserTypeAdapter) userTypeAdapter,
+                                                                 (CategoryTypeAdapter) categoryTypeAdapter,
+                                                                 (PlayTypeAdapter) playTypeAdapter);
+                }
+            }
+
+            // by returning null, Gson will never check this factory if it can handle this TypeToken again [KZ] 6/15/16
+            return null;
+        }
+    }
 }

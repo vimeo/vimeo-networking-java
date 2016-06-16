@@ -22,12 +22,26 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.model.playback.VideoLog;
+import com.vimeo.networking.model.playback.VideoLog.VideoLogTypeAdapter;
+import com.vimeo.networking.utils.EnumTypeAdapter;
+import com.vimeo.networking.utils.ISO8601;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -35,6 +49,7 @@ import java.util.Date;
  * <p/>
  * Created by alfredhanssen on 4/25/15.
  */
+@SuppressWarnings("deprecation")
 public class VideoFile implements Serializable {
 
     public enum MimeType {
@@ -46,7 +61,7 @@ public class VideoFile implements Serializable {
         @SerializedName("vp6/x-video")
         VP6("vp6/x-video"); // Flash
 
-        private String string;
+        private final String string;
 
         MimeType(String string) {
             this.string = string;
@@ -71,7 +86,7 @@ public class VideoFile implements Serializable {
         @SerializedName("mobile")
         MOBILE("mobile");
 
-        private String string;
+        private final String string;
 
         VideoQuality(String string) {
             this.string = string;
@@ -223,4 +238,151 @@ public class VideoFile implements Serializable {
         return this.getLink() != null ? this.getLink().hashCode() : 0;
     }
     // </editor-fold>
+
+    public static class VideoFileTypeAdapter extends TypeAdapter<VideoFile> {
+
+        private final static EnumTypeAdapter<MimeType> sMimeTypeEnumTypeAdapter =
+                new EnumTypeAdapter<>(MimeType.class);
+        private final static EnumTypeAdapter<VideoQuality> sVideoQualityEnumTypeAdapter =
+                new EnumTypeAdapter<>(VideoQuality.class);
+
+        @NotNull
+        private final VideoLogTypeAdapter mVideoLogTypeAdapter;
+
+        public VideoFileTypeAdapter(@NotNull VideoLogTypeAdapter videoLogTypeAdapter) {
+            mVideoLogTypeAdapter = videoLogTypeAdapter;
+        }
+
+        @Override
+        public void write(JsonWriter out, VideoFile value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("Comment null in write()");
+                out.endObject();
+                return;
+            }
+            if (value.expires != null) {
+                out.name("expires").value(ISO8601.fromDate(value.expires));
+            }
+            if (value.linkExpirationTime != null) {
+                out.name("link_expiration_time").value(ISO8601.fromDate(value.linkExpirationTime));
+            }
+            if (value.link != null) {
+                out.name("link").value(value.link);
+            }
+            if (value.log != null) {
+                out.name("log");
+                mVideoLogTypeAdapter.write(out, value.log);
+            }
+            if (value.quality != null) {
+                out.name("quality");
+                sVideoQualityEnumTypeAdapter.write(out, value.quality);
+            }
+            if (value.type != null) {
+                out.name("type");
+                sMimeTypeEnumTypeAdapter.write(out, value.type);
+            }
+            out.name("fps").value(value.fps);
+            out.name("width").value(value.width);
+            out.name("height").value(value.height);
+            out.name("size").value(value.size);
+            if (value.md5 != null) {
+                out.name("md5").value(value.md5);
+            }
+            if (value.createdTime != null) {
+                out.name("created_time").value(ISO8601.fromDate(value.createdTime));
+            }
+
+            out.endObject();
+        }
+
+        @Override
+        public VideoFile read(JsonReader in) throws IOException {
+            final VideoFile videoFile = new VideoFile();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "expires":
+                        try {
+                            videoFile.expires = ISO8601.toDate(in.nextString());
+                        } catch (ParseException e) {
+                            ClientLogger.e("Error parsing VideoFile date", e);
+                        }
+                        break;
+                    case "link_expiration_time":
+                        try {
+                            videoFile.linkExpirationTime = ISO8601.toDate(in.nextString());
+                        } catch (ParseException e) {
+                            ClientLogger.e("Error parsing VideoFile date", e);
+                        }
+                        break;
+                    case "link":
+                        videoFile.link = in.nextString();
+                        break;
+                    case "log":
+                        videoFile.log = mVideoLogTypeAdapter.read(in);
+                        break;
+                    case "quality":
+                        videoFile.quality = sVideoQualityEnumTypeAdapter.read(in);
+                        break;
+                    case "type":
+                        videoFile.type = sMimeTypeEnumTypeAdapter.read(in);
+                        break;
+                    case "fps":
+                        videoFile.fps = in.nextDouble();
+                        break;
+                    case "width":
+                        videoFile.width = in.nextInt();
+                        break;
+                    case "height":
+                        videoFile.height = in.nextInt();
+                        break;
+                    case "size":
+                        videoFile.size = in.nextLong();
+                        break;
+                    case "md5":
+                        videoFile.md5 = in.nextString();
+                        break;
+                    case "created_time":
+                        try {
+                            videoFile.createdTime = ISO8601.toDate(in.nextString());
+                        } catch (ParseException e) {
+                            ClientLogger.e("Error parsing VideoFile date", e);
+                        }
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return videoFile;
+        }
+    }
+
+    public static class Factory implements TypeAdapterFactory {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken) {
+            if (VideoFile.class.isAssignableFrom(typeToken.getRawType())) {
+                TypeAdapter videoLogTypeAdapter = gson.getAdapter(VideoLog.class);
+                if (videoLogTypeAdapter instanceof VideoLogTypeAdapter) {
+                    return (TypeAdapter<T>) new VideoFileTypeAdapter(
+                            (VideoLogTypeAdapter) videoLogTypeAdapter);
+                }
+            }
+
+            // by returning null, Gson will never check this factory if it can handle this TypeToken again [KZ] 6/15/16
+            return null;
+        }
+    }
 }
