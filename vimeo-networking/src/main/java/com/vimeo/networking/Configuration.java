@@ -23,8 +23,7 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.Vimeo.LogLevel;
-import com.vimeo.networking.logging.DebugLogger;
-import com.vimeo.networking.logging.DebugLoggerInterface;
+import com.vimeo.networking.logging.LogProvider;
 import com.vimeo.networking.model.VimeoAccount;
 
 import org.jetbrains.annotations.Nullable;
@@ -79,7 +78,8 @@ public class Configuration {
     public int timeout; // in seconds
 
     public boolean certPinningEnabled;
-    public DebugLoggerInterface debugLogger;
+    @Nullable
+    public LogProvider logProvider;
     public LogLevel logLevel;
 
     /**
@@ -160,7 +160,7 @@ public class Configuration {
         this.timeout = builder.timeout;
 
         this.certPinningEnabled = builder.certPinningEnabled;
-        this.debugLogger = builder.debugLogger;
+        this.logProvider = builder.logProvider;
         this.logLevel = builder.logLevel;
         this.networkInterceptors.addAll(builder.networkInterceptors);
         this.interceptors.addAll(builder.interceptors);
@@ -204,7 +204,8 @@ public class Configuration {
 
         private boolean certPinningEnabled = true;
         // Default to the stock logger which just prints - this makes it optional
-        public DebugLoggerInterface debugLogger = new DebugLogger();
+        @Nullable
+        public LogProvider logProvider;
         public LogLevel logLevel = LogLevel.DEBUG;
 
         /**
@@ -327,8 +328,8 @@ public class Configuration {
             return this;
         }
 
-        public Builder setDebugLogger(DebugLoggerInterface debugLogger) {
-            this.debugLogger = debugLogger;
+        public Builder setDebugLogger(LogProvider logProvider) {
+            this.logProvider = logProvider;
             return this;
         }
 

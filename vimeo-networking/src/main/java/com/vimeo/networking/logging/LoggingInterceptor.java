@@ -47,55 +47,47 @@ import okio.Buffer;
  */
 public class LoggingInterceptor implements Interceptor {
 
-    private DebugLoggerInterface logger;
-    private int logLevel;
-
-    public LoggingInterceptor(DebugLoggerInterface logger, LogLevel logLevel) {
-        this.logger = logger;
-        this.logLevel = logLevel.ordinal();
-    }
-
     @Override
     public Response intercept(Chain chain) throws IOException {
-        if (logLevel <= LogLevel.DEBUG.ordinal()) {
+        if (ClientLogger.getLogLevel().ordinal() <= LogLevel.DEBUG.ordinal()) {
             Request request = chain.request();
 
             HttpUrl httpUrl = request.url();
 
             long t1 = System.nanoTime();
-            logger.d("--------- REQUEST ---------");
-            logger.d("METHOD: " + request.method());
-            logger.d("ENDPOINT: " + httpUrl.encodedPath());
+            ClientLogger.d("--------- REQUEST ---------");
+            ClientLogger.d("METHOD: " + request.method());
+            ClientLogger.d("ENDPOINT: " + httpUrl.encodedPath());
             try {
                 if (request.body() != null && shouldLogVerbose()) {
-                    logger.v("QUERY: " + httpUrl.query());
-                    logger.v("--------- REQUEST BODY ---------");
+                    ClientLogger.v("QUERY: " + httpUrl.query());
+                    ClientLogger.v("--------- REQUEST BODY ---------");
                     Request copy = request.newBuilder().build();
                     Buffer requestBuffer = new Buffer();
                     copy.body().writeTo(requestBuffer);
                     verboseLogLongJson(requestBuffer.readUtf8());
-                    logger.v("--------- REQUEST BODY END ---------");
+                    ClientLogger.v("--------- REQUEST BODY END ---------");
                 }
             } catch (Exception e) {
-                logger.e("Exception in LoggingInterceptor", e);
+                ClientLogger.e("Exception in LoggingInterceptor", e);
             }
-            logger.d("--------- REQUEST END ---------");
+            ClientLogger.d("--------- REQUEST END ---------");
 
             Response response = chain.proceed(request);
             long t2 = System.nanoTime();
 
-            logger.d("--------- RESPONSE ---------");
-            logger.d("ENDPOINT: " + httpUrl.encodedPath());
-            logger.d("STATUS CODE: " + response.code());
-            logger.d(String.format("REQUEST TIME: %.1fms", (t2 - t1) / 1e6d));
+            ClientLogger.d("--------- RESPONSE ---------");
+            ClientLogger.d("ENDPOINT: " + httpUrl.encodedPath());
+            ClientLogger.d("STATUS CODE: " + response.code());
+            ClientLogger.d(String.format("REQUEST TIME: %.1fms", (t2 - t1) / 1e6d));
 
             String responseBodyString = response.body().string();
             if (shouldLogVerbose()) {
-                logger.v("--------- RESPONSE BODY ---------");
+                ClientLogger.v("--------- RESPONSE BODY ---------");
                 verboseLogLongJson(responseBodyString);
-                logger.v("--------- RESPONSE BODY END ---------");
+                ClientLogger.v("--------- RESPONSE BODY END ---------");
             }
-            logger.d("--------- RESPONSE END ---------");
+            ClientLogger.d("--------- RESPONSE END ---------");
 
             // You need to reconstruct the body because it can only be read once 1/27/16 [KV]
             return response.newBuilder()
@@ -107,7 +99,7 @@ public class LoggingInterceptor implements Interceptor {
     }
 
     private boolean shouldLogVerbose() {
-        return logLevel <= LogLevel.VERBOSE.ordinal();
+        return ClientLogger.getLogLevel().ordinal() <= LogLevel.VERBOSE.ordinal();
     }
 
     private void verboseLogLongJson(String jsonString) {
@@ -117,7 +109,7 @@ public class LoggingInterceptor implements Interceptor {
             int start = i * maxLogSize;
             int end = (i + 1) * maxLogSize;
             end = end > veryLongString.length() ? veryLongString.length() : end;
-            logger.v(veryLongString.substring(start, end));
+            ClientLogger.v(veryLongString.substring(start, end));
         }
     }
 
@@ -136,7 +128,7 @@ public class LoggingInterceptor implements Interceptor {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 prettyString = gson.toJson(json);
             } catch (Exception e) {
-                logger.e("Error making body pretty response/request");
+                ClientLogger.e("Error making body pretty response/request");
             }
         }
         return prettyString;

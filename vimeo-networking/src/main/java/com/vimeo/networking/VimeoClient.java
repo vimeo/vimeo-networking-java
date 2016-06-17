@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
@@ -112,6 +113,8 @@ public class VimeoClient {
         this.cache = this.configuration.getCache();
         this.retrofit = createRetrofit();
         this.vimeoService = retrofit.create(VimeoService.class);
+        ClientLogger.setLogProvider(this.configuration.logProvider);
+        ClientLogger.setLogLevel(this.configuration.logLevel);
 
         VimeoAccount vimeoAccount = this.configuration.loadAccount();
         this.setVimeoAccount(vimeoAccount);
@@ -140,8 +143,7 @@ public class VimeoClient {
                 })
                 .setReadTimeout(this.configuration.timeout, TimeUnit.SECONDS)
                 .setConnectionTimeout(this.configuration.timeout, TimeUnit.SECONDS)
-                .addInterceptor(
-                        new LoggingInterceptor(this.configuration.debugLogger, this.configuration.logLevel))
+                .addInterceptor(new LoggingInterceptor())
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -166,7 +168,7 @@ public class VimeoClient {
             try {
                 retrofitClientBuilder.pinCertificates();
             } catch (Exception e) {
-                this.configuration.debugLogger.e("Exception when pinning certificate: " + e.getMessage(), e);
+                ClientLogger.e("Exception when pinning certificate: " + e.getMessage(), e);
             }
         }
 
@@ -178,10 +180,10 @@ public class VimeoClient {
             if (this.cache != null) {
                 this.cache.evictAll();
             } else {
-                configuration.debugLogger.e("Attempt to clear null cache");
+                ClientLogger.e("Attempt to clear null cache");
             }
         } catch (IOException e) {
-            configuration.debugLogger.e("Cache clearing error: " + e.getMessage(), e);
+            ClientLogger.e("Cache clearing error: " + e.getMessage(), e);
         }
     }
 

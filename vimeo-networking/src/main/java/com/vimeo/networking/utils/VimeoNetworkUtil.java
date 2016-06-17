@@ -27,6 +27,36 @@ package com.vimeo.networking.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.vimeo.networking.model.Category;
+import com.vimeo.networking.model.Comment;
+import com.vimeo.networking.model.CommentList;
+import com.vimeo.networking.model.Connection;
+import com.vimeo.networking.model.ConnectionCollection;
+import com.vimeo.networking.model.Email;
+import com.vimeo.networking.model.Embed;
+import com.vimeo.networking.model.Interaction;
+import com.vimeo.networking.model.InteractionCollection;
+import com.vimeo.networking.model.Metadata;
+import com.vimeo.networking.model.Paging;
+import com.vimeo.networking.model.Picture;
+import com.vimeo.networking.model.PictureCollection;
+import com.vimeo.networking.model.PictureResource;
+import com.vimeo.networking.model.Preferences;
+import com.vimeo.networking.model.Privacy;
+import com.vimeo.networking.model.Quota;
+import com.vimeo.networking.model.Space;
+import com.vimeo.networking.model.StatsCollection;
+import com.vimeo.networking.model.Tag;
+import com.vimeo.networking.model.UploadQuota;
+import com.vimeo.networking.model.User;
+import com.vimeo.networking.model.Video;
+import com.vimeo.networking.model.VideoFile;
+import com.vimeo.networking.model.VideoList;
+import com.vimeo.networking.model.VideosPreference;
+import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking.model.Website;
+import com.vimeo.networking.model.playback.Play;
+import com.vimeo.networking.model.playback.VideoLog;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -48,18 +78,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * <p/>
  * Created by kylevenn on 10/30/15.
  */
-public class VimeoNetworkUtil {
+public final class VimeoNetworkUtil {
+
+    private static Gson sGson;
+
+    private VimeoNetworkUtil() {
+    }
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
      * </p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
+     * Example date: "2015-05-21T14:24:03+00:00"
+     * <p/>
+     * This only creates the Gson instance once, then uses it, so that subsequent calls to this method do
+     * not recreate the Gson object. This makes the Gson object more efficient, as it will learn what classes
+     * it has TypeAdapters for.
      *
      * @return Gson object that can be passed into a {@link GsonConverterFactory} create() method
      */
     public static Gson getGson() {
-        // Example date: "2015-05-21T14:24:03+00:00"
-        return getGsonBuilder().create();
+        if (sGson == null) {
+            sGson = getGsonBuilder().create();
+        }
+        return sGson;
     }
 
     /**
@@ -73,7 +115,38 @@ public class VimeoNetworkUtil {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(Date.class, ISO8601.getDateSerializer())
-                .registerTypeAdapter(Date.class, ISO8601.getDateDeserializer());
+                .registerTypeAdapter(Date.class, ISO8601.getDateDeserializer())
+                .registerTypeAdapter(Email.class, new Email.EmailTypeAdapter())
+                .registerTypeAdapter(Paging.class, new Paging.PagingTypeAdapter())
+                .registerTypeAdapter(Privacy.class, new Privacy.PrivacyTypeAdapter())
+                .registerTypeAdapter(StatsCollection.class, new StatsCollection.StatsCollectionTypeAdapter())
+                .registerTypeAdapter(Embed.class, new Embed.EmbedTypeAdapter())
+                .registerTypeAdapter(VideoLog.class, new VideoLog.VideoLogTypeAdapter())
+                .registerTypeAdapterFactory(new VideoFile.Factory())
+                .registerTypeAdapter(PictureResource.class, new PictureResource.PictureResourceTypeAdapter())
+                .registerTypeAdapter(Interaction.class, new Interaction.InteractionTypeAdapter())
+                .registerTypeAdapterFactory(new InteractionCollection.Factory())
+                .registerTypeAdapter(Connection.class, new Connection.ConnectionTypeAdapter())
+                .registerTypeAdapterFactory(new ConnectionCollection.Factory())
+                .registerTypeAdapter(Picture.class, new Picture.PictureTypeAdapter())
+                .registerTypeAdapterFactory(new PictureCollection.Factory())
+                .registerTypeAdapterFactory(new Metadata.Factory())
+                .registerTypeAdapter(VideosPreference.class,
+                                     new VideosPreference.VideosPreferenceTypeAdapter())
+                .registerTypeAdapterFactory(new Preferences.Factory())
+                .registerTypeAdapter(Website.class, new Website.WebsiteTypeAdapter())
+                .registerTypeAdapter(Quota.class, new Quota.QuotaTypeAdapter())
+                .registerTypeAdapter(Space.class, new Space.SpaceTypeAdapter())
+                .registerTypeAdapterFactory(new UploadQuota.Factory())
+                .registerTypeAdapterFactory(new User.Factory())
+                .registerTypeAdapterFactory(new Comment.Factory())
+                .registerTypeAdapterFactory(new VimeoAccount.Factory())
+                .registerTypeAdapterFactory(new Tag.Factory())
+                .registerTypeAdapterFactory(new Category.Factory())
+                .registerTypeAdapterFactory(new Play.Factory())
+                .registerTypeAdapterFactory(new Video.Factory())
+                .registerTypeAdapterFactory(new VideoList.Factory())
+                .registerTypeAdapterFactory(new CommentList.Factory());
         /** Refer to {@link ISO8601} for explanation of deserialization */
         // .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ")
     }

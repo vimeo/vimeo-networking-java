@@ -22,11 +22,20 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
+import com.vimeo.networking.utils.EnumTypeAdapter;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * Privacy for a video
+ * <p/>
  * Created by hanssena on 4/23/15.
  */
 public class Privacy implements Serializable {
@@ -59,20 +68,20 @@ public class Privacy implements Serializable {
         @SerializedName(PRIVACY_DISABLE)
         DISABLE(PRIVACY_DISABLE);
 
-        private final String text;
+        private final String mText;
 
         PrivacyValue(String text) {
-            this.text = text;
+            this.mText = text;
         }
 
         public String getText() {
-            return this.text;
+            return this.mText;
         }
 
         public static PrivacyValue privacyValueFromString(String string) {
             if (string != null) {
                 for (PrivacyValue privacyValue : PrivacyValue.values()) {
-                    if (string.equalsIgnoreCase(privacyValue.text)) {
+                    if (string.equalsIgnoreCase(privacyValue.mText)) {
                         return privacyValue;
                     }
                 }
@@ -86,4 +95,73 @@ public class Privacy implements Serializable {
     public boolean download;
     public boolean add;
     public PrivacyValue comments;
+
+    public static class PrivacyTypeAdapter extends TypeAdapter<Privacy> {
+
+        private final static EnumTypeAdapter<PrivacyValue> sPrivacyValueEnumTypeAdapter =
+                new EnumTypeAdapter<>(PrivacyValue.class);
+
+        @Override
+        public void write(JsonWriter out, Privacy value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("Privacy null in write()");
+                out.endObject();
+                return;
+            }
+            if (value.view != null) {
+                out.name("view");
+                sPrivacyValueEnumTypeAdapter.write(out, value.view);
+            }
+            if (value.embed != null) {
+                out.name("embed").value(value.embed);
+            }
+            out.name("download").value(value.download);
+            out.name("add").value(value.add);
+            if (value.comments != null) {
+                out.name("comments");
+                sPrivacyValueEnumTypeAdapter.write(out, value.comments);
+            }
+
+            out.endObject();
+        }
+
+        @Override
+        public Privacy read(JsonReader in) throws IOException {
+            final Privacy privacy = new Privacy();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "view":
+                        privacy.view = sPrivacyValueEnumTypeAdapter.read(in);
+                        break;
+                    case "embed":
+                        privacy.embed = in.nextString();
+                        break;
+                    case "download":
+                        privacy.download = in.nextBoolean();
+                        break;
+                    case "add":
+                        privacy.add = in.nextBoolean();
+                        break;
+                    case "comments":
+                        privacy.comments = sPrivacyValueEnumTypeAdapter.read(in);
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return privacy;
+        }
+    }
 }

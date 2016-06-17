@@ -24,9 +24,18 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+import com.vimeo.networking.logging.ClientLogger;
+
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * Quota for uploads
+ * <p/>
  * Created by kylevenn on 8/19/15.
  */
 public class Quota implements Serializable {
@@ -35,4 +44,50 @@ public class Quota implements Serializable {
 
     public boolean hd;
     public boolean sd;
+
+    public static class QuotaTypeAdapter extends TypeAdapter<Quota> {
+
+        @Override
+        public void write(JsonWriter out, Quota value) throws IOException {
+            out.beginObject();
+            if (value == null) {
+                ClientLogger.d("Quota null in write()");
+                out.endObject();
+                return;
+            }
+            out.name("hd").value(value.hd);
+            out.name("sd").value(value.sd);
+
+            out.endObject();
+        }
+
+        @Override
+        public Quota read(JsonReader in) throws IOException {
+            final Quota quota = new Quota();
+            in.beginObject();
+            while (in.hasNext()) {
+                String nextName = in.nextName();
+                JsonToken jsonToken = in.peek();
+                if (jsonToken == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
+                switch (nextName) {
+                    case "hd":
+                        quota.hd = in.nextBoolean();
+                        break;
+                    case "sd":
+                        quota.sd = in.nextBoolean();
+                        break;
+                    default:
+                        // skip any values that we do not account for, without this, the app will crash if the
+                        // api provides more values than we have! [KZ] 6/15/16
+                        in.skipValue();
+                        break;
+                }
+            }
+            in.endObject();
+            return quota;
+        }
+    }
 }
