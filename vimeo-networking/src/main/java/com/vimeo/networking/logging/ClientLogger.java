@@ -24,7 +24,9 @@
 
 package com.vimeo.networking.logging;
 
-import com.vimeo.networking.VimeoClient;
+import com.vimeo.networking.Vimeo.LogLevel;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Simple utility class to delegate logging when it is not known whether VimeoClient has been initialized yet
@@ -33,44 +35,63 @@ import com.vimeo.networking.VimeoClient;
  */
 public final class ClientLogger {
 
-    private static DebugLoggerInterface sLogger;
+    @Nullable
+    private static LogProvider sLoggerProvider;
+    private static LogLevel sLogLevel = LogLevel.DEBUG;;
 
     private ClientLogger() {
     }
 
-    private static void initializeLogger() {
-        if (sLogger == null) {
-            VimeoClient vimeoClient = null;
-            try {
-                vimeoClient = VimeoClient.getInstance();
-            } catch (AssertionError e) {
-                //VimeoClient has yet to be instantiated, but the user of this class may not care
-            }
-            if (vimeoClient != null) {
-                sLogger = vimeoClient.getDebugLogger();
+    public static void setLogProvider(@Nullable LogProvider logProvider) {
+        sLoggerProvider = logProvider;
+    }
+
+    public static void setLogLevel(LogLevel logLevel) {
+        sLogLevel = logLevel;
+    }
+
+    public static LogLevel getLogLevel(){
+        return sLogLevel;
+    }
+
+    public static void e(String error) {
+        if(sLogLevel.ordinal() <= LogLevel.ERROR.ordinal()) {
+            if (sLoggerProvider != null) {
+                sLoggerProvider.e(error);
             } else {
-                sLogger = new DebugLogger();
+                System.out.println(error);
             }
         }
     }
 
-    public static void e(String error) {
-        initializeLogger();
-        sLogger.e(error);
-    }
-
     public static void e(String error, Exception exception) {
-        initializeLogger();
-        sLogger.e(error, exception);
+        if(sLogLevel.ordinal() <= LogLevel.ERROR.ordinal()) {
+            if (sLoggerProvider != null) {
+                sLoggerProvider.e(error, exception);
+            } else {
+                System.out.println(error);
+                exception.printStackTrace();
+            }
+        }
     }
 
     public static void d(String debug) {
-        initializeLogger();
-        sLogger.d(debug);
+        if(sLogLevel.ordinal() <= LogLevel.DEBUG.ordinal()) {
+            if (sLoggerProvider != null) {
+                sLoggerProvider.d(debug);
+            } else {
+                System.out.println(debug);
+            }
+        }
     }
 
     public static void v(String verbose) {
-        initializeLogger();
-        sLogger.v(verbose);
+        if(sLogLevel.ordinal() <= LogLevel.VERBOSE.ordinal()) {
+            if (sLoggerProvider != null) {
+                sLoggerProvider.v(verbose);
+            } else {
+                System.out.println(verbose);
+            }
+        }
     }
 }
