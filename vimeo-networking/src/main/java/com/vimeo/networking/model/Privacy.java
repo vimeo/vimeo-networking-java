@@ -69,10 +69,10 @@ public class Privacy implements Serializable {
             return this.text;
         }
 
-        public static PrivacyValue privacyValueFromString(String text) {
-            if (text != null) {
+        public static PrivacyValue privacyValueFromString(String string) {
+            if (string != null) {
                 for (PrivacyValue privacyValue : PrivacyValue.values()) {
-                    if (text.equalsIgnoreCase(privacyValue.text)) {
+                    if (string.equalsIgnoreCase(privacyValue.text)) {
                         return privacyValue;
                     }
                 }
@@ -85,5 +85,5 @@ public class Privacy implements Serializable {
     public String embed;
     public boolean download;
     public boolean add;
-    public String comments;
+    public PrivacyValue comments;
 }
