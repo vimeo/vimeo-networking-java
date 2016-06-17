@@ -32,6 +32,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.logging.ClientLogger;
+import com.vimeo.networking.model.Email.EmailTypeAdapter;
 import com.vimeo.networking.model.Metadata.MetadataTypeAdapter;
 import com.vimeo.networking.model.PictureCollection.PictureCollectionTypeAdapter;
 import com.vimeo.networking.model.Preferences.PreferencesTypeAdapter;
@@ -315,6 +316,8 @@ public class User implements Serializable {
         @NotNull
         private final UploadQuotaTypeAdapter mUploadQuotaTypeAdapter;
         @NotNull
+        private final EmailTypeAdapter mEmailTypeAdapter;
+        @NotNull
         private final WebsiteTypeAdapter mWebsiteTypeAdapter;
         @NotNull
         private final MetadataTypeAdapter mMetadataTypeAdapter;
@@ -324,11 +327,13 @@ public class User implements Serializable {
         private final PictureCollectionTypeAdapter mPictureCollectionTypeAdapter;
 
         public UserTypeAdapter(@NotNull UploadQuotaTypeAdapter uploadQuotaTypeAdapter,
+                               @NotNull EmailTypeAdapter emailTypeAdapter,
                                @NotNull WebsiteTypeAdapter websiteTypeAdapter,
                                @NotNull MetadataTypeAdapter metadataTypeAdapter,
                                @NotNull PreferencesTypeAdapter preferencesTypeAdapter,
                                @NotNull PictureCollectionTypeAdapter pictureCollectionTypeAdapter) {
             mUploadQuotaTypeAdapter = uploadQuotaTypeAdapter;
+            mEmailTypeAdapter = emailTypeAdapter;
             mWebsiteTypeAdapter = websiteTypeAdapter;
             mMetadataTypeAdapter = metadataTypeAdapter;
             mPreferencesTypeAdapter = preferencesTypeAdapter;
@@ -368,6 +373,13 @@ public class User implements Serializable {
                 out.name("pictures");
                 mPictureCollectionTypeAdapter.write(out, value.pictures);
             }
+            out.name("emails").beginArray();
+            if (value.emails != null) {
+                for (final Email email : value.emails) {
+                    mEmailTypeAdapter.write(out, email);
+                }
+            }
+            out.endArray();
             out.name("websites").beginArray();
             if (value.websites != null) {
                 for (final Website website : value.websites) {
@@ -431,6 +443,14 @@ public class User implements Serializable {
                     case "pictures":
                         user.pictures = mPictureCollectionTypeAdapter.read(in);
                         break;
+                    case "emails":
+                        in.beginArray();
+                        user.emails = new ArrayList<>();
+                        while (in.hasNext()) {
+                            user.emails.add(mEmailTypeAdapter.read(in));
+                        }
+                        in.endArray();
+                        break;
                     case "websites":
                         in.beginArray();
                         user.websites = new ArrayList<>();
@@ -467,18 +487,20 @@ public class User implements Serializable {
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
             if (User.class.isAssignableFrom(type.getRawType())) {
                 TypeAdapter uploadQuotaTypeAdapter = gson.getAdapter(UploadQuota.class);
+                TypeAdapter emailTypeAdapter = gson.getAdapter(Email.class);
                 TypeAdapter websiteTypeAdapter = gson.getAdapter(Website.class);
                 TypeAdapter pictureCollectionTypeAdapter = gson.getAdapter(PictureCollection.class);
                 TypeAdapter metadataTypeAdapter = gson.getAdapter(Metadata.class);
                 TypeAdapter preferencesTypeAdapter = gson.getAdapter(Preferences.class);
                 if (uploadQuotaTypeAdapter instanceof UploadQuotaTypeAdapter &&
                     pictureCollectionTypeAdapter instanceof PictureCollectionTypeAdapter &&
+                    emailTypeAdapter instanceof EmailTypeAdapter &&
                     websiteTypeAdapter instanceof WebsiteTypeAdapter &&
                     metadataTypeAdapter instanceof MetadataTypeAdapter &&
                     preferencesTypeAdapter instanceof PreferencesTypeAdapter) {
                     return (TypeAdapter<T>) new UserTypeAdapter(
                             (UploadQuotaTypeAdapter) uploadQuotaTypeAdapter,
-                            (WebsiteTypeAdapter) websiteTypeAdapter,
+                            (EmailTypeAdapter) emailTypeAdapter, (WebsiteTypeAdapter) websiteTypeAdapter,
                             (MetadataTypeAdapter) metadataTypeAdapter,
                             (PreferencesTypeAdapter) preferencesTypeAdapter,
                             (PictureCollectionTypeAdapter) pictureCollectionTypeAdapter);

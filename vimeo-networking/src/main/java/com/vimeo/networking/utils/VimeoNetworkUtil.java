@@ -32,6 +32,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.Connection;
 import com.vimeo.networking.model.ConnectionCollection;
+import com.vimeo.networking.model.Email;
 import com.vimeo.networking.model.Embed;
 import com.vimeo.networking.model.Interaction;
 import com.vimeo.networking.model.InteractionCollection;
@@ -115,6 +116,7 @@ public final class VimeoNetworkUtil {
         return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(Date.class, ISO8601.getDateSerializer())
                 .registerTypeAdapter(Date.class, ISO8601.getDateDeserializer())
+                .registerTypeAdapter(Email.class, new Email.EmailTypeAdapter())
                 .registerTypeAdapter(Paging.class, new Paging.PagingTypeAdapter())
                 .registerTypeAdapter(Privacy.class, new Privacy.PrivacyTypeAdapter())
                 .registerTypeAdapter(StatsCollection.class, new StatsCollection.StatsCollectionTypeAdapter())
