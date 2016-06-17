@@ -43,7 +43,7 @@ public class Privacy implements Serializable {
     private static final long serialVersionUID = -1679908652622815871L;
     private static final String PRIVACY_NOBODY = "nobody";
     private static final String PRIVACY_USERS = "users";
-    private static final String PRIVACY_ANYBODY = "anybody";
+    public static final String PRIVACY_ANYBODY = "anybody";
     private static final String PRIVACY_VOD = "ptv";
     private static final String PRIVACY_CONTACTS = "contacts";
     private static final String PRIVACY_PASSWORD = "password";
@@ -78,10 +78,10 @@ public class Privacy implements Serializable {
             return this.mText;
         }
 
-        public static PrivacyValue privacyValueFromString(String text) {
-            if (text != null) {
+        public static PrivacyValue privacyValueFromString(String string) {
+            if (string != null) {
                 for (PrivacyValue privacyValue : PrivacyValue.values()) {
-                    if (text.equalsIgnoreCase(privacyValue.mText)) {
+                    if (string.equalsIgnoreCase(privacyValue.mText)) {
                         return privacyValue;
                     }
                 }
@@ -94,7 +94,7 @@ public class Privacy implements Serializable {
     public String embed;
     public boolean download;
     public boolean add;
-    public String comments;
+    public PrivacyValue comments;
 
     public static class PrivacyTypeAdapter extends TypeAdapter<Privacy> {
 
@@ -119,7 +119,8 @@ public class Privacy implements Serializable {
             out.name("download").value(value.download);
             out.name("add").value(value.add);
             if (value.comments != null) {
-                out.name("comments").value(value.comments);
+                out.name("comments");
+                sPrivacyValueEnumTypeAdapter.write(out, value.comments);
             }
 
             out.endObject();
@@ -150,7 +151,7 @@ public class Privacy implements Serializable {
                         privacy.add = in.nextBoolean();
                         break;
                     case "comments":
-                        privacy.comments = in.nextString();
+                        privacy.comments = sPrivacyValueEnumTypeAdapter.read(in);
                         break;
                     default:
                         // skip any values that we do not account for, without this, the app will crash if the

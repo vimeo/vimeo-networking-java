@@ -73,6 +73,7 @@ public class User implements Serializable {
     public Date createdTime;
     public String account;
     public PictureCollection pictures;
+    public ArrayList<Email> emails;
     public ArrayList<Website> websites;
     public Metadata metadata;
     @SerializedName("upload_quota")
@@ -269,6 +270,10 @@ public class User implements Serializable {
 
     public String getAccount() {
         return account;
+    }
+
+    public ArrayList<Email> getVerifiedEmails() {
+        return emails;
     }
 
     public ArrayList<Website> getWebsites() {
