@@ -29,7 +29,7 @@ public class Email implements Serializable {
         public void write(JsonWriter out, Email value) throws IOException {
             out.beginObject();
             if (value == null) {
-                ClientLogger.d("Embed null in write()");
+                ClientLogger.d("Email null in write()");
                 out.endObject();
                 return;
             }
