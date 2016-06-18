@@ -165,6 +165,8 @@ public enum ErrorCode {
     UNABLE_TO_LOGIN_TOKEN_CAN_NOT_DECRYPT,
     @SerializedName("2314")
     UNABLE_TO_LOGIN_TOKEN_TOO_LONG,
+    @SerializedName("2315")
+    UNABLE_TO_LOGIN_PINCODE_EXPIRED,
     // Generic Auth Errors
     @SerializedName("2400")
     USER_EXISTS,
