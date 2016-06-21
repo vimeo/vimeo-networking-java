@@ -24,6 +24,7 @@ package com.vimeo.networking;
 
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
+import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 
@@ -97,6 +98,22 @@ public interface VimeoService {
                                              @Field("token") String token,
                                              @Field("token_secret") String tokenSecret,
                                              @Field("scope") String scope);
+
+    @FormUrlEncoded
+    @Headers("Cache-Control: no-cache, no-store")
+    @POST("oauth/device")
+    Call<PinCodeInfo> getPinCodeInfo(@Header("Authorization") String authHeader,
+                                     @Field("grant_type") String grantType, @Field("scope") String scope);
+
+    @FormUrlEncoded
+    @Headers("Cache-Control: no-cache, no-store")
+    @POST("/oauth/device/authorize")
+    Call<VimeoAccount> logInWithPinCode(@Header("Authorization") String authHeader,
+                                        @Field("grant_type") String grantType,
+                                        @Field("user_code") String pinCode,
+                                        @Field("device_code") String deviceCode,
+                                        @Field("scope") String scope);
+
     // </editor-fold>
 
     /**

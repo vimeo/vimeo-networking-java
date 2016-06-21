@@ -39,6 +39,7 @@ public class Vimeo {
     public static final String CODE_GRANT_RESPONSE_TYPE = "code";
     public static final String CODE_GRANT_STATE = "state";
     public static final String CODE_GRANT_TYPE = "authorization_code";
+    public static final String DEVICE_GRANT_TYPE = "device_grant";
     public static final String FACEBOOK_GRANT_TYPE = "facebook";
     public static final String PASSWORD_GRANT_TYPE = "password";
     public static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";

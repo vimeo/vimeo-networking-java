@@ -34,7 +34,7 @@ public class Privacy implements Serializable {
     private static final long serialVersionUID = -1679908652622815871L;
     private static final String PRIVACY_NOBODY = "nobody";
     private static final String PRIVACY_USERS = "users";
-    private static final String PRIVACY_ANYBODY = "anybody";
+    public static final String PRIVACY_ANYBODY = "anybody";
     private static final String PRIVACY_VOD = "ptv";
     private static final String PRIVACY_CONTACTS = "contacts";
     private static final String PRIVACY_PASSWORD = "password";
@@ -59,7 +59,7 @@ public class Privacy implements Serializable {
         @SerializedName(PRIVACY_DISABLE)
         DISABLE(PRIVACY_DISABLE);
 
-        private String text;
+        private final String text;
 
         PrivacyValue(String text) {
             this.text = text;
@@ -69,10 +69,10 @@ public class Privacy implements Serializable {
             return this.text;
         }
 
-        public static PrivacyValue privacyValueFromString(String text) {
-            if (text != null) {
+        public static PrivacyValue privacyValueFromString(String string) {
+            if (string != null) {
                 for (PrivacyValue privacyValue : PrivacyValue.values()) {
-                    if (text.equalsIgnoreCase(privacyValue.text)) {
+                    if (string.equalsIgnoreCase(privacyValue.text)) {
                         return privacyValue;
                     }
                 }
@@ -85,5 +85,5 @@ public class Privacy implements Serializable {
     public String embed;
     public boolean download;
     public boolean add;
-    public String comments;
+    public PrivacyValue comments;
 }
