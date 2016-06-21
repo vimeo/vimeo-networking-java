@@ -25,8 +25,6 @@ package com.vimeo.networking.callbacks;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.model.error.VimeoError;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.lang.annotation.Annotation;
 
 import okhttp3.ResponseBody;
@@ -49,26 +47,10 @@ public abstract class VimeoCallback<T> implements Callback<T> {
     public VimeoCallback() {
     }
 
-    public VimeoCallback(@Nullable Call call) {
-        this.call = call;
-    }
-
-    @Nullable
-    private Call call;
-
-    public void setCall(@Nullable Call call) {
-        this.call = call;
-    }
-
-    @Nullable
-    public Call getCall() {
-        return call;
-    }
-
     @Override
-    public void onResponse(Response<T> response) {
+    public void onResponse(Call<T> call, Response<T> response) {
         // response.isSuccess() is true if the response code is 2xx
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             T t = response.body();
             success(t);
         } else {
@@ -92,7 +74,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<T> call, Throwable t) {
         /* handle execution failures
          * Failures may include:
          *      No Internet
