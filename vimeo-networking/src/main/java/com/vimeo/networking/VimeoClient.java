@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.PictureResource;
@@ -144,8 +145,7 @@ public final class VimeoClient {
                 })
                 .setReadTimeout(mConfiguration.timeout, TimeUnit.SECONDS)
                 .setConnectionTimeout(mConfiguration.timeout, TimeUnit.SECONDS)
-                .addInterceptor(
-                        new LoggingInterceptor(mConfiguration.debugLogger, mConfiguration.logLevel))
+                .addInterceptor(new LoggingInterceptor())
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -170,7 +170,7 @@ public final class VimeoClient {
             try {
                 retrofitClientBuilder.pinCertificates();
             } catch (Exception e) {
-                mConfiguration.debugLogger.e("Exception when pinning certificate: " + e.getMessage(), e);
+                ClientLogger.e("Exception when pinning certificate: " + e.getMessage(), e);
             }
         }
 
@@ -182,10 +182,10 @@ public final class VimeoClient {
             if (mCache != null) {
                 mCache.evictAll();
             } else {
-                mConfiguration.debugLogger.e("Attempt to clear null cache");
+                ClientLogger.e("Attempt to clear null cache");
             }
         } catch (IOException e) {
-            mConfiguration.debugLogger.e("Cache clearing error: " + e.getMessage(), e);
+            ClientLogger.e("Cache clearing error: " + e.getMessage(), e);
         }
     }
 
@@ -225,7 +225,8 @@ public final class VimeoClient {
         saveAccount(vimeoAccount, email);
     }
 
-    /** Sets the {@link #mVimeoAccount} field as well as triggering the saveAccount event for the
+    /**
+     * Sets the {@link #mVimeoAccount} field as well as triggering the saveAccount event for the
      * account store
      */
     public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email) {
@@ -316,7 +317,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call =
                 mVimeoService.authenticateWithCodeGrant(getBasicAuthHeader(), redirectURI, code,
-                                                             Vimeo.CODE_GRANT_TYPE);
+                                                        Vimeo.CODE_GRANT_TYPE);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -334,10 +335,9 @@ public final class VimeoClient {
             throw new AssertionError("Callback cannot be null");
         }
 
-        Call<VimeoAccount> call =
-                mVimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
-                                                                       Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
-                                                                       mConfiguration.scope);
+        Call<VimeoAccount> call = mVimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
+                                                                                    Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
+                                                                                    mConfiguration.scope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -356,8 +356,8 @@ public final class VimeoClient {
         }
 
         Call<VimeoAccount> call =
-                mVimeoService.exchangeOAuthOneToken(getBasicAuthHeader(), Vimeo.OAUTH_ONE_GRANT_TYPE,
-                                                         token, tokenSecret, mConfiguration.scope);
+                mVimeoService.exchangeOAuthOneToken(getBasicAuthHeader(), Vimeo.OAUTH_ONE_GRANT_TYPE, token,
+                                                    tokenSecret, mConfiguration.scope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -452,7 +452,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call =
                 mVimeoService.logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE,
-                                         mConfiguration.scope);
+                                    mConfiguration.scope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
@@ -473,7 +473,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call =
                 mVimeoService.logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE,
-                                         mConfiguration.scope);
+                                    mConfiguration.scope);
 
         VimeoAccount vimeoAccount = null;
         try {
@@ -482,7 +482,7 @@ public final class VimeoClient {
                 vimeoAccount = response.body();
             }
         } catch (IOException e) {
-            mConfiguration.debugLogger.e("Exception during logIn: " + e.getMessage(), e);
+            ClientLogger.e("Exception during logIn: " + e.getMessage(), e);
         }
 
         saveAccount(vimeoAccount, email);
@@ -510,7 +510,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call =
                 mVimeoService.logInWithFacebook(getBasicAuthHeader(), Vimeo.FACEBOOK_GRANT_TYPE,
-                                                     facebookToken, mConfiguration.scope);
+                                                facebookToken, mConfiguration.scope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
@@ -732,10 +732,11 @@ public final class VimeoClient {
      * This method will handle polling the api to check if the code has been activated, and it will ultimately
      * call the completion handler (authCallback) when that happens.  If the pin code expires while we're
      * waiting, completion handler (authCallback) will be called with an error
+     *
      * @param pinCodeCallback {@link ModelCallback} that will receive {@link PinCodeInfo} to display.
-     *                                             This is held as weak reference.
-     * @param authCallback {@link AuthCallback} that will be notified when Authorization is complete.
-     *                                         This is held as a weak reference.
+     *                        This is held as weak reference.
+     * @param authCallback    {@link AuthCallback} that will be notified when Authorization is complete.
+     *                        This is held as a weak reference.
      * @return a call object for the pin code request
      */
     public Call<PinCodeInfo> logInWithPinCode(@NotNull final ModelCallback<PinCodeInfo> pinCodeCallback,
