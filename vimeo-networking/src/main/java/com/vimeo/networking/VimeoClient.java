@@ -117,6 +117,8 @@ public final class VimeoClient {
         mCache = mConfiguration.getCache();
         mRetrofit = createRetrofit();
         mVimeoService = mRetrofit.create(VimeoService.class);
+        ClientLogger.setLogProvider(mConfiguration.logProvider);
+        ClientLogger.setLogLevel(mConfiguration.logLevel);
 
         VimeoAccount vimeoAccount = mConfiguration.loadAccount();
         setVimeoAccount(vimeoAccount);
