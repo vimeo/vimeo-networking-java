@@ -637,7 +637,9 @@ public final class VimeoClient {
 
         private void cancelPolling() {
             VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = false;
-            mTimer.cancel();
+            if (mTimer != null) {
+                mTimer.cancel();
+            }
         }
 
         @Override
@@ -666,7 +668,9 @@ public final class VimeoClient {
      */
     public void cancelPinCodeLogin() {
         VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = false;
-        mPinCodeAuthorizationTimer.cancel();
+        if (mPinCodeAuthorizationTimer != null) {
+            mPinCodeAuthorizationTimer.cancel();
+        }
     }
 
     /**
