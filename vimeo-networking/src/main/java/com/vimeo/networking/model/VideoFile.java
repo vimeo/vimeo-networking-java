@@ -100,6 +100,8 @@ public class VideoFile implements Serializable {
     public String link;
     @Nullable
     private VideoLog log;
+    public String token;
+    public String licenseLink;
 
     @Nullable
     public Date getLinkExpirationTime() {

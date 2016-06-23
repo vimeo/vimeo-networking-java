@@ -86,6 +86,9 @@ public class Play implements Serializable {
     @Nullable
     @SerializedName("status")
     private Status mStatus;
+    @Nullable
+    @SerializedName("drm")
+    public Drm mDrm;
 
     @Nullable
     public Embed getEmbed() {
