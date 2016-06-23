@@ -1,1 +1,5 @@
+apply from: 'stag-java/settings-parent.gradle'
+
 include ':vimeo-networking', ':example'
+
+rootProject.children.removeAll {proj -> (proj.name == 'sample')}
