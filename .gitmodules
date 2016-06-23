@@ -1,3 +1,3 @@
 [submodule "stag-java"]
 	path = stag-java
-	url = https://github.com/vimeo/stag-java.git
+	url = git@github.com:vimeo/stag-java.git
