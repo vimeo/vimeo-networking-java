@@ -26,6 +26,7 @@ package com.vimeo.networking.model;
 
 
 import com.vimeo.networking.Vimeo;
+import com.vimeo.stag.GsonAdapterKey;
 
 import java.io.Serializable;
 
@@ -36,7 +37,9 @@ public class UploadQuota implements Serializable {
 
     private static final long serialVersionUID = 4050488085481972886L;
 
+    @GsonAdapterKey("space")
     public Space space;
+    @GsonAdapterKey("quota")
     public Quota quota;
 
     // Returns -1 if there is no space object on this user

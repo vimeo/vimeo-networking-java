@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -33,13 +35,21 @@ import java.util.ArrayList;
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 441419347585215353L;
+    @GsonAdapterKey("uri")
     public String uri;
+    @GsonAdapterKey("name")
     public String name;
+    @GsonAdapterKey("link")
     public String link;
+    @GsonAdapterKey("top_level")
     public boolean topLevel;
+    @GsonAdapterKey("pictures")
     public PictureCollection pictures;
+    @GsonAdapterKey("subcategories")
     public ArrayList<Category> subcategories;
+    @GsonAdapterKey("parent")
     public Category parent;
+    @GsonAdapterKey("metadata")
     public Metadata metadata;
 
     @Nullable

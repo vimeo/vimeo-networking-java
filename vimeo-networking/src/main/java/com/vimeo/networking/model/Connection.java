@@ -27,7 +27,7 @@ import com.vimeo.stag.GsonAdapterKey;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This model object represents a Connection.
@@ -41,7 +41,7 @@ public class Connection implements Serializable {
     public String uri;
     @Nullable
     @GsonAdapterKey("options")
-    public List<String> options;
+    public ArrayList<String> options;
     @GsonAdapterKey("total")
     public int total;
     @GsonAdapterKey("main_total")

@@ -54,8 +54,8 @@ public class ISO8601 {
     // There was a bug in Android 2.1 that looks like it would arbitrary GC a static SDF
     // If supporting Android 2.1, be aware of this [KV]
     // Using RFC 822 since we can't use ISO 8601
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ",
-                                                                            Locale.ENGLISH);
+    private static final SimpleDateFormat dateFormat =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
 
     public static JsonSerializer<Date> getDateSerializer() {
         return new JsonSerializer<Date>() {
@@ -98,9 +98,6 @@ public class ISO8601 {
         // Account for ISO 8601 standard of using the character 'Z' to represent UTC
         String s = iso8601string.replace("Z", "+00:00");
         try {
-            if (s.charAt(22) != ':') {
-                throw new ParseException("Invalid ISO 8601 format", 0);
-            }
             s = s.substring(0, 22) + s.substring(23);  // To get rid of the ":" to conform to RFC 822
         } catch (IndexOutOfBoundsException e) {
             // Throw a ParseException because all ISO 8601 strings should be of the same length

@@ -24,7 +24,7 @@
 
 package com.vimeo.networking.model.playback;
 
-import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.GsonAdapterKey;
 
 import java.io.Serializable;
 
@@ -37,20 +37,20 @@ public class VideoLog implements Serializable {
 
     private static final long serialVersionUID = -4646869969374079276L;
     // URL for the "load" event
-    @SerializedName("load_link")
-    private String mLoadLink;
+    @GsonAdapterKey("load_link")
+    public String mLoadLink;
 
     // URL for the "play" event
-    @SerializedName("play_link")
-    private String mPlayLink;
+    @GsonAdapterKey("play_link")
+    public String mPlayLink;
 
     // URL for the "like_press_link" event
-    @SerializedName("like_press_link")
-    private String mLikePressLink;
+    @GsonAdapterKey("like_press_link")
+    public String mLikePressLink;
 
     // URL for the "watchlater_press_link" event
-    @SerializedName("watchlater_press_link")
-    private String mWatchLaterPressLink;
+    @GsonAdapterKey("watchlater_press_link")
+    public String mWatchLaterPressLink;
 
     public String getLoadLoggingUrl() {
         return mLoadLink;

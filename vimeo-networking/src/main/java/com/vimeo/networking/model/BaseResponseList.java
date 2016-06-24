@@ -31,10 +31,15 @@ import java.util.ArrayList;
 public abstract class BaseResponseList<T> implements Serializable {
 
     private static final long serialVersionUID = -1641146617506148394L;
+    //@GsonAdapterKey("total")
     public int total;
+    //@GsonAdapterKey("page")
     public int page;
+    //@GsonAdapterKey("per_page")
     public int perPage;
+  //  @GsonAdapterKey("paging")
     public Paging paging;
+//    @GsonAdapterKey("data")
     public ArrayList<T> data;
 
     // TODO: maybe don't need

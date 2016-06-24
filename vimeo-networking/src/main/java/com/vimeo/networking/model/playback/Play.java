@@ -27,6 +27,7 @@ package com.vimeo.networking.model.playback;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.VideoFile;
 import com.vimeo.networking.model.playback.embed.Embed;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -69,23 +70,23 @@ public class Play implements Serializable {
     }
 
     @Nullable
-    @SerializedName("embed")
-    private Embed mEmbed;
+    @GsonAdapterKey("embed")
+    public Embed mEmbed;
     @Nullable
-    @SerializedName("hls")
-    private VideoFile mHls;
+    @GsonAdapterKey("hls")
+    public VideoFile mHls;
     @Nullable
-    @SerializedName("dash")
-    private VideoFile mDash;
+    @GsonAdapterKey("dash")
+    public VideoFile mDash;
     @Nullable
-    @SerializedName("progressive")
-    private ArrayList<VideoFile> mProgressive;
+    @GsonAdapterKey("progressive")
+    public ArrayList<VideoFile> mProgressive;
     @Nullable
-    @SerializedName("progress")
-    private PlayProgress mProgress;
+    @GsonAdapterKey("progress")
+    public PlayProgress mProgress;
     @Nullable
-    @SerializedName("status")
-    private Status mStatus;
+    @GsonAdapterKey("status")
+    public Status mStatus;
 
     @Nullable
     public Embed getEmbed() {

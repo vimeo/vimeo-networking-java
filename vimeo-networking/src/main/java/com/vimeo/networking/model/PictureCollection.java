@@ -22,7 +22,7 @@
 
 package com.vimeo.networking.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.GsonAdapterKey;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,10 +33,13 @@ import java.util.ArrayList;
 public class PictureCollection implements Serializable {
 
     private static final long serialVersionUID = -4495146309328278574L;
+    @GsonAdapterKey("uri")
     public String uri;
+    @GsonAdapterKey("active")
     public boolean active;
-    @SerializedName("default")
+    @GsonAdapterKey("default")
     public boolean isDefault;
+    @GsonAdapterKey("sizes")
     public ArrayList<Picture> sizes;
 
     public Picture pictureForWidth(int width) {
