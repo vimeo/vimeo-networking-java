@@ -29,6 +29,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.vimeo.networking.logging.ClientLogger;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -49,13 +50,16 @@ import java.util.Locale;
  * <p/>
  * Created by kylevenn on 8/26/15.
  */
-public class ISO8601 {
+public final class ISO8601 {
 
     // There was a bug in Android 2.1 that looks like it would arbitrary GC a static SDF
     // If supporting Android 2.1, be aware of this [KV]
     // Using RFC 822 since we can't use ISO 8601
     private static final SimpleDateFormat dateFormat =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
+
+    private ISO8601() {
+    }
 
     public static JsonSerializer<Date> getDateSerializer() {
         return new JsonSerializer<Date>() {
@@ -75,7 +79,7 @@ public class ISO8601 {
                     return json == null ? null : toDate(json.getAsString());
                 } catch (ParseException e) {
                     // Return an null date if it is formatted incorrectly
-                    System.out.println("Incorrectly formatted date sent from server");
+                    ClientLogger.e("Incorrectly formatted date sent from server");
                     return null;
                 }
             }
