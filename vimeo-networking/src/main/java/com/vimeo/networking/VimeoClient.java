@@ -742,7 +742,7 @@ public final class VimeoClient {
      * @param pinCodeCallback {@link ModelCallback} that will receive {@link PinCodeInfo} to display.
      *                        This is held as weak reference.
      * @param authCallback    {@link AuthCallback} that will be notified when Authorization is complete.
-     *                        This is held as a weak reference.
+     *                        This is held as a weak reference. It may be called back on a different thread.
      * @return a call object for the pin code request
      */
     public Call<PinCodeInfo> logInWithPinCode(@NotNull final ModelCallback<PinCodeInfo> pinCodeCallback,
