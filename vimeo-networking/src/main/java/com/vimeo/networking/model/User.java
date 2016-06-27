@@ -22,9 +22,9 @@
 
 package com.vimeo.networking.model;
 
-import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -47,21 +47,33 @@ public class User implements Serializable {
         STAFF
     }
 
+    @GsonAdapterKey("uri")
     public String uri;
+    @GsonAdapterKey("name")
     public String name;
+    @GsonAdapterKey("link")
     public String link;
+    @GsonAdapterKey("location")
     public String location;
+    @GsonAdapterKey("bio")
     public String bio;
+    @GsonAdapterKey("created_time")
     public Date createdTime;
+    @GsonAdapterKey("account")
     public String account;
+    @GsonAdapterKey("pictures")
     public PictureCollection pictures;
+    @GsonAdapterKey("emails")
     public ArrayList<Email> emails;
+    @GsonAdapterKey("websites")
     public ArrayList<Website> websites;
+    @GsonAdapterKey("metadata")
     public Metadata metadata;
-    @SerializedName("upload_quota")
+    @GsonAdapterKey("upload_quota")
     public UploadQuota uploadQuota;
     @Nullable
-    protected Preferences preferences;
+    @GsonAdapterKey("preferences")
+    public Preferences preferences;
 
     public AccountType getAccountType() {
         if (this.account == null) {

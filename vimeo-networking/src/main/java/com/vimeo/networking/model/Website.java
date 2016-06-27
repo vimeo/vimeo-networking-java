@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import java.io.Serializable;
 
 /**
@@ -30,7 +32,10 @@ import java.io.Serializable;
 public class Website implements Serializable {
 
     private static final long serialVersionUID = -1672589618654261644L;
+    @GsonAdapterKey("name")
     public String name;
+    @GsonAdapterKey("link")
     public String link;
+    @GsonAdapterKey("description")
     public String description;
 }

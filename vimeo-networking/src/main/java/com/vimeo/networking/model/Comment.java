@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.stag.GsonAdapterKey;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -41,11 +42,17 @@ public class Comment implements Serializable {
         //TODO get the other comment types and put them here [KZ]
     }
 
+    @GsonAdapterKey("uri")
     public String uri;
+    @GsonAdapterKey("type")
     public CommentType type;
+    @GsonAdapterKey("created_on")
     public Date createdOn;
+    @GsonAdapterKey("text")
     public String text;
+    @GsonAdapterKey("user")
     public User user;
+    @GsonAdapterKey("metadata")
     public Metadata metadata;
 
     public int replyCount() {

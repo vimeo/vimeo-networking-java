@@ -24,6 +24,8 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import java.io.Serializable;
 
 /**
@@ -33,6 +35,8 @@ public class Quota implements Serializable {
 
     private static final long serialVersionUID = -9173641301792409558L;
 
+    @GsonAdapterKey("hd")
     public boolean hd;
+    @GsonAdapterKey("sd")
     public boolean sd;
 }

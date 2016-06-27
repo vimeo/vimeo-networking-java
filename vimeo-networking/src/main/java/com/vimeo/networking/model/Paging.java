@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import java.io.Serializable;
 
 /**
@@ -30,8 +32,12 @@ import java.io.Serializable;
 public class Paging implements Serializable {
 
     private static final long serialVersionUID = -8547699448016693035L;
+    @GsonAdapterKey("next")
     public String next;
+    @GsonAdapterKey("previous")
     public String previous;
+    @GsonAdapterKey("first")
     public String first;
+    @GsonAdapterKey("last")
     public String last;
 }

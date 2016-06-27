@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.playback.VideoLog;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -92,14 +93,18 @@ public class VideoFile implements Serializable {
     // <editor-fold desc="Fields common between all file types">
     @Deprecated
     @Nullable
+    @GsonAdapterKey("expires")
     public Date expires;
     @Nullable
-    private Date linkExpirationTime;
+    @GsonAdapterKey("link_expiration_time")
+    public Date linkExpirationTime;
     /** link will be made private in a future release - use {@link #getLink()} instead */
     @Deprecated
+    @GsonAdapterKey("link")
     public String link;
     @Nullable
-    private VideoLog log;
+    @GsonAdapterKey("log")
+    public VideoLog log;
 
     @Nullable
     public Date getLinkExpirationTime() {
@@ -132,27 +137,34 @@ public class VideoFile implements Serializable {
     /** quality will be removed in the future when {@link Video#files} is removed */
     @Deprecated
     @Nullable
-    private VideoQuality quality;
+    @GsonAdapterKey("quality")
+    public VideoQuality quality;
     @Nullable
-    private MimeType type;
-    private double fps;
+    @GsonAdapterKey("type")
+    public MimeType type;
+    @GsonAdapterKey("fps")
+    public double fps;
     /** width will be made private in a future release - use {@link #getWidth()} instead */
     @Deprecated
+    @GsonAdapterKey("width")
     public int width;
     /** height will be made private in a future release - use {@link #getHeight()} instead */
     @Deprecated
+    @GsonAdapterKey("height")
     public int height;
     /** size will be made private in a future release - use {@link #getSize()} instead */
     @Deprecated
+    @GsonAdapterKey("size")
     public long size; // size of the file, in bytes
     /** The md5 provides us with a way to uniquely identify video files at {@link #getLink()} */
     /** md5 will be made private in a future release - use {@link #getMd5()} instead */
     @Deprecated
     @Nullable
-    @SerializedName("md5")
+    @GsonAdapterKey("md5")
     public String md5;
     @Nullable
-    private Date createdTime; // time indicating when this transcode was completed
+    @GsonAdapterKey("created_time")
+    public Date createdTime; // time indicating when this transcode was completed
 
     /**
      * quality is no longer included in VideoFiles under {@link Video#getPlay()} - it will be removed

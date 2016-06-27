@@ -24,7 +24,7 @@
 
 package com.vimeo.networking.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,26 +36,26 @@ import org.jetbrains.annotations.Nullable;
 public class PinCodeInfo {
 
     @Nullable
-    @SerializedName("device_code")
-    private String mDeviceCode;
+    @GsonAdapterKey("device_code")
+    public String mDeviceCode;
 
     @Nullable
-    @SerializedName("user_code")
-    private String mUserCode;
+    @GsonAdapterKey("user_code")
+    public String mUserCode;
 
     @Nullable
-    @SerializedName("authorize_link")
-    private String mAuthorizeLink;
+    @GsonAdapterKey("authorize_link")
+    public String mAuthorizeLink;
 
     @Nullable
-    @SerializedName("activate_link")
-    private String mActivateLink;
+    @GsonAdapterKey("activate_link")
+    public String mActivateLink;
 
-    @SerializedName("expires_in")
-    private int expiresIn;
+    @GsonAdapterKey("expires_in")
+    public int expiresIn;
 
-    @SerializedName("interval")
-    private int interval;
+    @GsonAdapterKey("interval")
+    public int interval;
 
     @Nullable
     public String getDeviceCode() {

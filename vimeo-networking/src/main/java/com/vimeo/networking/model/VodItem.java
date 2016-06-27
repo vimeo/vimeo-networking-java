@@ -25,6 +25,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -65,8 +66,8 @@ public class VodItem implements Serializable {
         private static final long serialVersionUID = -994389241935894370L;
 
         @Nullable
-        @SerializedName("time")
-        private Date mTime;
+        @GsonAdapterKey("time")
+        public Date mTime;
 
         @Nullable
         public Date getTime() {
@@ -78,44 +79,44 @@ public class VodItem implements Serializable {
     private static final long serialVersionUID = 8360150766347816073L;
 
     @Nullable
-    @SerializedName("name")
-    private String mName;
+    @GsonAdapterKey("name")
+    public String mName;
 
     @Nullable
-    @SerializedName("description")
-    private String mDescription;
+    @GsonAdapterKey("description")
+    public String mDescription;
 
     @Nullable
-    @SerializedName("type")
-    private VodType mType;
+    @GsonAdapterKey("type")
+    public VodType mType;
 
     @Nullable
-    @SerializedName("link")
-    private String mLink;
+    @GsonAdapterKey("link")
+    public String mLink;
 
     @Nullable
-    @SerializedName("publish")
-    private Publish mPublish;
+    @GsonAdapterKey("publish")
+    public Publish mPublish;
 
     @Nullable
-    @SerializedName("pictures")
-    private PictureCollection mPictures;
+    @GsonAdapterKey("pictures")
+    public PictureCollection mPictures;
 
     @Nullable
-    @SerializedName("metadata")
-    private Metadata mMetadata;
+    @GsonAdapterKey("metadata")
+    public Metadata mMetadata;
 
     @Nullable
-    @SerializedName("user")
-    private User mUser;
+    @GsonAdapterKey("user")
+    public User mUser;
 
     @Nullable
-    @SerializedName("film")
-    private Video mFilm;
+    @GsonAdapterKey("film")
+    public Video mFilm;
 
     @Nullable
-    @SerializedName("trailer")
-    private Video mTrailer;
+    @GsonAdapterKey("trailer")
+    public Video mTrailer;
 
     @Nullable
     public String getName() {

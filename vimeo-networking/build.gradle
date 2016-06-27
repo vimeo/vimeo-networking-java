@@ -1,6 +1,19 @@
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.6'
+    }
+}
+
+apply plugin: 'net.ltgt.apt'
+
 repositories {
     jcenter()
 }
@@ -10,6 +23,8 @@ dependencies {
     compile 'com.intellij:annotations:12.0@jar'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile project(':stag-library')
+    apt project(':stag-library-compiler')
 }
 
 group = 'com.vimeo.networking'
