@@ -38,6 +38,7 @@ import java.io.Serializable;
 public class SearchFacetCollection implements Serializable {
 
     private static final long serialVersionUID = 3340976215489066653L;
+
     @Nullable
     @GsonAdapterKey("type")
     public SearchFacet mTypeFacet;

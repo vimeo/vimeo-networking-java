@@ -36,8 +36,10 @@ import java.io.Serializable;
 public class SearchFacet implements Serializable {
 
     private static final long serialVersionUID = -6507918911819851151L;
+
     @GsonAdapterKey("name")
     public String mName;
+
     @GsonAdapterKey("options")
     public FacetOptionsCollection mOptions;
 }

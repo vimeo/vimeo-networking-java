@@ -41,6 +41,6 @@ public class SearchResponse extends BaseResponseList<SearchResult> {
 
     @Override
     public Class getModelClass() {
-        return SearchResponse.class;
+        return SearchResult.class;
     }
 }

@@ -222,11 +222,8 @@ public final class Search {
 
     public static class QueryParameterProvider {
 
-        private final Map<String, String> mQueryParameters;
-
-        public QueryParameterProvider() {
-            mQueryParameters = new HashMap<>();
-        }
+        @NotNull
+        private final Map<String, String> mQueryParameters = new HashMap<>();
 
         public QueryParameterProvider setSort(@Nullable Sort sort) {
             if (sort != null) {
@@ -279,6 +276,7 @@ public final class Search {
             return this;
         }
 
+        @NotNull
         public Map<String, String> getQueryParameters() {
             return mQueryParameters;
         }

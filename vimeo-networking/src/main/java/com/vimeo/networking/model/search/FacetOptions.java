@@ -38,8 +38,10 @@ import java.io.Serializable;
 public class FacetOptions implements Serializable {
 
     private static final long serialVersionUID = 6525562797608669182L;
+
     @GsonAdapterKey("total")
     public int mTotal;
+
     @Nullable
     @GsonAdapterKey("uri")
     public String uri;
