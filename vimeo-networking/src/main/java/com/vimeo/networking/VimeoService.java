@@ -27,6 +27,7 @@ import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking.model.search.SearchResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -107,7 +108,7 @@ public interface VimeoService {
 
     @FormUrlEncoded
     @Headers("Cache-Control: no-cache, no-store")
-    @POST("/oauth/device/authorize")
+    @POST("oauth/device/authorize")
     Call<VimeoAccount> logInWithPinCode(@Header("Authorization") String authHeader,
                                         @Field("grant_type") String grantType,
                                         @Field("user_code") String pinCode,
@@ -178,5 +179,15 @@ public interface VimeoService {
     Call<Object> POST(@Header("Authorization") String authHeader, @Url String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
                       @Body HashMap<String, String> parameters);
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Search - new search, for whitelisted apps only
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Search">
+    @Headers("Cache-Control: no-cache, no-store")
+    @GET("search")
+    Call<SearchResponse> search(@Header("Authorization") String authHeader,
+                                @QueryMap Map<String, String> queryParams);
     // </editor-fold>
 }

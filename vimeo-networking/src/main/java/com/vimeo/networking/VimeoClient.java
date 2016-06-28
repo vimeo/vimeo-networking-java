@@ -23,6 +23,7 @@
 package com.vimeo.networking;
 
 import com.google.gson.Gson;
+import com.vimeo.networking.Search.FilterType;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
@@ -37,6 +38,7 @@ import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -1115,6 +1117,23 @@ public final class VimeoClient {
         return fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, searchRefinement, fieldFilter);
     }
 
+    /**
+     * A package private search method: use {@link Search#search(String, FilterType, ModelCallback, Map, String)}
+     * which relies on this method.
+     *
+     * @param queryMap the query parameters
+     * @param callback the callback to be invoked when the call finishes
+     * @return the Call object provided by the Retrofit service
+     */
+    @Nullable
+    Call<SearchResponse> search(@NotNull Map<String, String> queryMap,
+                                @NotNull ModelCallback<SearchResponse> callback) {
+
+        Call<SearchResponse> call = mVimeoService.search(getAuthHeader(), queryMap);
+        call.enqueue(callback);
+        return call;
+    }
+
     public void fetchCurrentUser(ModelCallback<User> callback) {
         // Endpoints
         fetchContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback);
@@ -1398,9 +1417,8 @@ public final class VimeoClient {
     }
 
     @NotNull
-    private Map<String, String> createQueryMap(@Nullable String query,
-                                               @Nullable Map<String, String> refinementMap,
-                                               @Nullable String fieldFilter) {
+    Map<String, String> createQueryMap(@Nullable String query, @Nullable Map<String, String> refinementMap,
+                                       @Nullable String fieldFilter) {
         Map<String, String> queryMap = new HashMap<>();
         if (refinementMap != null && !refinementMap.isEmpty()) {
             queryMap = refinementMap;
