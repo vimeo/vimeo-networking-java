@@ -38,7 +38,7 @@ public abstract class BaseResponseList<T> implements Serializable {
     public int total;
     @GsonAdapterKey
     public int page;
-
+    @GsonAdapterKey("per_page")
     public int perPage;
     @GsonAdapterKey
     public Paging paging;
