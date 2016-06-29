@@ -26,12 +26,14 @@ package com.vimeo.networking.model.search;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.BaseResponseList;
+import com.vimeo.stag.GsonAdapterKey;
 
 /**
  * Response of /search
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@GsonAdapterKey
 public class SearchResponse extends BaseResponseList<SearchResult> {
 
     private static final long serialVersionUID = -7915082057592438294L;

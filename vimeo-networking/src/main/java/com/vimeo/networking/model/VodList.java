@@ -24,10 +24,13 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 /**
  * A list of {@link VodItem} objects
  * Created by rigbergh on 4/25/16.
  */
+@GsonAdapterKey
 public class VodList extends BaseResponseList<VodItem> {
     @Override
     public Class getModelClass() {

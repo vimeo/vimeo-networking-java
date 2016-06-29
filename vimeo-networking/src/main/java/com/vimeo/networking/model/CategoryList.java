@@ -22,9 +22,12 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 /**
  * Created by zetterstromk on 8/20/15.
  */
+@GsonAdapterKey
 public class CategoryList extends BaseResponseList<Category> {
 
     @Override

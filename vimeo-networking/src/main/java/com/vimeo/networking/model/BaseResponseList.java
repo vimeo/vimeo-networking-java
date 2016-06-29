@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -31,10 +33,16 @@ import java.util.ArrayList;
 public abstract class BaseResponseList<T> implements Serializable {
 
     private static final long serialVersionUID = -1641146617506148394L;
+
+    @GsonAdapterKey
     public int total;
+    @GsonAdapterKey
     public int page;
+
     public int perPage;
+    @GsonAdapterKey
     public Paging paging;
+    @GsonAdapterKey
     public ArrayList<T> data;
 
     // TODO: maybe don't need
