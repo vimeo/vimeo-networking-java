@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -34,16 +36,27 @@ public class Channel implements Serializable {
 
     private static final long serialVersionUID = 3190410523525111858L;
 
+    @GsonAdapterKey("uri")
     public String uri;
+    @GsonAdapterKey("name")
     public String name;
+    @GsonAdapterKey("description")
     public String description;
+    @GsonAdapterKey("link")
     public String link;
+    @GsonAdapterKey("created_time")
     public Date createdTime;
+    @GsonAdapterKey("modified_time")
     public Date modifiedTime;
+    @GsonAdapterKey("user")
     public User user;
+    @GsonAdapterKey("pictures")
     public PictureCollection pictures;
+    @GsonAdapterKey("header")
     public PictureCollection header;
+    @GsonAdapterKey("privacy")
     public Privacy privacy;
+    @GsonAdapterKey("metadata")
     public Metadata metadata;
 
     @Nullable

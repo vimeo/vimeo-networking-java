@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2015 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,39 +22,19 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
-
-import com.vimeo.stag.GsonAdapterKey;
-
-import java.io.Serializable;
-import java.util.ArrayList;
+package com.vimeo.networking.logging;
 
 /**
- * Created by hanssena on 4/23/15.
+ * An interface for logging
+ * Created by zetterstromk on 6/22/16.
  */
-public class PictureCollection implements Serializable {
+public interface LogProvider {
 
-    private static final long serialVersionUID = -4495146309328278574L;
-    @GsonAdapterKey("uri")
-    public String uri;
-    @GsonAdapterKey("active")
-    public boolean active;
-    @GsonAdapterKey("default")
-    public boolean isDefault;
-    @GsonAdapterKey("sizes")
-    public ArrayList<Picture> sizes;
+    void e(String error);
 
-    public Picture pictureForWidth(int width) {
-        if (sizes != null && !sizes.isEmpty()) {
-            Picture selectedPicture = sizes.get(sizes.size() - 1);
-            for (Picture picture : sizes) {
-                if ((picture.width >= width) && ((picture.width - width) < (selectedPicture.width - width))) {
-                    selectedPicture = picture;
-                }
-            }
-            return selectedPicture;
-        }
+    void e(String error, Exception exception);
 
-        return null;
-    }
+    void d(String debug);
+
+    void v(String verbose);
 }

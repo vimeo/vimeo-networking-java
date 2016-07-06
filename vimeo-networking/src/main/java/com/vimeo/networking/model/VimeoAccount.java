@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -41,11 +42,19 @@ public class VimeoAccount implements Serializable {
     private static final long serialVersionUID = -8341071767843490585L;
     //    private static final String TOKEN_TYPE_BEARER = "bearer";
 
-    private String accessToken;
-    private String tokenType;
-    private String scope;
-    private User user;
+    @GsonAdapterKey("access_token")
+    public String accessToken;
+    @GsonAdapterKey("token_type")
+    public String tokenType;
+    @GsonAdapterKey("scope")
+    public String scope;
+    @GsonAdapterKey("user")
+    public User user;
     private String userJSON;
+
+    public VimeoAccount(){
+        //constructor for stag TypeAdapter generation
+    }
 
     public VimeoAccount(@Nullable String accessToken) {
         this.accessToken = accessToken;

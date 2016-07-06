@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2015 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,39 +22,40 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.search;
 
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
- * Created by hanssena on 4/23/15.
+ * A grouping of all facets
+ * <p/>
+ * Created by zetterstromk on 6/27/16.
  */
-public class PictureCollection implements Serializable {
+public class SearchFacetCollection implements Serializable {
 
-    private static final long serialVersionUID = -4495146309328278574L;
-    @GsonAdapterKey("uri")
-    public String uri;
-    @GsonAdapterKey("active")
-    public boolean active;
-    @GsonAdapterKey("default")
-    public boolean isDefault;
-    @GsonAdapterKey("sizes")
-    public ArrayList<Picture> sizes;
+    private static final long serialVersionUID = 3340976215489066653L;
 
-    public Picture pictureForWidth(int width) {
-        if (sizes != null && !sizes.isEmpty()) {
-            Picture selectedPicture = sizes.get(sizes.size() - 1);
-            for (Picture picture : sizes) {
-                if ((picture.width >= width) && ((picture.width - width) < (selectedPicture.width - width))) {
-                    selectedPicture = picture;
-                }
-            }
-            return selectedPicture;
-        }
-
-        return null;
-    }
+    @Nullable
+    @GsonAdapterKey("type")
+    public SearchFacet mTypeFacet;
+    @Nullable
+    @GsonAdapterKey("category")
+    public SearchFacet mCategoryFacet;
+    @Nullable
+    @GsonAdapterKey("duration")
+    public SearchFacet mDurationFacet;
+    @Nullable
+    @GsonAdapterKey("license")
+    public SearchFacet mLicenseFacet;
+    @Nullable
+    @GsonAdapterKey("uploaded")
+    public SearchFacet mUploadedFacet;
+    // TODO: VOD facets 6/27/16 [KZ]
+    // TODO: People facets 6/27/16 [KZ]
+    // TODO: Channel facets 6/27/16 [KZ]
+    // TODO: Group facets 6/27/16 [KZ]
 }

@@ -22,7 +22,7 @@
 
 package com.vimeo.networking.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,69 +36,69 @@ public class ConnectionCollection implements Serializable {
 
     private static final long serialVersionUID = -4523270955994232839L;
     @Nullable
-    @SerializedName("videos")
+    @GsonAdapterKey("videos")
     public Connection videos;
     @Nullable
-    @SerializedName("comments")
+    @GsonAdapterKey("comments")
     public Connection comments;
     @Nullable
-    @SerializedName("credits")
+    @GsonAdapterKey("credits")
     public Connection credits;
     @Nullable
-    @SerializedName("likes")
+    @GsonAdapterKey("likes")
     public Connection likes;
     @Nullable
-    @SerializedName("pictures")
+    @GsonAdapterKey("pictures")
     public Connection pictures;
     @Nullable
-    @SerializedName("texttracks")
+    @GsonAdapterKey("texttracks")
     public Connection texttracks;
     @Nullable
-    @SerializedName("activities")
+    @GsonAdapterKey("activities")
     public Connection activities;
     @Nullable
-    @SerializedName("albums")
+    @GsonAdapterKey("albums")
     public Connection albums;
     @Nullable
-    @SerializedName("channels")
+    @GsonAdapterKey("channels")
     public Connection channels;
     @Nullable
-    @SerializedName("feed")
+    @GsonAdapterKey("feed")
     public Connection feed;
     @Nullable
-    @SerializedName("followers")
+    @GsonAdapterKey("followers")
     public Connection followers;
     @Nullable
-    @SerializedName("following")
+    @GsonAdapterKey("following")
     public Connection following;
     @Nullable
-    @SerializedName("groups")
+    @GsonAdapterKey("groups")
     public Connection groups;
     @Nullable
-    @SerializedName("portfolios")
+    @GsonAdapterKey("portfolios")
     public Connection portfolios;
     @Nullable
-    @SerializedName("shared")
+    @GsonAdapterKey("shared")
     public Connection shared;
     @Nullable
-    @SerializedName("recommendations")
+    @GsonAdapterKey("recommendations")
     public Connection recommendations;
     @Nullable
-    @SerializedName("related")
+    @GsonAdapterKey("related")
     public Connection related;
     @Nullable
-    @SerializedName("replies")
+    @GsonAdapterKey("replies")
     public Connection replies;
     @Nullable
-    @SerializedName("users")
+    @GsonAdapterKey("users")
     public Connection users;
     @Nullable
-    @SerializedName("watchlater")
+    @GsonAdapterKey("watchlater")
     public Connection watchlater;
     @Nullable
-    @SerializedName("ondemand")
+    @GsonAdapterKey("ondemand")
     public Connection ondemand;
     @Nullable
-    @SerializedName("trailer")
+    @GsonAdapterKey("trailer")
     public Connection trailer;
 }

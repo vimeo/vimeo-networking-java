@@ -23,6 +23,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -63,18 +64,18 @@ public class Interaction implements Serializable {
         }
     }
 
-    @SerializedName("added")
+    @GsonAdapterKey("added")
     public boolean added;
     @Nullable
-    @SerializedName("added_time")
+    @GsonAdapterKey("added_time")
     public Date addedTime;
     @Nullable
-    @SerializedName("uri")
+    @GsonAdapterKey("uri")
     public String uri;
     @Nullable
-    @SerializedName("stream")
+    @GsonAdapterKey("stream")
     public Stream stream;
     @Nullable
-    @SerializedName("expires_time")
+    @GsonAdapterKey("expires_time")
     public Date expiration;
 }

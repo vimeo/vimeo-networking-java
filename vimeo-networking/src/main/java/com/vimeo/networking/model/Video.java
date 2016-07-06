@@ -26,13 +26,13 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
 import com.vimeo.networking.model.playback.Play;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * A model class representing a Video.
@@ -114,42 +114,70 @@ public class Video implements Serializable {
     }
 
     // Note: if you rename any fields, GSON serialization of persisted videos may break. [KV] 3/31/16
+    @GsonAdapterKey("uri")
     public String uri;
+    @GsonAdapterKey("name")
     public String name;
+    @GsonAdapterKey("description")
     public String description;
+    @GsonAdapterKey("link")
     public String link;
+    @GsonAdapterKey("duration")
     public int duration;
     @Deprecated
+    @GsonAdapterKey("files")
     public ArrayList<VideoFile> files;
+    @GsonAdapterKey("width")
     public int width;
+    @GsonAdapterKey("height")
     public int height;
     @Deprecated
+    @GsonAdapterKey("embed")
     public com.vimeo.networking.model.Embed embed;
+    @GsonAdapterKey("language")
     public String language;
+    @GsonAdapterKey("created_time")
     public Date createdTime;
+    @GsonAdapterKey("modified_time")
     public Date modifiedTime;
+    @GsonAdapterKey("release_time")
     public Date releaseTime;
+    @GsonAdapterKey("content_rating")
     public ArrayList<String> contentRating;
+    @GsonAdapterKey("license")
     public String license;
+    @GsonAdapterKey("privacy")
     public Privacy privacy;
+    @GsonAdapterKey("pictures")
     public PictureCollection pictures;
+    @GsonAdapterKey("tags")
     public ArrayList<Tag> tags;
+    @GsonAdapterKey("stats")
     public StatsCollection stats;
+    @GsonAdapterKey("metadata")
     public Metadata metadata;
+    @GsonAdapterKey("user")
     public User user;
-    private Status status;
-    public List<Category> categories;
+    @GsonAdapterKey("status")
+    public Status status;
+    @GsonAdapterKey("categories")
+    public ArrayList<Category> categories;
     @Nullable
-    private String password;
+    @GsonAdapterKey("password")
+    public String password;
     @Nullable
-    private String reviewLink;
+    @GsonAdapterKey("review_link")
+    public String reviewLink;
     @Nullable
-    private Play play;
+    @GsonAdapterKey("play")
+    public Play play;
     @Nullable
-    private ArrayList<VideoFile> download;
+    @GsonAdapterKey("download")
+    public ArrayList<VideoFile> download;
 
     /** The resource_key field is the unique identifier for a Video object. It may be used for object comparison. */
-    private String resourceKey;
+    @GsonAdapterKey("resource_key")
+    public String resourceKey;
 
     // -----------------------------------------------------------------------------------------------------
     // Resource Key
