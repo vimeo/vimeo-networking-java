@@ -86,7 +86,7 @@ public class Play implements Serializable {
     public PlayProgress mProgress;
     @Nullable
     @GsonAdapterKey("status")
-    private Status mStatus;
+    public Status mStatus;
     @Nullable
     @GsonAdapterKey("drm")
     public Drm mDrm;
