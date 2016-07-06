@@ -125,6 +125,11 @@ public class Play implements Serializable {
     }
 
     @Nullable
+    public Drm getDrm() {
+        return mDrm;
+    }
+
+    @Nullable
     public Status getStatus() {
         return mStatus;
     }

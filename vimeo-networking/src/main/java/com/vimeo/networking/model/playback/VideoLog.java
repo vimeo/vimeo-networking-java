@@ -44,6 +44,10 @@ public class VideoLog implements Serializable {
     @GsonAdapterKey("play_link")
     public String mPlayLink;
 
+    // URL for the "exit" event, used for drm purposes
+    @GsonAdapterKey("exit_link")
+    public String mExitLink;
+
     // URL for the "like_press_link" event
     @GsonAdapterKey("like_press_link")
     public String mLikePressLink;
@@ -66,6 +70,14 @@ public class VideoLog implements Serializable {
 
     public String getPlayLoggingUrl() {
         return mPlayLink;
+    }
+
+    public boolean isExitLinkEmpty() {
+        return mExitLink == null || mExitLink.trim().isEmpty();
+    }
+
+    public String getExitLoggingUrl() {
+        return mExitLink;
     }
 
     public boolean isLikeEmpty() {

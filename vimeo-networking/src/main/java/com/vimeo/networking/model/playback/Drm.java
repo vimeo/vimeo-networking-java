@@ -30,11 +30,28 @@ import com.vimeo.stag.GsonAdapterKey;
 import java.io.Serializable;
 
 /**
+ * An object that holds on to the drm content. There are three types, fairplay, widevine, and playready.
+ * Since this is a Java library and only Apple products support fairplay, that type is omitted. Clients will
+ * only receive these if given the app-specific permission.
+ * <p/>
  * Created by zetterstromk on 6/22/16.
  */
+@SuppressWarnings("unused")
 public class Drm implements Serializable {
 
     private static final long serialVersionUID = 3048847922257143776L;
+
     @GsonAdapterKey("widevine")
-    public VideoFile widevine;
+    public VideoFile mWidevine;
+
+    @GsonAdapterKey("playready")
+    public VideoFile mPlayReady;
+
+    public VideoFile getWidevine() {
+        return mWidevine;
+    }
+
+    public VideoFile getPlayReady() {
+        return mPlayReady;
+    }
 }
