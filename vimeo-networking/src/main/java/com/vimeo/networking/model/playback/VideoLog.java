@@ -26,6 +26,8 @@ package com.vimeo.networking.model.playback;
 
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -45,6 +47,7 @@ public class VideoLog implements Serializable {
     public String mPlayLink;
 
     // URL for the "exit" event, used for drm purposes
+    @Nullable
     @GsonAdapterKey("exit_link")
     public String mExitLink;
 
@@ -76,6 +79,7 @@ public class VideoLog implements Serializable {
         return mExitLink == null || mExitLink.trim().isEmpty();
     }
 
+    @Nullable
     public String getExitLoggingUrl() {
         return mExitLink;
     }
