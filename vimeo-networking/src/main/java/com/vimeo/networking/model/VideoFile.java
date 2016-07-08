@@ -95,16 +95,27 @@ public class VideoFile implements Serializable {
     @Nullable
     @GsonAdapterKey("expires")
     public Date expires;
+
     @Nullable
     @GsonAdapterKey("link_expiration_time")
     public Date linkExpirationTime;
+
     /** link will be made private in a future release - use {@link #getLink()} instead */
     @Deprecated
     @GsonAdapterKey("link")
     public String link;
+
     @Nullable
     @GsonAdapterKey("log")
     public VideoLog log;
+
+    @Nullable
+    @GsonAdapterKey("token")
+    public String token;
+
+    @Nullable
+    @GsonAdapterKey("license_link")
+    public String licenseLink;
 
     @Nullable
     public Date getLinkExpirationTime() {
@@ -128,6 +139,17 @@ public class VideoFile implements Serializable {
     public VideoLog getLog() {
         return log;
     }
+
+    @Nullable
+    public String getToken() {
+        return token;
+    }
+
+    @Nullable
+    public String getLicenseLink() {
+        return licenseLink;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------

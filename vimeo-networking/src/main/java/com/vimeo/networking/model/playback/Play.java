@@ -87,6 +87,9 @@ public class Play implements Serializable {
     @Nullable
     @GsonAdapterKey("status")
     public Status mStatus;
+    @Nullable
+    @GsonAdapterKey("drm")
+    public Drm mDrm;
 
     @Nullable
     public Embed getEmbed() {
@@ -119,6 +122,11 @@ public class Play implements Serializable {
 
     public void setProgress(@Nullable PlayProgress progress) {
         this.mProgress = progress;
+    }
+
+    @Nullable
+    public Drm getDrm() {
+        return mDrm;
     }
 
     @Nullable

@@ -26,6 +26,8 @@ package com.vimeo.networking.model.playback;
 
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -44,6 +46,11 @@ public class VideoLog implements Serializable {
     @GsonAdapterKey("play_link")
     public String mPlayLink;
 
+    // URL for the "exit" event, used for drm purposes - should be used when a drm video stops playback
+    @Nullable
+    @GsonAdapterKey("exit_link")
+    public String mExitLink;
+
     // URL for the "like_press_link" event
     @GsonAdapterKey("like_press_link")
     public String mLikePressLink;
@@ -57,19 +64,28 @@ public class VideoLog implements Serializable {
     }
 
     public boolean isLoadEmpty() {
-        return mLoadLink == null || mLoadLink.trim().isEmpty();
+        return isStringEmpty(mLoadLink);
     }
 
     public boolean isPlayEmpty() {
-        return mPlayLink == null || mPlayLink.trim().isEmpty();
+        return isStringEmpty(mPlayLink);
     }
 
     public String getPlayLoggingUrl() {
         return mPlayLink;
     }
 
+    public boolean isExitLinkEmpty() {
+        return isStringEmpty(mExitLink);
+    }
+
+    @Nullable
+    public String getExitLoggingUrl() {
+        return mExitLink;
+    }
+
     public boolean isLikeEmpty() {
-        return mLikePressLink == null || mLikePressLink.trim().isEmpty();
+        return isStringEmpty(mLikePressLink);
     }
 
     public String getLikeLoggingUrl() {
@@ -77,10 +93,14 @@ public class VideoLog implements Serializable {
     }
 
     public boolean isWatchLaterEmpty() {
-        return mWatchLaterPressLink == null || mWatchLaterPressLink.trim().isEmpty();
+        return isStringEmpty(mWatchLaterPressLink);
     }
 
     public String getWatchLaterLoggingUrl() {
         return mWatchLaterPressLink;
+    }
+
+    private static boolean isStringEmpty(@Nullable String string) {
+        return string == null || string.trim().isEmpty();
     }
 }
