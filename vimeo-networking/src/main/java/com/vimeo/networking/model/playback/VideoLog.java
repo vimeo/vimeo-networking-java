@@ -46,7 +46,7 @@ public class VideoLog implements Serializable {
     @GsonAdapterKey("play_link")
     public String mPlayLink;
 
-    // URL for the "exit" event, used for drm purposes
+    // URL for the "exit" event, used for drm purposes - should be used when a drm video stops playback
     @Nullable
     @GsonAdapterKey("exit_link")
     public String mExitLink;
@@ -64,11 +64,11 @@ public class VideoLog implements Serializable {
     }
 
     public boolean isLoadEmpty() {
-        return mLoadLink == null || mLoadLink.trim().isEmpty();
+        return isStringEmpty(mLoadLink);
     }
 
     public boolean isPlayEmpty() {
-        return mPlayLink == null || mPlayLink.trim().isEmpty();
+        return isStringEmpty(mPlayLink);
     }
 
     public String getPlayLoggingUrl() {
@@ -76,7 +76,7 @@ public class VideoLog implements Serializable {
     }
 
     public boolean isExitLinkEmpty() {
-        return mExitLink == null || mExitLink.trim().isEmpty();
+        return isStringEmpty(mExitLink);
     }
 
     @Nullable
@@ -85,7 +85,7 @@ public class VideoLog implements Serializable {
     }
 
     public boolean isLikeEmpty() {
-        return mLikePressLink == null || mLikePressLink.trim().isEmpty();
+        return isStringEmpty(mLikePressLink);
     }
 
     public String getLikeLoggingUrl() {
@@ -93,10 +93,14 @@ public class VideoLog implements Serializable {
     }
 
     public boolean isWatchLaterEmpty() {
-        return mWatchLaterPressLink == null || mWatchLaterPressLink.trim().isEmpty();
+        return isStringEmpty(mWatchLaterPressLink);
     }
 
     public String getWatchLaterLoggingUrl() {
         return mWatchLaterPressLink;
+    }
+
+    private static boolean isStringEmpty(@Nullable String string) {
+        return string == null || string.trim().isEmpty();
     }
 }

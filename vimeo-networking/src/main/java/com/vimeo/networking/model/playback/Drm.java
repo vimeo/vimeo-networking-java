@@ -34,7 +34,8 @@ import java.io.Serializable;
 /**
  * An object that holds on to the drm content. There are three types, fairplay, widevine, and playready.
  * Since this is a Java library and only Apple products support fairplay, that type is omitted. Clients will
- * only receive these if given the app-specific permission.
+ * only receive these if given the app-specific permission, essentially this class is not consumable by the
+ * general public.
  * <p/>
  * Created by zetterstromk on 6/22/16.
  */
