@@ -75,9 +75,6 @@ public class UserBadge implements Serializable {
 
     public UserBadgeType getBadgeType() {
         if (this.mBadgeType == null) {
-            //We should assume the account object could be null; also, a User object could be created with
-            // just a uri, then updated when fetched from the server, so account would be null until then.
-            // Scenario: deeplinking. [KZ] 9/29/15
             return UserBadgeType.NONE;
         }
         switch (mBadgeType) {
