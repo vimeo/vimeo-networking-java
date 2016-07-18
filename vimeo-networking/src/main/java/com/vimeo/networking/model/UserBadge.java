@@ -74,7 +74,7 @@ public class UserBadge implements Serializable {
     public String mUrl;
 
     public UserBadgeType getBadgeType() {
-        if (this.mBadgeType == null) {
+        if (mBadgeType == null) {
             return UserBadgeType.NONE;
         }
         switch (mBadgeType) {
