@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
+import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
@@ -39,9 +40,15 @@ import java.util.Date;
 public class User implements Serializable {
 
     private static final long serialVersionUID = -4112910222188194647L;
+    private static final String ACCOUNT_BASIC = "basic";
+    private static final String ACCOUNT_BUSINESS = "business";
+    private static final String ACCOUNT_PLUS = "plus";
+    private static final String ACCOUNT_PRO = "pro";
+    private static final String ACCOUNT_STAFF = "staff";
 
     public enum AccountType {
         BASIC,
+        BUSINESS,
         PRO,
         PLUS,
         STAFF
@@ -74,6 +81,9 @@ public class User implements Serializable {
     @Nullable
     @GsonAdapterKey("preferences")
     public Preferences preferences;
+    @Nullable
+    @GsonAdapterKey("badge")
+    public UserBadge badge;
 
     public AccountType getAccountType() {
         if (this.account == null) {
@@ -82,17 +92,23 @@ public class User implements Serializable {
             // Scenario: deeplinking. [KZ] 9/29/15
             return AccountType.BASIC;
         }
-        if (this.account.equals("basic")) {
-            return AccountType.BASIC;
-        } else if (this.account.equals("plus")) {
-            return AccountType.PLUS;
-        } else if (this.account.equals("pro")) {
-            return AccountType.PRO;
-        } else if (this.account.equals("staff")) {
-            return AccountType.STAFF;
+        switch (this.account) {
+            case ACCOUNT_BUSINESS:
+                return AccountType.BUSINESS;
+            case ACCOUNT_PLUS:
+                return AccountType.PLUS;
+            case ACCOUNT_PRO:
+                return AccountType.PRO;
+            case ACCOUNT_STAFF:
+                return AccountType.STAFF;
+            case ACCOUNT_BASIC:
+            default:
+                return AccountType.BASIC;
         }
+    }
 
-        return AccountType.BASIC;
+    public UserBadgeType getUserBadgeType() {
+        return badge == null ? UserBadgeType.NONE : badge.getBadgeType();
     }
 
     /**
