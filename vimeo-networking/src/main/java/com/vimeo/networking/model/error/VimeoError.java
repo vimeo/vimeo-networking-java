@@ -25,6 +25,7 @@ package com.vimeo.networking.model.error;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -114,6 +115,7 @@ public class VimeoError extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    @NotNull
     public ErrorCode getErrorCode() {
         return errorCode == null ? ErrorCode.DEFAULT : this.errorCode;
     }
