@@ -115,6 +115,8 @@ public enum ErrorCode {
     INVALID_CREDENTIALS,
     @SerializedName("8001")
     UNAUTHORIZED_CLIENT,
+    @SerializedName("8003")
+    EMPTY_AUTHENTICATION,
     // </editor-fold>
 
     // ---- Auth ----
@@ -300,5 +302,19 @@ public enum ErrorCode {
     INVALID_INPUT_BAD_CLIP_SHOW_SCALING_BUTTON_TYPE,
     @SerializedName("2501")
     APP_DOES_NOT_HAVE_PROTECTED_VIDEO_CAPABILITY,
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // DRM
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="DRM">
+    @SerializedName("2297")
+    INVALID_INPUT_DRM_NOT_ENABLED_ON_CLIP,
+    @SerializedName("2298")
+    INVALID_INPUT_BAD_LOGGING_PLAY_TYPE,
+    @SerializedName("3419")
+    USER_CANNOT_STREAM_CLIP,
+    @SerializedName("3420")
+    USER_HIT_STREAM_LIMITS_FOR_VIDEO
     // </editor-fold>
 }
