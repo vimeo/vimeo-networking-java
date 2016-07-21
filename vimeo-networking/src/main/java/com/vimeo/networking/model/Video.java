@@ -460,6 +460,7 @@ public class Video implements Serializable {
     /**
      * Returns the date the VOD video will expire. In the event that a video is both rented and subscribed,
      * this will return the later expiration date. If they are equal, subscription date will be returned.
+     *
      * @return the expiration date or null if there is no expiration
      */
     @Nullable
@@ -524,6 +525,21 @@ public class Video implements Serializable {
 
     public boolean isVod() {
         return (metadata != null && metadata.connections != null && metadata.connections.ondemand != null);
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Playback failure Endpoint
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Playback failure Endpoint">
+    @Nullable
+    public String getPlaybackFailureUri() {
+        String playbackFailureUri = null;
+        if (metadata != null && metadata.connections != null &&
+            metadata.connections.playbackFailureReason != null) {
+            playbackFailureUri = metadata.connections.playbackFailureReason.uri;
+        }
+        return playbackFailureUri;
     }
     // </editor-fold>
 
