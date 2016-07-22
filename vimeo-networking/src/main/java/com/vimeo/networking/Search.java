@@ -209,11 +209,15 @@ public final class Search {
     public static Call<SearchResponse> search(@NotNull String query, @NotNull FilterType type,
                                               @NotNull ModelCallback<SearchResponse> callback,
                                               @Nullable Map<String, String> refinementMap,
+                                              @Nullable String containerFilter,
                                               @Nullable String fieldFilter) {
         if (refinementMap == null) {
             refinementMap = new HashMap<>();
         }
         refinementMap.put(FILTER_TYPE, type.getText());
+        if (containerFilter != null) {
+            refinementMap.put(Vimeo.PARAMETER_GET_CONTAINER_FIELD_FILTER, containerFilter);
+        }
         Map<String, String> queryMap =
                 VimeoClient.getInstance().createQueryMap(query, refinementMap, fieldFilter);
         // VimeoClient is the end-all interactor with the retrofit service
