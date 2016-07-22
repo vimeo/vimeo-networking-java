@@ -100,6 +100,7 @@ public class Vimeo {
     public static final String PARAMETER_GET_SORT = "sort";
     public static final String PARAMETER_GET_DIRECTION = "direction";
     public static final String PARAMETER_GET_FIELD_FILTER = "fields";
+    public static final String PARAMETER_GET_CONTAINER_FIELD_FILTER = "container_fields";
     public static final String PARAMETER_GET_LENGTH_MIN_DURATION = "min_duration";
     public static final String PARAMETER_GET_LENGTH_MAX_DURATION = "max_duration";
     public static final String PARAMETER_GET_FILTER = "filter";
