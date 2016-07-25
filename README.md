@@ -52,7 +52,7 @@ compile project(':vimeo-networking-java:vimeo-networking')
 
 ### Initialization
 
-The `VimeoClient` instance is highly customizable through the use of the `Configuration.Builder` class. There are a few different default `Builder` constructors that cover core functionality.
+Access to this API is done through the `VimeoClient` class, which must be initialized prior to use, or rather, before the first call to `VimeoClient.getInstance()`. To initialize `VimeoClient`, you must call `VimeoClient.initialize(Configration)` passing it a `Configuration` object, which is highly customizable through the use of the `Configuration.Builder` class. There are a few different default `Builder` constructors that cover core functionality.
 In the below sections, we cover examples of ways to customize your `VimeoClient` instance. Full implementations are in the example app.
 
 #### Configuration Builder for Apps with Account Management
