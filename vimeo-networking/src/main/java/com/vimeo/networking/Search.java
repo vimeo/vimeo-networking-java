@@ -47,12 +47,18 @@ public final class Search {
     private Search() {
     }
 
+    public static final String FILTER_TYPE_VIDEO = "clip";
+    public static final String FILTER_TYPE_VOD = "ondemand";
+    public static final String FILTER_TYPE_USER = "people";
+    public static final String FILTER_TYPE_CHANNEL = "channel";
+    public static final String FILTER_TYPE_GROUP = "group";
+
     public enum FilterType {
-        VIDEO("clip"),
-        VOD("ondemand"),
-        USER("people"),
-        CHANNEL("channel"),
-        GROUP("group");
+        VIDEO(FILTER_TYPE_VIDEO),
+        VOD(FILTER_TYPE_VOD),
+        USER(FILTER_TYPE_USER),
+        CHANNEL(FILTER_TYPE_CHANNEL),
+        GROUP(FILTER_TYPE_GROUP);
 
         private final String mText;
 
