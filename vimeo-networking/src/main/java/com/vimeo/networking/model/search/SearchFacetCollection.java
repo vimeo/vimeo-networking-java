@@ -35,6 +35,7 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@SuppressWarnings("unused")
 public class SearchFacetCollection implements Serializable {
 
     private static final long serialVersionUID = 3340976215489066653L;
@@ -42,20 +43,54 @@ public class SearchFacetCollection implements Serializable {
     @Nullable
     @GsonAdapterKey("type")
     public SearchFacet mTypeFacet;
+
     @Nullable
     @GsonAdapterKey("category")
     public SearchFacet mCategoryFacet;
+
     @Nullable
     @GsonAdapterKey("duration")
     public SearchFacet mDurationFacet;
+
     @Nullable
     @GsonAdapterKey("license")
     public SearchFacet mLicenseFacet;
+
     @Nullable
     @GsonAdapterKey("uploaded")
     public SearchFacet mUploadedFacet;
-    // TODO: VOD facets 6/27/16 [KZ]
-    // TODO: People facets 6/27/16 [KZ]
-    // TODO: Channel facets 6/27/16 [KZ]
-    // TODO: Group facets 6/27/16 [KZ]
+
+    @Nullable
+    @GsonAdapterKey("user_type")
+    public SearchFacet mUserTypeFacet;
+
+    @Nullable
+    public SearchFacet getTypeFacet() {
+        return mTypeFacet;
+    }
+
+    @Nullable
+    public SearchFacet getCategoryFacet() {
+        return mCategoryFacet;
+    }
+
+    @Nullable
+    public SearchFacet getDurationFacet() {
+        return mDurationFacet;
+    }
+
+    @Nullable
+    public SearchFacet getLicenseFacet() {
+        return mLicenseFacet;
+    }
+
+    @Nullable
+    public SearchFacet getUploadedFacet() {
+        return mUploadedFacet;
+    }
+
+    @Nullable
+    public SearchFacet getUserTypeFacet() {
+        return mUserTypeFacet;
+    }
 }

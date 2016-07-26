@@ -31,18 +31,36 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 
 /**
- * Model representing a facets options
+ * Model representing a facets option
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
-public class FacetOptions implements Serializable {
+public class FacetOption implements Serializable {
 
     private static final long serialVersionUID = 6525562797608669182L;
+
+    @Nullable
+    @GsonAdapterKey("name")
+    public String mName;
 
     @GsonAdapterKey("total")
     public int mTotal;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    public String uri;
+    @GsonAdapterKey("text")
+    public String mText;
+
+    @Nullable
+    public String getName() {
+        return mName;
+    }
+
+    public int getTotal() {
+        return mTotal;
+    }
+
+    @Nullable
+    public String getText() {
+        return mText;
+    }
 }
