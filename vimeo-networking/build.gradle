@@ -1,6 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
+compileJava {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
 buildscript {
     repositories {
         maven {

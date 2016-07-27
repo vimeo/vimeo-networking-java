@@ -32,7 +32,6 @@ import com.vimeo.stag.generated.Stag;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -73,11 +72,7 @@ public class VimeoNetworkUtil {
     public static GsonBuilder getGsonBuilder() {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().registerTypeAdapterFactory(new Stag.Factory())
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapter(Date.class, ISO8601.getDateSerializer())
-                .registerTypeAdapter(Date.class, ISO8601.getDateDeserializer());
-        /** Refer to {@link ISO8601} for explanation of deserialization */
-        // .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ")
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
     }
 
     /**
