@@ -117,7 +117,7 @@ public final class VimeoClient {
     private static LazyInitializationProvider sLazyInitializationProvider;
     private static VimeoClient sSharedInstance;
 
-    public static VimeoClient getInstance() {
+    public static synchronized VimeoClient getInstance() {
         if (sSharedInstance == null) {
             if (sLazyInitializationProvider != null) {
                 initialize(sLazyInitializationProvider.getConfiguration());
