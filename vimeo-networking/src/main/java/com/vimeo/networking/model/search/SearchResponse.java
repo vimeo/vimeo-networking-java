@@ -27,20 +27,36 @@ package com.vimeo.networking.model.search;
 import com.vimeo.networking.model.BaseResponseList;
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Response of /search
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@SuppressWarnings("unused")
 public class SearchResponse extends BaseResponseList<SearchResult> {
 
     private static final long serialVersionUID = -7915082057592438294L;
 
+    @Nullable
     @GsonAdapterKey("facets")
     public SearchFacetCollection mFacetCollection;
+
+    @GsonAdapterKey("mature_hidden_count")
+    public int mMatureHiddenCount;
 
     @Override
     public Class getModelClass() {
         return SearchResult.class;
+    }
+
+    @Nullable
+    public SearchFacetCollection getFacetCollection() {
+        return mFacetCollection;
+    }
+
+    public int getMatureHiddenCount() {
+        return mMatureHiddenCount;
     }
 }

@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -46,12 +47,18 @@ public final class Search {
     private Search() {
     }
 
+    public static final String FILTER_TYPE_VIDEO = "clip";
+    public static final String FILTER_TYPE_VOD = "ondemand";
+    public static final String FILTER_TYPE_USER = "people";
+    public static final String FILTER_TYPE_CHANNEL = "channel";
+    public static final String FILTER_TYPE_GROUP = "group";
+
     public enum FilterType {
-        VIDEO("clip"),
-        VOD("ondemand"),
-        USER("people"),
-        CHANNEL("channel"),
-        GROUP("group");
+        VIDEO(FILTER_TYPE_VIDEO),
+        VOD(FILTER_TYPE_VOD),
+        USER(FILTER_TYPE_USER),
+        CHANNEL(FILTER_TYPE_CHANNEL),
+        GROUP(FILTER_TYPE_GROUP);
 
         private final String mText;
 
@@ -160,27 +167,17 @@ public final class Search {
         }
     }
 
-    public enum FilterCategory {
-        ANIMATION("animation"),
-        ART("art"),
-        CAMERA_TECHNIQUES("cameratechniques"),
-        COMEDY("comedy"),
-        DOCUMENTARY("documentary"),
-        EXPERIMENTAL("experimental"),
-        FASHION("fashion"),
-        FOOD("food"),
-        INSTRUCTIONALS("instructionals"),
-        JOURNALISM("journalism"),
-        MUSIC("music"),
-        NARRATIVE("narrative"),
-        PERSONAL("personal"),
-        SPORTS("sports"),
-        TALKS("talks"),
-        TRAVEL("travel");
+    public enum Facet {
+        TYPE("type"),
+        CATEGORY("category"),
+        DURATION("duration"),
+        LICENSE("license"),
+        UPLOADED("uploaded"),
+        USER_TYPE("user_type");
 
         private final String mText;
 
-        FilterCategory(String text) {
+        Facet(String text) {
             this.mText = text;
         }
 
@@ -188,9 +185,9 @@ public final class Search {
             return this.mText;
         }
 
-        public static FilterCategory fromString(String text) {
+        public static Facet fromString(String text) {
             if (text != null) {
-                for (FilterCategory b : FilterCategory.values()) {
+                for (Facet b : Facet.values()) {
                     if (text.equalsIgnoreCase(b.mText)) {
                         return b;
                     }
@@ -205,16 +202,26 @@ public final class Search {
     static final String FILTER_DURATION = "filter_duration";
     static final String FILTER_TYPE = "filter_type";
     static final String FILTER_FEATURED_COUNT = "featured_clip_count";
+    static final String PARAMETER_GET_FACETS = "facets";
 
     public static Call<SearchResponse> search(@NotNull String query, @NotNull FilterType type,
                                               @NotNull ModelCallback<SearchResponse> callback,
                                               @Nullable Map<String, String> refinementMap,
-                                              @Nullable String containerFilter,
+                                              @Nullable List<Facet> facets, @Nullable String containerFilter,
                                               @Nullable String fieldFilter) {
         if (refinementMap == null) {
             refinementMap = new HashMap<>();
         }
         refinementMap.put(FILTER_TYPE, type.getText());
+        if (facets != null) {
+            StringBuilder facetsToUse = new StringBuilder();
+            String delim = "";
+            for (Facet facet : facets) {
+                facetsToUse.append(delim).append(facet.getText());
+                delim = ",";
+            }
+            refinementMap.put(PARAMETER_GET_FACETS, facetsToUse.toString());
+        }
         if (containerFilter != null) {
             refinementMap.put(Vimeo.PARAMETER_GET_CONTAINER_FIELD_FILTER, containerFilter);
         }
@@ -266,9 +273,9 @@ public final class Search {
             return this;
         }
 
-        public QueryParameterProvider setCategory(@Nullable FilterCategory filterCategory) {
+        public QueryParameterProvider setCategory(@Nullable String filterCategory) {
             if (filterCategory != null) {
-                mQueryParameters.put(FILTER_CATEGORY, filterCategory.getText());
+                mQueryParameters.put(FILTER_CATEGORY, filterCategory);
             } else {
                 mQueryParameters.remove(FILTER_CATEGORY);
             }
