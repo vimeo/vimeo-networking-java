@@ -214,14 +214,13 @@ public final class Search {
         }
         refinementMap.put(FILTER_TYPE, type.getText());
         if (facets != null) {
-            String facetsToUse = "";
-            for (int i = 0; i < facets.size(); i++) {
-                facetsToUse += facets.get(i).getText();
-                if (i + 1 != facets.size()) {
-                    facetsToUse += ",";
-                }
+            StringBuilder facetsToUse = new StringBuilder();
+            String delim = "";
+            for (Facet facet : facets) {
+                facetsToUse.append(delim).append(facet.getText());
+                delim = ",";
             }
-            refinementMap.put(PARAMETER_GET_FACETS, facetsToUse);
+            refinementMap.put(PARAMETER_GET_FACETS, facetsToUse.toString());
         }
         if (containerFilter != null) {
             refinementMap.put(Vimeo.PARAMETER_GET_CONTAINER_FIELD_FILTER, containerFilter);
