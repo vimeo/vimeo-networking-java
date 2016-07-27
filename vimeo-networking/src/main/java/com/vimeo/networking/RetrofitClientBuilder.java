@@ -22,6 +22,8 @@
 
 package com.vimeo.networking;
 
+import com.vimeo.networking.logging.ClientLogger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyManagementException;
@@ -126,6 +128,13 @@ public class RetrofitClientBuilder {
         sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
 
         sSLSocketFactory = sslContext.getSocketFactory();
+        if (inputStream != null) {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                ClientLogger.d("pinCertificates: Could not close keystore InputStream");
+            }
+        }
 
         return this;
     }

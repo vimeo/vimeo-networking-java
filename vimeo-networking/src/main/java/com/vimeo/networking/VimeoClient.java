@@ -99,17 +99,43 @@ public final class VimeoClient {
      */
     // <editor-fold desc="Configuration">
 
+    private static class LazyInitializationProvider {
+
+        @NotNull
+        private final Configuration mConfiguration;
+
+        public LazyInitializationProvider(@NotNull Configuration configuration) {
+            mConfiguration = configuration;
+        }
+
+        @NotNull
+        public Configuration getConfiguration() {
+            return mConfiguration;
+        }
+    }
+
+    private static LazyInitializationProvider sLazyInitializationProvider;
     private static VimeoClient mSharedInstance;
 
     public static VimeoClient getInstance() {
         if (mSharedInstance == null) {
+            if (sLazyInitializationProvider != null) {
+                initialize(sLazyInitializationProvider.getConfiguration());
+                if (mSharedInstance != null) {
+                    return mSharedInstance;
+                }
+            }
             throw new AssertionError("Instance must be configured before use");
         }
 
         return mSharedInstance;
     }
 
-    public static void initialize(Configuration configuration) {
+    public static void initializeLazily(@NotNull Configuration configuration) {
+        sLazyInitializationProvider = new LazyInitializationProvider(configuration);
+    }
+
+    public static void initialize(@NotNull Configuration configuration) {
         mSharedInstance = new VimeoClient(configuration);
     }
 
