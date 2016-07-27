@@ -115,20 +115,20 @@ public final class VimeoClient {
     }
 
     private static LazyInitializationProvider sLazyInitializationProvider;
-    private static VimeoClient mSharedInstance;
+    private static VimeoClient sSharedInstance;
 
     public static VimeoClient getInstance() {
-        if (mSharedInstance == null) {
+        if (sSharedInstance == null) {
             if (sLazyInitializationProvider != null) {
                 initialize(sLazyInitializationProvider.getConfiguration());
-                if (mSharedInstance != null) {
-                    return mSharedInstance;
+                if (sSharedInstance != null) {
+                    return sSharedInstance;
                 }
             }
             throw new AssertionError("Instance must be configured before use");
         }
 
-        return mSharedInstance;
+        return sSharedInstance;
     }
 
     public static void initializeLazily(@NotNull Configuration configuration) {
@@ -136,7 +136,7 @@ public final class VimeoClient {
     }
 
     public static void initialize(@NotNull Configuration configuration) {
-        mSharedInstance = new VimeoClient(configuration);
+        sSharedInstance = new VimeoClient(configuration);
     }
 
     private VimeoClient(@NotNull Configuration configuration) {
@@ -801,7 +801,7 @@ public final class VimeoClient {
                 VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = true;
                 mPinCodeAuthorizationTimer.scheduleAtFixedRate(
                         new PinCodePollingTimerTask(pinCodeInfo, mPinCodeAuthorizationTimer,
-                                                    pinCodeInfo.getExpiresIn(), authCallback, mSharedInstance,
+                                                    pinCodeInfo.getExpiresIn(), authCallback, sSharedInstance,
                                                     SCOPE), 0,
                         SECONDS_TO_MILLISECONDS * pinCodeInfo.getInterval());
             }
