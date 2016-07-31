@@ -84,6 +84,9 @@ public class ConnectionCollection implements Serializable {
     @GsonAdapterKey("recommendations")
     public Connection recommendations;
     @Nullable
+    @GsonAdapterKey("appearances")
+    public Connection appearances;
+    @Nullable
     @GsonAdapterKey("related")
     public Connection related;
     @Nullable
