@@ -47,7 +47,7 @@ public class SearchResponse extends BaseResponseList<SearchResult> {
     public int mMatureHiddenCount;
 
     @Override
-    public Class getModelClass() {
+    public Class<SearchResult> getModelClass() {
         return SearchResult.class;
     }
 

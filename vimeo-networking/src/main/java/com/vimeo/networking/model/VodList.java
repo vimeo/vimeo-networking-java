@@ -32,8 +32,11 @@ import com.vimeo.stag.GsonAdapterKey;
  */
 @GsonAdapterKey
 public class VodList extends BaseResponseList<VodItem> {
+
+    private static final long serialVersionUID = 2086096986453255372L;
+
     @Override
-    public Class getModelClass() {
+    public Class<VodItem> getModelClass() {
         return VodItem.class;
     }
 }
