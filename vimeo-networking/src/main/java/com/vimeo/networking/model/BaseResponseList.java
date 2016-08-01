@@ -46,5 +46,5 @@ public abstract class BaseResponseList<T> implements Serializable {
     public ArrayList<T> data;
 
     // TODO: maybe don't need
-    public abstract Class getModelClass();
+    public abstract Class<T> getModelClass();
 }

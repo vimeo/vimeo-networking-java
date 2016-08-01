@@ -30,8 +30,10 @@ import com.vimeo.stag.GsonAdapterKey;
 @GsonAdapterKey
 public class ChannelList extends BaseResponseList<Channel> {
 
+    private static final long serialVersionUID = -6382319292336453350L;
+
     @Override
-    public Class getModelClass() {
+    public Class<Channel> getModelClass() {
         return Channel.class;
     }
 }
