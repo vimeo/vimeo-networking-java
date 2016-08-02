@@ -526,6 +526,24 @@ public class Video implements Serializable {
     public boolean isVod() {
         return (metadata != null && metadata.connections != null && metadata.connections.ondemand != null);
     }
+
+    @Nullable
+    public Play.Status getPlayStatus() {
+        if (play != null) {
+            return play.getStatus();
+        }
+        return null;
+    }
+
+    @Nullable
+    public String getTrailerUri() {
+        if (metadata != null && metadata.connections != null &&
+            metadata.connections.trailer != null) {
+
+            return metadata.connections.trailer.uri;
+        }
+        return null;
+    }
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
