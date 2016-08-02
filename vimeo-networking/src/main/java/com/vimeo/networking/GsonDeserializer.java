@@ -24,6 +24,9 @@ package com.vimeo.networking;
 
 import com.google.gson.Gson;
 import com.vimeo.networking.callbacks.ModelCallback;
+import com.vimeo.networking.logging.ClientLogger;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * To be able to keep our api calls generic, we need to handle deserialization ourselves (Retrofit calls
@@ -56,8 +59,14 @@ public class GsonDeserializer {
         callback.success(result);
     }
 
+    @Nullable
     protected Object deserializeObject(Gson gson, Object object, ModelCallback<Object> callback) {
-        String JSON = gson.toJson(object);
-        return gson.fromJson(JSON, callback.getObjectType());
+        try {
+            String JSON = gson.toJson(object);
+            return gson.fromJson(JSON, callback.getObjectType());
+        } catch (Exception e) {
+            ClientLogger.e("Error when deserializing object!", e);
+            return null;
+        }
     }
 }
