@@ -50,23 +50,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class VimeoNetworkUtil {
 
+    private static Gson mGson;
+
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
      * </p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
-     *
      * @return Gson object that can be passed into a {@link GsonConverterFactory} create() method
      */
     public static Gson getGson() {
-        // Example date: "2015-05-21T14:24:03+00:00"
-        return getGsonBuilder().create();
+        if (mGson == null) {
+            mGson = getGsonBuilder().create();
+        }
+        return mGson;
     }
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
      * </p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
-     *
      * @return GsonBuilder that can be built upon and then created
      */
     public static GsonBuilder getGsonBuilder() {
@@ -78,7 +80,6 @@ public class VimeoNetworkUtil {
     /**
      * Returns a simple query map from a provided uri. The simple map enforces there is exactly one value for
      * every name (multiple values for the same name are regularly allowed in a set of parameters)
-     *
      * @param uri a uri, optionally with a query
      * @return a query map with a one to one mapping of names to values or empty {@link HashMap}
      * if no parameters are found on the uri
@@ -107,7 +108,6 @@ public class VimeoNetworkUtil {
     /**
      * Return a builder of the given cache control because for some reason this doesn't exist already.
      * Useful for adding more attributes to an already defined {@link CacheControl}
-     *
      * @param cacheControl The CacheControl to convert to a builder
      * @return A builder with the same attributes as the CacheControl passed in
      */
