@@ -1064,9 +1064,16 @@ public final class VimeoClient {
 
     @Nullable
     public retrofit2.Response<Video> fetchVideoSync(String uri, @Nullable String fieldFilter) {
+        return fetchVideoSync(uri, CacheControl.FORCE_NETWORK, fieldFilter);
+    }
+
+    @Nullable
+    public retrofit2.Response<Video> fetchVideoSync(String uri, CacheControl cacheControl,
+                                                    @Nullable String fieldFilter) {
+        String cacheHeaderValue = createCacheControlString(cacheControl);
         try {
-            return mVimeoService.getVideo(getAuthHeader(), uri, createQueryMap(null, null, fieldFilter))
-                    .execute();
+            return mVimeoService.getVideo(getAuthHeader(), cacheHeaderValue, uri,
+                                          createQueryMap(null, null, fieldFilter)).execute();
         } catch (IOException e) {
             return null;
         }
