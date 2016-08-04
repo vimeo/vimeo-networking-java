@@ -62,7 +62,7 @@ public class VimeoError extends RuntimeException {
     private Exception exception;
     private int httpStatusCode = Vimeo.NOT_FOUND;
 
-    private boolean isCanceledError = false;
+    private boolean isCanceledError;
 
     public VimeoError() {
     }
@@ -130,7 +130,6 @@ public class VimeoError extends RuntimeException {
 
     /**
      * Returns the first invalid parameter in the {@link #invalidParameters} list
-     *
      * @return First InvalidParameter in the invalid parameters array
      */
     @Nullable
@@ -169,7 +168,6 @@ public class VimeoError extends RuntimeException {
     /**
      * True if the error was from poor connectivity, closed sockets, or any other issue with the networking
      * layer of the request.
-     *
      * @return {@link #isNetworkError}
      */
     public boolean isNetworkError() {
@@ -224,5 +222,24 @@ public class VimeoError extends RuntimeException {
             invalidParameters = new ArrayList<>();
         }
         this.invalidParameters.add(invalidParameter);
+    }
+
+    /**
+     * @return the most useful error message string or <code>""</code> if none available.
+     */
+    @NotNull
+    public String getLogString() {
+        if (getDeveloperMessage() != null) {
+            return getDeveloperMessage();
+        } else if (this.errorMessage != null) {
+            return this.errorMessage;
+        } else if (exception != null && exception.getMessage() != null) {
+            return "Exception: " + exception.getMessage();
+        } else if (getErrorCode() != ErrorCode.DEFAULT) {
+            return "Error Code " + getErrorCode();
+        } else if (getHttpStatusCode() != Vimeo.NOT_FOUND) {
+            return "HTTP Status Code: " + getHttpStatusCode();
+        }
+        return "";
     }
 }
