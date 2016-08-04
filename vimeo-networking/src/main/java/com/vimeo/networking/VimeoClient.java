@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -1062,11 +1063,27 @@ public final class VimeoClient {
         return call;
     }
 
+    /**
+     * This will fetch a video synchronously by-passing the cache. To fetch from cache, use
+     * {@link #fetchVideoSync(String, CacheControl, String)}
+     *
+     * @param uri         the uri of the video to fetch
+     * @param fieldFilter any field filters to apply for the video response, may be null
+     * @return a Retrofit response object with the Video as the body
+     */
     @Nullable
     public retrofit2.Response<Video> fetchVideoSync(String uri, @Nullable String fieldFilter) {
         return fetchVideoSync(uri, CacheControl.FORCE_NETWORK, fieldFilter);
     }
 
+    /**
+     * This will fetch a video synchronously
+     *
+     * @param uri          the uri of the video to fetch
+     * @param cacheControl the cache control
+     * @param fieldFilter  any field filters to apply for the video response, may be null
+     * @return a Retrofit response object with the Video as the body
+     */
     @Nullable
     public retrofit2.Response<Video> fetchVideoSync(String uri, CacheControl cacheControl,
                                                     @Nullable String fieldFilter) {
@@ -1125,7 +1142,7 @@ public final class VimeoClient {
     }
 
     /**
-     * A package private search method: use {@link Search#search(String, FilterType, ModelCallback, Map, String)}
+     * A package private search method: use {@link Search#search(String, FilterType, ModelCallback, Map, List, String, String)}
      * which relies on this method.
      *
      * @param queryMap the query parameters
