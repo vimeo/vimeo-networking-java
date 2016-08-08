@@ -348,6 +348,35 @@ public final class VimeoClient {
     }
 
     /**
+     * Authorizes users of the app who are not signed in. This call requires a client id and client secret
+     * to be set on the initial Configuration.
+     * <p/>
+     * Leaves User as null in {@link VimeoAccount} model and populates the rest.
+     * <p/>
+     * WARNING: This contains a synchronous network call. Use {@link #authorizeWithClientCredentialsGrant(AuthCallback)}
+     * for asynchronous use.
+     */
+    public VimeoAccount authorizeWithClientCredentialsGrantSync() {
+
+        Call<VimeoAccount> call = mVimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
+                                                                                    Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
+                                                                                    mConfiguration.scope);
+
+        VimeoAccount vimeoAccount = null;
+        try {
+            retrofit2.Response<VimeoAccount> response = call.execute();
+             if (response.isSuccessful()) {
+                vimeoAccount = response.body();
+                saveAccount(vimeoAccount, null);
+            }
+        } catch (IOException e) {
+            ClientLogger.e("Exception during authorizeWithClientCredentialsGrantSync: " + e.getMessage(), e);
+        }
+
+        return vimeoAccount;
+    }
+
+    /**
      * Exchange OAuth1 token/secret combination for a new OAuth2 token
      *
      * @param callback    Callback pertaining to authentication
