@@ -356,6 +356,7 @@ public final class VimeoClient {
      * WARNING: This contains a synchronous network call. Use {@link #authorizeWithClientCredentialsGrant(AuthCallback)}
      * for asynchronous use.
      */
+    @Nullable
     public VimeoAccount authorizeWithClientCredentialsGrantSync() {
 
         Call<VimeoAccount> call = mVimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
@@ -365,7 +366,7 @@ public final class VimeoClient {
         VimeoAccount vimeoAccount = null;
         try {
             retrofit2.Response<VimeoAccount> response = call.execute();
-             if (response.isSuccessful()) {
+            if (response.isSuccessful()) {
                 vimeoAccount = response.body();
                 saveAccount(vimeoAccount, null);
             }
