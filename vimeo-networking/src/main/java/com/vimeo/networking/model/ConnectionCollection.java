@@ -32,12 +32,16 @@ import java.io.Serializable;
  * Stores a collection of Connection objects.
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
 public class ConnectionCollection implements Serializable {
 
     private static final long serialVersionUID = -4523270955994232839L;
     @Nullable
     @GsonAdapterKey("videos")
     public Connection videos;
+    @Nullable
+    @GsonAdapterKey("categories")
+    public Connection categories;
     @Nullable
     @GsonAdapterKey("comments")
     public Connection comments;
