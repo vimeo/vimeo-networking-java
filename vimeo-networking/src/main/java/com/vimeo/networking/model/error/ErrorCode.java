@@ -315,6 +315,10 @@ public enum ErrorCode {
     @SerializedName("3419")
     USER_CANNOT_STREAM_CLIP,
     @SerializedName("3420")
-    USER_HIT_STREAM_LIMITS_FOR_VIDEO
+    USER_HIT_STREAM_LIMITS_FOR_VIDEO,
+    @SerializedName("3421")
+    USER_HIT_DEVICE_LIMIT,
+    @SerializedName("8300")
+    DRM_INVALID_CREDENTIALS
     // </editor-fold>
 }
