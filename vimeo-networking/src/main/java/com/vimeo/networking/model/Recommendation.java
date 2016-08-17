@@ -59,6 +59,35 @@ public class Recommendation implements Serializable {
     @GsonAdapterKey("resource_key")
     public String mResourceKey;
 
+    // -----------------------------------------------------------------------------------------------------
+    // Getters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Getters">
+    @Nullable
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    @Nullable
+    public User getUser() {
+        return mUser;
+    }
+
+    @Nullable
+    public Channel getChannel() {
+        return mChannel;
+    }
+
+    @Nullable
+    public String getDescription() {
+        return mDescription;
+    }
+
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
     @NotNull
     public RecommendationType getRecommendationType() {
         if (TYPE_CHANNEL.equals(mRecommendationType)) {
@@ -69,5 +98,6 @@ public class Recommendation implements Serializable {
             return RecommendationType.NONE;
         }
     }
+    // </editor-fold>
 
 }
