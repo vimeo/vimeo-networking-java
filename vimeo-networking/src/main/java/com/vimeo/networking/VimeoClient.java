@@ -397,6 +397,30 @@ public final class VimeoClient {
         return call;
     }
 
+    /**
+     * This method is used to exchange a user access token from app A for a token for app B.
+     * <p/>
+     * An app can use this to exchange an authenticated user's access token from app A for a new access
+     * token for app B, using the scope associated with app B. The caller of this method will be app B.
+     * <p/>
+     * <b>This method is application restricted, and not meant to be consumed by the general public.</b>
+     *
+     * @param token    the authenticated user access token from application A. This <b>cannot</b> be a client
+     *                 credentials access token.
+     * @param callback Callback invoked upon success/fail of the service
+     * @return A Call object
+     */
+    public Call<VimeoAccount> singleSignOnTokenExchange(String token, AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        Call<VimeoAccount> call =
+                mVimeoService.ssoTokenExchange(getBasicAuthHeader(), token, mConfiguration.scope);
+        call.enqueue(new AccountCallback(this, callback));
+        return call;
+    }
+
     @Nullable
     public Call<VimeoAccount> join(String displayName, String email, String password, AuthCallback callback) {
         if (callback == null) {

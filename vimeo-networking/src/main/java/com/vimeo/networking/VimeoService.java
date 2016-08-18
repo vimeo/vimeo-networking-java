@@ -101,6 +101,11 @@ public interface VimeoService {
                                              @Field("scope") String scope);
 
     @FormUrlEncoded
+    @POST("oauth/appexchange")
+    Call<VimeoAccount> ssoTokenExchange(@Header("Authorization") String basicAuth,
+                                        @Field("access_token") String token, @Field("scope") String scope);
+
+    @FormUrlEncoded
     @Headers("Cache-Control: no-cache, no-store")
     @POST("oauth/device")
     Call<PinCodeInfo> getPinCodeInfo(@Header("Authorization") String authHeader,
