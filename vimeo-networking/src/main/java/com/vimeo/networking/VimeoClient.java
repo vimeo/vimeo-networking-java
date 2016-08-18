@@ -410,7 +410,7 @@ public final class VimeoClient {
      * @param callback Callback invoked upon success/fail of the service
      * @return A Call object
      */
-    public Call<VimeoAccount> singleSignOnTokenExchange(String token, AuthCallback callback) {
+    public Call<VimeoAccount> singleSignOnTokenExchange(@NotNull String token, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
