@@ -27,8 +27,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.intellij:annotations:12.0@jar'
-    compile 'com.squareup.retrofit2:retrofit:2.0.2'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile project(':stag-library')
     apt project(':stag-library-compiler')
 }
