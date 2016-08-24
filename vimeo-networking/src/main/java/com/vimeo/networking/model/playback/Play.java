@@ -149,6 +149,12 @@ public class Play implements Serializable {
         if (getProgressiveVideoFiles() != null) {
             count += getProgressiveVideoFiles().size();
         }
+        if (mDrm != null && mDrm.getWidevine() != null) {
+            count++;
+        }
+        if (mDrm != null && mDrm.getPlayReady() != null) {
+            count++;
+        }
         return count;
     }
 
