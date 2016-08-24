@@ -31,6 +31,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -43,7 +44,7 @@ import java.util.Locale;
  * <b>This class is now deprecated</b>
  * <br>
  * Gson has  added support for parsing ISO 8601 strings into Date objects, removing the need for this class.
- * This class will be removed in release 2.0.0 of vimeo-networking.
+ * This class will be removed in release 2.0.0 of vimeo-networking. See {@link ISO8601Utils}
  * <p/>
  * <b>Original JavaDoc:</b>
  * <br>
