@@ -149,14 +149,26 @@ public class Play implements Serializable {
         if (getProgressiveVideoFiles() != null) {
             count += getProgressiveVideoFiles().size();
         }
+        if (mDrm != null && mDrm.getWidevine() != null) {
+            count++;
+        }
+        if (mDrm != null && mDrm.getPlayReady() != null) {
+            count++;
+        }
         return count;
     }
 
 
     @Nullable
     public String getLoadLoggingUrl() {
-        if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
-            !getHlsVideoFile().getLog().isLoadEmpty()) {
+        if (mDrm != null && mDrm.getWidevine() != null && mDrm.getWidevine().getLog() != null &&
+            !mDrm.getWidevine().getLog().isLoadEmpty()) {
+            return mDrm.getWidevine().getLog().getLoadLoggingUrl();
+        } else if (mDrm != null && mDrm.getPlayReady() != null && mDrm.getPlayReady().getLog() != null &&
+                   !mDrm.getPlayReady().getLog().isLoadEmpty()) {
+            return mDrm.getPlayReady().getLog().getLoadLoggingUrl();
+        } else if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
+                   !getHlsVideoFile().getLog().isLoadEmpty()) {
             return getHlsVideoFile().getLog().getLoadLoggingUrl();
         } else if (getDashVideoFile() != null &&
                    getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isLoadEmpty()) {
@@ -173,8 +185,14 @@ public class Play implements Serializable {
 
     @Nullable
     public String getLikeLoggingUrl() {
-        if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
-            !getHlsVideoFile().getLog().isLikeEmpty()) {
+        if (mDrm != null && mDrm.getWidevine() != null && mDrm.getWidevine().getLog() != null &&
+            !mDrm.getWidevine().getLog().isLikeEmpty()) {
+            return mDrm.getWidevine().getLog().getLikeLoggingUrl();
+        } else if (mDrm != null && mDrm.getPlayReady() != null && mDrm.getPlayReady().getLog() != null &&
+                   !mDrm.getPlayReady().getLog().isLikeEmpty()) {
+            return mDrm.getPlayReady().getLog().getLikeLoggingUrl();
+        } else if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
+                   !getHlsVideoFile().getLog().isLikeEmpty()) {
             return getHlsVideoFile().getLog().getLikeLoggingUrl();
         } else if (getDashVideoFile() != null &&
                    getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isLikeEmpty()) {
@@ -191,8 +209,14 @@ public class Play implements Serializable {
 
     @Nullable
     public String getWatchLaterLoggingUrl() {
-        if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
-            !getHlsVideoFile().getLog().isWatchLaterEmpty()) {
+        if (mDrm != null && mDrm.getWidevine() != null && mDrm.getWidevine().getLog() != null &&
+            !mDrm.getWidevine().getLog().isWatchLaterEmpty()) {
+            return mDrm.getWidevine().getLog().getWatchLaterLoggingUrl();
+        } else if (mDrm != null && mDrm.getPlayReady() != null && mDrm.getPlayReady().getLog() != null &&
+                   !mDrm.getPlayReady().getLog().isWatchLaterEmpty()) {
+            return mDrm.getPlayReady().getLog().getWatchLaterLoggingUrl();
+        } else if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
+                   !getHlsVideoFile().getLog().isWatchLaterEmpty()) {
             return getHlsVideoFile().getLog().getWatchLaterLoggingUrl();
         } else if (getDashVideoFile() != null &&
                    getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isWatchLaterEmpty()) {
