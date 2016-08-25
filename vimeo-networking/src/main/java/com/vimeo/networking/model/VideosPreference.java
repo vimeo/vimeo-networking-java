@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -33,7 +35,17 @@ public class VideosPreference implements Serializable {
 
     private static final long serialVersionUID = 1956447486226253433L;
     @Nullable
-    protected String privacy;
+    @GsonAdapterKey("privacy")
+    public String privacy;
+
+    @Nullable
+    @GsonAdapterKey("password")
+    public String password;
+
+    @Nullable
+    public String getPassword() {
+        return password;
+    }
 
     @Nullable
     public String getPrivacy() {

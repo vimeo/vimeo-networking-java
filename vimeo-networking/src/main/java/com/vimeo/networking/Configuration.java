@@ -23,15 +23,17 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.Vimeo.LogLevel;
-import com.vimeo.networking.logging.DebugLogger;
-import com.vimeo.networking.logging.DebugLoggerInterface;
+import com.vimeo.networking.logging.LogProvider;
 import com.vimeo.networking.model.VimeoAccount;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 
 /**
  * The configuration object for making API calls with Retrofit.
@@ -55,9 +57,14 @@ public class Configuration {
     public String clientSecret;
     public String scope;
 
+    public String accessToken;
+
     @Nullable
     private AccountStore accountStore;
     public GsonDeserializer deserializer;
+
+    public final List<Interceptor> networkInterceptors = new ArrayList<>();
+    public final List<Interceptor> interceptors = new ArrayList<>();
 
     public String apiVersionString;
     public String codeGrantRedirectURI;
@@ -71,7 +78,8 @@ public class Configuration {
     public int timeout; // in seconds
 
     public boolean certPinningEnabled;
-    public DebugLoggerInterface debugLogger;
+    @Nullable
+    public LogProvider logProvider;
     public LogLevel logLevel;
 
     /**
@@ -88,9 +96,20 @@ public class Configuration {
         return new Cache(cacheDirectory, cacheSize);
     }
 
+    /**
+     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
+     * <p/>
+     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
+     * application sessions.
+     */
+    @Deprecated
     public void saveAccount(VimeoAccount account, String email, String password) {
+        saveAccount(account, email);
+    }
+
+    public void saveAccount(VimeoAccount account, String email) {
         if (accountStore != null) {
-            accountStore.saveAccount(account, email, password);
+            accountStore.saveAccount(account, email);
         }
     }
 
@@ -100,6 +119,7 @@ public class Configuration {
         }
     }
 
+    @Nullable
     public VimeoAccount loadAccount() {
         if (accountStore == null) {
             return null;
@@ -119,6 +139,9 @@ public class Configuration {
         this.clientID = builder.clientID;
         this.clientSecret = builder.clientSecret;
         this.scope = builder.scope;
+
+        this.accessToken = builder.accessToken;
+
         this.accountStore = builder.accountStore;
         this.deserializer = builder.deserializer;
 
@@ -137,15 +160,19 @@ public class Configuration {
         this.timeout = builder.timeout;
 
         this.certPinningEnabled = builder.certPinningEnabled;
-        this.debugLogger = builder.debugLogger;
+        this.logProvider = builder.logProvider;
         this.logLevel = builder.logLevel;
+        this.networkInterceptors.addAll(builder.networkInterceptors);
+        this.interceptors.addAll(builder.interceptors);
     }
 
     private boolean isValid() {
-        return (this.baseURLString != null && !this.baseURLString.trim().isEmpty() &&
-                this.clientID != null && !this.clientID.trim().isEmpty() &&
-                this.clientSecret != null && !this.clientSecret.trim().isEmpty() &&
-                this.scope != null && !this.scope.trim().isEmpty());
+        return this.baseURLString != null && (!this.baseURLString.trim().isEmpty() &&
+                                              this.clientID != null && !this.clientID.trim().isEmpty() &&
+                                              this.clientSecret != null &&
+                                              !this.clientSecret.trim().isEmpty() &&
+                                              this.scope != null && !this.scope.trim().isEmpty()) ||
+               (this.accessToken != null && !this.accessToken.trim().isEmpty());
     }
 
     /**
@@ -153,10 +180,13 @@ public class Configuration {
      */
     public static class Builder {
 
-        private String baseURLString;
+        private String baseURLString = Vimeo.VIMEO_BASE_URL_STRING;
         private String clientID;
         private String clientSecret;
         private String scope;
+
+        private String accessToken;
+
         private AccountStore accountStore;
         private GsonDeserializer deserializer = new GsonDeserializer();
 
@@ -167,15 +197,43 @@ public class Configuration {
         private String userAgentString = DEFAULT_USER_AGENT;
         public int timeout = DEFAULT_TIMEOUT;
 
+        private final List<Interceptor> networkInterceptors = new ArrayList<>();
+        private final List<Interceptor> interceptors = new ArrayList<>();
+
         public String codeGrantRedirectUri = "vimeo" + clientID + "://auth";
 
         private boolean certPinningEnabled = true;
         // Default to the stock logger which just prints - this makes it optional
-        public DebugLoggerInterface debugLogger = new DebugLogger();
+        @Nullable
+        public LogProvider logProvider;
         public LogLevel logLevel = LogLevel.DEBUG;
 
+        /**
+         * The most basic builder constructor. If you've only provided an access token, you'll only be able to
+         * make requests for the given access token's account.
+         * <p/>
+         * If you'd like the ability to switch accounts or request a client credentials grant, you'll have to set a client id and client secret.
+         * If you'd like the ability to persist accounts, you'll have to set an account store.
+         * If you'd like the ability to issue code grant, you'll have to set a code grant redirect uri.
+         *
+         * @param accessToken Token provided by the Vimeo developer console
+         */
+        public Builder(String accessToken) {
+            this.accessToken = accessToken;
+        }
+
+        public Builder(String clientID, String clientSecret, String scope) {
+            this(null, clientID, clientSecret, scope, null, null);
+        }
+
+        @Deprecated
         public Builder(String baseURLString, String clientID, String clientSecret, String scope) {
             this(baseURLString, clientID, clientSecret, scope, null, null);
+        }
+
+        public Builder(String clientId, String clientSecret, String scope,
+                       @Nullable AccountStore accountStore, @Nullable GsonDeserializer deserializer) {
+            this(null, clientId, clientSecret, scope, accountStore, deserializer);
         }
 
         /**
@@ -192,14 +250,27 @@ public class Configuration {
          * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Androids <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">Account Manager</a>
          * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread
          */
-        public Builder(String baseURLString, String clientId, String clientSecret, String scope,
+        @Deprecated
+        public Builder(@Nullable String baseURLString, String clientId, String clientSecret, String scope,
                        @Nullable AccountStore accountStore, @Nullable GsonDeserializer deserializer) {
-            this.baseURLString = baseURLString;
+            this.baseURLString = baseURLString == null ? this.baseURLString : baseURLString;
             this.clientID = clientId;
             this.clientSecret = clientSecret;
             this.scope = scope;
             this.accountStore = accountStore;
             this.deserializer = deserializer;
+        }
+
+        public Builder setBaseUrl(String baseUrl) {
+            this.baseURLString = baseUrl;
+            return this;
+        }
+
+        /** If you used the basic Builder access token constructor but have the intent of */
+        public Builder setClientIdAndSecret(String clientId, String clientSecret) {
+            this.clientID = clientId;
+            this.clientSecret = clientSecret;
+            return this;
         }
 
         public Builder setAccountStore(AccountStore accountStore) {
@@ -209,6 +280,11 @@ public class Configuration {
 
         public Builder setGsonDeserializer(GsonDeserializer deserializer) {
             this.deserializer = deserializer;
+            return this;
+        }
+
+        public Builder setAccessToken(String accessToken) {
+            this.accessToken = accessToken;
             return this;
         }
 
@@ -252,13 +328,41 @@ public class Configuration {
             return this;
         }
 
-        public Builder setDebugLogger(DebugLoggerInterface debugLogger) {
-            this.debugLogger = debugLogger;
+        public Builder setDebugLogger(LogProvider logger) {
+            this.logProvider = logger;
             return this;
         }
 
         public Builder setLogLevel(LogLevel level) {
             this.logLevel = level;
+            return this;
+        }
+
+        public Builder addNetworkInterceptor(Interceptor interceptor) {
+            if (interceptor != null) {
+                this.networkInterceptors.add(interceptor);
+            }
+            return this;
+        }
+
+        public Builder addNetworkInterceptors(List<Interceptor> interceptors) {
+            if (interceptors != null) {
+                this.networkInterceptors.addAll(interceptors);
+            }
+            return this;
+        }
+
+        public Builder addInterceptor(Interceptor interceptor) {
+            if (interceptor != null) {
+                this.interceptors.add(interceptor);
+            }
+            return this;
+        }
+
+        public Builder addInterceptors(List<Interceptor> interceptors) {
+            if (interceptors != null) {
+                this.interceptors.addAll(interceptors);
+            }
             return this;
         }
 

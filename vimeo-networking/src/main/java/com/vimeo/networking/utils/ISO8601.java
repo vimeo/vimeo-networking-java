@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2015 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +31,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -36,7 +39,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+
 /**
+ * <b>This class is now deprecated</b>
+ * <br>
+ * Gson has  added support for parsing ISO 8601 strings into Date objects, removing the need for this class.
+ * This class will be removed in release 2.0.0 of vimeo-networking. See {@link ISO8601Utils}
+ * <p/>
+ * <b>Original JavaDoc:</b>
+ * <br>
  * We have to write our own serializer and deserializer because Android doesn't currently
  * support ISO 8601. The SimpleDateFormat link below shows 'ZZZZZ' as what we want for timezone
  * but this is only available in Android 4.3 and up. Java 7 has the 'X' character to represent
@@ -49,13 +60,15 @@ import java.util.Locale;
  * <p/>
  * Created by kylevenn on 8/26/15.
  */
+@SuppressWarnings({"UtilityClassWithoutPrivateConstructor", "unused", "NonFinalUtilityClass", "MagicNumber"})
+@Deprecated
 public class ISO8601 {
 
     // There was a bug in Android 2.1 that looks like it would arbitrary GC a static SDF
     // If supporting Android 2.1, be aware of this [KV]
     // Using RFC 822 since we can't use ISO 8601
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ",
-                                                                            Locale.ENGLISH);
+    private static final SimpleDateFormat dateFormat =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
 
     public static JsonSerializer<Date> getDateSerializer() {
         return new JsonSerializer<Date>() {
@@ -70,7 +83,9 @@ public class ISO8601 {
         return new JsonDeserializer<Date>() {
             @Override
             public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-                    throws JsonParseException {
+                    throws JsonParseException
+
+            {
                 try {
                     return json == null ? null : toDate(json.getAsString());
                 } catch (ParseException e) {
@@ -110,3 +125,4 @@ public class ISO8601 {
         return dateFormat.parse(s);
     }
 }
+

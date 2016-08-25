@@ -25,6 +25,7 @@ package com.vimeo.networking.model.error;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class VimeoError extends RuntimeException {
     private Exception exception;
     private int httpStatusCode = Vimeo.NOT_FOUND;
 
-    private boolean isCanceledError = false;
+    private boolean isCanceledError;
 
     public VimeoError() {
     }
@@ -114,6 +115,7 @@ public class VimeoError extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    @NotNull
     public ErrorCode getErrorCode() {
         return errorCode == null ? ErrorCode.DEFAULT : this.errorCode;
     }
@@ -127,14 +129,21 @@ public class VimeoError extends RuntimeException {
     }
 
     /**
-     * Returns the first invalid parameter in the parameter list
-     *
+     * Returns the first invalid parameter in the {@link #invalidParameters} list
      * @return First InvalidParameter in the invalid parameters array
      */
     @Nullable
     public InvalidParameter getInvalidParameter() {
-        return invalidParameters != null && invalidParameters.size() > 0 ? this.invalidParameters.get(
-                0) : null;
+        return invalidParameters != null && !invalidParameters.isEmpty() ? invalidParameters.get(0) : null;
+    }
+
+    /**
+     * Returns the error code for the first invalid parameter in the {@link #invalidParameters} list
+     * or null if none exists.
+     */
+    @Nullable
+    public ErrorCode getInvalidParameterErrorCode() {
+        return getInvalidParameter() != null ? getInvalidParameter().getErrorCode() : null;
     }
 
     public Exception getException() {
@@ -159,11 +168,12 @@ public class VimeoError extends RuntimeException {
     /**
      * True if the error was from poor connectivity, closed sockets, or any other issue with the networking
      * layer of the request.
-     *
      * @return {@link #isNetworkError}
      */
     public boolean isNetworkError() {
-        return !isCanceledError;
+        // Response will be null if the VimeoCallback#onFailure was called (which will be due to issues
+        // in the networking layer 2/17/16 [KV]
+        return !isCanceledError && response == null;
     }
 
     public void setIsCanceledError(boolean isCanceledError) {
@@ -212,5 +222,24 @@ public class VimeoError extends RuntimeException {
             invalidParameters = new ArrayList<>();
         }
         this.invalidParameters.add(invalidParameter);
+    }
+
+    /**
+     * @return the most useful error message string or <code>""</code> if none available.
+     */
+    @NotNull
+    public String getLogString() {
+        if (getDeveloperMessage() != null) {
+            return getDeveloperMessage();
+        } else if (this.errorMessage != null) {
+            return this.errorMessage;
+        } else if (exception != null && exception.getMessage() != null) {
+            return "Exception: " + exception.getMessage();
+        } else if (getErrorCode() != ErrorCode.DEFAULT) {
+            return "Error Code " + getErrorCode();
+        } else if (getHttpStatusCode() != Vimeo.NOT_FOUND) {
+            return "HTTP Status Code: " + getHttpStatusCode();
+        }
+        return "";
     }
 }

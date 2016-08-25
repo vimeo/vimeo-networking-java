@@ -22,16 +22,32 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * This model object represents a Connection.
  * Created by hanssena on 4/23/15.
  */
 public class Connection implements Serializable {
 
     private static final long serialVersionUID = -840088720891343176L;
+    @Nullable
+    @GsonAdapterKey("uri")
     public String uri;
+    @Nullable
+    @GsonAdapterKey("options")
     public ArrayList<String> options;
+    @GsonAdapterKey("total")
     public int total;
+    @GsonAdapterKey("main_total")
+    public int mainTotal;
+    @GsonAdapterKey("extra_total")
+    public int extraTotal;
+    @GsonAdapterKey("viewable_total")
+    public int viewableTotal;
 }

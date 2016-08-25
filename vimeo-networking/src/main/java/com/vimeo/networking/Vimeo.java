@@ -39,6 +39,7 @@ public class Vimeo {
     public static final String CODE_GRANT_RESPONSE_TYPE = "code";
     public static final String CODE_GRANT_STATE = "state";
     public static final String CODE_GRANT_TYPE = "authorization_code";
+    public static final String DEVICE_GRANT_TYPE = "device_grant";
     public static final String FACEBOOK_GRANT_TYPE = "facebook";
     public static final String PASSWORD_GRANT_TYPE = "password";
     public static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
@@ -82,8 +83,12 @@ public class Vimeo {
 
     // Video Analytics Parameters
     public static final String PARAMETER_SESSION_ID = "session_id";
+    public static final String PARAMETER_SESSION_TIME = "session_time";
+    public static final String PARAMETER_VUID = "vuid";
     public static final String PARAMETER_LOCALE = "locale";
+    @Deprecated
     public static final String PARAMETER_TIME = "time";
+    @Deprecated
     public static final String PARAMETER_QUALITY = "quality";
     public static final String PARAMETER_DURATION = "duration";
     public static final String PARAMETER_PROGRESS = "progress";
@@ -95,6 +100,7 @@ public class Vimeo {
     public static final String PARAMETER_GET_SORT = "sort";
     public static final String PARAMETER_GET_DIRECTION = "direction";
     public static final String PARAMETER_GET_FIELD_FILTER = "fields";
+    public static final String PARAMETER_GET_CONTAINER_FIELD_FILTER = "container_fields";
     public static final String PARAMETER_GET_LENGTH_MIN_DURATION = "min_duration";
     public static final String PARAMETER_GET_LENGTH_MAX_DURATION = "max_duration";
     public static final String PARAMETER_GET_FILTER = "filter";
@@ -105,8 +111,10 @@ public class Vimeo {
     public static final String SORT_RELEVANCE = "relevant";
     public static final String SORT_POPULAR = "popularity";
     public static final String SORT_DATE = "date";
+    public static final String SORT_PURCHASE_TIME = "purchase_time";
     public static final String SORT_FOLLOWERS = "followers";
     public static final String SORT_ALPHABETICAL = "alphabetical";
+    public static final String SORT_MANUAL = "manual";
     // Sort Direction Values
     public static final String SORT_DIRECTION_ASCENDING = "asc";
     public static final String SORT_DIRECTION_DESCENDING = "desc";
@@ -114,6 +122,10 @@ public class Vimeo {
     // Filter (filter) Values
     public static final String FILTER_RELATED = "related";
     public static final String FILTER_UPLOAD = "upload_date";
+    public static final String FILTER_VIEWABLE = "viewable";
+    public static final String FILTER_VOD_RENTALS = "rented";
+    public static final String FILTER_VOD_SUBSCRIPTIONS = "subscription";
+    public static final String FILTER_VOD_PURCHASES = "purchased";
     // Filter Upload Date Values
     public static final String FILTER_UPLOAD_DATE_TODAY = "day";
     public static final String FILTER_UPLOAD_DATE_WEEK = "week";

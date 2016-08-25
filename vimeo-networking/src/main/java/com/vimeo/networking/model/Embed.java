@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2015 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +24,19 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import java.io.Serializable;
 
 /**
+ * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.playback.embed.Embed}.
+ * <p/>
  * Created by hanssena on 4/23/15.
  */
+@Deprecated
 public class Embed implements Serializable {
 
     private static final long serialVersionUID = 7145437300195734964L;
+    @GsonAdapterKey("html")
     public String html;
 }

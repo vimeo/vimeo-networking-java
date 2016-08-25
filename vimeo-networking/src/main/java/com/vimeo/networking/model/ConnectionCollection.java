@@ -22,32 +22,93 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
+ * Stores a collection of Connection objects.
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
 public class ConnectionCollection implements Serializable {
 
     private static final long serialVersionUID = -4523270955994232839L;
+    @Nullable
+    @GsonAdapterKey("videos")
     public Connection videos;
+    @Nullable
+    @GsonAdapterKey("categories")
+    public Connection categories;
+    @Nullable
+    @GsonAdapterKey("comments")
     public Connection comments;
+    @Nullable
+    @GsonAdapterKey("credits")
     public Connection credits;
+    @Nullable
+    @GsonAdapterKey("likes")
     public Connection likes;
+    @Nullable
+    @GsonAdapterKey("pictures")
     public Connection pictures;
+    @Nullable
+    @GsonAdapterKey("texttracks")
     public Connection texttracks;
+    @Nullable
+    @GsonAdapterKey("activities")
     public Connection activities;
+    @Nullable
+    @GsonAdapterKey("albums")
     public Connection albums;
+    @Nullable
+    @GsonAdapterKey("channels")
     public Connection channels;
+    @Nullable
+    @GsonAdapterKey("feed")
     public Connection feed;
+    @Nullable
+    @GsonAdapterKey("followers")
     public Connection followers;
+    @Nullable
+    @GsonAdapterKey("following")
     public Connection following;
+    @Nullable
+    @GsonAdapterKey("groups")
     public Connection groups;
+    @Nullable
+    @GsonAdapterKey("portfolios")
     public Connection portfolios;
+    @Nullable
+    @GsonAdapterKey("shared")
     public Connection shared;
+    @Nullable
+    @GsonAdapterKey("recommendations")
     public Connection recommendations;
+    @Nullable
+    @GsonAdapterKey("appearances")
+    public Connection appearances;
+    @Nullable
+    @GsonAdapterKey("related")
     public Connection related;
+    @Nullable
+    @GsonAdapterKey("replies")
     public Connection replies;
+    @Nullable
+    @GsonAdapterKey("users")
     public Connection users;
+    @Nullable
+    @GsonAdapterKey("watchlater")
     public Connection watchlater;
+    @Nullable
+    @GsonAdapterKey("ondemand")
+    public Connection ondemand;
+    @Nullable
+    @GsonAdapterKey("trailer")
+    public Connection trailer;
+    @Nullable
+    @GsonAdapterKey("playback")
+    public Connection playbackFailureReason;
 }

@@ -1,19 +1,40 @@
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
+compileJava {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.6'
+    }
+}
+
+apply plugin: 'net.ltgt.apt'
+
 repositories {
     jcenter()
 }
 
 dependencies {
+    testCompile 'junit:junit:4.12'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.intellij:annotations:12.0@jar'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile project(':stag-library')
+    apt project(':stag-library-compiler')
 }
 
 group = 'com.vimeo.networking'
-version = '1.0.0'
+version = '1.1.0'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -71,8 +92,7 @@ allprojects {
                     publicDownloadNumbers = true
                     version {
                         name = project.version
-                        desc = 'The first deploy of the vimeo networking library.'
-                        //            vcsTag = '1.0.0'
+                        vcsTag = project.version
                     }
                 }
             }

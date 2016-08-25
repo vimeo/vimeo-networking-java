@@ -22,9 +22,10 @@
 
 package com.vimeo.networking.model;
 
-import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
+import com.vimeo.networking.model.UserBadge.UserBadgeType;
+import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -39,28 +40,50 @@ import java.util.Date;
 public class User implements Serializable {
 
     private static final long serialVersionUID = -4112910222188194647L;
+    private static final String ACCOUNT_BASIC = "basic";
+    private static final String ACCOUNT_BUSINESS = "business";
+    private static final String ACCOUNT_PLUS = "plus";
+    private static final String ACCOUNT_PRO = "pro";
+    private static final String ACCOUNT_STAFF = "staff";
 
     public enum AccountType {
         BASIC,
+        BUSINESS,
         PRO,
         PLUS,
         STAFF
     }
 
+    @GsonAdapterKey("uri")
     public String uri;
+    @GsonAdapterKey("name")
     public String name;
+    @GsonAdapterKey("link")
     public String link;
+    @GsonAdapterKey("location")
     public String location;
+    @GsonAdapterKey("bio")
     public String bio;
+    @GsonAdapterKey("created_time")
     public Date createdTime;
+    @GsonAdapterKey("account")
     public String account;
+    @GsonAdapterKey("pictures")
     public PictureCollection pictures;
+    @GsonAdapterKey("emails")
+    public ArrayList<Email> emails;
+    @GsonAdapterKey("websites")
     public ArrayList<Website> websites;
+    @GsonAdapterKey("metadata")
     public Metadata metadata;
-    @SerializedName("upload_quota")
+    @GsonAdapterKey("upload_quota")
     public UploadQuota uploadQuota;
     @Nullable
-    protected Preferences preferences;
+    @GsonAdapterKey("preferences")
+    public Preferences preferences;
+    @Nullable
+    @GsonAdapterKey("badge")
+    public UserBadge badge;
 
     public AccountType getAccountType() {
         if (this.account == null) {
@@ -69,17 +92,23 @@ public class User implements Serializable {
             // Scenario: deeplinking. [KZ] 9/29/15
             return AccountType.BASIC;
         }
-        if (this.account.equals("basic")) {
-            return AccountType.BASIC;
-        } else if (this.account.equals("plus")) {
-            return AccountType.PLUS;
-        } else if (this.account.equals("pro")) {
-            return AccountType.PRO;
-        } else if (this.account.equals("staff")) {
-            return AccountType.STAFF;
+        switch (this.account) {
+            case ACCOUNT_BUSINESS:
+                return AccountType.BUSINESS;
+            case ACCOUNT_PLUS:
+                return AccountType.PLUS;
+            case ACCOUNT_PRO:
+                return AccountType.PRO;
+            case ACCOUNT_STAFF:
+                return AccountType.STAFF;
+            case ACCOUNT_BASIC:
+            default:
+                return AccountType.BASIC;
         }
+    }
 
-        return AccountType.BASIC;
+    public UserBadgeType getUserBadgeType() {
+        return badge == null ? UserBadgeType.NONE : badge.getBadgeType();
     }
 
     /**
@@ -145,6 +174,21 @@ public class User implements Serializable {
     public int getLikesCount() {
         if (getLikesConnection() != null) {
             return getLikesConnection().total;
+        }
+        return 0;
+    }
+
+    @Nullable
+    public Connection getAppearancesConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.appearances != null) {
+            return metadata.connections.appearances;
+        }
+        return null;
+    }
+
+    public int getAppearancesCount() {
+        if (getAppearancesConnection() != null) {
+            return getAppearancesConnection().total;
         }
         return 0;
     }
@@ -251,6 +295,10 @@ public class User implements Serializable {
 
     public String getAccount() {
         return account;
+    }
+
+    public ArrayList<Email> getVerifiedEmails() {
+        return emails;
     }
 
     public ArrayList<Website> getWebsites() {

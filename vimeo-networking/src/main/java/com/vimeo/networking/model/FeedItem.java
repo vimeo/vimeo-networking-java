@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -44,15 +46,25 @@ public class FeedItem implements Serializable {
         NONE
     }
 
+    @GsonAdapterKey("uri")
     public String uri;
+    @GsonAdapterKey("clip")
     public Video clip;
+    @GsonAdapterKey("type")
     public String type;
+    @GsonAdapterKey("time")
     public Date time;
+    @GsonAdapterKey("user")
     public User user;   // from like type
+    @GsonAdapterKey("channel")
     public Channel channel; // from channel type
+    @GsonAdapterKey("category")
     public Category category;
+    @GsonAdapterKey("tag")
     public Tag tag;
+    @GsonAdapterKey("group")
     public Group group;
+    @GsonAdapterKey("metadata")
     public Metadata metadata;
 
     public AttributionType getType() {
@@ -91,12 +103,13 @@ public class FeedItem implements Serializable {
         FeedItem that = (FeedItem) o;
 
         return ((this.clip != null && that.clip != null) &&
-                (this.clip.uri != null && that.clip.uri != null) && this.clip.uri.equals(that.clip.uri));
+                (this.clip.getResourceKey() != null && that.clip.getResourceKey() != null) &&
+                this.clip.getResourceKey().equals(that.clip.getResourceKey()));
     }
 
     @Override
     public int hashCode() {
-        return this.clip.uri != null ? this.clip.uri.hashCode() : 0;
+        return this.clip.getResourceKey() != null ? this.clip.getResourceKey().hashCode() : 0;
     }
 
 }

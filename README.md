@@ -2,6 +2,8 @@
 vimeo-networking is a Java networking library used for interacting with the Vimeo API. The example provided in this project shows the implementation in the context of an Android app.
 
 ## Contents
+* [Prerequisites](#prerequisites)
+      * [API Registration](#api-registration)
 * [Getting Started](#getting-started)
       * [Gradle](#gradle)
       * [Submodule](#submodule)
@@ -11,9 +13,23 @@ vimeo-networking is a Java networking library used for interacting with the Vime
      * [Callbacks](#callbacks)
      * [Cache Strategy](#cache-strategy)
      * [Sample Requests](#sample-requests)
+* [FAQs](#faqs)
+     * [How do I get a video that I own?](#how-do-i-get-a-video-that-i-own)
+     * [How do I play a video?](#how-do-i-play-a-video)
 * [Found an Issue?](#found-an-issue)
 * [Questions](#questions)
 * [License](#license)
+
+## Prerequisites
+In order to get started with using this library, there are a few prerequisites you need to satisfy, namely, creating a Vimeo account and registering an app with the API.
+
+### API Registration
+In order to use this library and the Vimeo API, you will need an application registered with the Vimeo API. If you do not already have an application registered, you can do so [here](https://developer.vimeo.com/apps). If you do not have a Vimeo account, you will be prompted to sign up before registration.
+
+After you have an application registered, you will have access to a few critical pieces of information required for [initialization](#initialization) - the client identifier and client secret. These will both be located in the Authentication tab once you select your app from the [list here](https://developer.vimeo.com/apps).
+
+More information about this and other API questions can be found on the [API homepage](https://developer.vimeo.com/api).
+
 
 ## Getting Started
 For a more in depth look at the usage, refer to the [example Android app](example). The example project includes implementation of all of the below features.
@@ -21,7 +37,7 @@ For a more in depth look at the usage, refer to the [example Android app](exampl
 ### Gradle
 Specify the dependency in your `build.gradle` file (make sure `jcenter()` is included as a repository)
 ```groovy
-compile 'com.vimeo.networking:vimeo-networking:1.0.0'
+compile 'com.vimeo.networking:vimeo-networking:1.1.0'
 ```
 
 ### Submodule
@@ -35,12 +51,16 @@ compile project(':vimeo-networking-java:vimeo-networking')
 ```
 
 ### Initialization
+
+Access to this API is done through the `VimeoClient` class, which must be initialized prior to use, or rather, before the first call to `VimeoClient.getInstance()`. To initialize `VimeoClient`, you must call `VimeoClient.initialize(Configration)` passing it a `Configuration` object, which is highly customizable through the use of the `Configuration.Builder` class. There are a few different default `Builder` constructors that cover core functionality.
+In the below sections, we cover examples of ways to customize your `VimeoClient` instance. Full implementations are in the example app.
+
+#### Configuration Builder for Apps with Account Management
 On app launch, configure `VimeoClient` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary. This authentication can include [client credentials](#client-credentials-grant) or authentication via [code grant](#oauth-authorization-code-grant). 
 
 If you choose to pass in an `AccountStore`, the authenticated account will automatically be persisted. Once authentication is complete, you can access the persisted `VimeoAccount` object through `VimeoClient#getVimeoAccount()`. For a basic implementation of an `AccountStore`, please refer to [this file in the example app](example/src/main/java/com/vimeo/android/networking/example/vimeonetworking/TestAccountStore.java)
 ```java
   /**
-    * @param baseURLString The base url pointing to the Vimeo api. Something like: {@link Vimeo#VIMEO_BASE_URL_STRING}
     * @param clientId      The client id provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
     * @param clientSecret  The client secret provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
     * @param scope         Space separated list of <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
@@ -50,13 +70,31 @@ If you choose to pass in an `AccountStore`, the authenticated account will autom
     * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread
     */
 Configuration.Builder configBuilder =
-      new Configuration.Builder(Vimeo.VIMEO_BASE_URL_STRING, clientId, clientSecret, SCOPE,
+      new Configuration.Builder(clientId, clientSecret, SCOPE,
                                 testAccountStore, new AndroidGsonDeserializer())
           .setCacheDirectory(this.getCacheDir())
 ```
 Setting the cache directory and deserializer are optional but highly recommended.
 * The deserializer allows for deserialization on a background thread. Without it, object deserialization will occur on the main (UI) thread. This can be bad for performance if the API response bodies are large.
 * The cache directory is to allow caching of requests. Without it, no requests will be cached and all other cache settings will be ignored.
+
+#### Configuration Builder for Apps with Only One Developer Account
+You can skip the need for [client credentials](#client-credentials-grant) or [code grant](#oauth-authorization-code-grant) requests if you provide an access token up front. With this access token you'll be able to make any requests that the access token's scope allows.
+You will NOT be able to switch accounts if you only supply the access token. To do that, refer to the above section.
+
+You can generate an access token in the Authentication tab once you select your app from the [list here](https://developer.vimeo.com/apps).
+
+Once you have the access token, you can easily initialize your `VimeoClient` instance with the below builder.
+ 
+```java
+String accessToken = getString(R.string.access_token);
+return new Configuration.Builder(accessToken);
+```
+
+After providing the access token, if you'd like to have access to the associated `User` object you'll need to make a call to `VimeoClient#fetchCurrentUser`. If you're using an account store, you can update the `VimeoAccount` with the new `User` object.
+
+*Note: You will not be able to log out of the account associated with the access token provided to the `Configuration.Builder`. This is because we wouldn't want anyone to accidentally invalidate/delete the token which is being used to authenticate users in a production application. You will still be able to delete the token via the web [developer console](https://developer.vimeo.com/apps/).
+If this seems like restricting functionality, please log an issue to the [issue tracker](https://github.com/vimeo/vimeo-networking-java/issues).
 
 ### Authentication 
 All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/api/authentication). This means that before making requests to the API you must authenticate and obtain an access token. Two authentication methods are provided: 
@@ -68,7 +106,7 @@ All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/a
 #### Client Credentials Grant
 ```java
 // You can't make any requests to the api without an access token. This will get you a basic
-// "Client Credentials" grant which will allow you to make requests
+// "Client Credentials" grant which will allow you to make requests. This requires a client id and client secret.
 private void authenticateWithClientCredentials() {
     VimeoClient.getInstance().authorizeWithClientCredentialsGrant(new AuthCallback() {
         @Override
@@ -130,15 +168,16 @@ You can access the below methods through `VimeoClient.getInstance()`.
 
 For making GET requests:
 ```java
-public Call<Object> fetchContent(String uri, CacheControl cacheControl, ModelCallback callback,
-                                 @Nullable String query, @Nullable Map<String, String> refinementMap,
+public Call<Object> fetchContent(@NotNull String uri, CacheControl cacheControl,
+                                 @NotNull ModelCallback callback, @Nullable String query,
+                                 @Nullable Map<String, String> refinementMap,
                                  @Nullable String fieldFilter)
 ```
 
 For making POST requests:
 ```java
-public Call<Object> postContent(String uri, CacheControl cacheControl, HashMap<String, String> postBody,
-                                VimeoCallback callback)
+public Call<Object> postContent(@NotNull String uri, CacheControl cacheControl,
+                                HashMap<String, String> postBody, @NotNull VimeoCallback callback)
 ```
 
 For making PUT requests:
@@ -206,20 +245,104 @@ VimeoClient.getInstance().fetchCurrentUser(new ModelCallback<User>(User.class) {
 });
 ```
 
+## FAQs
+### How do I get a video that I own?
+You can either request a ```Video``` object on it's own or request a list of videos (```VideoList```).
+#### Requesting a single video
+To request a single video, you will need to know its uri. For this reason, requesting a single video is most helpful when you already have a copy of it and just need to refresh your local copy with the copy that exists on the Vimeo servers.
+```java
+String uri = ...;// the video uri; if you have a Video, this is video.uri
+VimeoClient.getInstance().fetchNetworkContent(uri, new ModelCallback<Video>(Video.class) {
+     @Override
+     public void success(Video video) {
+          // use the video
+     }
+     
+     @Override
+     public void failure(VimeoError error) {
+          // voice the error
+     }
+});
+```
+
+#### Requesting a list of videos
+In order to get a list of your own videos you will need a uri from one of two ways:
+
+As the authenticated user, just use the /me/videos endpoint:
+```java
+String uri = "/me/videos";
+```
+In the second manner, you must have a handle to your ```User``` object; you can get a list of videos a users owns as such:
+```java
+User user = ...; // get a handle to the User object
+String uri;
+if(user.getVideosConnection() != null) {
+     uri = user.getVideosConnection().uri; 
+}
+```
+
+Then you can use the uri to get a list of videos
+```java
+String uri = ...; // obtained using one of the above methods
+VimeoClient.getInstance().fetchNetworkContent(uri, new ModelCallback<VideoList>(VideoList.class) {
+     @Override
+     public void success(VideoList videoList) {
+          if (videoList != null && videoList.data != null && !videoList.data.isEmpty()) {
+               Video video = videoList.data.get(0); // just an example of getting the first video
+          }
+     }
+     
+     @Override
+     public void failure(VimeoError error) {
+          // voice the error
+     }
+});
+```
+
+### How do I play a video?
+Once you have a ```Video``` object you have two choices - embed or play natively. All consumers of this library will be able to access the embed data, however, in order to play videos natively (for example, in a VideoView or using ExoPlayer on Android) you must have access to the ```VideoFile``` links - this is restricted to users with Vimeo PRO accounts accessing their own videos.
+#### Embed
+All consumers of this library will have access to a video's embed html. Once you request a video you can get access to this as such:
+```java
+Video video = ...; // obtain a video in a manner described in the Requests section
+String html = video.embed != null ? video.embed.html : null;
+if(html != null) {
+     // html is in the form "<iframe .... ></iframe>"
+     // load the html, for instance, if using a WebView on Android, you can perform the following:
+     WebView webview = ...; // obtain a handle to your webview
+     webview.loadData(html, "text/html", "utf-8");
+}
+```
+#### Native playback
+If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array. 
+```java
+Video video = ...; // obtain a video you own as described above
+ArrayList<VideoFile> videoFiles = video.files;
+if(videoFiles != null && !videoFiles.isEmpty()) {
+     VideoFile videoFile = videoFiles.get(0); // you could sort these files by size, fps, width/height
+     String link = videoFile.getLink();
+     // load link
+}
+```
+
 ## Found an Issue?
-Please file any and all issues found in this library to the git [issue tracker](https://github.com/vimeo/vimeo-networking-java/issues)
+
+Please file it in the git [issue tracker](https://github.com/vimeo/vimeo-networking-java/issues).
 
 ## Want to Contribute?
-If you'd like to contribute, please follow our guidelines found in [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## Questions?
-
-Tweet at us here: @vimeoapi
-
-Post on [Stackoverflow](http://stackoverflow.com/questions/tagged/vimeo-android) with the tag `vimeo-android`
-
-Get in touch [here](https://Vimeo.com/help/contact)
+If you'd like to contribute, please follow our guidelines found in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-`vimeo-networking-java` is available under the MIT license. See the LICENSE file for more info.
+`vimeo-networking-java` is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
+
+## Questions?
+
+Tweet at us here: [@vimeoapi](https://twitter.com/vimeoapi).
+
+Post on [Stackoverflow](http://stackoverflow.com/questions/tagged/vimeo-android) with the tag `vimeo-android`.
+
+Get in touch [here](https://vimeo.com/help/contact).
+
+Interested in working at Vimeo? We're [hiring](https://vimeo.com/jobs)!

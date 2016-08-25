@@ -22,15 +22,35 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.stag.GsonAdapterKey;
+
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
+ * A collection of Interaction objects.
  * Created by zetterstromk on 6/5/15.
  */
 public class InteractionCollection implements Serializable {
 
     private static final long serialVersionUID = 489519386122782640L;
+    @Nullable
+    @GsonAdapterKey("watchlater")
     public Interaction watchlater;
+    @Nullable
+    @GsonAdapterKey("like")
     public Interaction like;
+    @Nullable
+    @GsonAdapterKey("follow")
     public Interaction follow;
+    @Nullable
+    @GsonAdapterKey("buy")
+    public Interaction buy;
+    @Nullable
+    @GsonAdapterKey("rent")
+    public Interaction rent;
+    @Nullable
+    @GsonAdapterKey("subscribe")
+    public Interaction subscribe;
 }

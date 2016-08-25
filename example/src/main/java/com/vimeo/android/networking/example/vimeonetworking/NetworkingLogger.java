@@ -2,14 +2,14 @@ package com.vimeo.android.networking.example.vimeonetworking;
 
 import android.util.Log;
 
-import com.vimeo.networking.logging.DebugLoggerInterface;
+import com.vimeo.networking.logging.LogProvider;
 
 /**
  * Logger delegate for handling logs coming from the Networking library
  * <p/>
  * Created by kylevenn on 1/27/16.
  */
-public class NetworkingLogger implements DebugLoggerInterface {
+public class NetworkingLogger implements LogProvider {
 
     private static final String TEST_APP = "~NET TEST APP~";
 
