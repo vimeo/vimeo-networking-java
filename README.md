@@ -37,7 +37,7 @@ For a more in depth look at the usage, refer to the [example Android app](exampl
 ### Gradle
 Specify the dependency in your `build.gradle` file (make sure `jcenter()` is included as a repository)
 ```groovy
-compile 'com.vimeo.networking:vimeo-networking:1.0.1'
+compile 'com.vimeo.networking:vimeo-networking:1.1.0'
 ```
 
 ### Submodule
@@ -168,15 +168,16 @@ You can access the below methods through `VimeoClient.getInstance()`.
 
 For making GET requests:
 ```java
-public Call<Object> fetchContent(String uri, CacheControl cacheControl, ModelCallback callback,
-                                 @Nullable String query, @Nullable Map<String, String> refinementMap,
+public Call<Object> fetchContent(@NotNull String uri, CacheControl cacheControl,
+                                 @NotNull ModelCallback callback, @Nullable String query,
+                                 @Nullable Map<String, String> refinementMap,
                                  @Nullable String fieldFilter)
 ```
 
 For making POST requests:
 ```java
-public Call<Object> postContent(String uri, CacheControl cacheControl, HashMap<String, String> postBody,
-                                VimeoCallback callback)
+public Call<Object> postContent(@NotNull String uri, CacheControl cacheControl,
+                                HashMap<String, String> postBody, @NotNull VimeoCallback callback)
 ```
 
 For making PUT requests:
