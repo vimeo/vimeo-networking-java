@@ -29,8 +29,8 @@ dependencies {
     compile 'com.intellij:annotations:12.0@jar'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile project(':stag-library')
-    apt project(':stag-library-compiler')
+    compile 'com.vimeo.stag:stag-library:1.0.0'
+    apt 'com.vimeo.stag:stag-library-compiler:1.0.0'
 }
 
 group = 'com.vimeo.networking'
