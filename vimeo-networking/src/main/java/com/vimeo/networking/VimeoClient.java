@@ -47,6 +47,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1336,6 +1337,32 @@ public final class VimeoClient {
 
         // Don't use the deserialization callback because we don't get objects returned with post
         return POST(getAuthHeader(), uri, cacheHeaderValue, postBody, callback);
+    }
+
+    /**
+     * A generic POST call that takes in the URI of the specific resource.
+     *
+     * @param uri          URI of the resource to POST
+     * @param cacheControl Cache control type
+     * @param postBody     The body of the POST request
+     * @param callback     The callback for the specific model type of the resource
+     */
+    @Nullable
+    public Call<Object> postContent(@NotNull String uri, CacheControl cacheControl,
+                                    ArrayList<Object> postBody, @NotNull VimeoCallback<Object> callback) {
+
+        if (postBody == null) {
+            postBody = new ArrayList<>();
+        }
+
+        String cacheHeaderValue = null;
+        if (cacheControl != null) {
+            cacheHeaderValue = cacheControl.toString();
+        }
+
+        Call<Object> call = mVimeoService.POST(getAuthHeader(), uri, cacheHeaderValue, postBody);
+        call.enqueue(callback);
+        return call;
     }
 
     /**

@@ -29,6 +29,7 @@ import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.search.SearchResponse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -185,6 +186,11 @@ public interface VimeoService {
     Call<Object> POST(@Header("Authorization") String authHeader, @Url String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
                       @Body HashMap<String, String> parameters);
+
+    @POST
+    Call<Object> POST(@Header("Authorization") String authHeader, @Url String uri,
+                      @Header("Cache-Control") String cacheHeaderValue,
+                      @Body ArrayList<Object> parameters);
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
