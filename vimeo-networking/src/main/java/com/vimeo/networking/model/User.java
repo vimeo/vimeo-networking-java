@@ -179,6 +179,21 @@ public class User implements Serializable {
     }
 
     @Nullable
+    public Connection getChannelsConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.channels != null) {
+            return metadata.connections.channels;
+        }
+        return null;
+    }
+
+    public int getChannelsCount() {
+        if (getChannelsConnection() != null) {
+            return getChannelsConnection().total;
+        }
+        return 0;
+    }
+
+    @Nullable
     public Connection getAppearancesConnection() {
         if (metadata != null && metadata.connections != null && metadata.connections.appearances != null) {
             return metadata.connections.appearances;
