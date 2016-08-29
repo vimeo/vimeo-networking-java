@@ -67,6 +67,9 @@ public class ConnectionCollection implements Serializable {
     @GsonAdapterKey("channels")
     public Connection channels;
     @Nullable
+    @GsonAdapterKey("moderated_channels")
+    public Connection moderatedChannels;
+    @Nullable
     @GsonAdapterKey("feed")
     public Connection feed;
     @Nullable
