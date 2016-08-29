@@ -179,7 +179,7 @@ public class User implements Serializable {
     }
 
     @Nullable
-    public Connection getChannelsConnection() {
+    public Connection getFollowedChannelsConnection() {
         if (metadata != null && metadata.connections != null && metadata.connections.channels != null) {
             return metadata.connections.channels;
         }
@@ -187,8 +187,24 @@ public class User implements Serializable {
     }
 
     public int getChannelsCount() {
-        if (getChannelsConnection() != null) {
-            return getChannelsConnection().total;
+        if (getFollowedChannelsConnection() != null) {
+            return getFollowedChannelsConnection().total;
+        }
+        return 0;
+    }
+
+    @Nullable
+    public Connection getModeratedChannelsConnection() {
+        if (metadata != null && metadata.connections != null &&
+            metadata.connections.moderatedChannels != null) {
+            return metadata.connections.moderatedChannels;
+        }
+        return null;
+    }
+
+    public int getModeratedChannelsConnectionCount() {
+        if (getFollowedChannelsConnection() != null) {
+            return getModeratedChannelsConnection().total;
         }
         return 0;
     }
