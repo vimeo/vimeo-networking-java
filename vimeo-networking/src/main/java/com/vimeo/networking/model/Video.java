@@ -26,6 +26,7 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
 import com.vimeo.networking.model.playback.Play;
+import com.vimeo.networking.model.playback.PlayProgress;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
@@ -175,7 +176,10 @@ public class Video implements Serializable {
     @GsonAdapterKey("download")
     public ArrayList<VideoFile> download;
 
-    /** The resource_key field is the unique identifier for a Video object. It may be used for object comparison. */
+    /**
+     * The resource_key field is the unique identifier for a Video object. It may be used for object
+     * comparison.
+     */
     @GsonAdapterKey("resource_key")
     public String resourceKey;
 
@@ -199,7 +203,8 @@ public class Video implements Serializable {
 
     /**
      * This will return the value as it's given to us from the API (or {@link Status#NONE if null}). Unlike
-     * {@link Video#getStatus()}, this will return all known statuses for a video (including {@link Status#TRANSCODE_STARTING}.
+     * {@link Video#getStatus()}, this will return all known statuses for a video (including {@link
+     * Status#TRANSCODE_STARTING}.
      * <p/>
      * For a more simplified representation of the video status, use {@link Video#getStatus()}.
      */
@@ -208,8 +213,9 @@ public class Video implements Serializable {
     }
 
     /**
-     * This getter is always guaranteed to return a {@link Status}, {@link Status#NONE if null}. If the Status
-     * is equal to {@link Status#TRANSCODE_STARTING} then we'll just return the Status {@link Status#TRANSCODING}
+     * This getter is always guaranteed to return a {@link Status},
+     * {@link Status#NONE if null}. If the Status is equal to {@link Status#TRANSCODE_STARTING}
+     * then we'll just return the Status {@link Status#TRANSCODING}
      * since they're functionally equivalent from a client-side perspective.
      * <p/>
      * For an all-inclusive getter of the video status, use {@link Video#getRawStatus()}.
@@ -367,7 +373,6 @@ public class Video implements Serializable {
      * <ol>The user making the request owns the video</ol>
      * <ol>The application making the request is granted access to view this field</ol>
      * </ul>
-     *
      * @return the password if applicable
      */
     @Nullable
@@ -394,6 +399,14 @@ public class Video implements Serializable {
     public Play getPlay() {
         return play;
     }
+
+    @Nullable
+    public PlayProgress getPlayProgress() {
+        if (play == null) {
+            return null;
+        }
+        return play.getProgress();
+    }
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -419,7 +432,6 @@ public class Video implements Serializable {
      * 3) both rental and subscription? choose the later expiration, expirations equal? choose subscription
      * 4) subscription
      * 5) rental
-     *
      * @return the VodVideoType of the video or {@code VodVideoType.NONE} if it is not a VOD video or
      * {@code VodVideoType.UNKNOWN} if it is a VOD video that is not marked as rented, subscribed or bought
      */
@@ -460,7 +472,6 @@ public class Video implements Serializable {
     /**
      * Returns the date the VOD video will expire. In the event that a video is both rented and subscribed,
      * this will return the later expiration date. If they are equal, subscription date will be returned.
-     *
      * @return the expiration date or null if there is no expiration
      */
     @Nullable
