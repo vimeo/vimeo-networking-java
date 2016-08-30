@@ -179,6 +179,37 @@ public class User implements Serializable {
     }
 
     @Nullable
+    public Connection getFollowedChannelsConnection() {
+        if (metadata != null && metadata.connections != null && metadata.connections.channels != null) {
+            return metadata.connections.channels;
+        }
+        return null;
+    }
+
+    public int getChannelsCount() {
+        if (getFollowedChannelsConnection() != null) {
+            return getFollowedChannelsConnection().total;
+        }
+        return 0;
+    }
+
+    @Nullable
+    public Connection getModeratedChannelsConnection() {
+        if (metadata != null && metadata.connections != null &&
+            metadata.connections.moderatedChannels != null) {
+            return metadata.connections.moderatedChannels;
+        }
+        return null;
+    }
+
+    public int getModeratedChannelsConnectionCount() {
+        if (getFollowedChannelsConnection() != null) {
+            return getModeratedChannelsConnection().total;
+        }
+        return 0;
+    }
+
+    @Nullable
     public Connection getAppearancesConnection() {
         if (metadata != null && metadata.connections != null && metadata.connections.appearances != null) {
             return metadata.connections.appearances;
