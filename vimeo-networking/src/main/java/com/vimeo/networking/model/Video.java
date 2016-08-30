@@ -409,24 +409,34 @@ public class Video implements Serializable {
     /**
      * @return The position (in seconds) to resume from if the video
      * had previously been watched. It will return {@link Vimeo#NOT_FOUND}
-     * if you do not have the proper API capabilities or 0 if the video
-     * has no previous position.
+     * if you do not have the proper API capabilities or 0 if:
+     * <ul>
+     * <li>User never watched video</li>
+     * <li>Video is less than 300 seconds/5 minutes</li>
+     * <li>User has watched less than 15 seconds of video</li>
+     * <li>Video is less than or equal to 20 minutes long and user's
+     * play progress is greater than the video's duration minus 15 seconds</li>
+     * <li>Video is greater than 20 minutes long and user's
+     * play progress is greater than the video's duration
+     * minus 120 seconds/2 minutes</li>
+     * </ul>
+     * @see PlayProgress#getSeconds() for nullable value
      */
-    public int getPlayProgressSeconds() {
+    public float getPlayProgressSeconds() {
         PlayProgress playProgress = getPlayProgress();
         if (playProgress == null) {
             return Vimeo.NOT_FOUND;
         }
-        return playProgress.getSeconds();
+        return playProgress.getSeconds() == null ? 0 : playProgress.getSeconds();
     }
 
     /** @see #getPlayProgressSeconds() */
     public long getPlayProgressMillis() {
-        int progressSeconds = getPlayProgressSeconds();
+        float progressSeconds = getPlayProgressSeconds();
         if (progressSeconds == Vimeo.NOT_FOUND) {
             return Vimeo.NOT_FOUND;
         }
-        return TimeUnit.SECONDS.toMillis(progressSeconds);
+        return TimeUnit.SECONDS.toMillis((long) progressSeconds);
     }
     // </editor-fold>
 
