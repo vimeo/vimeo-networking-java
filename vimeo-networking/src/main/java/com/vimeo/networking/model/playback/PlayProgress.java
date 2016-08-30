@@ -40,6 +40,7 @@ public class PlayProgress implements Serializable {
     private static final long serialVersionUID = -3745271302058282379L;
 
     @GsonAdapterKey("seconds")
+    @Nullable
     public Float mSeconds;
 
     /**
