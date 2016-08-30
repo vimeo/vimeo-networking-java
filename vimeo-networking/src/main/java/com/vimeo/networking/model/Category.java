@@ -32,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Created by zetterstromk on 8/20/15.
  */
-public class Category implements Serializable {
+public class Category implements Serializable, Followable {
 
     private static final long serialVersionUID = 441419347585215353L;
     @GsonAdapterKey("uri")
@@ -68,6 +68,7 @@ public class Category implements Serializable {
     }
 
     @Nullable
+    @Override
     public Interaction getFollowInteraction() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
             return metadata.interactions.follow;
@@ -75,10 +76,12 @@ public class Category implements Serializable {
         return null;
     }
 
+    @Override
     public boolean canFollow() {
         return getFollowInteraction() != null;
     }
 
+    @Override
     public boolean isFollowing() {
         if (getFollowInteraction() != null) {
             return metadata.interactions.follow.added;

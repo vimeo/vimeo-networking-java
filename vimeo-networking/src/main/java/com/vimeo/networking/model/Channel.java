@@ -32,7 +32,7 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 6/11/15.
  */
-public class Channel implements Serializable {
+public class Channel implements Serializable, Followable {
 
     private static final long serialVersionUID = 3190410523525111858L;
 
@@ -68,6 +68,7 @@ public class Channel implements Serializable {
     }
 
     @Nullable
+    @Override
     public Interaction getFollowInteraction() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
             return metadata.interactions.follow;
@@ -75,10 +76,12 @@ public class Channel implements Serializable {
         return null;
     }
 
+    @Override
     public boolean canFollow() {
         return getFollowInteraction() != null;
     }
 
+    @Override
     public boolean isFollowing() {
         if (getFollowInteraction() != null) {
             return metadata.interactions.follow.added;
