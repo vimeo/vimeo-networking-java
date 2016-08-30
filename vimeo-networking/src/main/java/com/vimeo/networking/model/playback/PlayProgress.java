@@ -26,6 +26,8 @@ package com.vimeo.networking.model.playback;
 
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -38,12 +40,14 @@ public class PlayProgress implements Serializable {
     private static final long serialVersionUID = -3745271302058282379L;
 
     @GsonAdapterKey("seconds")
-    public int mSeconds;
+    @Nullable
+    public Float mSeconds;
 
     /**
      * @return where the user has progressed to in the video, in seconds
      */
-    public int getSeconds() {
+    @Nullable
+    public Float getSeconds() {
         return mSeconds;
     }
 }
