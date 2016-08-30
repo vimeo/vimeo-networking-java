@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A model class representing a Video.
@@ -406,6 +407,29 @@ public class Video implements Serializable {
             return null;
         }
         return play.getProgress();
+    }
+
+    /**
+     * @return The position (in seconds) to resume from if the video
+     * had previously been watched. It will return {@link Vimeo#NOT_FOUND}
+     * if you do not have the proper API capabilities or 0 if the video
+     * has no previous position.
+     */
+    public int getPlayProgressSeconds() {
+        PlayProgress playProgress = getPlayProgress();
+        if (playProgress == null) {
+            return Vimeo.NOT_FOUND;
+        }
+        return playProgress.getSeconds();
+    }
+
+    /** @see #getPlayProgressSeconds() */
+    public long getPlayProgressMillis() {
+        int progressSeconds = getPlayProgressSeconds();
+        if (progressSeconds == Vimeo.NOT_FOUND) {
+            return Vimeo.NOT_FOUND;
+        }
+        return TimeUnit.SECONDS.toMillis(progressSeconds);
     }
     // </editor-fold>
 
