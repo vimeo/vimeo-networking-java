@@ -403,10 +403,7 @@ public class Video implements Serializable {
 
     @Nullable
     public PlayProgress getPlayProgress() {
-        if (play == null) {
-            return null;
-        }
-        return play.getProgress();
+        return play == null ? null : play.getProgress();
     }
 
     /**
