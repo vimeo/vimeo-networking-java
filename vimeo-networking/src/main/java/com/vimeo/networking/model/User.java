@@ -37,7 +37,7 @@ import java.util.Date;
  * Created by alfredhanssen on 4/12/15.
  */
 
-public class User implements Serializable {
+public class User implements Serializable, Followable {
 
     private static final long serialVersionUID = -4112910222188194647L;
     private static final String ACCOUNT_BASIC = "basic";
@@ -117,15 +117,18 @@ public class User implements Serializable {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Accessors/Helpers">
+    @Override
     public boolean canFollow() {
         return getFollowInteraction() != null;
     }
 
+    @Override
     public boolean isFollowing() {
         return getFollowInteraction() != null && metadata.interactions.follow.added;
     }
 
     @Nullable
+    @Override
     public Interaction getFollowInteraction() {
         if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
             return metadata.interactions.follow;
