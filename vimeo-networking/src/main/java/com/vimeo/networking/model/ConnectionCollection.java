@@ -114,4 +114,10 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     @GsonAdapterKey("playback")
     public Connection playbackFailureReason;
+    @Nullable
+    @GsonAdapterKey("recommended_channels")
+    public Connection recommendedChannels;
+    @Nullable
+    @GsonAdapterKey("recommended_users")
+    public Connection recommendedUsers;
 }
