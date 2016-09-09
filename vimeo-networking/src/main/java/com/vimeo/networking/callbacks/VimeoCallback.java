@@ -55,7 +55,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
             success(t);
         } else {
             VimeoError vimeoError = null;
-            if (response.errorBody() != null) {
+            if (response.errorBody() != null && response.errorBody().contentLength() > 0) {
                 try {
                     Converter<ResponseBody, VimeoError> errorConverter = VimeoClient.getInstance()
                             .getRetrofit()
