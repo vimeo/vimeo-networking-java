@@ -32,6 +32,7 @@ import com.vimeo.stag.generated.Stag;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -69,11 +70,14 @@ public class VimeoNetworkUtil {
      * Static helper method that automatically applies the VimeoClient Gson preferences
      * </p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
+     *
      * @return GsonBuilder that can be built upon and then created
      */
     public static GsonBuilder getGsonBuilder() {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().registerTypeAdapterFactory(new Stag.Factory())
+                .registerTypeAdapter(Date.class, ISO8601Wrapper.getDateSerializer())
+                .registerTypeAdapter(Date.class, ISO8601Wrapper.getDateDeserializer())
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
     }
 
