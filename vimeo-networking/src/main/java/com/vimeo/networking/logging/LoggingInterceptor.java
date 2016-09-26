@@ -23,12 +23,12 @@
 package com.vimeo.networking.logging;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.vimeo.networking.Configuration;
 import com.vimeo.networking.Vimeo.LogLevel;
 import com.vimeo.networking.VimeoClient;
+import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import java.io.IOException;
 
@@ -125,7 +125,7 @@ public class LoggingInterceptor implements Interceptor {
                 JsonParser parser = new JsonParser();
                 JsonObject json = parser.parse(jsonString).getAsJsonObject();
 
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Gson gson = VimeoNetworkUtil.getGsonBuilder().setPrettyPrinting().create();
                 prettyString = gson.toJson(json);
             } catch (Exception e) {
                 ClientLogger.e("Error making body pretty response/request");
