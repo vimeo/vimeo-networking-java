@@ -20,8 +20,10 @@ import java.util.Date;
  * using the {@link ISO8601Utils} class that catches errors
  * and reports them to the client application, allowing
  * them to decide if they should crash or not. If we just
- * rely on the default adapter used by JSON, we are unable
+ * rely on the default adapter used by Gson, we are unable
  * to absorb date parsing errors or log them correctly.
+ * Additionally, the default adapter was not serializing the
+ * dates correctly.
  */
 @SuppressWarnings("WeakerAccess")
 public final class ISO8601Wrapper {
