@@ -22,9 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.vimeo.networking.utils.VimeoNetworkUtil;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
@@ -70,8 +69,7 @@ public class VimeoAccount implements Serializable {
         this.tokenType = tokenType;
         this.scope = scope;
 
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+        Gson gson = VimeoNetworkUtil.getGson();
 
         this.user = gson.fromJson(userJSON, User.class);
     }
@@ -112,8 +110,7 @@ public class VimeoAccount implements Serializable {
             return this.userJSON;
         }
 
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+        Gson gson = VimeoNetworkUtil.getGson();
 
         this.userJSON = gson.toJson(this.user);
 

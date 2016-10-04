@@ -22,9 +22,15 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.vod;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.ConnectionCollection;
+import com.vimeo.networking.model.InteractionCollection;
+import com.vimeo.networking.model.Metadata;
+import com.vimeo.networking.model.PictureCollection;
+import com.vimeo.networking.model.User;
+import com.vimeo.networking.model.Video;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.NotNull;
