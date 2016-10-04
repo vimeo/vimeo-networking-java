@@ -22,8 +22,9 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.vod;
 
+import com.vimeo.networking.model.BaseResponseList;
 import com.vimeo.stag.GsonAdapterKey;
 
 /**

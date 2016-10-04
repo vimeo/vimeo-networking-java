@@ -28,7 +28,7 @@ import com.vimeo.networking.model.Channel;
 import com.vimeo.networking.model.Group;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
-import com.vimeo.networking.model.VodItem;
+import com.vimeo.networking.model.vod.VodItem;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
