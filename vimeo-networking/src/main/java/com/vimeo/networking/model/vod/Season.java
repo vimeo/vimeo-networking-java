@@ -136,4 +136,27 @@ public class Season implements Serializable {
     }
 
     // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Comparison methods
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Comparison methods">
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || !(obj instanceof Season)) {
+            return false;
+        }
+        Season that = (Season) obj;
+
+        return (mUri != null && that.getUri() != null) && mUri.equals(that.getUri());
+    }
+
+    @Override
+    public int hashCode() {
+        return mUri != null ? mUri.hashCode() : 0;
+    }
+    // </editor-fold>
 }
