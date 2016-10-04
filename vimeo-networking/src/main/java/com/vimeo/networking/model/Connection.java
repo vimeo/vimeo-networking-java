@@ -36,18 +36,64 @@ import java.util.ArrayList;
 public class Connection implements Serializable {
 
     private static final long serialVersionUID = -840088720891343176L;
+
     @Nullable
     @GsonAdapterKey("uri")
     public String uri;
+
     @Nullable
     @GsonAdapterKey("options")
     public ArrayList<String> options;
+
     @GsonAdapterKey("total")
     public int total;
+
     @GsonAdapterKey("main_total")
     public int mainTotal;
+
     @GsonAdapterKey("extra_total")
     public int extraTotal;
+
     @GsonAdapterKey("viewable_total")
     public int viewableTotal;
+
+    @Nullable
+    @GsonAdapterKey("name")
+    public String name;
+
+    // -----------------------------------------------------------------------------------------------------
+    // Getters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Getters">
+    @Nullable
+    public String getUri() {
+        return uri;
+    }
+
+    @Nullable
+    public ArrayList<String> getOptions() {
+        return options;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public int getMainTotal() {
+        return mainTotal;
+    }
+
+    public int getExtraTotal() {
+        return extraTotal;
+    }
+
+    public int getViewableTotal() {
+        return viewableTotal;
+    }
+
+    @Nullable
+    public String getName() {
+        return name;
+    }
+    // </editor-fold>
 }

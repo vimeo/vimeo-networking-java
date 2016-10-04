@@ -109,6 +109,9 @@ public class ConnectionCollection implements Serializable {
     @GsonAdapterKey("ondemand")
     public Connection ondemand;
     @Nullable
+    @GsonAdapterKey("season")
+    public Connection season;
+    @Nullable
     @GsonAdapterKey("trailer")
     public Connection trailer;
     @Nullable

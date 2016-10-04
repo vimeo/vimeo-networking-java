@@ -176,6 +176,9 @@ public class Video implements Serializable {
     @Nullable
     @GsonAdapterKey("download")
     public ArrayList<VideoFile> download;
+    @Nullable
+    @GsonAdapterKey("badge")
+    public VideoBadge videoBadge;
 
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
@@ -374,6 +377,7 @@ public class Video implements Serializable {
      * <ol>The user making the request owns the video</ol>
      * <ol>The application making the request is granted access to view this field</ol>
      * </ul>
+     *
      * @return the password if applicable
      */
     @Nullable
@@ -463,6 +467,7 @@ public class Video implements Serializable {
      * 3) both rental and subscription? choose the later expiration, expirations equal? choose subscription
      * 4) subscription
      * 5) rental
+     *
      * @return the VodVideoType of the video or {@code VodVideoType.NONE} if it is not a VOD video or
      * {@code VodVideoType.UNKNOWN} if it is a VOD video that is not marked as rented, subscribed or bought
      */
@@ -503,6 +508,7 @@ public class Video implements Serializable {
     /**
      * Returns the date the VOD video will expire. In the event that a video is both rented and subscribed,
      * this will return the later expiration date. If they are equal, subscription date will be returned.
+     *
      * @return the expiration date or null if there is no expiration
      */
     @Nullable
@@ -585,6 +591,20 @@ public class Video implements Serializable {
             return metadata.connections.trailer.uri;
         }
         return null;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Badge
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Badge">
+
+    /**
+     * @return the badge associated with this video, null if there is no badge
+     */
+    @Nullable
+    public VideoBadge getVideoBadge() {
+        return videoBadge;
     }
     // </editor-fold>
 
