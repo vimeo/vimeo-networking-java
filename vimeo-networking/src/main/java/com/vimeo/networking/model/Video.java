@@ -406,6 +406,14 @@ public class Video implements Serializable {
     }
 
     @Nullable
+    public Play.Status getPlayStatus() {
+        if (play != null) {
+            return play.getStatus();
+        }
+        return null;
+    }
+
+    @Nullable
     public PlayProgress getPlayProgress() {
         return play == null ? null : play.getProgress();
     }
@@ -555,6 +563,21 @@ public class Video implements Serializable {
         return null;
     }
 
+    /**
+     * Videos that are VODs are part of Seasons. Included on a Season
+     * Connection is the name of that season.
+     *
+     * @return the Season name, or null if this Video is not part of a Season
+     */
+    @Nullable
+    public String getSeasonName() {
+        if (metadata != null && metadata.connections != null &&
+            metadata.connections.season != null) {
+            return metadata.connections.season.getName();
+        }
+        return null;
+    }
+
     public boolean isRental() {
         return (isPossiblePurchase() && isPurchased(metadata.interactions.rent));
     }
@@ -573,14 +596,6 @@ public class Video implements Serializable {
 
     public boolean isVod() {
         return (metadata != null && metadata.connections != null && metadata.connections.ondemand != null);
-    }
-
-    @Nullable
-    public Play.Status getPlayStatus() {
-        if (play != null) {
-            return play.getStatus();
-        }
-        return null;
     }
 
     @Nullable
