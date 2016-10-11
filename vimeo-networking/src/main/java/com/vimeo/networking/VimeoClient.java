@@ -419,16 +419,24 @@ public final class VimeoClient {
      * when already running in a background thread, such as when using the Android AccountManager.
      * See the documentation of {@link #singleSignOnTokenExchange(String, AuthCallback)} for more info.
      *
-     * @param token       the authenticated user access token from application A. This <b>cannot</b> be a client
-     *                    credentials access token.
-     * @param accountName the name of the account, usually the email
+     * @param token           the authenticated user access token from application A. This <b>cannot</b> be a client
+     *                        credentials access token.
+     * @param accountName     the name of the account, usually the email
+     * @param basicAuthHeader a "basic" auth header to pass in; the basic auth header should be from
+     *                        the application that needs the new token. In the case of the Android
+     *                        account authenticator, which runs on the first app installed, we need
+     *                        to pass in that token
      * @return A {@link VimeoAccount} if the sign on worked, or null
      */
     @Nullable
-    public VimeoAccount singleSignOnTokenExchange(@NotNull String token, @NotNull String accountName) {
+    public VimeoAccount singleSignOnTokenExchange(@NotNull String token, @NotNull String accountName,
+                                                  @Nullable String basicAuthHeader) {
 
+        if (basicAuthHeader == null) {
+            basicAuthHeader = getBasicAuthHeader();
+        }
         Call<VimeoAccount> call =
-                mVimeoService.ssoTokenExchange(getBasicAuthHeader(), token, mConfiguration.scope);
+                mVimeoService.ssoTokenExchange(basicAuthHeader, token, mConfiguration.scope);
 
         VimeoAccount vimeoAccount = executeAccountCall(call);
 
@@ -1516,7 +1524,7 @@ public final class VimeoClient {
         return credential;
     }
 
-    private String getBasicAuthHeader() {
+    public String getBasicAuthHeader() {
         return Credentials.basic(mConfiguration.clientID, mConfiguration.clientSecret);
     }
 
