@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -39,19 +40,25 @@ import java.io.Serializable;
 public class VimeoAccount implements Serializable {
 
     private static final long serialVersionUID = -8341071767843490585L;
-    //    private static final String TOKEN_TYPE_BEARER = "bearer";
 
+    @Nullable
     @GsonAdapterKey("access_token")
     public String accessToken;
+
+    @Nullable
     @GsonAdapterKey("token_type")
     public String tokenType;
+
+    @Nullable
     @GsonAdapterKey("scope")
     public String scope;
+
+    @Nullable
     @GsonAdapterKey("user")
     public User user;
     private String userJSON;
 
-    public VimeoAccount(){
+    public VimeoAccount() {
         //constructor for stag TypeAdapter generation
     }
 
@@ -59,9 +66,10 @@ public class VimeoAccount implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
-        if (accessToken == null || accessToken.isEmpty() || tokenType == null ||
-            tokenType.isEmpty() || scope == null || scope.isEmpty()) {
+    public VimeoAccount(@Nullable String accessToken, @NotNull String tokenType, @NotNull String scope,
+                        String userJSON) {
+        if ((accessToken != null && accessToken.isEmpty()) || tokenType == null || tokenType.isEmpty() ||
+            scope == null || scope.isEmpty()) {
             throw new AssertionError("Account can only be created with token, tokenType, scope");
         }
 
@@ -69,23 +77,28 @@ public class VimeoAccount implements Serializable {
         this.tokenType = tokenType;
         this.scope = scope;
 
-        Gson gson = VimeoNetworkUtil.getGson();
+        if (userJSON != null) {
+            Gson gson = VimeoNetworkUtil.getGson();
 
-        this.user = gson.fromJson(userJSON, User.class);
+            this.user = gson.fromJson(userJSON, User.class);
+        }
     }
 
     public boolean isAuthenticated() {
         return (this.accessToken != null && !this.accessToken.isEmpty());
     }
 
+    @Nullable
     public String getAccessToken() {
         return this.accessToken;
     }
 
+    @Nullable
     public String getTokenType() {
         return this.tokenType;
     }
 
+    @Nullable
     public String getScope() {
         return this.scope;
     }
@@ -95,13 +108,12 @@ public class VimeoAccount implements Serializable {
         return this.user;
     }
 
-    public void setUser(User user) {
+    public void setUser(@Nullable User user) {
         this.user = user;
     }
 
     @Nullable
-    public String getUserJSON() // For AccountManager.userData [AH]
-    {
+    public String getUserJSON() {
         if (this.user == null) {
             return null;
         }

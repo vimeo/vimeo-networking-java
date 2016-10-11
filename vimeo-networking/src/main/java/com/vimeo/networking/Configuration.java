@@ -26,6 +26,7 @@ import com.vimeo.networking.Vimeo.LogLevel;
 import com.vimeo.networking.logging.LogProvider;
 import com.vimeo.networking.model.VimeoAccount;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -96,24 +97,13 @@ public class Configuration {
         return new Cache(cacheDirectory, cacheSize);
     }
 
-    /**
-     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
-     * <p/>
-     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
-     * application sessions.
-     */
-    @Deprecated
-    public void saveAccount(VimeoAccount account, String email, String password) {
-        saveAccount(account, email);
-    }
-
-    public void saveAccount(VimeoAccount account, String email) {
+    public void saveAccount(@NotNull VimeoAccount account, String email) {
         if (accountStore != null) {
             accountStore.saveAccount(account, email);
         }
     }
 
-    public void deleteAccount(VimeoAccount account) {
+    public void deleteAccount(@NotNull VimeoAccount account) {
         if (accountStore != null) {
             accountStore.deleteAccount(account);
         }

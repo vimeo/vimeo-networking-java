@@ -24,6 +24,9 @@ package com.vimeo.networking;
 
 import com.vimeo.networking.model.VimeoAccount;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Interface responsible for handling the creation, deletion, and loading of Vimeo accounts on the client.
  * <p/>
@@ -31,18 +34,10 @@ import com.vimeo.networking.model.VimeoAccount;
  */
 public interface AccountStore {
 
+    @Nullable
     VimeoAccount loadAccount();
 
-    /**
-     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
-     * <p/>
-     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
-     * application sessions.
-     */
-    @Deprecated
-    void saveAccount(VimeoAccount vimeoAccount, String email, String password);
+    void saveAccount(@NotNull VimeoAccount vimeoAccount, String email);
 
-    void saveAccount(VimeoAccount vimeoAccount, String email);
-
-    void deleteAccount(VimeoAccount vimeoAccount);
+    void deleteAccount(@NotNull VimeoAccount vimeoAccount);
 }
