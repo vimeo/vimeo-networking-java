@@ -214,7 +214,7 @@ public final class VimeoClient {
             // just a token in it. Otherwise we'll want to leave the persisted account as null.
             vimeoAccount = new VimeoAccount(mConfiguration.accessToken);
             if (mConfiguration.accessToken != null) {
-                mConfiguration.saveAccount(vimeoAccount, null);
+                mConfiguration.saveAccount(vimeoAccount);
             }
         }
 
@@ -230,10 +230,14 @@ public final class VimeoClient {
      * @param accountName  accountName should be provided if the account is for an authenticated user. It may
      *                     be null if the account represents a client credentials grant.
      */
-    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String accountName) {
+    public void saveAccount(@Nullable VimeoAccount vimeoAccount, @Nullable String accountName) {
         setVimeoAccount(vimeoAccount);
         if (vimeoAccount != null) {
-            mConfiguration.saveAccount(vimeoAccount, accountName);
+            if (accountName != null) {
+                mConfiguration.saveAccount(vimeoAccount, accountName);
+            } else {
+                mConfiguration.saveAccount(vimeoAccount);
+            }
         }
     }
 

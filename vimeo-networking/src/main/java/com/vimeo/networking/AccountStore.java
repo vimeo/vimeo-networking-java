@@ -44,12 +44,23 @@ public interface AccountStore {
 
     /**
      * Saves a {@link VimeoAccount} for loading later.
+     * <p>
+     * Use this method for saving authenticated users that have an account name.
      *
      * @param vimeoAccount the VimeoAccount to save, should not be null when calling this method
      * @param accountName  the <i>name</i> of the account that helps uniquely identify it in account
      *                     stores, such as the Android AccountManager
      */
-    void saveAccount(@NotNull VimeoAccount vimeoAccount, String accountName);
+    void saveAccount(@NotNull VimeoAccount vimeoAccount, @NotNull String accountName);
+
+    /**
+     * Saves a {@link VimeoAccount} for loading later.
+     * <p>
+     * Use this method for saving client credential token when there is not account name.
+     *
+     * @param vimeoAccount the VimeoAccount to save, should not be null when calling this method
+     */
+    void saveAccount(@NotNull VimeoAccount vimeoAccount);
 
     /**
      * Removes the saved {@link VimeoAccount} from storage
