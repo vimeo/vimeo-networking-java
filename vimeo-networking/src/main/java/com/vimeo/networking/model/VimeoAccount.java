@@ -43,27 +43,29 @@ public class VimeoAccount implements Serializable {
 
     @Nullable
     @GsonAdapterKey("access_token")
-    public String accessToken;
+    public String mAccessToken;
 
     @Nullable
     @GsonAdapterKey("token_type")
-    public String tokenType;
+    public String mTokenType;
 
     @Nullable
     @GsonAdapterKey("scope")
-    public String scope;
+    public String mScope;
 
     @Nullable
     @GsonAdapterKey("user")
-    public User user;
-    private String userJSON;
+    public User mUser;
+
+    @Nullable
+    private String mUserJson;
 
     public VimeoAccount() {
         //constructor for stag TypeAdapter generation
     }
 
     public VimeoAccount(@Nullable String accessToken) {
-        this.accessToken = accessToken;
+        mAccessToken = accessToken;
     }
 
     public VimeoAccount(@Nullable String accessToken, @NotNull String tokenType, @NotNull String scope,
@@ -73,59 +75,105 @@ public class VimeoAccount implements Serializable {
             throw new AssertionError("Account can only be created with token, tokenType, scope");
         }
 
-        this.accessToken = accessToken;
-        this.tokenType = tokenType;
-        this.scope = scope;
+        mAccessToken = accessToken;
+        mTokenType = tokenType;
+        mScope = scope;
 
         if (userJSON != null) {
             Gson gson = VimeoNetworkUtil.getGson();
 
-            this.user = gson.fromJson(userJSON, User.class);
+            mUser = gson.fromJson(userJSON, User.class);
         }
     }
 
+    /**
+     * @return true if the access token is not empty, false if it is null or empty
+     */
     public boolean isAuthenticated() {
-        return (this.accessToken != null && !this.accessToken.isEmpty());
+        return (mAccessToken != null && !mAccessToken.isEmpty());
     }
 
+    /**
+     * @return the access (auth) token stored with this account
+     */
     @Nullable
     public String getAccessToken() {
-        return this.accessToken;
+        return mAccessToken;
     }
 
+    /**
+     * Sets the auth token. This should only be used when there is no auth token set, or it otherwise
+     * needs to change. If changed, this {@link VimeoAccount} should be set and saved in the client
+     * for use.
+     *
+     * @param accessToken the new auth token
+     */
+    public void setAccessToken(@Nullable String accessToken) {
+        mAccessToken = accessToken;
+    }
+
+    /**
+     * @return the token type that is stored with this account
+     */
     @Nullable
     public String getTokenType() {
-        return this.tokenType;
+        return mTokenType;
     }
 
+    /**
+     * @return The scope that is stored with this account
+     */
     @Nullable
     public String getScope() {
-        return this.scope;
+        return mScope;
     }
 
+    /**
+     * Get the user represented by this account
+     *
+     * @return the user, or null if no user is represented by the account
+     */
     @Nullable
     public User getUser() {
-        return this.user;
+        return mUser;
     }
 
+    /**
+     * Set the user on the account. When changing the user, the account should be set and saved by the client
+     *
+     * @param user the new user on the account
+     */
     public void setUser(@Nullable User user) {
-        this.user = user;
+        mUser = user;
+
+        createUserJson();
     }
 
+    /**
+     * Get the user represented as a JSON string
+     *
+     * @return the user in a JSON format, null if there is no user
+     */
     @Nullable
     public String getUserJSON() {
-        if (this.user == null) {
+        if (mUser == null) {
             return null;
         }
 
-        if (this.userJSON != null) {
-            return this.userJSON;
+        if (mUserJson != null) {
+            return mUserJson;
         }
 
+        createUserJson();
+
+        return mUserJson;
+    }
+
+    private void createUserJson() {
+        if (mUser == null) {
+            mUserJson = null;
+        }
         Gson gson = VimeoNetworkUtil.getGson();
-
-        this.userJSON = gson.toJson(this.user);
-
-        return this.userJSON;
+        mUserJson = gson.toJson(mUserJson);
     }
 }

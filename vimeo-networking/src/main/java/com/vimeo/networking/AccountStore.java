@@ -34,10 +34,27 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface AccountStore {
 
+    /**
+     * Load the previously saved {@link VimeoAccount} and return it
+     *
+     * @return null if no VimeoAccount could be loaded
+     */
     @Nullable
     VimeoAccount loadAccount();
 
-    void saveAccount(@NotNull VimeoAccount vimeoAccount, String email);
+    /**
+     * Saves a {@link VimeoAccount} for loading later.
+     *
+     * @param vimeoAccount the VimeoAccount to save, should not be null when calling this method
+     * @param accountName  the <i>name</i> of the account that helps unique identify it in account
+     *                     stores, such as the Android AccountManager
+     */
+    void saveAccount(@NotNull VimeoAccount vimeoAccount, String accountName);
 
+    /**
+     * Removes the saved {@link VimeoAccount} from storage
+     *
+     * @param vimeoAccount the account to delete
+     */
     void deleteAccount(@NotNull VimeoAccount vimeoAccount);
 }

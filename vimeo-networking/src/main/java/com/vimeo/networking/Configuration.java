@@ -97,18 +97,35 @@ public class Configuration {
         return new Cache(cacheDirectory, cacheSize);
     }
 
-    public void saveAccount(@NotNull VimeoAccount account, String email) {
+    /**
+     * Persist the {@link VimeoAccount} in the {@link AccountStore}
+     *
+     * @param account     the account to persist
+     * @param accountName the name of the account. Required for authenticated user account,
+     *                    but may be null for client credential accounts
+     */
+    public void saveAccount(@NotNull VimeoAccount account, String accountName) {
         if (accountStore != null) {
-            accountStore.saveAccount(account, email);
+            accountStore.saveAccount(account, accountName);
         }
     }
 
+    /**
+     * Remove the {@link VimeoAccount} from the {@link AccountStore}
+     *
+     * @param account the account to remove
+     */
     public void deleteAccount(@NotNull VimeoAccount account) {
         if (accountStore != null) {
             accountStore.deleteAccount(account);
         }
     }
 
+    /**
+     * Load the {@link VimeoAccount} from the {@link AccountStore}
+     *
+     * @return the loaded account, or null if none could be loaded
+     */
     @Nullable
     public VimeoAccount loadAccount() {
         if (accountStore == null) {

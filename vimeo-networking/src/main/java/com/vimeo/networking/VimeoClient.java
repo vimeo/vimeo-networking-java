@@ -223,7 +223,12 @@ public final class VimeoClient {
 
     /**
      * Sets the {@link #mVimeoAccount} field as well as triggering the saveAccount event for the
-     * account store
+     * account store.
+     *
+     * @param vimeoAccount The account to save - this should be provided; if it is not, then one will
+     *                     be constructed using the access token set on the {@link Configuration}.
+     * @param email        Email should be provided if the account is for an authenticated user. It may
+     *                     be null if the account represents a client credentials grant.
      */
     public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email) {
         setVimeoAccount(vimeoAccount);
@@ -417,7 +422,6 @@ public final class VimeoClient {
     /**
      * Synchronous version of {@link #singleSignOnTokenExchange(String, AuthCallback)}. This is useful
      * when already running in a background thread, such as when using the Android AccountManager.
-     * See the documentation of {@link #singleSignOnTokenExchange(String, AuthCallback)} for more info.
      *
      * @param token           the authenticated user access token from application A. This <b>cannot</b> be a client
      *                        credentials access token.
@@ -427,6 +431,7 @@ public final class VimeoClient {
      *                        account authenticator, which runs on the first app installed, we need
      *                        to pass in that token
      * @return A {@link VimeoAccount} if the sign on worked, or null
+     * @see #singleSignOnTokenExchange(String, AuthCallback)
      */
     @Nullable
     public VimeoAccount singleSignOnTokenExchange(@NotNull String token, @NotNull String accountName,
