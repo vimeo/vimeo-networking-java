@@ -427,14 +427,16 @@ public final class VimeoClient {
      * Synchronous version of {@link #singleSignOnTokenExchange(String, AuthCallback)}. This is useful
      * when already running in a background thread, such as when using the Android AccountManager.
      *
-     * @param token           the authenticated user access token from application A. This <b>cannot</b> be a client
-     *                        credentials access token.
+     * @param token           the authenticated user access token from application A. This <b>cannot</b> be
+     *                        a client credentials access token. It must be granted via password, Facebook,
+     *                        or another means of logging a specific user in.
      * @param accountName     the name of the account, usually the email
      * @param basicAuthHeader a "basic" auth header to pass in; the basic auth header should be from
      *                        the application that needs the new token. In the case of the Android
      *                        account authenticator, which runs on the first app installed, we need
-     *                        to pass in that token. If this is null, then {@link #getBasicAuthHeader()}
-     *                        will be used.
+     *                        to pass in the auth header for the app that needs the token swap, rather
+     *                        than the app the is executing this method. If this is null, then
+     *                        {@link #getBasicAuthHeader()} will be used.
      * @return A {@link VimeoAccount} if the sign on worked, or null
      * @see #singleSignOnTokenExchange(String, AuthCallback)
      */
