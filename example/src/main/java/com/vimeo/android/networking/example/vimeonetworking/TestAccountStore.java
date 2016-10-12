@@ -4,6 +4,7 @@ import android.Manifest.permission;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
 
 import com.vimeo.android.networking.example.AccountPreferenceManager;
@@ -38,19 +39,18 @@ public class TestAccountStore implements AccountStore {
         return AccountPreferenceManager.getClientAccount();
     }
 
-    @Deprecated
     @Override
-    public void saveAccount(VimeoAccount vimeoAccount, String email, String password) {
-        saveAccount(vimeoAccount, email);
-    }
-
-    @Override
-    public void saveAccount(VimeoAccount vimeoAccount, String email) {
+    public void saveAccount(@NonNull VimeoAccount vimeoAccount) {
         AccountPreferenceManager.setClientAccount(vimeoAccount);
     }
 
     @Override
-    public void deleteAccount(VimeoAccount vimeoAccount) {
+    public void saveAccount(@NonNull VimeoAccount vimeoAccount, @NonNull String email) {
+        AccountPreferenceManager.setClientAccount(vimeoAccount);
+    }
+
+    @Override
+    public void deleteAccount(@NonNull VimeoAccount vimeoAccount) {
         AccountPreferenceManager.removeClientAccount();
         // NOTE: You'll now need a client credentials grant (without an authenticated user)
     }
