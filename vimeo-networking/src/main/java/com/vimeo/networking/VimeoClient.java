@@ -429,7 +429,8 @@ public final class VimeoClient {
      * @param basicAuthHeader a "basic" auth header to pass in; the basic auth header should be from
      *                        the application that needs the new token. In the case of the Android
      *                        account authenticator, which runs on the first app installed, we need
-     *                        to pass in that token
+     *                        to pass in that token. If this is null, then {@link #getBasicAuthHeader()}
+     *                        will be used.
      * @return A {@link VimeoAccount} if the sign on worked, or null
      * @see #singleSignOnTokenExchange(String, AuthCallback)
      */
@@ -600,6 +601,11 @@ public final class VimeoClient {
             if (response.isSuccessful()) {
                 return response.body();
             }
+            String responseError = "";
+            if (response.errorBody() != null) {
+                responseError = response.errorBody().string();
+            }
+            ClientLogger.e("Unsuccessful response getting account: " + responseError);
         } catch (IOException e) {
             ClientLogger.e("Exception during executeAccountCall: " + e.getMessage(), e);
         }
