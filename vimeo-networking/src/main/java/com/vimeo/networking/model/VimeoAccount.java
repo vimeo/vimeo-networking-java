@@ -64,10 +64,33 @@ public class VimeoAccount implements Serializable {
         //constructor for stag TypeAdapter generation
     }
 
+    /**
+     * Constructor for use for developers making requests with only one account. Provide your access
+     * token to the Configuration Builder and this constructor will be used to set up your authentication.
+     * <p>
+     * Providing a null access token will prevent your requests from succeeding.
+     * <p>
+     * See the README of this library for more information.
+     *
+     * @param accessToken your access token.
+     * @see "https://github.com/vimeo/vimeo-networking-java#initialization"
+     */
     public VimeoAccount(@Nullable String accessToken) {
         mAccessToken = accessToken;
     }
 
+    /**
+     * Using this constructor is to create an account manually. It is recommended that if you cannot obtain
+     * a valid access token, to have this class constructed automantically using one of the authentication
+     * methods in VimeoClient.
+     *
+     * @param accessToken May be null here, but it <i>must</i> be set using {@link #setAccessToken(String)}
+     *                    <i>before</i> making any authenticated requests. Without passing in an access
+     *                    token, requests using this VimeoAccount will fail!
+     * @param tokenType   The token type. May be set to a value to pair with an access token.
+     * @param scope       The scope of the access token
+     * @param userJSON    A {@link User} represented in a JSON string
+     */
     public VimeoAccount(@Nullable String accessToken, @NotNull String tokenType, @NotNull String scope,
                         String userJSON) {
         if ((accessToken != null && accessToken.isEmpty()) || tokenType == null || tokenType.isEmpty() ||
