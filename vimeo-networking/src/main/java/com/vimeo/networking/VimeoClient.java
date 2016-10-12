@@ -227,13 +227,13 @@ public final class VimeoClient {
      *
      * @param vimeoAccount The account to save - this should be provided; if it is not, then one will
      *                     be constructed using the access token set on the {@link Configuration}.
-     * @param email        Email should be provided if the account is for an authenticated user. It may
+     * @param accountName  accountName should be provided if the account is for an authenticated user. It may
      *                     be null if the account represents a client credentials grant.
      */
-    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email) {
+    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String accountName) {
         setVimeoAccount(vimeoAccount);
         if (vimeoAccount != null) {
-            mConfiguration.saveAccount(vimeoAccount, email);
+            mConfiguration.saveAccount(vimeoAccount, accountName);
         }
     }
 

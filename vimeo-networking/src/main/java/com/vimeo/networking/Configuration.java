@@ -101,7 +101,7 @@ public class Configuration {
      * Persist the {@link VimeoAccount} in the {@link AccountStore}
      *
      * @param account     the account to persist
-     * @param accountName the name of the account. Required for authenticated user account,
+     * @param accountName the name of the account. Required for authenticated user accounts,
      *                    but may be null for client credential accounts
      */
     public void saveAccount(@NotNull VimeoAccount account, String accountName) {

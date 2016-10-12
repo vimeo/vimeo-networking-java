@@ -46,7 +46,7 @@ public interface AccountStore {
      * Saves a {@link VimeoAccount} for loading later.
      *
      * @param vimeoAccount the VimeoAccount to save, should not be null when calling this method
-     * @param accountName  the <i>name</i> of the account that helps unique identify it in account
+     * @param accountName  the <i>name</i> of the account that helps uniquely identify it in account
      *                     stores, such as the Android AccountManager
      */
     void saveAccount(@NotNull VimeoAccount vimeoAccount, String accountName);
