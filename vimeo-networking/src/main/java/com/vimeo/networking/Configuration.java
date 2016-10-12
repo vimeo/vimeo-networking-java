@@ -114,7 +114,7 @@ public class Configuration {
 
     /**
      * Persist the {@link VimeoAccount} in the {@link AccountStore} without an account
-     * name. For authenticated users, user {@link #saveAccount(VimeoAccount, String)},
+     * name. For authenticated users, use {@link #saveAccount(VimeoAccount, String)},
      * as this is meant for client credential saving, when an account name is not available.
      *
      * @param account the account to persist

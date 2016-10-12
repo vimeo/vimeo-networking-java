@@ -56,7 +56,7 @@ public interface AccountStore {
     /**
      * Saves a {@link VimeoAccount} for loading later.
      * <p>
-     * Use this method for saving client credential token when there is not account name.
+     * Use this method for saving client credential token when there is no account name.
      *
      * @param vimeoAccount the VimeoAccount to save, should not be null when calling this method
      */
