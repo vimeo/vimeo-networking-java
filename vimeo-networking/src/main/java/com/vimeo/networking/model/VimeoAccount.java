@@ -172,8 +172,9 @@ public class VimeoAccount implements Serializable {
     private void createUserJson() {
         if (mUser == null) {
             mUserJson = null;
+        } else {
+            Gson gson = VimeoNetworkUtil.getGson();
+            mUserJson = gson.toJson(mUser);
         }
-        Gson gson = VimeoNetworkUtil.getGson();
-        mUserJson = gson.toJson(mUserJson);
     }
 }

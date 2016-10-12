@@ -445,8 +445,6 @@ public final class VimeoClient {
 
         VimeoAccount vimeoAccount = executeAccountCall(call);
 
-        saveAccount(vimeoAccount, accountName);
-
         return vimeoAccount;
     }
 
