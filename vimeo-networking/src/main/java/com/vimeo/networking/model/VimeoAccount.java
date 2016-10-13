@@ -68,32 +68,34 @@ public class VimeoAccount implements Serializable {
      * Constructor for use for developers making requests with only one account. Provide your access
      * token to the Configuration Builder and this constructor will be used to set up your authentication.
      * <p>
-     * Providing a null access token will prevent your requests from succeeding.
-     * <p>
      * See the README of this library for more information.
      *
      * @param accessToken your access token.
      * @see "https://github.com/vimeo/vimeo-networking-java#initialization"
      */
-    public VimeoAccount(@Nullable String accessToken) {
+    public VimeoAccount(@NotNull String accessToken) {
+        //noinspection ConstantConditions
+        if (accessToken == null || accessToken.isEmpty()) {
+            throw new AssertionError("Account must be created with token");
+        }
+
         mAccessToken = accessToken;
     }
 
     /**
      * Using this constructor is to create an account manually. It is recommended that if you cannot obtain
-     * a valid access token, to have this class constructed automantically using one of the authentication
+     * a valid access token, to have this class constructed automatically using one of the authentication
      * methods in VimeoClient.
      *
-     * @param accessToken May be null here, but it <i>must</i> be set using {@link #setAccessToken(String)}
-     *                    <i>before</i> making any authenticated requests. Without passing in an access
-     *                    token, requests using this VimeoAccount will fail!
+     * @param accessToken The authentication token
      * @param tokenType   The token type. May be set to a value to pair with an access token.
      * @param scope       The scope of the access token
-     * @param userJSON    A {@link User} represented in a JSON string
+     * @param userJson    A {@link User} represented in a JSON string
      */
-    public VimeoAccount(@Nullable String accessToken, @NotNull String tokenType, @NotNull String scope,
-                        String userJSON) {
-        if ((accessToken != null && accessToken.isEmpty()) || tokenType == null || tokenType.isEmpty() ||
+    public VimeoAccount(@NotNull String accessToken, @NotNull String tokenType, @NotNull String scope,
+                        @Nullable String userJson) {
+        //noinspection ConstantConditions
+        if (accessToken == null || accessToken.isEmpty() || tokenType == null || tokenType.isEmpty() ||
             scope == null || scope.isEmpty()) {
             throw new AssertionError("Account can only be created with token, tokenType, scope");
         }
@@ -102,11 +104,11 @@ public class VimeoAccount implements Serializable {
         mTokenType = tokenType;
         mScope = scope;
 
-        if (userJSON != null) {
+        if (userJson != null) {
             Gson gson = VimeoNetworkUtil.getGson();
 
-            mUser = gson.fromJson(userJSON, User.class);
-            mUserJson = userJSON;
+            mUser = gson.fromJson(userJson, User.class);
+            mUserJson = userJson;
         }
     }
 
@@ -123,17 +125,6 @@ public class VimeoAccount implements Serializable {
     @Nullable
     public String getAccessToken() {
         return mAccessToken;
-    }
-
-    /**
-     * Sets the auth token. This should only be used when there is no auth token set, or it otherwise
-     * needs to change. If changed, this {@link VimeoAccount} should be set and saved in the client
-     * for use.
-     *
-     * @param accessToken the new auth token
-     */
-    public void setAccessToken(@Nullable String accessToken) {
-        mAccessToken = accessToken;
     }
 
     /**

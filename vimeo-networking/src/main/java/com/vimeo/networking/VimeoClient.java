@@ -92,6 +92,7 @@ public final class VimeoClient {
     /**
      * Currently authenticated account
      */
+    @Nullable
     private VimeoAccount mVimeoAccount;
 
     /**
@@ -199,21 +200,24 @@ public final class VimeoClient {
         return mRetrofit;
     }
 
-    @NotNull
+    /**
+     * @return the current VimeoAccount, or null if it hasn't been set yet
+     */
+    @Nullable
     public VimeoAccount getVimeoAccount() {
-        if (mVimeoAccount == null) {
-            throw new AssertionError("Account should never be null");
-        }
-
         return mVimeoAccount;
+    }
+
+    public boolean isAuthenticated() {
+        return mVimeoAccount != null && mVimeoAccount.isAuthenticated();
     }
 
     public void setVimeoAccount(@Nullable VimeoAccount vimeoAccount) {
         if (vimeoAccount == null) {
-            // If the provided account was null but we have an access token, persist the vimeo account with
-            // just a token in it. Otherwise we'll want to leave the persisted account as null.
-            vimeoAccount = new VimeoAccount(mConfiguration.accessToken);
             if (mConfiguration.accessToken != null) {
+                // If the provided account was null but we have an access token, persist the vimeo account with
+                // just a token in it. Otherwise we'll want to leave the persisted account as null.
+                vimeoAccount = new VimeoAccount(mConfiguration.accessToken);
                 mConfiguration.saveAccount(vimeoAccount);
             }
         }
@@ -437,22 +441,28 @@ public final class VimeoClient {
      *                        to pass in the auth header for the app that needs the token swap, rather
      *                        than the app the is executing this method. If this is null, then
      *                        {@link #getBasicAuthHeader()} will be used.
+     * @param requestedScope  the scope that the requested token should include. In the case of the Android
+     *                        account authenticator, which runs on the first app installed, we need
+     *                        to pass in the scope for the app that needs the token swap, rather
+     *                        than the app the is executing this method. If this is null, then
+     *                        the configuration's scope on this client will be used.
      * @return A {@link VimeoAccount} if the sign on worked, or null
      * @see #singleSignOnTokenExchange(String, AuthCallback)
      */
     @Nullable
     public VimeoAccount singleSignOnTokenExchange(@NotNull String token, @NotNull String accountName,
-                                                  @Nullable String basicAuthHeader) {
+                                                  @Nullable String basicAuthHeader,
+                                                  @Nullable String requestedScope) {
 
         if (basicAuthHeader == null) {
             basicAuthHeader = getBasicAuthHeader();
         }
-        Call<VimeoAccount> call =
-                mVimeoService.ssoTokenExchange(basicAuthHeader, token, mConfiguration.scope);
+        if (requestedScope == null) {
+            requestedScope = mConfiguration.scope;
+        }
+        Call<VimeoAccount> call = mVimeoService.ssoTokenExchange(basicAuthHeader, token, requestedScope);
 
-        VimeoAccount vimeoAccount = executeAccountCall(call);
-
-        return vimeoAccount;
+        return executeAccountCall(call);
     }
 
     @Nullable
@@ -628,7 +638,7 @@ public final class VimeoClient {
     public Call<Object> logOut(@Nullable final VimeoCallback<Object> callback) {
         // If you've provided an access token to the configuration builder, we're assuming that you wouldn't
         // want to be able to log out of it, because this would invalidate the constant you've provided us.
-        if (mConfiguration.accessToken != null &&
+        if (mConfiguration.accessToken != null && mVimeoAccount != null &&
             mConfiguration.accessToken.equals(mVimeoAccount.getAccessToken())) {
             if (callback != null) {
                 callback.failure(new VimeoError(
@@ -655,7 +665,9 @@ public final class VimeoClient {
         });
 
         // Remove account immediately, but only after the auth header has been set (working properly?) [AH] 5/4/15
-        mConfiguration.deleteAccount(mVimeoAccount);
+        if (mVimeoAccount != null) {
+            mConfiguration.deleteAccount(mVimeoAccount);
+        }
         setVimeoAccount(null);
         return call;
     }
@@ -1541,6 +1553,10 @@ public final class VimeoClient {
 
     public String getBasicAuthHeader() {
         return Credentials.basic(mConfiguration.clientID, mConfiguration.clientSecret);
+    }
+
+    public String getCurrentScope() {
+        return mConfiguration.scope;
     }
 
     @NotNull
