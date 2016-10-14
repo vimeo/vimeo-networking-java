@@ -101,27 +101,27 @@ public class Configuration {
      * Persist the {@link VimeoAccount} in the {@link AccountStore}
      * <p>
      * Account name is <b>required</b> for authenticated user accounts; for
-     * client credential account saving use {@link #saveAccount(VimeoAccount)}
+     * client credential account saving use {@link #saveNonUserAccount(VimeoAccount)}
      *
      * @param account     the account to persist
      * @param accountName the name of the account.
      */
-    public void saveAccount(@NotNull VimeoAccount account, @NotNull String accountName) {
+    public void saveAuthenticatedUserAccount(@NotNull VimeoAccount account, @NotNull String accountName) {
         if (accountStore != null) {
-            accountStore.saveAccount(account, accountName);
+            accountStore.saveAuthenticatedUserAccount(account, accountName);
         }
     }
 
     /**
      * Persist the {@link VimeoAccount} in the {@link AccountStore} without an account
-     * name. For authenticated users, use {@link #saveAccount(VimeoAccount, String)},
-     * as this is meant for client credential saving, when an account name is not available.
+     * name. For authenticated users, use {@link #saveAuthenticatedUserAccount(VimeoAccount, String)},
+     * as this is meant for client credential or code grant saving, when an account name is not available.
      *
      * @param account the account to persist
      */
-    public void saveAccount(@NotNull VimeoAccount account) {
+    public void saveNonUserAccount(@NotNull VimeoAccount account) {
         if (accountStore != null) {
-            accountStore.saveAccount(account);
+            accountStore.saveNonUserAccount(account);
         }
     }
 

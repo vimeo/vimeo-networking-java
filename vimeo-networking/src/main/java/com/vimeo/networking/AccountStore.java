@@ -51,7 +51,7 @@ public interface AccountStore {
      * @param accountName  the <i>name</i> of the account that helps uniquely identify it in account
      *                     stores, such as the Android AccountManager
      */
-    void saveAccount(@NotNull VimeoAccount vimeoAccount, @NotNull String accountName);
+    void saveAuthenticatedUserAccount(@NotNull VimeoAccount vimeoAccount, @NotNull String accountName);
 
     /**
      * Saves a {@link VimeoAccount} for loading later.
@@ -60,7 +60,7 @@ public interface AccountStore {
      *
      * @param vimeoAccount the VimeoAccount to save, should not be null when calling this method
      */
-    void saveAccount(@NotNull VimeoAccount vimeoAccount);
+    void saveNonUserAccount(@NotNull VimeoAccount vimeoAccount);
 
     /**
      * Removes the saved {@link VimeoAccount} from storage

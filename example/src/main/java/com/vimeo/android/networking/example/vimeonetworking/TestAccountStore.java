@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresPermission;
 
 import com.vimeo.android.networking.example.AccountPreferenceManager;
@@ -34,18 +35,20 @@ public class TestAccountStore implements AccountStore {
 //        mAccountManager = AccountManager.get(context);
     }
 
+    @Nullable
     @Override
     public VimeoAccount loadAccount() {
         return AccountPreferenceManager.getClientAccount();
     }
 
     @Override
-    public void saveAccount(@NonNull VimeoAccount vimeoAccount) {
+    public void saveNonUserAccount(@NonNull VimeoAccount vimeoAccount) {
         AccountPreferenceManager.setClientAccount(vimeoAccount);
     }
 
     @Override
-    public void saveAccount(@NonNull VimeoAccount vimeoAccount, @NonNull String email) {
+    public void saveAuthenticatedUserAccount(@NonNull VimeoAccount vimeoAccount,
+                                             @NonNull String accountName) {
         AccountPreferenceManager.setClientAccount(vimeoAccount);
     }
 

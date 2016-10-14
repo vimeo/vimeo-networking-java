@@ -83,9 +83,9 @@ public class VimeoAccount implements Serializable {
     }
 
     /**
-     * Using this constructor is to create an account manually. It is recommended that if you cannot obtain
-     * a valid access token, to have this class constructed automatically using one of the authentication
-     * methods in VimeoClient.
+     * Use this constructor to create an account manually. If you cannot obtain a valid access token,
+     * it is recommended to have a VimeoAccount constructed automatically using one of the
+     * authentication methods in VimeoClient rather than calling this constructor directly.
      *
      * @param accessToken The authentication token
      * @param tokenType   The token type. May be set to a value to pair with an access token.
@@ -190,6 +190,28 @@ public class VimeoAccount implements Serializable {
         } else {
             Gson gson = VimeoNetworkUtil.getGson();
             mUserJson = gson.toJson(mUser);
+        }
+    }
+
+    /**
+     * Copies one VimeoAccount into another
+     *
+     * @param other the account to copy
+     * @return a new VimeoAccount, with the details of the other
+     */
+    @Nullable
+    public static VimeoAccount copy(final VimeoAccount other) {
+        String accessToken = other.getAccessToken();
+        String tokenType = other.getTokenType();
+        String scope = other.getScope();
+        String userJson = other.getUserJSON();
+
+        if (accessToken != null && tokenType != null && scope != null) {
+            return new VimeoAccount(accessToken, tokenType, scope, userJson);
+        } else if (accessToken != null) {
+            return new VimeoAccount(accessToken);
+        } else {
+            return null;
         }
     }
 }
