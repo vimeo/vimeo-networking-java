@@ -42,13 +42,15 @@ public class TestAccountStore implements AccountStore {
     }
 
     @Override
-    public void saveNonUserAccount(@NonNull VimeoAccount vimeoAccount) {
+    public void saveAuthenticatedUserAccount(@NonNull VimeoAccount vimeoAccount,
+                                             @NonNull String accountName) {
+        // In non-demo code, you may want to store the account name. It is left off in
+        // this demo, but may be used as a key (such as in the Android Account Manager).
         AccountPreferenceManager.setClientAccount(vimeoAccount);
     }
 
     @Override
-    public void saveAuthenticatedUserAccount(@NonNull VimeoAccount vimeoAccount,
-                                             @NonNull String accountName) {
+    public void saveNonUserAccount(@NonNull VimeoAccount vimeoAccount) {
         AccountPreferenceManager.setClientAccount(vimeoAccount);
     }
 

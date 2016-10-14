@@ -126,7 +126,11 @@ public final class VimeoClient {
         ClientLogger.setLogLevel(mConfiguration.logLevel);
 
         VimeoAccount vimeoAccount = mConfiguration.loadAccount();
-        setVimeoAccount(vimeoAccount);
+        if (vimeoAccount == null) {
+            configureAccessTokenAccount();
+        } else {
+            setVimeoAccount(vimeoAccount);
+        }
     }
 
     private Retrofit createRetrofit() {
@@ -216,52 +220,55 @@ public final class VimeoClient {
     }
 
     /**
-     * Sets the current {@link VimeoAccount} on this client. If the provided account is null and
-     * an access token exists on the {@link Configuration}, then a new account will be created
-     * using that access token.
+     * Sets the current {@link VimeoAccount} on this client.
      *
      * @param vimeoAccount the account to set on this client
      */
     public void setVimeoAccount(@Nullable VimeoAccount vimeoAccount) {
-        if (vimeoAccount == null) {
-            if (mConfiguration.accessToken != null) {
-                // If the provided account was null but we have an access token, persist the vimeo account with
-                // just a token in it. Otherwise we'll want to leave the persisted account as null.
-                vimeoAccount = new VimeoAccount(mConfiguration.accessToken);
-                mConfiguration.saveNonUserAccount(vimeoAccount);
-            }
-        }
-
         mVimeoAccount = vimeoAccount;
+    }
+
+    /**
+     * This will configure a {@link VimeoAccount} using the access token provided to the
+     * {@link Configuration}.
+     */
+    private void configureAccessTokenAccount() {
+        if (mConfiguration.accessToken != null) {
+            // If the provided account was null but we have an access token, persist the vimeo account with
+            // just a token in it. Otherwise we'll want to leave the persisted account as null.
+            VimeoAccount vimeoAccount = new VimeoAccount(mConfiguration.accessToken);
+            mConfiguration.saveNonUserAccount(vimeoAccount);
+
+            setVimeoAccount(vimeoAccount);
+        }
     }
 
     /**
      * Sets the {@link #mVimeoAccount} field as well as triggering the saveAuthenticatedUserAccount
      * event for the account store.
      *
-     * @param vimeoAccount The account to save - this should be provided; if it is not, then one will
-     *                     be constructed using the access token set on the {@link Configuration}.
+     * @param vimeoAccount The account to save
      * @param accountName  accountName should be provided if the account is for an authenticated user. It may
      *                     be null if the account represents a client credentials grant.
      */
-    public void saveAuthenticatedUserAccount(@Nullable VimeoAccount vimeoAccount,
+    public void saveAuthenticatedUserAccount(@NotNull VimeoAccount vimeoAccount,
                                              @NotNull String accountName) {
-        setVimeoAccount(vimeoAccount);
         if (vimeoAccount != null) {
+            setVimeoAccount(vimeoAccount);
             mConfiguration.saveAuthenticatedUserAccount(vimeoAccount, accountName);
         }
     }
 
     /**
      * Sets the {@link #mVimeoAccount} field as well as triggering the saveNonUserAccount event for the
-     * account store. This is meant to be user when no user is directly associated with the account.
+     * account store. This is meant to be used when no user is directly associated with the account.
      *
      * @param vimeoAccount The account to save - this should be provided; if it is not, then one will
      *                     be constructed using the access token set on the {@link Configuration}.
      */
     public void saveNonUserAccount(@Nullable VimeoAccount vimeoAccount) {
-        setVimeoAccount(vimeoAccount);
         if (vimeoAccount != null) {
+            setVimeoAccount(vimeoAccount);
             mConfiguration.saveNonUserAccount(vimeoAccount);
         }
     }
@@ -602,7 +609,9 @@ public final class VimeoClient {
 
         VimeoAccount vimeoAccount = executeAccountCall(call);
 
-        saveAuthenticatedUserAccount(vimeoAccount, email);
+        if (vimeoAccount != null) {
+            saveAuthenticatedUserAccount(vimeoAccount, email);
+        }
 
         return vimeoAccount;
     }
@@ -702,7 +711,7 @@ public final class VimeoClient {
     private static class AccountCallback extends VimeoCallback<VimeoAccount> {
 
         private final VimeoClient mClient;
-        private String mEmail;
+        private String mAccountName;
         private final AuthCallback mCallback;
 
         public AccountCallback(VimeoClient client, AuthCallback callback) {
@@ -714,13 +723,13 @@ public final class VimeoClient {
             mCallback = callback;
         }
 
-        public AccountCallback(VimeoClient client, String email, AuthCallback callback) {
+        public AccountCallback(VimeoClient client, String accountName, AuthCallback callback) {
             if (client == null || callback == null) {
                 throw new AssertionError("Client and Callback must not be null");
             }
 
             mClient = client;
-            mEmail = email;
+            mAccountName = accountName;
             mCallback = callback;
         }
 
@@ -737,14 +746,14 @@ public final class VimeoClient {
 
         @Override
         public void success(VimeoAccount vimeoAccount) {
-            if (vimeoAccount.getUser() != null && (mEmail == null || mEmail.isEmpty())) {
+            if (vimeoAccount.getUser() != null && (mAccountName == null || mAccountName.isEmpty())) {
                 // We must always have a `name` field, which is used by the Android Account Manager for
                 // display in the device Settings -> Accounts [KZ] 12/17/15
                 String name = (vimeoAccount.getUser().name !=
                                null) ? vimeoAccount.getUser().name : vimeoAccount.getUser().uri;
                 mClient.saveAuthenticatedUserAccount(vimeoAccount, name);
             } else {
-                mClient.saveAuthenticatedUserAccount(vimeoAccount, mEmail);
+                mClient.saveAuthenticatedUserAccount(vimeoAccount, mAccountName);
             }
             mCallback.success();
         }
