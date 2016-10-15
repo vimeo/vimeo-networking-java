@@ -124,115 +124,109 @@ public class User implements Serializable, Followable {
 
     @Override
     public boolean isFollowing() {
-        return getFollowInteraction() != null && metadata.interactions.follow.added;
+        Interaction follow = getFollowInteraction();
+        return follow != null && follow.added;
+    }
+
+    @Nullable
+    private ConnectionCollection getMetadataConnections() {
+        if(metadata != null){
+            return metadata.connections;
+        }
+        return null;
+    }
+
+    @Nullable
+    private InteractionCollection getMetadataInteractions() {
+        if(metadata != null){
+            return metadata.interactions;
+        }
+        return null;
     }
 
     @Nullable
     @Override
     public Interaction getFollowInteraction() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return metadata.interactions.follow;
-        }
-        return null;
+        InteractionCollection interactions = getMetadataInteractions();
+        return interactions != null ? interactions.follow : null;
     }
 
     @Nullable
     public Connection getFollowingConnection() {
-        if (metadata != null && metadata.connections != null) {
-            return metadata.connections.following;
-        }
-        return null;
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.following : null;
     }
 
     @Nullable
     public Connection getFollowersConnection() {
-        if (metadata != null && metadata.connections != null) {
-            return metadata.connections.followers;
-        }
-        return null;
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.followers : null;
     }
 
     public int getFollowerCount() {
-        if (getFollowersConnection() != null) {
-            return getFollowersConnection().total;
-        }
-        return 0;
+        Connection followers = getFollowersConnection();
+        return followers != null ? followers.total : 0;
     }
 
     public int getFollowingCount() {
-        if (getFollowingConnection() != null) {
-            return getFollowingConnection().total;
-        }
-        return 0;
+        Connection following = getFollowingConnection();
+        return following != null ? following.total : 0;
     }
 
     @Nullable
     public Connection getLikesConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.likes != null) {
-            return metadata.connections.likes;
-        }
-        return null;
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.likes : null;
     }
 
     public int getLikesCount() {
-        if (getLikesConnection() != null) {
-            return getLikesConnection().total;
-        }
-        return 0;
+        Connection likes = getLikesConnection();
+        return likes != null ? likes.total : 0;
     }
 
     @Nullable
     public Connection getFollowedChannelsConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.channels != null) {
-            return metadata.connections.channels;
-        }
-        return null;
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.channels : null;
     }
 
     public int getChannelsCount() {
-        if (getFollowedChannelsConnection() != null) {
-            return getFollowedChannelsConnection().total;
-        }
-        return 0;
+        Connection channels = getFollowedChannelsConnection();
+        return channels != null ? channels.total : 0;
     }
 
     @Nullable
     public Connection getModeratedChannelsConnection() {
-        if (metadata != null && metadata.connections != null &&
-            metadata.connections.moderatedChannels != null) {
-            return metadata.connections.moderatedChannels;
-        }
-        return null;
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.moderatedChannels : null;
     }
 
     public int getModeratedChannelsConnectionCount() {
-        if (getFollowedChannelsConnection() != null) {
-            return getModeratedChannelsConnection().total;
-        }
-        return 0;
+        Connection moderatedChannels = getModeratedChannelsConnection();
+        return moderatedChannels != null ? moderatedChannels.total : 0;
     }
 
     @Nullable
     public Connection getAppearancesConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.appearances != null) {
-            return metadata.connections.appearances;
-        }
-        return null;
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.appearances : null;
     }
 
     public int getAppearancesCount() {
-        if (getAppearancesConnection() != null) {
-            return getAppearancesConnection().total;
-        }
-        return 0;
+        Connection appearances = getAppearancesConnection();
+        return appearances != null ? appearances.total : 0;
     }
 
     @Nullable
     public Connection getWatchLaterConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.watchlater != null) {
-            return metadata.connections.watchlater;
-        }
-        return null;
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.watchlater : null;
+    }
+
+    @Nullable
+    public Connection getWatchedVideosConnection() {
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.watchedVideos : null;
     }
     // </editor-fold>
 
@@ -245,17 +239,13 @@ public class User implements Serializable, Followable {
 
     @Nullable
     public Connection getVideosConnection() {
-        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.videos != null)) {
-            return metadata.connections.videos;
-        }
-        return null;
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.videos : null;
     }
 
     public int getVideoCount() {
-        if (getVideosConnection() != null) {
-            return metadata.connections.videos.total;
-        }
-        return 0;
+        Connection videos = getVideosConnection();
+        return videos != null ? videos.total : 0;
     }
 
     public boolean isPlusOrPro() {
