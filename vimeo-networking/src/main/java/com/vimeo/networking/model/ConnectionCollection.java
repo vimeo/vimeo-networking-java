@@ -123,4 +123,7 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     @GsonAdapterKey("recommended_users")
     public Connection recommendedUsers;
+    @Nullable
+    @GsonAdapterKey("watched_videos")
+    public Connection watchedVideos;
 }
