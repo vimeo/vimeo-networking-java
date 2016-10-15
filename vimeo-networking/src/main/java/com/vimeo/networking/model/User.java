@@ -234,6 +234,15 @@ public class User implements Serializable, Followable {
         }
         return null;
     }
+
+    @Nullable
+    public Connection getWatchedVideosConnection() {
+        if ((metadata != null) && (metadata.connections != null) &&
+            (metadata.connections.watchedVideos != null)) {
+            return metadata.connections.watchedVideos;
+        }
+        return null;
+    }
     // </editor-fold>
 
     public ArrayList<Picture> getPictures() {
