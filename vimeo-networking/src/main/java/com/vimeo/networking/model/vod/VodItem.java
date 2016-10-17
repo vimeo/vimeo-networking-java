@@ -25,6 +25,7 @@
 package com.vimeo.networking.model.vod;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.Connection;
 import com.vimeo.networking.model.ConnectionCollection;
 import com.vimeo.networking.model.InteractionCollection;
 import com.vimeo.networking.model.Metadata;
@@ -185,18 +186,32 @@ public class VodItem implements Serializable {
     }
 
     public int getViewableVideoCount() {
-        if (mMetadata != null && mMetadata.connections != null && mMetadata.connections.videos != null) {
-            return mMetadata.connections.videos.viewableTotal;
-        }
-        return 0;
+        Connection videos = getVideosConnection();
+        return videos != null ? videos.getViewableTotal() : 0;
     }
 
     @Nullable
     public String getVideosUri() {
-        if (mMetadata != null && mMetadata.connections != null && mMetadata.connections.videos != null) {
-            return mMetadata.connections.videos.uri;
-        }
-        return null;
+        Connection videos = getVideosConnection();
+        return videos != null ? videos.getUri() : null;
+    }
+
+    @Nullable
+    public Connection getVideosConnection() {
+        ConnectionCollection connections = getConnections();
+        return connections != null ? connections.videos : null;
+    }
+
+    @Nullable
+    public Connection getSeasonsConnection() {
+        ConnectionCollection connections = getConnections();
+        return connections != null ? connections.seasons : null;
+    }
+
+    @Nullable
+    public String getSeasonsUri() {
+        Connection seasons = getSeasonsConnection();
+        return seasons != null ? seasons.getUri() : null;
     }
 
     public void setName(@Nullable String name) {
