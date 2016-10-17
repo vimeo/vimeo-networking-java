@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -39,81 +40,178 @@ import java.io.Serializable;
 public class VimeoAccount implements Serializable {
 
     private static final long serialVersionUID = -8341071767843490585L;
-    //    private static final String TOKEN_TYPE_BEARER = "bearer";
 
+    @Nullable
     @GsonAdapterKey("access_token")
-    public String accessToken;
-    @GsonAdapterKey("token_type")
-    public String tokenType;
-    @GsonAdapterKey("scope")
-    public String scope;
-    @GsonAdapterKey("user")
-    public User user;
-    private String userJSON;
+    public String mAccessToken;
 
-    public VimeoAccount(){
+    @Nullable
+    @GsonAdapterKey("token_type")
+    public String mTokenType;
+
+    @Nullable
+    @GsonAdapterKey("scope")
+    public String mScope;
+
+    @Nullable
+    @GsonAdapterKey("user")
+    public User mUser;
+
+    @Nullable
+    private String mUserJson;
+
+    public VimeoAccount() {
         //constructor for stag TypeAdapter generation
     }
 
-    public VimeoAccount(@Nullable String accessToken) {
-        this.accessToken = accessToken;
+    /**
+     * Constructor for use for developers making requests with only one account. Provide your access
+     * token to the Configuration Builder and this constructor will be used to set up your authentication.
+     * <p>
+     * See the README of this library for more information.
+     *
+     * @param accessToken your access token.
+     * @see "https://github.com/vimeo/vimeo-networking-java#initialization"
+     */
+    public VimeoAccount(@NotNull String accessToken) {
+        //noinspection ConstantConditions
+        if (accessToken == null || accessToken.isEmpty()) {
+            throw new AssertionError("Account must be created with token");
+        }
+
+        mAccessToken = accessToken;
     }
 
-    public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
-        if (accessToken == null || accessToken.isEmpty() || tokenType == null ||
-            tokenType.isEmpty() || scope == null || scope.isEmpty()) {
+    /**
+     * Use this constructor to create an account manually. If you cannot obtain a valid access token,
+     * it is recommended to have a VimeoAccount constructed automatically using one of the
+     * authentication methods in VimeoClient rather than calling this constructor directly.
+     *
+     * @param accessToken The authentication token
+     * @param tokenType   The token type. May be set to a value to pair with an access token.
+     * @param scope       The scope of the access token
+     * @param userJson    A {@link User} represented in a JSON string
+     */
+    public VimeoAccount(@NotNull String accessToken, @NotNull String tokenType, @NotNull String scope,
+                        @Nullable String userJson) {
+        //noinspection ConstantConditions
+        if (accessToken == null || accessToken.isEmpty() || tokenType == null || tokenType.isEmpty() ||
+            scope == null || scope.isEmpty()) {
             throw new AssertionError("Account can only be created with token, tokenType, scope");
         }
 
-        this.accessToken = accessToken;
-        this.tokenType = tokenType;
-        this.scope = scope;
+        mAccessToken = accessToken;
+        mTokenType = tokenType;
+        mScope = scope;
 
-        Gson gson = VimeoNetworkUtil.getGson();
+        if (userJson != null) {
+            Gson gson = VimeoNetworkUtil.getGson();
 
-        this.user = gson.fromJson(userJSON, User.class);
+            mUser = gson.fromJson(userJson, User.class);
+            mUserJson = userJson;
+        }
     }
 
+    /**
+     * @return true if the access token is not empty, false if it is null or empty
+     */
     public boolean isAuthenticated() {
-        return (this.accessToken != null && !this.accessToken.isEmpty());
+        return (mAccessToken != null && !mAccessToken.isEmpty());
     }
 
+    /**
+     * @return the access (auth) token stored with this account
+     */
+    @Nullable
     public String getAccessToken() {
-        return this.accessToken;
+        return mAccessToken;
     }
 
+    /**
+     * @return the token type that is stored with this account
+     */
+    @Nullable
     public String getTokenType() {
-        return this.tokenType;
+        return mTokenType;
     }
 
+    /**
+     * @return The scope that is stored with this account
+     */
+    @Nullable
     public String getScope() {
-        return this.scope;
+        return mScope;
     }
 
+    /**
+     * Get the user represented by this account
+     *
+     * @return the user, or null if no user is represented by the account
+     */
     @Nullable
     public User getUser() {
-        return this.user;
+        return mUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    /**
+     * Set the user on the account. When changing the user, the account should be set and saved by the client
+     *
+     * @param user the new user on the account
+     */
+    public void setUser(@Nullable User user) {
+        mUser = user;
+
+        createUserJson();
     }
 
+    /**
+     * Get the user represented as a JSON string
+     *
+     * @return the user in a JSON format, null if there is no user
+     */
     @Nullable
-    public String getUserJSON() // For AccountManager.userData [AH]
-    {
-        if (this.user == null) {
+    public String getUserJSON() {
+        if (mUser == null) {
             return null;
         }
 
-        if (this.userJSON != null) {
-            return this.userJSON;
+        if (mUserJson != null) {
+            return mUserJson;
         }
 
-        Gson gson = VimeoNetworkUtil.getGson();
+        createUserJson();
 
-        this.userJSON = gson.toJson(this.user);
+        return mUserJson;
+    }
 
-        return this.userJSON;
+    private void createUserJson() {
+        if (mUser == null) {
+            mUserJson = null;
+        } else {
+            Gson gson = VimeoNetworkUtil.getGson();
+            mUserJson = gson.toJson(mUser);
+        }
+    }
+
+    /**
+     * Copies one VimeoAccount into another
+     *
+     * @param other the account to copy
+     * @return a new VimeoAccount, with the details of the other
+     */
+    @Nullable
+    public static VimeoAccount copy(final VimeoAccount other) {
+        String accessToken = other.getAccessToken();
+        String tokenType = other.getTokenType();
+        String scope = other.getScope();
+        String userJson = other.getUserJSON();
+
+        if (accessToken != null && tokenType != null && scope != null) {
+            return new VimeoAccount(accessToken, tokenType, scope, userJson);
+        } else if (accessToken != null) {
+            return new VimeoAccount(accessToken);
+        } else {
+            return null;
+        }
     }
 }
