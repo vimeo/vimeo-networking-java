@@ -127,7 +127,16 @@ public final class VimeoClient {
 
         VimeoAccount vimeoAccount = mConfiguration.loadAccount();
         if (vimeoAccount == null) {
-            configureAccessTokenAccount();
+            String accessToken = mConfiguration.accessToken;
+            // No need to have an else here - consumers should be
+            // checking to see if they are authenticated before making
+            // any requests. A use case is if the account could not
+            // be loaded due to lack of auth token, but other account
+            // details exist, for which the client can then use to
+            // get another token.
+            if (accessToken != null) {
+                configureAccessTokenAccount(accessToken);
+            }
         } else {
             setVimeoAccount(vimeoAccount);
         }
@@ -229,18 +238,18 @@ public final class VimeoClient {
     }
 
     /**
-     * This will configure a {@link VimeoAccount} using the access token provided to the
-     * {@link Configuration}.
+     * This will configure a {@link VimeoAccount} using the access token provided. This
+     * token should have been set on the {@link Configuration} before initializing this library.
+     *
+     * @param accessToken the access token to use.
      */
-    private void configureAccessTokenAccount() {
-        if (mConfiguration.accessToken != null) {
-            // If the provided account was null but we have an access token, persist the vimeo account with
-            // just a token in it. Otherwise we'll want to leave the persisted account as null.
-            VimeoAccount vimeoAccount = new VimeoAccount(mConfiguration.accessToken);
-            mConfiguration.saveNonUserAccount(vimeoAccount);
+    private void configureAccessTokenAccount(@NotNull String accessToken) {
+        // If the provided account was null but we have an access token, persist the vimeo account with
+        // just a token in it. Otherwise we'll want to leave the persisted account as null.
+        VimeoAccount vimeoAccount = new VimeoAccount(accessToken);
+        mConfiguration.saveNonUserAccount(vimeoAccount);
 
-            setVimeoAccount(vimeoAccount);
-        }
+        setVimeoAccount(vimeoAccount);
     }
 
     /**
