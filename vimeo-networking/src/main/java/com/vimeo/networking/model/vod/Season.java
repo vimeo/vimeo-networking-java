@@ -1,5 +1,7 @@
 package com.vimeo.networking.model.vod;
 
+import com.vimeo.networking.model.Connection;
+import com.vimeo.networking.model.ConnectionCollection;
 import com.vimeo.networking.model.Metadata;
 import com.vimeo.networking.model.User;
 import com.vimeo.stag.GsonAdapterKey;
@@ -135,6 +137,29 @@ public class Season implements Serializable {
         return mResourceKey;
     }
 
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Helpers
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Helpers">
+
+    @Nullable
+    public ConnectionCollection getConnections() {
+        return mMetadata != null ? mMetadata.connections : null;
+    }
+
+    @Nullable
+    public Connection getVideosConnection() {
+        ConnectionCollection connections = getConnections();
+        return connections != null ? connections.videos : null;
+    }
+
+    @Nullable
+    public String getVideosUri() {
+        Connection videos = getVideosConnection();
+        return videos != null ? videos.getUri() : null;
+    }
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
