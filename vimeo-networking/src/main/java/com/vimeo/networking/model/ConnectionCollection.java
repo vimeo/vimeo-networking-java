@@ -112,6 +112,9 @@ public class ConnectionCollection implements Serializable {
     @GsonAdapterKey("season")
     public Connection season;
     @Nullable
+    @GsonAdapterKey("seasons")
+    public Connection seasons;
+    @Nullable
     @GsonAdapterKey("trailer")
     public Connection trailer;
     @Nullable
