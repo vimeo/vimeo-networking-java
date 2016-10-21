@@ -26,7 +26,6 @@ import com.vimeo.networking.Vimeo.LogLevel;
 import com.vimeo.networking.logging.LogProvider;
 import com.vimeo.networking.model.VimeoAccount;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -98,49 +97,28 @@ public class Configuration {
     }
 
     /**
-     * Persist the {@link VimeoAccount} in the {@link AccountStore}
-     * <p>
-     * Account name is <b>required</b> for authenticated user accounts; for
-     * client credential account saving use {@link #saveNonUserAccount(VimeoAccount)}
-     *
-     * @param account     the account to persist
-     * @param accountName the name of the account.
+     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
+     * <p/>
+     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
+     * application sessions.
      */
-    public void saveAuthenticatedUserAccount(@NotNull VimeoAccount account, @NotNull String accountName) {
+    @Deprecated
+    public void saveAccount(VimeoAccount account, String email, String password) {
+        saveAccount(account, email);
+    }
+
+    public void saveAccount(VimeoAccount account, String email) {
         if (accountStore != null) {
-            accountStore.saveAuthenticatedUserAccount(account, accountName);
+            accountStore.saveAccount(account, email);
         }
     }
 
-    /**
-     * Persist the {@link VimeoAccount} in the {@link AccountStore} without an account
-     * name. For authenticated users, use {@link #saveAuthenticatedUserAccount(VimeoAccount, String)},
-     * as this is meant for client credential or code grant saving, when an account name is not available.
-     *
-     * @param account the account to persist
-     */
-    public void saveNonUserAccount(@NotNull VimeoAccount account) {
-        if (accountStore != null) {
-            accountStore.saveNonUserAccount(account);
-        }
-    }
-
-    /**
-     * Remove the {@link VimeoAccount} from the {@link AccountStore}
-     *
-     * @param account the account to remove
-     */
-    public void deleteAccount(@NotNull VimeoAccount account) {
+    public void deleteAccount(VimeoAccount account) {
         if (accountStore != null) {
             accountStore.deleteAccount(account);
         }
     }
 
-    /**
-     * Load the {@link VimeoAccount} from the {@link AccountStore}
-     *
-     * @return the loaded account, or null if none could be loaded
-     */
     @Nullable
     public VimeoAccount loadAccount() {
         if (accountStore == null) {
