@@ -92,7 +92,6 @@ public final class VimeoClient {
     /**
      * Currently authenticated account
      */
-    @Nullable
     private VimeoAccount mVimeoAccount;
 
     /**
@@ -126,20 +125,7 @@ public final class VimeoClient {
         ClientLogger.setLogLevel(mConfiguration.logLevel);
 
         VimeoAccount vimeoAccount = mConfiguration.loadAccount();
-        if (vimeoAccount == null) {
-            String accessToken = mConfiguration.accessToken;
-            // No need to have an else here - consumers should be
-            // checking to see if they are authenticated before making
-            // any requests. A use case is if the account could not
-            // be loaded due to lack of auth token, but other account
-            // details exist, for which the client can then use to
-            // get another token.
-            if (accessToken != null) {
-                configureAccessTokenAccount(accessToken);
-            }
-        } else {
-            setVimeoAccount(vimeoAccount);
-        }
+        setVimeoAccount(vimeoAccount);
     }
 
     private Retrofit createRetrofit() {
@@ -213,75 +199,46 @@ public final class VimeoClient {
         return mRetrofit;
     }
 
-    /**
-     * @return the current VimeoAccount, or null if it hasn't been set yet
-     */
-    @Nullable
     public VimeoAccount getVimeoAccount() {
-        return VimeoAccount.copy(mVimeoAccount);
+        if (mVimeoAccount == null) {
+            throw new AssertionError("Account should never be null");
+        }
+
+        return mVimeoAccount;
     }
 
-    /**
-     * @return true if the current {@link VimeoAccount} is not null and has an auth token
-     */
-    public boolean isAuthenticated() {
-        return mVimeoAccount != null && mVimeoAccount.isAuthenticated();
-    }
-
-    /**
-     * Sets the current {@link VimeoAccount} on this client.
-     *
-     * @param vimeoAccount the account to set on this client
-     */
     public void setVimeoAccount(@Nullable VimeoAccount vimeoAccount) {
+        if (vimeoAccount == null) {
+            // If the provided account was null but we have an access token, persist the vimeo account with
+            // just a token in it. Otherwise we'll want to leave the persisted account as null.
+            vimeoAccount = new VimeoAccount(mConfiguration.accessToken);
+            if (mConfiguration.accessToken != null) {
+                mConfiguration.saveAccount(vimeoAccount, null);
+            }
+        }
+
         mVimeoAccount = vimeoAccount;
     }
 
     /**
-     * This will configure a {@link VimeoAccount} using the access token provided. This
-     * token should have been set on the {@link Configuration} before initializing this library.
-     *
-     * @param accessToken the access token to use.
+     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
+     * <p/>
+     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
+     * application sessions.
      */
-    private void configureAccessTokenAccount(@NotNull String accessToken) {
-        // If the provided account was null but we have an access token, persist the vimeo account with
-        // just a token in it. Otherwise we'll want to leave the persisted account as null.
-        VimeoAccount vimeoAccount = new VimeoAccount(accessToken);
-        mConfiguration.saveNonUserAccount(vimeoAccount);
+    @Deprecated
+    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email, String password) {
+        saveAccount(vimeoAccount, email);
+    }
 
+    /**
+     * Sets the {@link #mVimeoAccount} field as well as triggering the saveAccount event for the
+     * account store
+     */
+    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email) {
         setVimeoAccount(vimeoAccount);
+        mConfiguration.saveAccount(vimeoAccount, email);
     }
-
-    /**
-     * Sets the {@link #mVimeoAccount} field as well as triggering the saveAuthenticatedUserAccount
-     * event for the account store.
-     *
-     * @param vimeoAccount The account to save
-     * @param accountName  accountName should be provided if the account is for an authenticated user. It may
-     *                     be null if the account represents a client credentials grant.
-     */
-    public void saveAuthenticatedUserAccount(@NotNull VimeoAccount vimeoAccount,
-                                             @NotNull String accountName) {
-        if (vimeoAccount != null) {
-            setVimeoAccount(vimeoAccount);
-            mConfiguration.saveAuthenticatedUserAccount(vimeoAccount, accountName);
-        }
-    }
-
-    /**
-     * Sets the {@link #mVimeoAccount} field as well as triggering the saveNonUserAccount event for the
-     * account store. This is meant to be used when no user is directly associated with the account.
-     *
-     * @param vimeoAccount The account to save - this should be provided; if it is not, then one will
-     *                     be constructed using the access token set on the {@link Configuration}.
-     */
-    public void saveNonUserAccount(@Nullable VimeoAccount vimeoAccount) {
-        if (vimeoAccount != null) {
-            setVimeoAccount(vimeoAccount);
-            mConfiguration.saveNonUserAccount(vimeoAccount);
-        }
-    }
-
 
     @NotNull
     public Configuration getConfiguration() {
@@ -412,7 +369,7 @@ public final class VimeoClient {
             retrofit2.Response<VimeoAccount> response = call.execute();
             if (response.isSuccessful()) {
                 vimeoAccount = response.body();
-                saveNonUserAccount(vimeoAccount);
+                saveAccount(vimeoAccount, null);
             }
         } catch (IOException e) {
             ClientLogger.e("Exception during authorizeWithClientCredentialsGrantSync: " + e.getMessage(), e);
@@ -463,44 +420,6 @@ public final class VimeoClient {
                 mVimeoService.ssoTokenExchange(getBasicAuthHeader(), token, mConfiguration.scope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
-    }
-
-    /**
-     * Synchronous version of {@link #singleSignOnTokenExchange(String, AuthCallback)}. This is useful
-     * when already running in a background thread, such as when using the Android AccountManager.
-     *
-     * @param token           the authenticated user access token from application A. This <b>cannot</b> be
-     *                        a client credentials access token. It must be granted via password, Facebook,
-     *                        or another means of logging a specific user in.
-     * @param accountName     the name of the account, usually the email
-     * @param basicAuthHeader a "basic" auth header to pass in; the basic auth header should be from
-     *                        the application that needs the new token. In the case of the Android
-     *                        account authenticator, which runs on the first app installed, we need
-     *                        to pass in the auth header for the app that needs the token swap, rather
-     *                        than the app the is executing this method. If this is null, then
-     *                        {@link #getBasicAuthHeader()} will be used.
-     * @param requestedScope  the scope that the requested token should include. In the case of the Android
-     *                        account authenticator, which runs on the first app installed, we need
-     *                        to pass in the scope for the app that needs the token swap, rather
-     *                        than the app the is executing this method. If this is null, then
-     *                        the configuration's scope on this client will be used.
-     * @return A {@link VimeoAccount} if the sign on worked, or null
-     * @see #singleSignOnTokenExchange(String, AuthCallback)
-     */
-    @Nullable
-    public VimeoAccount singleSignOnTokenExchange(@NotNull String token, @NotNull String accountName,
-                                                  @Nullable String basicAuthHeader,
-                                                  @Nullable String requestedScope) {
-
-        if (basicAuthHeader == null) {
-            basicAuthHeader = getBasicAuthHeader();
-        }
-        if (requestedScope == null) {
-            requestedScope = mConfiguration.scope;
-        }
-        Call<VimeoAccount> call = mVimeoService.ssoTokenExchange(basicAuthHeader, token, requestedScope);
-
-        return executeAccountCall(call);
     }
 
     @Nullable
@@ -616,11 +535,17 @@ public final class VimeoClient {
                 mVimeoService.logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE,
                                     mConfiguration.scope);
 
-        VimeoAccount vimeoAccount = executeAccountCall(call);
-
-        if (vimeoAccount != null) {
-            saveAuthenticatedUserAccount(vimeoAccount, email);
+        VimeoAccount vimeoAccount = null;
+        try {
+            retrofit2.Response<VimeoAccount> response = call.execute();
+            if (response.isSuccessful()) {
+                vimeoAccount = response.body();
+            }
+        } catch (IOException e) {
+            ClientLogger.e("Exception during logIn: " + e.getMessage(), e);
         }
+
+        saveAccount(vimeoAccount, email);
 
         return vimeoAccount;
     }
@@ -650,24 +575,6 @@ public final class VimeoClient {
         return call;
     }
 
-    @Nullable
-    private static VimeoAccount executeAccountCall(@NotNull Call<VimeoAccount> call) {
-        try {
-            retrofit2.Response<VimeoAccount> response = call.execute();
-            if (response.isSuccessful()) {
-                return response.body();
-            }
-            String responseError = "";
-            if (response.errorBody() != null) {
-                responseError = response.errorBody().string();
-            }
-            ClientLogger.e("Unsuccessful response getting account: " + responseError);
-        } catch (IOException e) {
-            ClientLogger.e("Exception during executeAccountCall: " + e.getMessage(), e);
-        }
-        return null;
-    }
-
 
     /**
      * Must be called when user logs out to ensure that the tokens have been invalidated
@@ -678,7 +585,7 @@ public final class VimeoClient {
     public Call<Object> logOut(@Nullable final VimeoCallback<Object> callback) {
         // If you've provided an access token to the configuration builder, we're assuming that you wouldn't
         // want to be able to log out of it, because this would invalidate the constant you've provided us.
-        if (mConfiguration.accessToken != null && mVimeoAccount != null &&
+        if (mConfiguration.accessToken != null &&
             mConfiguration.accessToken.equals(mVimeoAccount.getAccessToken())) {
             if (callback != null) {
                 callback.failure(new VimeoError(
@@ -705,9 +612,7 @@ public final class VimeoClient {
         });
 
         // Remove account immediately, but only after the auth header has been set (working properly?) [AH] 5/4/15
-        if (mVimeoAccount != null) {
-            mConfiguration.deleteAccount(mVimeoAccount);
-        }
+        mConfiguration.deleteAccount(mVimeoAccount);
         setVimeoAccount(null);
         return call;
     }
@@ -720,7 +625,7 @@ public final class VimeoClient {
     private static class AccountCallback extends VimeoCallback<VimeoAccount> {
 
         private final VimeoClient mClient;
-        private String mAccountName;
+        private String mEmail;
         private final AuthCallback mCallback;
 
         public AccountCallback(VimeoClient client, AuthCallback callback) {
@@ -732,13 +637,13 @@ public final class VimeoClient {
             mCallback = callback;
         }
 
-        public AccountCallback(VimeoClient client, String accountName, AuthCallback callback) {
+        public AccountCallback(VimeoClient client, String email, AuthCallback callback) {
             if (client == null || callback == null) {
                 throw new AssertionError("Client and Callback must not be null");
             }
 
             mClient = client;
-            mAccountName = accountName;
+            mEmail = email;
             mCallback = callback;
         }
 
@@ -755,14 +660,14 @@ public final class VimeoClient {
 
         @Override
         public void success(VimeoAccount vimeoAccount) {
-            if (vimeoAccount.getUser() != null && (mAccountName == null || mAccountName.isEmpty())) {
+            if (vimeoAccount.getUser() != null && (mEmail == null || mEmail.isEmpty())) {
                 // We must always have a `name` field, which is used by the Android Account Manager for
                 // display in the device Settings -> Accounts [KZ] 12/17/15
                 String name = (vimeoAccount.getUser().name !=
                                null) ? vimeoAccount.getUser().name : vimeoAccount.getUser().uri;
-                mClient.saveAuthenticatedUserAccount(vimeoAccount, name);
+                mClient.saveAccount(vimeoAccount, name);
             } else {
-                mClient.saveAuthenticatedUserAccount(vimeoAccount, mAccountName);
+                mClient.saveAccount(vimeoAccount, mEmail);
             }
             mCallback.success();
         }
@@ -1591,12 +1496,8 @@ public final class VimeoClient {
         return credential;
     }
 
-    public String getBasicAuthHeader() {
+    private String getBasicAuthHeader() {
         return Credentials.basic(mConfiguration.clientID, mConfiguration.clientSecret);
-    }
-
-    public String getCurrentScope() {
-        return mConfiguration.scope;
     }
 
     @NotNull

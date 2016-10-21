@@ -24,9 +24,6 @@ package com.vimeo.networking;
 
 import com.vimeo.networking.model.VimeoAccount;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 /**
  * Interface responsible for handling the creation, deletion, and loading of Vimeo accounts on the client.
  * <p/>
@@ -34,38 +31,18 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface AccountStore {
 
-    /**
-     * Load the previously saved {@link VimeoAccount} and return it
-     *
-     * @return null if no VimeoAccount could be loaded
-     */
-    @Nullable
     VimeoAccount loadAccount();
 
     /**
-     * Saves a {@link VimeoAccount} for loading later.
-     * <p>
-     * Use this method for saving authenticated users that have an account name.
-     *
-     * @param vimeoAccount the VimeoAccount to save, should not be null when calling this method
-     * @param accountName  the <i>name</i> of the account that helps uniquely identify it in account
-     *                     stores, such as the Android AccountManager
+     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
+     * <p/>
+     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
+     * application sessions.
      */
-    void saveAuthenticatedUserAccount(@NotNull VimeoAccount vimeoAccount, @NotNull String accountName);
+    @Deprecated
+    void saveAccount(VimeoAccount vimeoAccount, String email, String password);
 
-    /**
-     * Saves a {@link VimeoAccount} for loading later.
-     * <p>
-     * Use this method for saving client credential token when there is no account name.
-     *
-     * @param vimeoAccount the VimeoAccount to save, should not be null when calling this method
-     */
-    void saveNonUserAccount(@NotNull VimeoAccount vimeoAccount);
+    void saveAccount(VimeoAccount vimeoAccount, String email);
 
-    /**
-     * Removes the saved {@link VimeoAccount} from storage
-     *
-     * @param vimeoAccount the account to delete
-     */
-    void deleteAccount(@NotNull VimeoAccount vimeoAccount);
+    void deleteAccount(VimeoAccount vimeoAccount);
 }
