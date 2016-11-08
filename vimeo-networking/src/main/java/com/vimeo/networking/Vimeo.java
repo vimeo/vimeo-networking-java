@@ -48,9 +48,9 @@ public final class Vimeo {
     // Endpoints
     public static final String ENDPOINT_ME = "me";
     public static final String ENDPOINT_RECOMMENDATIONS = "/recommendations";
-    public static final String ENDPOINT_TERMS_OF_SERVICE = "termsofservice";
-    public static final String ENDPOINT_PRIVACY_POLICY = "privacy";
-    public static final String ENDPOINT_PAYMENT_ADDENDUM = "paymentaddendum";
+    public static final String ENDPOINT_TERMS_OF_SERVICE = "documents/termsofservice";
+    public static final String ENDPOINT_PRIVACY_POLICY = "documents/privacy";
+    public static final String ENDPOINT_PAYMENT_ADDENDUM = "documents/paymentaddendum";
 
     // Parameters
     public static final String PARAMETER_REDIRECT_URI = "redirect_uri";
