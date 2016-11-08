@@ -23,7 +23,6 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.playback.VideoLog;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
@@ -47,7 +46,7 @@ public class VideoFile implements Serializable {
         @SerializedName("vp6/x-video")
         VP6("vp6/x-video"); // Flash
 
-        private String string;
+        private final String string;
 
         MimeType(String string) {
             this.string = string;
@@ -72,7 +71,7 @@ public class VideoFile implements Serializable {
         @SerializedName("mobile")
         MOBILE("mobile");
 
-        private String string;
+        private final String string;
 
         VideoQuality(String string) {
             this.string = string;
@@ -91,63 +90,56 @@ public class VideoFile implements Serializable {
     // Fields common between all file types - HLS, Dash, Progressive
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Fields common between all file types">
-    @Deprecated
-    @Nullable
-    @GsonAdapterKey("expires")
-    public Date expires;
-
     @Nullable
     @GsonAdapterKey("link_expiration_time")
-    public Date linkExpirationTime;
+    Date mLinkExpirationTime;
 
-    /** link will be made private in a future release - use {@link #getLink()} instead */
-    @Deprecated
     @GsonAdapterKey("link")
-    public String link;
+    String mLink;
 
     @Nullable
     @GsonAdapterKey("log")
-    public VideoLog log;
+    String mLog;
 
     @Nullable
     @GsonAdapterKey("token")
-    public String token;
+    String mToken;
 
     @Nullable
     @GsonAdapterKey("license_link")
-    public String licenseLink;
+    String mLicenseLink;
 
     @Nullable
     public Date getLinkExpirationTime() {
-        return linkExpirationTime;
+        return mLinkExpirationTime;
     }
 
     /** @return true if this VideoFile doesn't have an expired field or if the expires date is before the current date */
     public boolean isExpired() {
         // If expires is null, we should probably refresh the video object regardless [KV] 3/31/16
         // TODO: Simplify this when expires is deprecated 4/25/16 [KZ]
-        return (expires == null && linkExpirationTime == null) ||
-               (expires != null && expires.before(new Date())) ||
-               (linkExpirationTime != null && linkExpirationTime.before(new Date()));
+        return (mExpires == null && mLinkExpirationTime == null) ||
+               (mExpires != null && mExpires.before(new Date())) ||
+               (mLinkExpirationTime != null && mLinkExpirationTime.before(new Date()));
     }
 
     public String getLink() {
-        return link;
+        return mLink;
     }
 
     @Nullable
-    public VideoLog getLog() {
-        return log;
+    public String getLog() {
+        return mLog;
     }
 
     @Nullable
     public String getToken() {
-        return token;
+        return mToken;
     }
 
     @Nullable
     public String getLicenseLink() {
-        return licenseLink;
+        return mLicenseLink;
     }
 
     // </editor-fold>
@@ -160,33 +152,38 @@ public class VideoFile implements Serializable {
     @Deprecated
     @Nullable
     @GsonAdapterKey("quality")
-    public VideoQuality quality;
+    VideoQuality mQuality;
+
+    /** expires will be removed in the future when {@link Video#files} is removed */
+    @Deprecated
+    @Nullable
+    @GsonAdapterKey("expires")
+    Date mExpires;
+
     @Nullable
     @GsonAdapterKey("type")
-    public MimeType type;
+    MimeType mMimeType;
+
     @GsonAdapterKey("fps")
-    public double fps;
-    /** width will be made private in a future release - use {@link #getWidth()} instead */
-    @Deprecated
+    double mFps;
+
     @GsonAdapterKey("width")
-    public int width;
-    /** height will be made private in a future release - use {@link #getHeight()} instead */
-    @Deprecated
+    int mWidth;
+
     @GsonAdapterKey("height")
-    public int height;
-    /** size will be made private in a future release - use {@link #getSize()} instead */
-    @Deprecated
+    int mHeight;
+
     @GsonAdapterKey("size")
-    public long size; // size of the file, in bytes
+    long mSize; // size of the file, in bytes
+
     /** The md5 provides us with a way to uniquely identify video files at {@link #getLink()} */
-    /** md5 will be made private in a future release - use {@link #getMd5()} instead */
-    @Deprecated
     @Nullable
     @GsonAdapterKey("md5")
-    public String md5;
+    String mMd5;
+
     @Nullable
     @GsonAdapterKey("created_time")
-    public Date createdTime; // time indicating when this transcode was completed
+    Date mCreatedTime; // time indicating when this transcode was completed
 
     /**
      * quality is no longer included in VideoFiles under {@link Video#getPlay()} - it will be removed
@@ -196,11 +193,11 @@ public class VideoFile implements Serializable {
      */
     @Deprecated
     public VideoQuality getQuality() {
-        return quality == null ? VideoQuality.NONE : quality;
+        return mQuality == null ? VideoQuality.NONE : mQuality;
     }
 
     public MimeType getType() {
-        return type == null ? MimeType.NONE : type;
+        return mMimeType == null ? MimeType.NONE : mMimeType;
     }
 
     public boolean isVP6() {
@@ -208,29 +205,29 @@ public class VideoFile implements Serializable {
     }
 
     public int getWidth() {
-        return width;
+        return mWidth;
     }
 
     public int getHeight() {
-        return height;
+        return mHeight;
     }
 
     public long getSize() {
-        return size;
+        return mSize;
     }
 
     public double getFps() {
-        return fps;
+        return mFps;
     }
 
     @Nullable
     public String getMd5() {
-        return md5;
+        return mMd5;
     }
 
     @Nullable
     public Date getCreatedTime() {
-        return createdTime;
+        return mCreatedTime;
     }
     // </editor-fold>
 
@@ -249,12 +246,12 @@ public class VideoFile implements Serializable {
 
         VideoFile that = (VideoFile) o;
 
-        return (this.getLink() != null && that.getLink() != null) && this.getLink().equals(that.getLink());
+        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
     }
 
     @Override
     public int hashCode() {
-        return this.getLink() != null ? this.getLink().hashCode() : 0;
+        return mLink != null ? mLink.hashCode() : 0;
     }
     // </editor-fold>
 }

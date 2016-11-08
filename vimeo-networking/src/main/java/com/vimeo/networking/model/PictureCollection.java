@@ -24,28 +24,52 @@ package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * A model representing a "pictures" response, which contains an array
+ * of {@link Picture}s
  * Created by hanssena on 4/23/15.
  */
 public class PictureCollection implements Serializable {
 
     private static final long serialVersionUID = -4495146309328278574L;
-    @GsonAdapterKey("uri")
-    public String uri;
-    @GsonAdapterKey("active")
-    public boolean active;
-    @GsonAdapterKey("default")
-    public boolean isDefault;
-    @GsonAdapterKey("sizes")
-    public ArrayList<Picture> sizes;
 
+    private static final String PICTURE_TYPE_CAUTION = "caution";
+    private static final String PICTURE_TYPE_CUSTOM = "custom";
+    private static final String PICTURE_TYPE_DEFAULT = "default";
+
+    public enum PictureType {
+        CAUTION,
+        CUSTOM,
+        DEFAULT,
+        UNKNOWN
+    }
+
+    @Nullable
+    @GsonAdapterKey("uri")
+    String mUri;
+
+    @GsonAdapterKey("active")
+    boolean mIsActive;
+
+    @Nullable
+    @GsonAdapterKey("type")
+    String mType;
+
+    @Nullable
+    @GsonAdapterKey("sizes")
+    ArrayList<Picture> mPictures;
+
+    @Nullable
     public Picture pictureForWidth(int width) {
-        if (sizes != null && !sizes.isEmpty()) {
-            Picture selectedPicture = sizes.get(sizes.size() - 1);
-            for (Picture picture : sizes) {
+        if (mPictures != null && !mPictures.isEmpty()) {
+            Picture selectedPicture = mPictures.get(mPictures.size() - 1);
+            for (Picture picture : mPictures) {
                 if ((picture.width >= width) && ((picture.width - width) < (selectedPicture.width - width))) {
                     selectedPicture = picture;
                 }
@@ -54,5 +78,36 @@ public class PictureCollection implements Serializable {
         }
 
         return null;
+    }
+
+    @Nullable
+    public String getUri() {
+        return mUri;
+    }
+
+    public boolean isActive() {
+        return mIsActive;
+    }
+
+    @Nullable
+    public ArrayList<Picture> getPictures() {
+        return mPictures;
+    }
+
+    @NotNull
+    public PictureType getPictureType() {
+        if (PICTURE_TYPE_CAUTION.equals(mType)) {
+            return PictureType.CAUTION;
+        }
+
+        if (PICTURE_TYPE_CUSTOM.equals(mType)) {
+            return PictureType.CUSTOM;
+        }
+
+        if (PICTURE_TYPE_DEFAULT.equals(mType)) {
+            return PictureType.DEFAULT;
+        }
+
+        return PictureType.UNKNOWN;
     }
 }

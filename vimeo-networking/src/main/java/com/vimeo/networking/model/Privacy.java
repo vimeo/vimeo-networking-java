@@ -25,6 +25,8 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -82,14 +84,44 @@ public class Privacy implements Serializable {
         }
     }
 
+    @Nullable
     @GsonAdapterKey("view")
     public PrivacyValue view;
+
+    @Nullable
     @GsonAdapterKey("embed")
     public String embed;
+
     @GsonAdapterKey("download")
     public boolean download;
+
     @GsonAdapterKey("add")
     public boolean add;
+
+    @Nullable
     @GsonAdapterKey("comments")
     public PrivacyValue comments;
+
+    @Nullable
+    public PrivacyValue getView() {
+        return view;
+    }
+
+    @Nullable
+    public String getEmbed() {
+        return embed;
+    }
+
+    public boolean isDownload() {
+        return download;
+    }
+
+    public boolean isAdd() {
+        return add;
+    }
+
+    @Nullable
+    public PrivacyValue getComments() {
+        return comments;
+    }
 }

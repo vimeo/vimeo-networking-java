@@ -86,13 +86,16 @@ public class Vimeo {
     public static final String PARAMETER_SESSION_TIME = "session_time";
     public static final String PARAMETER_VUID = "vuid";
     public static final String PARAMETER_LOCALE = "locale";
-    @Deprecated
-    public static final String PARAMETER_TIME = "time";
-    @Deprecated
-    public static final String PARAMETER_QUALITY = "quality";
-    public static final String PARAMETER_DURATION = "duration";
+    public static final String PARAMETER_EXIT_WATCHED_TIME = "exit_watched_time_code";
+    public static final String PARAMETER_FURTHEST_WATCHED_TIME = "furthest_watched_time_code";
     public static final String PARAMETER_PROGRESS = "progress";
-    public static final String PARAMETER_BUTTON_STATE = "button_state";
+    public static final String PARAMETER_EVENTS = "events";
+    public static final String PARAMETER_EVENT_TYPE = "type";
+    public static final String PARAMETER_EVENT_TYPE_WATER_LATER = "watchlater";
+    public static final String PARAMETER_EVENT_TYPE_LIKE = "like";
+    public static final String PARAMETER_EVENT_ACTION = "action";
+    public static final String PARAMETER_EVENT_ACTION_ADDED = "added";
+    public static final String PARAMETER_EVENT_ACTION_REMOVED = "removed";
 
     // GET and Sorting Parameters
     public static final String PARAMETER_GET_PAGE_SIZE = "per_page";
