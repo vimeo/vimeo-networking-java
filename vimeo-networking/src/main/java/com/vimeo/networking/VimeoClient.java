@@ -30,6 +30,7 @@ import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Comment;
+import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Privacy;
@@ -948,6 +949,56 @@ public final class VimeoClient {
         return call;
     }
 
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Documents
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Documents">
+
+    /**
+     * An asynchronous request to get a {@link Document} representing the Vimeo Terms of Service
+     *
+     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @return a {@link Call} with the {@link Document} type. This can be used for request
+     * cancellation.
+     */
+    @NotNull
+    public Call<Document> getTermsOfService(@NotNull ModelCallback<Document> callback) {
+        return getDocument(Vimeo.ENDPOINT_TERMS_OF_SERVICE, callback);
+    }
+
+    /**
+     * An asynchronous request to get a {@link Document} representing the Vimeo Privacy Policy
+     *
+     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @return a {@link Call} with the {@link Document} type. This can be used for request
+     * cancellation.
+     */
+    @NotNull
+    public Call<Document> getPrivacyPolicy(@NotNull ModelCallback<Document> callback) {
+        return getDocument(Vimeo.ENDPOINT_PRIVACY_POLICY, callback);
+    }
+
+    /**
+     * An asynchronous request to get a {@link Document} representing the Vimeo Payment Addendum
+     *
+     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @return a {@link Call} with the {@link Document} type. This can be used for request
+     * cancellation.
+     */
+    @NotNull
+    public Call<Document> getPaymentAddendum(@NotNull ModelCallback<Document> callback) {
+        return getDocument(Vimeo.ENDPOINT_PAYMENT_ADDENDUM, callback);
+    }
+
+    @NotNull
+    private Call<Document> getDocument(@NotNull String uri, @NotNull ModelCallback<Document> callback) {
+        Call<Document> call = mVimeoService.getDocument(getAuthHeader(), uri);
+        call.enqueue(callback);
+
+        return call;
+    }
     // </editor-fold>
 
     /**
