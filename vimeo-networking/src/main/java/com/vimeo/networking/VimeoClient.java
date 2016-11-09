@@ -992,8 +992,16 @@ public final class VimeoClient {
         return getDocument(Vimeo.ENDPOINT_PAYMENT_ADDENDUM, callback);
     }
 
+    /**
+     * Gets a {@link Document} at the provided uri. When finished, the callback will be invoked.
+     *
+     * @param uri      the uri of the Document
+     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @return a {@link Call} with the {@link Document} type. This can be used for request
+     * cancellation.
+     */
     @NotNull
-    private Call<Document> getDocument(@NotNull String uri, @NotNull ModelCallback<Document> callback) {
+    public Call<Document> getDocument(@NotNull String uri, @NotNull ModelCallback<Document> callback) {
         Call<Document> call = mVimeoService.getDocument(getAuthHeader(), uri);
         call.enqueue(callback);
 
