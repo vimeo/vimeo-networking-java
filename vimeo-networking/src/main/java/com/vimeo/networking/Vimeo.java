@@ -27,7 +27,7 @@ package com.vimeo.networking;
  * <p/>
  * Created by kylevenn on 7/7/15.
  */
-public class Vimeo {
+public final class Vimeo {
 
     public static final String VIMEO_BASE_URL_STRING = "https://api.vimeo.com/";
 
@@ -48,6 +48,9 @@ public class Vimeo {
     // Endpoints
     public static final String ENDPOINT_ME = "me";
     public static final String ENDPOINT_RECOMMENDATIONS = "/recommendations";
+    public static final String ENDPOINT_TERMS_OF_SERVICE = "documents/termsofservice";
+    public static final String ENDPOINT_PRIVACY_POLICY = "documents/privacy";
+    public static final String ENDPOINT_PAYMENT_ADDENDUM = "documents/paymentaddendum";
 
     // Parameters
     public static final String PARAMETER_REDIRECT_URI = "redirect_uri";
@@ -219,5 +222,8 @@ public class Vimeo {
     public enum LogLevel {
         // 0      1       2     3
         VERBOSE, DEBUG, ERROR, NONE
+    }
+
+    private Vimeo() {
     }
 }

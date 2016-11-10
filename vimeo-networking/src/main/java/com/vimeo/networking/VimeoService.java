@@ -23,6 +23,7 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.model.Comment;
+import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Video;
@@ -162,6 +163,9 @@ public interface VimeoService {
     Call<Video> getVideo(@Header("Authorization") String authHeader,
                          @Header("Cache-Control") String cacheHeaderValue, @Url String uri,
                          @QueryMap Map<String, String> options);
+
+    @GET
+    Call<Document> getDocument(@Header("Authorization") String authHeader, @Url String uri);
     // </editor-fold>
 
     /**
@@ -189,8 +193,7 @@ public interface VimeoService {
 
     @POST
     Call<Object> POST(@Header("Authorization") String authHeader, @Url String uri,
-                      @Header("Cache-Control") String cacheHeaderValue,
-                      @Body ArrayList<Object> parameters);
+                      @Header("Cache-Control") String cacheHeaderValue, @Body ArrayList<Object> parameters);
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
