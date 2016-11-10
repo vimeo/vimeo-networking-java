@@ -47,11 +47,11 @@ public class PictureCollection implements Serializable {
      * The type of picture
      * <ol>
      * <li>{@link #CAUTION} Caution is for Video pictures only. It means the video does not match
-     * the authenticated users content rating, so a different thumbnail is
-     * returns instead</li>
+     * the authenticated (current logged in) users content rating, so a different thumbnail is
+     * returned instead</li>
      * <li>{@link #CUSTOM} A user uploaded/generated image</li>
-     * <li>{@link #DEFAULT} Default means the default image, which is the same across all images
-     * in which one has not been uploaded or generated</li>
+     * <li>{@link #DEFAULT} Default means the default image provided by Vimeo when the creator has
+     * not uploaded a custom image for the associated content</li>
      * </ol>
      */
     public enum PictureType {
@@ -102,7 +102,11 @@ public class PictureCollection implements Serializable {
     /**
      * Returns true if this picture collection is active. Numerous picture
      * collections can be uploaded for an object (User, Category, Channel, Video, etc)
-     * but only one may be active at a time.
+     * but only one may be active at a time. This will be true whenever this
+     * object is returned as part of a another object since it is actively
+     * representing that object. It can be false if requesting a
+     * PictureCollection on its own - it will be false if it does not actively
+     * represent the pictures of another object.
      */
     public boolean isActive() {
         return mIsActive;
