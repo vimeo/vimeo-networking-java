@@ -46,16 +46,16 @@ public class VideoFile implements Serializable {
         @SerializedName("vp6/x-video")
         VP6("vp6/x-video"); // Flash
 
-        private final String string;
+        private final String mTypeName;
 
-        MimeType(String string) {
-            this.string = string;
+        MimeType(String typeName) {
+            mTypeName = typeName;
         }
 
         @Override
         // Overridden for analytics.
         public String toString() {
-            return this.string;
+            return mTypeName;
         }
     }
 
@@ -71,16 +71,16 @@ public class VideoFile implements Serializable {
         @SerializedName("mobile")
         MOBILE("mobile");
 
-        private final String string;
+        private final String mTypeName;
 
-        VideoQuality(String string) {
-            this.string = string;
+        VideoQuality(String typeName) {
+            mTypeName = typeName;
         }
 
         @Override
         // Overridden for analytics.
         public String toString() {
-            return this.string;
+            return mTypeName;
         }
     }
 

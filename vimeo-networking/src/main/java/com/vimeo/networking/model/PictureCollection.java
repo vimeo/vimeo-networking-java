@@ -43,6 +43,17 @@ public class PictureCollection implements Serializable {
     private static final String PICTURE_TYPE_CUSTOM = "custom";
     private static final String PICTURE_TYPE_DEFAULT = "default";
 
+    /**
+     * The type of picture
+     * <ol>
+     * <li>{@link #CAUTION} Caution is for Video pictures only. It means the video does not match
+     * the authenticated users content rating, so a different thumbnail is
+     * returns instead</li>
+     * <li>{@link #CUSTOM} A user uploaded/generated image</li>
+     * <li>{@link #DEFAULT} Default means the default image, which is the same across all images
+     * in which one has not been uploaded or generated</li>
+     * </ol>
+     */
     public enum PictureType {
         CAUTION,
         CUSTOM,
@@ -80,34 +91,52 @@ public class PictureCollection implements Serializable {
         return null;
     }
 
+    /**
+     * Return the uri representing this object
+     */
     @Nullable
     public String getUri() {
         return mUri;
     }
 
+    /**
+     * Returns true if this picture collection is active. Numerous picture
+     * collections can be uploaded for an object (User, Category, Channel, Video, etc)
+     * but only one may be active at a time.
+     */
     public boolean isActive() {
         return mIsActive;
     }
 
+    /**
+     * Returns the array of {@link Picture}s in this collection
+     */
     @Nullable
     public ArrayList<Picture> getPictures() {
         return mPictures;
     }
 
+    /**
+     * Returns the type of picture represented here, one of {@link
+     * PictureType}.
+     *
+     * @see PictureType PictureType for more info
+     */
     @NotNull
     public PictureType getPictureType() {
-        if (PICTURE_TYPE_CAUTION.equals(mType)) {
-            return PictureType.CAUTION;
+        if (mType == null) {
+            return PictureType.UNKNOWN;
         }
 
-        if (PICTURE_TYPE_CUSTOM.equals(mType)) {
-            return PictureType.CUSTOM;
+        switch (mType) {
+            case PICTURE_TYPE_CAUTION:
+                return PictureType.CAUTION;
+            case PICTURE_TYPE_CUSTOM:
+                return PictureType.CUSTOM;
+            case PICTURE_TYPE_DEFAULT:
+                return PictureType.DEFAULT;
+            default:
+                return PictureType.UNKNOWN;
         }
-
-        if (PICTURE_TYPE_DEFAULT.equals(mType)) {
-            return PictureType.DEFAULT;
-        }
-
-        return PictureType.UNKNOWN;
     }
 }

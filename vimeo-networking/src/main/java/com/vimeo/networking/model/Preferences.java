@@ -42,6 +42,9 @@ public class Preferences implements Serializable {
     @GsonAdapterKey("videos")
     VideosPreference mVideos;
 
+    /**
+     * Return the {@link VideosPreference} of this object
+     */
     @Nullable
     public VideosPreference getVideos() {
         return mVideos;

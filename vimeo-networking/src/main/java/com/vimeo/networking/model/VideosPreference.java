@@ -44,11 +44,17 @@ public class VideosPreference implements Serializable {
     @GsonAdapterKey("password")
     String mPassword;
 
+    /**
+     * Returns the default password a user has set up for their videos
+     */
     @Nullable
     public String getPassword() {
         return mPassword;
     }
 
+    /**
+     * Return the default {@link Privacy} the user has set up for their videos
+     */
     @Nullable
     public Privacy getPrivacy() {
         return mPrivacy;
