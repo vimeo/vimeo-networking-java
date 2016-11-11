@@ -1272,9 +1272,23 @@ public final class VimeoClient {
         return call;
     }
 
-    public void fetchCurrentUser(ModelCallback<User> callback) {
-        // Endpoints
-        fetchContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback);
+    /**
+     * Fetches the currently authenticated user from the API
+     *
+     * @param callback the callback to be invoked when the request finishes
+     */
+    public void fetchCurrentUser(@NotNull ModelCallback<User> callback) {
+        fetchCurrentUser(callback, null);
+    }
+
+    /**
+     * Fetches the currently authenticated user from the API
+     *
+     * @param callback    the callback to be invoked when the request finishes
+     * @param fieldFilter the field filter to apply to the request
+     */
+    public void fetchCurrentUser(@NotNull ModelCallback<User> callback, @Nullable String fieldFilter) {
+        fetchContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, fieldFilter);
     }
 
 
