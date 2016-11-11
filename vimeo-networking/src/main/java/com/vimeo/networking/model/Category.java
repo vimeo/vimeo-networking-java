@@ -35,20 +35,39 @@ import java.util.ArrayList;
 public class Category implements Serializable, Followable {
 
     private static final long serialVersionUID = 441419347585215353L;
+
+    @Nullable
     @GsonAdapterKey("uri")
     public String uri;
+
+    @Nullable
     @GsonAdapterKey("name")
     public String name;
+
+    @Nullable
     @GsonAdapterKey("link")
     public String link;
+
     @GsonAdapterKey("top_level")
     public boolean topLevel;
+
+    @Nullable
     @GsonAdapterKey("pictures")
     public PictureCollection pictures;
+
+    @Nullable
+    @GsonAdapterKey("icon")
+    PictureCollection mIcon;
+
+    @Nullable
     @GsonAdapterKey("subcategories")
     public ArrayList<Category> subcategories;
+
+    @Nullable
     @GsonAdapterKey("parent")
     public Category parent;
+
+    @Nullable
     @GsonAdapterKey("metadata")
     public Metadata metadata;
 
@@ -102,6 +121,14 @@ public class Category implements Serializable, Followable {
             return getUserConnection().total;
         }
         return 0;
+    }
+
+    /**
+     * Returns the icon associated with this category, in the form of a {@link PictureCollection}
+     */
+    @Nullable
+    public PictureCollection getIcon() {
+        return mIcon;
     }
 
     @Override
