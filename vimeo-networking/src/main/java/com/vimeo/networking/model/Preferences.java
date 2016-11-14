@@ -31,18 +31,22 @@ import java.io.Serializable;
 
 /**
  * This model holds on to certain User preferences that may have been set by a user
- *
+ * <p>
  * Created by zetterstromk on 1/28/16.
  */
-public class Preferences implements Serializable{
+public class Preferences implements Serializable {
 
     private static final long serialVersionUID = -251634859829805204L;
-    @Nullable
-    @GsonAdapterKey("videos")
-    public VideosPreference videos;
 
     @Nullable
+    @GsonAdapterKey("videos")
+    VideosPreference mVideos;
+
+    /**
+     * Return the {@link VideosPreference} of this object
+     */
+    @Nullable
     public VideosPreference getVideos() {
-        return videos;
+        return mVideos;
     }
 }

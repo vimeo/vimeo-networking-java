@@ -29,26 +29,34 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 
 /**
+ * A model representing default preferences that a user has for their videos
  * Created by zetterstromk on 1/28/16.
  */
 public class VideosPreference implements Serializable {
 
     private static final long serialVersionUID = 1956447486226253433L;
+
     @Nullable
     @GsonAdapterKey("privacy")
-    public String privacy;
+    Privacy mPrivacy;
 
     @Nullable
     @GsonAdapterKey("password")
-    public String password;
+    String mPassword;
 
+    /**
+     * Returns the default password a user has set up for their videos
+     */
     @Nullable
     public String getPassword() {
-        return password;
+        return mPassword;
     }
 
+    /**
+     * Return the default {@link Privacy} the user has set up for their videos
+     */
     @Nullable
-    public String getPrivacy() {
-        return privacy;
+    public Privacy getPrivacy() {
+        return mPrivacy;
     }
 }

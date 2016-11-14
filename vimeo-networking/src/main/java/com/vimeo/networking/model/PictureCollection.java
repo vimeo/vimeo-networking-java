@@ -24,28 +24,63 @@ package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * A model representing a "pictures" response, which contains an array
+ * of {@link Picture}s
  * Created by hanssena on 4/23/15.
  */
 public class PictureCollection implements Serializable {
 
     private static final long serialVersionUID = -4495146309328278574L;
-    @GsonAdapterKey("uri")
-    public String uri;
-    @GsonAdapterKey("active")
-    public boolean active;
-    @GsonAdapterKey("default")
-    public boolean isDefault;
-    @GsonAdapterKey("sizes")
-    public ArrayList<Picture> sizes;
 
+    private static final String PICTURE_TYPE_CAUTION = "caution";
+    private static final String PICTURE_TYPE_CUSTOM = "custom";
+    private static final String PICTURE_TYPE_DEFAULT = "default";
+
+    /**
+     * The type of picture
+     * <ol>
+     * <li>{@link #CAUTION} Caution is for Video pictures only. It means the video does not match
+     * the authenticated (current logged in) users content rating, so a different thumbnail is
+     * returned instead</li>
+     * <li>{@link #CUSTOM} A user uploaded/generated image</li>
+     * <li>{@link #DEFAULT} Default means the default image provided by Vimeo when the creator has
+     * not uploaded a custom image for the associated content</li>
+     * </ol>
+     */
+    public enum PictureType {
+        CAUTION,
+        CUSTOM,
+        DEFAULT,
+        UNKNOWN
+    }
+
+    @Nullable
+    @GsonAdapterKey("uri")
+    String mUri;
+
+    @GsonAdapterKey("active")
+    boolean mIsActive;
+
+    @Nullable
+    @GsonAdapterKey("type")
+    String mType;
+
+    @Nullable
+    @GsonAdapterKey("sizes")
+    ArrayList<Picture> mPictures;
+
+    @Nullable
     public Picture pictureForWidth(int width) {
-        if (sizes != null && !sizes.isEmpty()) {
-            Picture selectedPicture = sizes.get(sizes.size() - 1);
-            for (Picture picture : sizes) {
+        if (mPictures != null && !mPictures.isEmpty()) {
+            Picture selectedPicture = mPictures.get(mPictures.size() - 1);
+            for (Picture picture : mPictures) {
                 if ((picture.width >= width) && ((picture.width - width) < (selectedPicture.width - width))) {
                     selectedPicture = picture;
                 }
@@ -54,5 +89,58 @@ public class PictureCollection implements Serializable {
         }
 
         return null;
+    }
+
+    /**
+     * Return the uri representing this object
+     */
+    @Nullable
+    public String getUri() {
+        return mUri;
+    }
+
+    /**
+     * Returns true if this picture collection is active. Numerous picture
+     * collections can be uploaded for an object (User, Category, Channel, Video, etc)
+     * but only one may be active at a time. This will be true whenever this
+     * object is returned as part of a another object since it is actively
+     * representing that object. It can be false if requesting a
+     * PictureCollection on its own - it will be false if it does not actively
+     * represent the pictures of another object.
+     */
+    public boolean isActive() {
+        return mIsActive;
+    }
+
+    /**
+     * Returns the array of {@link Picture}s in this collection
+     */
+    @Nullable
+    public ArrayList<Picture> getPictures() {
+        return mPictures;
+    }
+
+    /**
+     * Returns the type of picture represented here, one of {@link
+     * PictureType}.
+     *
+     * @see PictureType PictureType for more info
+     */
+    @NotNull
+    public PictureType getPictureType() {
+        if (mType == null) {
+            return PictureType.UNKNOWN;
+        }
+
+        switch (mType) {
+            case PICTURE_TYPE_CAUTION:
+                return PictureType.CAUTION;
+            case PICTURE_TYPE_CUSTOM:
+                return PictureType.CUSTOM;
+            case PICTURE_TYPE_DEFAULT:
+                return PictureType.DEFAULT;
+            default:
+                return PictureType.UNKNOWN;
+        }
     }
 }

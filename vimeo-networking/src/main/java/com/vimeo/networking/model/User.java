@@ -27,6 +27,7 @@ import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.stag.GsonAdapterKey;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -130,7 +131,7 @@ public class User implements Serializable, Followable {
 
     @Nullable
     private ConnectionCollection getMetadataConnections() {
-        if(metadata != null){
+        if (metadata != null) {
             return metadata.connections;
         }
         return null;
@@ -138,7 +139,7 @@ public class User implements Serializable, Followable {
 
     @Nullable
     private InteractionCollection getMetadataInteractions() {
-        if(metadata != null){
+        if (metadata != null) {
             return metadata.interactions;
         }
         return null;
@@ -230,11 +231,12 @@ public class User implements Serializable, Followable {
     }
     // </editor-fold>
 
+    @NotNull
     public ArrayList<Picture> getPictures() {
-        if (pictures == null || pictures.sizes == null) {
+        if (pictures == null || pictures.getPictures() == null) {
             return new ArrayList<>();
         }
-        return pictures.sizes;
+        return pictures.getPictures();
     }
 
     @Nullable
@@ -259,9 +261,9 @@ public class User implements Serializable, Followable {
     @Nullable
     public PrivacyValue getPreferredVideoPrivacyValue() {
         PrivacyValue privacyValue = null;
-        if (getPreferences() != null && getPreferences().getVideos() != null &&
-            getPreferences().getVideos().getPrivacy() != null) {
-            privacyValue = PrivacyValue.privacyValueFromString(getPreferences().getVideos().getPrivacy());
+        if (preferences != null && preferences.getVideos() != null &&
+            preferences.getVideos().getPrivacy() != null) {
+            privacyValue = preferences.getVideos().getPrivacy().getView();
         }
         return privacyValue;
     }

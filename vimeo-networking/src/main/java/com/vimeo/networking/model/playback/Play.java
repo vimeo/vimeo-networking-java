@@ -57,7 +57,7 @@ public class Play implements Serializable {
         @SerializedName("restricted")
         RESTRICTED("restricted");
 
-        private String string;
+        private final String string;
 
         Status(String string) {
             this.string = string;
@@ -71,25 +71,31 @@ public class Play implements Serializable {
 
     @Nullable
     @GsonAdapterKey("embed")
-    public Embed mEmbed;
+    Embed mEmbed;
+
     @Nullable
     @GsonAdapterKey("hls")
-    public VideoFile mHls;
+    VideoFile mHls;
+
     @Nullable
     @GsonAdapterKey("dash")
-    public VideoFile mDash;
+    VideoFile mDash;
+
     @Nullable
     @GsonAdapterKey("progressive")
-    public ArrayList<VideoFile> mProgressive;
+    ArrayList<VideoFile> mProgressive;
+
     @Nullable
     @GsonAdapterKey("progress")
-    public PlayProgress mProgress;
+    PlayProgress mProgress;
+
     @Nullable
     @GsonAdapterKey("status")
-    public Status mStatus;
+    Status mStatus;
+
     @Nullable
     @GsonAdapterKey("drm")
-    public Drm mDrm;
+    Drm mDrm;
 
     @Nullable
     public Embed getEmbed() {
@@ -97,7 +103,7 @@ public class Play implements Serializable {
     }
 
     public void setEmbed(@Nullable Embed embed) {
-        this.mEmbed = embed;
+        mEmbed = embed;
     }
 
     @Nullable
@@ -121,7 +127,7 @@ public class Play implements Serializable {
     }
 
     public void setProgress(@Nullable PlayProgress progress) {
-        this.mProgress = progress;
+        mProgress = progress;
     }
 
     @Nullable
@@ -140,14 +146,14 @@ public class Play implements Serializable {
     // <editor-fold desc="Helpers">
     public int getFileCount() {
         int count = 0;
-        if (getHlsVideoFile() != null) {
+        if (mHls != null) {
             count++;
         }
-        if (getDashVideoFile() != null) {
+        if (mDash != null) {
             count++;
         }
-        if (getProgressiveVideoFiles() != null) {
-            count += getProgressiveVideoFiles().size();
+        if (mProgressive != null) {
+            count += mProgressive.size();
         }
         if (mDrm != null && mDrm.getWidevine() != null) {
             count++;
@@ -156,84 +162,6 @@ public class Play implements Serializable {
             count++;
         }
         return count;
-    }
-
-
-    @Nullable
-    public String getLoadLoggingUrl() {
-        if (mDrm != null && mDrm.getWidevine() != null && mDrm.getWidevine().getLog() != null &&
-            !mDrm.getWidevine().getLog().isLoadEmpty()) {
-            return mDrm.getWidevine().getLog().getLoadLoggingUrl();
-        } else if (mDrm != null && mDrm.getPlayReady() != null && mDrm.getPlayReady().getLog() != null &&
-                   !mDrm.getPlayReady().getLog().isLoadEmpty()) {
-            return mDrm.getPlayReady().getLog().getLoadLoggingUrl();
-        } else if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
-                   !getHlsVideoFile().getLog().isLoadEmpty()) {
-            return getHlsVideoFile().getLog().getLoadLoggingUrl();
-        } else if (getDashVideoFile() != null &&
-                   getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isLoadEmpty()) {
-            return getDashVideoFile().getLog().getLoadLoggingUrl();
-        } else if (getProgressiveVideoFiles() != null) {
-            for (VideoFile videoFile : getProgressiveVideoFiles()) {
-                if (videoFile.getLog() != null && !videoFile.getLog().isLoadEmpty()) {
-                    return videoFile.getLog().getLoadLoggingUrl();
-                }
-            }
-        }
-        return null;
-    }
-
-    @Nullable
-    public String getLikeLoggingUrl() {
-        if (mDrm != null && mDrm.getWidevine() != null && mDrm.getWidevine().getLog() != null &&
-            !mDrm.getWidevine().getLog().isLikeEmpty()) {
-            return mDrm.getWidevine().getLog().getLikeLoggingUrl();
-        } else if (mDrm != null && mDrm.getPlayReady() != null && mDrm.getPlayReady().getLog() != null &&
-                   !mDrm.getPlayReady().getLog().isLikeEmpty()) {
-            return mDrm.getPlayReady().getLog().getLikeLoggingUrl();
-        } else if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
-                   !getHlsVideoFile().getLog().isLikeEmpty()) {
-            return getHlsVideoFile().getLog().getLikeLoggingUrl();
-        } else if (getDashVideoFile() != null &&
-                   getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isLikeEmpty()) {
-            return getDashVideoFile().getLog().getLikeLoggingUrl();
-        } else if (getProgressiveVideoFiles() != null) {
-            for (VideoFile videoFile : getProgressiveVideoFiles()) {
-                if (videoFile.getLog() != null && !videoFile.getLog().isLikeEmpty()) {
-                    return videoFile.getLog().getLikeLoggingUrl();
-                }
-            }
-        }
-        return null;
-    }
-
-    @Nullable
-    public String getWatchLaterLoggingUrl() {
-        if (mDrm != null && mDrm.getWidevine() != null && mDrm.getWidevine().getLog() != null &&
-            !mDrm.getWidevine().getLog().isWatchLaterEmpty()) {
-            return mDrm.getWidevine().getLog().getWatchLaterLoggingUrl();
-        } else if (mDrm != null && mDrm.getPlayReady() != null && mDrm.getPlayReady().getLog() != null &&
-                   !mDrm.getPlayReady().getLog().isWatchLaterEmpty()) {
-            return mDrm.getPlayReady().getLog().getWatchLaterLoggingUrl();
-        } else if (getHlsVideoFile() != null && getHlsVideoFile().getLog() != null &&
-                   !getHlsVideoFile().getLog().isWatchLaterEmpty()) {
-            return getHlsVideoFile().getLog().getWatchLaterLoggingUrl();
-        } else if (getDashVideoFile() != null &&
-                   getDashVideoFile().getLog() != null && !getDashVideoFile().getLog().isWatchLaterEmpty()) {
-            return getDashVideoFile().getLog().getWatchLaterLoggingUrl();
-        } else if (getProgressiveVideoFiles() != null) {
-            for (VideoFile videoFile : getProgressiveVideoFiles()) {
-                if (videoFile.getLog() != null && !videoFile.getLog().isWatchLaterEmpty()) {
-                    return videoFile.getLog().getWatchLaterLoggingUrl();
-                }
-            }
-        }
-        return null;
-    }
-
-    @Nullable
-    private VideoLog getVideoLogForFile(@Nullable VideoFile videoFile) {
-        return videoFile != null ? videoFile.getLog() : null;
     }
     // </editor-fold>
 }
