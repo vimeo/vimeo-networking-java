@@ -129,6 +129,7 @@ public final class Vimeo {
     public static final String FILTER_RELATED = "related";
     public static final String FILTER_UPLOAD = "upload_date";
     public static final String FILTER_VIEWABLE = "viewable";
+    public static final String FILTER_PLAYABLE = "playable";
     public static final String FILTER_TRENDING = "trending";
     public static final String FILTER_VOD_RENTALS = "rented";
     public static final String FILTER_VOD_SUBSCRIPTIONS = "subscription";
