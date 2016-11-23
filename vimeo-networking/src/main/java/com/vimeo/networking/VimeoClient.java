@@ -100,18 +100,44 @@ public final class VimeoClient {
      */
     // <editor-fold desc="Configuration">
 
-    private static VimeoClient mSharedInstance;
+    private static class LazyInitializationProvider {
 
-    public static VimeoClient getInstance() {
-        if (mSharedInstance == null) {
+        @NotNull
+        private final Configuration mConfiguration;
+
+        public LazyInitializationProvider(@NotNull Configuration configuration) {
+            mConfiguration = configuration;
+        }
+
+        @NotNull
+        public Configuration getConfiguration() {
+            return mConfiguration;
+        }
+    }
+
+    private static LazyInitializationProvider sLazyInitializationProvider;
+    private static VimeoClient sSharedInstance;
+
+    public static synchronized VimeoClient getInstance() {
+        if (sSharedInstance == null) {
+            if (sLazyInitializationProvider != null) {
+                initialize(sLazyInitializationProvider.getConfiguration());
+                if (sSharedInstance != null) {
+                    return sSharedInstance;
+                }
+            }
             throw new AssertionError("Instance must be configured before use");
         }
 
-        return mSharedInstance;
+        return sSharedInstance;
     }
 
-    public static void initialize(Configuration configuration) {
-        mSharedInstance = new VimeoClient(configuration);
+    public static void initializeLazily(@NotNull Configuration configuration) {
+        sLazyInitializationProvider = new LazyInitializationProvider(configuration);
+    }
+
+    public static void initialize(@NotNull Configuration configuration) {
+        sSharedInstance = new VimeoClient(configuration);
     }
 
     private VimeoClient(@NotNull Configuration configuration) {
@@ -830,7 +856,7 @@ public final class VimeoClient {
                 VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = true;
                 mPinCodeAuthorizationTimer.scheduleAtFixedRate(
                         new PinCodePollingTimerTask(pinCodeInfo, mPinCodeAuthorizationTimer,
-                                                    pinCodeInfo.getExpiresIn(), authCallback, mSharedInstance,
+                                                    pinCodeInfo.getExpiresIn(), authCallback, sSharedInstance,
                                                     SCOPE), 0,
                         SECONDS_TO_MILLISECONDS * pinCodeInfo.getInterval());
             }
