@@ -959,7 +959,8 @@ public final class VimeoClient {
      */
     @Nullable
     public Call<SubscriptionCollection> editSubscriptions(@NotNull Map<String, Boolean> subscriptionMap,
-                                                          ModelCallback<SubscriptionCollection> callback) {
+                                                          @NotNull
+                                                                  ModelCallback<SubscriptionCollection> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
