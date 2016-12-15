@@ -34,6 +34,7 @@ import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Privacy;
+import com.vimeo.networking.model.SubscriptionCollection;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
@@ -946,6 +947,26 @@ public final class VimeoClient {
 
         Call<Object> call = mVimeoService.edit(getAuthHeader(), uri, parameters);
         call.enqueue(getRetrofitCallback(callback));
+        return call;
+    }
+
+    /**
+     * Used to edit a users push notification subscriptions
+     *
+     * @param subscriptionMap a map of the subscriptions you wish to change
+     * @param callback        callback to be invoked when the request finishes
+     * @return A Call so that the request can be cancelled if need be
+     */
+    @Nullable
+    public Call<SubscriptionCollection> editSubscriptions(@NotNull Map<String, Boolean> subscriptionMap,
+                                                          ModelCallback<SubscriptionCollection> callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        Call<SubscriptionCollection> call = mVimeoService.editSubscriptions(getAuthHeader(), subscriptionMap);
+        call.enqueue(callback);
+
         return call;
     }
 
