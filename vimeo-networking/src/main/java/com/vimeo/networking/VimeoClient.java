@@ -961,9 +961,6 @@ public final class VimeoClient {
     public Call<SubscriptionCollection> editSubscriptions(@NotNull Map<String, Boolean> subscriptionMap,
                                                           @NotNull
                                                                   ModelCallback<SubscriptionCollection> callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
 
         Call<SubscriptionCollection> call = mVimeoService.editSubscriptions(getAuthHeader(), subscriptionMap);
         call.enqueue(callback);

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * A representation of the subscriptions that a user has.
+ * A representation of the {@link Subscriptions} that a user has.
  *
  * @see Subscriptions
  * <p>
