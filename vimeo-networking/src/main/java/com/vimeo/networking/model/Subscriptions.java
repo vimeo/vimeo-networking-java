@@ -44,52 +44,52 @@ public class Subscriptions implements Serializable {
     @GsonAdapterKey(KEY_VIDEO_AVAILABLE)
     boolean mVideoAvailable;
 
-    public boolean isComment() {
+    public boolean isReceivingComment() {
         return mComment;
     }
 
-    public void setComment(boolean comment) {
-        mComment = comment;
+    public void receiveComment(boolean receive) {
+        mComment = receive;
     }
 
-    public boolean isCredit() {
+    public boolean isReceivingCredit() {
         return mCredit;
     }
 
-    public void setCredit(boolean credit) {
-        mCredit = credit;
+    public void receiveCredit(boolean receive) {
+        mCredit = receive;
     }
 
-    public boolean isLike() {
+    public boolean isReceivingLike() {
         return mLike;
     }
 
-    public void setLike(boolean like) {
-        mLike = like;
+    public void receiveLike(boolean receive) {
+        mLike = receive;
     }
 
-    public boolean isReply() {
+    public boolean isReceivingReply() {
         return mReply;
     }
 
-    public void setReply(boolean reply) {
-        mReply = reply;
+    public void receiveReply(boolean receive) {
+        mReply = receive;
     }
 
-    public boolean isFollow() {
+    public boolean isReceivingFollow() {
         return mFollow;
     }
 
-    public void setFollow(boolean follow) {
-        mFollow = follow;
+    public void receiveFollow(boolean receive) {
+        mFollow = receive;
     }
 
-    public boolean isVideoAvailable() {
+    public boolean isReceivingVideoAvailable() {
         return mVideoAvailable;
     }
 
-    public void setVideoAvailable(boolean videoAvailable) {
-        mVideoAvailable = videoAvailable;
+    public void receiveVideoAvailable(boolean receive) {
+        mVideoAvailable = receive;
     }
 
     @NotNull
