@@ -1,6 +1,12 @@
 # vimeo-networking
 vimeo-networking is a Java networking library used for interacting with the Vimeo API. The example provided in this project shows the implementation in the context of an Android app.
 
+| Branch | Build Status |
+|--------|--------------|
+| master | [![Build Status](https://circleci.com/gh/vimeo/vimeo-networking-java/tree/master.svg?style=shield&circle-token=d38c2d8e39d16937a9f10cb30fb128f7e1b08b96)](https://circleci.com/gh/vimeo/vimeo-networking-java/tree/master) |
+| v2.0.0 | [![Build Status](https://circleci.com/gh/vimeo/vimeo-networking-java/tree/v2.0.0.svg?style=shield&circle-token=d38c2d8e39d16937a9f10cb30fb128f7e1b08b96)](https://circleci.com/gh/vimeo/vimeo-networking-java/tree/v2.0.0) |
+
+
 ## Contents
 * [Prerequisites](#prerequisites)
       * [API Registration](#api-registration)
