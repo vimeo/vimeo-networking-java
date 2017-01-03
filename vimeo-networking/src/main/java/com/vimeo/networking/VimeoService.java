@@ -26,6 +26,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
+import com.vimeo.networking.model.SubscriptionCollection;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.search.SearchResponse;
@@ -134,6 +135,9 @@ public interface VimeoService {
     Call<Object> edit(@Header("Authorization") String authHeader, @Url String uri,
                       @Body HashMap<String, Object> parameters);
 
+    @PATCH("me/notifications/subscriptions")
+    Call<SubscriptionCollection> editSubscriptions(@Header("Authorization") String authHeader,
+                                                   @Body Map<String, Boolean> parameters);
     // </editor-fold>
 
     /**
