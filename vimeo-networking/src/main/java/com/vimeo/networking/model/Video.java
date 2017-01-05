@@ -118,67 +118,116 @@ public class Video implements Serializable {
     // Note: if you rename any fields, GSON serialization of persisted videos may break. [KV] 3/31/16
     @GsonAdapterKey("uri")
     public String uri;
+
     @GsonAdapterKey("name")
     public String name;
+
     @GsonAdapterKey("description")
     public String description;
+
     @GsonAdapterKey("link")
     public String link;
+
     @GsonAdapterKey("duration")
     public int duration;
+
     @Deprecated
     @GsonAdapterKey("files")
     public ArrayList<VideoFile> files;
+
     @GsonAdapterKey("width")
     public int width;
+
     @GsonAdapterKey("height")
     public int height;
+
     @Deprecated
     @GsonAdapterKey("embed")
     public com.vimeo.networking.model.Embed embed;
+
     @GsonAdapterKey("language")
     public String language;
+
     @GsonAdapterKey("created_time")
     public Date createdTime;
+
     @GsonAdapterKey("modified_time")
     public Date modifiedTime;
+
     @GsonAdapterKey("release_time")
     public Date releaseTime;
+
     @GsonAdapterKey("content_rating")
     public ArrayList<String> contentRating;
+
     @GsonAdapterKey("license")
     public String license;
+
     @GsonAdapterKey("privacy")
     public Privacy privacy;
+
     @GsonAdapterKey("pictures")
     public PictureCollection pictures;
+
     @GsonAdapterKey("tags")
     public ArrayList<Tag> tags;
+
     @GsonAdapterKey("stats")
     public StatsCollection stats;
+
     @GsonAdapterKey("metadata")
     public Metadata metadata;
+
     @GsonAdapterKey("user")
     public User user;
+
     @GsonAdapterKey("status")
     public Status status;
+
     @GsonAdapterKey("categories")
     public ArrayList<Category> categories;
+
     @Nullable
     @GsonAdapterKey("password")
     public String password;
+
     @Nullable
     @GsonAdapterKey("review_link")
     public String reviewLink;
+
     @Nullable
     @GsonAdapterKey("play")
     public Play play;
+
     @Nullable
     @GsonAdapterKey("download")
     public ArrayList<VideoFile> download;
+
     @Nullable
     @GsonAdapterKey("badge")
     public VideoBadge videoBadge;
+
+    @Nullable
+    @GsonAdapterKey("spatial")
+    public Spatial spatial;
+
+    // -----------------------------------------------------------------------------------------------------
+    // 360
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="360">
+
+    /**
+     * Returns true if the video is a 360 video.
+     * Criteria for a video being 360 is that it
+     * contains a populated{@link Spatial} field.
+     *
+     * @return true if the video is 360, false otherwise.
+     */
+    public boolean is360Video() {
+        return spatial != null;
+    }
+
+    // </editor-fold>
 
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
