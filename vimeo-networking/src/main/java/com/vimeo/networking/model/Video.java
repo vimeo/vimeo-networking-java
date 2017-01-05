@@ -211,6 +211,24 @@ public class Video implements Serializable {
     @GsonAdapterKey("spatial")
     public Spatial spatial;
 
+    // -----------------------------------------------------------------------------------------------------
+    // 360
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="360">
+
+    /**
+     * Returns true if the video is a 360 video.
+     * Criteria for a video being 360 is that it
+     * contains a populated{@link Spatial} field.
+     *
+     * @return true if the video is 360, false otherwise.
+     */
+    public boolean is360Video() {
+        return spatial != null;
+    }
+
+    // </editor-fold>
+
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
      * comparison.

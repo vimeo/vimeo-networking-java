@@ -3,7 +3,6 @@ package com.vimeo.networking.model;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -13,6 +12,7 @@ import java.io.Serializable;
  * <p>
  * Created by restainoa on 1/3/17.
  */
+@SuppressWarnings("unused")
 public class Spatial implements Serializable {
 
     private static final long serialVersionUID = 5660325676029549468L;
@@ -22,13 +22,15 @@ public class Spatial implements Serializable {
         CYLINDRICAL,
         CUBICAL,
         PYRAMID,
-        DOME
+        DOME,
+        UNKNOWN
     }
 
     public enum Format {
         MONO,
         LEFT_RIGHT,
-        TOP_BOTTOM
+        TOP_BOTTOM,
+        UNKNOWN
     }
 
     @NotNull
@@ -39,7 +41,7 @@ public class Spatial implements Serializable {
     @GsonAdapterKey("stereo_format")
     protected String mStereoFormat;
 
-    @Nullable
+    @NotNull
     public Projection getProjection() {
         switch (mProjection) {
             case "equirectangular":
@@ -53,11 +55,11 @@ public class Spatial implements Serializable {
             case "dome":
                 return Projection.DOME;
             default:
-                return null;
+                return Projection.UNKNOWN;
         }
     }
 
-    @Nullable
+    @NotNull
     public Format getFormat() {
         switch (mStereoFormat) {
             case "mono":
@@ -67,7 +69,7 @@ public class Spatial implements Serializable {
             case "top-bottom":
                 return Format.TOP_BOTTOM;
             default:
-                return null;
+                return Format.UNKNOWN;
         }
     }
 }
