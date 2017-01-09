@@ -72,4 +72,34 @@ public class Spatial implements Serializable {
                 return Format.UNKNOWN;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Spatial spatial = (Spatial) o;
+
+        return mProjection.equals(spatial.mProjection) && mStereoFormat.equals(spatial.mStereoFormat);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "{" +
+               "mProjection='" + mProjection + '\'' +
+               ", mStereoFormat='" + mStereoFormat + '\'' +
+               '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mProjection.hashCode();
+        result = 31 * result + mStereoFormat.hashCode();
+        result = 31 * result + super.hashCode();
+        return result;
+    }
 }
