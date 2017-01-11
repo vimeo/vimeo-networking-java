@@ -26,7 +26,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
-import com.vimeo.networking.model.SubscriptionCollection;
+import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.search.SearchResponse;

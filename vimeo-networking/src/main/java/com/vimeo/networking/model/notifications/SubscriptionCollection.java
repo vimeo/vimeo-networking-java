@@ -1,4 +1,4 @@
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.notifications;
 
 import com.vimeo.stag.GsonAdapterKey;
 
