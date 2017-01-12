@@ -58,4 +58,52 @@ public class Credit implements Serializable {
     public User getUser() {
         return mUser;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Credit credit = (Credit) o;
+
+        if (mUri != null ? !mUri.equals(credit.mUri) : credit.mUri != null) {
+            return false;
+        }
+        if (mRole != null ? !mRole.equals(credit.mRole) : credit.mRole != null) {
+            return false;
+        }
+        if (mName != null ? !mName.equals(credit.mName) : credit.mName != null) {
+            return false;
+        }
+        if (mVideo != null ? !mVideo.equals(credit.mVideo) : credit.mVideo != null) {
+            return false;
+        }
+        return mUser != null ? mUser.equals(credit.mUser) : credit.mUser == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mUri != null ? mUri.hashCode() : 0;
+        result = 31 * result + (mRole != null ? mRole.hashCode() : 0);
+        result = 31 * result + (mName != null ? mName.hashCode() : 0);
+        result = 31 * result + (mVideo != null ? mVideo.hashCode() : 0);
+        result = 31 * result + (mUser != null ? mUser.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Credit{" +
+               "mUri='" + mUri + '\'' +
+               ", mRole='" + mRole + '\'' +
+               ", mName='" + mName + '\'' +
+               ", mVideo=" + mVideo +
+               ", mUser=" + mUser +
+               '}';
+    }
 }
