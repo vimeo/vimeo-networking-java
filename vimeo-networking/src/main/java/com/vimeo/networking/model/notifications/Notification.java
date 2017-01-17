@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * A model representing activity that a user may be notified about.
  * Created by zetterstromk on 1/11/17.
  */
 public class Notification implements Serializable {
@@ -47,6 +48,12 @@ public class Notification implements Serializable {
     @GsonAdapterKey("credit")
     Credit mCredit;
 
+    @GsonAdapterKey("new")
+    boolean mIsNew;
+
+    @GsonAdapterKey("seen")
+    boolean mIsSeen;
+
     @Nullable
     public String getUri() {
         return mUri;
@@ -80,6 +87,14 @@ public class Notification implements Serializable {
     @Nullable
     public Credit getCredit() {
         return mCredit;
+    }
+
+    public boolean isNew() {
+        return mIsNew;
+    }
+
+    public boolean isSeen() {
+        return mIsSeen;
     }
 
     @Override
