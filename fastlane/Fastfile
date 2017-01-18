@@ -49,19 +49,27 @@ platform :android do
         task: "vimeo-networking:test"
       )
     rescue => error
-      pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+      begin
+        pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+      rescue => error
+      end
+
       if is_ci
         danger(use_bundle_exec: false)
       end
+      
       raise error
     end
     
-    pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
-    
-    if is_ci
-        danger(use_bundle_exec: false)
+    begin
+      pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+    rescue => error
     end
     
+    if is_ci
+      danger(use_bundle_exec: false)
+    end
+
   end
 
   # You can define as many lanes as you want
