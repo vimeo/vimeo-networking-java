@@ -1,4 +1,4 @@
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.notifications;
 
 import com.vimeo.stag.GsonAdapterKey;
 
@@ -19,29 +19,23 @@ public class Subscriptions implements Serializable {
 
     private static final long serialVersionUID = 3088065484753327987L;
 
-    public static final String KEY_COMMENT = "comment";
-    public static final String KEY_CREDIT = "credit";
-    public static final String KEY_LIKE = "like";
-    public static final String KEY_REPLY = "reply";
-    public static final String KEY_FOLLOW = "follow";
-    public static final String KEY_VIDEO_AVAILABLE = "video_available";
 
-    @GsonAdapterKey(KEY_COMMENT)
+    @GsonAdapterKey(NotificationConstants.NOTIFICATION_COMMENT)
     boolean mComment;
 
-    @GsonAdapterKey(KEY_CREDIT)
+    @GsonAdapterKey(NotificationConstants.NOTIFICATION_CREDIT)
     boolean mCredit;
 
-    @GsonAdapterKey(KEY_LIKE)
+    @GsonAdapterKey(NotificationConstants.NOTIFICATION_LIKE)
     boolean mLike;
 
-    @GsonAdapterKey(KEY_REPLY)
+    @GsonAdapterKey(NotificationConstants.NOTIFICATION_REPLY)
     boolean mReply;
 
-    @GsonAdapterKey(KEY_FOLLOW)
+    @GsonAdapterKey(NotificationConstants.NOTIFICATION_FOLLOW)
     boolean mFollow;
 
-    @GsonAdapterKey(KEY_VIDEO_AVAILABLE)
+    @GsonAdapterKey(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
     boolean mVideoAvailable;
 
     public boolean isReceivingComment() {
@@ -96,12 +90,12 @@ public class Subscriptions implements Serializable {
     public Map<String, Boolean> getMapFromSubscriptions() {
         Map<String, Boolean> map = new HashMap<>();
 
-        map.put(KEY_COMMENT, mComment);
-        map.put(KEY_CREDIT, mCredit);
-        map.put(KEY_LIKE, mLike);
-        map.put(KEY_REPLY, mReply);
-        map.put(KEY_FOLLOW, mFollow);
-        map.put(KEY_VIDEO_AVAILABLE, mVideoAvailable);
+        map.put(NotificationConstants.NOTIFICATION_COMMENT, mComment);
+        map.put(NotificationConstants.NOTIFICATION_CREDIT, mCredit);
+        map.put(NotificationConstants.NOTIFICATION_LIKE, mLike);
+        map.put(NotificationConstants.NOTIFICATION_REPLY, mReply);
+        map.put(NotificationConstants.NOTIFICATION_FOLLOW, mFollow);
+        map.put(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE, mVideoAvailable);
 
         return map;
     }

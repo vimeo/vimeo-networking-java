@@ -57,6 +57,12 @@ public class Connection implements Serializable {
     @GsonAdapterKey("viewable_total")
     public int viewableTotal;
 
+    @GsonAdapterKey("new_total")
+    int newTotal;
+
+    @GsonAdapterKey("unread_total")
+    int unreadTotal;
+
     @Nullable
     @GsonAdapterKey("name")
     public String name;
@@ -89,6 +95,14 @@ public class Connection implements Serializable {
 
     public int getViewableTotal() {
         return viewableTotal;
+    }
+
+    public int getNewTotal() {
+        return newTotal;
+    }
+
+    public int getUnreadTotal() {
+        return unreadTotal;
     }
 
     @Nullable
