@@ -1,4 +1,6 @@
 language: android
+rvm:
+  - 2.2
 jdk:
 - oraclejdk8
 android:
