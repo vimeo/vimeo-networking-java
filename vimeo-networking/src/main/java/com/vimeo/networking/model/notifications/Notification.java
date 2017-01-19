@@ -74,9 +74,17 @@ public class Notification implements Serializable {
         return mUser;
     }
 
+    public void setUser(@Nullable User user) {
+        mUser = user;
+    }
+
     @Nullable
     public Comment getComment() {
         return mComment;
+    }
+
+    public void setComment(@Nullable Comment comment) {
+        mComment = comment;
     }
 
     @Nullable
@@ -84,9 +92,17 @@ public class Notification implements Serializable {
         return mVideo;
     }
 
+    public void setVideo(@Nullable Video video) {
+        mVideo = video;
+    }
+
     @Nullable
     public Credit getCredit() {
         return mCredit;
+    }
+
+    public void setCredit(@Nullable Credit credit) {
+        mCredit = credit;
     }
 
     public boolean isNew() {

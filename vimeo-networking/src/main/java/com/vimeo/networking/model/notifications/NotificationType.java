@@ -25,7 +25,7 @@ public enum NotificationType {
             case NotificationConstants.NOTIFICATION_FOLLOW:
                 return NOTIFICATION_TYPE_FOLLOW;
             case NotificationConstants.NOTIFICATION_LIKE:
-                return NOTIFICATION_TYPE_COMMENT;
+                return NOTIFICATION_TYPE_LIKE;
             case NotificationConstants.NOTIFICATION_REPLY:
                 return NOTIFICATION_TYPE_REPLY;
             case NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE:

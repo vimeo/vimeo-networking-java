@@ -54,9 +54,17 @@ public class Credit implements Serializable {
         return mVideo;
     }
 
+    public void setVideo(@Nullable Video video) {
+        mVideo = video;
+    }
+
     @Nullable
     public User getUser() {
         return mUser;
+    }
+
+    public void setUser(@Nullable User user) {
+        mUser = user;
     }
 
     @Override
