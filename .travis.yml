@@ -1,0 +1,32 @@
+language: android
+jdk:
+- oraclejdk8
+android:
+  components:
+  - android-5
+  - android-6
+  - android-N
+  - android-23
+  - android-24
+  - platform-tools
+  - platform-tools-preview
+  - tools
+  - build-tools
+  - extra-android-m2repository
+  - extra-android-support
+  - extra-google-google_play_services
+  - extra-google-m2repositor
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - "$HOME/.gradle/caches/f8f212a143c2b54b3284813d89dee28291ef4d11"
+  - "$HOME/.gradle/wrapper/"
+  - "$HOME/.android/build-cache"
+script:
+  - FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec fastlane test
+notifications:
+  slack:
+    rooms:
+      secure: B9zy/OeAj8WwMdwU7mwOpg93cCQm3ED0hQ6Sk9K+hxntsvt35FRU1i8UBeqhbBsHhpE6aMQj5ixgywv3aY7EZTgLllgywhuPwUJ+sYnRgnIct5nwaoEOgziHuqRXQAcHnfOrN0NSq2YByZg2GrVDbw89OYB+NAQ1381b50dUrY/WZKhUYrtKKm4EhaqpLLA/oj4jwXznuMyTE8ePjpouEnlREqRGGEwZwwtG733EuBrYMOwbAjFFzFRcRbt3YvDwhwdhMRbY3AAzgS5pC5RU9ii0+7r0TQatZ1dOzX2Tl/QL283aBLkLD+Ya+DrEWPpLVfIm/lB2p87UdAECcUJBdkt19qgC4bZ068EsMxxSV7LqG/HxEMsyo+5HndLtQ3fnikMNdZu4IcMidJeVfiH+SiWygyrTBX78/DTWtEtr8w2o7r3CaItmMdP0mXklQEiJ22j+/6ERG++P92pgluo5zCunTbwoXGQBAZCP6orHB1MWKA48RoI4uVgLAIW1YRdTEfc+H0pIzmXiAkPeR+v3XW4Fou3HCe3FYOFIwKrJpUZR5ztbdYi/mk8Po2oDO5qVvAVVOSWd+XGA3kSe9oc2Q4V+L5IepMZPLM3i5o1Ze6Ln8zLZPtjs7LWEl+quwREmt2RZLn0VLflKnyzm+kXOxkSJPFMK87lHClVUDQEAdIY=
