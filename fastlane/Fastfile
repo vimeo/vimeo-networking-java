@@ -49,17 +49,26 @@ platform :android do
         task: "vimeo-networking:test"
       )
     rescue => error
-      pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+      begin
+        pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+      rescue => error
+      end
+
+      if is_ci
+        danger(use_bundle_exec: false)
+      end
+      
+      raise error
     end
     
-    gradle(
-      task: "vimeo-networking:assemble"
-    )
-    gradle(
-      task: "example:packageRelease"
-    )
-
-    pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+    begin
+      pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+    rescue => error
+    end
+    
+    if is_ci
+      danger(use_bundle_exec: false)
+    end
 
   end
 

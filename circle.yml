@@ -6,4 +6,4 @@ dependencies:
 
 test:
   override:
-    - bundle exec fastlane test
+    - FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec fastlane test
