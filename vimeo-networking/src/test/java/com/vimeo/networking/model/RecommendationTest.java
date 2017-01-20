@@ -15,7 +15,7 @@ public class RecommendationTest {
     public void testGetRecommendationType() throws Exception {
         Recommendation recommendation = new Recommendation();
 
-        Assert.assertNull(recommendation.getRecommendationType());
+        Assert.assertNotNull(recommendation.getRecommendationType());
         Assert.assertEquals(recommendation.getRecommendationType(), RecommendationType.NONE);
 
         recommendation.mRecommendationType = Recommendation.TYPE_CHANNEL;
