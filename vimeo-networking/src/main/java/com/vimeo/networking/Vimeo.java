@@ -112,6 +112,7 @@ public final class Vimeo {
     public static final String PARAMETER_GET_FILTER = "filter";
     public static final String PARAMETER_GET_UPLOAD_DATE_FILTER = "filter_upload_date";
     public static final String PARAMETER_GET_NOTIFICATION_TYPES_FILTER = "filter_notification_types";
+    public static final String PARAMETER_PATCH_LATEST_NOTIFICATION_URI = "latest_notification_uri";
 
     // Sorting (sort) Values
     public static final String SORT_DEFAULT = "default";
