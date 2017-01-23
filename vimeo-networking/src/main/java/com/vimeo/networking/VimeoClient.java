@@ -1489,7 +1489,7 @@ public final class VimeoClient {
     }
 
     /**
-     * A PACTH call where the API doesn't return any response body. This is only handled by Retrofit
+     * A PATCH call where the API doesn't return any response body. This is only handled by Retrofit
      * if you specify a Void object response type.
      *
      * @param uri         URI of the resource to PATCH to
@@ -1497,25 +1497,16 @@ public final class VimeoClient {
      * @param patchBody   the body of the PATCH, it is likely a List or a Map
      * @param callback    the callback to be invoked upon request completion
      */
-    @Nullable
-    public Call<Void> emptyResponsePatch(String uri, @Nullable Map<String, String> queryParams,
-                                         @Nullable Object patchBody, VimeoCallback<Void> callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (uri == null) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-
-            return null;
-        }
-
+    @NotNull
+    public Call<Void> emptyResponsePatch(@NotNull String uri, @Nullable Map<String, String> queryParams,
+                                         @NotNull Object patchBody, @NotNull VimeoCallback<Void> callback) {
         if (queryParams == null) {
             queryParams = new HashMap<>();
         }
 
         Call<Void> call = mVimeoService.emptyResponsePatch(getAuthHeader(), uri, queryParams, patchBody);
         call.enqueue(callback);
+
         return call;
     }
 
