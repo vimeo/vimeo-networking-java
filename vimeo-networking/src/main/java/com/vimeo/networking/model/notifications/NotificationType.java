@@ -36,11 +36,6 @@ public enum NotificationType {
         }
     }
 
-    @Override
-    public String toString() {
-        return stringFromNotificationType(this);
-    }
-
     @Nullable
     public static String stringFromNotificationType(@NotNull NotificationType type) {
         switch (type) {
