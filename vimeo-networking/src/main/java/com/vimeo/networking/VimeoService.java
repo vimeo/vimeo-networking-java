@@ -139,6 +139,7 @@ public interface VimeoService {
     Call<SubscriptionCollection> editSubscriptions(@Header("Authorization") String authHeader,
                                                    @Body Map<String, Boolean> parameters);
 
+    @Headers("Cache-Control: no-cache, no-store")
     @PATCH
     Call<Void> emptyResponsePatch(@Header("Authorization") String authHeader, @Url String uri,
                                   @QueryMap Map<String, String> options, @Body Object parameters);
