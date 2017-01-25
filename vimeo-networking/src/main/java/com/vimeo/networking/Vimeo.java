@@ -111,6 +111,8 @@ public final class Vimeo {
     public static final String PARAMETER_GET_LENGTH_MAX_DURATION = "max_duration";
     public static final String PARAMETER_GET_FILTER = "filter";
     public static final String PARAMETER_GET_UPLOAD_DATE_FILTER = "filter_upload_date";
+    public static final String PARAMETER_GET_NOTIFICATION_TYPES_FILTER = "filter_notification_types";
+    public static final String PARAMETER_PATCH_LATEST_NOTIFICATION_URI = "latest_notification_uri";
 
     // Sorting (sort) Values
     public static final String SORT_DEFAULT = "default";
@@ -134,6 +136,7 @@ public final class Vimeo {
     public static final String FILTER_VOD_RENTALS = "rented";
     public static final String FILTER_VOD_SUBSCRIPTIONS = "subscription";
     public static final String FILTER_VOD_PURCHASES = "purchased";
+    public static final String FILTER_NOTIFICATION_TYPES = "notification_types";
     // Filter Upload Date Values
     public static final String FILTER_UPLOAD_DATE_TODAY = "day";
     public static final String FILTER_UPLOAD_DATE_WEEK = "week";

@@ -34,12 +34,12 @@ import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Privacy;
-import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 
@@ -1485,6 +1485,28 @@ public final class VimeoClient {
 
         Call<Void> call = mVimeoService.emptyResponsePost(getAuthHeader(), uri, postBody);
         call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * A PATCH call where the API doesn't return any response body. This is only handled by Retrofit
+     * if you specify a Void object response type.
+     *
+     * @param uri         URI of the resource to PATCH to
+     * @param queryParams any query parameters of the PATCH
+     * @param patchBody   the body of the PATCH, it is likely a List or a Map
+     * @param callback    the callback to be invoked upon request completion
+     */
+    @NotNull
+    public Call<Void> emptyResponsePatch(@NotNull String uri, @Nullable Map<String, String> queryParams,
+                                         @NotNull Object patchBody, @NotNull VimeoCallback<Void> callback) {
+        if (queryParams == null) {
+            queryParams = new HashMap<>();
+        }
+
+        Call<Void> call = mVimeoService.emptyResponsePatch(getAuthHeader(), uri, queryParams, patchBody);
+        call.enqueue(callback);
+
         return call;
     }
 
