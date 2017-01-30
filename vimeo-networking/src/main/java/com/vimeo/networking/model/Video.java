@@ -28,6 +28,8 @@ import com.vimeo.networking.model.Interaction.Stream;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -41,6 +43,7 @@ import java.util.concurrent.TimeUnit;
  * Created by alfredhanssen on 4/12/15.
  */
 @SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Video implements Serializable {
 
     private static final long serialVersionUID = -1282907783845240057L;
