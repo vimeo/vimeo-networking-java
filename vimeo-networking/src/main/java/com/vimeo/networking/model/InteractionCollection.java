@@ -23,6 +23,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +34,7 @@ import java.io.Serializable;
  * A collection of Interaction objects.
  * Created by zetterstromk on 6/5/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class InteractionCollection implements Serializable {
 
     private static final long serialVersionUID = 489519386122782640L;

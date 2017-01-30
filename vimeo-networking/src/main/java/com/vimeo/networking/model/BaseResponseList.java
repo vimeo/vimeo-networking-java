@@ -23,6 +23,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 /**
  * Created by kylevenn on 5/28/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public abstract class BaseResponseList<T> implements Serializable {
 
     private static final long serialVersionUID = -1641146617506148394L;

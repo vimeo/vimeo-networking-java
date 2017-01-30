@@ -25,6 +25,8 @@
 package com.vimeo.networking.model.playback.embed;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,18 +37,19 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class EmbedTitle implements Serializable {
 
     private static final long serialVersionUID = -2543724237726304625L;
     @Nullable
     @SerializedName("name")
-    private String mName;
+    String mName;
     @Nullable
     @SerializedName("owner")
-    private String mOwner;
+    String mOwner;
     @Nullable
     @SerializedName("portrait")
-    private String mPortrait;
+    String mPortrait;
 
     @Nullable
     public String getName() {

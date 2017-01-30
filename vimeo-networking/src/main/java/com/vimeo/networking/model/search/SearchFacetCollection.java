@@ -25,6 +25,8 @@
 package com.vimeo.networking.model.search;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,6 +38,7 @@ import java.io.Serializable;
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class SearchFacetCollection implements Serializable {
 
     private static final long serialVersionUID = 3340976215489066653L;

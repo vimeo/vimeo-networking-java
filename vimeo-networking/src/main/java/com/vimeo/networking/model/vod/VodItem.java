@@ -33,6 +33,8 @@ import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,6 +47,7 @@ import java.util.Date;
  * Created by rigbergh on 4/25/16.
  */
 @SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class VodItem implements Serializable {
 
     private static final String S_FILM = "film";

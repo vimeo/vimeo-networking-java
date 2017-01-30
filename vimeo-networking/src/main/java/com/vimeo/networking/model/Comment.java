@@ -25,6 +25,8 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -32,6 +34,7 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 7/31/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = -7716027694845877155L;

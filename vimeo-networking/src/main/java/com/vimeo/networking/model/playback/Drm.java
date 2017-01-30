@@ -26,6 +26,8 @@ package com.vimeo.networking.model.playback;
 
 import com.vimeo.networking.model.VideoFile;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -40,6 +42,7 @@ import java.io.Serializable;
  * Created by zetterstromk on 6/22/16.
  */
 @SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Drm implements Serializable {
 
     private static final long serialVersionUID = 3048847922257143776L;

@@ -25,6 +25,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
  * Created by rigbergh on 6/16/16.
  */
 @SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class PinCodeInfo {
 
     @Nullable

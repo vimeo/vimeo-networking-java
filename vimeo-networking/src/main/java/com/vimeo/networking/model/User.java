@@ -26,6 +26,8 @@ import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +39,7 @@ import java.util.Date;
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class User implements Serializable, Followable {
 
     private static final long serialVersionUID = -4112910222188194647L;

@@ -25,12 +25,15 @@
 package com.vimeo.networking.model.search;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 /**
  * Enum representing types of searches.
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public enum SearchType {
 
     @SerializedName("clip")

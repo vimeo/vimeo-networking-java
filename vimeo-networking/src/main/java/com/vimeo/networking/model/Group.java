@@ -23,6 +23,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,6 +32,7 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 6/26/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Group implements Serializable {
 
     private static final long serialVersionUID = -3604741570351063891L;

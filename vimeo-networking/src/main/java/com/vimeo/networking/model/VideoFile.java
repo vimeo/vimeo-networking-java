@@ -24,6 +24,8 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,6 +37,7 @@ import java.util.Date;
  * <p/>
  * Created by alfredhanssen on 4/25/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class VideoFile implements Serializable {
 
     public enum MimeType {

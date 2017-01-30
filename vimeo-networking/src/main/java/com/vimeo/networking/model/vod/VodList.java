@@ -25,13 +25,14 @@
 package com.vimeo.networking.model.vod;
 
 import com.vimeo.networking.model.BaseResponseList;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 /**
  * A list of {@link VodItem} objects
  * Created by rigbergh on 4/25/16.
  */
-@GsonAdapterKey
+@UseStag(FieldOption.NONE)
 public class VodList extends BaseResponseList<VodItem> {
 
     private static final long serialVersionUID = 2086096986453255372L;

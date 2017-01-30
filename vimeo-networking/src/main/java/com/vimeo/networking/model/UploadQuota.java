@@ -27,12 +27,15 @@ package com.vimeo.networking.model;
 
 import com.vimeo.networking.Vimeo;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import java.io.Serializable;
 
 /**
  * Created by kylevenn on 8/19/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class UploadQuota implements Serializable {
 
     private static final long serialVersionUID = 4050488085481972886L;

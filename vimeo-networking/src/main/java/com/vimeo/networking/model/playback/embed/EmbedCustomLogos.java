@@ -25,6 +25,8 @@
 package com.vimeo.networking.model.playback.embed;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,16 +37,17 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class EmbedCustomLogos implements Serializable {
 
     private static final long serialVersionUID = -8919686101651093878L;
     @SerializedName("active")
-    private boolean mActive;
+    boolean mActive;
     @Nullable
     @SerializedName("link")
-    private String mLink;
+    String mLink;
     @SerializedName("sticky")
-    private boolean mSticky;
+    boolean mSticky;
 
     public boolean isActive() {
         return mActive;
