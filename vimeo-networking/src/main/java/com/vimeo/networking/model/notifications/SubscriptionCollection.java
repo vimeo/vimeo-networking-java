@@ -1,6 +1,8 @@
 package com.vimeo.networking.model.notifications;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -14,6 +16,7 @@ import java.util.Date;
  * <p>
  * Created by zetterstromk on 12/15/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class SubscriptionCollection implements Serializable {
 
     private static final long serialVersionUID = -6392190720319669273L;

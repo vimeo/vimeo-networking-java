@@ -1,6 +1,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +15,7 @@ import java.io.Serializable;
  * Created by restainoa on 1/3/17.
  */
 @SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Spatial implements Serializable {
 
     private static final long serialVersionUID = 5660325676029549468L;

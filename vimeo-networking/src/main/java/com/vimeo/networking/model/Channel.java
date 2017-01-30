@@ -23,6 +23,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +34,7 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 6/11/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Channel implements Serializable, Followable {
 
     private static final long serialVersionUID = 3190410523525111858L;

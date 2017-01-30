@@ -1,5 +1,8 @@
 package com.vimeo.networking.model.notifications;
 
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -7,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
  * A simple enum describing notification types
  * Created by zetterstromk on 1/11/17.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public enum NotificationType {
     NOTIFICATION_TYPE_COMMENT,
     NOTIFICATION_TYPE_CREDIT,

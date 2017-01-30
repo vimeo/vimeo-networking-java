@@ -23,6 +23,8 @@
 package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 /**
  * Similar to {@link VimeoError} object, this holds error codes/error messages relevant to a specific invalid field.
@@ -33,16 +35,20 @@ import com.google.gson.annotations.SerializedName;
  * <p/>
  * Created by kylevenn on 7/15/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class InvalidParameter {
 
     @SerializedName("field")
-    private String field;
+    protected String field;
     @SerializedName("error_code")
-    private ErrorCode errorCode;
+    protected ErrorCode errorCode;
     @SerializedName("user_message")
-    private String userMessage;
+    protected String userMessage;
     @SerializedName("developer_message")
-    private String developerMessage;
+    protected String developerMessage;
+
+    InvalidParameter() {
+    }
 
     public InvalidParameter(String field, ErrorCode errorCode, String developerMessage) {
         this.field = field;

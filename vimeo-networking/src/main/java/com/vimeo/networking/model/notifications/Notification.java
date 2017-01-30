@@ -5,6 +5,8 @@ import com.vimeo.networking.model.Credit;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,6 +18,7 @@ import java.util.Date;
  * A model representing activity that a user may be notified about.
  * Created by zetterstromk on 1/11/17.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Notification implements Serializable {
 
     private static final long serialVersionUID = -68262442832775695L;

@@ -24,6 +24,8 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -34,6 +36,7 @@ import java.util.Date;
  * This model object represents an Interaction.
  * Created by zetterstromk on 6/5/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Interaction implements Serializable {
 
     private static final long serialVersionUID = 2033767841952340400L;

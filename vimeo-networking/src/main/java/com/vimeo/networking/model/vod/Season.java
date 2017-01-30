@@ -5,6 +5,8 @@ import com.vimeo.networking.model.ConnectionCollection;
 import com.vimeo.networking.model.Metadata;
 import com.vimeo.networking.model.User;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +20,7 @@ import java.io.Serializable;
  * <p>
  * Created by zetterstromk on 10/4/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Season implements Serializable {
 
     private static final String SEASON_TYPE_MAIN = "main";

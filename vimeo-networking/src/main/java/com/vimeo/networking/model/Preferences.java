@@ -23,6 +23,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -34,6 +36,7 @@ import java.io.Serializable;
  * <p>
  * Created by zetterstromk on 1/28/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Preferences implements Serializable {
 
     private static final long serialVersionUID = -251634859829805204L;

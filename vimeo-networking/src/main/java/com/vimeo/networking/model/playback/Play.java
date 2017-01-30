@@ -28,6 +28,8 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.VideoFile;
 import com.vimeo.networking.model.playback.embed.Embed;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -39,6 +41,7 @@ import java.util.ArrayList;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Play implements Serializable {
 
     private static final long serialVersionUID = -7429617944240759711L;

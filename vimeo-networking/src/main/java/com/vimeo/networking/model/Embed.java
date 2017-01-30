@@ -25,6 +25,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import java.io.Serializable;
 
@@ -34,6 +36,7 @@ import java.io.Serializable;
  * Created by hanssena on 4/23/15.
  */
 @Deprecated
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Embed implements Serializable {
 
     private static final long serialVersionUID = 7145437300195734964L;

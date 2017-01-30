@@ -23,6 +23,8 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +35,7 @@ import java.util.ArrayList;
  * This model object represents a Connection.
  * Created by hanssena on 4/23/15.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Connection implements Serializable {
 
     private static final long serialVersionUID = -840088720891343176L;

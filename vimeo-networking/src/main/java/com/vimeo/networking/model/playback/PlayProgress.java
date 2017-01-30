@@ -25,6 +25,8 @@
 package com.vimeo.networking.model.playback;
 
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,6 +37,7 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class PlayProgress implements Serializable {
 
     private static final long serialVersionUID = -3745271302058282379L;

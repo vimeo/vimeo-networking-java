@@ -30,6 +30,8 @@ import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.vod.VodItem;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -40,6 +42,7 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class SearchResult implements Serializable {
 
     private static final long serialVersionUID = -1607389617833091383L;
