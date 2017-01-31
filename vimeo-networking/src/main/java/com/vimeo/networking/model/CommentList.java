@@ -22,12 +22,12 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 /**
  * Created by zetterstromk on 7/31/15.
  */
-@GsonAdapterKey
+@UseStag
 public class CommentList extends BaseResponseList<Comment> {
 
     private static final long serialVersionUID = -5092384010058406105L;

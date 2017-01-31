@@ -93,10 +93,10 @@ public class Privacy implements Serializable {
     public String embed;
 
     @GsonAdapterKey("download")
-    public boolean download;
+    protected int download;
 
     @GsonAdapterKey("add")
-    public boolean add;
+    protected int add;
 
     @Nullable
     @GsonAdapterKey("comments")
@@ -113,11 +113,11 @@ public class Privacy implements Serializable {
     }
 
     public boolean isDownload() {
-        return download;
+        return download == 1;
     }
 
     public boolean isAdd() {
-        return add;
+        return add == 1;
     }
 
     @Nullable
