@@ -23,7 +23,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +32,8 @@ import java.io.Serializable;
 /**
  * Created by hanssena on 4/23/15.
  */
+// TODO: Figure out how to enable UseStag on this class without breaking deserialization due to the API giving us back integers for add and download 2/1/17 [AR]
+// @UseStag(FieldOption.SERIALIZED_NAME)
 public class Privacy implements Serializable {
 
     private static final long serialVersionUID = -1679908652622815871L;
@@ -44,6 +46,7 @@ public class Privacy implements Serializable {
     private static final String PRIVACY_DISABLE = "disable";
     private static final String PRIVACY_UNLISTED = "unlisted";
 
+    @UseStag
     public enum PrivacyValue {
         @SerializedName(PRIVACY_NOBODY)
         NOBODY(PRIVACY_NOBODY),
@@ -85,21 +88,21 @@ public class Privacy implements Serializable {
     }
 
     @Nullable
-    @GsonAdapterKey("view")
+    @SerializedName("view")
     public PrivacyValue view;
 
     @Nullable
-    @GsonAdapterKey("embed")
+    @SerializedName("embed")
     public String embed;
 
-    @GsonAdapterKey("download")
-    protected int download;
+    @SerializedName("download")
+    public boolean download;
 
-    @GsonAdapterKey("add")
-    protected int add;
+    @SerializedName("add")
+    public boolean add;
 
     @Nullable
-    @GsonAdapterKey("comments")
+    @SerializedName("comments")
     public PrivacyValue comments;
 
     @Nullable
@@ -113,11 +116,11 @@ public class Privacy implements Serializable {
     }
 
     public boolean isDownload() {
-        return download == 1;
+        return download;
     }
 
     public boolean isAdd() {
-        return add == 1;
+        return add;
     }
 
     @Nullable
