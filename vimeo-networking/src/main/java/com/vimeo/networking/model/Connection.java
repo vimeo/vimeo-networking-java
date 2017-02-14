@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -33,38 +34,36 @@ import java.util.ArrayList;
  * This model object represents a Connection.
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Connection implements Serializable {
 
     private static final long serialVersionUID = -840088720891343176L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    public String uri;
+    protected String uri;
 
     @Nullable
-    @GsonAdapterKey("options")
-    public ArrayList<String> options;
+    protected ArrayList<String> options;
 
-    @GsonAdapterKey("total")
-    public int total;
+    protected int total;
 
-    @GsonAdapterKey("main_total")
-    public int mainTotal;
+    @SerializedName("main_total")
+    protected int mainTotal;
 
-    @GsonAdapterKey("extra_total")
-    public int extraTotal;
+    @SerializedName("extra_total")
+    protected int extraTotal;
 
-    @GsonAdapterKey("viewable_total")
-    public int viewableTotal;
+    @SerializedName("viewable_total")
+    protected int viewableTotal;
 
-    @GsonAdapterKey("new_total")
-    int newTotal;
+    @SerializedName("new_total")
+    protected int newTotal;
 
-    @GsonAdapterKey("unread_total")
-    int unreadTotal;
+    @SerializedName("unread_total")
+    protected int unreadTotal;
 
     @Nullable
-    @GsonAdapterKey("name")
     public String name;
 
     // -----------------------------------------------------------------------------------------------------

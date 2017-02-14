@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,26 +31,31 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 6/26/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Group implements Serializable {
 
     private static final long serialVersionUID = -3604741570351063891L;
-    @GsonAdapterKey("uri")
+
     public String uri;
-    @GsonAdapterKey("created_time")
+
+    @SerializedName("created_time")
     public Date createdTime;
-    @GsonAdapterKey("group_description")
+
+    @SerializedName("group_description")
     public String groupDescription;
-    @GsonAdapterKey("link")
+
     public String link;
-    @GsonAdapterKey("name")
+
     public String name;
-    @GsonAdapterKey("picture_collection")
+
+    @SerializedName("picture_collection")
     public PictureCollection pictureCollection;
-    @GsonAdapterKey("privacy")
+
     public Privacy privacy;
-    @GsonAdapterKey("user")
+
     public User user;
-    @GsonAdapterKey("metadata")
+
     public Metadata metadata;
 
 }

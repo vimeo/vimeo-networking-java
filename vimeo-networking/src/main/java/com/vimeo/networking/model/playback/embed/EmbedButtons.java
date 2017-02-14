@@ -25,6 +25,7 @@
 package com.vimeo.networking.model.playback.embed;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
@@ -34,98 +35,101 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class EmbedButtons implements Serializable {
 
     private static final long serialVersionUID = 6724361702326756097L;
-    @SerializedName("like")
-    private boolean mLike;
+
+    protected boolean like;
+
     @SerializedName("watchlater")
-    private boolean mWatchLater;
-    @SerializedName("share")
-    private boolean mShare;
-    @SerializedName("embed")
-    private boolean mEmbed;
-    @SerializedName("hd")
-    private boolean mHd;
-    @SerializedName("fullscreen")
-    private boolean mFullscreen;
-    @SerializedName("scaling")
-    private boolean mScaling;
+    protected boolean watchLater;
+
+    protected boolean share;
+
+    protected boolean embed;
+
+    protected boolean hd;
+
+    protected boolean fullscreen;
+
+    protected boolean scaling;
 
     public boolean isLike() {
-        return mLike;
+        return like;
     }
 
     /**
      * @param like Show or hide the like button
      */
     public void setLike(boolean like) {
-        this.mLike = like;
+        this.like = like;
     }
 
     public boolean isWatchLater() {
-        return mWatchLater;
+        return watchLater;
     }
 
     /**
      * @param watchlater Show or hide the watch later button
      */
     public void setWatchLater(boolean watchlater) {
-        this.mWatchLater = watchlater;
+        this.watchLater = watchlater;
     }
 
     public boolean isShare() {
-        return mShare;
+        return share;
     }
 
     /**
      * @param share Show or hide the share button
      */
     public void setShare(boolean share) {
-        this.mShare = share;
+        this.share = share;
     }
 
     public boolean isEmbed() {
-        return mEmbed;
+        return embed;
     }
 
     /**
      * @param embed Show or hide the embed button
      */
     public void setEmbed(boolean embed) {
-        this.mEmbed = embed;
+        this.embed = embed;
     }
 
     public boolean isHd() {
-        return mHd;
+        return hd;
     }
 
     /**
      * @param hd Show or hide the hd button
      */
     public void setHd(boolean hd) {
-        this.mHd = hd;
+        this.hd = hd;
     }
 
     public boolean isFullscreen() {
-        return mFullscreen;
+        return fullscreen;
     }
 
     /**
      * @param fullscreen Show or hide the fullscreen button
      */
     public void setFullscreen(boolean fullscreen) {
-        this.mFullscreen = fullscreen;
+        this.fullscreen = fullscreen;
     }
 
     public boolean isScaling() {
-        return mScaling;
+        return scaling;
     }
 
     /**
      * @param scaling Show or hide the scaling button (shown only in fullscreen mode)
      */
     public void setScaling(boolean scaling) {
-        this.mScaling = scaling;
+        this.scaling = scaling;
     }
 }

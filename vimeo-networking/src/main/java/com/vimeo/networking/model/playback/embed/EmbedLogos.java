@@ -25,6 +25,7 @@
 package com.vimeo.networking.model.playback.embed;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,35 +36,38 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class EmbedLogos implements Serializable {
 
     private static final long serialVersionUID = -6946192139468749658L;
+
     @SerializedName("vimeo")
-    private boolean mVimeoLogoVisible;
+    protected boolean vimeoLogoVisible;
+
     @Nullable
-    @SerializedName("custom")
-    private EmbedCustomLogos mCustom;
+    protected EmbedCustomLogos custom;
 
     public boolean isVimeoLogoVisible() {
-        return mVimeoLogoVisible;
+        return vimeoLogoVisible;
     }
 
     /**
      * @param visible Show or hide the vimeo logo
      */
     public void setVimeoLogo(boolean visible) {
-        this.mVimeoLogoVisible = visible;
+        this.vimeoLogoVisible = visible;
     }
 
     @Nullable
     public EmbedCustomLogos getCustom() {
-        return mCustom;
+        return custom;
     }
 
     /**
      * @param custom {@link EmbedCustomLogos}
      */
     public void setCustom(@Nullable EmbedCustomLogos custom) {
-        this.mCustom = custom;
+        this.custom = custom;
     }
 }

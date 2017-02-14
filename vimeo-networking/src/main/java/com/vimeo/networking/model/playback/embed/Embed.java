@@ -25,6 +25,7 @@
 package com.vimeo.networking.model.playback.embed;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,99 +36,101 @@ import java.io.Serializable;
  * <p/>
  * Only the html data structure will be accessible unless the requesting user owns the video.
  * <p/>
- * All other fields besides {@link #mHtml} are here for allowing you to edit a video's embed settings
+ * All other fields besides {@link #html} are here for allowing you to edit a video's embed settings
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Embed implements Serializable {
 
     private static final long serialVersionUID = -4708548576616330795L;
 
     @Nullable
-    @SerializedName("uri")
-    private String mUri;
+    protected String uri;
+
     @Nullable
-    @SerializedName("html")
-    private EmbedHtml mHtml;
+    protected EmbedHtml html;
+
     @Nullable
-    @SerializedName("buttons")
-    private EmbedButtons mButtons;
+    protected EmbedButtons buttons;
+
     @Nullable
-    @SerializedName("title")
-    private EmbedTitle mTitle;
+    protected EmbedTitle title;
+
     @SerializedName("playbar")
-    private boolean mPlayBar;
-    @SerializedName("volume")
-    private boolean mVolume;
+    protected boolean playBar;
+
+    protected boolean volume;
+
     @Nullable
-    @SerializedName("color")
-    private String mColor;
+    protected String color;
 
     @Nullable
     public String getUri() {
-        return mUri;
+        return uri;
     }
 
     @Nullable
     public EmbedHtml getHtml() {
-        return mHtml;
+        return html;
     }
 
     @Nullable
     public EmbedButtons getButtons() {
-        return mButtons;
+        return buttons;
     }
 
     /**
      * @param buttons Set {@link EmbedButtons}
      */
     public void setButtons(@Nullable EmbedButtons buttons) {
-        this.mButtons = buttons;
+        this.buttons = buttons;
     }
 
     @Nullable
     public EmbedTitle getTitle() {
-        return mTitle;
+        return title;
     }
 
     /**
      * @param title Set {@link EmbedTitle}
      */
     public void setTitle(@Nullable EmbedTitle title) {
-        this.mTitle = title;
+        this.title = title;
     }
 
     public boolean isPlayBar() {
-        return mPlayBar;
+        return playBar;
     }
 
     /**
      * @param playbar Show or hide the play bar
      */
     public void setPlayBar(boolean playbar) {
-        this.mPlayBar = playbar;
+        this.playBar = playbar;
     }
 
     public boolean isVolume() {
-        return mVolume;
+        return volume;
     }
 
     /**
      * @param volume Show or hide the volume selector
      */
     public void setVolume(boolean volume) {
-        this.mVolume = volume;
+        this.volume = volume;
     }
 
     @Nullable
     public String getColor() {
-        return mColor;
+        return color;
     }
 
     /**
      * @param color A primary color used by the embed player
      */
     public void setColor(@Nullable String color) {
-        this.mColor = color;
+        this.color = color;
     }
 }

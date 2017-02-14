@@ -23,8 +23,10 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,22 +38,28 @@ import java.io.Serializable;
  * <p/>
  * Created by alfredhanssen on 4/12/15.
  */
+@SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class VimeoAccount implements Serializable {
 
     private static final long serialVersionUID = -8341071767843490585L;
     //    private static final String TOKEN_TYPE_BEARER = "bearer";
 
-    @GsonAdapterKey("access_token")
-    public String accessToken;
-    @GsonAdapterKey("token_type")
-    public String tokenType;
-    @GsonAdapterKey("scope")
-    public String scope;
-    @GsonAdapterKey("user")
+    @SerializedName("access_token")
+    protected String accessToken;
+
+    @SerializedName("token_type")
+    protected String tokenType;
+
+    @SerializedName("scope")
+    protected String scope;
+
+    @SerializedName("user")
     public User user;
+
     private String userJSON;
 
-    public VimeoAccount(){
+    public VimeoAccount() {
         //constructor for stag TypeAdapter generation
     }
 

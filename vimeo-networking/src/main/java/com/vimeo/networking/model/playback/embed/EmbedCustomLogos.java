@@ -24,7 +24,7 @@
 
 package com.vimeo.networking.model.playback.embed;
 
-import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,48 +35,50 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class EmbedCustomLogos implements Serializable {
 
     private static final long serialVersionUID = -8919686101651093878L;
-    @SerializedName("active")
-    private boolean mActive;
+
+    protected boolean active;
+
     @Nullable
-    @SerializedName("link")
-    private String mLink;
-    @SerializedName("sticky")
-    private boolean mSticky;
+    protected String link;
+
+    protected boolean sticky;
 
     public boolean isActive() {
-        return mActive;
+        return active;
     }
 
     /**
      * @param active Show or hide your custom logo
      */
     public void setActive(boolean active) {
-        this.mActive = active;
+        this.active = active;
     }
 
     @Nullable
     public String getLink() {
-        return mLink;
+        return link;
     }
 
     /**
      * @param link A url that your user will navigate to if they click your custom logo
      */
     public void setLink(@Nullable String link) {
-        this.mLink = link;
+        this.link = link;
     }
 
     public boolean isSticky() {
-        return mSticky;
+        return sticky;
     }
 
     /**
      * @param sticky Always show the custom logo, or hide it after time with the rest of the UI
      */
     public void setSticky(boolean sticky) {
-        this.mSticky = sticky;
+        this.sticky = sticky;
     }
 }

@@ -24,7 +24,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -33,48 +34,48 @@ import org.jetbrains.annotations.Nullable;
  * Created by rigbergh on 6/16/16.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class PinCodeInfo {
 
     @Nullable
-    @GsonAdapterKey("device_code")
-    public String mDeviceCode;
+    @SerializedName("device_code")
+    protected String deviceCode;
 
     @Nullable
-    @GsonAdapterKey("user_code")
-    public String mUserCode;
+    @SerializedName("user_code")
+    protected String userCode;
 
     @Nullable
-    @GsonAdapterKey("authorize_link")
-    public String mAuthorizeLink;
+    @SerializedName("authorize_link")
+    protected String authorizeLink;
 
     @Nullable
-    @GsonAdapterKey("activate_link")
-    public String mActivateLink;
+    @SerializedName("activate_link")
+    protected String activateLink;
 
-    @GsonAdapterKey("expires_in")
-    public int expiresIn;
+    @SerializedName("expires_in")
+    protected int expiresIn;
 
-    @GsonAdapterKey("interval")
-    public int interval;
+    protected int interval;
 
     @Nullable
     public String getDeviceCode() {
-        return mDeviceCode;
+        return deviceCode;
     }
 
     @Nullable
     public String getUserCode() {
-        return mUserCode;
+        return userCode;
     }
 
     @Nullable
     public String getAuthorizeLink() {
-        return mAuthorizeLink;
+        return authorizeLink;
     }
 
     @Nullable
     public String getActivateLink() {
-        return mActivateLink;
+        return activateLink;
     }
 
     public int getExpiresIn() {

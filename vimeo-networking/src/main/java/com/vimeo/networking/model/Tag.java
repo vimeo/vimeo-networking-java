@@ -22,24 +22,26 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
 /**
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Tag implements Serializable {
 
     private static final long serialVersionUID = 3388947522077930006L;
-    @GsonAdapterKey("uri")
+
     public String uri;
-    @GsonAdapterKey("name")
+
     public String name;
-    @GsonAdapterKey("tag")
+
     public String tag;
-    @GsonAdapterKey("canonical")
+
     public String canonical;
-    @GsonAdapterKey("metadata")
+
     public Metadata metadata;
 }

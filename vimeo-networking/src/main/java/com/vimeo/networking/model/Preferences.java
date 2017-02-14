@@ -22,7 +22,7 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -34,19 +34,20 @@ import java.io.Serializable;
  * <p>
  * Created by zetterstromk on 1/28/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Preferences implements Serializable {
 
     private static final long serialVersionUID = -251634859829805204L;
 
     @Nullable
-    @GsonAdapterKey("videos")
-    VideosPreference mVideos;
+    protected VideosPreference videos;
 
     /**
      * Return the {@link VideosPreference} of this object
      */
     @Nullable
     public VideosPreference getVideos() {
-        return mVideos;
+        return videos;
     }
 }

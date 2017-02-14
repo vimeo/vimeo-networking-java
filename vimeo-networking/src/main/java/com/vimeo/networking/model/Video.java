@@ -28,6 +28,7 @@ import com.vimeo.networking.model.Interaction.Stream;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -41,6 +42,7 @@ import java.util.concurrent.TimeUnit;
  * Created by alfredhanssen on 4/12/15.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class Video implements Serializable {
 
     private static final long serialVersionUID = -1282907783845240057L;
@@ -115,100 +117,76 @@ public class Video implements Serializable {
         }
     }
 
-    // Note: if you rename any fields, GSON serialization of persisted videos may break. [KV] 3/31/16
-    @GsonAdapterKey("uri")
     public String uri;
 
-    @GsonAdapterKey("name")
     public String name;
 
-    @GsonAdapterKey("description")
     public String description;
 
-    @GsonAdapterKey("link")
     public String link;
 
-    @GsonAdapterKey("duration")
     public int duration;
 
     @Deprecated
-    @GsonAdapterKey("files")
     public ArrayList<VideoFile> files;
 
-    @GsonAdapterKey("width")
     public int width;
 
-    @GsonAdapterKey("height")
     public int height;
 
     @Deprecated
-    @GsonAdapterKey("embed")
     public com.vimeo.networking.model.Embed embed;
 
-    @GsonAdapterKey("language")
     public String language;
 
-    @GsonAdapterKey("created_time")
+    @SerializedName("created_time")
     public Date createdTime;
 
-    @GsonAdapterKey("modified_time")
+    @SerializedName("modified_time")
     public Date modifiedTime;
 
-    @GsonAdapterKey("release_time")
+    @SerializedName("release_time")
     public Date releaseTime;
 
-    @GsonAdapterKey("content_rating")
+    @SerializedName("content_rating")
     public ArrayList<String> contentRating;
 
-    @GsonAdapterKey("license")
     public String license;
 
-    @GsonAdapterKey("privacy")
     public Privacy privacy;
 
-    @GsonAdapterKey("pictures")
     public PictureCollection pictures;
 
-    @GsonAdapterKey("tags")
     public ArrayList<Tag> tags;
 
-    @GsonAdapterKey("stats")
     public StatsCollection stats;
 
-    @GsonAdapterKey("metadata")
     public Metadata metadata;
 
-    @GsonAdapterKey("user")
     public User user;
 
-    @GsonAdapterKey("status")
     public Status status;
 
-    @GsonAdapterKey("categories")
     public ArrayList<Category> categories;
 
     @Nullable
-    @GsonAdapterKey("password")
     public String password;
 
     @Nullable
-    @GsonAdapterKey("review_link")
+    @SerializedName("review_link")
     public String reviewLink;
 
     @Nullable
-    @GsonAdapterKey("play")
     public Play play;
 
     @Nullable
-    @GsonAdapterKey("download")
     public ArrayList<VideoFile> download;
 
     @Nullable
-    @GsonAdapterKey("badge")
+    @SerializedName("badge")
     public VideoBadge videoBadge;
 
     @Nullable
-    @GsonAdapterKey("spatial")
     public Spatial spatial;
 
     // -----------------------------------------------------------------------------------------------------
@@ -370,11 +348,7 @@ public class Video implements Serializable {
      */
     @Nullable
     public Integer playCount() {
-        if (stats != null) {
-            return stats.plays;
-        } else {
-            return null;
-        }
+        return stats != null ? stats.plays : null;
     }
     // </editor-fold>
 

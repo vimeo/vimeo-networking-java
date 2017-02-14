@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
  * of {@link Picture}s
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class PictureCollection implements Serializable {
 
     private static final long serialVersionUID = -4495146309328278574L;
@@ -62,25 +65,23 @@ public class PictureCollection implements Serializable {
     }
 
     @Nullable
-    @GsonAdapterKey("uri")
-    String mUri;
+    protected String uri;
 
-    @GsonAdapterKey("active")
-    boolean mIsActive;
-
-    @Nullable
-    @GsonAdapterKey("type")
-    String mType;
+    @SerializedName("active")
+    protected boolean isActive;
 
     @Nullable
-    @GsonAdapterKey("sizes")
-    ArrayList<Picture> mPictures;
+    protected String type;
+
+    @Nullable
+    @SerializedName("sizes")
+    protected ArrayList<Picture> pictures;
 
     @Nullable
     public Picture pictureForWidth(int width) {
-        if (mPictures != null && !mPictures.isEmpty()) {
-            Picture selectedPicture = mPictures.get(mPictures.size() - 1);
-            for (Picture picture : mPictures) {
+        if (pictures != null && !pictures.isEmpty()) {
+            Picture selectedPicture = pictures.get(pictures.size() - 1);
+            for (Picture picture : pictures) {
                 if ((picture.width >= width) && ((picture.width - width) < (selectedPicture.width - width))) {
                     selectedPicture = picture;
                 }
@@ -96,7 +97,7 @@ public class PictureCollection implements Serializable {
      */
     @Nullable
     public String getUri() {
-        return mUri;
+        return uri;
     }
 
     /**
@@ -109,7 +110,7 @@ public class PictureCollection implements Serializable {
      * represent the pictures of another object.
      */
     public boolean isActive() {
-        return mIsActive;
+        return isActive;
     }
 
     /**
@@ -117,7 +118,7 @@ public class PictureCollection implements Serializable {
      */
     @Nullable
     public ArrayList<Picture> getPictures() {
-        return mPictures;
+        return pictures;
     }
 
     /**
@@ -128,11 +129,11 @@ public class PictureCollection implements Serializable {
      */
     @NotNull
     public PictureType getPictureType() {
-        if (mType == null) {
+        if (type == null) {
             return PictureType.UNKNOWN;
         }
 
-        switch (mType) {
+        switch (type) {
             case PICTURE_TYPE_CAUTION:
                 return PictureType.CAUTION;
             case PICTURE_TYPE_CUSTOM:

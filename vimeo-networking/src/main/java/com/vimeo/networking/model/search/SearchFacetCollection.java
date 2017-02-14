@@ -24,7 +24,8 @@
 
 package com.vimeo.networking.model.search;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,61 +37,62 @@ import java.io.Serializable;
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class SearchFacetCollection implements Serializable {
 
     private static final long serialVersionUID = 3340976215489066653L;
 
     @Nullable
-    @GsonAdapterKey("type")
-    public SearchFacet mTypeFacet;
+    @SerializedName("type")
+    protected SearchFacet typeFacet;
 
     @Nullable
-    @GsonAdapterKey("category")
-    public SearchFacet mCategoryFacet;
+    @SerializedName("category")
+    protected SearchFacet categoryFacet;
 
     @Nullable
-    @GsonAdapterKey("duration")
-    public SearchFacet mDurationFacet;
+    @SerializedName("duration")
+    protected SearchFacet durationFacet;
 
     @Nullable
-    @GsonAdapterKey("license")
-    public SearchFacet mLicenseFacet;
+    @SerializedName("license")
+    protected SearchFacet licenseFacet;
 
     @Nullable
-    @GsonAdapterKey("uploaded")
-    public SearchFacet mUploadedFacet;
+    @SerializedName("uploaded")
+    protected SearchFacet uploadedFacet;
 
     @Nullable
-    @GsonAdapterKey("user_type")
-    public SearchFacet mUserTypeFacet;
+    @SerializedName("user_type")
+    protected SearchFacet userTypeFacet;
 
     @Nullable
     public SearchFacet getTypeFacet() {
-        return mTypeFacet;
+        return typeFacet;
     }
 
     @Nullable
     public SearchFacet getCategoryFacet() {
-        return mCategoryFacet;
+        return categoryFacet;
     }
 
     @Nullable
     public SearchFacet getDurationFacet() {
-        return mDurationFacet;
+        return durationFacet;
     }
 
     @Nullable
     public SearchFacet getLicenseFacet() {
-        return mLicenseFacet;
+        return licenseFacet;
     }
 
     @Nullable
     public SearchFacet getUploadedFacet() {
-        return mUploadedFacet;
+        return uploadedFacet;
     }
 
     @Nullable
     public SearchFacet getUserTypeFacet() {
-        return mUserTypeFacet;
+        return userTypeFacet;
     }
 }

@@ -24,6 +24,8 @@ package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,6 +41,8 @@ import retrofit2.Response;
  * <p/>
  * Created by zetterstromk on 5/27/15.
  */
+@SuppressWarnings("unused")
+//@UseStag(FieldOption.SERIALIZED_NAME)
 public class VimeoError extends RuntimeException {
 
     private static final long serialVersionUID = -5252307626841557962L;
@@ -49,15 +53,19 @@ public class VimeoError extends RuntimeException {
     private Response response;
 
     @SerializedName("error")
-    private String errorMessage;
+    protected String errorMessage;
+
     @SerializedName("link")
-    private String link;
+    protected String link;
+
     @SerializedName("developer_message")
-    private String developerMessage;
+    protected String developerMessage;
+
     @SerializedName("error_code")
-    private ErrorCode errorCode;
+    protected ErrorCode errorCode;
+
     @SerializedName("invalid_parameters")
-    private List<InvalidParameter> invalidParameters;
+    protected List<InvalidParameter> invalidParameters;
 
     private Exception exception;
     private int httpStatusCode = Vimeo.NOT_FOUND;
@@ -130,6 +138,7 @@ public class VimeoError extends RuntimeException {
 
     /**
      * Returns the first invalid parameter in the {@link #invalidParameters} list
+     *
      * @return First InvalidParameter in the invalid parameters array
      */
     @Nullable
@@ -168,6 +177,7 @@ public class VimeoError extends RuntimeException {
     /**
      * True if the error was from poor connectivity, closed sockets, or any other issue with the networking
      * layer of the request.
+     *
      * @return {@link #isNetworkError}
      */
     public boolean isNetworkError() {
@@ -205,15 +215,14 @@ public class VimeoError extends RuntimeException {
     }
 
     public boolean isPasswordRequiredError() {
-        if (((getInvalidParameter() != null) &&
-             (getInvalidParameter().getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD)) ||
-            ((getInvalidParameter() != null) &&
-             (getInvalidParameter().getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH)) ||
-            (getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD) ||
-            (getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH)) {
-            return true;
-        }
-        return false;
+        InvalidParameter invalidParameter = getInvalidParameter();
+        ErrorCode code = getErrorCode();
+        return ((invalidParameter != null) &&
+                (invalidParameter.getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD)) ||
+               ((invalidParameter != null) &&
+                (invalidParameter.getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH)) ||
+               (code == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD) ||
+               (code == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH);
     }
 
     public void addInvalidParameter(String field, ErrorCode code, String developerMessage) {

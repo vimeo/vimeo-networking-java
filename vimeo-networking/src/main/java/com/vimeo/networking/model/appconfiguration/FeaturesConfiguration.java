@@ -23,12 +23,15 @@
 package com.vimeo.networking.model.appconfiguration;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 /**
  * An object returned from the /configs endpoint to specify which features are enabled or disabled
  * <p/>
  * Created by vennk on 5/20/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class FeaturesConfiguration {
 
     @SerializedName("iap")

@@ -24,7 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -32,6 +32,8 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 7/31/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = -7716027694845877155L;
@@ -42,33 +44,32 @@ public class Comment implements Serializable {
         //TODO get the other comment types and put them here [KZ]
     }
 
-    @GsonAdapterKey("uri")
     public String uri;
-    @GsonAdapterKey("type")
+
     public CommentType type;
-    @GsonAdapterKey("created_on")
+
+    @SerializedName("created_on")
     public Date createdOn;
-    @GsonAdapterKey("text")
+
     public String text;
-    @GsonAdapterKey("user")
+
     public User user;
-    @GsonAdapterKey("metadata")
+
     public Metadata metadata;
 
     public int replyCount() {
-        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.replies != null)) {
+        if (metadata != null && metadata.connections != null && metadata.connections.replies != null) {
             return metadata.connections.replies.total;
         }
         return 0;
     }
 
     public boolean canReply() {
-        if ((metadata != null) && (metadata.connections != null) &&
-            (metadata.connections.replies != null) &&
-            (metadata.connections.replies.options != null)) {
-            return metadata.connections.replies.options.contains(Vimeo.OPTIONS_POST);
-        }
-        return false;
+        return metadata != null &&
+               metadata.connections != null &&
+               metadata.connections.replies != null &&
+               metadata.connections.replies.options != null &&
+               metadata.connections.replies.options.contains(Vimeo.OPTIONS_POST);
     }
 
     @Override
@@ -82,7 +83,7 @@ public class Comment implements Serializable {
 
         Comment that = (Comment) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
     }
 
     @Override

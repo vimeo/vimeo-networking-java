@@ -22,10 +22,12 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +39,8 @@ import java.util.Date;
 /**
  * Created by alfredhanssen on 4/12/15.
  */
-
+@SuppressWarnings("unused")
+@UseStag
 public class User implements Serializable, Followable {
 
     private static final long serialVersionUID = -4112910222188194647L;
@@ -55,30 +58,32 @@ public class User implements Serializable, Followable {
         STAFF
     }
 
-    @GsonAdapterKey("uri")
     public String uri;
-    @GsonAdapterKey("name")
+
     public String name;
-    @GsonAdapterKey("link")
+
     public String link;
-    @GsonAdapterKey("location")
+
     public String location;
-    @GsonAdapterKey("bio")
+
     public String bio;
-    @GsonAdapterKey("created_time")
+
+    @SerializedName("created_time")
     public Date createdTime;
-    @GsonAdapterKey("account")
+
     public String account;
-    @GsonAdapterKey("pictures")
+
     public PictureCollection pictures;
-    @GsonAdapterKey("emails")
+
     public ArrayList<Email> emails;
-    @GsonAdapterKey("websites")
+
     public ArrayList<Website> websites;
-    @GsonAdapterKey("metadata")
+
     public Metadata metadata;
-    @GsonAdapterKey("upload_quota")
+
+    @SerializedName("upload_quota")
     public UploadQuota uploadQuota;
+
     @Nullable
     @GsonAdapterKey("preferences")
     public Preferences preferences;
@@ -269,12 +274,11 @@ public class User implements Serializable, Followable {
     }
 
     public boolean canUploadPicture() {
-        if ((metadata != null) && (metadata.connections != null) &&
-            (metadata.connections.pictures != null) &&
-            (metadata.connections.pictures.options != null)) {
-            return metadata.connections.pictures.options.contains(Vimeo.OPTIONS_POST);
-        }
-        return false;
+        return metadata != null &&
+               metadata.connections != null &&
+               metadata.connections.pictures != null &&
+               metadata.connections.pictures.options != null &&
+               metadata.connections.pictures.options.contains(Vimeo.OPTIONS_POST);
     }
 
     public UploadQuota getUploadQuota() {
@@ -353,7 +357,7 @@ public class User implements Serializable, Followable {
 
         User that = (User) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
     }
 
     @Override

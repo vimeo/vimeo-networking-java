@@ -1,10 +1,11 @@
 package com.vimeo.networking.model.vod;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.Connection;
 import com.vimeo.networking.model.ConnectionCollection;
 import com.vimeo.networking.model.Metadata;
 import com.vimeo.networking.model.User;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +19,8 @@ import java.io.Serializable;
  * <p>
  * Created by zetterstromk on 10/4/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Season implements Serializable {
 
     private static final String SEASON_TYPE_MAIN = "main";
@@ -31,35 +34,28 @@ public class Season implements Serializable {
     private static final long serialVersionUID = 2770200708069413413L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    public String mUri;
+    public String uri;
 
     @Nullable
-    @GsonAdapterKey("name")
-    public String mName;
+    public String name;
 
     @Nullable
-    @GsonAdapterKey("type")
-    public String mType;
+    public String type;
 
     @Nullable
-    @GsonAdapterKey("description")
-    public String mDescription;
+    public String description;
 
     @Nullable
-    @GsonAdapterKey("user")
-    public User mUser;
+    public User user;
 
-    @GsonAdapterKey("position")
-    public int mPosition;
+    public int position;
 
     @Nullable
-    @GsonAdapterKey("metadata")
-    public Metadata mMetadata;
+    public Metadata metadata;
 
     @Nullable
-    @GsonAdapterKey("resource_key")
-    public String mResourceKey;
+    @SerializedName("resource_key")
+    public String resourceKey;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -68,7 +64,7 @@ public class Season implements Serializable {
 
     @Nullable
     public String getUri() {
-        return mUri;
+        return uri;
     }
 
     /**
@@ -76,7 +72,7 @@ public class Season implements Serializable {
      */
     @Nullable
     public String getName() {
-        return mName;
+        return name;
     }
 
     /**
@@ -87,7 +83,7 @@ public class Season implements Serializable {
      */
     @NotNull
     public SeasonType getSeasonType() {
-        if (SEASON_TYPE_EXTRAS.equals(mType)) {
+        if (SEASON_TYPE_EXTRAS.equals(type)) {
             return SeasonType.EXTRAS;
         }
         return SeasonType.MAIN;
@@ -98,7 +94,7 @@ public class Season implements Serializable {
      */
     @Nullable
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     /**
@@ -106,7 +102,7 @@ public class Season implements Serializable {
      */
     @Nullable
     public User getUser() {
-        return mUser;
+        return user;
     }
 
     /**
@@ -117,7 +113,7 @@ public class Season implements Serializable {
      * @return the position of the season
      */
     public int getPosition() {
-        return mPosition;
+        return position;
     }
 
     /**
@@ -129,12 +125,12 @@ public class Season implements Serializable {
      */
     @Nullable
     public Metadata getMetadata() {
-        return mMetadata;
+        return metadata;
     }
 
     @Nullable
     public String getResourceKey() {
-        return mResourceKey;
+        return resourceKey;
     }
 
     // </editor-fold>
@@ -146,7 +142,7 @@ public class Season implements Serializable {
 
     @Nullable
     public ConnectionCollection getConnections() {
-        return mMetadata != null ? mMetadata.connections : null;
+        return metadata != null ? metadata.connections : null;
     }
 
     @Nullable
@@ -176,12 +172,12 @@ public class Season implements Serializable {
         }
         Season that = (Season) obj;
 
-        return (mUri != null && that.getUri() != null) && mUri.equals(that.getUri());
+        return (uri != null && that.getUri() != null) && uri.equals(that.getUri());
     }
 
     @Override
     public int hashCode() {
-        return mUri != null ? mUri.hashCode() : 0;
+        return uri != null ? uri.hashCode() : 0;
     }
     // </editor-fold>
 }

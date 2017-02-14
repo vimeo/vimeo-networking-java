@@ -23,8 +23,9 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -34,9 +35,12 @@ import java.util.Date;
  * This model object represents an Interaction.
  * Created by zetterstromk on 6/5/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Interaction implements Serializable {
 
     private static final long serialVersionUID = 2033767841952340400L;
+
     private static final String STREAM_PURCHASED = "purchased";
     private static final String STREAM_RESTRICTED = "restricted";
     private static final String STREAM_AVAILABLE = "available";
@@ -52,9 +56,10 @@ public class Interaction implements Serializable {
         @SerializedName(STREAM_UNAVAILABLE)
         UNAVAILABLE(STREAM_UNAVAILABLE); // you don't have it, can't purchase it
 
+        @NotNull
         private final String mName;
 
-        Stream(String name) {
+        Stream(@NotNull String name) {
             mName = name;
         }
 
@@ -64,18 +69,19 @@ public class Interaction implements Serializable {
         }
     }
 
-    @GsonAdapterKey("added")
     public boolean added;
+
     @Nullable
-    @GsonAdapterKey("added_time")
+    @SerializedName("added_time")
     public Date addedTime;
+
     @Nullable
-    @GsonAdapterKey("uri")
     public String uri;
+
     @Nullable
-    @GsonAdapterKey("stream")
     public Stream stream;
+
     @Nullable
-    @GsonAdapterKey("expires_time")
+    @SerializedName("expires_time")
     public Date expiration;
 }

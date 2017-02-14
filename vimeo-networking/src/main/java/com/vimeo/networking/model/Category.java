@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,43 +33,37 @@ import java.util.ArrayList;
 /**
  * Created by zetterstromk on 8/20/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Category implements Serializable, Followable {
 
     private static final long serialVersionUID = 441419347585215353L;
 
     @Nullable
-    @GsonAdapterKey("uri")
     public String uri;
 
     @Nullable
-    @GsonAdapterKey("name")
     public String name;
 
     @Nullable
-    @GsonAdapterKey("link")
     public String link;
 
-    @GsonAdapterKey("top_level")
+    @SerializedName("top_level")
     public boolean topLevel;
 
     @Nullable
-    @GsonAdapterKey("pictures")
     public PictureCollection pictures;
 
     @Nullable
-    @GsonAdapterKey("icon")
-    PictureCollection mIcon;
+    protected PictureCollection icon;
 
     @Nullable
-    @GsonAdapterKey("subcategories")
     public ArrayList<Category> subcategories;
 
     @Nullable
-    @GsonAdapterKey("parent")
     public Category parent;
 
     @Nullable
-    @GsonAdapterKey("metadata")
     public Metadata metadata;
 
     @Nullable
@@ -102,10 +97,8 @@ public class Category implements Serializable, Followable {
 
     @Override
     public boolean isFollowing() {
-        if (getFollowInteraction() != null) {
-            return metadata.interactions.follow.added;
-        }
-        return false;
+        Interaction interaction = getFollowInteraction();
+        return interaction != null && interaction.added;
     }
 
     @Nullable
@@ -128,7 +121,7 @@ public class Category implements Serializable, Followable {
      */
     @Nullable
     public PictureCollection getIcon() {
-        return mIcon;
+        return icon;
     }
 
     @Override
@@ -142,7 +135,7 @@ public class Category implements Serializable, Followable {
 
         Category that = (Category) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
     }
 
     @Override

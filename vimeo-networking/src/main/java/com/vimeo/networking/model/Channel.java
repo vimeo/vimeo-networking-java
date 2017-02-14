@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,31 +33,34 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 6/11/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Channel implements Serializable, Followable {
 
     private static final long serialVersionUID = 3190410523525111858L;
 
-    @GsonAdapterKey("uri")
     public String uri;
-    @GsonAdapterKey("name")
+
     public String name;
-    @GsonAdapterKey("description")
+
     public String description;
-    @GsonAdapterKey("link")
+
     public String link;
-    @GsonAdapterKey("created_time")
+
+    @SerializedName("created_time")
     public Date createdTime;
-    @GsonAdapterKey("modified_time")
+
+    @SerializedName("modified_time")
     public Date modifiedTime;
-    @GsonAdapterKey("user")
+
     public User user;
-    @GsonAdapterKey("pictures")
+
     public PictureCollection pictures;
-    @GsonAdapterKey("header")
+
     public PictureCollection header;
-    @GsonAdapterKey("privacy")
+
     public Privacy privacy;
-    @GsonAdapterKey("metadata")
+
     public Metadata metadata;
 
     @Nullable
@@ -83,10 +87,8 @@ public class Channel implements Serializable, Followable {
 
     @Override
     public boolean isFollowing() {
-        if (getFollowInteraction() != null) {
-            return metadata.interactions.follow.added;
-        }
-        return false;
+        Interaction interaction = getFollowInteraction();
+        return interaction != null && interaction.added;
     }
 
     public int getFollowerCount() {
@@ -122,7 +124,7 @@ public class Channel implements Serializable, Followable {
 
         Channel that = (Channel) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
     }
 
     @Override

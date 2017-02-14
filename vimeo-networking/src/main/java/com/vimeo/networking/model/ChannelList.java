@@ -27,6 +27,7 @@ import com.vimeo.stag.UseStag;
 /**
  * Created by zetterstromk on 6/11/15.
  */
+@SuppressWarnings("unused")
 @UseStag
 public class ChannelList extends BaseResponseList<Channel> {
 

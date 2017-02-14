@@ -32,7 +32,7 @@ import com.vimeo.networking.model.Metadata;
 import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,6 +45,7 @@ import java.util.Date;
  * Created by rigbergh on 4/25/16.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class VodItem implements Serializable {
 
     private static final String S_FILM = "film";
@@ -56,6 +57,7 @@ public class VodItem implements Serializable {
         @SerializedName(S_SERIES)
         SERIES(S_SERIES);
 
+        @NotNull
         private final String mType;
 
         VodType(@NotNull String type) {
@@ -73,12 +75,11 @@ public class VodItem implements Serializable {
         private static final long serialVersionUID = -994389241935894370L;
 
         @Nullable
-        @GsonAdapterKey("time")
-        public Date mTime;
+        public Date time;
 
         @Nullable
         public Date getTime() {
-            return mTime;
+            return time;
         }
 
     }
@@ -86,103 +87,93 @@ public class VodItem implements Serializable {
     private static final long serialVersionUID = 8360150766347816073L;
 
     @Nullable
-    @GsonAdapterKey("name")
-    public String mName;
+    public String name;
 
     @Nullable
-    @GsonAdapterKey("description")
-    public String mDescription;
+    public String description;
 
     @Nullable
-    @GsonAdapterKey("type")
-    public VodType mType;
+    public VodType type;
 
     @Nullable
-    @GsonAdapterKey("link")
-    public String mLink;
+    public String link;
 
     @Nullable
-    @GsonAdapterKey("publish")
-    public Publish mPublish;
+    public Publish publish;
 
     @Nullable
-    @GsonAdapterKey("pictures")
-    public PictureCollection mPictures;
+    public PictureCollection pictures;
 
     @Nullable
-    @GsonAdapterKey("metadata")
-    public Metadata mMetadata;
+    public Metadata metadata;
 
     @Nullable
-    @GsonAdapterKey("user")
-    public User mUser;
+    public User user;
 
     @Nullable
-    @GsonAdapterKey("film")
-    public Video mFilm;
+    public Video film;
 
     @Nullable
-    @GsonAdapterKey("trailer")
-    public Video mTrailer;
+    public Video trailer;
 
     @Nullable
     public String getName() {
-        return mName;
+        return name;
     }
 
     @Nullable
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     @Nullable
     public Publish getPublish() {
-        return mPublish;
+        return publish;
     }
 
     @Nullable
     public PictureCollection getPictures() {
-        return mPictures;
+        return pictures;
     }
 
     @Nullable
     public Metadata getMetadata() {
-        return mMetadata;
+        return metadata;
     }
 
     @Nullable
     public InteractionCollection getInteractions() {
-        return mMetadata != null ? mMetadata.interactions : null;
+        return metadata != null ? metadata.interactions : null;
     }
 
     @Nullable
     public ConnectionCollection getConnections() {
-        return mMetadata != null ? mMetadata.connections : null;
+        return metadata != null ? metadata.connections : null;
     }
 
     @Nullable
     public User getUser() {
-        return mUser;
+        return user;
     }
 
     @Nullable
     public Video getFilm() {
-        return mFilm;
+        return film;
     }
 
     @Nullable
     public Video getTrailer() {
-        return mTrailer;
+        return trailer;
     }
 
     @Nullable
     public String getLink() {
-        return mLink;
+        return link;
     }
 
     @Nullable
     public VodType getType() {
-        return mType;
+        return type;
     }
 
     public int getViewableVideoCount() {
@@ -215,39 +206,39 @@ public class VodItem implements Serializable {
     }
 
     public void setName(@Nullable String name) {
-        mName = name;
+        this.name = name;
     }
 
     public void setDescription(@Nullable String description) {
-        mDescription = description;
+        this.description = description;
     }
 
     public void setType(@Nullable VodType type) {
-        mType = type;
+        this.type = type;
     }
 
     public void setPublish(@Nullable Publish publish) {
-        mPublish = publish;
+        this.publish = publish;
     }
 
     public void setPictures(@Nullable PictureCollection pictures) {
-        mPictures = pictures;
+        this.pictures = pictures;
     }
 
     public void setMetadata(@Nullable Metadata metadata) {
-        mMetadata = metadata;
+        this.metadata = metadata;
     }
 
     public void setUser(@Nullable User user) {
-        mUser = user;
+        this.user = user;
     }
 
     public void setFilm(@Nullable Video film) {
-        mFilm = film;
+        this.film = film;
     }
 
     public void setTrailer(@Nullable Video trailer) {
-        mTrailer = trailer;
+        this.trailer = trailer;
     }
 
     @Override
@@ -260,11 +251,11 @@ public class VodItem implements Serializable {
         }
         VodItem that = (VodItem) obj;
 
-        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
+        return (link != null && that.getLink() != null) && link.equals(that.getLink());
     }
 
     @Override
     public int hashCode() {
-        return mLink != null ? mLink.hashCode() : 0;
+        return link != null ? link.hashCode() : 0;
     }
 }

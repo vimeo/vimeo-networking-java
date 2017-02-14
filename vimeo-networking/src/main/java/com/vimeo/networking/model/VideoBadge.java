@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -12,29 +13,27 @@ import java.io.Serializable;
  * video data (name, description, etc)
  * Created by zetterstromk on 10/4/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class VideoBadge implements Serializable {
 
     private static final long serialVersionUID = -5343389171512787927L;
 
     @Nullable
-    @GsonAdapterKey("type")
-    public String mType;
+    public String type;
 
     @Nullable
-    @GsonAdapterKey("festival")
-    public String mFestival;
+    public String festival;
 
     @Nullable
-    @GsonAdapterKey("link")
-    public String mLink;
+    public String link;
 
     @Nullable
-    @GsonAdapterKey("text")
-    public String mText;
+    public String text;
 
     @Nullable
-    @GsonAdapterKey("pictures")
-    public PictureCollection mPictureCollection;
+    @SerializedName("pictures")
+    public PictureCollection pictureCollection;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -50,7 +49,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public String getType() {
-        return mType;
+        return type;
     }
 
     /**
@@ -58,7 +57,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public String getFestival() {
-        return mFestival;
+        return festival;
     }
 
     /**
@@ -67,7 +66,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public String getLink() {
-        return mLink;
+        return link;
     }
 
     /**
@@ -76,7 +75,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public String getText() {
-        return mText;
+        return text;
     }
 
     /**
@@ -85,7 +84,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public PictureCollection getPictureCollection() {
-        return mPictureCollection;
+        return pictureCollection;
     }
     // </editor-fold>
 }

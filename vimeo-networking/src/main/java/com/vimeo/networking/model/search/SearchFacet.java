@@ -24,7 +24,7 @@
 
 package com.vimeo.networking.model.search;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,25 +36,25 @@ import java.util.ArrayList;
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class SearchFacet implements Serializable {
 
     private static final long serialVersionUID = -6507918911819851151L;
 
     @Nullable
-    @GsonAdapterKey("name")
-    public String mName;
+    public String name;
 
     @Nullable
-    @GsonAdapterKey("options")
-    public ArrayList<FacetOption> mOptions;
+    public ArrayList<FacetOption> options;
 
     @Nullable
     public String getName() {
-        return mName;
+        return name;
     }
 
     @Nullable
     public ArrayList<FacetOption> getOptions() {
-        return mOptions;
+        return options;
     }
 }

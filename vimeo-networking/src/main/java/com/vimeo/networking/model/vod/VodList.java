@@ -31,6 +31,7 @@ import com.vimeo.stag.UseStag;
  * A list of {@link VodItem} objects
  * Created by rigbergh on 4/25/16.
  */
+@SuppressWarnings("unused")
 @UseStag
 public class VodList extends BaseResponseList<VodItem> {
 

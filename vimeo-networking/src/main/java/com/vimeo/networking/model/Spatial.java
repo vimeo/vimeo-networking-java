@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * Created by restainoa on 1/3/17.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class Spatial implements Serializable {
 
     private static final long serialVersionUID = 5660325676029549468L;
@@ -34,16 +36,16 @@ public class Spatial implements Serializable {
     }
 
     @NotNull
-    @GsonAdapterKey("projection")
-    protected String mProjection;
+    @SerializedName("projection")
+    protected String projection;
 
     @NotNull
-    @GsonAdapterKey("stereo_format")
-    protected String mStereoFormat;
+    @SerializedName("stereo_format")
+    protected String stereoFormat;
 
     @NotNull
     public Projection getProjection() {
-        switch (mProjection) {
+        switch (projection) {
             case "equirectangular":
                 return Projection.EQUIRECTANGULAR;
             case "cylindrical":
@@ -61,7 +63,7 @@ public class Spatial implements Serializable {
 
     @NotNull
     public Format getFormat() {
-        switch (mStereoFormat) {
+        switch (stereoFormat) {
             case "mono":
                 return Format.MONO;
             case "left-right":
@@ -84,21 +86,21 @@ public class Spatial implements Serializable {
 
         Spatial spatial = (Spatial) o;
 
-        return mProjection.equals(spatial.mProjection) && mStereoFormat.equals(spatial.mStereoFormat);
+        return projection.equals(spatial.projection) && stereoFormat.equals(spatial.stereoFormat);
     }
 
     @Override
     public String toString() {
         return super.toString() + "{" +
-               "mProjection='" + mProjection + '\'' +
-               ", mStereoFormat='" + mStereoFormat + '\'' +
+               "projection='" + projection + '\'' +
+               ", stereoFormat='" + stereoFormat + '\'' +
                '}';
     }
 
     @Override
     public int hashCode() {
-        int result = mProjection.hashCode();
-        result = 31 * result + mStereoFormat.hashCode();
+        int result = projection.hashCode();
+        result = 31 * result + stereoFormat.hashCode();
         result = 31 * result + super.hashCode();
         return result;
     }

@@ -7,6 +7,7 @@ import com.vimeo.stag.UseStag;
  * A list of {@link Season} items
  * Created by zetterstromk on 10/4/16.
  */
+@SuppressWarnings("unused")
 @UseStag
 public class SeasonList extends BaseResponseList<Season> {
 

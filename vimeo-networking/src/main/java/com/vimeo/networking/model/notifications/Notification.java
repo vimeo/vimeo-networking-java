@@ -1,10 +1,11 @@
 package com.vimeo.networking.model.notifications;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Credit;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,101 +17,98 @@ import java.util.Date;
  * A model representing activity that a user may be notified about.
  * Created by zetterstromk on 1/11/17.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Notification implements Serializable {
 
     private static final long serialVersionUID = -68262442832775695L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    String mUri;
+    protected String uri;
 
     @Nullable
-    @GsonAdapterKey("created_time")
-    Date mCreatedDate;
+    @SerializedName("created_time")
+    protected Date createdDate;
 
     @NotNull
-    @GsonAdapterKey("type")
-    String mType;
+    protected String type;
 
     @Nullable
-    @GsonAdapterKey("user")
-    User mUser;
+    protected User user;
 
     @Nullable
-    @GsonAdapterKey("comment")
-    Comment mComment;
+    protected Comment comment;
 
     @Nullable
-    @GsonAdapterKey("clip")
-    Video mVideo;
+    @SerializedName("clip")
+    protected Video video;
 
     @Nullable
-    @GsonAdapterKey("credit")
-    Credit mCredit;
+    protected Credit credit;
 
-    @GsonAdapterKey("new")
-    boolean mIsNew;
+    @SerializedName("new")
+    protected boolean isNew;
 
-    @GsonAdapterKey("seen")
-    boolean mIsSeen;
+    @SerializedName("seen")
+    protected boolean isSeen;
 
     @Nullable
     public String getUri() {
-        return mUri;
+        return uri;
     }
 
     @Nullable
     public Date getCreatedDate() {
-        return mCreatedDate;
+        return createdDate;
     }
 
     @NotNull
     public NotificationType getNotificationType() {
-        return NotificationType.notificationTypeFromString(mType);
+        return NotificationType.notificationTypeFromString(type);
     }
 
     @Nullable
     public User getUser() {
-        return mUser;
+        return user;
     }
 
     public void setUser(@Nullable User user) {
-        mUser = user;
+        this.user = user;
     }
 
     @Nullable
     public Comment getComment() {
-        return mComment;
+        return comment;
     }
 
     public void setComment(@Nullable Comment comment) {
-        mComment = comment;
+        this.comment = comment;
     }
 
     @Nullable
     public Video getVideo() {
-        return mVideo;
+        return video;
     }
 
     public void setVideo(@Nullable Video video) {
-        mVideo = video;
+        this.video = video;
     }
 
     @Nullable
     public Credit getCredit() {
-        return mCredit;
+        return credit;
     }
 
     public void setCredit(@Nullable Credit credit) {
-        mCredit = credit;
+        this.credit = credit;
     }
 
     public boolean isNew() {
-        return mIsNew;
+        return isNew;
     }
 
     public boolean isSeen() {
-        return mIsSeen;
+        return isSeen;
     }
 
     @Override
@@ -124,50 +122,50 @@ public class Notification implements Serializable {
 
         Notification that = (Notification) o;
 
-        if (mUri != null ? !mUri.equals(that.mUri) : that.mUri != null) {
+        if (uri != null ? !uri.equals(that.uri) : that.uri != null) {
             return false;
         }
-        if (mCreatedDate != null ? !mCreatedDate.equals(that.mCreatedDate) : that.mCreatedDate != null) {
+        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) {
             return false;
         }
-        if (!mType.equals(that.mType)) {
+        if (!type.equals(that.type)) {
             return false;
         }
-        if (mUser != null ? !mUser.equals(that.mUser) : that.mUser != null) {
+        if (user != null ? !user.equals(that.user) : that.user != null) {
             return false;
         }
-        if (mComment != null ? !mComment.equals(that.mComment) : that.mComment != null) {
+        if (comment != null ? !comment.equals(that.comment) : that.comment != null) {
             return false;
         }
-        if (mVideo != null ? !mVideo.equals(that.mVideo) : that.mVideo != null) {
+        if (video != null ? !video.equals(that.video) : that.video != null) {
             return false;
         }
-        return mCredit != null ? mCredit.equals(that.mCredit) : that.mCredit == null;
+        return credit != null ? credit.equals(that.credit) : that.credit == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = mUri != null ? mUri.hashCode() : 0;
-        result = 31 * result + (mCreatedDate != null ? mCreatedDate.hashCode() : 0);
-        result = 31 * result + mType.hashCode();
-        result = 31 * result + (mUser != null ? mUser.hashCode() : 0);
-        result = 31 * result + (mComment != null ? mComment.hashCode() : 0);
-        result = 31 * result + (mVideo != null ? mVideo.hashCode() : 0);
-        result = 31 * result + (mCredit != null ? mCredit.hashCode() : 0);
+        int result = uri != null ? uri.hashCode() : 0;
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        result = 31 * result + type.hashCode();
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        result = 31 * result + (video != null ? video.hashCode() : 0);
+        result = 31 * result + (credit != null ? credit.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Notification{" +
-               "mUri='" + mUri + '\'' +
-               ", mCreatedDate=" + mCreatedDate +
-               ", mType='" + mType + '\'' +
-               ", mUser=" + mUser +
-               ", mComment=" + mComment +
-               ", mVideo=" + mVideo +
-               ", mCredit=" + mCredit +
+               "uri='" + uri + '\'' +
+               ", createdDate=" + createdDate +
+               ", type='" + type + '\'' +
+               ", user=" + user +
+               ", comment=" + comment +
+               ", video=" + video +
+               ", credit=" + credit +
                '}';
     }
 }

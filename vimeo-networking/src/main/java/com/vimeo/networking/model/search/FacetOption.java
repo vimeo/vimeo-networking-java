@@ -24,7 +24,7 @@
 
 package com.vimeo.networking.model.search;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,32 +35,31 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class FacetOption implements Serializable {
 
     private static final long serialVersionUID = 6525562797608669182L;
 
     @Nullable
-    @GsonAdapterKey("name")
-    public String mName;
+    public String name;
 
-    @GsonAdapterKey("total")
-    public int mTotal;
+    public int total;
 
     @Nullable
-    @GsonAdapterKey("text")
-    public String mText;
+    public String text;
 
     @Nullable
     public String getName() {
-        return mName;
+        return name;
     }
 
     public int getTotal() {
-        return mTotal;
+        return total;
     }
 
     @Nullable
     public String getText() {
-        return mText;
+        return text;
     }
 }

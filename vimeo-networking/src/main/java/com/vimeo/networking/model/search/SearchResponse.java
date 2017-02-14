@@ -24,8 +24,9 @@
 
 package com.vimeo.networking.model.search;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.BaseResponseList;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,16 +36,17 @@ import org.jetbrains.annotations.Nullable;
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class SearchResponse extends BaseResponseList<SearchResult> {
 
     private static final long serialVersionUID = -7915082057592438294L;
 
     @Nullable
-    @GsonAdapterKey("facets")
-    public SearchFacetCollection mFacetCollection;
+    @SerializedName("facets")
+    protected SearchFacetCollection facetCollection;
 
-    @GsonAdapterKey("mature_hidden_count")
-    public int mMatureHiddenCount;
+    @SerializedName("mature_hidden_count")
+    protected int matureHiddenCount;
 
     @Override
     public Class<SearchResult> getModelClass() {
@@ -53,10 +55,10 @@ public class SearchResponse extends BaseResponseList<SearchResult> {
 
     @Nullable
     public SearchFacetCollection getFacetCollection() {
-        return mFacetCollection;
+        return facetCollection;
     }
 
     public int getMatureHiddenCount() {
-        return mMatureHiddenCount;
+        return matureHiddenCount;
     }
 }

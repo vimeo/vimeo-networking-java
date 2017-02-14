@@ -22,22 +22,24 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
 /**
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Paging implements Serializable {
 
     private static final long serialVersionUID = -8547699448016693035L;
-    @GsonAdapterKey("next")
+
     public String next;
-    @GsonAdapterKey("previous")
+
     public String previous;
-    @GsonAdapterKey("first")
+
     public String first;
-    @GsonAdapterKey("last")
+
     public String last;
 }

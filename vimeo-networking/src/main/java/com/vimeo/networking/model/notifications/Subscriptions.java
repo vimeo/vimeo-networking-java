@@ -1,6 +1,7 @@
 package com.vimeo.networking.model.notifications;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,87 +16,89 @@ import java.util.Map;
  * <p>
  * Created by zetterstromk on 12/15/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Subscriptions implements Serializable {
 
     private static final long serialVersionUID = 3088065484753327987L;
 
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_COMMENT)
-    boolean mComment;
+    @SerializedName(NotificationConstants.NOTIFICATION_COMMENT)
+    protected boolean comment;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_CREDIT)
-    boolean mCredit;
+    @SerializedName(NotificationConstants.NOTIFICATION_CREDIT)
+    protected boolean credit;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_LIKE)
-    boolean mLike;
+    @SerializedName(NotificationConstants.NOTIFICATION_LIKE)
+    protected boolean like;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_REPLY)
-    boolean mReply;
+    @SerializedName(NotificationConstants.NOTIFICATION_REPLY)
+    protected boolean reply;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_FOLLOW)
-    boolean mFollow;
+    @SerializedName(NotificationConstants.NOTIFICATION_FOLLOW)
+    protected boolean follow;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
-    boolean mVideoAvailable;
+    @SerializedName(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
+    protected boolean videoAvailable;
 
     public boolean isReceivingComment() {
-        return mComment;
+        return comment;
     }
 
     public void receiveComment(boolean receive) {
-        mComment = receive;
+        comment = receive;
     }
 
     public boolean isReceivingCredit() {
-        return mCredit;
+        return credit;
     }
 
     public void receiveCredit(boolean receive) {
-        mCredit = receive;
+        credit = receive;
     }
 
     public boolean isReceivingLike() {
-        return mLike;
+        return like;
     }
 
     public void receiveLike(boolean receive) {
-        mLike = receive;
+        like = receive;
     }
 
     public boolean isReceivingReply() {
-        return mReply;
+        return reply;
     }
 
     public void receiveReply(boolean receive) {
-        mReply = receive;
+        reply = receive;
     }
 
     public boolean isReceivingFollow() {
-        return mFollow;
+        return follow;
     }
 
     public void receiveFollow(boolean receive) {
-        mFollow = receive;
+        follow = receive;
     }
 
     public boolean isReceivingVideoAvailable() {
-        return mVideoAvailable;
+        return videoAvailable;
     }
 
     public void receiveVideoAvailable(boolean receive) {
-        mVideoAvailable = receive;
+        videoAvailable = receive;
     }
 
     @NotNull
     public Map<String, Boolean> getMapFromSubscriptions() {
         Map<String, Boolean> map = new HashMap<>();
 
-        map.put(NotificationConstants.NOTIFICATION_COMMENT, mComment);
-        map.put(NotificationConstants.NOTIFICATION_CREDIT, mCredit);
-        map.put(NotificationConstants.NOTIFICATION_LIKE, mLike);
-        map.put(NotificationConstants.NOTIFICATION_REPLY, mReply);
-        map.put(NotificationConstants.NOTIFICATION_FOLLOW, mFollow);
-        map.put(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE, mVideoAvailable);
+        map.put(NotificationConstants.NOTIFICATION_COMMENT, comment);
+        map.put(NotificationConstants.NOTIFICATION_CREDIT, credit);
+        map.put(NotificationConstants.NOTIFICATION_LIKE, like);
+        map.put(NotificationConstants.NOTIFICATION_REPLY, reply);
+        map.put(NotificationConstants.NOTIFICATION_FOLLOW, follow);
+        map.put(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE, videoAvailable);
 
         return map;
     }

@@ -8,6 +8,7 @@ import com.vimeo.stag.UseStag;
  * <p>
  * Created by zetterstromk on 1/11/17.
  */
+@SuppressWarnings("unused")
 @UseStag
 public class NotificationList extends BaseResponseList<Notification> {
 

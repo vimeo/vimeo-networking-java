@@ -1,6 +1,6 @@
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -10,61 +10,58 @@ import java.io.Serializable;
  * A model representing a credit.
  * Created by zetterstromk on 1/11/17.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Credit implements Serializable {
 
     private static final long serialVersionUID = 6037404487282167384L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    String mUri;
+    protected String uri;
 
     @Nullable
-    @GsonAdapterKey("role")
-    String mRole;
+    protected String role;
 
     @Nullable
-    @GsonAdapterKey("name")
-    String mName;
+    protected String name;
 
     @Nullable
-    @GsonAdapterKey("video")
-    Video mVideo;
+    protected Video video;
 
     @Nullable
-    @GsonAdapterKey("user")
-    User mUser;
+    protected User user;
 
     @Nullable
     public String getUri() {
-        return mUri;
+        return uri;
     }
 
     @Nullable
     public String getRole() {
-        return mRole;
+        return role;
     }
 
     @Nullable
     public String getName() {
-        return mName;
+        return name;
     }
 
     @Nullable
     public Video getVideo() {
-        return mVideo;
+        return video;
     }
 
     public void setVideo(@Nullable Video video) {
-        mVideo = video;
+        this.video = video;
     }
 
     @Nullable
     public User getUser() {
-        return mUser;
+        return user;
     }
 
     public void setUser(@Nullable User user) {
-        mUser = user;
+        this.user = user;
     }
 
     @Override
@@ -78,40 +75,40 @@ public class Credit implements Serializable {
 
         Credit credit = (Credit) o;
 
-        if (mUri != null ? !mUri.equals(credit.mUri) : credit.mUri != null) {
+        if (uri != null ? !uri.equals(credit.uri) : credit.uri != null) {
             return false;
         }
-        if (mRole != null ? !mRole.equals(credit.mRole) : credit.mRole != null) {
+        if (role != null ? !role.equals(credit.role) : credit.role != null) {
             return false;
         }
-        if (mName != null ? !mName.equals(credit.mName) : credit.mName != null) {
+        if (name != null ? !name.equals(credit.name) : credit.name != null) {
             return false;
         }
-        if (mVideo != null ? !mVideo.equals(credit.mVideo) : credit.mVideo != null) {
+        if (video != null ? !video.equals(credit.video) : credit.video != null) {
             return false;
         }
-        return mUser != null ? mUser.equals(credit.mUser) : credit.mUser == null;
+        return user != null ? user.equals(credit.user) : credit.user == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = mUri != null ? mUri.hashCode() : 0;
-        result = 31 * result + (mRole != null ? mRole.hashCode() : 0);
-        result = 31 * result + (mName != null ? mName.hashCode() : 0);
-        result = 31 * result + (mVideo != null ? mVideo.hashCode() : 0);
-        result = 31 * result + (mUser != null ? mUser.hashCode() : 0);
+        int result = uri != null ? uri.hashCode() : 0;
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (video != null ? video.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Credit{" +
-               "mUri='" + mUri + '\'' +
-               ", mRole='" + mRole + '\'' +
-               ", mName='" + mName + '\'' +
-               ", mVideo=" + mVideo +
-               ", mUser=" + mUser +
+               "uri='" + uri + '\'' +
+               ", role='" + role + '\'' +
+               ", name='" + name + '\'' +
+               ", video=" + video +
+               ", user=" + user +
                '}';
     }
 }
