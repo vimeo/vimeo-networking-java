@@ -48,7 +48,7 @@ import java.util.Locale;
  * <p/>
  * <b>Original JavaDoc:</b>
  * <br>
- * We have to write our own serializer and deserializer because Android doesn't currently
+ * We have to write our own serializer and mGsonDeserializer because Android doesn't currently
  * support ISO 8601. The SimpleDateFormat link below shows 'ZZZZZ' as what we want for timezone
  * but this is only available in Android 4.3 and up. Java 7 has the 'X' character to represent
  * ISO 8601 but Android treats this differently. So in the mean time the ISO8601 class will convert
@@ -67,7 +67,7 @@ public class ISO8601 {
     // There was a bug in Android 2.1 that looks like it would arbitrary GC a static SDF
     // If supporting Android 2.1, be aware of this [KV]
     // Using RFC 822 since we can't use ISO 8601
-    private static final SimpleDateFormat dateFormat =
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
 
     public static JsonSerializer<Date> getDateSerializer() {
@@ -99,7 +99,7 @@ public class ISO8601 {
 
     /** Transform Date to ISO 8601 string. */
     public static String fromDate(final Date date) {
-        String formatted = dateFormat.format(date);
+        String formatted = SIMPLE_DATE_FORMAT.format(date);
         return formatted.substring(0, 22) + ":" + formatted.substring(22);
     }
 
@@ -122,7 +122,7 @@ public class ISO8601 {
             throw new ParseException("Invalid length", 0);
         }
 
-        return dateFormat.parse(s);
+        return SIMPLE_DATE_FORMAT.parse(s);
     }
 }
 

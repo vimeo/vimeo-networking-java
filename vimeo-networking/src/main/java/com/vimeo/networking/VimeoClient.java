@@ -80,15 +80,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @SuppressWarnings("unused")
 public final class VimeoClient {
 
+    private static volatile boolean sContinuePinCodeAuthorizationRefreshCycle;
+
     @NotNull
     private final Configuration mConfiguration;
     private final VimeoService mVimeoService;
     @Nullable
     private final Cache mCache;
     private String mCurrentCodeGrantState;
+
+    @NotNull
     private final Retrofit mRetrofit;
+
+    @NotNull
     private final Gson mGson;
-    private static volatile boolean mContinuePinCodeAuthorizationRefreshCycle;
     private Timer mPinCodeAuthorizationTimer;
 
     /**
@@ -102,19 +107,20 @@ public final class VimeoClient {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Configuration">
+    @Nullable
+    private static VimeoClient sSharedInstance;
 
-    private static VimeoClient mSharedInstance;
-
+    @NotNull
     public static VimeoClient getInstance() {
-        if (mSharedInstance == null) {
+        if (sSharedInstance == null) {
             throw new AssertionError("Instance must be configured before use");
         }
 
-        return mSharedInstance;
+        return sSharedInstance;
     }
 
-    public static void initialize(Configuration configuration) {
-        mSharedInstance = new VimeoClient(configuration);
+    public static void initialize(@NotNull Configuration configuration) {
+        sSharedInstance = new VimeoClient(configuration);
     }
 
     private VimeoClient(@NotNull Configuration configuration) {
@@ -123,15 +129,15 @@ public final class VimeoClient {
         mCache = mConfiguration.getCache();
         mRetrofit = createRetrofit();
         mVimeoService = mRetrofit.create(VimeoService.class);
-        ClientLogger.setLogProvider(mConfiguration.logProvider);
-        ClientLogger.setLogLevel(mConfiguration.logLevel);
+        ClientLogger.setLogProvider(mConfiguration.mLogProvider);
+        ClientLogger.setLogLevel(mConfiguration.mLogLevel);
 
         VimeoAccount vimeoAccount = mConfiguration.loadAccount();
         setVimeoAccount(vimeoAccount);
     }
 
     private Retrofit createRetrofit() {
-        return new Retrofit.Builder().baseUrl(mConfiguration.baseURLString)
+        return new Retrofit.Builder().baseUrl(mConfiguration.mBaseURLString)
                 .client(createOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(mGson))
                 .build();
@@ -151,8 +157,8 @@ public final class VimeoClient {
                                 .build();
                     }
                 })
-                .setReadTimeout(mConfiguration.timeout, TimeUnit.SECONDS)
-                .setConnectionTimeout(mConfiguration.timeout, TimeUnit.SECONDS)
+                .setReadTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
+                .setConnectionTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
                 .addInterceptor(new LoggingInterceptor())
                 .addInterceptor(new Interceptor() {
                     @Override
@@ -161,7 +167,7 @@ public final class VimeoClient {
 
                         // Customize the request to add the user agent and accept header to all of them
                         Request request = original.newBuilder()
-                                .header(Vimeo.HEADER_USER_AGENT, mConfiguration.userAgentString)
+                                .header(Vimeo.HEADER_USER_AGENT, mConfiguration.mUserAgentString)
                                 .header(Vimeo.HEADER_ACCEPT, getAcceptHeader())
                                 .method(original.method(), original.body())
                                 .build();
@@ -170,10 +176,10 @@ public final class VimeoClient {
                         return chain.proceed(request);
                     }
                 })
-                .addNetworkInterceptors(mConfiguration.networkInterceptors)
-                .addInterceptors(mConfiguration.interceptors);
+                .addNetworkInterceptors(mConfiguration.mNetworkInterceptors)
+                .addInterceptors(mConfiguration.mInterceptors);
 
-        if (mConfiguration.certPinningEnabled) {
+        if (mConfiguration.mCertPinningEnabled) {
             // Try and pin certificates to prevent man-in-the-middle attacks (if pinning is enabled)
             try {
                 retrofitClientBuilder.pinCertificates();
@@ -213,8 +219,8 @@ public final class VimeoClient {
         if (vimeoAccount == null) {
             // If the provided account was null but we have an access token, persist the vimeo account with
             // just a token in it. Otherwise we'll want to leave the persisted account as null.
-            vimeoAccount = new VimeoAccount(mConfiguration.accessToken);
-            if (mConfiguration.accessToken != null) {
+            vimeoAccount = new VimeoAccount(mConfiguration.mAccessToken);
+            if (mConfiguration.mAccessToken != null) {
                 mConfiguration.saveAccount(vimeoAccount, null);
             }
         }
@@ -270,15 +276,15 @@ public final class VimeoClient {
 
         // TODO: TEST
         // Will look like the following: https://api.vimeo.com/oauth/authorize?<UTF8 encoded params>
-        HttpUrl baseUrl = HttpUrl.parse(mConfiguration.baseURLString);
+        HttpUrl baseUrl = HttpUrl.parse(mConfiguration.mBaseURLString);
         HttpUrl uri = new HttpUrl.Builder().scheme(baseUrl.scheme())
                 .host(baseUrl.host())
                 .encodedPath(Vimeo.CODE_GRANT_PATH)
-                .addQueryParameter(Vimeo.PARAMETER_REDIRECT_URI, mConfiguration.codeGrantRedirectURI)
+                .addQueryParameter(Vimeo.PARAMETER_REDIRECT_URI, mConfiguration.mCodeGrantRedirectURI)
                 .addQueryParameter(Vimeo.PARAMETER_RESPONSE_TYPE, Vimeo.CODE_GRANT_RESPONSE_TYPE)
                 .addQueryParameter(Vimeo.PARAMETER_STATE, mCurrentCodeGrantState)
-                .addQueryParameter(Vimeo.PARAMETER_SCOPE, mConfiguration.scope)
-                .addQueryParameter(Vimeo.PARAMETER_CLIENT_ID, mConfiguration.clientID)
+                .addQueryParameter(Vimeo.PARAMETER_SCOPE, mConfiguration.mScope)
+                .addQueryParameter(Vimeo.PARAMETER_CLIENT_ID, mConfiguration.mClientID)
                 .build();
         return uri.toString();
     }
@@ -321,7 +327,7 @@ public final class VimeoClient {
 
         mCurrentCodeGrantState = null;
 
-        String redirectURI = mConfiguration.codeGrantRedirectURI;
+        String redirectURI = mConfiguration.mCodeGrantRedirectURI;
 
         Call<VimeoAccount> call =
                 mVimeoService.authenticateWithCodeGrant(getBasicAuthHeader(), redirectURI, code,
@@ -345,7 +351,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call = mVimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
                                                                                     Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
-                                                                                    mConfiguration.scope);
+                                                                                    mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -364,7 +370,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call = mVimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
                                                                                     Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
-                                                                                    mConfiguration.scope);
+                                                                                    mConfiguration.mScope);
 
         VimeoAccount vimeoAccount = null;
         try {
@@ -395,7 +401,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call =
                 mVimeoService.exchangeOAuthOneToken(getBasicAuthHeader(), Vimeo.OAUTH_ONE_GRANT_TYPE, token,
-                                                    tokenSecret, mConfiguration.scope);
+                                                    tokenSecret, mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -404,7 +410,7 @@ public final class VimeoClient {
      * This method is used to exchange a user access token from app A for a token for app B.
      * <p/>
      * An app can use this to exchange an authenticated user's access token from app A for a new access
-     * token for app B, using the scope associated with app B. The caller of this method will be app B.
+     * token for app B, using the mScope associated with app B. The caller of this method will be app B.
      * <p/>
      * <b>This method is application restricted, and not meant to be consumed by the general public.</b>
      *
@@ -419,7 +425,7 @@ public final class VimeoClient {
         }
 
         Call<VimeoAccount> call =
-                mVimeoService.ssoTokenExchange(getBasicAuthHeader(), token, mConfiguration.scope);
+                mVimeoService.ssoTokenExchange(getBasicAuthHeader(), token, mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -456,7 +462,7 @@ public final class VimeoClient {
         parameters.put(Vimeo.PARAMETER_USERS_NAME, displayName);
         parameters.put(Vimeo.PARAMETER_EMAIL, email);
         parameters.put(Vimeo.PARAMETER_PASSWORD, password);
-        parameters.put(Vimeo.PARAMETER_SCOPE, mConfiguration.scope);
+        parameters.put(Vimeo.PARAMETER_SCOPE, mConfiguration.mScope);
 
         Call<VimeoAccount> call = mVimeoService.join(getBasicAuthHeader(), parameters);
         call.enqueue(new AccountCallback(this, email, callback));
@@ -483,7 +489,7 @@ public final class VimeoClient {
 
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_TOKEN, facebookToken);
-        parameters.put(Vimeo.PARAMETER_SCOPE, mConfiguration.scope);
+        parameters.put(Vimeo.PARAMETER_SCOPE, mConfiguration.mScope);
 
         Call<VimeoAccount> call = mVimeoService.join(getBasicAuthHeader(), parameters);
         call.enqueue(new AccountCallback(this, email, callback));
@@ -514,7 +520,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call =
                 mVimeoService.logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE,
-                                    mConfiguration.scope);
+                                    mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
@@ -535,7 +541,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call =
                 mVimeoService.logIn(getBasicAuthHeader(), email, password, Vimeo.PASSWORD_GRANT_TYPE,
-                                    mConfiguration.scope);
+                                    mConfiguration.mScope);
 
         VimeoAccount vimeoAccount = null;
         try {
@@ -572,7 +578,7 @@ public final class VimeoClient {
 
         Call<VimeoAccount> call =
                 mVimeoService.logInWithFacebook(getBasicAuthHeader(), Vimeo.FACEBOOK_GRANT_TYPE,
-                                                facebookToken, mConfiguration.scope);
+                                                facebookToken, mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
@@ -587,8 +593,8 @@ public final class VimeoClient {
     public Call<Object> logOut(@Nullable final VimeoCallback<Object> callback) {
         // If you've provided an access token to the configuration builder, we're assuming that you wouldn't
         // want to be able to log out of it, because this would invalidate the constant you've provided us.
-        if (mConfiguration.accessToken != null &&
-            mConfiguration.accessToken.equals(mVimeoAccount.getAccessToken())) {
+        if (mConfiguration.mAccessToken != null &&
+            mConfiguration.mAccessToken.equals(mVimeoAccount.getAccessToken())) {
             if (callback != null) {
                 callback.failure(new VimeoError(
                         "You can't log out of the account provided through the configuration builder. " +
@@ -696,7 +702,7 @@ public final class VimeoClient {
         }
 
         private void cancelPolling() {
-            VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = false;
+            VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
             if (mTimer != null) {
                 mTimer.cancel();
             }
@@ -704,14 +710,14 @@ public final class VimeoClient {
 
         @Override
         public void success(VimeoAccount vimeoAccount) {
-            if (VimeoClient.mContinuePinCodeAuthorizationRefreshCycle) {
+            if (VimeoClient.sContinuePinCodeAuthorizationRefreshCycle) {
                 cancelPolling();
                 super.success(vimeoAccount);
             }
         }
 
         public void failure(VimeoError error) {
-            if (VimeoClient.mContinuePinCodeAuthorizationRefreshCycle) {
+            if (VimeoClient.sContinuePinCodeAuthorizationRefreshCycle) {
                 if (error.getHttpStatusCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
                     // 400: Bad Request implies the code hasn't been activated yet, so try again
                     return;
@@ -727,7 +733,7 @@ public final class VimeoClient {
      * This method cancels any previous active {@link VimeoClient#logInWithPinCode} attempts.
      */
     public void cancelPinCodeLogin() {
-        VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = false;
+        VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
         if (mPinCodeAuthorizationTimer != null) {
             mPinCodeAuthorizationTimer.cancel();
         }
@@ -762,10 +768,10 @@ public final class VimeoClient {
             AuthCallback authCallback = mAuthCallbackWeakReference.get();
             VimeoClient vimeoClient = mVimeoClient.get();
             long now = System.nanoTime();
-            if (!VimeoClient.mContinuePinCodeAuthorizationRefreshCycle || now >= mExpiresInNano ||
+            if (!VimeoClient.sContinuePinCodeAuthorizationRefreshCycle || now >= mExpiresInNano ||
                 authCallback == null || vimeoClient == null) {
-                if (VimeoClient.mContinuePinCodeAuthorizationRefreshCycle) {
-                    VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = false;
+                if (VimeoClient.sContinuePinCodeAuthorizationRefreshCycle) {
+                    VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
                     mTimer.cancel();
                     if (authCallback != null && now >= mExpiresInNano) {
                         VimeoError error = new VimeoError("Pin code expired.");
@@ -789,7 +795,7 @@ public final class VimeoClient {
      * (PRIVATE: Vimeo Use Only, will not work for third-party applications)
      * This is a method for Vimeo's internal use in association with pin code based authentication for
      * connected but keyboardless devices such as Android TV. The method will return immediately but will run
-     * for an extended period of time asynchronously until a timeout expires, authorization has been
+     * for an extended period of time asynchronously until a mTimeout expires, authorization has been
      * successful, or a failure occurs. The expected application flow is that the user is initially presented
      * a pin code (returned in pinCodeCallback), which they then enter into a special page (from
      * a link returned in pinCodeCallback) on Vimeo.com  on a different device.  Back on the original device,
@@ -807,12 +813,12 @@ public final class VimeoClient {
      */
     public Call<PinCodeInfo> logInWithPinCode(@NotNull final ModelCallback<PinCodeInfo> pinCodeCallback,
                                               @NotNull final AuthCallback authCallback) {
-        VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = false;
+        VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
         if (mPinCodeAuthorizationTimer != null) {
             mPinCodeAuthorizationTimer.cancel();
         }
 
-        final String SCOPE = mConfiguration.scope;
+        final String SCOPE = mConfiguration.mScope;
         Call<PinCodeInfo> call =
                 mVimeoService.getPinCodeInfo(getBasicAuthHeader(), Vimeo.DEVICE_GRANT_TYPE, SCOPE);
 
@@ -830,10 +836,10 @@ public final class VimeoClient {
                 pinCodeCallback.success(pinCodeInfo);
                 final int SECONDS_TO_MILLISECONDS = 1000;
                 mPinCodeAuthorizationTimer = new Timer();
-                VimeoClient.mContinuePinCodeAuthorizationRefreshCycle = true;
+                VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = true;
                 mPinCodeAuthorizationTimer.scheduleAtFixedRate(
                         new PinCodePollingTimerTask(pinCodeInfo, mPinCodeAuthorizationTimer,
-                                                    pinCodeInfo.getExpiresIn(), authCallback, mSharedInstance,
+                                                    pinCodeInfo.getExpiresIn(), authCallback, sSharedInstance,
                                                     SCOPE), 0,
                         SECONDS_TO_MILLISECONDS * pinCodeInfo.getInterval());
             }
@@ -1244,8 +1250,8 @@ public final class VimeoClient {
         return new VimeoCallback<Object>() {
             @Override
             public void success(Object o) {
-                // Handle the gson parsing using a deserializer object
-                mConfiguration.deserializer.deserialize(mGson, o, callback);
+                // Handle the gson parsing using a mGsonDeserializer object
+                mConfiguration.mGsonDeserializer.deserialize(mGson, o, callback);
             }
 
             @Override
@@ -1591,11 +1597,11 @@ public final class VimeoClient {
      */
     // <editor-fold desc="Header values">
     public String getUserAgent() {
-        return mConfiguration.userAgentString;
+        return mConfiguration.mUserAgentString;
     }
 
     public String getAcceptHeader() {
-        return "application/vnd.vimeo.*+json; version=" + mConfiguration.apiVersionString;
+        return "application/vnd.vimeo.*+json; version=" + mConfiguration.mApiVersionString;
     }
 
     public String getAuthHeader() {
@@ -1611,7 +1617,7 @@ public final class VimeoClient {
     }
 
     private String getBasicAuthHeader() {
-        return Credentials.basic(mConfiguration.clientID, mConfiguration.clientSecret);
+        return Credentials.basic(mConfiguration.mClientID, mConfiguration.mClientSecret);
     }
 
     @NotNull
@@ -1621,7 +1627,7 @@ public final class VimeoClient {
                 CacheControl.Builder builder = VimeoNetworkUtil.getCacheControlBuilder(cacheControl);
                 // If no max age specified on CacheControl then set it to our default [KV]
                 if (cacheControl.maxAgeSeconds() == -1) {
-                    builder.maxAge(mConfiguration.cacheMaxAge, TimeUnit.SECONDS);
+                    builder.maxAge(mConfiguration.mCacheMaxAge, TimeUnit.SECONDS);
                 }
                 // CacheControl.FORCE_CACHE defaults stale to Integer.MAX so we need to overwrite it
                 // so that a max age can actually do it's job [KV]
@@ -1630,7 +1636,7 @@ public final class VimeoClient {
             }
         } else {
             cacheControl =
-                    new CacheControl.Builder().maxAge(mConfiguration.cacheMaxAge, TimeUnit.SECONDS).build();
+                    new CacheControl.Builder().maxAge(mConfiguration.mCacheMaxAge, TimeUnit.SECONDS).build();
         }
         return cacheControl.toString();
     }

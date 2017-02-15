@@ -51,7 +51,7 @@ public class VimeoAccount implements Serializable {
     @SerializedName("token_type")
     protected String mTokenType;
 
-    @SerializedName("scope")
+    @SerializedName("mScope")
     protected String mScope;
 
     @SerializedName("user")
@@ -70,7 +70,7 @@ public class VimeoAccount implements Serializable {
     public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
         if (accessToken == null || accessToken.isEmpty() || tokenType == null ||
             tokenType.isEmpty() || scope == null || scope.isEmpty()) {
-            throw new AssertionError("Account can only be created with token, tokenType, scope");
+            throw new AssertionError("Account can only be created with token, tokenType, mScope");
         }
 
         this.mAccessToken = accessToken;

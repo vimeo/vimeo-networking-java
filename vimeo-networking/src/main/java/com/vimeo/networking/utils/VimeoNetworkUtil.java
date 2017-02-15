@@ -29,6 +29,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.vimeo.stag.generated.Stag;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -49,9 +51,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * <p/>
  * Created by kylevenn on 10/30/15.
  */
+@SuppressWarnings("unused")
 public class VimeoNetworkUtil {
 
-    private static Gson mGson;
+    private static Gson sGson;
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
@@ -60,11 +63,12 @@ public class VimeoNetworkUtil {
      *
      * @return Gson object that can be passed into a {@link GsonConverterFactory} create() method
      */
+    @NotNull
     public static Gson getGson() {
-        if (mGson == null) {
-            mGson = getGsonBuilder().create();
+        if (sGson == null) {
+            sGson = getGsonBuilder().create();
         }
-        return mGson;
+        return sGson;
     }
 
     /**
@@ -74,6 +78,7 @@ public class VimeoNetworkUtil {
      *
      * @return GsonBuilder that can be built upon and then created
      */
+    @NotNull
     public static GsonBuilder getGsonBuilder() {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().registerTypeAdapterFactory(new Stag.Factory())
@@ -92,24 +97,25 @@ public class VimeoNetworkUtil {
      * if no parameters are found on the uri
      * @see <a href="http://stackoverflow.com/a/13592567/1759443">StackOverflow</a>
      */
+    @NotNull
     public static Map<String, String> getSimpleQueryMap(String uri) {
-        final Map<String, String> query_pairs = new LinkedHashMap<>();
+        final Map<String, String> queryPairs = new LinkedHashMap<>();
         try {
             String query = uri.split("\\?")[1];
             String[] pairs = query.split("&");
             for (String pair : pairs) {
                 int idx = pair.indexOf("=");
-                query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
-                                URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+                queryPairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
+                               URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
             }
-            return query_pairs;
+            return queryPairs;
         } catch (UnsupportedEncodingException e) {
             // Just print the trace, we don't want to crash the app. If you ever get an empty query params
             // map back, then we know there was a malformed URL returned from the api (or a failure) 1/27/16 [KV]
             e.printStackTrace();
         }
 
-        return query_pairs;
+        return queryPairs;
     }
 
     /**
@@ -119,7 +125,7 @@ public class VimeoNetworkUtil {
      * @param cacheControl The CacheControl to convert to a builder
      * @return A builder with the same attributes as the CacheControl passed in
      */
-
+    @NotNull
     public static CacheControl.Builder getCacheControlBuilder(CacheControl cacheControl) {
         CacheControl.Builder builder = new CacheControl.Builder();
         if (cacheControl.maxAgeSeconds() > -1) {
@@ -148,7 +154,7 @@ public class VimeoNetworkUtil {
     }
 
     /** A helper which cancels an array of {@link Call} objects. */
-    public static void cancelCalls(final ArrayList<Call> callsToCancel) {
+    public static void cancelCalls(@NotNull final ArrayList<Call> callsToCancel) {
         final List<Call> callList = new CopyOnWriteArrayList<>(callsToCancel);
         new Thread(new Runnable() {
             @Override

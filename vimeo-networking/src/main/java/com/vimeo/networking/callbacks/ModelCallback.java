@@ -29,13 +29,13 @@ package com.vimeo.networking.callbacks;
  */
 public abstract class ModelCallback<T> extends VimeoCallback<T> {
 
-    private Class objectType;
+    private Class mObjectType;
 
     public ModelCallback(Class objectType) {
-        this.objectType = objectType;
+        this.mObjectType = objectType;
     }
 
     public Class getObjectType() {
-        return this.objectType;
+        return this.mObjectType;
     }
 }

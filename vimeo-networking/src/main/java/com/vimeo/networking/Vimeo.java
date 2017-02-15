@@ -27,6 +27,7 @@ package com.vimeo.networking;
  * <p/>
  * Created by kylevenn on 7/7/15.
  */
+@SuppressWarnings("unused")
 public final class Vimeo {
 
     public static final String VIMEO_BASE_URL_STRING = "https://api.vimeo.com/";
@@ -56,7 +57,7 @@ public final class Vimeo {
     public static final String PARAMETER_REDIRECT_URI = "redirect_uri";
     public static final String PARAMETER_RESPONSE_TYPE = "response_type";
     public static final String PARAMETER_STATE = "state";
-    public static final String PARAMETER_SCOPE = "scope";
+    public static final String PARAMETER_SCOPE = "mScope";
     public static final String PARAMETER_TOKEN = "token";
     public static final String PARAMETER_CLIENT_ID = "client_id";
 
@@ -72,7 +73,7 @@ public final class Vimeo {
     public static final String PARAMETER_VIDEO_PRIVACY = "privacy";
     public static final String PARAMETER_VIDEO_PASSWORD = "password";
 
-    public static final String PARAMETER_COMMENT_TEXT_BODY = "text";
+    public static final String PARAMETER_COMMENT_TEXT_BODY = "mText";
 
     public static final String PARAMETER_ACTIVE = "active";
 
@@ -172,25 +173,25 @@ public final class Vimeo {
         ZA(SORT_DIRECTION_DESCENDING);
 
 
-        private String text;
+        private String mText;
 
         RefineSort(String text) {
-            this.text = text;
+            this.mText = text;
         }
 
         public String getText() {
-            return this.text;
+            return this.mText;
         }
 
         public static RefineSort fromString(String text) {
             if (text != null) {
                 for (RefineSort b : RefineSort.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+                    if (text.equalsIgnoreCase(b.mText)) {
                         return b;
                     }
                 }
             }
-            throw new IllegalArgumentException("No constant with text " + text + " found");
+            throw new IllegalArgumentException("No constant with mText " + text + " found");
         }
     }
 
@@ -201,25 +202,25 @@ public final class Vimeo {
         THIS_MONTH(FILTER_UPLOAD_DATE_MONTH),
         THIS_YEAR(FILTER_UPLOAD_DATE_YEAR);
 
-        private String text;
+        private String mText;
 
         RefineUploadDate(String text) {
-            this.text = text;
+            this.mText = text;
         }
 
         public String getText() {
-            return this.text;
+            return this.mText;
         }
 
         public static RefineUploadDate fromString(String text) {
             if (text != null) {
                 for (RefineUploadDate b : RefineUploadDate.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+                    if (text.equalsIgnoreCase(b.mText)) {
                         return b;
                     }
                 }
             }
-            throw new IllegalArgumentException("No constant with text " + text + " found");
+            throw new IllegalArgumentException("No constant with mText " + text + " found");
         }
     }
 
