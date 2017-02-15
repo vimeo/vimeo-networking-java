@@ -1,7 +1,5 @@
 package com.vimeo.networking.model.notifications;
 
-import com.vimeo.stag.UseStag;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
  * Created by zetterstromk on 1/11/17.
  */
 @SuppressWarnings("unused")
-@UseStag
 public enum NotificationType {
     NOTIFICATION_TYPE_COMMENT,
     NOTIFICATION_TYPE_CREDIT,

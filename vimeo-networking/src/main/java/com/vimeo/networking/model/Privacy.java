@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -66,16 +67,19 @@ public class Privacy implements Serializable {
         @SerializedName(PRIVACY_DISABLE)
         DISABLE(PRIVACY_DISABLE);
 
+        @NotNull
         private final String text;
 
-        PrivacyValue(String text) {
+        PrivacyValue(@NotNull String text) {
             this.text = text;
         }
 
+        @NotNull
         public String getText() {
             return this.text;
         }
 
+        @Nullable
         public static PrivacyValue privacyValueFromString(String string) {
             if (string != null) {
                 for (PrivacyValue privacyValue : PrivacyValue.values()) {
@@ -90,42 +94,42 @@ public class Privacy implements Serializable {
 
     @Nullable
     @SerializedName("view")
-    public PrivacyValue view;
+    public PrivacyValue mView;
 
     @Nullable
     @SerializedName("embed")
-    public String embed;
+    public String mEmbed;
 
     @SerializedName("download")
-    public boolean download;
+    public boolean mDownload;
 
     @SerializedName("add")
-    public boolean add;
+    public boolean mAdd;
 
     @Nullable
     @SerializedName("comments")
-    public PrivacyValue comments;
+    public PrivacyValue mComments;
 
     @Nullable
     public PrivacyValue getView() {
-        return view;
+        return mView;
     }
 
     @Nullable
     public String getEmbed() {
-        return embed;
+        return mEmbed;
     }
 
     public boolean isDownload() {
-        return download;
+        return mDownload;
     }
 
     public boolean isAdd() {
-        return add;
+        return mAdd;
     }
 
     @Nullable
     public PrivacyValue getComments() {
-        return comments;
+        return mComments;
     }
 }

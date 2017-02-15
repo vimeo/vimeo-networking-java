@@ -44,55 +44,55 @@ public class SearchFacetCollection implements Serializable {
 
     @Nullable
     @SerializedName("type")
-    protected SearchFacet typeFacet;
+    protected SearchFacet mTypeFacet;
 
     @Nullable
     @SerializedName("category")
-    protected SearchFacet categoryFacet;
+    protected SearchFacet mCategoryFacet;
 
     @Nullable
     @SerializedName("duration")
-    protected SearchFacet durationFacet;
+    protected SearchFacet mDurationFacet;
 
     @Nullable
     @SerializedName("license")
-    protected SearchFacet licenseFacet;
+    protected SearchFacet mLicenseFacet;
 
     @Nullable
     @SerializedName("uploaded")
-    protected SearchFacet uploadedFacet;
+    protected SearchFacet mUploadedFacet;
 
     @Nullable
     @SerializedName("user_type")
-    protected SearchFacet userTypeFacet;
+    protected SearchFacet mUserTypeFacet;
 
     @Nullable
     public SearchFacet getTypeFacet() {
-        return typeFacet;
+        return mTypeFacet;
     }
 
     @Nullable
     public SearchFacet getCategoryFacet() {
-        return categoryFacet;
+        return mCategoryFacet;
     }
 
     @Nullable
     public SearchFacet getDurationFacet() {
-        return durationFacet;
+        return mDurationFacet;
     }
 
     @Nullable
     public SearchFacet getLicenseFacet() {
-        return licenseFacet;
+        return mLicenseFacet;
     }
 
     @Nullable
     public SearchFacet getUploadedFacet() {
-        return uploadedFacet;
+        return mUploadedFacet;
     }
 
     @Nullable
     public SearchFacet getUserTypeFacet() {
-        return userTypeFacet;
+        return mUserTypeFacet;
     }
 }

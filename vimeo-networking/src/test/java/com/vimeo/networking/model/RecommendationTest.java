@@ -18,10 +18,10 @@ public class RecommendationTest {
         Assert.assertNotNull(recommendation.getRecommendationType());
         Assert.assertEquals(recommendation.getRecommendationType(), RecommendationType.NONE);
 
-        recommendation.recommendationType = Recommendation.TYPE_CHANNEL;
+        recommendation.mRecommendationType = Recommendation.TYPE_CHANNEL;
         Assert.assertEquals(recommendation.getRecommendationType(), RecommendationType.CHANNEL);
 
-        recommendation.recommendationType = Recommendation.TYPE_USER;
+        recommendation.mRecommendationType = Recommendation.TYPE_USER;
         Assert.assertEquals(recommendation.getRecommendationType(), RecommendationType.USER);
 
     }

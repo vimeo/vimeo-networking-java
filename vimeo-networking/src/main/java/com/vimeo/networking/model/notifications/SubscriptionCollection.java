@@ -22,27 +22,29 @@ public class SubscriptionCollection implements Serializable {
     private static final long serialVersionUID = -6392190720319669273L;
 
     @Nullable
-    protected String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
     @SerializedName("modified_time")
-    protected Date modifiedTime;
+    protected Date mModifiedTime;
 
     @Nullable
-    protected Subscriptions subscriptions;
+    @SerializedName("subscriptions")
+    protected Subscriptions mSubscriptions;
 
     @Nullable
     public String getUri() {
-        return uri;
+        return mUri;
     }
 
     @Nullable
     public Date getModifiedTime() {
-        return modifiedTime;
+        return mModifiedTime;
     }
 
     @Nullable
     public Subscriptions getSubscriptions() {
-        return subscriptions;
+        return mSubscriptions;
     }
 }

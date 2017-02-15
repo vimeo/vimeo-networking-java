@@ -69,19 +69,46 @@ public class Interaction implements Serializable {
         }
     }
 
-    public boolean added;
+    @SerializedName("added")
+    protected boolean mAdded;
 
     @Nullable
     @SerializedName("added_time")
-    public Date addedTime;
+    protected Date mAddedTime;
 
     @Nullable
-    public String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
-    public Stream stream;
+    @SerializedName("stream")
+    protected Stream mStream;
 
     @Nullable
     @SerializedName("expires_time")
-    public Date expiration;
+    protected Date mExpiration;
+
+    public boolean isAdded() {
+        return mAdded;
+    }
+
+    @Nullable
+    public Date getAddedTime() {
+        return mAddedTime;
+    }
+
+    @Nullable
+    public String getUri() {
+        return mUri;
+    }
+
+    @Nullable
+    public Stream getStream() {
+        return mStream;
+    }
+
+    @Nullable
+    public Date getExpiration() {
+        return mExpiration;
+    }
 }

@@ -58,47 +58,57 @@ public class User implements Serializable, Followable {
         STAFF
     }
 
-    public String uri;
+    @SerializedName("uri")
+    public String mUri;
 
-    public String name;
+    @SerializedName("name")
+    public String mName;
 
-    public String link;
+    @SerializedName("link")
+    public String mLink;
 
-    public String location;
+    @SerializedName("location")
+    public String mLocation;
 
-    public String bio;
+    @SerializedName("bio")
+    public String mBio;
 
     @SerializedName("created_time")
-    public Date createdTime;
+    public Date mCreatedTime;
 
-    public String account;
+    @SerializedName("account")
+    public String mAccount;
 
-    public PictureCollection pictures;
+    @SerializedName("pictures")
+    public PictureCollection mPictures;
 
-    public ArrayList<Email> emails;
+    @SerializedName("emails")
+    public ArrayList<Email> mEmails;
 
-    public ArrayList<Website> websites;
+    @SerializedName("websites")
+    public ArrayList<Website> mWebsites;
 
-    public Metadata metadata;
+    @SerializedName("metadata")
+    public Metadata mMetadata;
 
     @SerializedName("upload_quota")
-    public UploadQuota uploadQuota;
+    public UploadQuota mUploadQuota;
 
     @Nullable
     @GsonAdapterKey("preferences")
-    public Preferences preferences;
+    public Preferences mPreferences;
     @Nullable
     @GsonAdapterKey("badge")
-    public UserBadge badge;
+    public UserBadge mBadge;
 
     public AccountType getAccountType() {
-        if (this.account == null) {
+        if (this.mAccount == null) {
             //We should assume the account object could be null; also, a User object could be created with
             // just a uri, then updated when fetched from the server, so account would be null until then.
             // Scenario: deeplinking. [KZ] 9/29/15
             return AccountType.BASIC;
         }
-        switch (this.account) {
+        switch (this.mAccount) {
             case ACCOUNT_BUSINESS:
                 return AccountType.BUSINESS;
             case ACCOUNT_PLUS:
@@ -114,7 +124,7 @@ public class User implements Serializable, Followable {
     }
 
     public UserBadgeType getUserBadgeType() {
-        return badge == null ? UserBadgeType.NONE : badge.getBadgeType();
+        return mBadge == null ? UserBadgeType.NONE : mBadge.getBadgeType();
     }
 
     /**
@@ -131,21 +141,21 @@ public class User implements Serializable, Followable {
     @Override
     public boolean isFollowing() {
         Interaction follow = getFollowInteraction();
-        return follow != null && follow.added;
+        return follow != null && follow.mAdded;
     }
 
     @Nullable
     private ConnectionCollection getMetadataConnections() {
-        if (metadata != null) {
-            return metadata.connections;
+        if (mMetadata != null) {
+            return mMetadata.mConnections;
         }
         return null;
     }
 
     @Nullable
     private InteractionCollection getMetadataInteractions() {
-        if (metadata != null) {
-            return metadata.interactions;
+        if (mMetadata != null) {
+            return mMetadata.mInteractions;
         }
         return null;
     }
@@ -154,105 +164,105 @@ public class User implements Serializable, Followable {
     @Override
     public Interaction getFollowInteraction() {
         InteractionCollection interactions = getMetadataInteractions();
-        return interactions != null ? interactions.follow : null;
+        return interactions != null ? interactions.mFollow : null;
     }
 
     @Nullable
     public Connection getFollowingConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.following : null;
+        return connections != null ? connections.mFollowing : null;
     }
 
     @Nullable
     public Connection getFollowersConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.followers : null;
+        return connections != null ? connections.mFollowers : null;
     }
 
     public int getFollowerCount() {
         Connection followers = getFollowersConnection();
-        return followers != null ? followers.total : 0;
+        return followers != null ? followers.mTotal : 0;
     }
 
     public int getFollowingCount() {
         Connection following = getFollowingConnection();
-        return following != null ? following.total : 0;
+        return following != null ? following.mTotal : 0;
     }
 
     @Nullable
     public Connection getLikesConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.likes : null;
+        return connections != null ? connections.mLikes : null;
     }
 
     public int getLikesCount() {
         Connection likes = getLikesConnection();
-        return likes != null ? likes.total : 0;
+        return likes != null ? likes.mTotal : 0;
     }
 
     @Nullable
     public Connection getFollowedChannelsConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.channels : null;
+        return connections != null ? connections.mChannels : null;
     }
 
     public int getChannelsCount() {
         Connection channels = getFollowedChannelsConnection();
-        return channels != null ? channels.total : 0;
+        return channels != null ? channels.mTotal : 0;
     }
 
     @Nullable
     public Connection getModeratedChannelsConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.moderatedChannels : null;
+        return connections != null ? connections.mModeratedChannels : null;
     }
 
     public int getModeratedChannelsConnectionCount() {
         Connection moderatedChannels = getModeratedChannelsConnection();
-        return moderatedChannels != null ? moderatedChannels.total : 0;
+        return moderatedChannels != null ? moderatedChannels.mTotal : 0;
     }
 
     @Nullable
     public Connection getAppearancesConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.appearances : null;
+        return connections != null ? connections.mAppearances : null;
     }
 
     public int getAppearancesCount() {
         Connection appearances = getAppearancesConnection();
-        return appearances != null ? appearances.total : 0;
+        return appearances != null ? appearances.mTotal : 0;
     }
 
     @Nullable
     public Connection getWatchLaterConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.watchlater : null;
+        return connections != null ? connections.mWatchlater : null;
     }
 
     @Nullable
     public Connection getWatchedVideosConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.watchedVideos : null;
+        return connections != null ? connections.mWatchedVideos : null;
     }
     // </editor-fold>
 
     @NotNull
     public ArrayList<Picture> getPictures() {
-        if (pictures == null || pictures.getPictures() == null) {
+        if (mPictures == null || mPictures.getPictures() == null) {
             return new ArrayList<>();
         }
-        return pictures.getPictures();
+        return mPictures.getPictures();
     }
 
     @Nullable
     public Connection getVideosConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.videos : null;
+        return connections != null ? connections.mVideos : null;
     }
 
     public int getVideoCount() {
         Connection videos = getVideosConnection();
-        return videos != null ? videos.total : 0;
+        return videos != null ? videos.mTotal : 0;
     }
 
     public boolean isPlusOrPro() {
@@ -266,29 +276,29 @@ public class User implements Serializable, Followable {
     @Nullable
     public PrivacyValue getPreferredVideoPrivacyValue() {
         PrivacyValue privacyValue = null;
-        if (preferences != null && preferences.getVideos() != null &&
-            preferences.getVideos().getPrivacy() != null) {
-            privacyValue = preferences.getVideos().getPrivacy().getView();
+        if (mPreferences != null && mPreferences.getVideos() != null &&
+            mPreferences.getVideos().getPrivacy() != null) {
+            privacyValue = mPreferences.getVideos().getPrivacy().getView();
         }
         return privacyValue;
     }
 
     public boolean canUploadPicture() {
-        return metadata != null &&
-               metadata.connections != null &&
-               metadata.connections.pictures != null &&
-               metadata.connections.pictures.options != null &&
-               metadata.connections.pictures.options.contains(Vimeo.OPTIONS_POST);
+        return mMetadata != null &&
+               mMetadata.mConnections != null &&
+               mMetadata.mConnections.mPictures != null &&
+               mMetadata.mConnections.mPictures.mOptions != null &&
+               mMetadata.mConnections.mPictures.mOptions.contains(Vimeo.OPTIONS_POST);
     }
 
     public UploadQuota getUploadQuota() {
-        return uploadQuota;
+        return mUploadQuota;
     }
 
     // Returns -1 if there is no space object on this user
     public long getFreeUploadSpace() {
-        if (uploadQuota != null) {
-            return uploadQuota.getFreeUploadSpace();
+        if (mUploadQuota != null) {
+            return mUploadQuota.getFreeUploadSpace();
         }
         return Vimeo.NOT_FOUND;
     }
@@ -300,48 +310,48 @@ public class User implements Serializable, Followable {
      */
     // <editor-fold desc="Getters">
     public String getUri() {
-        return uri;
+        return mUri;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public String getLink() {
-        return link;
+        return mLink;
     }
 
     public String getLocation() {
-        return location;
+        return mLocation;
     }
 
     public String getBio() {
-        return bio;
+        return mBio;
     }
 
     public Date getCreatedTime() {
-        return createdTime;
+        return mCreatedTime;
     }
 
     public String getAccount() {
-        return account;
+        return mAccount;
     }
 
     public ArrayList<Email> getVerifiedEmails() {
-        return emails;
+        return mEmails;
     }
 
     public ArrayList<Website> getWebsites() {
-        return websites;
+        return mWebsites;
     }
 
     public Metadata getMetadata() {
-        return metadata;
+        return mMetadata;
     }
 
     @Nullable
     public Preferences getPreferences() {
-        return preferences;
+        return mPreferences;
     }
 
     // </editor-fold>
@@ -357,11 +367,11 @@ public class User implements Serializable, Followable {
 
         User that = (User) o;
 
-        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
+        return ((this.mUri != null && that.mUri != null) && this.mUri.equals(that.mUri));
     }
 
     @Override
     public int hashCode() {
-        return this.uri != null ? this.uri.hashCode() : 0;
+        return this.mUri != null ? this.mUri.hashCode() : 0;
     }
 }

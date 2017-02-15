@@ -108,15 +108,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         mApiClient.fetchNetworkContent(STAFF_PICKS_VIDEO_URI, new ModelCallback<VideoList>(VideoList.class) {
             @Override
             public void success(VideoList videoList) {
-                if (videoList != null && videoList.data != null) {
+                if (videoList != null && videoList.mData != null) {
                     String videoTitlesString = "";
                     boolean addNewLine = false;
-                    for (Video video : videoList.data) {
+                    for (Video video : videoList.mData) {
                         if (addNewLine) {
                             videoTitlesString += "\n";
                         }
                         addNewLine = true;
-                        videoTitlesString += video.name;
+                        videoTitlesString += video.mName;
                     }
                     mRequestOutputTv.setText(videoTitlesString);
                 }
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             @Override
             public void success(User user) {
                 if (user != null) {
-                    mRequestOutputTv.setText("Current account type: " + user.account);
+                    mRequestOutputTv.setText("Current account type: " + user.mAccount);
                     toast("Account Check Success");
                 } else {
                     toast("Account Check Failure");

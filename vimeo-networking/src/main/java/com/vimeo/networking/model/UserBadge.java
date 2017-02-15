@@ -27,6 +27,8 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -64,20 +66,23 @@ public class UserBadge implements Serializable {
     }
 
     @SerializedName("type")
-    public String badgeType;
+    public String mBadgeType;
 
-    public String text;
+    @SerializedName("text")
+    public String mText;
 
     @SerializedName("alt_text")
-    public String alternateText;
+    public String mAlternateText;
 
-    public String url;
+    @SerializedName("url")
+    public String mUrl;
 
+    @NotNull
     public UserBadgeType getBadgeType() {
-        if (badgeType == null) {
+        if (mBadgeType == null) {
             return UserBadgeType.NONE;
         }
-        switch (badgeType) {
+        switch (mBadgeType) {
             case BADGE_ALUM:
                 return UserBadgeType.ALUM;
             case BADGE_BUSINESS:

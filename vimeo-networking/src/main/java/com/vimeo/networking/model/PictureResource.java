@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
@@ -35,9 +36,24 @@ public class PictureResource implements Serializable {
 
     private static final long serialVersionUID = -495204863230150919L;
 
-    public String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
-    public boolean active;
+    @SerializedName("active")
+    protected boolean mActive;
 
-    public String link;
+    @SerializedName("link")
+    protected String mLink;
+
+    public String getUri() {
+        return mUri;
+    }
+
+    public boolean isActive() {
+        return mActive;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
 }

@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -39,20 +40,56 @@ public class InteractionCollection implements Serializable {
     private static final long serialVersionUID = 489519386122782640L;
 
     @Nullable
-    public Interaction watchlater;
+    @SerializedName("watchlater")
+    protected Interaction mWatchlater;
 
     @Nullable
-    public Interaction like;
+    @SerializedName("like")
+    protected Interaction mLike;
 
     @Nullable
-    public Interaction follow;
+    @SerializedName("follow")
+    protected Interaction mFollow;
 
     @Nullable
-    public Interaction buy;
+    @SerializedName("buy")
+    protected Interaction mBuy;
 
     @Nullable
-    public Interaction rent;
+    @SerializedName("rent")
+    protected Interaction mRent;
 
     @Nullable
-    public Interaction subscribe;
+    @SerializedName("subscribe")
+    protected Interaction mSubscribe;
+
+    @Nullable
+    public Interaction getWatchlater() {
+        return mWatchlater;
+    }
+
+    @Nullable
+    public Interaction getLike() {
+        return mLike;
+    }
+
+    @Nullable
+    public Interaction getFollow() {
+        return mFollow;
+    }
+
+    @Nullable
+    public Interaction getBuy() {
+        return mBuy;
+    }
+
+    @Nullable
+    public Interaction getRent() {
+        return mRent;
+    }
+
+    @Nullable
+    public Interaction getSubscribe() {
+        return mSubscribe;
+    }
 }

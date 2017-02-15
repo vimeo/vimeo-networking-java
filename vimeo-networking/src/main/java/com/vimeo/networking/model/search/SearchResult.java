@@ -48,45 +48,83 @@ public class SearchResult implements Serializable {
     private static final long serialVersionUID = -1607389617833091383L;
 
     @SerializedName("is_staffpick")
-    public boolean isStaffPick;
+    protected boolean mIsStaffPick;
 
     @SerializedName("is_featured")
-    public boolean isFeatured;
+    protected boolean mIsFeatured;
 
     @SerializedName("type")
-    public SearchType searchType;
+    protected SearchType mSearchType;
 
     /**
-     * Non-null when {@link #searchType} is {@link SearchType#VIDEO}
+     * Non-null when {@link #mSearchType} is {@link SearchType#VIDEO}
      */
     @Nullable
     @SerializedName("clip")
-    public Video video;
+    protected Video mVideo;
 
     /**
-     * Non-null when {@link #searchType} is {@link SearchType#USER}
+     * Non-null when {@link #mSearchType} is {@link SearchType#USER}
      */
     @Nullable
     @SerializedName("people")
-    public User user;
+    protected User mUser;
 
     /**
-     * Non-null when {@link #searchType} is {@link SearchType#CHANNEL}
+     * Non-null when {@link #mSearchType} is {@link SearchType#CHANNEL}
      */
     @Nullable
-    public Channel channel;
+    @SerializedName("channel")
+    protected Channel mChannel;
 
     /**
-     * Non-null when {@link #searchType} is {@link SearchType#GROUP}
+     * Non-null when {@link #mSearchType} is {@link SearchType#GROUP}
      */
     @Nullable
-    public Group group;
+    @SerializedName("group")
+    protected Group mGroup;
 
     /**
-     * Non-null when {@link #searchType} is {@link SearchType#VOD}
+     * Non-null when {@link #mSearchType} is {@link SearchType#VOD}
      */
     @Nullable
     @SerializedName("ondemand")
-    public VodItem vod;
+    protected VodItem mVod;
 
+    public boolean isStaffPick() {
+        return mIsStaffPick;
+    }
+
+    public boolean isFeatured() {
+        return mIsFeatured;
+    }
+
+    public SearchType getSearchType() {
+        return mSearchType;
+    }
+
+    @Nullable
+    public Video getVideo() {
+        return mVideo;
+    }
+
+    @Nullable
+    public User getUser() {
+        return mUser;
+    }
+
+    @Nullable
+    public Channel getChannel() {
+        return mChannel;
+    }
+
+    @Nullable
+    public Group getGroup() {
+        return mGroup;
+    }
+
+    @Nullable
+    public VodItem getVod() {
+        return mVod;
+    }
 }

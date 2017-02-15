@@ -37,15 +37,15 @@ public class Spatial implements Serializable {
 
     @NotNull
     @SerializedName("projection")
-    protected String projection;
+    protected String mProjection;
 
     @NotNull
     @SerializedName("stereo_format")
-    protected String stereoFormat;
+    protected String mStereoFormat;
 
     @NotNull
     public Projection getProjection() {
-        switch (projection) {
+        switch (mProjection) {
             case "equirectangular":
                 return Projection.EQUIRECTANGULAR;
             case "cylindrical":
@@ -63,7 +63,7 @@ public class Spatial implements Serializable {
 
     @NotNull
     public Format getFormat() {
-        switch (stereoFormat) {
+        switch (mStereoFormat) {
             case "mono":
                 return Format.MONO;
             case "left-right":
@@ -86,21 +86,21 @@ public class Spatial implements Serializable {
 
         Spatial spatial = (Spatial) o;
 
-        return projection.equals(spatial.projection) && stereoFormat.equals(spatial.stereoFormat);
+        return mProjection.equals(spatial.mProjection) && mStereoFormat.equals(spatial.mStereoFormat);
     }
 
     @Override
     public String toString() {
         return super.toString() + "{" +
-               "projection='" + projection + '\'' +
-               ", stereoFormat='" + stereoFormat + '\'' +
+               "projection='" + mProjection + '\'' +
+               ", stereoFormat='" + mStereoFormat + '\'' +
                '}';
     }
 
     @Override
     public int hashCode() {
-        int result = projection.hashCode();
-        result = 31 * result + stereoFormat.hashCode();
+        int result = mProjection.hashCode();
+        result = 31 * result + mStereoFormat.hashCode();
         result = 31 * result + super.hashCode();
         return result;
     }

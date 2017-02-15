@@ -94,51 +94,54 @@ public class VideoFile implements Serializable {
     // <editor-fold desc="Fields common between all file types">
     @Nullable
     @SerializedName("link_expiration_time")
-    protected Date linkExpirationTime;
+    protected Date mLinkExpirationTime;
 
-    protected String link;
-
-    @Nullable
-    protected String log;
+    @SerializedName("link")
+    protected String mLink;
 
     @Nullable
-    protected String token;
+    @SerializedName("log")
+    protected String mLog;
+
+    @Nullable
+    @SerializedName("token")
+    protected String mToken;
 
     @Nullable
     @SerializedName("license_link")
-    protected String licenseLink;
+    protected String mLicenseLink;
 
     @Nullable
     public Date getLinkExpirationTime() {
-        return linkExpirationTime;
+        return mLinkExpirationTime;
     }
 
     /** @return true if this VideoFile doesn't have an expired field or if the expires date is before the current date */
     public boolean isExpired() {
         // If expires is null, we should probably refresh the video object regardless [KV] 3/31/16
         // TODO: Simplify this when expires is deprecated 4/25/16 [KZ]
-        return (expires == null && linkExpirationTime == null) ||
-               (expires != null && expires.before(new Date())) ||
-               (linkExpirationTime != null && linkExpirationTime.before(new Date()));
+        return (mExpires == null && mLinkExpirationTime == null) ||
+               (mExpires != null && mExpires.before(new Date())) ||
+               (mLinkExpirationTime != null && mLinkExpirationTime.before(new Date()));
     }
 
     public String getLink() {
-        return link;
+        return mLink;
     }
 
     @Nullable
     public String getLog() {
-        return log;
+        return mLog;
     }
 
     @Nullable
     public String getToken() {
-        return token;
+        return mToken;
     }
 
     @Nullable
     public String getLicenseLink() {
-        return licenseLink;
+        return mLicenseLink;
     }
 
     // </editor-fold>
@@ -147,49 +150,56 @@ public class VideoFile implements Serializable {
     // Progressive files only - these fields are not relevant to HLS/Dash
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Progressive files only">
-    /** quality will be removed in the future when {@link Video#files} is removed */
+    /** quality will be removed in the future when {@link Video#mVideoFiles} is removed */
     @Deprecated
     @Nullable
-    protected VideoQuality quality;
+    @SerializedName("quality")
+    protected VideoQuality mQuality;
 
-    /** expires will be removed in the future when {@link Video#files} is removed */
+    /** expires will be removed in the future when {@link Video#mVideoFiles} is removed */
     @Deprecated
     @Nullable
-    protected Date expires;
+    @SerializedName("expires")
+    protected Date mExpires;
 
     @Nullable
     @SerializedName("type")
-    protected MimeType mimeType;
+    protected MimeType mMimeType;
 
-    protected double fps;
+    @SerializedName("fps")
+    protected double mFps;
 
-    protected int width;
+    @SerializedName("width")
+    protected int mWidth;
 
-    protected int height;
+    @SerializedName("height")
+    protected int mHeight;
 
-    protected long size; // size of the file, in bytes
+    @SerializedName("size")
+    protected long mSize; // size of the file, in bytes
 
     /** The md5 provides us with a way to uniquely identify video files at {@link #getLink()} */
     @Nullable
-    protected String md5;
+    @SerializedName("md5")
+    protected String mMd5;
 
     @Nullable
     @SerializedName("created_time")
-    protected Date createdTime; // time indicating when this transcode was completed
+    protected Date mCreatedTime; // time indicating when this transcode was completed
 
     /**
      * quality is no longer included in VideoFiles under {@link Video#getPlay()} - it will be removed
-     * in a future release once {@link Video#files} is removed.
+     * in a future release once {@link Video#mVideoFiles} is removed.
      *
      * @return the VideoQuality
      */
     @Deprecated
     public VideoQuality getQuality() {
-        return quality == null ? VideoQuality.NONE : quality;
+        return mQuality == null ? VideoQuality.NONE : mQuality;
     }
 
     public MimeType getType() {
-        return mimeType == null ? MimeType.NONE : mimeType;
+        return mMimeType == null ? MimeType.NONE : mMimeType;
     }
 
     public boolean isVP6() {
@@ -197,29 +207,29 @@ public class VideoFile implements Serializable {
     }
 
     public int getWidth() {
-        return width;
+        return mWidth;
     }
 
     public int getHeight() {
-        return height;
+        return mHeight;
     }
 
     public long getSize() {
-        return size;
+        return mSize;
     }
 
     public double getFps() {
-        return fps;
+        return mFps;
     }
 
     @Nullable
     public String getMd5() {
-        return md5;
+        return mMd5;
     }
 
     @Nullable
     public Date getCreatedTime() {
-        return createdTime;
+        return mCreatedTime;
     }
     // </editor-fold>
 
@@ -238,12 +248,12 @@ public class VideoFile implements Serializable {
 
         VideoFile that = (VideoFile) o;
 
-        return (link != null && that.getLink() != null) && link.equals(that.getLink());
+        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
     }
 
     @Override
     public int hashCode() {
-        return link != null ? link.hashCode() : 0;
+        return mLink != null ? mLink.hashCode() : 0;
     }
     // </editor-fold>
 }

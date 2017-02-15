@@ -24,91 +24,96 @@ public class Notification implements Serializable {
     private static final long serialVersionUID = -68262442832775695L;
 
     @Nullable
-    protected String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
     @SerializedName("created_time")
-    protected Date createdDate;
+    protected Date mCreatedDate;
 
     @NotNull
-    protected String type;
+    @SerializedName("type")
+    protected String mType;
 
     @Nullable
-    protected User user;
+    @SerializedName("user")
+    protected User mUser;
 
     @Nullable
-    protected Comment comment;
+    @SerializedName("comment")
+    protected Comment mComment;
 
     @Nullable
     @SerializedName("clip")
-    protected Video video;
+    protected Video mVideo;
 
     @Nullable
-    protected Credit credit;
+    @SerializedName("credit")
+    protected Credit mCredit;
 
     @SerializedName("new")
-    protected boolean isNew;
+    protected boolean mIsNew;
 
     @SerializedName("seen")
-    protected boolean isSeen;
+    protected boolean mIsSeen;
 
     @Nullable
     public String getUri() {
-        return uri;
+        return mUri;
     }
 
     @Nullable
     public Date getCreatedDate() {
-        return createdDate;
+        return mCreatedDate;
     }
 
     @NotNull
     public NotificationType getNotificationType() {
-        return NotificationType.notificationTypeFromString(type);
+        return NotificationType.notificationTypeFromString(mType);
     }
 
     @Nullable
     public User getUser() {
-        return user;
+        return mUser;
     }
 
     public void setUser(@Nullable User user) {
-        this.user = user;
+        this.mUser = user;
     }
 
     @Nullable
     public Comment getComment() {
-        return comment;
+        return mComment;
     }
 
     public void setComment(@Nullable Comment comment) {
-        this.comment = comment;
+        this.mComment = comment;
     }
 
     @Nullable
     public Video getVideo() {
-        return video;
+        return mVideo;
     }
 
     public void setVideo(@Nullable Video video) {
-        this.video = video;
+        this.mVideo = video;
     }
 
     @Nullable
     public Credit getCredit() {
-        return credit;
+        return mCredit;
     }
 
     public void setCredit(@Nullable Credit credit) {
-        this.credit = credit;
+        this.mCredit = credit;
     }
 
     public boolean isNew() {
-        return isNew;
+        return mIsNew;
     }
 
     public boolean isSeen() {
-        return isSeen;
+        return mIsSeen;
     }
 
     @Override
@@ -122,50 +127,50 @@ public class Notification implements Serializable {
 
         Notification that = (Notification) o;
 
-        if (uri != null ? !uri.equals(that.uri) : that.uri != null) {
+        if (mUri != null ? !mUri.equals(that.mUri) : that.mUri != null) {
             return false;
         }
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) {
+        if (mCreatedDate != null ? !mCreatedDate.equals(that.mCreatedDate) : that.mCreatedDate != null) {
             return false;
         }
-        if (!type.equals(that.type)) {
+        if (!mType.equals(that.mType)) {
             return false;
         }
-        if (user != null ? !user.equals(that.user) : that.user != null) {
+        if (mUser != null ? !mUser.equals(that.mUser) : that.mUser != null) {
             return false;
         }
-        if (comment != null ? !comment.equals(that.comment) : that.comment != null) {
+        if (mComment != null ? !mComment.equals(that.mComment) : that.mComment != null) {
             return false;
         }
-        if (video != null ? !video.equals(that.video) : that.video != null) {
+        if (mVideo != null ? !mVideo.equals(that.mVideo) : that.mVideo != null) {
             return false;
         }
-        return credit != null ? credit.equals(that.credit) : that.credit == null;
+        return mCredit != null ? mCredit.equals(that.mCredit) : that.mCredit == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = uri != null ? uri.hashCode() : 0;
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        result = 31 * result + type.hashCode();
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        result = 31 * result + (video != null ? video.hashCode() : 0);
-        result = 31 * result + (credit != null ? credit.hashCode() : 0);
+        int result = mUri != null ? mUri.hashCode() : 0;
+        result = 31 * result + (mCreatedDate != null ? mCreatedDate.hashCode() : 0);
+        result = 31 * result + mType.hashCode();
+        result = 31 * result + (mUser != null ? mUser.hashCode() : 0);
+        result = 31 * result + (mComment != null ? mComment.hashCode() : 0);
+        result = 31 * result + (mVideo != null ? mVideo.hashCode() : 0);
+        result = 31 * result + (mCredit != null ? mCredit.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Notification{" +
-               "uri='" + uri + '\'' +
-               ", createdDate=" + createdDate +
-               ", type='" + type + '\'' +
-               ", user=" + user +
-               ", comment=" + comment +
-               ", video=" + video +
-               ", credit=" + credit +
+               "uri='" + mUri + '\'' +
+               ", createdDate=" + mCreatedDate +
+               ", type='" + mType + '\'' +
+               ", user=" + mUser +
+               ", comment=" + mComment +
+               ", video=" + mVideo +
+               ", credit=" + mCredit +
                '}';
     }
 }

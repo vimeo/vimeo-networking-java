@@ -24,6 +24,7 @@
 
 package com.vimeo.networking.model.search;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -43,18 +44,20 @@ public class SearchFacet implements Serializable {
     private static final long serialVersionUID = -6507918911819851151L;
 
     @Nullable
-    public String name;
+    @SerializedName("name")
+    protected String mName;
 
     @Nullable
-    public ArrayList<FacetOption> options;
+    @SerializedName("options")
+    protected ArrayList<FacetOption> mOptions;
 
     @Nullable
     public String getName() {
-        return name;
+        return mName;
     }
 
     @Nullable
     public ArrayList<FacetOption> getOptions() {
-        return options;
+        return mOptions;
     }
 }

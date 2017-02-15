@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
@@ -35,11 +36,31 @@ public class Paging implements Serializable {
 
     private static final long serialVersionUID = -8547699448016693035L;
 
-    public String next;
+    @SerializedName("next")
+    protected String mNext;
 
-    public String previous;
+    @SerializedName("previous")
+    protected String mPrevious;
 
-    public String first;
+    @SerializedName("first")
+    protected String mFirst;
 
-    public String last;
+    @SerializedName("last")
+    protected String mLast;
+
+    public String getNext() {
+        return mNext;
+    }
+
+    public String getPrevious() {
+        return mPrevious;
+    }
+
+    public String getFirst() {
+        return mFirst;
+    }
+
+    public String getLast() {
+        return mLast;
+    }
 }

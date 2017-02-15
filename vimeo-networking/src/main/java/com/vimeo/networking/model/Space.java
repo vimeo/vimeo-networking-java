@@ -24,6 +24,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
@@ -37,9 +38,24 @@ public class Space implements Serializable {
 
     private static final long serialVersionUID = -1985382617862372889L;
 
-    public long free;
+    @SerializedName("free")
+    protected long mFree;
 
-    public long max;
+    @SerializedName("max")
+    protected long mMax;
 
-    public long used;
+    @SerializedName("used")
+    protected long mUsed;
+
+    public long getFree() {
+        return mFree;
+    }
+
+    public long getMax() {
+        return mMax;
+    }
+
+    public long getUsed() {
+        return mUsed;
+    }
 }

@@ -33,30 +33,34 @@ public class Recommendation implements Serializable {
      * Null if not recommended by a category
      */
     @Nullable
-    protected Category category;
+    @SerializedName("category")
+    protected Category mCategory;
 
     @Nullable
     @SerializedName("type")
-    protected String recommendationType;
+    protected String mRecommendationType;
 
     /**
      * Null if type is not user
      */
     @Nullable
-    protected User user;
+    @SerializedName("user")
+    protected User mUser;
 
     /**
      * Null if type is not channel
      */
     @Nullable
-    protected Channel channel;
+    @SerializedName("channel")
+    protected Channel mChannel;
 
     @Nullable
-    protected String description;
+    @SerializedName("description")
+    protected String mDescription;
 
     @Nullable
     @SerializedName("resource_key")
-    public String resourceKey;
+    protected String mResourceKey;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -64,34 +68,34 @@ public class Recommendation implements Serializable {
     // <editor-fold desc="Getters">
     @Nullable
     public Category getCategory() {
-        return category;
+        return mCategory;
     }
 
     @Nullable
     public User getUser() {
-        return user;
+        return mUser;
     }
 
     @Nullable
     public Channel getChannel() {
-        return channel;
+        return mChannel;
     }
 
     @Nullable
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     @Nullable
     public String getResourceKey() {
-        return resourceKey;
+        return mResourceKey;
     }
 
     @NotNull
     public RecommendationType getRecommendationType() {
-        if (TYPE_CHANNEL.equals(recommendationType)) {
+        if (TYPE_CHANNEL.equals(mRecommendationType)) {
             return RecommendationType.CHANNEL;
-        } else if (TYPE_USER.equals(recommendationType)) {
+        } else if (TYPE_USER.equals(mRecommendationType)) {
             return RecommendationType.USER;
         } else {
             return RecommendationType.NONE;

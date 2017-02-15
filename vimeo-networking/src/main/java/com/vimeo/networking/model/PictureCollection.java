@@ -65,24 +65,26 @@ public class PictureCollection implements Serializable {
     }
 
     @Nullable
-    protected String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @SerializedName("active")
-    protected boolean isActive;
+    protected boolean mIsActive;
 
     @Nullable
-    protected String type;
+    @SerializedName("type")
+    protected String mType;
 
     @Nullable
     @SerializedName("sizes")
-    protected ArrayList<Picture> pictures;
+    protected ArrayList<Picture> mPictures;
 
     @Nullable
     public Picture pictureForWidth(int width) {
-        if (pictures != null && !pictures.isEmpty()) {
-            Picture selectedPicture = pictures.get(pictures.size() - 1);
-            for (Picture picture : pictures) {
-                if ((picture.width >= width) && ((picture.width - width) < (selectedPicture.width - width))) {
+        if (mPictures != null && !mPictures.isEmpty()) {
+            Picture selectedPicture = mPictures.get(mPictures.size() - 1);
+            for (Picture picture : mPictures) {
+                if ((picture.mWidth >= width) && ((picture.mWidth - width) < (selectedPicture.mWidth - width))) {
                     selectedPicture = picture;
                 }
             }
@@ -97,7 +99,7 @@ public class PictureCollection implements Serializable {
      */
     @Nullable
     public String getUri() {
-        return uri;
+        return mUri;
     }
 
     /**
@@ -110,7 +112,7 @@ public class PictureCollection implements Serializable {
      * represent the pictures of another object.
      */
     public boolean isActive() {
-        return isActive;
+        return mIsActive;
     }
 
     /**
@@ -118,7 +120,7 @@ public class PictureCollection implements Serializable {
      */
     @Nullable
     public ArrayList<Picture> getPictures() {
-        return pictures;
+        return mPictures;
     }
 
     /**
@@ -129,11 +131,11 @@ public class PictureCollection implements Serializable {
      */
     @NotNull
     public PictureType getPictureType() {
-        if (type == null) {
+        if (mType == null) {
             return PictureType.UNKNOWN;
         }
 
-        switch (type) {
+        switch (mType) {
             case PICTURE_TYPE_CAUTION:
                 return PictureType.CAUTION;
             case PICTURE_TYPE_CUSTOM:

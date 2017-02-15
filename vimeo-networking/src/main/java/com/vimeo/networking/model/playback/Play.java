@@ -29,6 +29,7 @@ import com.vimeo.networking.model.VideoFile;
 import com.vimeo.networking.model.playback.embed.Embed;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -59,9 +60,10 @@ public class Play implements Serializable {
         @SerializedName("restricted")
         RESTRICTED("restricted");
 
+        @NotNull
         private final String string;
 
-        Status(String string) {
+        Status(@NotNull String string) {
             this.string = string;
         }
 
@@ -72,67 +74,74 @@ public class Play implements Serializable {
     }
 
     @Nullable
-    protected Embed embed;
+    @SerializedName("embed")
+    protected Embed mEmbed;
 
     @Nullable
-    protected VideoFile hls;
+    @SerializedName("hls")
+    protected VideoFile mHls;
 
     @Nullable
-    protected VideoFile dash;
+    @SerializedName("dash")
+    protected VideoFile mDash;
 
     @Nullable
-    protected ArrayList<VideoFile> progressive;
+    @SerializedName("progressive")
+    protected ArrayList<VideoFile> mProgressive;
 
     @Nullable
-    protected PlayProgress progress;
+    @SerializedName("progress")
+    protected PlayProgress mProgress;
 
     @Nullable
-    protected Status status;
+    @SerializedName("status")
+    protected Status mStatus;
 
     @Nullable
-    protected Drm drm;
+    @SerializedName("drm")
+    protected Drm mDrm;
 
     @Nullable
     public Embed getEmbed() {
-        return embed;
+        return mEmbed;
     }
 
     public void setEmbed(@Nullable Embed embed) {
-        this.embed = embed;
+        this.mEmbed = embed;
     }
 
     @Nullable
     public VideoFile getHlsVideoFile() {
-        return hls;
+        return mHls;
     }
 
     @Nullable
     public VideoFile getDashVideoFile() {
-        return dash;
+        return mDash;
     }
 
     @Nullable
     public ArrayList<VideoFile> getProgressiveVideoFiles() {
-        return progressive;
+        return mProgressive;
     }
 
     @Nullable
     public PlayProgress getProgress() {
-        return progress;
+        return mProgress;
     }
 
     public void setProgress(@Nullable PlayProgress progress) {
-        this.progress = progress;
+        this.mProgress = progress;
     }
 
     @Nullable
     public Drm getDrm() {
-        return drm;
+        return mDrm;
     }
 
     @Nullable
     public Status getStatus() {
-        return status;
+        return mStatus;
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -141,19 +150,19 @@ public class Play implements Serializable {
     // <editor-fold desc="Helpers">
     public int getFileCount() {
         int count = 0;
-        if (hls != null) {
+        if (mHls != null) {
             count++;
         }
-        if (dash != null) {
+        if (mDash != null) {
             count++;
         }
-        if (progressive != null) {
-            count += progressive.size();
+        if (mProgressive != null) {
+            count += mProgressive.size();
         }
-        if (drm != null && drm.getWidevine() != null) {
+        if (mDrm != null && mDrm.getWidevine() != null) {
             count++;
         }
-        if (drm != null && drm.getPlayReady() != null) {
+        if (mDrm != null && mDrm.getPlayReady() != null) {
             count++;
         }
         return count;

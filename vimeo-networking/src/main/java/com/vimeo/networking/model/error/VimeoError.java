@@ -24,8 +24,6 @@ package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
-import com.vimeo.stag.UseStag;
-import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,104 +48,104 @@ public class VimeoError extends RuntimeException {
     private static final String AUTHENTICATION_HEADER = "WWW-Authenticate";
     private static final String AUTHENTICATION_TOKEN_ERROR = "Bearer error=\"invalid_token\"";
 
-    private Response response;
+    private Response mResponse;
 
     @SerializedName("error")
-    protected String errorMessage;
+    protected String mErrorMessage;
 
     @SerializedName("link")
-    protected String link;
+    protected String mLink;
 
     @SerializedName("developer_message")
-    protected String developerMessage;
+    protected String mDeveloperMessage;
 
     @SerializedName("error_code")
-    protected ErrorCode errorCode;
+    protected ErrorCode mErrorCode;
 
     @SerializedName("invalid_parameters")
-    protected List<InvalidParameter> invalidParameters;
+    protected List<InvalidParameter> mInvalidParameters;
 
-    private Exception exception;
-    private int httpStatusCode = Vimeo.NOT_FOUND;
+    private Exception mException;
+    private int mHttpStatusCode = Vimeo.NOT_FOUND;
 
-    private boolean isCanceledError;
+    private boolean mIsCanceledError;
 
     public VimeoError() {
     }
 
     public VimeoError(String errorMessage) {
-        this.developerMessage = errorMessage;
+        this.mDeveloperMessage = errorMessage;
     }
 
     public VimeoError(String errorMessage, Exception exception) {
-        this.developerMessage = errorMessage;
-        this.exception = exception;
+        this.mDeveloperMessage = errorMessage;
+        this.mException = exception;
     }
 
     public Response getResponse() {
-        return response;
+        return mResponse;
     }
 
     public void setResponse(Response response) {
-        this.response = response;
+        this.mResponse = response;
     }
 
     public void setLink(String link) {
-        this.link = link;
+        this.mLink = link;
     }
 
     public String getLink() {
-        return this.link;
+        return this.mLink;
     }
 
     public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+        this.mErrorMessage = errorMessage;
     }
 
     public String getErrorMessage() {
-        return this.errorMessage;
+        return this.mErrorMessage;
     }
 
     public void setDeveloperMessage(String developerMessage) {
-        this.developerMessage = developerMessage;
+        this.mDeveloperMessage = developerMessage;
     }
 
     public String getDeveloperMessage() {
-        if (this.developerMessage == null || this.developerMessage.isEmpty()) {
-            return this.errorMessage;
+        if (this.mDeveloperMessage == null || this.mDeveloperMessage.isEmpty()) {
+            return this.mErrorMessage;
         }
-        return this.developerMessage;
+        return this.mDeveloperMessage;
     }
 
     public void setErrorCode(ErrorCode errorCode) {
-        this.errorCode = errorCode;
+        this.mErrorCode = errorCode;
     }
 
     @NotNull
     public ErrorCode getErrorCode() {
-        return errorCode == null ? ErrorCode.DEFAULT : this.errorCode;
+        return mErrorCode == null ? ErrorCode.DEFAULT : this.mErrorCode;
     }
 
     public void setInvalidParameters(List<InvalidParameter> invalidParameters) {
-        this.invalidParameters = invalidParameters;
+        this.mInvalidParameters = invalidParameters;
     }
 
     public List<InvalidParameter> getInvalidParameters() {
-        return this.invalidParameters;
+        return this.mInvalidParameters;
     }
 
     /**
-     * Returns the first invalid parameter in the {@link #invalidParameters} list
+     * Returns the first invalid parameter in the {@link #mInvalidParameters} list
      *
      * @return First InvalidParameter in the invalid parameters array
      */
     @Nullable
     public InvalidParameter getInvalidParameter() {
-        return invalidParameters != null && !invalidParameters.isEmpty() ? invalidParameters.get(0) : null;
+        return mInvalidParameters != null && !mInvalidParameters.isEmpty() ? mInvalidParameters.get(0) : null;
     }
 
     /**
-     * Returns the error code for the first invalid parameter in the {@link #invalidParameters} list
+     * Returns the error code for the first invalid parameter in the {@link #mInvalidParameters} list
      * or null if none exists.
      */
     @Nullable
@@ -156,22 +154,22 @@ public class VimeoError extends RuntimeException {
     }
 
     public Exception getException() {
-        return exception;
+        return mException;
     }
 
     public void setException(Exception exception) {
-        this.exception = exception;
+        this.mException = exception;
     }
 
     public int getHttpStatusCode() {
-        if (response != null) {
-            return response.code();
+        if (mResponse != null) {
+            return mResponse.code();
         }
-        return httpStatusCode;
+        return mHttpStatusCode;
     }
 
     public void setHttpStatusCode(int httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
+        this.mHttpStatusCode = httpStatusCode;
     }
 
     /**
@@ -183,28 +181,28 @@ public class VimeoError extends RuntimeException {
     public boolean isNetworkError() {
         // Response will be null if the VimeoCallback#onFailure was called (which will be due to issues
         // in the networking layer 2/17/16 [KV]
-        return !isCanceledError && response == null;
+        return !mIsCanceledError && mResponse == null;
     }
 
     public void setIsCanceledError(boolean isCanceledError) {
-        this.isCanceledError = isCanceledError;
+        this.mIsCanceledError = isCanceledError;
     }
 
     public boolean isCanceledError() {
-        return isCanceledError;
+        return mIsCanceledError;
     }
 
     public boolean isServiceUnavailable() {
-        return (response != null) && (response.code() == 503);
+        return (mResponse != null) && (mResponse.code() == 503);
     }
 
     public boolean isForbiddenError() {
-        return (response != null) && (response.code() == 403);
+        return (mResponse != null) && (mResponse.code() == 403);
     }
 
     public boolean isInvalidTokenError() {
-        if ((response != null) && (response.code() == 401)) {
-            List<String> headers = response.headers().values(AUTHENTICATION_HEADER);
+        if ((mResponse != null) && (mResponse.code() == 401)) {
+            List<String> headers = mResponse.headers().values(AUTHENTICATION_HEADER);
             for (String header : headers) {
                 if (header.equals(AUTHENTICATION_TOKEN_ERROR)) {
                     return true;
@@ -227,10 +225,10 @@ public class VimeoError extends RuntimeException {
 
     public void addInvalidParameter(String field, ErrorCode code, String developerMessage) {
         InvalidParameter invalidParameter = new InvalidParameter(field, code, developerMessage);
-        if (this.invalidParameters == null) {
-            invalidParameters = new ArrayList<>();
+        if (this.mInvalidParameters == null) {
+            mInvalidParameters = new ArrayList<>();
         }
-        this.invalidParameters.add(invalidParameter);
+        this.mInvalidParameters.add(invalidParameter);
     }
 
     /**
@@ -240,10 +238,10 @@ public class VimeoError extends RuntimeException {
     public String getLogString() {
         if (getDeveloperMessage() != null) {
             return getDeveloperMessage();
-        } else if (this.errorMessage != null) {
-            return this.errorMessage;
-        } else if (exception != null && exception.getMessage() != null) {
-            return "Exception: " + exception.getMessage();
+        } else if (this.mErrorMessage != null) {
+            return this.mErrorMessage;
+        } else if (mException != null && mException.getMessage() != null) {
+            return "Exception: " + mException.getMessage();
         } else if (getErrorCode() != ErrorCode.DEFAULT) {
             return "Error Code " + getErrorCode();
         } else if (getHttpStatusCode() != Vimeo.NOT_FOUND) {

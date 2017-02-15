@@ -36,7 +36,7 @@ import java.io.Serializable;
  * <p/>
  * Only the html data structure will be accessible unless the requesting user owns the video.
  * <p/>
- * All other fields besides {@link #html} are here for allowing you to edit a video's embed settings
+ * All other fields besides {@link #mHtml} are here for allowing you to edit a video's embed settings
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
@@ -47,90 +47,96 @@ public class Embed implements Serializable {
     private static final long serialVersionUID = -4708548576616330795L;
 
     @Nullable
-    protected String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
-    protected EmbedHtml html;
+    @SerializedName("html")
+    protected EmbedHtml mHtml;
 
     @Nullable
-    protected EmbedButtons buttons;
+    @SerializedName("buttons")
+    protected EmbedButtons mButtons;
 
     @Nullable
-    protected EmbedTitle title;
+    @SerializedName("title")
+    protected EmbedTitle mTitle;
 
     @SerializedName("playbar")
-    protected boolean playBar;
+    protected boolean mPlayBar;
 
-    protected boolean volume;
+    @SerializedName("volume")
+    protected boolean mVolume;
 
     @Nullable
-    protected String color;
+    @SerializedName("color")
+    protected String mColor;
 
     @Nullable
     public String getUri() {
-        return uri;
+        return mUri;
     }
 
     @Nullable
     public EmbedHtml getHtml() {
-        return html;
+        return mHtml;
     }
 
     @Nullable
     public EmbedButtons getButtons() {
-        return buttons;
+        return mButtons;
     }
 
     /**
      * @param buttons Set {@link EmbedButtons}
      */
     public void setButtons(@Nullable EmbedButtons buttons) {
-        this.buttons = buttons;
+        this.mButtons = buttons;
     }
 
     @Nullable
     public EmbedTitle getTitle() {
-        return title;
+        return mTitle;
     }
 
     /**
      * @param title Set {@link EmbedTitle}
      */
     public void setTitle(@Nullable EmbedTitle title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
     public boolean isPlayBar() {
-        return playBar;
+        return mPlayBar;
     }
 
     /**
      * @param playbar Show or hide the play bar
      */
     public void setPlayBar(boolean playbar) {
-        this.playBar = playbar;
+        this.mPlayBar = playbar;
     }
 
     public boolean isVolume() {
-        return volume;
+        return mVolume;
     }
 
     /**
      * @param volume Show or hide the volume selector
      */
     public void setVolume(boolean volume) {
-        this.volume = volume;
+        this.mVolume = volume;
     }
 
     @Nullable
     public String getColor() {
-        return color;
+        return mColor;
     }
 
     /**
      * @param color A primary color used by the embed player
      */
     public void setColor(@Nullable String color) {
-        this.color = color;
+        this.mColor = color;
     }
 }

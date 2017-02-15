@@ -39,50 +39,51 @@ public class PinCodeInfo {
 
     @Nullable
     @SerializedName("device_code")
-    protected String deviceCode;
+    protected String mDeviceCode;
 
     @Nullable
     @SerializedName("user_code")
-    protected String userCode;
+    protected String mUserCode;
 
     @Nullable
     @SerializedName("authorize_link")
-    protected String authorizeLink;
+    protected String mAuthorizeLink;
 
     @Nullable
     @SerializedName("activate_link")
-    protected String activateLink;
+    protected String mActivateLink;
 
     @SerializedName("expires_in")
-    protected int expiresIn;
+    protected int mExpiresIn;
 
-    protected int interval;
+    @SerializedName("interval")
+    protected int mInterval;
 
     @Nullable
     public String getDeviceCode() {
-        return deviceCode;
+        return mDeviceCode;
     }
 
     @Nullable
     public String getUserCode() {
-        return userCode;
+        return mUserCode;
     }
 
     @Nullable
     public String getAuthorizeLink() {
-        return authorizeLink;
+        return mAuthorizeLink;
     }
 
     @Nullable
     public String getActivateLink() {
-        return activateLink;
+        return mActivateLink;
     }
 
     public int getExpiresIn() {
-        return expiresIn;
+        return mExpiresIn;
     }
 
     public int getInterval() {
-        return interval;
+        return mInterval;
     }
 }

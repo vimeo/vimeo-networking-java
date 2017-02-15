@@ -24,6 +24,7 @@
 
 package com.vimeo.networking.model.playback.embed;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -42,23 +43,26 @@ public class EmbedHtml implements Serializable {
 
     private static final long serialVersionUID = 3752755790501317766L;
 
-    protected int width;
+    @SerializedName("width")
+    protected int mWidth;
 
-    protected int height;
+    @SerializedName("height")
+    protected int mHeight;
 
     @Nullable
-    protected String html;
+    @SerializedName("html")
+    protected String mHtml;
 
     public int getWidth() {
-        return width;
+        return mWidth;
     }
 
     public int getHeight() {
-        return height;
+        return mHeight;
     }
 
     @Nullable
     public String getHtml() {
-        return html;
+        return mHtml;
     }
 }

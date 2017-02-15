@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -41,13 +42,14 @@ public class Preferences implements Serializable {
     private static final long serialVersionUID = -251634859829805204L;
 
     @Nullable
-    protected VideosPreference videos;
+    @SerializedName("videos")
+    protected VideosPreference mVideos;
 
     /**
      * Return the {@link VideosPreference} of this object
      */
     @Nullable
     public VideosPreference getVideos() {
-        return videos;
+        return mVideos;
     }
 }

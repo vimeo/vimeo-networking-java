@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
@@ -48,44 +49,89 @@ public class FeedItem implements Serializable {
         NONE
     }
 
-    public String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
-    public Video clip;
+    @SerializedName("clip")
+    protected Video mClip;
 
-    public String type;
+    @SerializedName("type")
+    protected String mType;
 
-    public Date time;
+    @SerializedName("time")
+    protected Date mTime;
 
-    public User user;   // from like type
+    @SerializedName("user")
+    protected User mUser;   // from like type
 
-    public Channel channel; // from channel type
+    @SerializedName("channel")
+    protected Channel mChannel; // from channel type
 
-    public Category category;
+    @SerializedName("category")
+    protected Category mCategory;
 
-    public Tag tag;
+    @SerializedName("tag")
+    protected Tag mTag;
 
-    public Group group;
+    @SerializedName("group")
+    protected Group mGroup;
 
-    public Metadata metadata;
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
 
+    public String getUri() {
+        return mUri;
+    }
+
+    public Video getClip() {
+        return mClip;
+    }
+
+    public Date getTime() {
+        return mTime;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public Channel getChannel() {
+        return mChannel;
+    }
+
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    public Tag getTag() {
+        return mTag;
+    }
+
+    public Group getGroup() {
+        return mGroup;
+    }
+
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
 
     public AttributionType getType() {
-        if (type != null) {
-            if (type.equalsIgnoreCase("category")) {
+        if (mType != null) {
+            if (mType.equalsIgnoreCase("category")) {
                 return AttributionType.CATEGORY;
-            } else if (type.equalsIgnoreCase("channel")) {
+            } else if (mType.equalsIgnoreCase("channel")) {
                 return AttributionType.CHANNEL;
-            } else if (type.equalsIgnoreCase("like")) {
+            } else if (mType.equalsIgnoreCase("like")) {
                 return AttributionType.LIKE;
-            } else if (type.equalsIgnoreCase("upload")) {
+            } else if (mType.equalsIgnoreCase("upload")) {
                 return AttributionType.UPLOAD;
-            } else if (type.equalsIgnoreCase("tag")) {
+            } else if (mType.equalsIgnoreCase("tag")) {
                 return AttributionType.TAG;
-            } else if (type.equalsIgnoreCase("group")) {
+            } else if (mType.equalsIgnoreCase("group")) {
                 return AttributionType.GROUP;
-            } else if (type.equalsIgnoreCase("appearance")) {
+            } else if (mType.equalsIgnoreCase("appearance")) {
                 return AttributionType.CREDIT;
-            } else if (type.equalsIgnoreCase("share")) {
+            } else if (mType.equalsIgnoreCase("share")) {
                 return AttributionType.SHARE;
             }
         }
@@ -104,14 +150,14 @@ public class FeedItem implements Serializable {
 
         FeedItem that = (FeedItem) o;
 
-        return ((this.clip != null && that.clip != null) &&
-                (this.clip.getResourceKey() != null && that.clip.getResourceKey() != null) &&
-                this.clip.getResourceKey().equals(that.clip.getResourceKey()));
+        return ((this.mClip != null && that.mClip != null) &&
+                (this.mClip.getResourceKey() != null && that.mClip.getResourceKey() != null) &&
+                this.mClip.getResourceKey().equals(that.mClip.getResourceKey()));
     }
 
     @Override
     public int hashCode() {
-        return this.clip.getResourceKey() != null ? this.clip.getResourceKey().hashCode() : 0;
+        return this.mClip.getResourceKey() != null ? this.mClip.getResourceKey().hashCode() : 0;
     }
 
 }

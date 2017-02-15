@@ -39,34 +39,87 @@ public class Channel implements Serializable, Followable {
 
     private static final long serialVersionUID = 3190410523525111858L;
 
-    public String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
-    public String name;
+    @SerializedName("name")
+    protected String mName;
 
-    public String description;
+    @SerializedName("description")
+    protected String mDescription;
 
-    public String link;
+    @SerializedName("link")
+    protected String mLink;
 
     @SerializedName("created_time")
-    public Date createdTime;
+    protected Date mCreatedTime;
 
     @SerializedName("modified_time")
-    public Date modifiedTime;
+    protected Date mModifiedTime;
 
-    public User user;
+    @SerializedName("user")
+    protected User mUser;
 
-    public PictureCollection pictures;
+    @SerializedName("pictures")
+    protected PictureCollection mPictures;
 
-    public PictureCollection header;
+    @SerializedName("header")
+    protected PictureCollection mHeader;
 
-    public Privacy privacy;
+    @SerializedName("privacy")
+    protected Privacy mPrivacy;
 
-    public Metadata metadata;
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
+
+    public String getUri() {
+        return mUri;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public Date getCreatedTime() {
+        return mCreatedTime;
+    }
+
+    public Date getModifiedTime() {
+        return mModifiedTime;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public PictureCollection getPictures() {
+        return mPictures;
+    }
+
+    public PictureCollection getHeader() {
+        return mHeader;
+    }
+
+    public Privacy getPrivacy() {
+        return mPrivacy;
+    }
+
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
 
     @Nullable
     public Connection getUsersConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
-            return metadata.connections.users;
+        if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mUsers != null) {
+            return mMetadata.mConnections.mUsers;
         }
         return null;
     }
@@ -74,8 +127,8 @@ public class Channel implements Serializable, Followable {
     @Nullable
     @Override
     public Interaction getFollowInteraction() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return metadata.interactions.follow;
+        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mFollow != null) {
+            return mMetadata.mInteractions.mFollow;
         }
         return null;
     }
@@ -88,27 +141,27 @@ public class Channel implements Serializable, Followable {
     @Override
     public boolean isFollowing() {
         Interaction interaction = getFollowInteraction();
-        return interaction != null && interaction.added;
+        return interaction != null && interaction.mAdded;
     }
 
     public int getFollowerCount() {
         if (getUsersConnection() != null) {
-            return getUsersConnection().total;
+            return getUsersConnection().mTotal;
         }
         return 0;
     }
 
     @Nullable
     public Connection getVideosConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
-            return metadata.connections.videos;
+        if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mVideos != null) {
+            return mMetadata.mConnections.mVideos;
         }
         return null;
     }
 
     public int getVideoCount() {
         if (getVideosConnection() != null) {
-            return getVideosConnection().total;
+            return getVideosConnection().mTotal;
         }
         return 0;
     }
@@ -124,11 +177,11 @@ public class Channel implements Serializable, Followable {
 
         Channel that = (Channel) o;
 
-        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
+        return ((this.mUri != null && that.mUri != null) && this.mUri.equals(that.mUri));
     }
 
     @Override
     public int hashCode() {
-        return this.uri != null ? this.uri.hashCode() : 0;
+        return this.mUri != null ? this.mUri.hashCode() : 0;
     }
 }

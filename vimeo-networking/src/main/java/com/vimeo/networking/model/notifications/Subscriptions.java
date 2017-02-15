@@ -24,81 +24,81 @@ public class Subscriptions implements Serializable {
 
 
     @SerializedName(NotificationConstants.NOTIFICATION_COMMENT)
-    protected boolean comment;
+    protected boolean mComment;
 
     @SerializedName(NotificationConstants.NOTIFICATION_CREDIT)
-    protected boolean credit;
+    protected boolean mCredit;
 
     @SerializedName(NotificationConstants.NOTIFICATION_LIKE)
-    protected boolean like;
+    protected boolean mLike;
 
     @SerializedName(NotificationConstants.NOTIFICATION_REPLY)
-    protected boolean reply;
+    protected boolean mReply;
 
     @SerializedName(NotificationConstants.NOTIFICATION_FOLLOW)
-    protected boolean follow;
+    protected boolean mFollow;
 
     @SerializedName(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
-    protected boolean videoAvailable;
+    protected boolean mVideoAvailable;
 
     public boolean isReceivingComment() {
-        return comment;
+        return mComment;
     }
 
     public void receiveComment(boolean receive) {
-        comment = receive;
+        mComment = receive;
     }
 
     public boolean isReceivingCredit() {
-        return credit;
+        return mCredit;
     }
 
     public void receiveCredit(boolean receive) {
-        credit = receive;
+        mCredit = receive;
     }
 
     public boolean isReceivingLike() {
-        return like;
+        return mLike;
     }
 
     public void receiveLike(boolean receive) {
-        like = receive;
+        mLike = receive;
     }
 
     public boolean isReceivingReply() {
-        return reply;
+        return mReply;
     }
 
     public void receiveReply(boolean receive) {
-        reply = receive;
+        mReply = receive;
     }
 
     public boolean isReceivingFollow() {
-        return follow;
+        return mFollow;
     }
 
     public void receiveFollow(boolean receive) {
-        follow = receive;
+        mFollow = receive;
     }
 
     public boolean isReceivingVideoAvailable() {
-        return videoAvailable;
+        return mVideoAvailable;
     }
 
     public void receiveVideoAvailable(boolean receive) {
-        videoAvailable = receive;
+        mVideoAvailable = receive;
     }
 
     @NotNull
     public Map<String, Boolean> getMapFromSubscriptions() {
         Map<String, Boolean> map = new HashMap<>();
 
-        map.put(NotificationConstants.NOTIFICATION_COMMENT, comment);
-        map.put(NotificationConstants.NOTIFICATION_CREDIT, credit);
-        map.put(NotificationConstants.NOTIFICATION_LIKE, like);
-        map.put(NotificationConstants.NOTIFICATION_REPLY, reply);
-        map.put(NotificationConstants.NOTIFICATION_FOLLOW, follow);
-        map.put(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE, videoAvailable);
+        map.put(NotificationConstants.NOTIFICATION_COMMENT, mComment);
+        map.put(NotificationConstants.NOTIFICATION_CREDIT, mCredit);
+        map.put(NotificationConstants.NOTIFICATION_LIKE, mLike);
+        map.put(NotificationConstants.NOTIFICATION_REPLY, mReply);
+        map.put(NotificationConstants.NOTIFICATION_FOLLOW, mFollow);
+        map.put(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE, mVideoAvailable);
 
         return map;
     }

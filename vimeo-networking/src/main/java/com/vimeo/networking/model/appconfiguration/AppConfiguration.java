@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model.appconfiguration;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * An object returned from the /configs endpoint. This is a way for the api to specify configuration for our application
  * <p/>
@@ -29,9 +31,14 @@ package com.vimeo.networking.model.appconfiguration;
  */
 public class AppConfiguration {
 
-    public FacebookConfiguration facebook;
-    public ApiConfiguration api;
-    public FeaturesConfiguration features;
+    @SerializedName("facebook")
+    public FacebookConfiguration mFacebook;
+
+    @SerializedName("api")
+    public ApiConfiguration mApi;
+
+    @SerializedName("features")
+    public FeaturesConfiguration mFeatures;
 
 
     @Override
@@ -45,21 +52,21 @@ public class AppConfiguration {
 
         AppConfiguration that = (AppConfiguration) o;
 
-        if (facebook != null ? !facebook.equals(that.facebook) : that.facebook != null) {
+        if (mFacebook != null ? !mFacebook.equals(that.mFacebook) : that.mFacebook != null) {
             return false;
         }
-        if (api != null ? !api.equals(that.api) : that.api != null) {
+        if (mApi != null ? !mApi.equals(that.mApi) : that.mApi != null) {
             return false;
         }
-        return !(features != null ? !features.equals(that.features) : that.features != null);
+        return !(mFeatures != null ? !mFeatures.equals(that.mFeatures) : that.mFeatures != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = facebook != null ? facebook.hashCode() : 0;
-        result = 31 * result + (api != null ? api.hashCode() : 0);
-        result = 31 * result + (features != null ? features.hashCode() : 0);
+        int result = mFacebook != null ? mFacebook.hashCode() : 0;
+        result = 31 * result + (mApi != null ? mApi.hashCode() : 0);
+        result = 31 * result + (mFeatures != null ? mFeatures.hashCode() : 0);
         return result;
     }
 }

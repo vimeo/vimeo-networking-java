@@ -34,28 +34,35 @@ public class Season implements Serializable {
     private static final long serialVersionUID = 2770200708069413413L;
 
     @Nullable
-    public String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
-    public String name;
+    @SerializedName("name")
+    protected String mName;
 
     @Nullable
-    public String type;
+    @SerializedName("type")
+    protected String mType;
 
     @Nullable
-    public String description;
+    @SerializedName("description")
+    protected String mDescription;
 
     @Nullable
-    public User user;
+    @SerializedName("user")
+    protected User mUser;
 
-    public int position;
+    @SerializedName("position")
+    protected int mPosition;
 
     @Nullable
-    public Metadata metadata;
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
 
     @Nullable
     @SerializedName("resource_key")
-    public String resourceKey;
+    protected String mResourceKey;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -63,8 +70,13 @@ public class Season implements Serializable {
     // <editor-fold desc="Getters">
 
     @Nullable
+    public String getType() {
+        return mType;
+    }
+
+    @Nullable
     public String getUri() {
-        return uri;
+        return mUri;
     }
 
     /**
@@ -72,7 +84,7 @@ public class Season implements Serializable {
      */
     @Nullable
     public String getName() {
-        return name;
+        return mName;
     }
 
     /**
@@ -83,7 +95,7 @@ public class Season implements Serializable {
      */
     @NotNull
     public SeasonType getSeasonType() {
-        if (SEASON_TYPE_EXTRAS.equals(type)) {
+        if (SEASON_TYPE_EXTRAS.equals(mType)) {
             return SeasonType.EXTRAS;
         }
         return SeasonType.MAIN;
@@ -94,7 +106,7 @@ public class Season implements Serializable {
      */
     @Nullable
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     /**
@@ -102,7 +114,7 @@ public class Season implements Serializable {
      */
     @Nullable
     public User getUser() {
-        return user;
+        return mUser;
     }
 
     /**
@@ -113,7 +125,7 @@ public class Season implements Serializable {
      * @return the position of the season
      */
     public int getPosition() {
-        return position;
+        return mPosition;
     }
 
     /**
@@ -125,12 +137,12 @@ public class Season implements Serializable {
      */
     @Nullable
     public Metadata getMetadata() {
-        return metadata;
+        return mMetadata;
     }
 
     @Nullable
     public String getResourceKey() {
-        return resourceKey;
+        return mResourceKey;
     }
 
     // </editor-fold>
@@ -142,13 +154,13 @@ public class Season implements Serializable {
 
     @Nullable
     public ConnectionCollection getConnections() {
-        return metadata != null ? metadata.connections : null;
+        return mMetadata != null ? mMetadata.getConnections() : null;
     }
 
     @Nullable
     public Connection getVideosConnection() {
         ConnectionCollection connections = getConnections();
-        return connections != null ? connections.videos : null;
+        return connections != null ? connections.getVideos() : null;
     }
 
     @Nullable
@@ -172,12 +184,12 @@ public class Season implements Serializable {
         }
         Season that = (Season) obj;
 
-        return (uri != null && that.getUri() != null) && uri.equals(that.getUri());
+        return (mUri != null && that.getUri() != null) && mUri.equals(that.getUri());
     }
 
     @Override
     public int hashCode() {
-        return uri != null ? uri.hashCode() : 0;
+        return mUri != null ? mUri.hashCode() : 0;
     }
     // </editor-fold>
 }

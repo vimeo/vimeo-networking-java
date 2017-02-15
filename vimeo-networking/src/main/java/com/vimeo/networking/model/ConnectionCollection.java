@@ -40,104 +40,290 @@ public class ConnectionCollection implements Serializable {
     private static final long serialVersionUID = -4523270955994232839L;
 
     @Nullable
-    public Connection videos;
+    @SerializedName("videos")
+    protected Connection mVideos;
 
     @Nullable
-    public Connection categories;
+    @SerializedName("categories")
+    protected Connection mCategories;
 
     @Nullable
-    public Connection comments;
+    @SerializedName("comments")
+    protected Connection mComments;
 
     @Nullable
-    public Connection credits;
+    @SerializedName("credits")
+    protected Connection mCredits;
 
     @Nullable
-    public Connection likes;
+    @SerializedName("likes")
+    protected Connection mLikes;
 
     @Nullable
-    public Connection pictures;
+    @SerializedName("pictures")
+    protected Connection mPictures;
 
     @Nullable
-    public Connection texttracks;
+    @SerializedName("texttracks")
+    protected Connection mTexttracks;
 
     @Nullable
-    public Connection activities;
+    @SerializedName("activities")
+    protected Connection mActivities;
 
     @Nullable
-    public Connection albums;
+    @SerializedName("albums")
+    protected Connection mAlbums;
 
     @Nullable
-    public Connection channels;
+    @SerializedName("channels")
+    protected Connection mChannels;
 
     @Nullable
     @SerializedName("moderated_channels")
-    public Connection moderatedChannels;
+    protected Connection mModeratedChannels;
 
     @Nullable
-    public Connection feed;
+    @SerializedName("feed")
+    protected Connection mFeed;
 
     @Nullable
-    public Connection followers;
+    @SerializedName("followers")
+    protected Connection mFollowers;
 
     @Nullable
-    public Connection following;
+    @SerializedName("following")
+    protected Connection mFollowing;
 
     @Nullable
-    public Connection groups;
+    @SerializedName("groups")
+    protected Connection mGroups;
 
     @Nullable
-    public Connection portfolios;
+    @SerializedName("portfolios")
+    protected Connection mPortfolios;
 
     @Nullable
-    public Connection shared;
+    @SerializedName("shared")
+    protected Connection mShared;
 
     @Nullable
-    public Connection recommendations;
+    @SerializedName("recommendations")
+    protected Connection mRecommendations;
 
     @Nullable
-    public Connection appearances;
+    @SerializedName("appearances")
+    protected Connection mAppearances;
 
     @Nullable
-    public Connection related;
+    @SerializedName("related")
+    protected Connection mRelated;
 
     @Nullable
-    public Connection replies;
+    @SerializedName("replies")
+    protected Connection mReplies;
 
     @Nullable
-    public Connection users;
+    @SerializedName("users")
+    protected Connection mUsers;
 
     @Nullable
-    public Connection watchlater;
+    @SerializedName("watchlater")
+    protected Connection mWatchlater;
 
     @Nullable
-    public Connection ondemand;
+    @SerializedName("ondemand")
+    protected Connection mOndemand;
 
     @Nullable
-    public Connection season;
+    @SerializedName("season")
+    protected Connection mSeason;
 
     @Nullable
-    public Connection seasons;
+    @SerializedName("seasons")
+    protected Connection mSeasons;
 
     @Nullable
-    public Connection trailer;
+    @SerializedName("trailer")
+    protected Connection mTrailer;
 
     @Nullable
     @SerializedName("playback")
-    public Connection playbackFailureReason;
+    protected Connection mPlaybackFailureReason;
 
     @Nullable
     @SerializedName("recommended_channels")
-    public Connection recommendedChannels;
+    protected Connection mRecommendedChannels;
 
     @Nullable
     @SerializedName("recommended_users")
-    public Connection recommendedUsers;
+    protected Connection mRecommendedUsers;
 
     @Nullable
     @SerializedName("watched_videos")
-    public Connection watchedVideos;
+    protected Connection mWatchedVideos;
 
     @Nullable
     @SerializedName("notifications")
-    public Connection notifications;
+    protected Connection mNotifications;
+
+    @Nullable
+    public Connection getVideos() {
+        return mVideos;
+    }
+
+    @Nullable
+    public Connection getCategories() {
+        return mCategories;
+    }
+
+    @Nullable
+    public Connection getComments() {
+        return mComments;
+    }
+
+    @Nullable
+    public Connection getCredits() {
+        return mCredits;
+    }
+
+    @Nullable
+    public Connection getLikes() {
+        return mLikes;
+    }
+
+    @Nullable
+    public Connection getPictures() {
+        return mPictures;
+    }
+
+    @Nullable
+    public Connection getTexttracks() {
+        return mTexttracks;
+    }
+
+    @Nullable
+    public Connection getActivities() {
+        return mActivities;
+    }
+
+    @Nullable
+    public Connection getAlbums() {
+        return mAlbums;
+    }
+
+    @Nullable
+    public Connection getChannels() {
+        return mChannels;
+    }
+
+    @Nullable
+    public Connection getModeratedChannels() {
+        return mModeratedChannels;
+    }
+
+    @Nullable
+    public Connection getFeed() {
+        return mFeed;
+    }
+
+    @Nullable
+    public Connection getFollowers() {
+        return mFollowers;
+    }
+
+    @Nullable
+    public Connection getFollowing() {
+        return mFollowing;
+    }
+
+    @Nullable
+    public Connection getGroups() {
+        return mGroups;
+    }
+
+    @Nullable
+    public Connection getPortfolios() {
+        return mPortfolios;
+    }
+
+    @Nullable
+    public Connection getShared() {
+        return mShared;
+    }
+
+    @Nullable
+    public Connection getRecommendations() {
+        return mRecommendations;
+    }
+
+    @Nullable
+    public Connection getAppearances() {
+        return mAppearances;
+    }
+
+    @Nullable
+    public Connection getRelated() {
+        return mRelated;
+    }
+
+    @Nullable
+    public Connection getReplies() {
+        return mReplies;
+    }
+
+    @Nullable
+    public Connection getUsers() {
+        return mUsers;
+    }
+
+    @Nullable
+    public Connection getWatchlater() {
+        return mWatchlater;
+    }
+
+    @Nullable
+    public Connection getOndemand() {
+        return mOndemand;
+    }
+
+    @Nullable
+    public Connection getSeason() {
+        return mSeason;
+    }
+
+    @Nullable
+    public Connection getSeasons() {
+        return mSeasons;
+    }
+
+    @Nullable
+    public Connection getTrailer() {
+        return mTrailer;
+    }
+
+    @Nullable
+    public Connection getPlaybackFailureReason() {
+        return mPlaybackFailureReason;
+    }
+
+    @Nullable
+    public Connection getRecommendedChannels() {
+        return mRecommendedChannels;
+    }
+
+    @Nullable
+    public Connection getRecommendedUsers() {
+        return mRecommendedUsers;
+    }
+
+    @Nullable
+    public Connection getWatchedVideos() {
+        return mWatchedVideos;
+    }
+
+    @Nullable
+    public Connection getNotifications() {
+        return mNotifications;
+    }
 }

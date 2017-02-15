@@ -43,10 +43,10 @@ public class SearchResponse extends BaseResponseList<SearchResult> {
 
     @Nullable
     @SerializedName("facets")
-    protected SearchFacetCollection facetCollection;
+    protected SearchFacetCollection mFacetCollection;
 
     @SerializedName("mature_hidden_count")
-    protected int matureHiddenCount;
+    protected int mMatureHiddenCount;
 
     @Override
     public Class<SearchResult> getModelClass() {
@@ -55,10 +55,10 @@ public class SearchResponse extends BaseResponseList<SearchResult> {
 
     @Nullable
     public SearchFacetCollection getFacetCollection() {
-        return facetCollection;
+        return mFacetCollection;
     }
 
     public int getMatureHiddenCount() {
-        return matureHiddenCount;
+        return mMatureHiddenCount;
     }
 }

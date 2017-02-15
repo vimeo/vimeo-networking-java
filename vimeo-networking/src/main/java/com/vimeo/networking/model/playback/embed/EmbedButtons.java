@@ -41,95 +41,101 @@ public class EmbedButtons implements Serializable {
 
     private static final long serialVersionUID = 6724361702326756097L;
 
-    protected boolean like;
+    @SerializedName("like")
+    protected boolean mLike;
 
     @SerializedName("watchlater")
-    protected boolean watchLater;
+    protected boolean mWatchLater;
 
-    protected boolean share;
+    @SerializedName("share")
+    protected boolean mShare;
 
-    protected boolean embed;
+    @SerializedName("embed")
+    protected boolean mEmbed;
 
-    protected boolean hd;
+    @SerializedName("hd")
+    protected boolean mHd;
 
-    protected boolean fullscreen;
+    @SerializedName("fullscreen")
+    protected boolean mFullscreen;
 
-    protected boolean scaling;
+    @SerializedName("scaling")
+    protected boolean mScaling;
 
     public boolean isLike() {
-        return like;
+        return mLike;
     }
 
     /**
      * @param like Show or hide the like button
      */
     public void setLike(boolean like) {
-        this.like = like;
+        this.mLike = like;
     }
 
     public boolean isWatchLater() {
-        return watchLater;
+        return mWatchLater;
     }
 
     /**
      * @param watchlater Show or hide the watch later button
      */
     public void setWatchLater(boolean watchlater) {
-        this.watchLater = watchlater;
+        this.mWatchLater = watchlater;
     }
 
     public boolean isShare() {
-        return share;
+        return mShare;
     }
 
     /**
      * @param share Show or hide the share button
      */
     public void setShare(boolean share) {
-        this.share = share;
+        this.mShare = share;
     }
 
     public boolean isEmbed() {
-        return embed;
+        return mEmbed;
     }
 
     /**
      * @param embed Show or hide the embed button
      */
     public void setEmbed(boolean embed) {
-        this.embed = embed;
+        this.mEmbed = embed;
     }
 
     public boolean isHd() {
-        return hd;
+        return mHd;
     }
 
     /**
      * @param hd Show or hide the hd button
      */
     public void setHd(boolean hd) {
-        this.hd = hd;
+        this.mHd = hd;
     }
 
     public boolean isFullscreen() {
-        return fullscreen;
+        return mFullscreen;
     }
 
     /**
      * @param fullscreen Show or hide the fullscreen button
      */
     public void setFullscreen(boolean fullscreen) {
-        this.fullscreen = fullscreen;
+        this.mFullscreen = fullscreen;
     }
 
     public boolean isScaling() {
-        return scaling;
+        return mScaling;
     }
 
     /**
      * @param scaling Show or hide the scaling button (shown only in fullscreen mode)
      */
     public void setScaling(boolean scaling) {
-        this.scaling = scaling;
+        this.mScaling = scaling;
     }
 }

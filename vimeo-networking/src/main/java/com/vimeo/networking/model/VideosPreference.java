@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -39,17 +40,19 @@ public class VideosPreference implements Serializable {
     private static final long serialVersionUID = 1956447486226253433L;
 
     @Nullable
-    protected Privacy privacy;
+    @SerializedName("privacy")
+    protected Privacy mPrivacy;
 
     @Nullable
-    protected String password;
+    @SerializedName("password")
+    protected String mPassword;
 
     /**
      * Returns the default password a user has set up for their videos
      */
     @Nullable
     public String getPassword() {
-        return password;
+        return mPassword;
     }
 
     /**
@@ -57,6 +60,6 @@ public class VideosPreference implements Serializable {
      */
     @Nullable
     public Privacy getPrivacy() {
-        return privacy;
+        return mPrivacy;
     }
 }

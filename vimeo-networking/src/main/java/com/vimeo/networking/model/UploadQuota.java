@@ -25,6 +25,7 @@
 package com.vimeo.networking.model;
 
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.stag.UseStag;
 
@@ -39,9 +40,11 @@ public class UploadQuota implements Serializable {
 
     private static final long serialVersionUID = 4050488085481972886L;
 
-    public Space space;
+    @SerializedName("space")
+    public Space mSpace;
 
-    public Quota quota;
+    @SerializedName("quota")
+    public Quota mQuota;
 
     /**
      * The amount of free upload space left for the user.
@@ -51,8 +54,8 @@ public class UploadQuota implements Serializable {
      * there is none left.
      */
     public long getFreeUploadSpace() {
-        if (space != null) {
-            return space.free;
+        if (mSpace != null) {
+            return mSpace.mFree;
         } else {
             return Vimeo.NOT_FOUND;
         }

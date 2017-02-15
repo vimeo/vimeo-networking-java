@@ -1,5 +1,6 @@
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -19,6 +20,7 @@ public class Document implements Serializable {
     private static final long serialVersionUID = -8676604257868932660L;
 
     @Nullable
+    @SerializedName("html")
     protected String html;
 
     @Nullable

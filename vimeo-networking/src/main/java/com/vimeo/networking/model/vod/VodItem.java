@@ -75,11 +75,12 @@ public class VodItem implements Serializable {
         private static final long serialVersionUID = -994389241935894370L;
 
         @Nullable
-        public Date time;
+        @SerializedName("time")
+        protected Date mTime;
 
         @Nullable
         public Date getTime() {
-            return time;
+            return mTime;
         }
 
     }
@@ -87,34 +88,44 @@ public class VodItem implements Serializable {
     private static final long serialVersionUID = 8360150766347816073L;
 
     @Nullable
-    public String name;
+    @SerializedName("name")
+    protected String name;
 
     @Nullable
-    public String description;
+    @SerializedName("description")
+    protected String description;
 
     @Nullable
-    public VodType type;
+    @SerializedName("type")
+    protected VodType type;
 
     @Nullable
-    public String link;
+    @SerializedName("link")
+    protected String link;
 
     @Nullable
-    public Publish publish;
+    @SerializedName("publish")
+    protected Publish publish;
 
     @Nullable
-    public PictureCollection pictures;
+    @SerializedName("pictures")
+    protected PictureCollection pictures;
 
     @Nullable
-    public Metadata metadata;
+    @SerializedName("metadata")
+    protected Metadata metadata;
 
     @Nullable
-    public User user;
+    @SerializedName("user")
+    protected User user;
 
     @Nullable
-    public Video film;
+    @SerializedName("film")
+    protected Video film;
 
     @Nullable
-    public Video trailer;
+    @SerializedName("trailer")
+    protected Video trailer;
 
     @Nullable
     public String getName() {
@@ -143,12 +154,12 @@ public class VodItem implements Serializable {
 
     @Nullable
     public InteractionCollection getInteractions() {
-        return metadata != null ? metadata.interactions : null;
+        return metadata != null ? metadata.getInteractions() : null;
     }
 
     @Nullable
     public ConnectionCollection getConnections() {
-        return metadata != null ? metadata.connections : null;
+        return metadata != null ? metadata.getConnections() : null;
     }
 
     @Nullable
@@ -190,13 +201,13 @@ public class VodItem implements Serializable {
     @Nullable
     public Connection getVideosConnection() {
         ConnectionCollection connections = getConnections();
-        return connections != null ? connections.videos : null;
+        return connections != null ? connections.getVideos() : null;
     }
 
     @Nullable
     public Connection getSeasonsConnection() {
         ConnectionCollection connections = getConnections();
-        return connections != null ? connections.seasons : null;
+        return connections != null ? connections.getSeasons() : null;
     }
 
     @Nullable

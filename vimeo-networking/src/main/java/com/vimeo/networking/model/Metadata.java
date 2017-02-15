@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
@@ -35,7 +36,17 @@ public class Metadata implements Serializable {
 
     private static final long serialVersionUID = 6626539965452151962L;
 
-    public ConnectionCollection connections;
+    @SerializedName("connections")
+    protected ConnectionCollection mConnections;
 
-    public InteractionCollection interactions;
+    @SerializedName("interactions")
+    protected InteractionCollection mInteractions;
+
+    public ConnectionCollection getConnections() {
+        return mConnections;
+    }
+
+    public InteractionCollection getInteractions() {
+        return mInteractions;
+    }
 }

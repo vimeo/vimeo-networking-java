@@ -37,25 +37,66 @@ public class Group implements Serializable {
 
     private static final long serialVersionUID = -3604741570351063891L;
 
-    public String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @SerializedName("created_time")
-    public Date createdTime;
+    protected Date mCreatedTime;
 
     @SerializedName("group_description")
-    public String groupDescription;
+    protected String mGroupDescription;
 
-    public String link;
+    @SerializedName("link")
+    protected String mLink;
 
-    public String name;
+    @SerializedName("name")
+    protected String mName;
 
     @SerializedName("picture_collection")
-    public PictureCollection pictureCollection;
+    protected PictureCollection mPictureCollection;
 
-    public Privacy privacy;
+    @SerializedName("privacy")
+    protected Privacy mPrivacy;
 
-    public User user;
+    @SerializedName("user")
+    protected User mUser;
 
-    public Metadata metadata;
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
 
+    public String getUri() {
+        return mUri;
+    }
+
+    public Date getCreatedTime() {
+        return mCreatedTime;
+    }
+
+    public String getGroupDescription() {
+        return mGroupDescription;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public PictureCollection getPictureCollection() {
+        return mPictureCollection;
+    }
+
+    public Privacy getPrivacy() {
+        return mPrivacy;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
 }

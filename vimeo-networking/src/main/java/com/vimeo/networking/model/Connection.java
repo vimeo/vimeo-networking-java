@@ -41,30 +41,34 @@ public class Connection implements Serializable {
     private static final long serialVersionUID = -840088720891343176L;
 
     @Nullable
-    protected String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
-    protected ArrayList<String> options;
+    @SerializedName("options")
+    protected ArrayList<String> mOptions;
 
-    protected int total;
+    @SerializedName("total")
+    protected int mTotal;
 
     @SerializedName("main_total")
-    protected int mainTotal;
+    protected int mMainTotal;
 
     @SerializedName("extra_total")
-    protected int extraTotal;
+    protected int mExtraTotal;
 
     @SerializedName("viewable_total")
-    protected int viewableTotal;
+    protected int mViewableTotal;
 
     @SerializedName("new_total")
-    protected int newTotal;
+    protected int mNewTotal;
 
     @SerializedName("unread_total")
-    protected int unreadTotal;
+    protected int mUnreadTotal;
 
     @Nullable
-    public String name;
+    @SerializedName("name")
+    protected String mName;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -72,41 +76,41 @@ public class Connection implements Serializable {
     // <editor-fold desc="Getters">
     @Nullable
     public String getUri() {
-        return uri;
+        return mUri;
     }
 
     @Nullable
     public ArrayList<String> getOptions() {
-        return options;
+        return mOptions;
     }
 
     public int getTotal() {
-        return total;
+        return mTotal;
     }
 
     public int getMainTotal() {
-        return mainTotal;
+        return mMainTotal;
     }
 
     public int getExtraTotal() {
-        return extraTotal;
+        return mExtraTotal;
     }
 
     public int getViewableTotal() {
-        return viewableTotal;
+        return mViewableTotal;
     }
 
     public int getNewTotal() {
-        return newTotal;
+        return mNewTotal;
     }
 
     public int getUnreadTotal() {
-        return unreadTotal;
+        return mUnreadTotal;
     }
 
     @Nullable
     public String getName() {
-        return name;
+        return mName;
     }
     // </editor-fold>
 }

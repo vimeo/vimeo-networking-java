@@ -24,6 +24,7 @@
 
 package com.vimeo.networking.model.playback.embed;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -42,47 +43,50 @@ public class EmbedTitle implements Serializable {
     private static final long serialVersionUID = -2543724237726304625L;
 
     @Nullable
-    protected String name;
+    @SerializedName("name")
+    protected String mName;
 
     @Nullable
-    protected String owner;
+    @SerializedName("owner")
+    protected String mOwner;
 
     @Nullable
-    protected String portrait;
+    @SerializedName("portrait")
+    protected String mPortrait;
 
     @Nullable
     public String getName() {
-        return name;
+        return mName;
     }
 
     /**
      * @param name Show, hide, or let the user decide if the video title shows on the video
      */
     public void setName(@Nullable String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     @Nullable
     public String getOwner() {
-        return owner;
+        return mOwner;
     }
 
     /**
      * @param owner Show, hide, or let the user decide if the owners information shows on the video
      */
     public void setOwner(@Nullable String owner) {
-        this.owner = owner;
+        this.mOwner = owner;
     }
 
     @Nullable
     public String getPortrait() {
-        return portrait;
+        return mPortrait;
     }
 
     /**
      * @param portrait Show, hide, or let the user decide if the owners portrait shows on the video
      */
     public void setPortrait(@Nullable String portrait) {
-        this.portrait = portrait;
+        this.mPortrait = portrait;
     }
 }

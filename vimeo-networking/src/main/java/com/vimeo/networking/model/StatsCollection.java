@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -38,5 +39,6 @@ public class StatsCollection implements Serializable {
     private static final long serialVersionUID = -348202198117360187L;
 
     @Nullable
-    public Integer plays; // If this is null, that means the uploader has disabled play count [KZ] 9/9/15
+    @SerializedName("plays")
+    public Integer mPlays; // If this is null, that means the uploader has disabled play count [KZ] 9/9/15
 }

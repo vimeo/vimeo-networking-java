@@ -44,32 +44,61 @@ public class Comment implements Serializable {
         //TODO get the other comment types and put them here [KZ]
     }
 
-    public String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
-    public CommentType type;
+    @SerializedName("type")
+    protected CommentType mType;
 
     @SerializedName("created_on")
-    public Date createdOn;
+    protected Date mCreatedOn;
 
-    public String text;
+    @SerializedName("text")
+    protected String mText;
 
-    public User user;
+    @SerializedName("user")
+    protected User mUser;
 
-    public Metadata metadata;
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
+
+    public String getUri() {
+        return mUri;
+    }
+
+    public CommentType getType() {
+        return mType;
+    }
+
+    public Date getCreatedOn() {
+        return mCreatedOn;
+    }
+
+    public String getText() {
+        return mText;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
 
     public int replyCount() {
-        if (metadata != null && metadata.connections != null && metadata.connections.replies != null) {
-            return metadata.connections.replies.total;
+        if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mReplies != null) {
+            return mMetadata.mConnections.mReplies.mTotal;
         }
         return 0;
     }
 
     public boolean canReply() {
-        return metadata != null &&
-               metadata.connections != null &&
-               metadata.connections.replies != null &&
-               metadata.connections.replies.options != null &&
-               metadata.connections.replies.options.contains(Vimeo.OPTIONS_POST);
+        return mMetadata != null &&
+               mMetadata.mConnections != null &&
+               mMetadata.mConnections.mReplies != null &&
+               mMetadata.mConnections.mReplies.mOptions != null &&
+               mMetadata.mConnections.mReplies.mOptions.contains(Vimeo.OPTIONS_POST);
     }
 
     @Override
@@ -83,12 +112,12 @@ public class Comment implements Serializable {
 
         Comment that = (Comment) o;
 
-        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
+        return ((this.mUri != null && that.mUri != null) && this.mUri.equals(that.mUri));
     }
 
     @Override
     public int hashCode() {
-        return this.uri != null ? this.uri.hashCode() : 0;
+        return this.mUri != null ? this.mUri.hashCode() : 0;
     }
 
 }

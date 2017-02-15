@@ -20,20 +20,24 @@ public class VideoBadge implements Serializable {
     private static final long serialVersionUID = -5343389171512787927L;
 
     @Nullable
-    public String type;
+    @SerializedName("type")
+    protected String mType;
 
     @Nullable
-    public String festival;
+    @SerializedName("festival")
+    protected String mFestival;
 
     @Nullable
-    public String link;
+    @SerializedName("link")
+    protected String mLink;
 
     @Nullable
-    public String text;
+    @SerializedName("text")
+    protected String mText;
 
     @Nullable
     @SerializedName("pictures")
-    public PictureCollection pictureCollection;
+    protected PictureCollection mPictureCollection;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -49,7 +53,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public String getType() {
-        return type;
+        return mType;
     }
 
     /**
@@ -57,7 +61,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public String getFestival() {
-        return festival;
+        return mFestival;
     }
 
     /**
@@ -66,7 +70,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public String getLink() {
-        return link;
+        return mLink;
     }
 
     /**
@@ -75,7 +79,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public String getText() {
-        return text;
+        return mText;
     }
 
     /**
@@ -84,7 +88,7 @@ public class VideoBadge implements Serializable {
      */
     @Nullable
     public PictureCollection getPictureCollection() {
-        return pictureCollection;
+        return mPictureCollection;
     }
     // </editor-fold>
 }
