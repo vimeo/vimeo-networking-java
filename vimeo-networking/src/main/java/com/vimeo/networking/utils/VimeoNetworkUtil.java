@@ -30,6 +30,7 @@ import com.google.gson.GsonBuilder;
 import com.vimeo.stag.generated.Stag;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -54,6 +55,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @SuppressWarnings("unused")
 public class VimeoNetworkUtil {
 
+    @Nullable
     private static Gson sGson;
 
     /**
@@ -98,7 +100,7 @@ public class VimeoNetworkUtil {
      * @see <a href="http://stackoverflow.com/a/13592567/1759443">StackOverflow</a>
      */
     @NotNull
-    public static Map<String, String> getSimpleQueryMap(String uri) {
+    public static Map<String, String> getSimpleQueryMap(@NotNull String uri) {
         final Map<String, String> queryPairs = new LinkedHashMap<>();
         try {
             String query = uri.split("\\?")[1];
@@ -126,7 +128,7 @@ public class VimeoNetworkUtil {
      * @return A builder with the same attributes as the CacheControl passed in
      */
     @NotNull
-    public static CacheControl.Builder getCacheControlBuilder(CacheControl cacheControl) {
+    public static CacheControl.Builder getCacheControlBuilder(@NotNull CacheControl cacheControl) {
         CacheControl.Builder builder = new CacheControl.Builder();
         if (cacheControl.maxAgeSeconds() > -1) {
             builder.maxAge(cacheControl.maxAgeSeconds(), TimeUnit.SECONDS);

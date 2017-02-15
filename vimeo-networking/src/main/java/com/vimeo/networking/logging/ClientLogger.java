@@ -26,6 +26,7 @@ package com.vimeo.networking.logging;
 
 import com.vimeo.networking.Vimeo.LogLevel;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -38,6 +39,8 @@ public final class ClientLogger {
 
     @Nullable
     private static LogProvider sLoggerProvider;
+
+    @NotNull
     private static LogLevel sLogLevel = LogLevel.DEBUG;
 
 
@@ -48,7 +51,7 @@ public final class ClientLogger {
         sLoggerProvider = logProvider;
     }
 
-    public static void setLogLevel(LogLevel logLevel) {
+    public static void setLogLevel(@NotNull LogLevel logLevel) {
         sLogLevel = logLevel;
     }
 
