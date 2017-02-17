@@ -23,7 +23,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,8 +35,11 @@ import java.util.Date;
  * <p/>
  * Created by alfredhanssen on 4/25/15.
  */
+// TODO: Remove the VideoFileDeserializer and use Stag instead, once API corrects log issue behind version 2/16/17 [KZ]
+// @UseStag(FieldOption.SERIALIZED_NAME)
 public class VideoFile implements Serializable {
 
+    @UseStag
     public enum MimeType {
         NONE("None"),
         @SerializedName("video/mp4")
@@ -60,6 +63,7 @@ public class VideoFile implements Serializable {
     }
 
     @Deprecated
+    @UseStag
     public enum VideoQuality {
         NONE("N/A"),
         @SerializedName("hls")
@@ -91,22 +95,22 @@ public class VideoFile implements Serializable {
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Fields common between all file types">
     @Nullable
-    @GsonAdapterKey("link_expiration_time")
+    @SerializedName("link_expiration_time")
     Date mLinkExpirationTime;
 
-    @GsonAdapterKey("link")
+    @SerializedName("link")
     String mLink;
 
     @Nullable
-    @GsonAdapterKey("log")
+    @SerializedName("log")
     String mLog;
 
     @Nullable
-    @GsonAdapterKey("token")
+    @SerializedName("token")
     String mToken;
 
     @Nullable
-    @GsonAdapterKey("license_link")
+    @SerializedName("license_link")
     String mLicenseLink;
 
     @Nullable
@@ -151,38 +155,38 @@ public class VideoFile implements Serializable {
     /** quality will be removed in the future when {@link Video#files} is removed */
     @Deprecated
     @Nullable
-    @GsonAdapterKey("quality")
+    @SerializedName("quality")
     VideoQuality mQuality;
 
     /** expires will be removed in the future when {@link Video#files} is removed */
     @Deprecated
     @Nullable
-    @GsonAdapterKey("expires")
+    @SerializedName("expires")
     Date mExpires;
 
     @Nullable
-    @GsonAdapterKey("type")
+    @SerializedName("type")
     MimeType mMimeType;
 
-    @GsonAdapterKey("fps")
+    @SerializedName("fps")
     double mFps;
 
-    @GsonAdapterKey("width")
+    @SerializedName("width")
     int mWidth;
 
-    @GsonAdapterKey("height")
+    @SerializedName("height")
     int mHeight;
 
-    @GsonAdapterKey("size")
+    @SerializedName("size")
     long mSize; // size of the file, in bytes
 
     /** The md5 provides us with a way to uniquely identify video files at {@link #getLink()} */
     @Nullable
-    @GsonAdapterKey("md5")
+    @SerializedName("md5")
     String mMd5;
 
     @Nullable
-    @GsonAdapterKey("created_time")
+    @SerializedName("created_time")
     Date mCreatedTime; // time indicating when this transcode was completed
 
     /**
