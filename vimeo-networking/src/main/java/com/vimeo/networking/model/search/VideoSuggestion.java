@@ -59,7 +59,7 @@ public class VideoSuggestion extends BaseSuggestion implements Serializable {
     }
 
     @UseStag(FieldOption.SERIALIZED_NAME)
-    static class VideoSuggestionMetadata implements Serializable {
+    public static class VideoSuggestionMetadata implements Serializable {
 
         private static final long serialVersionUID = -5853739822133424630L;
 
