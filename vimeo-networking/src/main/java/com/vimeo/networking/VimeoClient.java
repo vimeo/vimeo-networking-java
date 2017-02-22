@@ -41,6 +41,7 @@ import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
+import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -1282,7 +1283,7 @@ public final class VimeoClient {
      * @param callback the callback to be invoked when the call finishes
      * @return the Call object provided by the Retrofit service
      */
-    @Nullable
+    @NotNull
     Call<SearchResponse> search(@NotNull Map<String, String> queryMap,
                                 @NotNull ModelCallback<SearchResponse> callback) {
 
@@ -1290,6 +1291,24 @@ public final class VimeoClient {
         call.enqueue(callback);
         return call;
     }
+
+    /**
+     * A package private search suggestions method. See {@link Search#suggest(String, int, int, ModelCallback)} for
+     * public usage of the suggestion API.
+     *
+     * @param queryMap the query parameters
+     * @param callback the callback to be invokedn when the call finishes
+     * @return the {@link Call} object provided by Retrofit
+     */
+    @NotNull
+    Call<SuggestionResponse> suggest(@NotNull Map<String, String> queryMap,
+                                     @NotNull ModelCallback<SuggestionResponse> callback) {
+        Call<SuggestionResponse> call = mVimeoService.suggest(getAuthHeader(), queryMap);
+        call.enqueue(callback);
+
+        return call;
+    }
+
 
     /**
      * Fetches the currently authenticated user from the API

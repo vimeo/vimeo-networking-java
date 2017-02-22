@@ -30,6 +30,7 @@ import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
+import com.vimeo.networking.model.search.SuggestionResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -214,4 +215,8 @@ public interface VimeoService {
     Call<SearchResponse> search(@Header("Authorization") String authHeader,
                                 @QueryMap Map<String, String> queryParams);
     // </editor-fold>
+
+    @GET("suggest")
+    Call<SuggestionResponse> suggest(@Header("Authorization") String authHeader,
+                                     @QueryMap Map<String, String> queryParams);
 }
