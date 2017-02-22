@@ -1283,7 +1283,7 @@ public final class VimeoClient {
      * @param callback the callback to be invoked when the call finishes
      * @return the Call object provided by the Retrofit service
      */
-    @Nullable
+    @NotNull
     Call<SearchResponse> search(@NotNull Map<String, String> queryMap,
                                 @NotNull ModelCallback<SearchResponse> callback) {
 
@@ -1300,7 +1300,7 @@ public final class VimeoClient {
      * @param callback the callback to be invokedn when the call finishes
      * @return the {@link Call} object provided by Retrofit
      */
-    @Nullable
+    @NotNull
     Call<SuggestionResponse> suggest(@NotNull Map<String, String> queryMap,
                                      @NotNull ModelCallback<SuggestionResponse> callback) {
         Call<SuggestionResponse> call = mVimeoService.suggest(getAuthHeader(), queryMap);

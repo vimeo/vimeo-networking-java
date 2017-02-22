@@ -262,7 +262,7 @@ public final class Search {
             return null;
         }
 
-        Map<String, String> queryMap = new HashMap<>();
+        Map<String, String> queryMap = new HashMap<>(3);
         queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
 
         if (videoSuggestionCount > 0) {
