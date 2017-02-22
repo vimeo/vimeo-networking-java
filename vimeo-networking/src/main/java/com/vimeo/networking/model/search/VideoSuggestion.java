@@ -15,7 +15,7 @@ import java.io.Serializable;
  * Created by zetterstromk on 2/21/17.
  */
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class VideoSuggestion extends BaseSuggestion implements Serializable {
+public final class VideoSuggestion extends BaseSuggestion implements Serializable {
 
     private static final long serialVersionUID = -6047771941064977527L;
 
@@ -59,7 +59,7 @@ public class VideoSuggestion extends BaseSuggestion implements Serializable {
     }
 
     @UseStag(FieldOption.SERIALIZED_NAME)
-    public static class VideoSuggestionMetadata implements Serializable {
+    public final static class VideoSuggestionMetadata implements Serializable {
 
         private static final long serialVersionUID = -5853739822133424630L;
 
