@@ -42,21 +42,21 @@ public class NotificationConnection extends Connection {
     private static final long serialVersionUID = 4908222195478449252L;
 
     @SerializedName("new_total")
-    protected int newTotal;
+    protected int mNewTotal;
 
     @SerializedName("unread_total")
-    protected int unreadTotal;
+    protected int mUnreadTotal;
 
     @Nullable
     @SerializedName("type_count")
     protected NotificationTypeCount mTypeCount;
 
     public int getNewTotal() {
-        return newTotal;
+        return mNewTotal;
     }
 
     public int getUnreadTotal() {
-        return unreadTotal;
+        return mUnreadTotal;
     }
 
     @Nullable
@@ -71,8 +71,8 @@ public class NotificationConnection extends Connection {
 
         NotificationConnection that = (NotificationConnection) o;
 
-        if (newTotal != that.newTotal) { return false; }
-        if (unreadTotal != that.unreadTotal) { return false; }
+        if (mNewTotal != that.mNewTotal) { return false; }
+        if (mUnreadTotal != that.mUnreadTotal) { return false; }
         if (total != that.total) { return false; }
         if (mTypeCount != null ? !mTypeCount.equals(that.mTypeCount) : that.mTypeCount != null) { return false; }
         return uri != null ? uri.equals(that.uri) : that.uri == null;
@@ -81,8 +81,8 @@ public class NotificationConnection extends Connection {
 
     @Override
     public int hashCode() {
-        int result = newTotal;
-        result = 31 * result + unreadTotal;
+        int result = mNewTotal;
+        result = 31 * result + mUnreadTotal;
         result = 31 * result + (mTypeCount != null ? mTypeCount.hashCode() : 0);
         result = 31 * result + (uri != null ? uri.hashCode() : 0);
         result = 31 * result + total;
@@ -92,8 +92,8 @@ public class NotificationConnection extends Connection {
     @Override
     public String toString() {
         return "NotificationConnection{" +
-               "newTotal=" + newTotal +
-               ", unreadTotal=" + unreadTotal +
+               "newTotal=" + mNewTotal +
+               ", unreadTotal=" + mUnreadTotal +
                ", mTypeCount=" + mTypeCount +
                ", uri='" + uri + '\'' +
                ", total=" + total +
