@@ -36,9 +36,11 @@ import java.util.Date;
  * Created by alfredhanssen on 4/25/15.
  */
 @SuppressWarnings("unused")
-@UseStag
+// TODO: Remove the VideoFileDeserializer and use Stag instead, once API corrects log issue behind version 2/16/17 [KZ]
+// @UseStag(FieldOption.SERIALIZED_NAME)
 public class VideoFile implements Serializable {
 
+    @UseStag
     public enum MimeType {
         NONE("None"),
         @SerializedName("video/mp4")
@@ -62,6 +64,7 @@ public class VideoFile implements Serializable {
     }
 
     @Deprecated
+    @UseStag
     public enum VideoQuality {
         NONE("N/A"),
         @SerializedName("hls")

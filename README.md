@@ -62,7 +62,7 @@ Access to this API is done through the `VimeoClient` class, which must be initia
 In the below sections, we cover examples of ways to customize your `VimeoClient` instance. Full implementations are in the example app.
 
 #### Configuration Builder for Apps with Account Management
-On app launch, configure `VimeoClient` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary. This authentication can include [client credentials](#client-credentials-grant) or authentication via [code grant](#oauth-authorization-code-grant). 
+On app launch, configure `VimeoClient` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary. This authentication can include [client credentials](#client-credentials-grant) or authentication via [code grant](#oauth-authorization-code-grant).
 
 If you choose to pass in an `AccountStore`, the authenticated account will automatically be persisted. Once authentication is complete, you can access the persisted `VimeoAccount` object through `VimeoClient#getVimeoAccount()`. For a basic implementation of an `AccountStore`, please refer to [this file in the example app](example/src/main/java/com/vimeo/android/networking/example/vimeonetworking/TestAccountStore.java)
 ```java
@@ -91,7 +91,7 @@ You will NOT be able to switch accounts if you only supply the access token. To 
 You can generate an access token in the Authentication tab once you select your app from the [list here](https://developer.vimeo.com/apps).
 
 Once you have the access token, you can easily initialize your `VimeoClient` instance with the below builder.
- 
+
 ```java
 String accessToken = getString(R.string.access_token);
 return new Configuration.Builder(accessToken);
@@ -102,12 +102,12 @@ After providing the access token, if you'd like to have access to the associated
 *Note: You will not be able to log out of the account associated with the access token provided to the `Configuration.Builder`. This is because we wouldn't want anyone to accidentally invalidate/delete the token which is being used to authenticate users in a production application. You will still be able to delete the token via the web [developer console](https://developer.vimeo.com/apps/).
 If this seems like restricting functionality, please log an issue to the [issue tracker](https://github.com/vimeo/vimeo-networking-java/issues).
 
-### Authentication 
-All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/api/authentication). This means that before making requests to the API you must authenticate and obtain an access token. Two authentication methods are provided: 
+### Authentication
+All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/api/authentication). This means that before making requests to the API you must authenticate and obtain an access token. Two authentication methods are provided:
 
-1. [Client credentials grant](https://developer.vimeo.com/api/authentication#unauthenticated-requests): This mechanism allows your application to access publicly accessible content on Vimeo. 
+1. [Client credentials grant](https://developer.vimeo.com/api/authentication#generate-unauthenticated-tokens): This mechanism allows your application to access publicly accessible content on Vimeo.
 
-2. [OAuth authorization code grant](https://developer.vimeo.com/api/authentication#generate-redirect): This mechanism allows a Vimeo user to grant permission to your app so that it can access private, user-specific content on their behalf. 
+2. [OAuth authorization code grant](https://developer.vimeo.com/api/authentication#generate-authenticated-tokens): This mechanism allows a Vimeo user to grant permission to your app so that it can access private, user-specific content on their behalf.
 
 #### Client Credentials Grant
 ```java
@@ -132,11 +132,11 @@ private void authenticateWithClientCredentials() {
 
 #### OAuth Authorization Code Grant
 1) Set up a redirect url scheme:
-Navigate to your app target settings > Info > URL Types.  Add a new URL Type, and under url scheme enter `vimeo{CLIENT_KEY}` (ex: if your CLIENT_KEY is `1234`, enter `vimeo1234`).  This allows Vimeo to redirect back into your app after authorization.  
+Navigate to your app target settings > Info > URL Types.  Add a new URL Type, and under url scheme enter `vimeo{CLIENT_KEY}` (ex: if your CLIENT_KEY is `1234`, enter `vimeo1234`).  This allows Vimeo to redirect back into your app after authorization.
 
 You also need to add this redirect URL to your app on the Vimeo API site.  Under “App Callback URL”, add `vimeo{CLIENT_KEY}://auth` (for the example above, `vimeo1234://auth`).
 
-2) Open the authorization URL in the web browser: 
+2) Open the authorization URL in the web browser:
 ```java
 private void onLoginClick() {
      // Go To Web For Code Grant Auth
@@ -145,16 +145,16 @@ private void onLoginClick() {
      startActivity(browserIntent);
 }
 ```
-3) The web browser will open and the user will be presented with a webpage asking them to grant access based on the `scope` that you specified in your `ClientBuilder` above.  
+3) The web browser will open and the user will be presented with a webpage asking them to grant access based on the `scope` that you specified in your `ClientBuilder` above.
 
 4) Add an intent filter to your activity in the [`AndroidManifest`](example/src/main/AndroidManifest.xml) to listen for the deeplink.
 ```xml
 <intent-filter>
       <action android:name="android.intent.action.VIEW"/>
-     
+
       <category android:name="android.intent.category.DEFAULT"/>
       <category android:name="android.intent.category.BROWSABLE"/>
-     
+
      <!-- vimeo{CLIENT_KEY} -->
       <data android:scheme="@string/deeplink_redirect_scheme"/>
       <!-- auth -->
@@ -228,7 +228,7 @@ VimeoClient.getInstance().fetchNetworkContent(STAFF_PICKS_VIDEO_URI, new ModelCa
                toast("Staff Picks Success!");
           }
      }
-     
+
      @Override
      public void failure(VimeoError error) {
           String errorMessage = error.getDeveloperMessage();
@@ -243,7 +243,7 @@ VimeoClient.getInstance().fetchCurrentUser(new ModelCallback<User>(User.class) {
      public void success(User user) {
           // Update UI with information about the current user
      }
-     
+
      @Override
      public void error(VimeoError error) {
           // Log the error and update the UI to tell the user there was an error
@@ -263,7 +263,7 @@ VimeoClient.getInstance().fetchNetworkContent(uri, new ModelCallback<Video>(Vide
      public void success(Video video) {
           // use the video
      }
-     
+
      @Override
      public void failure(VimeoError error) {
           // voice the error
@@ -283,7 +283,7 @@ In the second manner, you must have a handle to your ```User``` object; you can 
 User user = ...; // get a handle to the User object
 String uri;
 if(user.getVideosConnection() != null) {
-     uri = user.getVideosConnection().uri; 
+     uri = user.getVideosConnection().uri;
 }
 ```
 
@@ -297,7 +297,7 @@ VimeoClient.getInstance().fetchNetworkContent(uri, new ModelCallback<VideoList>(
                Video video = videoList.data.get(0); // just an example of getting the first video
           }
      }
-     
+
      @Override
      public void failure(VimeoError error) {
           // voice the error
@@ -320,7 +320,7 @@ if(html != null) {
 }
 ```
 #### Native playback
-If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array. 
+If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array.
 ```java
 Video video = ...; // obtain a video you own as described above
 ArrayList<VideoFile> videoFiles = video.files;
