@@ -15,7 +15,7 @@ import java.io.Serializable;
  * Created by zetterstromk on 2/21/17.
  */
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class OndemandSuggestion extends BaseSuggestion implements Serializable {
+public final class OndemandSuggestion extends BaseSuggestion implements Serializable {
 
     private static final long serialVersionUID = -1176546228110567452L;
 
