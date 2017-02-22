@@ -25,7 +25,9 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.callbacks.ModelCallback;
+import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.search.SearchResponse;
+import com.vimeo.networking.model.search.SuggestionResponse;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -230,6 +232,49 @@ public final class Search {
                 VimeoClient.getInstance().createQueryMap(query, refinementMap, fieldFilter);
         // VimeoClient is the end-all interactor with the retrofit service
         return VimeoClient.getInstance().search(queryMap, callback);
+    }
+
+    private static final String PARAM_VIDEO_SUGGESTION = "video_count";
+    private static final String PARAM_VOD_SUGGESTION = "ondemand_title_count";
+
+    /**
+     * API access to search suggestions.
+     *
+     * @param query                the text query to base suggestions off of. For best performance, the query should be
+     *                             3 characters or more, however, it works with as little as 1 character. If an empty
+     *                             string is provided, this method will immediately notify the callback of a failure
+     *                             and return null.
+     * @param videoSuggestionCount the number of video suggestions to receive. This determines the maximum number of
+     *                             items in the {@link SuggestionResponse#getVideoSuggestions()} list. This will
+     *                             be ignored if a value less than or equal to 0 is provided.
+     * @param vodSuggestionCount   the number of ondemand suggestions to receive. This determines the maximum number of
+     *                             items in the {@link SuggestionResponse#getOndemandSuggestionList()} list. This will
+     *                             be ignored if a value less than or equal to 0 is provided.
+     * @param callback             the callback to be invoked upon completion of this request
+     * @return a {@link Call} that can be used to cancel this request
+     */
+    @Nullable
+    public static Call<SuggestionResponse> suggest(@NotNull String query, int videoSuggestionCount,
+                                                   int vodSuggestionCount,
+                                                   @NotNull ModelCallback<SuggestionResponse> callback) {
+
+        if (query.isEmpty()) {
+            callback.failure(new VimeoError("Query cannot be empty!"));
+            return null;
+        }
+
+        Map<String, String> queryMap = new HashMap<>(3);
+        queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
+
+        if (videoSuggestionCount > 0) {
+            queryMap.put(PARAM_VIDEO_SUGGESTION, String.valueOf(videoSuggestionCount));
+        }
+
+        if (vodSuggestionCount > 0) {
+            queryMap.put(PARAM_VOD_SUGGESTION, String.valueOf(vodSuggestionCount));
+        }
+
+        return VimeoClient.getInstance().suggest(queryMap, callback);
     }
 
     public static class QueryParameterProvider {
