@@ -67,7 +67,7 @@ public final class OndemandSuggestion extends BaseSuggestion implements Serializ
     }
 
     @UseStag(FieldOption.SERIALIZED_NAME)
-    public static class OndemandSuggestionMetadata implements Serializable {
+    public final static class OndemandSuggestionMetadata implements Serializable {
 
         private static final long serialVersionUID = 7538947801290601850L;
 
