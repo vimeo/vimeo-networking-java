@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model;
 
+import com.vimeo.networking.model.notifications.NotificationConnection;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.Nullable;
@@ -131,5 +132,5 @@ public class ConnectionCollection implements Serializable {
     public Connection watchedVideos;
     @Nullable
     @GsonAdapterKey("notifications")
-    public Connection notifications;
+    public NotificationConnection notifications;
 }
