@@ -78,7 +78,7 @@ public class Notification implements Serializable {
     }
 
     public void setUser(@Nullable User user) {
-        this.mUser = user;
+        mUser = user;
     }
 
     @Nullable
@@ -87,7 +87,7 @@ public class Notification implements Serializable {
     }
 
     public void setComment(@Nullable Comment comment) {
-        this.mComment = comment;
+        mComment = comment;
     }
 
     @Nullable
@@ -96,7 +96,7 @@ public class Notification implements Serializable {
     }
 
     public void setVideo(@Nullable Video video) {
-        this.mVideo = video;
+        mVideo = video;
     }
 
     @Nullable
@@ -105,7 +105,7 @@ public class Notification implements Serializable {
     }
 
     public void setCredit(@Nullable Credit credit) {
-        this.mCredit = credit;
+        mCredit = credit;
     }
 
     public boolean isNew() {

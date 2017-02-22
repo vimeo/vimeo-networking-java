@@ -35,7 +35,7 @@ public abstract class ModelCallback<T> extends VimeoCallback<T> {
     private Class mObjectType;
 
     public ModelCallback(@NotNull Class objectType) {
-        this.mObjectType = objectType;
+        mObjectType = objectType;
     }
 
     @NotNull

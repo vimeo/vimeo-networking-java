@@ -89,102 +89,102 @@ public class VodItem implements Serializable {
 
     @Nullable
     @SerializedName("name")
-    protected String name;
+    protected String mName;
 
     @Nullable
     @SerializedName("description")
-    protected String description;
+    protected String mDescription;
 
     @Nullable
     @SerializedName("type")
-    protected VodType type;
+    protected VodType mType;
 
     @Nullable
     @SerializedName("link")
-    protected String link;
+    protected String mLink;
 
     @Nullable
     @SerializedName("publish")
-    protected Publish publish;
+    protected Publish mPublish;
 
     @Nullable
     @SerializedName("pictures")
-    protected PictureCollection pictures;
+    protected PictureCollection mPictures;
 
     @Nullable
     @SerializedName("metadata")
-    protected Metadata metadata;
+    protected Metadata mMetadata;
 
     @Nullable
     @SerializedName("user")
-    protected User user;
+    protected User mUser;
 
     @Nullable
     @SerializedName("film")
-    protected Video film;
+    protected Video mFilm;
 
     @Nullable
     @SerializedName("trailer")
-    protected Video trailer;
+    protected Video mTrailer;
 
     @Nullable
     public String getName() {
-        return name;
+        return mName;
     }
 
     @Nullable
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     @Nullable
     public Publish getPublish() {
-        return publish;
+        return mPublish;
     }
 
     @Nullable
     public PictureCollection getPictures() {
-        return pictures;
+        return mPictures;
     }
 
     @Nullable
     public Metadata getMetadata() {
-        return metadata;
+        return mMetadata;
     }
 
     @Nullable
     public InteractionCollection getInteractions() {
-        return metadata != null ? metadata.getInteractions() : null;
+        return mMetadata != null ? mMetadata.getInteractions() : null;
     }
 
     @Nullable
     public ConnectionCollection getConnections() {
-        return metadata != null ? metadata.getConnections() : null;
+        return mMetadata != null ? mMetadata.getConnections() : null;
     }
 
     @Nullable
     public User getUser() {
-        return user;
+        return mUser;
     }
 
     @Nullable
     public Video getFilm() {
-        return film;
+        return mFilm;
     }
 
     @Nullable
     public Video getTrailer() {
-        return trailer;
+        return mTrailer;
     }
 
     @Nullable
     public String getLink() {
-        return link;
+        return mLink;
     }
 
     @Nullable
     public VodType getType() {
-        return type;
+        return mType;
     }
 
     public int getViewableVideoCount() {
@@ -217,39 +217,39 @@ public class VodItem implements Serializable {
     }
 
     public void setName(@Nullable String name) {
-        this.name = name;
+        mName = name;
     }
 
     public void setDescription(@Nullable String description) {
-        this.description = description;
+        mDescription = description;
     }
 
     public void setType(@Nullable VodType type) {
-        this.type = type;
+        mType = type;
     }
 
     public void setPublish(@Nullable Publish publish) {
-        this.publish = publish;
+        mPublish = publish;
     }
 
     public void setPictures(@Nullable PictureCollection pictures) {
-        this.pictures = pictures;
+        mPictures = pictures;
     }
 
     public void setMetadata(@Nullable Metadata metadata) {
-        this.metadata = metadata;
+        mMetadata = metadata;
     }
 
     public void setUser(@Nullable User user) {
-        this.user = user;
+        mUser = user;
     }
 
     public void setFilm(@Nullable Video film) {
-        this.film = film;
+        mFilm = film;
     }
 
     public void setTrailer(@Nullable Video trailer) {
-        this.trailer = trailer;
+        mTrailer = trailer;
     }
 
     @Override
@@ -262,11 +262,11 @@ public class VodItem implements Serializable {
         }
         VodItem that = (VodItem) obj;
 
-        return (link != null && that.getLink() != null) && link.equals(that.getLink());
+        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
     }
 
     @Override
     public int hashCode() {
-        return link != null ? link.hashCode() : 0;
+        return mLink != null ? mLink.hashCode() : 0;
     }
 }

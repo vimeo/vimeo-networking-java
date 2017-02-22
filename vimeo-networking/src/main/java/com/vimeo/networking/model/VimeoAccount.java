@@ -51,7 +51,7 @@ public class VimeoAccount implements Serializable {
     @SerializedName("token_type")
     protected String mTokenType;
 
-    @SerializedName("mScope")
+    @SerializedName("scope")
     protected String mScope;
 
     @SerializedName("user")
@@ -64,64 +64,63 @@ public class VimeoAccount implements Serializable {
     }
 
     public VimeoAccount(@Nullable String accessToken) {
-        this.mAccessToken = accessToken;
+        mAccessToken = accessToken;
     }
 
     public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
         if (accessToken == null || accessToken.isEmpty() || tokenType == null ||
             tokenType.isEmpty() || scope == null || scope.isEmpty()) {
-            throw new AssertionError("Account can only be created with token, tokenType, mScope");
+            throw new AssertionError("Account can only be created with token, tokenType, scope");
         }
 
-        this.mAccessToken = accessToken;
-        this.mTokenType = tokenType;
-        this.mScope = scope;
+        mAccessToken = accessToken;
+        mTokenType = tokenType;
+        mScope = scope;
 
         Gson gson = VimeoNetworkUtil.getGson();
 
-        this.mUser = gson.fromJson(userJSON, User.class);
+        mUser = gson.fromJson(userJSON, User.class);
     }
 
     public boolean isAuthenticated() {
-        return (this.mAccessToken != null && !this.mAccessToken.isEmpty());
+        return (mAccessToken != null && !mAccessToken.isEmpty());
     }
 
     public String getAccessToken() {
-        return this.mAccessToken;
+        return mAccessToken;
     }
 
     public String getTokenType() {
-        return this.mTokenType;
+        return mTokenType;
     }
 
     public String getScope() {
-        return this.mScope;
+        return mScope;
     }
 
     @Nullable
     public User getUser() {
-        return this.mUser;
+        return mUser;
     }
 
     public void setUser(User user) {
-        this.mUser = user;
+        mUser = user;
     }
 
     @Nullable
-    public String getUserJSON() // For AccountManager.userData [AH]
-    {
-        if (this.mUser == null) {
+    public String getUserJSON() {
+        if (mUser == null) {
             return null;
         }
 
-        if (this.mUserJSON != null) {
-            return this.mUserJSON;
+        if (mUserJSON != null) {
+            return mUserJSON;
         }
 
         Gson gson = VimeoNetworkUtil.getGson();
 
-        this.mUserJSON = gson.toJson(this.mUser);
+        mUserJSON = gson.toJson(mUser);
 
-        return this.mUserJSON;
+        return mUserJSON;
     }
 }

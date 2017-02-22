@@ -48,7 +48,7 @@ import java.util.Locale;
  * <p/>
  * <b>Original JavaDoc:</b>
  * <br>
- * We have to write our own serializer and mGsonDeserializer because Android doesn't currently
+ * We have to write our own serializer and deserializer because Android doesn't currently
  * support ISO 8601. The SimpleDateFormat link below shows 'ZZZZZ' as what we want for timezone
  * but this is only available in Android 4.3 and up. Java 7 has the 'X' character to represent
  * ISO 8601 but Android treats this differently. So in the mean time the ISO8601 class will convert

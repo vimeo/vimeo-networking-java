@@ -239,7 +239,7 @@ public class Configuration {
 
         /**
          * The constructor for the Configuration Builder. Only the last two arguments are optional but it is
-         * highly recommended that you pass in a mGsonDeserializer since, without one, deserialization will occur
+         * highly recommended that you pass in a deserializer since, without one, deserialization will occur
          * on the main thread (which can be a lengthy operation)
          *
          * @param baseURLString The base url pointing to the Vimeo api. Something like: {@link Vimeo#VIMEO_BASE_URL_STRING}

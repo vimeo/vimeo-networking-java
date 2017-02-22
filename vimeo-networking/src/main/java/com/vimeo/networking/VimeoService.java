@@ -73,7 +73,7 @@ public interface VimeoService {
     @POST("oauth/authorize/client")
     Call<VimeoAccount> authorizeWithClientCredentialsGrant(@Header("Authorization") String authHeader,
                                                            @Field("grant_type") String grantType,
-                                                           @Field("mScope") String scope);
+                                                           @Field("scope") String scope);
 
     @POST("users")
     Call<VimeoAccount> join(@Header("Authorization") String authHeader,
@@ -83,13 +83,13 @@ public interface VimeoService {
     @POST("oauth/authorize/password")
     Call<VimeoAccount> logIn(@Header("Authorization") String authHeader, @Field("username") String email,
                              @Field("password") String password, @Field("grant_type") String grantType,
-                             @Field("mScope") String scope);
+                             @Field("scope") String scope);
 
     @FormUrlEncoded
     @POST("oauth/authorize/facebook")
     Call<VimeoAccount> logInWithFacebook(@Header("Authorization") String authHeader,
                                          @Field("grant_type") String grantType, @Field("token") String token,
-                                         @Field("mScope") String scope);
+                                         @Field("scope") String scope);
 
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("tokens")
@@ -101,18 +101,18 @@ public interface VimeoService {
                                              @Field("grant_type") String grantType,
                                              @Field("token") String token,
                                              @Field("token_secret") String tokenSecret,
-                                             @Field("mScope") String scope);
+                                             @Field("scope") String scope);
 
     @FormUrlEncoded
     @POST("oauth/appexchange")
     Call<VimeoAccount> ssoTokenExchange(@Header("Authorization") String basicAuth,
-                                        @Field("access_token") String token, @Field("mScope") String scope);
+                                        @Field("access_token") String token, @Field("scope") String scope);
 
     @FormUrlEncoded
     @Headers("Cache-Control: no-cache, no-store")
     @POST("oauth/device")
     Call<PinCodeInfo> getPinCodeInfo(@Header("Authorization") String authHeader,
-                                     @Field("grant_type") String grantType, @Field("mScope") String scope);
+                                     @Field("grant_type") String grantType, @Field("scope") String scope);
 
     @FormUrlEncoded
     @Headers("Cache-Control: no-cache, no-store")
@@ -121,7 +121,7 @@ public interface VimeoService {
                                         @Field("grant_type") String grantType,
                                         @Field("user_code") String pinCode,
                                         @Field("device_code") String deviceCode,
-                                        @Field("mScope") String scope);
+                                        @Field("scope") String scope);
 
     // </editor-fold>
 

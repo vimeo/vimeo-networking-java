@@ -57,7 +57,7 @@ public final class Vimeo {
     public static final String PARAMETER_REDIRECT_URI = "redirect_uri";
     public static final String PARAMETER_RESPONSE_TYPE = "response_type";
     public static final String PARAMETER_STATE = "state";
-    public static final String PARAMETER_SCOPE = "mScope";
+    public static final String PARAMETER_SCOPE = "scope";
     public static final String PARAMETER_TOKEN = "token";
     public static final String PARAMETER_CLIENT_ID = "client_id";
 

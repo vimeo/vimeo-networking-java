@@ -25,6 +25,8 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -78,6 +80,10 @@ public class FeedItem implements Serializable {
 
     @SerializedName("metadata")
     protected Metadata mMetadata;
+
+    public void setClip(@Nullable Video video) {
+        mClip = video;
+    }
 
     public String getUri() {
         return mUri;
