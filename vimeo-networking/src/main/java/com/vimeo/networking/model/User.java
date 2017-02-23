@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
+import com.vimeo.networking.model.notifications.NotificationConnection;
 import com.vimeo.stag.GsonAdapterKey;
 
 import org.jetbrains.annotations.NotNull;
@@ -228,6 +229,12 @@ public class User implements Serializable, Followable {
     public Connection getWatchedVideosConnection() {
         ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.watchedVideos : null;
+    }
+
+    @Nullable
+    public NotificationConnection getNotificationConnection() {
+        ConnectionCollection collections = getMetadataConnections();
+        return collections != null ? collections.notifications : null;
     }
     // </editor-fold>
 
