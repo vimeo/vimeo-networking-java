@@ -23,6 +23,8 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+
+import com.vimeo.networking.model.notifications.NotificationConnection;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -165,7 +167,7 @@ public class ConnectionCollection implements Serializable {
 
     @Nullable
     @SerializedName("notifications")
-    protected Connection mNotifications;
+    protected NotificationConnection mNotifications;
 
     @Nullable
     public Connection getVideos() {
@@ -323,7 +325,7 @@ public class ConnectionCollection implements Serializable {
     }
 
     @Nullable
-    public Connection getNotifications() {
+    public NotificationConnection getNotifications() {
         return mNotifications;
     }
 }

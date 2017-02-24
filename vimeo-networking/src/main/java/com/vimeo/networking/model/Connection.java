@@ -42,33 +42,27 @@ public class Connection implements Serializable {
 
     @Nullable
     @SerializedName("uri")
-    protected String mUri;
+    public String mUri;
 
     @Nullable
     @SerializedName("options")
-    protected ArrayList<String> mOptions;
+    public ArrayList<String> mOptions;
 
     @SerializedName("total")
-    protected int mTotal;
+    public int mTotal;
 
     @SerializedName("main_total")
-    protected int mMainTotal;
+    public int mMainTotal;
 
     @SerializedName("extra_total")
-    protected int mExtraTotal;
+    public int mExtraTotal;
 
     @SerializedName("viewable_total")
-    protected int mViewableTotal;
-
-    @SerializedName("new_total")
-    protected int mNewTotal;
-
-    @SerializedName("unread_total")
-    protected int mUnreadTotal;
+    public int mViewableTotal;
 
     @Nullable
     @SerializedName("name")
-    protected String mName;
+    public String mName;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -98,14 +92,6 @@ public class Connection implements Serializable {
 
     public int getViewableTotal() {
         return mViewableTotal;
-    }
-
-    public int getNewTotal() {
-        return mNewTotal;
-    }
-
-    public int getUnreadTotal() {
-        return mUnreadTotal;
     }
 
     @Nullable
