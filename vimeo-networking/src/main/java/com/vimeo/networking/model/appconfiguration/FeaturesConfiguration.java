@@ -67,6 +67,26 @@ public class FeaturesConfiguration {
         return mChromecastReceiverAppID;
     }
 
+    public void setIapEnabled(boolean iapEnabled) {
+        mIapEnabled = iapEnabled;
+    }
+
+    public void setAutoUploadEnabled(boolean autoUploadEnabled) {
+        mAutoUploadEnabled = autoUploadEnabled;
+    }
+
+    public void setComScoreEnabled(boolean comScoreEnabled) {
+        mComScoreEnabled = comScoreEnabled;
+    }
+
+    public void setPlayTrackingEnabled(boolean playTrackingEnabled) {
+        mPlayTrackingEnabled = playTrackingEnabled;
+    }
+
+    public void setChromecastReceiverAppID(String chromecastReceiverAppID) {
+        mChromecastReceiverAppID = chromecastReceiverAppID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

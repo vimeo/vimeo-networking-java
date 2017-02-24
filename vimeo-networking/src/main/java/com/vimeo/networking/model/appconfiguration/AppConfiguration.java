@@ -32,14 +32,37 @@ import com.google.gson.annotations.SerializedName;
 public class AppConfiguration {
 
     @SerializedName("facebook")
-    public FacebookConfiguration mFacebook;
+    protected FacebookConfiguration mFacebook;
 
     @SerializedName("api")
-    public ApiConfiguration mApi;
+    protected ApiConfiguration mApi;
 
     @SerializedName("features")
-    public FeaturesConfiguration mFeatures;
+    protected FeaturesConfiguration mFeatures;
 
+    public void setFacebook(FacebookConfiguration facebook) {
+        mFacebook = facebook;
+    }
+
+    public void setApi(ApiConfiguration api) {
+        mApi = api;
+    }
+
+    public void setFeatures(FeaturesConfiguration features) {
+        mFeatures = features;
+    }
+
+    public FacebookConfiguration getFacebook() {
+        return mFacebook;
+    }
+
+    public ApiConfiguration getApi() {
+        return mApi;
+    }
+
+    public FeaturesConfiguration getFeatures() {
+        return mFeatures;
+    }
 
     @Override
     public boolean equals(Object o) {

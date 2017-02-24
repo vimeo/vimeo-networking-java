@@ -32,7 +32,11 @@ import java.util.Arrays;
 public class FacebookConfiguration {
 
     @SerializedName("required_scopes")
-    public String[] mRequiredScopes;
+    protected String[] mRequiredScopes;
+
+    public void setRequiredScopes(String[] requiredScopes) {
+        mRequiredScopes = requiredScopes;
+    }
 
     public String[] getRequiredScopes() {
         return mRequiredScopes;

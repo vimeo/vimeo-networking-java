@@ -111,4 +111,8 @@ public class Interaction implements Serializable {
     public Date getExpiration() {
         return mExpiration;
     }
+
+    public void setIsAdded(boolean added) {
+        mAdded = added;
+    }
 }

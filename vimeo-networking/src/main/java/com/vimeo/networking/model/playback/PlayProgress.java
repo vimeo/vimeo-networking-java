@@ -53,4 +53,8 @@ public class PlayProgress implements Serializable {
     public Float getSeconds() {
         return mSeconds;
     }
+
+    public void setSeconds(@Nullable Float seconds) {
+        mSeconds = seconds;
+    }
 }

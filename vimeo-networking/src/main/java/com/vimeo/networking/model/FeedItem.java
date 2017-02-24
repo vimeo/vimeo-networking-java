@@ -85,6 +85,10 @@ public class FeedItem implements Serializable {
         mClip = video;
     }
 
+    public void setUser(User user) {
+        mUser = user;
+    }
+
     public String getUri() {
         return mUri;
     }

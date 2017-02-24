@@ -99,4 +99,9 @@ public class Connection implements Serializable {
         return mName;
     }
     // </editor-fold>
+
+
+    public void setTotal(int total) {
+        mTotal = total;
+    }
 }

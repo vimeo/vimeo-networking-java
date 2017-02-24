@@ -41,7 +41,7 @@ public class InteractionCollection implements Serializable {
 
     @Nullable
     @SerializedName("watchlater")
-    protected Interaction mWatchlater;
+    protected Interaction mWatchLater;
 
     @Nullable
     @SerializedName("like")
@@ -64,8 +64,8 @@ public class InteractionCollection implements Serializable {
     protected Interaction mSubscribe;
 
     @Nullable
-    public Interaction getWatchlater() {
-        return mWatchlater;
+    public Interaction getWatchLater() {
+        return mWatchLater;
     }
 
     @Nullable
@@ -91,5 +91,29 @@ public class InteractionCollection implements Serializable {
     @Nullable
     public Interaction getSubscribe() {
         return mSubscribe;
+    }
+
+    public void setLike(@Nullable Interaction like) {
+        mLike = like;
+    }
+
+    public void setWatchLater(@Nullable Interaction watchLater) {
+        mWatchLater = watchLater;
+    }
+
+    public void setFollow(@Nullable Interaction follow) {
+        mFollow = follow;
+    }
+
+    public void setBuy(@Nullable Interaction buy) {
+        mBuy = buy;
+    }
+
+    public void setRent(@Nullable Interaction rent) {
+        mRent = rent;
+    }
+
+    public void setSubscribe(@Nullable Interaction subscribe) {
+        mSubscribe = subscribe;
     }
 }

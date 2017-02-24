@@ -27,7 +27,6 @@ import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.networking.model.notifications.NotificationConnection;
-import com.vimeo.stag.GsonAdapterKey;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
@@ -96,11 +95,16 @@ public class User implements Serializable, Followable {
     public UploadQuota mUploadQuota;
 
     @Nullable
-    @GsonAdapterKey("preferences")
+    @SerializedName("preferences")
     public Preferences mPreferences;
     @Nullable
-    @GsonAdapterKey("badge")
+    @SerializedName("badge")
     public UserBadge mBadge;
+
+    @Nullable
+    public UserBadge getBadge() {
+        return mBadge;
+    }
 
     public AccountType getAccountType() {
         if (this.mAccount == null) {
@@ -134,6 +138,14 @@ public class User implements Serializable, Followable {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Accessors/Helpers">
+    public void setUri(String uri) {
+        mUri = uri;
+    }
+
+    public PictureCollection getPictures() {
+        return mPictures;
+    }
+
     @Override
     public boolean canFollow() {
         return getFollowInteraction() != null;
@@ -254,7 +266,7 @@ public class User implements Serializable, Followable {
     // </editor-fold>
 
     @NotNull
-    public ArrayList<Picture> getPictures() {
+    public ArrayList<Picture> getPicturesList() {
         if (mPictures == null || mPictures.getPictures() == null) {
             return new ArrayList<>();
         }
@@ -359,6 +371,29 @@ public class User implements Serializable, Followable {
     @Nullable
     public Preferences getPreferences() {
         return mPreferences;
+    }
+
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Setters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Setters">
+
+    public void setPictures(PictureCollection pictures) {
+        mPictures = pictures;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public void setLocation(String location) {
+        mLocation = location;
+    }
+
+    public void setBio(String bio) {
+        mBio = bio;
     }
 
     // </editor-fold>

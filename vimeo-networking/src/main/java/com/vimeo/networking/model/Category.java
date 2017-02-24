@@ -171,6 +171,10 @@ public class Category implements Serializable, Followable {
         return mIcon;
     }
 
+    public void setUri(@Nullable String uri) {
+        mUri = uri;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

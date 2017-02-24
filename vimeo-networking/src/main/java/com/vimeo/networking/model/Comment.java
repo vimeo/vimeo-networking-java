@@ -86,6 +86,10 @@ public class Comment implements Serializable {
         return mMetadata;
     }
 
+    public void setUser(User user) {
+        mUser = user;
+    }
+
     public int replyCount() {
         if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mReplies != null) {
             return mMetadata.mConnections.mReplies.mTotal;

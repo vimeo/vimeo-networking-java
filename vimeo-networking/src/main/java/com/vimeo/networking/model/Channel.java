@@ -72,6 +72,14 @@ public class Channel implements Serializable, Followable {
     @SerializedName("metadata")
     protected Metadata mMetadata;
 
+    public void setUri(String uri) {
+        mUri = uri;
+    }
+
+    public void setUser(User user) {
+        mUser = user;
+    }
+
     public String getUri() {
         return mUri;
     }

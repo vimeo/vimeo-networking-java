@@ -41,10 +41,26 @@ public class UploadQuota implements Serializable {
     private static final long serialVersionUID = 4050488085481972886L;
 
     @SerializedName("space")
-    public Space mSpace;
+    protected Space mSpace;
 
     @SerializedName("quota")
-    public Quota mQuota;
+    protected Quota mQuota;
+
+    public Space getSpace() {
+        return mSpace;
+    }
+
+    public void setSpace(Space space) {
+        mSpace = space;
+    }
+
+    public Quota getQuota() {
+        return mQuota;
+    }
+
+    public void setQuota(Quota quota) {
+        mQuota = quota;
+    }
 
     /**
      * The amount of free upload space left for the user.

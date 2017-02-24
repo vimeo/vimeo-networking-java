@@ -219,6 +219,130 @@ public class Video implements Serializable {
     public String mResourceKey;
 
     // -----------------------------------------------------------------------------------------------------
+    // Getters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Getters">
+    public String getUri() {
+        return mUri;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public int getDuration() {
+        return mDuration;
+    }
+
+    public ArrayList<VideoFile> getVideoFiles() {
+        return mVideoFiles;
+    }
+
+    public int getWidth() {
+        return mWidth;
+    }
+
+    public int getHeight() {
+        return mHeight;
+    }
+
+    public Embed getEmbed() {
+        return mEmbed;
+    }
+
+    public String getLanguage() {
+        return mLanguage;
+    }
+
+    public Date getCreatedTime() {
+        return mCreatedTime;
+    }
+
+    public Date getModifiedTime() {
+        return mModifiedTime;
+    }
+
+    public Date getReleaseTime() {
+        return mReleaseTime;
+    }
+
+    public ArrayList<String> getContentRating() {
+        return mContentRating;
+    }
+
+    public String getLicense() {
+        return mLicense;
+    }
+
+    public Privacy getPrivacy() {
+        return mPrivacy;
+    }
+
+    public PictureCollection getPictures() {
+        return mPictures;
+    }
+
+    public ArrayList<Tag> getTags() {
+        return mTags;
+    }
+
+    public StatsCollection getStats() {
+        return mStats;
+    }
+
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public ArrayList<Category> getCategories() {
+        return mCategories;
+    }
+
+    @Nullable
+    public Spatial getSpatial() {
+        return mSpatial;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Setters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Setters">
+
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public void setPlay(@Nullable Play play) {
+        mPlay = play;
+    }
+
+    public void setUri(String uri) {
+        mUri = uri;
+    }
+
+    public void setUser(User user) {
+        mUser = user;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
     // 360
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="360">
@@ -293,8 +417,8 @@ public class Video implements Serializable {
     // <editor-fold desc="Watch Later">
     @Nullable
     public Interaction getWatchLaterInteraction() {
-        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mWatchlater != null) {
-            return mMetadata.mInteractions.mWatchlater;
+        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mWatchLater != null) {
+            return mMetadata.mInteractions.mWatchLater;
         }
         return null;
     }

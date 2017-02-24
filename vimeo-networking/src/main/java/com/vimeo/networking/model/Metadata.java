@@ -49,4 +49,8 @@ public class Metadata implements Serializable {
     public InteractionCollection getInteractions() {
         return mInteractions;
     }
+
+    public void setInteractions(InteractionCollection interactions) {
+        mInteractions = interactions;
+    }
 }

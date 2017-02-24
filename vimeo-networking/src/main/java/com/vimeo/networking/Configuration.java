@@ -53,35 +53,35 @@ public class Configuration {
     private static final int DEFAULT_TIMEOUT = 60; // seconds
     private static final String DEFAULT_USER_AGENT = "sample_user_agent";
 
-    public String mBaseURLString;
-    public String mClientID;
-    public String mClientSecret;
-    public String mScope;
+    protected String mBaseURLString;
+    protected String mClientID;
+    protected String mClientSecret;
+    protected String mScope;
 
-    public String mAccessToken;
+    protected String mAccessToken;
 
     @Nullable
     private AccountStore mAccountStore;
-    public GsonDeserializer mGsonDeserializer;
+    protected GsonDeserializer mGsonDeserializer;
 
-    public final List<Interceptor> mNetworkInterceptors = new ArrayList<>();
-    public final List<Interceptor> mInterceptors = new ArrayList<>();
+    protected final List<Interceptor> mNetworkInterceptors = new ArrayList<>();
+    protected final List<Interceptor> mInterceptors = new ArrayList<>();
 
-    public String mApiVersionString;
-    public String mCodeGrantRedirectURI;
-    public String mUserAgentString;
+    protected String mApiVersionString;
+    protected String mCodeGrantRedirectURI;
+    protected String mUserAgentString;
 
     @Nullable
-    public File mCacheDirectory;
-    public int mCacheSize;
+    protected File mCacheDirectory;
+    protected int mCacheSize;
 
-    public int mCacheMaxAge; // in seconds
-    public int mTimeout; // in seconds
+    protected int mCacheMaxAge; // in seconds
+    protected int mTimeout; // in seconds
 
-    public boolean mCertPinningEnabled;
+    protected boolean mCertPinningEnabled;
     @Nullable
-    public LogProvider mLogProvider;
-    public LogLevel mLogLevel;
+    protected LogProvider mLogProvider;
+    protected LogLevel mLogLevel;
 
     /**
      * -----------------------------------------------------------------------------------------------------
@@ -89,6 +89,85 @@ public class Configuration {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Accessors">
+    public String getClientID() {
+        return mClientID;
+    }
+
+    public String getClientSecret() {
+        return mClientSecret;
+    }
+
+    public String getScope() {
+        return mScope;
+    }
+
+    public String getAccessToken() {
+        return mAccessToken;
+    }
+
+    @Nullable
+    public AccountStore getAccountStore() {
+        return mAccountStore;
+    }
+
+    public GsonDeserializer getGsonDeserializer() {
+        return mGsonDeserializer;
+    }
+
+    public List<Interceptor> getNetworkInterceptors() {
+        return mNetworkInterceptors;
+    }
+
+    public List<Interceptor> getInterceptors() {
+        return mInterceptors;
+    }
+
+    public String getApiVersionString() {
+        return mApiVersionString;
+    }
+
+    public String getCodeGrantRedirectURI() {
+        return mCodeGrantRedirectURI;
+    }
+
+    public String getUserAgentString() {
+        return mUserAgentString;
+    }
+
+    @Nullable
+    public File getCacheDirectory() {
+        return mCacheDirectory;
+    }
+
+    public int getCacheSize() {
+        return mCacheSize;
+    }
+
+    public int getCacheMaxAge() {
+        return mCacheMaxAge;
+    }
+
+    public int getTimeout() {
+        return mTimeout;
+    }
+
+    public boolean isCertPinningEnabled() {
+        return mCertPinningEnabled;
+    }
+
+    @Nullable
+    public LogProvider getLogProvider() {
+        return mLogProvider;
+    }
+
+    public LogLevel getLogLevel() {
+        return mLogLevel;
+    }
+
+    public String getBaseURLString() {
+        return mBaseURLString;
+    }
+
     @Nullable
     public Cache getCache() {
         if (mCacheDirectory == null) {
@@ -127,6 +206,21 @@ public class Configuration {
         }
         return mAccountStore.loadAccount();
     }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Setters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Setters">
+
+    public void setBaseURLString(String baseURLString) {
+        mBaseURLString = baseURLString;
+    }
+
+    public void setCertPinningEnabled(boolean certPinningEnabled) {
+        mCertPinningEnabled = certPinningEnabled;
+    }
+
     // </editor-fold>
 
     /**
