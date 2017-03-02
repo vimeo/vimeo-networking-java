@@ -37,9 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -54,11 +52,6 @@ public class ProgramContentItem implements Serializable {
     private static final long serialVersionUID = -3929762661095254821L;
     private static final String S_CATEGORY = "category";
     private static final String S_CHANNEL = "channel";
-    private static final String KEY_PAGE = "page";
-    private static final String KEY_PER_PAGE = "per_page";
-    private static final String QUERY_DELIM = "?";
-    private static final String QUERY_PARAM_DELIM = "&";
-    private static final String QUERY_KEY_VAL_DELIM = "=";
 
     public enum Type {
         @SerializedName(S_CATEGORY)
@@ -181,61 +174,6 @@ public class ProgramContentItem implements Serializable {
             return mMetadata.connections.contents.getUri();
         }
         return null;
-    }
-
-    /**
-     * Returns a uri (as a String) to the requested page of video content of the requested sized number of items.
-     *
-     * @param pageSize   A number (> 0) representing the size of the first page to retrieve. If the number is <= 0,
-     *                   a default value (currently 5) will be used.
-     * @param pageNumber A number (> 0) representing the page to retrieve. If the number is <= 0, the default
-     *                   value (currently 2) will be used.
-     * @return a uri (as a String) to the first page or null if a page is not available
-     */
-    @Nullable
-    public String getPageUri(int pageSize, int pageNumber) {
-        String page = getNextPageUri();
-        if (page != null) {
-            URI pageUri;
-            try {
-                pageUri = URI.create(page);
-            } catch (IllegalArgumentException iae) {
-                return null;
-            }
-            if (pageSize > 0 && pageNumber > 0) {
-                String path = pageUri.getPath();
-                String queryString = pageUri.getQuery();
-                if (queryString != null && !queryString.isEmpty()) {
-                    String[] query = queryString.split(QUERY_PARAM_DELIM);
-                    for (int i = 0; i < query.length; i++) {
-                        String[] keyValSplit = query[i].split(QUERY_KEY_VAL_DELIM);
-                        if (keyValSplit.length == 2) {
-                            if (pageNumber > 0 && KEY_PAGE.equalsIgnoreCase(keyValSplit[0])) {
-                                keyValSplit[1] = Integer.toString(pageNumber);
-                            } else if (pageSize > 0 && KEY_PER_PAGE.equalsIgnoreCase(keyValSplit[0])) {
-                                keyValSplit[1] = Integer.toString(pageSize);
-                            }
-                        }
-                        query[i] = join(keyValSplit, QUERY_KEY_VAL_DELIM);
-                    }
-                    page = path + QUERY_DELIM + join(query, QUERY_PARAM_DELIM);
-                }
-            }
-        }
-        return page;
-    }
-
-    /**
-     * Joins an array of Strings and inserts a delimiter between each sequential String when they are joined.
-     * Performs the opposite of String.split. This is necessary to avoid bringing in another library in this context.
-     *
-     * @param fields    an array of String fields to join
-     * @param delimiter the String delimiter to place between each String when they are joined
-     * @return a joined String
-     */
-    @NotNull
-    private static String join(@NotNull String[] fields, @NotNull String delimiter) {
-        return Arrays.toString(fields).replace(", ", delimiter).replaceAll("[\\[\\]]", "");
     }
 
 }
