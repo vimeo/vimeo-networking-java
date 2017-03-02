@@ -56,7 +56,6 @@ public class ProgramContentItem implements Serializable {
     private static final String S_CHANNEL = "channel";
     private static final String KEY_PAGE = "page";
     private static final String KEY_PER_PAGE = "per_page";
-    private static final String PAGE_ONE = "1";
     private static final String QUERY_DELIM = "?";
     private static final String QUERY_PARAM_DELIM = "&";
     private static final String QUERY_KEY_VAL_DELIM = "=";
@@ -212,7 +211,7 @@ public class ProgramContentItem implements Serializable {
                         String[] keyValSplit = query[i].split(QUERY_KEY_VAL_DELIM);
                         if (keyValSplit.length == 2) {
                             if (pageNumber > 0 && KEY_PAGE.equalsIgnoreCase(keyValSplit[0])) {
-                                keyValSplit[1] = PAGE_ONE;
+                                keyValSplit[1] = Integer.toString(pageNumber);
                             } else if (pageSize > 0 && KEY_PER_PAGE.equalsIgnoreCase(keyValSplit[0])) {
                                 keyValSplit[1] = Integer.toString(pageSize);
                             }
