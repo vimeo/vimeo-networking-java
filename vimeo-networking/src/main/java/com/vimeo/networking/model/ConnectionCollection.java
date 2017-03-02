@@ -133,4 +133,7 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     @GsonAdapterKey("notifications")
     public NotificationConnection notifications;
+    @Nullable
+    @GsonAdapterKey("contents")
+    public Connection contents;
 }
