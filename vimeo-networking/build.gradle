@@ -32,7 +32,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    def stagVersion = '2.0.1'
+    def stagVersion = '2.0.2'
     compile "com.vimeo.stag:stag-library:$stagVersion"
     apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
 }
