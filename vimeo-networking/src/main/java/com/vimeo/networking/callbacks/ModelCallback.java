@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.callbacks;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Abstract callback class for @param <T> type of model.
  * <p/>
@@ -29,13 +31,15 @@ package com.vimeo.networking.callbacks;
  */
 public abstract class ModelCallback<T> extends VimeoCallback<T> {
 
-    private Class objectType;
+    @NotNull
+    private Class mObjectType;
 
-    public ModelCallback(Class objectType) {
-        this.objectType = objectType;
+    public ModelCallback(@NotNull Class objectType) {
+        mObjectType = objectType;
     }
 
+    @NotNull
     public Class getObjectType() {
-        return this.objectType;
+        return this.mObjectType;
     }
 }

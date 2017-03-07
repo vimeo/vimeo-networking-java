@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,25 +33,87 @@ import java.io.Serializable;
  * A collection of Interaction objects.
  * Created by zetterstromk on 6/5/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class InteractionCollection implements Serializable {
 
     private static final long serialVersionUID = 489519386122782640L;
+
     @Nullable
-    @GsonAdapterKey("watchlater")
-    public Interaction watchlater;
+    @SerializedName("watchlater")
+    protected Interaction mWatchLater;
+
     @Nullable
-    @GsonAdapterKey("like")
-    public Interaction like;
+    @SerializedName("like")
+    protected Interaction mLike;
+
     @Nullable
-    @GsonAdapterKey("follow")
-    public Interaction follow;
+    @SerializedName("follow")
+    protected Interaction mFollow;
+
     @Nullable
-    @GsonAdapterKey("buy")
-    public Interaction buy;
+    @SerializedName("buy")
+    protected Interaction mBuy;
+
     @Nullable
-    @GsonAdapterKey("rent")
-    public Interaction rent;
+    @SerializedName("rent")
+    protected Interaction mRent;
+
     @Nullable
-    @GsonAdapterKey("subscribe")
-    public Interaction subscribe;
+    @SerializedName("subscribe")
+    protected Interaction mSubscribe;
+
+    @Nullable
+    public Interaction getWatchLater() {
+        return mWatchLater;
+    }
+
+    @Nullable
+    public Interaction getLike() {
+        return mLike;
+    }
+
+    @Nullable
+    public Interaction getFollow() {
+        return mFollow;
+    }
+
+    @Nullable
+    public Interaction getBuy() {
+        return mBuy;
+    }
+
+    @Nullable
+    public Interaction getRent() {
+        return mRent;
+    }
+
+    @Nullable
+    public Interaction getSubscribe() {
+        return mSubscribe;
+    }
+
+    public void setLike(@Nullable Interaction like) {
+        mLike = like;
+    }
+
+    public void setWatchLater(@Nullable Interaction watchLater) {
+        mWatchLater = watchLater;
+    }
+
+    public void setFollow(@Nullable Interaction follow) {
+        mFollow = follow;
+    }
+
+    public void setBuy(@Nullable Interaction buy) {
+        mBuy = buy;
+    }
+
+    public void setRent(@Nullable Interaction rent) {
+        mRent = rent;
+    }
+
+    public void setSubscribe(@Nullable Interaction subscribe) {
+        mSubscribe = subscribe;
+    }
 }

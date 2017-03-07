@@ -27,7 +27,7 @@ import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -41,6 +41,7 @@ import java.util.concurrent.TimeUnit;
  * Created by alfredhanssen on 4/12/15.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class Video implements Serializable {
 
     private static final long serialVersionUID = -1282907783845240057L;
@@ -115,101 +116,231 @@ public class Video implements Serializable {
         }
     }
 
-    // Note: if you rename any fields, GSON serialization of persisted videos may break. [KV] 3/31/16
-    @GsonAdapterKey("uri")
-    public String uri;
+    @SerializedName("uri")
+    public String mUri;
 
-    @GsonAdapterKey("name")
-    public String name;
+    @SerializedName("name")
+    public String mName;
 
-    @GsonAdapterKey("description")
-    public String description;
+    @SerializedName("description")
+    public String mDescription;
 
-    @GsonAdapterKey("link")
-    public String link;
+    @SerializedName("link")
+    public String mLink;
 
-    @GsonAdapterKey("duration")
-    public int duration;
-
-    @Deprecated
-    @GsonAdapterKey("files")
-    public ArrayList<VideoFile> files;
-
-    @GsonAdapterKey("width")
-    public int width;
-
-    @GsonAdapterKey("height")
-    public int height;
+    @SerializedName("duration")
+    public int mDuration;
 
     @Deprecated
-    @GsonAdapterKey("embed")
-    public com.vimeo.networking.model.Embed embed;
+    @SerializedName("files")
+    public ArrayList<VideoFile> mVideoFiles;
 
-    @GsonAdapterKey("language")
-    public String language;
+    @SerializedName("width")
+    public int mWidth;
 
-    @GsonAdapterKey("created_time")
-    public Date createdTime;
+    @SerializedName("height")
+    public int mHeight;
 
-    @GsonAdapterKey("modified_time")
-    public Date modifiedTime;
+    @Deprecated
+    @SerializedName("embed")
+    public com.vimeo.networking.model.Embed mEmbed;
 
-    @GsonAdapterKey("release_time")
-    public Date releaseTime;
+    @SerializedName("language")
+    public String mLanguage;
 
-    @GsonAdapterKey("content_rating")
-    public ArrayList<String> contentRating;
+    @SerializedName("created_time")
+    public Date mCreatedTime;
 
-    @GsonAdapterKey("license")
-    public String license;
+    @SerializedName("modified_time")
+    public Date mModifiedTime;
 
-    @GsonAdapterKey("privacy")
-    public Privacy privacy;
+    @SerializedName("release_time")
+    public Date mReleaseTime;
 
-    @GsonAdapterKey("pictures")
-    public PictureCollection pictures;
+    @SerializedName("content_rating")
+    public ArrayList<String> mContentRating;
 
-    @GsonAdapterKey("tags")
-    public ArrayList<Tag> tags;
+    @SerializedName("license")
+    public String mLicense;
 
-    @GsonAdapterKey("stats")
-    public StatsCollection stats;
+    @SerializedName("privacy")
+    public Privacy mPrivacy;
 
-    @GsonAdapterKey("metadata")
-    public Metadata metadata;
+    @SerializedName("pictures")
+    public PictureCollection mPictures;
 
-    @GsonAdapterKey("user")
-    public User user;
+    @SerializedName("tags")
+    public ArrayList<Tag> mTags;
 
-    @GsonAdapterKey("status")
-    public Status status;
+    @SerializedName("stats")
+    public StatsCollection mStats;
 
-    @GsonAdapterKey("categories")
-    public ArrayList<Category> categories;
+    @SerializedName("metadata")
+    public Metadata mMetadata;
 
-    @Nullable
-    @GsonAdapterKey("password")
-    public String password;
+    @SerializedName("user")
+    public User mUser;
 
-    @Nullable
-    @GsonAdapterKey("review_link")
-    public String reviewLink;
+    @SerializedName("status")
+    public Status mStatus;
 
-    @Nullable
-    @GsonAdapterKey("play")
-    public Play play;
+    @SerializedName("categories")
+    public ArrayList<Category> mCategories;
 
     @Nullable
-    @GsonAdapterKey("download")
-    public ArrayList<VideoFile> download;
+    @SerializedName("password")
+    public String mPassword;
 
     @Nullable
-    @GsonAdapterKey("badge")
-    public VideoBadge videoBadge;
+    @SerializedName("review_link")
+    public String mReviewLink;
 
     @Nullable
-    @GsonAdapterKey("spatial")
-    public Spatial spatial;
+    @SerializedName("play")
+    public Play mPlay;
+
+    @Nullable
+    @SerializedName("download")
+    public ArrayList<VideoFile> mDownload;
+
+    @Nullable
+    @SerializedName("badge")
+    public VideoBadge mVideoBadge;
+
+    @Nullable
+    @SerializedName("spatial")
+    public Spatial mSpatial;
+
+    /**
+     * The resource_key field is the unique identifier for a Video object. It may be used for object
+     * comparison.
+     */
+    @SerializedName("resource_key")
+    public String mResourceKey;
+
+    // -----------------------------------------------------------------------------------------------------
+    // Getters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Getters">
+    public String getUri() {
+        return mUri;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public int getDuration() {
+        return mDuration;
+    }
+
+    public ArrayList<VideoFile> getVideoFiles() {
+        return mVideoFiles;
+    }
+
+    public int getWidth() {
+        return mWidth;
+    }
+
+    public int getHeight() {
+        return mHeight;
+    }
+
+    public Embed getEmbed() {
+        return mEmbed;
+    }
+
+    public String getLanguage() {
+        return mLanguage;
+    }
+
+    public Date getCreatedTime() {
+        return mCreatedTime;
+    }
+
+    public Date getModifiedTime() {
+        return mModifiedTime;
+    }
+
+    public Date getReleaseTime() {
+        return mReleaseTime;
+    }
+
+    public ArrayList<String> getContentRating() {
+        return mContentRating;
+    }
+
+    public String getLicense() {
+        return mLicense;
+    }
+
+    public Privacy getPrivacy() {
+        return mPrivacy;
+    }
+
+    public PictureCollection getPictures() {
+        return mPictures;
+    }
+
+    public ArrayList<Tag> getTags() {
+        return mTags;
+    }
+
+    public StatsCollection getStats() {
+        return mStats;
+    }
+
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public ArrayList<Category> getCategories() {
+        return mCategories;
+    }
+
+    @Nullable
+    public Spatial getSpatial() {
+        return mSpatial;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Setters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Setters">
+
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public void setPlay(@Nullable Play play) {
+        mPlay = play;
+    }
+
+    public void setUri(String uri) {
+        mUri = uri;
+    }
+
+    public void setUser(User user) {
+        mUser = user;
+    }
+    // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
     // 360
@@ -224,28 +355,22 @@ public class Video implements Serializable {
      * @return true if the video is 360, false otherwise.
      */
     public boolean is360Video() {
-        return spatial != null;
+        return mSpatial != null;
     }
 
     // </editor-fold>
 
-    /**
-     * The resource_key field is the unique identifier for a Video object. It may be used for object
-     * comparison.
-     */
-    @GsonAdapterKey("resource_key")
-    public String resourceKey;
 
     // -----------------------------------------------------------------------------------------------------
     // Resource Key
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Resource Key">
     public String getResourceKey() {
-        return resourceKey;
+        return mResourceKey;
     }
 
     public void setResourceKey(String resourceKey) {
-        this.resourceKey = resourceKey;
+        this.mResourceKey = resourceKey;
     }
     // </editor-fold>
 
@@ -262,7 +387,7 @@ public class Video implements Serializable {
      * For a more simplified representation of the video status, use {@link Video#getStatus()}.
      */
     public Status getRawStatus() {
-        return status == null ? Status.NONE : status;
+        return mStatus == null ? Status.NONE : mStatus;
     }
 
     /**
@@ -274,14 +399,14 @@ public class Video implements Serializable {
      * For an all-inclusive getter of the video status, use {@link Video#getRawStatus()}.
      */
     public Status getStatus() {
-        if (status == Status.TRANSCODE_STARTING) {
+        if (mStatus == Status.TRANSCODE_STARTING) {
             return Status.TRANSCODING;
         }
         return getRawStatus();
     }
 
     public void setStatus(Status status) {
-        this.status = status;
+        this.mStatus = status;
     }
     // </editor-fold>
 
@@ -292,8 +417,8 @@ public class Video implements Serializable {
     // <editor-fold desc="Watch Later">
     @Nullable
     public Interaction getWatchLaterInteraction() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.watchlater != null) {
-            return metadata.interactions.watchlater;
+        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mWatchLater != null) {
+            return mMetadata.mInteractions.mWatchLater;
         }
         return null;
     }
@@ -303,13 +428,13 @@ public class Video implements Serializable {
     }
 
     public boolean isWatchLater() {
-        return getWatchLaterInteraction() != null && getWatchLaterInteraction().added;
+        return getWatchLaterInteraction() != null && getWatchLaterInteraction().mAdded;
     }
 
     @Nullable
     public Connection getWatchLaterConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.watchlater != null) {
-            return metadata.connections.watchlater;
+        if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mWatchlater != null) {
+            return mMetadata.mConnections.mWatchlater;
         }
         return null;
     }
@@ -321,8 +446,8 @@ public class Video implements Serializable {
     // <editor-fold desc="Like">
     @Nullable
     public Interaction getLikeInteraction() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.like != null) {
-            return metadata.interactions.like;
+        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mLike != null) {
+            return mMetadata.mInteractions.mLike;
         }
         return null;
     }
@@ -332,28 +457,28 @@ public class Video implements Serializable {
     }
 
     public boolean isLiked() {
-        return getLikeInteraction() != null && getLikeInteraction().added;
+        return getLikeInteraction() != null && getLikeInteraction().mAdded;
     }
 
     @Nullable
     public Connection getLikesConnection() {
-        if ((metadata != null) && (metadata.connections != null) && (metadata.connections.likes != null)) {
-            return metadata.connections.likes;
+        if ((mMetadata != null) && (mMetadata.mConnections != null) && (mMetadata.mConnections.mLikes != null)) {
+            return mMetadata.mConnections.mLikes;
         }
         return null;
     }
 
     @Nullable
     public Connection getRelatedConnection() {
-        if ((metadata != null) && (metadata.connections != null)) {
-            return metadata.connections.related;
+        if ((mMetadata != null) && (mMetadata.mConnections != null)) {
+            return mMetadata.mConnections.mRelated;
         }
         return null;
     }
 
     public int likeCount() {
         if (getLikesConnection() != null) {
-            return getLikesConnection().total;
+            return getLikesConnection().mTotal;
         }
         return 0;
     }
@@ -370,11 +495,7 @@ public class Video implements Serializable {
      */
     @Nullable
     public Integer playCount() {
-        if (stats != null) {
-            return stats.plays;
-        } else {
-            return null;
-        }
+        return mStats != null ? mStats.mPlays : null;
     }
     // </editor-fold>
 
@@ -385,10 +506,10 @@ public class Video implements Serializable {
     @Nullable
     public VideoFile getVideoFileForMd5(String md5) {
         // Only Progressive video files have an md5
-        if (play == null || play.getProgressiveVideoFiles() == null) {
+        if (mPlay == null || mPlay.getProgressiveVideoFiles() == null) {
             return null;
         }
-        for (VideoFile file : play.getProgressiveVideoFiles()) {
+        for (VideoFile file : mPlay.getProgressiveVideoFiles()) {
             if (file != null && file.getMd5() != null && file.getMd5().equals(md5)) {
                 return file;
             }
@@ -403,12 +524,12 @@ public class Video implements Serializable {
     // <editor-fold desc="Recommendation">
     public String recommendationsUri() {
         String recommendationsUri = null;
-        if (metadata != null && metadata.connections != null &&
-            metadata.connections.recommendations != null) {
-            recommendationsUri = metadata.connections.recommendations.uri;
+        if (mMetadata != null && mMetadata.mConnections != null &&
+            mMetadata.mConnections.mRecommendations != null) {
+            recommendationsUri = mMetadata.mConnections.mRecommendations.mUri;
         }
         if (recommendationsUri == null) {
-            recommendationsUri = uri + Vimeo.ENDPOINT_RECOMMENDATIONS;
+            recommendationsUri = mUri + Vimeo.ENDPOINT_RECOMMENDATIONS;
         }
         return recommendationsUri;
     }
@@ -431,7 +552,7 @@ public class Video implements Serializable {
      */
     @Nullable
     public String getPassword() {
-        return password;
+        return mPassword;
     }
     // </editor-fold>
 
@@ -441,7 +562,7 @@ public class Video implements Serializable {
     // <editor-fold desc="Review Link">
     @Nullable
     public String getReviewLink() {
-        return reviewLink;
+        return mReviewLink;
     }
     // </editor-fold>
 
@@ -451,20 +572,20 @@ public class Video implements Serializable {
     // <editor-fold desc="Play object, which holds the playback and embed controls">
     @Nullable
     public Play getPlay() {
-        return play;
+        return mPlay;
     }
 
     @Nullable
     public Play.Status getPlayStatus() {
-        if (play != null) {
-            return play.getStatus();
+        if (mPlay != null) {
+            return mPlay.getStatus();
         }
         return null;
     }
 
     @Nullable
     public PlayProgress getPlayProgress() {
-        return play == null ? null : play.getProgress();
+        return mPlay == null ? null : mPlay.getProgress();
     }
 
     /**
@@ -507,7 +628,7 @@ public class Video implements Serializable {
     // <editor-fold desc="Download">
     @Nullable
     public ArrayList<VideoFile> getDownload() {
-        return download;
+        return mDownload;
     }
     // </editor-fold>
 
@@ -559,7 +680,7 @@ public class Video implements Serializable {
     }
 
     private static boolean isPurchased(Interaction interaction) {
-        return (interaction != null && interaction.stream == Stream.PURCHASED);
+        return (interaction != null && interaction.mStream == Stream.PURCHASED);
     }
 
     /**
@@ -589,15 +710,15 @@ public class Video implements Serializable {
     }
 
     private boolean isPossiblePurchase() {
-        return (isVod() && !isTrailer() && metadata != null && metadata.interactions != null);
+        return (isVod() && !isTrailer() && mMetadata != null && mMetadata.mInteractions != null);
     }
 
     @Nullable
     public Date getRentalExpiration() {
         if (isRental()) {
             // isRental will validate and prevent possible npes
-            assert metadata.interactions.rent != null;
-            return metadata.interactions.rent.expiration;
+            assert mMetadata.mInteractions.mRent != null;
+            return mMetadata.mInteractions.mRent.mExpiration;
         }
         return null;
     }
@@ -606,8 +727,8 @@ public class Video implements Serializable {
     public Date getSubscriptionExpiration() {
         if (isSubscription()) {
             // isSubscription will validate and prevent possible npes
-            assert metadata.interactions.subscribe != null;
-            return metadata.interactions.subscribe.expiration;
+            assert mMetadata.mInteractions.mSubscribe != null;
+            return mMetadata.mInteractions.mSubscribe.mExpiration;
         }
         return null;
     }
@@ -620,39 +741,39 @@ public class Video implements Serializable {
      */
     @Nullable
     public String getSeasonName() {
-        if (metadata != null && metadata.connections != null &&
-            metadata.connections.season != null) {
-            return metadata.connections.season.getName();
+        if (mMetadata != null && mMetadata.mConnections != null &&
+            mMetadata.mConnections.mSeason != null) {
+            return mMetadata.mConnections.mSeason.getName();
         }
         return null;
     }
 
     public boolean isRental() {
-        return (isPossiblePurchase() && isPurchased(metadata.interactions.rent));
+        return (isPossiblePurchase() && isPurchased(mMetadata.mInteractions.mRent));
     }
 
     public boolean isSubscription() {
-        return (isPossiblePurchase() && isPurchased(metadata.interactions.subscribe));
+        return (isPossiblePurchase() && isPurchased(mMetadata.mInteractions.mSubscribe));
     }
 
     public boolean isPurchase() {
-        return (isPossiblePurchase() && isPurchased(metadata.interactions.buy));
+        return (isPossiblePurchase() && isPurchased(mMetadata.mInteractions.mBuy));
     }
 
     public boolean isTrailer() {
-        return (isVod() && metadata.connections.trailer == null);
+        return (isVod() && mMetadata.mConnections.mTrailer == null);
     }
 
     public boolean isVod() {
-        return (metadata != null && metadata.connections != null && metadata.connections.ondemand != null);
+        return (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mOndemand != null);
     }
 
     @Nullable
     public String getTrailerUri() {
-        if (metadata != null && metadata.connections != null &&
-            metadata.connections.trailer != null) {
+        if (mMetadata != null && mMetadata.mConnections != null &&
+            mMetadata.mConnections.mTrailer != null) {
 
-            return metadata.connections.trailer.uri;
+            return mMetadata.mConnections.mTrailer.mUri;
         }
         return null;
     }
@@ -668,7 +789,7 @@ public class Video implements Serializable {
      */
     @Nullable
     public VideoBadge getVideoBadge() {
-        return videoBadge;
+        return mVideoBadge;
     }
     // </editor-fold>
 
@@ -679,9 +800,9 @@ public class Video implements Serializable {
     @Nullable
     public String getPlaybackFailureUri() {
         String playbackFailureUri = null;
-        if (metadata != null && metadata.connections != null &&
-            metadata.connections.playbackFailureReason != null) {
-            playbackFailureUri = metadata.connections.playbackFailureReason.uri;
+        if (mMetadata != null && mMetadata.mConnections != null &&
+            mMetadata.mConnections.mPlaybackFailureReason != null) {
+            playbackFailureUri = mMetadata.mConnections.mPlaybackFailureReason.mUri;
         }
         return playbackFailureUri;
     }
@@ -702,13 +823,13 @@ public class Video implements Serializable {
 
         Video that = (Video) o;
 
-        return (this.resourceKey != null && that.resourceKey != null) &&
-               this.resourceKey.equals(that.resourceKey);
+        return (this.mResourceKey != null && that.mResourceKey != null) &&
+               this.mResourceKey.equals(that.mResourceKey);
     }
 
     @Override
     public int hashCode() {
-        return this.resourceKey != null ? this.resourceKey.hashCode() : 0;
+        return this.mResourceKey != null ? this.mResourceKey.hashCode() : 0;
     }
     // </editor-fold>
 

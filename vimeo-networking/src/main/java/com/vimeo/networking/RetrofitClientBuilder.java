@@ -52,54 +52,55 @@ import okhttp3.OkHttpClient;
  * </p>
  * Created by kylevenn on 6/10/15.
  */
+@SuppressWarnings("unused")
 public class RetrofitClientBuilder {
 
     private static final String KEYSTORE_PASSWORD = "vimeo123";
     private static final int NO_TIMEOUT = -1;
 
-    private int connectionTimeout = NO_TIMEOUT;
-    private TimeUnit connectionTimeoutTimeUnit;
-    private int readTimeout = NO_TIMEOUT;
-    private TimeUnit readTimeoutTimeUnit;
-    private Cache cache;
-    private List<Interceptor> interceptorList = new ArrayList<>();
-    private List<Interceptor> networkInterceptorList = new ArrayList<>();
-    private SSLSocketFactory sSLSocketFactory;
+    private int mConnectionTimeout = NO_TIMEOUT;
+    private TimeUnit mConnectionTimeoutTimeUnit;
+    private int mReadTimeout = NO_TIMEOUT;
+    private TimeUnit mReadTimeoutTimeUnit;
+    private Cache mCache;
+    private List<Interceptor> mInterceptorList = new ArrayList<>();
+    private List<Interceptor> mNetworkInterceptorList = new ArrayList<>();
+    private SSLSocketFactory mSSLSocketFactory;
 
     public RetrofitClientBuilder setConnectionTimeout(int connectionTimeout, TimeUnit timeUnit) {
-        this.connectionTimeout = connectionTimeout;
-        this.connectionTimeoutTimeUnit = timeUnit;
+        this.mConnectionTimeout = connectionTimeout;
+        this.mConnectionTimeoutTimeUnit = timeUnit;
         return this;
     }
 
     public RetrofitClientBuilder setReadTimeout(int readTimeout, TimeUnit timeUnit) {
-        this.readTimeout = readTimeout;
-        this.readTimeoutTimeUnit = timeUnit;
+        this.mReadTimeout = readTimeout;
+        this.mReadTimeoutTimeUnit = timeUnit;
         return this;
     }
 
     public RetrofitClientBuilder setCache(Cache cache) {
-        this.cache = cache;
+        this.mCache = cache;
         return this;
     }
 
     public RetrofitClientBuilder addNetworkInterceptor(Interceptor interceptor) {
-        networkInterceptorList.add(interceptor);
+        mNetworkInterceptorList.add(interceptor);
         return this;
     }
 
     public RetrofitClientBuilder addNetworkInterceptors(List<Interceptor> interceptors) {
-        networkInterceptorList.addAll(interceptors);
+        mNetworkInterceptorList.addAll(interceptors);
         return this;
     }
 
     public RetrofitClientBuilder addInterceptor(Interceptor interceptor) {
-        interceptorList.add(interceptor);
+        mInterceptorList.add(interceptor);
         return this;
     }
 
     public RetrofitClientBuilder addInterceptors(List<Interceptor> interceptors) {
-        interceptorList.addAll(interceptors);
+        mInterceptorList.addAll(interceptors);
         return this;
     }
 
@@ -125,7 +126,7 @@ public class RetrofitClientBuilder {
         SSLContext sslContext = SSLContext.getInstance("TLS"); // SSLSocketFactory.TLS
         sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
 
-        sSLSocketFactory = sslContext.getSocketFactory();
+        mSSLSocketFactory = sslContext.getSocketFactory();
 
         return this;
     }
@@ -160,30 +161,30 @@ public class RetrofitClientBuilder {
         SSLContext sc = SSLContext.getInstance("TLS");
         sc.init(null, trustAllCerts, new SecureRandom());
 
-        sSLSocketFactory = sc.getSocketFactory();
+        mSSLSocketFactory = sc.getSocketFactory();
 
         return this;
     }
 
     public OkHttpClient build() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        if (connectionTimeout != NO_TIMEOUT) {
-            builder.connectTimeout(connectionTimeout, connectionTimeoutTimeUnit);
+        if (mConnectionTimeout != NO_TIMEOUT) {
+            builder.connectTimeout(mConnectionTimeout, mConnectionTimeoutTimeUnit);
         }
-        if (readTimeout != NO_TIMEOUT) {
-            builder.readTimeout(readTimeout, readTimeoutTimeUnit);
+        if (mReadTimeout != NO_TIMEOUT) {
+            builder.readTimeout(mReadTimeout, mReadTimeoutTimeUnit);
         }
-        if (cache != null) {
-            builder.cache(cache);
+        if (mCache != null) {
+            builder.cache(mCache);
         }
-        for (Interceptor interceptor : networkInterceptorList) {
+        for (Interceptor interceptor : mNetworkInterceptorList) {
             builder.addNetworkInterceptor(interceptor);
         }
-        for (Interceptor interceptor : interceptorList) {
+        for (Interceptor interceptor : mInterceptorList) {
             builder.addInterceptor(interceptor);
         }
-        if (sSLSocketFactory != null) {
-            builder.sslSocketFactory(sSLSocketFactory);
+        if (mSSLSocketFactory != null) {
+            builder.sslSocketFactory(mSSLSocketFactory);
         }
 
         return builder.build();

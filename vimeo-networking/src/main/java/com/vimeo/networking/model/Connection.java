@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -33,33 +34,35 @@ import java.util.ArrayList;
  * This model object represents a Connection.
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Connection implements Serializable {
 
     private static final long serialVersionUID = -840088720891343176L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    public String uri;
+    @SerializedName("uri")
+    public String mUri;
 
     @Nullable
-    @GsonAdapterKey("options")
-    public ArrayList<String> options;
+    @SerializedName("options")
+    public ArrayList<String> mOptions;
 
-    @GsonAdapterKey("total")
-    public int total;
+    @SerializedName("total")
+    public int mTotal;
 
-    @GsonAdapterKey("main_total")
-    public int mainTotal;
+    @SerializedName("main_total")
+    public int mMainTotal;
 
-    @GsonAdapterKey("extra_total")
-    public int extraTotal;
+    @SerializedName("extra_total")
+    public int mExtraTotal;
 
-    @GsonAdapterKey("viewable_total")
-    public int viewableTotal;
+    @SerializedName("viewable_total")
+    public int mViewableTotal;
 
     @Nullable
-    @GsonAdapterKey("name")
-    public String name;
+    @SerializedName("name")
+    public String mName;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -67,33 +70,38 @@ public class Connection implements Serializable {
     // <editor-fold desc="Getters">
     @Nullable
     public String getUri() {
-        return uri;
+        return mUri;
     }
 
     @Nullable
     public ArrayList<String> getOptions() {
-        return options;
+        return mOptions;
     }
 
     public int getTotal() {
-        return total;
+        return mTotal;
     }
 
     public int getMainTotal() {
-        return mainTotal;
+        return mMainTotal;
     }
 
     public int getExtraTotal() {
-        return extraTotal;
+        return mExtraTotal;
     }
 
     public int getViewableTotal() {
-        return viewableTotal;
+        return mViewableTotal;
     }
 
     @Nullable
     public String getName() {
-        return name;
+        return mName;
     }
     // </editor-fold>
+
+
+    public void setTotal(int total) {
+        mTotal = total;
+    }
 }

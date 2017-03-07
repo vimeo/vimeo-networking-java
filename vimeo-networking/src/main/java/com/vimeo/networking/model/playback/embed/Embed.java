@@ -25,6 +25,7 @@
 package com.vimeo.networking.model.playback.embed;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -39,29 +40,37 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Embed implements Serializable {
 
     private static final long serialVersionUID = -4708548576616330795L;
 
     @Nullable
     @SerializedName("uri")
-    private String mUri;
+    protected String mUri;
+
     @Nullable
     @SerializedName("html")
-    private EmbedHtml mHtml;
+    protected EmbedHtml mHtml;
+
     @Nullable
     @SerializedName("buttons")
-    private EmbedButtons mButtons;
+    protected EmbedButtons mButtons;
+
     @Nullable
     @SerializedName("title")
-    private EmbedTitle mTitle;
+    protected EmbedTitle mTitle;
+
     @SerializedName("playbar")
-    private boolean mPlayBar;
+    protected boolean mPlayBar;
+
     @SerializedName("volume")
-    private boolean mVolume;
+    protected boolean mVolume;
+
     @Nullable
     @SerializedName("color")
-    private String mColor;
+    protected String mColor;
 
     @Nullable
     public String getUri() {

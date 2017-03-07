@@ -27,6 +27,7 @@ import com.vimeo.stag.UseStag;
 /**
  * Created by zetterstromk on 6/24/15.
  */
+@SuppressWarnings("unused")
 @UseStag
 public class FeedList extends BaseResponseList<FeedItem> {
 

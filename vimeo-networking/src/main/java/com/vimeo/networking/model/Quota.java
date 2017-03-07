@@ -24,19 +24,31 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
 /**
  * Created by kylevenn on 8/19/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Quota implements Serializable {
 
     private static final long serialVersionUID = -9173641301792409558L;
 
-    @GsonAdapterKey("hd")
-    public boolean hd;
-    @GsonAdapterKey("sd")
-    public boolean sd;
+    @SerializedName("hd")
+    protected boolean mHd;
+
+    @SerializedName("sd")
+    protected boolean mSd;
+
+    public boolean isHd() {
+        return mHd;
+    }
+
+    public boolean isSd() {
+        return mSd;
+    }
 }

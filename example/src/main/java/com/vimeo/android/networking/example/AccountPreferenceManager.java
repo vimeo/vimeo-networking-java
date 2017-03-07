@@ -16,16 +16,16 @@ import com.vimeo.networking.utils.VimeoNetworkUtil;
  */
 public class AccountPreferenceManager {
 
-    private static AccountPreferenceManager mInstance;
-    private static SharedPreferences mSharedPreferences;
+    private static AccountPreferenceManager sInstance;
+    private static SharedPreferences sSharedPreferences;
 
     private AccountPreferenceManager(Context context) {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static synchronized void initializeInstance(Context context) {
-        if (mInstance == null) {
-            mInstance = new AccountPreferenceManager(context.getApplicationContext());
+        if (sInstance == null) {
+            sInstance = new AccountPreferenceManager(context.getApplicationContext());
         }
     }
 
@@ -36,13 +36,13 @@ public class AccountPreferenceManager {
             "CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON";
 
     public static void removeClientAccount() {
-        mSharedPreferences.edit().remove(CLIENT_ACCOUNT_JSON).apply();
+        sSharedPreferences.edit().remove(CLIENT_ACCOUNT_JSON).apply();
     }
 
     @Nullable
     public static VimeoAccount getClientAccount() {
         // NOTE: This happens on the main thread, don't do this
-        String accountJSON = mSharedPreferences.getString(CLIENT_ACCOUNT_JSON, null);
+        String accountJSON = sSharedPreferences.getString(CLIENT_ACCOUNT_JSON, null);
         return accountJSON == null ? null : VimeoNetworkUtil.getGson()
                 .fromJson(accountJSON, VimeoAccount.class);
     }
@@ -55,7 +55,7 @@ public class AccountPreferenceManager {
                 removeClientAccount();
                 return;
             }
-            mSharedPreferences.edit().putString(CLIENT_ACCOUNT_JSON, accountJSON).apply();
+            sSharedPreferences.edit().putString(CLIENT_ACCOUNT_JSON, accountJSON).apply();
         }
     }
 
@@ -71,12 +71,12 @@ public class AccountPreferenceManager {
             if (accountJSON == null) {
                 return;
             }
-            mSharedPreferences.edit().putString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, accountJSON).apply();
+            sSharedPreferences.edit().putString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, accountJSON).apply();
         }
     }
 
     public static VimeoAccount getCachedClientCredentialsAccount() {
-        String accountJSON = mSharedPreferences.getString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, null);
+        String accountJSON = sSharedPreferences.getString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, null);
         return accountJSON == null ? null : VimeoNetworkUtil.getGson()
                 .fromJson(accountJSON, VimeoAccount.class);
     }

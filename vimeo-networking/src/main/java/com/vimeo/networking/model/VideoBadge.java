@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -12,29 +13,31 @@ import java.io.Serializable;
  * video data (name, description, etc)
  * Created by zetterstromk on 10/4/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class VideoBadge implements Serializable {
 
     private static final long serialVersionUID = -5343389171512787927L;
 
     @Nullable
-    @GsonAdapterKey("type")
-    public String mType;
+    @SerializedName("type")
+    protected String mType;
 
     @Nullable
-    @GsonAdapterKey("festival")
-    public String mFestival;
+    @SerializedName("festival")
+    protected String mFestival;
 
     @Nullable
-    @GsonAdapterKey("link")
-    public String mLink;
+    @SerializedName("link")
+    protected String mLink;
 
     @Nullable
-    @GsonAdapterKey("text")
-    public String mText;
+    @SerializedName("text")
+    protected String mText;
 
     @Nullable
-    @GsonAdapterKey("pictures")
-    public PictureCollection mPictureCollection;
+    @SerializedName("pictures")
+    protected PictureCollection mPictureCollection;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters

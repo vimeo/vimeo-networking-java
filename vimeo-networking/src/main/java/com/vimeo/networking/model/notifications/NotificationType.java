@@ -29,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
  * A simple enum describing notification types
  * Created by zetterstromk on 1/11/17.
  */
+@SuppressWarnings("unused")
 public enum NotificationType {
     NOTIFICATION_TYPE_COMMENT,
     NOTIFICATION_TYPE_CREDIT,

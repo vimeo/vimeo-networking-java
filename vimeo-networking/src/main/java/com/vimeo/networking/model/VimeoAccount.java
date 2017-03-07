@@ -23,8 +23,10 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,27 +38,33 @@ import java.io.Serializable;
  * <p/>
  * Created by alfredhanssen on 4/12/15.
  */
+@SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class VimeoAccount implements Serializable {
 
     private static final long serialVersionUID = -8341071767843490585L;
     //    private static final String TOKEN_TYPE_BEARER = "bearer";
 
-    @GsonAdapterKey("access_token")
-    public String accessToken;
-    @GsonAdapterKey("token_type")
-    public String tokenType;
-    @GsonAdapterKey("scope")
-    public String scope;
-    @GsonAdapterKey("user")
-    public User user;
-    private String userJSON;
+    @SerializedName("access_token")
+    protected String mAccessToken;
 
-    public VimeoAccount(){
+    @SerializedName("token_type")
+    protected String mTokenType;
+
+    @SerializedName("scope")
+    protected String mScope;
+
+    @SerializedName("user")
+    protected User mUser;
+
+    private String mUserJSON;
+
+    public VimeoAccount() {
         //constructor for stag TypeAdapter generation
     }
 
     public VimeoAccount(@Nullable String accessToken) {
-        this.accessToken = accessToken;
+        mAccessToken = accessToken;
     }
 
     public VimeoAccount(String accessToken, String tokenType, String scope, String userJSON) {
@@ -65,55 +73,54 @@ public class VimeoAccount implements Serializable {
             throw new AssertionError("Account can only be created with token, tokenType, scope");
         }
 
-        this.accessToken = accessToken;
-        this.tokenType = tokenType;
-        this.scope = scope;
+        mAccessToken = accessToken;
+        mTokenType = tokenType;
+        mScope = scope;
 
         Gson gson = VimeoNetworkUtil.getGson();
 
-        this.user = gson.fromJson(userJSON, User.class);
+        mUser = gson.fromJson(userJSON, User.class);
     }
 
     public boolean isAuthenticated() {
-        return (this.accessToken != null && !this.accessToken.isEmpty());
+        return (mAccessToken != null && !mAccessToken.isEmpty());
     }
 
     public String getAccessToken() {
-        return this.accessToken;
+        return mAccessToken;
     }
 
     public String getTokenType() {
-        return this.tokenType;
+        return mTokenType;
     }
 
     public String getScope() {
-        return this.scope;
+        return mScope;
     }
 
     @Nullable
     public User getUser() {
-        return this.user;
+        return mUser;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        mUser = user;
     }
 
     @Nullable
-    public String getUserJSON() // For AccountManager.userData [AH]
-    {
-        if (this.user == null) {
+    public String getUserJSON() {
+        if (mUser == null) {
             return null;
         }
 
-        if (this.userJSON != null) {
-            return this.userJSON;
+        if (mUserJSON != null) {
+            return mUserJSON;
         }
 
         Gson gson = VimeoNetworkUtil.getGson();
 
-        this.userJSON = gson.toJson(this.user);
+        mUserJSON = gson.toJson(mUser);
 
-        return this.userJSON;
+        return mUserJSON;
     }
 }

@@ -24,7 +24,8 @@
 
 package com.vimeo.networking.model.search;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,33 +37,34 @@ import java.io.Serializable;
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class SearchFacetCollection implements Serializable {
 
     private static final long serialVersionUID = 3340976215489066653L;
 
     @Nullable
-    @GsonAdapterKey("type")
-    public SearchFacet mTypeFacet;
+    @SerializedName("type")
+    protected SearchFacet mTypeFacet;
 
     @Nullable
-    @GsonAdapterKey("category")
-    public SearchFacet mCategoryFacet;
+    @SerializedName("category")
+    protected SearchFacet mCategoryFacet;
 
     @Nullable
-    @GsonAdapterKey("duration")
-    public SearchFacet mDurationFacet;
+    @SerializedName("duration")
+    protected SearchFacet mDurationFacet;
 
     @Nullable
-    @GsonAdapterKey("license")
-    public SearchFacet mLicenseFacet;
+    @SerializedName("license")
+    protected SearchFacet mLicenseFacet;
 
     @Nullable
-    @GsonAdapterKey("uploaded")
-    public SearchFacet mUploadedFacet;
+    @SerializedName("uploaded")
+    protected SearchFacet mUploadedFacet;
 
     @Nullable
-    @GsonAdapterKey("user_type")
-    public SearchFacet mUserTypeFacet;
+    @SerializedName("user_type")
+    protected SearchFacet mUserTypeFacet;
 
     @Nullable
     public SearchFacet getTypeFacet() {

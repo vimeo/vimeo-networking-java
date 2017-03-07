@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -10,29 +11,31 @@ import java.io.Serializable;
  * A model representing a credit.
  * Created by zetterstromk on 1/11/17.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Credit implements Serializable {
 
     private static final long serialVersionUID = 6037404487282167384L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    String mUri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
-    @GsonAdapterKey("role")
-    String mRole;
+    @SerializedName("role")
+    protected String mRole;
 
     @Nullable
-    @GsonAdapterKey("name")
-    String mName;
+    @SerializedName("name")
+    protected String mName;
 
     @Nullable
-    @GsonAdapterKey("video")
-    Video mVideo;
+    @SerializedName("video")
+    protected Video mVideo;
 
     @Nullable
-    @GsonAdapterKey("user")
-    User mUser;
+    @SerializedName("user")
+    protected User mUser;
 
     @Nullable
     public String getUri() {
@@ -55,7 +58,7 @@ public class Credit implements Serializable {
     }
 
     public void setVideo(@Nullable Video video) {
-        mVideo = video;
+        this.mVideo = video;
     }
 
     @Nullable
@@ -64,7 +67,7 @@ public class Credit implements Serializable {
     }
 
     public void setUser(@Nullable User user) {
-        mUser = user;
+        this.mUser = user;
     }
 
     @Override
@@ -107,11 +110,11 @@ public class Credit implements Serializable {
     @Override
     public String toString() {
         return "Credit{" +
-               "mUri='" + mUri + '\'' +
-               ", mRole='" + mRole + '\'' +
-               ", mName='" + mName + '\'' +
-               ", mVideo=" + mVideo +
-               ", mUser=" + mUser +
+               "uri='" + mUri + '\'' +
+               ", role='" + mRole + '\'' +
+               ", name='" + mName + '\'' +
+               ", video=" + mVideo +
+               ", user=" + mUser +
                '}';
     }
 }

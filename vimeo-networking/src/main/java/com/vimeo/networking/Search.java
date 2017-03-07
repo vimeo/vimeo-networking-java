@@ -44,6 +44,7 @@ import retrofit2.Call;
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@SuppressWarnings("unused")
 public final class Search {
 
     private Search() {

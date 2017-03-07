@@ -29,22 +29,63 @@ import com.google.gson.annotations.SerializedName;
  * <p/>
  * Created by vennk on 5/20/15.
  */
+@SuppressWarnings("unused")
 public class FeaturesConfiguration {
 
     @SerializedName("iap")
-    public boolean iapEnabled;
+    protected boolean mIapEnabled;
 
     @SerializedName("autoupload")
-    public boolean autoUploadEnabled;
+    protected boolean mAutoUploadEnabled;
 
     @SerializedName("comscore")
-    public boolean comScoreEnabled;
+    protected boolean mComScoreEnabled;
 
     @SerializedName("play_tracking")
-    public boolean playTrackingEnabled = true; // Default to true
+    protected boolean mPlayTrackingEnabled = true; // Default to true
 
     @SerializedName("chromecast_app_id")
-    public String chromecastReceiverAppID;
+    protected String mChromecastReceiverAppID;
+
+    public boolean isIapEnabled() {
+        return mIapEnabled;
+    }
+
+    public boolean isAutoUploadEnabled() {
+        return mAutoUploadEnabled;
+    }
+
+    public boolean isComScoreEnabled() {
+        return mComScoreEnabled;
+    }
+
+    public boolean isPlayTrackingEnabled() {
+        return mPlayTrackingEnabled;
+    }
+
+    public String getChromecastReceiverAppID() {
+        return mChromecastReceiverAppID;
+    }
+
+    public void setIapEnabled(boolean iapEnabled) {
+        mIapEnabled = iapEnabled;
+    }
+
+    public void setAutoUploadEnabled(boolean autoUploadEnabled) {
+        mAutoUploadEnabled = autoUploadEnabled;
+    }
+
+    public void setComScoreEnabled(boolean comScoreEnabled) {
+        mComScoreEnabled = comScoreEnabled;
+    }
+
+    public void setPlayTrackingEnabled(boolean playTrackingEnabled) {
+        mPlayTrackingEnabled = playTrackingEnabled;
+    }
+
+    public void setChromecastReceiverAppID(String chromecastReceiverAppID) {
+        mChromecastReceiverAppID = chromecastReceiverAppID;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -57,32 +98,32 @@ public class FeaturesConfiguration {
 
         FeaturesConfiguration that = (FeaturesConfiguration) o;
 
-        if (iapEnabled != that.iapEnabled) {
+        if (mIapEnabled != that.mIapEnabled) {
             return false;
         }
-        if (autoUploadEnabled != that.autoUploadEnabled) {
+        if (mAutoUploadEnabled != that.mAutoUploadEnabled) {
             return false;
         }
-        if (comScoreEnabled != that.comScoreEnabled) {
+        if (mComScoreEnabled != that.mComScoreEnabled) {
             return false;
         }
-        if (playTrackingEnabled != that.playTrackingEnabled) {
+        if (mPlayTrackingEnabled != that.mPlayTrackingEnabled) {
             return false;
         }
-        if (chromecastReceiverAppID != null && that.chromecastReceiverAppID != null) {
-            return chromecastReceiverAppID.equals(that.chromecastReceiverAppID);
+        if (mChromecastReceiverAppID != null && that.mChromecastReceiverAppID != null) {
+            return mChromecastReceiverAppID.equals(that.mChromecastReceiverAppID);
         } else {
-            return chromecastReceiverAppID == null && that.chromecastReceiverAppID == null;
+            return mChromecastReceiverAppID == null && that.mChromecastReceiverAppID == null;
         }
     }
 
     @Override
     public int hashCode() {
-        int result = (iapEnabled ? 1 : 0);
-        result = 31 * result + (autoUploadEnabled ? 1 : 0);
-        result = 31 * result + (comScoreEnabled ? 1 : 0);
-        result = 31 * result + (playTrackingEnabled ? 1 : 0);
-        result = 31 * result + (chromecastReceiverAppID != null ? chromecastReceiverAppID.hashCode() : 0);
+        int result = (mIapEnabled ? 1 : 0);
+        result = 31 * result + (mAutoUploadEnabled ? 1 : 0);
+        result = 31 * result + (mComScoreEnabled ? 1 : 0);
+        result = 31 * result + (mPlayTrackingEnabled ? 1 : 0);
+        result = 31 * result + (mChromecastReceiverAppID != null ? mChromecastReceiverAppID.hashCode() : 0);
         return result;
     }
 }

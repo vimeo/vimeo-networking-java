@@ -23,46 +23,54 @@
 package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 /**
  * Similar to {@link VimeoError} object, this holds error codes/error messages relevant to a specific invalid field.
  * <p/>
  * Example: If an invalid email is passed to the login call (doesn't include an '@' symbol), there will be an
- * instance of this object in the {@link VimeoError#invalidParameters} list of the {@link VimeoError} response with
- * {@link InvalidParameter#field} set to "email"
+ * instance of this object in the {@link VimeoError#mInvalidParameters} list of the {@link VimeoError} response with
+ * {@link InvalidParameter#mField} set to "email"
  * <p/>
  * Created by kylevenn on 7/15/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class InvalidParameter {
 
     @SerializedName("field")
-    private String field;
+    protected String mField;
+
     @SerializedName("error_code")
-    private ErrorCode errorCode;
+    protected ErrorCode mErrorCode;
+
     @SerializedName("user_message")
-    private String userMessage;
+    protected String mUserMessage;
+
     @SerializedName("developer_message")
-    private String developerMessage;
+    protected String mDeveloperMessage;
+
+    public InvalidParameter() {}
 
     public InvalidParameter(String field, ErrorCode errorCode, String developerMessage) {
-        this.field = field;
-        this.errorCode = errorCode;
-        this.developerMessage = developerMessage;
+        this.mField = field;
+        this.mErrorCode = errorCode;
+        this.mDeveloperMessage = developerMessage;
     }
 
     public String getField() {
-        return field;
+        return mField;
     }
 
     public ErrorCode getErrorCode() {
-        return errorCode == null ? ErrorCode.DEFAULT : errorCode;
+        return mErrorCode == null ? ErrorCode.DEFAULT : mErrorCode;
     }
 
     public String getUserMessage() {
-        return userMessage;
+        return mUserMessage;
     }
 
     public String getDeveloperMessage() {
-        return developerMessage;
+        return mDeveloperMessage;
     }
 }

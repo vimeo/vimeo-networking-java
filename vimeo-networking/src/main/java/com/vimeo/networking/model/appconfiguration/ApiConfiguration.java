@@ -22,6 +22,7 @@
 
 package com.vimeo.networking.model.appconfiguration;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 
 /**
@@ -32,7 +33,16 @@ import com.vimeo.networking.Vimeo;
 public class ApiConfiguration {
 
     // Default host so if not set (from no internet connection) then we still have a base url
-    public String host = Vimeo.VIMEO_BASE_URL_STRING;
+    @SerializedName("host")
+    protected String mHost = Vimeo.VIMEO_BASE_URL_STRING;
+
+    public void setHost(String host) {
+        mHost = host;
+    }
+
+    public String getHost() {
+        return mHost;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -45,12 +55,12 @@ public class ApiConfiguration {
 
         ApiConfiguration that = (ApiConfiguration) o;
 
-        return !(host != null ? !host.equals(that.host) : that.host != null);
+        return !(mHost != null ? !mHost.equals(that.mHost) : that.mHost != null);
 
     }
 
     @Override
     public int hashCode() {
-        return host != null ? host.hashCode() : 0;
+        return mHost != null ? mHost.hashCode() : 0;
     }
 }

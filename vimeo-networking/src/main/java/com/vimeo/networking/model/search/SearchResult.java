@@ -24,12 +24,13 @@
 
 package com.vimeo.networking.model.search;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.Channel;
 import com.vimeo.networking.model.Group;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.vod.VodItem;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -40,50 +41,90 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class SearchResult implements Serializable {
 
     private static final long serialVersionUID = -1607389617833091383L;
 
-    @GsonAdapterKey("is_staffpick")
-    public boolean mIsStaffPick;
-    @GsonAdapterKey("is_featured")
-    public boolean mIsFeatured;
-    @GsonAdapterKey("type")
-    public SearchType mSearchType;
+    @SerializedName("is_staffpick")
+    protected boolean mIsStaffPick;
+
+    @SerializedName("is_featured")
+    protected boolean mIsFeatured;
+
+    @SerializedName("type")
+    protected SearchType mSearchType;
 
     /**
      * Non-null when {@link #mSearchType} is {@link SearchType#VIDEO}
      */
     @Nullable
-    @GsonAdapterKey("clip")
-    public Video mVideo;
+    @SerializedName("clip")
+    protected Video mVideo;
 
     /**
      * Non-null when {@link #mSearchType} is {@link SearchType#USER}
      */
     @Nullable
-    @GsonAdapterKey("people")
-    public User mUser;
+    @SerializedName("people")
+    protected User mUser;
 
     /**
      * Non-null when {@link #mSearchType} is {@link SearchType#CHANNEL}
      */
     @Nullable
-    @GsonAdapterKey("channel")
-    public Channel mChannel;
+    @SerializedName("channel")
+    protected Channel mChannel;
 
     /**
      * Non-null when {@link #mSearchType} is {@link SearchType#GROUP}
      */
     @Nullable
-    @GsonAdapterKey("group")
-    public Group mGroup;
+    @SerializedName("group")
+    protected Group mGroup;
 
     /**
      * Non-null when {@link #mSearchType} is {@link SearchType#VOD}
      */
     @Nullable
-    @GsonAdapterKey("ondemand")
-    public VodItem mVod;
+    @SerializedName("ondemand")
+    protected VodItem mVod;
 
+    public boolean isStaffPick() {
+        return mIsStaffPick;
+    }
+
+    public boolean isFeatured() {
+        return mIsFeatured;
+    }
+
+    public SearchType getSearchType() {
+        return mSearchType;
+    }
+
+    @Nullable
+    public Video getVideo() {
+        return mVideo;
+    }
+
+    @Nullable
+    public User getUser() {
+        return mUser;
+    }
+
+    @Nullable
+    public Channel getChannel() {
+        return mChannel;
+    }
+
+    @Nullable
+    public Group getGroup() {
+        return mGroup;
+    }
+
+    @Nullable
+    public VodItem getVod() {
+        return mVod;
+    }
 }

@@ -6,6 +6,7 @@ import com.vimeo.stag.UseStag;
  * A {@link BaseResponseList} for {@link Recommendation} objects
  * Created by zetterstromk on 8/15/16.
  */
+@SuppressWarnings("unused")
 @UseStag
 public class RecommendationList extends BaseResponseList<Recommendation> {
 

@@ -24,7 +24,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -33,29 +34,30 @@ import org.jetbrains.annotations.Nullable;
  * Created by rigbergh on 6/16/16.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class PinCodeInfo {
 
     @Nullable
-    @GsonAdapterKey("device_code")
-    public String mDeviceCode;
+    @SerializedName("device_code")
+    protected String mDeviceCode;
 
     @Nullable
-    @GsonAdapterKey("user_code")
-    public String mUserCode;
+    @SerializedName("user_code")
+    protected String mUserCode;
 
     @Nullable
-    @GsonAdapterKey("authorize_link")
-    public String mAuthorizeLink;
+    @SerializedName("authorize_link")
+    protected String mAuthorizeLink;
 
     @Nullable
-    @GsonAdapterKey("activate_link")
-    public String mActivateLink;
+    @SerializedName("activate_link")
+    protected String mActivateLink;
 
-    @GsonAdapterKey("expires_in")
-    public int expiresIn;
+    @SerializedName("expires_in")
+    protected int mExpiresIn;
 
-    @GsonAdapterKey("interval")
-    public int interval;
+    @SerializedName("interval")
+    protected int mInterval;
 
     @Nullable
     public String getDeviceCode() {
@@ -78,10 +80,10 @@ public class PinCodeInfo {
     }
 
     public int getExpiresIn() {
-        return expiresIn;
+        return mExpiresIn;
     }
 
     public int getInterval() {
-        return interval;
+        return mInterval;
     }
 }

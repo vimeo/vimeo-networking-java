@@ -35,6 +35,7 @@ import java.util.Date;
  * <p/>
  * Created by alfredhanssen on 4/25/15.
  */
+@SuppressWarnings("unused")
 // TODO: Remove the VideoFileDeserializer and use Stag instead, once API corrects log issue behind version 2/16/17 [KZ]
 // @UseStag(FieldOption.SERIALIZED_NAME)
 public class VideoFile implements Serializable {
@@ -96,22 +97,22 @@ public class VideoFile implements Serializable {
     // <editor-fold desc="Fields common between all file types">
     @Nullable
     @SerializedName("link_expiration_time")
-    Date mLinkExpirationTime;
+    protected Date mLinkExpirationTime;
 
     @SerializedName("link")
-    String mLink;
+    protected String mLink;
 
     @Nullable
     @SerializedName("log")
-    String mLog;
+    protected String mLog;
 
     @Nullable
     @SerializedName("token")
-    String mToken;
+    protected String mToken;
 
     @Nullable
     @SerializedName("license_link")
-    String mLicenseLink;
+    protected String mLicenseLink;
 
     @Nullable
     public Date getLinkExpirationTime() {
@@ -152,46 +153,46 @@ public class VideoFile implements Serializable {
     // Progressive files only - these fields are not relevant to HLS/Dash
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Progressive files only">
-    /** quality will be removed in the future when {@link Video#files} is removed */
+    /** quality will be removed in the future when {@link Video#mVideoFiles} is removed */
     @Deprecated
     @Nullable
     @SerializedName("quality")
-    VideoQuality mQuality;
+    protected VideoQuality mQuality;
 
-    /** expires will be removed in the future when {@link Video#files} is removed */
+    /** expires will be removed in the future when {@link Video#mVideoFiles} is removed */
     @Deprecated
     @Nullable
     @SerializedName("expires")
-    Date mExpires;
+    protected Date mExpires;
 
     @Nullable
     @SerializedName("type")
-    MimeType mMimeType;
+    protected MimeType mMimeType;
 
     @SerializedName("fps")
-    double mFps;
+    protected double mFps;
 
     @SerializedName("width")
-    int mWidth;
+    protected int mWidth;
 
     @SerializedName("height")
-    int mHeight;
+    protected int mHeight;
 
     @SerializedName("size")
-    long mSize; // size of the file, in bytes
+    protected long mSize; // size of the file, in bytes
 
     /** The md5 provides us with a way to uniquely identify video files at {@link #getLink()} */
     @Nullable
     @SerializedName("md5")
-    String mMd5;
+    protected String mMd5;
 
     @Nullable
     @SerializedName("created_time")
-    Date mCreatedTime; // time indicating when this transcode was completed
+    protected Date mCreatedTime; // time indicating when this transcode was completed
 
     /**
      * quality is no longer included in VideoFiles under {@link Video#getPlay()} - it will be removed
-     * in a future release once {@link Video#files} is removed.
+     * in a future release once {@link Video#mVideoFiles} is removed.
      *
      * @return the VideoQuality
      */

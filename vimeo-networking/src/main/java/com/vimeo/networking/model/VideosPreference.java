@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,17 +33,19 @@ import java.io.Serializable;
  * A model representing default preferences that a user has for their videos
  * Created by zetterstromk on 1/28/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class VideosPreference implements Serializable {
 
     private static final long serialVersionUID = 1956447486226253433L;
 
     @Nullable
-    @GsonAdapterKey("privacy")
-    Privacy mPrivacy;
+    @SerializedName("privacy")
+    protected Privacy mPrivacy;
 
     @Nullable
-    @GsonAdapterKey("password")
-    String mPassword;
+    @SerializedName("password")
+    protected String mPassword;
 
     /**
      * Returns the default password a user has set up for their videos

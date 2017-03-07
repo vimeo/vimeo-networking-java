@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model.notifications;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,28 +38,30 @@ import java.util.Map;
  * <p>
  * Created by zetterstromk on 12/15/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Subscriptions implements Serializable {
 
     private static final long serialVersionUID = 3088065484753327987L;
 
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_COMMENT)
-    boolean mComment;
+    @SerializedName(NotificationConstants.NOTIFICATION_COMMENT)
+    protected boolean mComment;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_CREDIT)
-    boolean mCredit;
+    @SerializedName(NotificationConstants.NOTIFICATION_CREDIT)
+    protected boolean mCredit;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_LIKE)
-    boolean mLike;
+    @SerializedName(NotificationConstants.NOTIFICATION_LIKE)
+    protected boolean mLike;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_REPLY)
-    boolean mReply;
+    @SerializedName(NotificationConstants.NOTIFICATION_REPLY)
+    protected boolean mReply;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_FOLLOW)
-    boolean mFollow;
+    @SerializedName(NotificationConstants.NOTIFICATION_FOLLOW)
+    protected boolean mFollow;
 
-    @GsonAdapterKey(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
-    boolean mVideoAvailable;
+    @SerializedName(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
+    protected boolean mVideoAvailable;
 
     public boolean isReceivingComment() {
         return mComment;

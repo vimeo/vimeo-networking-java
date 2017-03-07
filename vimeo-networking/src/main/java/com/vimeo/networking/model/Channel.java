@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,37 +33,101 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 6/11/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Channel implements Serializable, Followable {
 
     private static final long serialVersionUID = 3190410523525111858L;
 
-    @GsonAdapterKey("uri")
-    public String uri;
-    @GsonAdapterKey("name")
-    public String name;
-    @GsonAdapterKey("description")
-    public String description;
-    @GsonAdapterKey("link")
-    public String link;
-    @GsonAdapterKey("created_time")
-    public Date createdTime;
-    @GsonAdapterKey("modified_time")
-    public Date modifiedTime;
-    @GsonAdapterKey("user")
-    public User user;
-    @GsonAdapterKey("pictures")
-    public PictureCollection pictures;
-    @GsonAdapterKey("header")
-    public PictureCollection header;
-    @GsonAdapterKey("privacy")
-    public Privacy privacy;
-    @GsonAdapterKey("metadata")
-    public Metadata metadata;
+    @SerializedName("uri")
+    protected String mUri;
+
+    @SerializedName("name")
+    protected String mName;
+
+    @SerializedName("description")
+    protected String mDescription;
+
+    @SerializedName("link")
+    protected String mLink;
+
+    @SerializedName("created_time")
+    protected Date mCreatedTime;
+
+    @SerializedName("modified_time")
+    protected Date mModifiedTime;
+
+    @SerializedName("user")
+    protected User mUser;
+
+    @SerializedName("pictures")
+    protected PictureCollection mPictures;
+
+    @SerializedName("header")
+    protected PictureCollection mHeader;
+
+    @SerializedName("privacy")
+    protected Privacy mPrivacy;
+
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
+
+    public void setUri(String uri) {
+        mUri = uri;
+    }
+
+    public void setUser(User user) {
+        mUser = user;
+    }
+
+    public String getUri() {
+        return mUri;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public Date getCreatedTime() {
+        return mCreatedTime;
+    }
+
+    public Date getModifiedTime() {
+        return mModifiedTime;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public PictureCollection getPictures() {
+        return mPictures;
+    }
+
+    public PictureCollection getHeader() {
+        return mHeader;
+    }
+
+    public Privacy getPrivacy() {
+        return mPrivacy;
+    }
+
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
 
     @Nullable
     public Connection getUsersConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
-            return metadata.connections.users;
+        if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mUsers != null) {
+            return mMetadata.mConnections.mUsers;
         }
         return null;
     }
@@ -70,8 +135,8 @@ public class Channel implements Serializable, Followable {
     @Nullable
     @Override
     public Interaction getFollowInteraction() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return metadata.interactions.follow;
+        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mFollow != null) {
+            return mMetadata.mInteractions.mFollow;
         }
         return null;
     }
@@ -83,30 +148,28 @@ public class Channel implements Serializable, Followable {
 
     @Override
     public boolean isFollowing() {
-        if (getFollowInteraction() != null) {
-            return metadata.interactions.follow.added;
-        }
-        return false;
+        Interaction interaction = getFollowInteraction();
+        return interaction != null && interaction.mAdded;
     }
 
     public int getFollowerCount() {
         if (getUsersConnection() != null) {
-            return getUsersConnection().total;
+            return getUsersConnection().mTotal;
         }
         return 0;
     }
 
     @Nullable
     public Connection getVideosConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
-            return metadata.connections.videos;
+        if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mVideos != null) {
+            return mMetadata.mConnections.mVideos;
         }
         return null;
     }
 
     public int getVideoCount() {
         if (getVideosConnection() != null) {
-            return getVideosConnection().total;
+            return getVideosConnection().mTotal;
         }
         return 0;
     }
@@ -122,11 +185,11 @@ public class Channel implements Serializable, Followable {
 
         Channel that = (Channel) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.mUri != null && that.mUri != null) && this.mUri.equals(that.mUri));
     }
 
     @Override
     public int hashCode() {
-        return this.uri != null ? this.uri.hashCode() : 0;
+        return this.mUri != null ? this.mUri.hashCode() : 0;
     }
 }

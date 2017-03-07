@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,26 +31,72 @@ import java.util.Date;
 /**
  * Created by zetterstromk on 6/26/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Group implements Serializable {
 
     private static final long serialVersionUID = -3604741570351063891L;
-    @GsonAdapterKey("uri")
-    public String uri;
-    @GsonAdapterKey("created_time")
-    public Date createdTime;
-    @GsonAdapterKey("group_description")
-    public String groupDescription;
-    @GsonAdapterKey("link")
-    public String link;
-    @GsonAdapterKey("name")
-    public String name;
-    @GsonAdapterKey("picture_collection")
-    public PictureCollection pictureCollection;
-    @GsonAdapterKey("privacy")
-    public Privacy privacy;
-    @GsonAdapterKey("user")
-    public User user;
-    @GsonAdapterKey("metadata")
-    public Metadata metadata;
 
+    @SerializedName("uri")
+    protected String mUri;
+
+    @SerializedName("created_time")
+    protected Date mCreatedTime;
+
+    @SerializedName("group_description")
+    protected String mGroupDescription;
+
+    @SerializedName("link")
+    protected String mLink;
+
+    @SerializedName("name")
+    protected String mName;
+
+    @SerializedName("picture_collection")
+    protected PictureCollection mPictureCollection;
+
+    @SerializedName("privacy")
+    protected Privacy mPrivacy;
+
+    @SerializedName("user")
+    protected User mUser;
+
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
+
+    public String getUri() {
+        return mUri;
+    }
+
+    public Date getCreatedTime() {
+        return mCreatedTime;
+    }
+
+    public String getGroupDescription() {
+        return mGroupDescription;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public PictureCollection getPictureCollection() {
+        return mPictureCollection;
+    }
+
+    public Privacy getPrivacy() {
+        return mPrivacy;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
 }

@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
  * <p/>
  * Created by restainoa on 8/29/16.
  */
+@SuppressWarnings("unused")
 public interface Followable {
 
     @Nullable

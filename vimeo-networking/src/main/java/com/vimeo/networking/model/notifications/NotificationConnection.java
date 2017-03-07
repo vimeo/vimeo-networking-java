@@ -73,9 +73,9 @@ public class NotificationConnection extends Connection {
 
         if (mNewTotal != that.mNewTotal) { return false; }
         if (mUnreadTotal != that.mUnreadTotal) { return false; }
-        if (total != that.total) { return false; }
+        if (mTotal != that.mTotal) { return false; }
         if (mTypeCount != null ? !mTypeCount.equals(that.mTypeCount) : that.mTypeCount != null) { return false; }
-        return uri != null ? uri.equals(that.uri) : that.uri == null;
+        return mUri != null ? mUri.equals(that.mUri) : that.mUri == null;
 
     }
 
@@ -84,8 +84,8 @@ public class NotificationConnection extends Connection {
         int result = mNewTotal;
         result = 31 * result + mUnreadTotal;
         result = 31 * result + (mTypeCount != null ? mTypeCount.hashCode() : 0);
-        result = 31 * result + (uri != null ? uri.hashCode() : 0);
-        result = 31 * result + total;
+        result = 31 * result + (mUri != null ? mUri.hashCode() : 0);
+        result = 31 * result + mTotal;
         return result;
     }
 
@@ -95,8 +95,8 @@ public class NotificationConnection extends Connection {
                "newTotal=" + mNewTotal +
                ", unreadTotal=" + mUnreadTotal +
                ", mTypeCount=" + mTypeCount +
-               ", uri='" + uri + '\'' +
-               ", total=" + total +
+               ", uri='" + mUri + '\'' +
+               ", total=" + mTotal +
                '}';
     }
 

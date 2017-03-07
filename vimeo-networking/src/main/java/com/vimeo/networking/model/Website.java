@@ -22,20 +22,38 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
 /**
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Website implements Serializable {
 
     private static final long serialVersionUID = -1672589618654261644L;
-    @GsonAdapterKey("name")
-    public String name;
-    @GsonAdapterKey("link")
-    public String link;
-    @GsonAdapterKey("description")
-    public String description;
+
+    @SerializedName("name")
+    protected String mName;
+
+    @SerializedName("link")
+    protected String mLink;
+
+    @SerializedName("description")
+    protected String mDescription;
+
+    public String getName() {
+        return mName;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
 }

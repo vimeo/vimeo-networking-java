@@ -29,6 +29,7 @@ import com.vimeo.networking.model.VimeoAccount;
  * <p/>
  * Created by hanssena on 4/27/15.
  */
+@SuppressWarnings("unused")
 public interface AccountStore {
 
     VimeoAccount loadAccount();

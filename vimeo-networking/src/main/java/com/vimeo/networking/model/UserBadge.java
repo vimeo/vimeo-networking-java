@@ -24,7 +24,10 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
@@ -36,6 +39,7 @@ import java.io.Serializable;
  * Created by zetterstromk on 7/18/16.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class UserBadge implements Serializable {
 
     private static final long serialVersionUID = 927892812790804141L;
@@ -61,18 +65,31 @@ public class UserBadge implements Serializable {
         SUPPORT
     }
 
-    @GsonAdapterKey("type")
-    public String mBadgeType;
+    @SerializedName("type")
+    protected String mBadgeType;
 
-    @GsonAdapterKey("text")
-    public String mText;
+    @SerializedName("text")
+    protected String mText;
 
-    @GsonAdapterKey("alt_text")
-    public String mAlternateText;
+    @SerializedName("alt_text")
+    protected String mAlternateText;
 
-    @GsonAdapterKey("url")
-    public String mUrl;
+    @SerializedName("url")
+    protected String mUrl;
 
+    public String getText() {
+        return mText;
+    }
+
+    public String getAlternateText() {
+        return mAlternateText;
+    }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    @NotNull
     public UserBadgeType getBadgeType() {
         if (mBadgeType == null) {
             return UserBadgeType.NONE;

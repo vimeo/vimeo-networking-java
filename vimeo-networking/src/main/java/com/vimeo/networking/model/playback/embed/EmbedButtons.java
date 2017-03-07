@@ -25,6 +25,7 @@
 package com.vimeo.networking.model.playback.embed;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
@@ -34,23 +35,32 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 4/25/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class EmbedButtons implements Serializable {
 
     private static final long serialVersionUID = 6724361702326756097L;
+
     @SerializedName("like")
-    private boolean mLike;
+    protected boolean mLike;
+
     @SerializedName("watchlater")
-    private boolean mWatchLater;
+    protected boolean mWatchLater;
+
     @SerializedName("share")
-    private boolean mShare;
+    protected boolean mShare;
+
     @SerializedName("embed")
-    private boolean mEmbed;
+    protected boolean mEmbed;
+
     @SerializedName("hd")
-    private boolean mHd;
+    protected boolean mHd;
+
     @SerializedName("fullscreen")
-    private boolean mFullscreen;
+    protected boolean mFullscreen;
+
     @SerializedName("scaling")
-    private boolean mScaling;
+    protected boolean mScaling;
 
     public boolean isLike() {
         return mLike;

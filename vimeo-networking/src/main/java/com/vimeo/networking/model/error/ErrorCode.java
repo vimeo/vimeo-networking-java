@@ -23,6 +23,7 @@
 package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 /**
  * All the error codes that can come back from the Vimeo Api.
@@ -30,6 +31,8 @@ import com.google.gson.annotations.SerializedName;
  * Vimean reference: {@link <a href="https://docs.google.com/a/vimeo.com/spreadsheets/d/1DlkbeOFDuogvwyG2QDqExqBd_Yb3M7w7ku25AJN7QU0/edit?usp=sharing">Spreadsheet</a>}
  * Created by kylevenn on 7/15/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public enum ErrorCode {
     // The default code that will be returned if the code returned from the server isn't enumerated below
     // If that is the case, check the raw response for the code [KV]

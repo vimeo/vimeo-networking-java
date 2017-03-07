@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,6 +14,8 @@ import java.io.Serializable;
  * <p/>
  * Created by zetterstromk on 8/15/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Recommendation implements Serializable {
 
     private static final long serialVersionUID = -1451431453348153582L;
@@ -30,34 +33,34 @@ public class Recommendation implements Serializable {
      * Null if not recommended by a category
      */
     @Nullable
-    @GsonAdapterKey("category")
-    public Category mCategory;
+    @SerializedName("category")
+    protected Category mCategory;
 
     @Nullable
-    @GsonAdapterKey("type")
-    public String mRecommendationType;
+    @SerializedName("type")
+    protected String mRecommendationType;
 
     /**
      * Null if type is not user
      */
     @Nullable
-    @GsonAdapterKey("user")
-    public User mUser;
+    @SerializedName("user")
+    protected User mUser;
 
     /**
      * Null if type is not channel
      */
     @Nullable
-    @GsonAdapterKey("channel")
-    public Channel mChannel;
+    @SerializedName("channel")
+    protected Channel mChannel;
 
     @Nullable
-    @GsonAdapterKey("description")
-    public String mDescription;
+    @SerializedName("description")
+    protected String mDescription;
 
     @Nullable
-    @GsonAdapterKey("resource_key")
-    public String mResourceKey;
+    @SerializedName("resource_key")
+    protected String mResourceKey;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters

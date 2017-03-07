@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -32,56 +33,97 @@ import java.util.ArrayList;
 /**
  * Created by zetterstromk on 8/20/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Category implements Serializable, Followable {
 
     private static final long serialVersionUID = 441419347585215353L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    public String uri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
-    @GsonAdapterKey("name")
-    public String name;
+    @SerializedName("name")
+    protected String mName;
 
     @Nullable
-    @GsonAdapterKey("link")
-    public String link;
+    @SerializedName("link")
+    protected String mLink;
 
-    @GsonAdapterKey("top_level")
-    public boolean topLevel;
-
-    @Nullable
-    @GsonAdapterKey("pictures")
-    public PictureCollection pictures;
+    @SerializedName("top_level")
+    protected boolean mTopLevel;
 
     @Nullable
-    @GsonAdapterKey("icon")
-    PictureCollection mIcon;
+    @SerializedName("pictures")
+    protected PictureCollection mPictures;
 
     @Nullable
-    @GsonAdapterKey("subcategories")
-    public ArrayList<Category> subcategories;
+    @SerializedName("icon")
+    protected PictureCollection mIcon;
 
     @Nullable
-    @GsonAdapterKey("parent")
-    public Category parent;
+    @SerializedName("subcategories")
+    protected ArrayList<Category> mSubcategories;
 
     @Nullable
-    @GsonAdapterKey("metadata")
-    public Metadata metadata;
+    @SerializedName("parent")
+    protected Category mParent;
+
+    @Nullable
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
+
+    @Nullable
+    public String getUri() {
+        return mUri;
+    }
+
+    @Nullable
+    public String getName() {
+        return mName;
+    }
+
+    @Nullable
+    public String getLink() {
+        return mLink;
+    }
+
+    public boolean isTopLevel() {
+        return mTopLevel;
+    }
+
+    @Nullable
+    public PictureCollection getPictures() {
+        return mPictures;
+    }
+
+    @Nullable
+    public ArrayList<Category> getSubcategories() {
+        return mSubcategories;
+    }
+
+    @Nullable
+    public Category getParent() {
+        return mParent;
+    }
+
+    @Nullable
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
 
     @Nullable
     public Connection getVideosConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.videos != null) {
-            return metadata.connections.videos;
+        if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mVideos != null) {
+            return mMetadata.mConnections.mVideos;
         }
         return null;
     }
 
     public int getVideoCount() {
         if (getVideosConnection() != null) {
-            return getVideosConnection().total;
+            return getVideosConnection().mTotal;
         }
         return 0;
     }
@@ -89,8 +131,8 @@ public class Category implements Serializable, Followable {
     @Nullable
     @Override
     public Interaction getFollowInteraction() {
-        if (metadata != null && metadata.interactions != null && metadata.interactions.follow != null) {
-            return metadata.interactions.follow;
+        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mFollow != null) {
+            return mMetadata.mInteractions.mFollow;
         }
         return null;
     }
@@ -102,23 +144,21 @@ public class Category implements Serializable, Followable {
 
     @Override
     public boolean isFollowing() {
-        if (getFollowInteraction() != null) {
-            return metadata.interactions.follow.added;
-        }
-        return false;
+        Interaction interaction = getFollowInteraction();
+        return interaction != null && interaction.mAdded;
     }
 
     @Nullable
     public Connection getUserConnection() {
-        if (metadata != null && metadata.connections != null && metadata.connections.users != null) {
-            return metadata.connections.users;
+        if (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mUsers != null) {
+            return mMetadata.mConnections.mUsers;
         }
         return null;
     }
 
     public int getFollowerCount() {
         if (getUserConnection() != null) {
-            return getUserConnection().total;
+            return getUserConnection().mTotal;
         }
         return 0;
     }
@@ -129,6 +169,10 @@ public class Category implements Serializable, Followable {
     @Nullable
     public PictureCollection getIcon() {
         return mIcon;
+    }
+
+    public void setUri(@Nullable String uri) {
+        mUri = uri;
     }
 
     @Override
@@ -142,11 +186,11 @@ public class Category implements Serializable, Followable {
 
         Category that = (Category) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.mUri != null && that.mUri != null) && this.mUri.equals(that.mUri));
     }
 
     @Override
     public int hashCode() {
-        return this.uri != null ? this.uri.hashCode() : 0;
+        return this.mUri != null ? this.mUri.hashCode() : 0;
     }
 }

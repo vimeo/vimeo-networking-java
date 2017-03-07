@@ -27,6 +27,7 @@ import com.vimeo.stag.UseStag;
 /**
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
 @UseStag
 public class UserList extends BaseResponseList<User> {
 

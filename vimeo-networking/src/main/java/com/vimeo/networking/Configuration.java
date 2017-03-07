@@ -42,6 +42,7 @@ import okhttp3.Interceptor;
  * <p/>
  * Created by alfredhanssen on 4/12/15.
  */
+@SuppressWarnings("unused")
 public class Configuration {
 
     private static final String DEFAULT_VERSION_STRING = "3.2";
@@ -52,35 +53,35 @@ public class Configuration {
     private static final int DEFAULT_TIMEOUT = 60; // seconds
     private static final String DEFAULT_USER_AGENT = "sample_user_agent";
 
-    public String baseURLString;
-    public String clientID;
-    public String clientSecret;
-    public String scope;
+    protected String mBaseURLString;
+    protected String mClientID;
+    protected String mClientSecret;
+    protected String mScope;
 
-    public String accessToken;
-
-    @Nullable
-    private AccountStore accountStore;
-    public GsonDeserializer deserializer;
-
-    public final List<Interceptor> networkInterceptors = new ArrayList<>();
-    public final List<Interceptor> interceptors = new ArrayList<>();
-
-    public String apiVersionString;
-    public String codeGrantRedirectURI;
-    public String userAgentString;
+    protected String mAccessToken;
 
     @Nullable
-    public File cacheDirectory;
-    public int cacheSize;
+    private AccountStore mAccountStore;
+    protected GsonDeserializer mGsonDeserializer;
 
-    public int cacheMaxAge; // in seconds
-    public int timeout; // in seconds
+    protected final List<Interceptor> mNetworkInterceptors = new ArrayList<>();
+    protected final List<Interceptor> mInterceptors = new ArrayList<>();
 
-    public boolean certPinningEnabled;
+    protected String mApiVersionString;
+    protected String mCodeGrantRedirectURI;
+    protected String mUserAgentString;
+
     @Nullable
-    public LogProvider logProvider;
-    public LogLevel logLevel;
+    protected File mCacheDirectory;
+    protected int mCacheSize;
+
+    protected int mCacheMaxAge; // in seconds
+    protected int mTimeout; // in seconds
+
+    protected boolean mCertPinningEnabled;
+    @Nullable
+    protected LogProvider mLogProvider;
+    protected LogLevel mLogLevel;
 
     /**
      * -----------------------------------------------------------------------------------------------------
@@ -88,12 +89,91 @@ public class Configuration {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Accessors">
+    public String getClientID() {
+        return mClientID;
+    }
+
+    public String getClientSecret() {
+        return mClientSecret;
+    }
+
+    public String getScope() {
+        return mScope;
+    }
+
+    public String getAccessToken() {
+        return mAccessToken;
+    }
+
+    @Nullable
+    public AccountStore getAccountStore() {
+        return mAccountStore;
+    }
+
+    public GsonDeserializer getGsonDeserializer() {
+        return mGsonDeserializer;
+    }
+
+    public List<Interceptor> getNetworkInterceptors() {
+        return mNetworkInterceptors;
+    }
+
+    public List<Interceptor> getInterceptors() {
+        return mInterceptors;
+    }
+
+    public String getApiVersionString() {
+        return mApiVersionString;
+    }
+
+    public String getCodeGrantRedirectURI() {
+        return mCodeGrantRedirectURI;
+    }
+
+    public String getUserAgentString() {
+        return mUserAgentString;
+    }
+
+    @Nullable
+    public File getCacheDirectory() {
+        return mCacheDirectory;
+    }
+
+    public int getCacheSize() {
+        return mCacheSize;
+    }
+
+    public int getCacheMaxAge() {
+        return mCacheMaxAge;
+    }
+
+    public int getTimeout() {
+        return mTimeout;
+    }
+
+    public boolean isCertPinningEnabled() {
+        return mCertPinningEnabled;
+    }
+
+    @Nullable
+    public LogProvider getLogProvider() {
+        return mLogProvider;
+    }
+
+    public LogLevel getLogLevel() {
+        return mLogLevel;
+    }
+
+    public String getBaseURLString() {
+        return mBaseURLString;
+    }
+
     @Nullable
     public Cache getCache() {
-        if (cacheDirectory == null) {
+        if (mCacheDirectory == null) {
             return null;
         }
-        return new Cache(cacheDirectory, cacheSize);
+        return new Cache(mCacheDirectory, mCacheSize);
     }
 
     /**
@@ -108,24 +188,39 @@ public class Configuration {
     }
 
     public void saveAccount(VimeoAccount account, String email) {
-        if (accountStore != null) {
-            accountStore.saveAccount(account, email);
+        if (mAccountStore != null) {
+            mAccountStore.saveAccount(account, email);
         }
     }
 
     public void deleteAccount(VimeoAccount account) {
-        if (accountStore != null) {
-            accountStore.deleteAccount(account);
+        if (mAccountStore != null) {
+            mAccountStore.deleteAccount(account);
         }
     }
 
     @Nullable
     public VimeoAccount loadAccount() {
-        if (accountStore == null) {
+        if (mAccountStore == null) {
             return null;
         }
-        return accountStore.loadAccount();
+        return mAccountStore.loadAccount();
     }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Setters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Setters">
+
+    public void setBaseURLString(String baseURLString) {
+        mBaseURLString = baseURLString;
+    }
+
+    public void setCertPinningEnabled(boolean certPinningEnabled) {
+        mCertPinningEnabled = certPinningEnabled;
+    }
+
     // </editor-fold>
 
     /**
@@ -135,44 +230,44 @@ public class Configuration {
      */
     // <editor-fold desc="Builder">
     private Configuration(Builder builder) {
-        this.baseURLString = builder.baseURLString;
-        this.clientID = builder.clientID;
-        this.clientSecret = builder.clientSecret;
-        this.scope = builder.scope;
+        this.mBaseURLString = builder.mBaseURLString;
+        this.mClientID = builder.mClientID;
+        this.mClientSecret = builder.mClientSecret;
+        this.mScope = builder.mScope;
 
-        this.accessToken = builder.accessToken;
+        this.mAccessToken = builder.mAccessToken;
 
-        this.accountStore = builder.accountStore;
-        this.deserializer = builder.deserializer;
+        this.mAccountStore = builder.mAccountStore;
+        this.mGsonDeserializer = builder.mDeserializer;
 
         if (!this.isValid()) {
             throw new AssertionError("Built invalid VimeoClientConfiguration");
         }
 
-        this.codeGrantRedirectURI = builder.codeGrantRedirectUri;
+        this.mCodeGrantRedirectURI = builder.mCodeGrantRedirectUri;
 
-        this.apiVersionString = builder.apiVersionString;
-        this.cacheDirectory = builder.cacheDirectory;
-        this.cacheSize = builder.cacheSize;
-        this.cacheMaxAge = builder.cacheMaxAge;
-        this.userAgentString = builder.userAgentString;
+        this.mApiVersionString = builder.mApiVersionString;
+        this.mCacheDirectory = builder.mCacheDirectory;
+        this.mCacheSize = builder.mCacheSize;
+        this.mCacheMaxAge = builder.mCacheMaxAge;
+        this.mUserAgentString = builder.mUserAgentString;
 
-        this.timeout = builder.timeout;
+        this.mTimeout = builder.mTimeout;
 
-        this.certPinningEnabled = builder.certPinningEnabled;
-        this.logProvider = builder.logProvider;
-        this.logLevel = builder.logLevel;
-        this.networkInterceptors.addAll(builder.networkInterceptors);
-        this.interceptors.addAll(builder.interceptors);
+        this.mCertPinningEnabled = builder.mCertPinningEnabled;
+        this.mLogProvider = builder.mLogProvider;
+        this.mLogLevel = builder.mLogLevel;
+        this.mNetworkInterceptors.addAll(builder.mNetworkInterceptors);
+        this.mInterceptors.addAll(builder.mInterceptors);
     }
 
     private boolean isValid() {
-        return this.baseURLString != null && (!this.baseURLString.trim().isEmpty() &&
-                                              this.clientID != null && !this.clientID.trim().isEmpty() &&
-                                              this.clientSecret != null &&
-                                              !this.clientSecret.trim().isEmpty() &&
-                                              this.scope != null && !this.scope.trim().isEmpty()) ||
-               (this.accessToken != null && !this.accessToken.trim().isEmpty());
+        return this.mBaseURLString != null && (!this.mBaseURLString.trim().isEmpty() &&
+                                               this.mClientID != null && !this.mClientID.trim().isEmpty() &&
+                                               this.mClientSecret != null &&
+                                               !this.mClientSecret.trim().isEmpty() &&
+                                               this.mScope != null && !this.mScope.trim().isEmpty()) ||
+               (this.mAccessToken != null && !this.mAccessToken.trim().isEmpty());
     }
 
     /**
@@ -180,33 +275,33 @@ public class Configuration {
      */
     public static class Builder {
 
-        private String baseURLString = Vimeo.VIMEO_BASE_URL_STRING;
-        private String clientID;
-        private String clientSecret;
-        private String scope;
+        private String mBaseURLString = Vimeo.VIMEO_BASE_URL_STRING;
+        private String mClientID;
+        private String mClientSecret;
+        private String mScope;
 
-        private String accessToken;
+        private String mAccessToken;
 
-        private AccountStore accountStore;
-        private GsonDeserializer deserializer = new GsonDeserializer();
+        private AccountStore mAccountStore;
+        private GsonDeserializer mDeserializer = new GsonDeserializer();
 
-        private String apiVersionString = DEFAULT_VERSION_STRING;
-        private File cacheDirectory;
-        private int cacheSize = DEFAULT_CACHE_SIZE;
-        private int cacheMaxAge = DEFAULT_CACHE_MAX_AGE;
-        private String userAgentString = DEFAULT_USER_AGENT;
-        public int timeout = DEFAULT_TIMEOUT;
+        private String mApiVersionString = DEFAULT_VERSION_STRING;
+        private File mCacheDirectory;
+        private int mCacheSize = DEFAULT_CACHE_SIZE;
+        private int mCacheMaxAge = DEFAULT_CACHE_MAX_AGE;
+        private String mUserAgentString = DEFAULT_USER_AGENT;
+        public int mTimeout = DEFAULT_TIMEOUT;
 
-        private final List<Interceptor> networkInterceptors = new ArrayList<>();
-        private final List<Interceptor> interceptors = new ArrayList<>();
+        private final List<Interceptor> mNetworkInterceptors = new ArrayList<>();
+        private final List<Interceptor> mInterceptors = new ArrayList<>();
 
-        public String codeGrantRedirectUri = "vimeo" + clientID + "://auth";
+        public String mCodeGrantRedirectUri = "vimeo" + mClientID + "://auth";
 
-        private boolean certPinningEnabled = true;
+        private boolean mCertPinningEnabled = true;
         // Default to the stock logger which just prints - this makes it optional
         @Nullable
-        public LogProvider logProvider;
-        public LogLevel logLevel = LogLevel.DEBUG;
+        public LogProvider mLogProvider;
+        public LogLevel mLogLevel = LogLevel.DEBUG;
 
         /**
          * The most basic builder constructor. If you've only provided an access token, you'll only be able to
@@ -219,7 +314,7 @@ public class Configuration {
          * @param accessToken Token provided by the Vimeo developer console
          */
         public Builder(String accessToken) {
-            this.accessToken = accessToken;
+            this.mAccessToken = accessToken;
         }
 
         public Builder(String clientID, String clientSecret, String scope) {
@@ -253,115 +348,115 @@ public class Configuration {
         @Deprecated
         public Builder(@Nullable String baseURLString, String clientId, String clientSecret, String scope,
                        @Nullable AccountStore accountStore, @Nullable GsonDeserializer deserializer) {
-            this.baseURLString = baseURLString == null ? this.baseURLString : baseURLString;
-            this.clientID = clientId;
-            this.clientSecret = clientSecret;
-            this.scope = scope;
-            this.accountStore = accountStore;
-            this.deserializer = deserializer;
+            this.mBaseURLString = baseURLString == null ? this.mBaseURLString : baseURLString;
+            this.mClientID = clientId;
+            this.mClientSecret = clientSecret;
+            this.mScope = scope;
+            this.mAccountStore = accountStore;
+            this.mDeserializer = deserializer;
         }
 
         public Builder setBaseUrl(String baseUrl) {
-            this.baseURLString = baseUrl;
+            this.mBaseURLString = baseUrl;
             return this;
         }
 
         /** If you used the basic Builder access token constructor but have the intent of */
         public Builder setClientIdAndSecret(String clientId, String clientSecret) {
-            this.clientID = clientId;
-            this.clientSecret = clientSecret;
+            this.mClientID = clientId;
+            this.mClientSecret = clientSecret;
             return this;
         }
 
         public Builder setAccountStore(AccountStore accountStore) {
-            this.accountStore = accountStore;
+            this.mAccountStore = accountStore;
             return this;
         }
 
         public Builder setGsonDeserializer(GsonDeserializer deserializer) {
-            this.deserializer = deserializer;
+            this.mDeserializer = deserializer;
             return this;
         }
 
         public Builder setAccessToken(String accessToken) {
-            this.accessToken = accessToken;
+            this.mAccessToken = accessToken;
             return this;
         }
 
         public Builder setCodeGrantRedirectUri(String redirectUri) {
-            this.codeGrantRedirectUri = redirectUri;
+            this.mCodeGrantRedirectUri = redirectUri;
             return this;
         }
 
         public Builder setApiVersionString(String apiVersionString) {
-            this.apiVersionString = apiVersionString;
+            this.mApiVersionString = apiVersionString;
             return this;
         }
 
         public Builder setCacheDirectory(File cacheDirectory) {
-            this.cacheDirectory = cacheDirectory;
+            this.mCacheDirectory = cacheDirectory;
             return this;
         }
 
         public Builder setCacheSize(int cacheSize) {
-            this.cacheSize = cacheSize;
+            this.mCacheSize = cacheSize;
             return this;
         }
 
         public Builder setCacheMaxAge(int cacheMaxAge) {
-            this.cacheMaxAge = cacheMaxAge;
+            this.mCacheMaxAge = cacheMaxAge;
             return this;
         }
 
         public Builder setUserAgentString(String userAgentString) {
-            this.userAgentString = userAgentString;
+            this.mUserAgentString = userAgentString;
             return this;
         }
 
         public Builder setTimeout(int timeout) {
-            this.timeout = timeout;
+            this.mTimeout = timeout;
             return this;
         }
 
         public Builder enableCertPinning(boolean enabled) {
-            this.certPinningEnabled = enabled;
+            this.mCertPinningEnabled = enabled;
             return this;
         }
 
         public Builder setDebugLogger(LogProvider logger) {
-            this.logProvider = logger;
+            this.mLogProvider = logger;
             return this;
         }
 
         public Builder setLogLevel(LogLevel level) {
-            this.logLevel = level;
+            this.mLogLevel = level;
             return this;
         }
 
         public Builder addNetworkInterceptor(Interceptor interceptor) {
             if (interceptor != null) {
-                this.networkInterceptors.add(interceptor);
+                this.mNetworkInterceptors.add(interceptor);
             }
             return this;
         }
 
         public Builder addNetworkInterceptors(List<Interceptor> interceptors) {
             if (interceptors != null) {
-                this.networkInterceptors.addAll(interceptors);
+                this.mNetworkInterceptors.addAll(interceptors);
             }
             return this;
         }
 
         public Builder addInterceptor(Interceptor interceptor) {
             if (interceptor != null) {
-                this.interceptors.add(interceptor);
+                this.mInterceptors.add(interceptor);
             }
             return this;
         }
 
         public Builder addInterceptors(List<Interceptor> interceptors) {
             if (interceptors != null) {
-                this.interceptors.addAll(interceptors);
+                this.mInterceptors.addAll(interceptors);
             }
             return this;
         }

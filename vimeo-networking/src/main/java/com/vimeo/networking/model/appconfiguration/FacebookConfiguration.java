@@ -22,6 +22,8 @@
 
 package com.vimeo.networking.model.appconfiguration;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Arrays;
 
 /**
@@ -29,7 +31,16 @@ import java.util.Arrays;
  */
 public class FacebookConfiguration {
 
-    public String[] requiredScopes;
+    @SerializedName("required_scopes")
+    protected String[] mRequiredScopes;
+
+    public void setRequiredScopes(String[] requiredScopes) {
+        mRequiredScopes = requiredScopes;
+    }
+
+    public String[] getRequiredScopes() {
+        return mRequiredScopes;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -43,11 +54,11 @@ public class FacebookConfiguration {
         FacebookConfiguration that = (FacebookConfiguration) o;
 
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.deepEquals(requiredScopes, that.requiredScopes);
+        return Arrays.deepEquals(mRequiredScopes, that.mRequiredScopes);
     }
 
     @Override
     public int hashCode() {
-        return requiredScopes != null ? Arrays.hashCode(requiredScopes) : 0;
+        return mRequiredScopes != null ? Arrays.hashCode(mRequiredScopes) : 0;
     }
 }

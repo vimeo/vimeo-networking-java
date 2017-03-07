@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * Created by restainoa on 1/3/17.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class Spatial implements Serializable {
 
     private static final long serialVersionUID = 5660325676029549468L;
@@ -34,11 +36,11 @@ public class Spatial implements Serializable {
     }
 
     @NotNull
-    @GsonAdapterKey("projection")
+    @SerializedName("projection")
     protected String mProjection;
 
     @NotNull
-    @GsonAdapterKey("stereo_format")
+    @SerializedName("stereo_format")
     protected String mStereoFormat;
 
     @NotNull
@@ -90,8 +92,8 @@ public class Spatial implements Serializable {
     @Override
     public String toString() {
         return super.toString() + "{" +
-               "mProjection='" + mProjection + '\'' +
-               ", mStereoFormat='" + mStereoFormat + '\'' +
+               "projection='" + mProjection + '\'' +
+               ", stereoFormat='" + mStereoFormat + '\'' +
                '}';
     }
 

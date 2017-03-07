@@ -68,25 +68,25 @@ final class PrivacyDeserializer {
                 return;
             }
 
-            if (object.view != null) {
+            if (object.mView != null) {
                 writer.name("view");
-                mPrivacyValueTypeAdapter.write(writer, object.view);
+                mPrivacyValueTypeAdapter.write(writer, object.mView);
             }
 
-            if (object.embed != null) {
+            if (object.mEmbed != null) {
                 writer.name("embed");
-                com.google.gson.internal.bind.TypeAdapters.STRING.write(writer, object.embed);
+                com.google.gson.internal.bind.TypeAdapters.STRING.write(writer, object.mEmbed);
             }
 
             writer.name("download");
-            writer.value(object.download);
+            writer.value(object.mDownload);
 
             writer.name("add");
-            writer.value(object.add);
+            writer.value(object.mAdd);
 
-            if (object.comments != null) {
+            if (object.mComments != null) {
                 writer.name("comments");
-                mPrivacyValueTypeAdapter.write(writer, object.comments);
+                mPrivacyValueTypeAdapter.write(writer, object.mComments);
             }
 
             writer.endObject();
@@ -114,27 +114,27 @@ final class PrivacyDeserializer {
                 }
                 switch (name) {
                     case "view":
-                        object.view = mPrivacyValueTypeAdapter.read(reader);
+                        object.mView = mPrivacyValueTypeAdapter.read(reader);
                         break;
                     case "embed":
-                        object.embed = com.google.gson.internal.bind.TypeAdapters.STRING.read(reader);
+                        object.mEmbed = com.google.gson.internal.bind.TypeAdapters.STRING.read(reader);
                         break;
                     case "download":
                         if (jsonToken == JsonToken.NUMBER) {
-                            object.download = reader.nextInt() == 1;
+                            object.mDownload = reader.nextInt() == 1;
                         } else {
-                            object.download = reader.nextBoolean();
+                            object.mDownload = reader.nextBoolean();
                         }
                         break;
                     case "add":
                         if (jsonToken == JsonToken.NUMBER) {
-                            object.add = reader.nextInt() == 1;
+                            object.mAdd = reader.nextInt() == 1;
                         } else {
-                            object.add = reader.nextBoolean();
+                            object.mAdd = reader.nextBoolean();
                         }
                         break;
                     case "comments":
-                        object.comments = mPrivacyValueTypeAdapter.read(reader);
+                        object.mComments = mPrivacyValueTypeAdapter.read(reader);
                         break;
                     default:
                         reader.skipValue();

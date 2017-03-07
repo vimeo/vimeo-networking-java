@@ -25,12 +25,17 @@
 package com.vimeo.networking.model.search;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Enum representing types of searches.
  * <p/>
  * Created by zetterstromk on 6/27/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public enum SearchType {
 
     @SerializedName("clip")
@@ -44,9 +49,10 @@ public enum SearchType {
     @SerializedName("group")
     GROUP("group");
 
+    @NotNull
     private final String string;
 
-    SearchType(String string) {
+    SearchType(@NotNull String string) {
         this.string = string;
     }
 

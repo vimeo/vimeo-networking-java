@@ -24,7 +24,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
@@ -33,10 +34,17 @@ import java.io.Serializable;
  * <p/>
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 @Deprecated
 public class Embed implements Serializable {
 
     private static final long serialVersionUID = 7145437300195734964L;
-    @GsonAdapterKey("html")
-    public String html;
+
+    @SerializedName("html")
+    protected String mHtml;
+
+    public String getHtml() {
+        return mHtml;
+    }
 }

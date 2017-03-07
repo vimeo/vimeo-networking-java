@@ -1,10 +1,11 @@
 package com.vimeo.networking.model.vod;
 
+import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.Connection;
 import com.vimeo.networking.model.ConnectionCollection;
 import com.vimeo.networking.model.Metadata;
 import com.vimeo.networking.model.User;
-import com.vimeo.stag.GsonAdapterKey;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +19,8 @@ import java.io.Serializable;
  * <p>
  * Created by zetterstromk on 10/4/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class Season implements Serializable {
 
     private static final String SEASON_TYPE_MAIN = "main";
@@ -31,40 +34,45 @@ public class Season implements Serializable {
     private static final long serialVersionUID = 2770200708069413413L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    public String mUri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
-    @GsonAdapterKey("name")
-    public String mName;
+    @SerializedName("name")
+    protected String mName;
 
     @Nullable
-    @GsonAdapterKey("type")
-    public String mType;
+    @SerializedName("type")
+    protected String mType;
 
     @Nullable
-    @GsonAdapterKey("description")
-    public String mDescription;
+    @SerializedName("description")
+    protected String mDescription;
 
     @Nullable
-    @GsonAdapterKey("user")
-    public User mUser;
+    @SerializedName("user")
+    protected User mUser;
 
-    @GsonAdapterKey("position")
-    public int mPosition;
-
-    @Nullable
-    @GsonAdapterKey("metadata")
-    public Metadata mMetadata;
+    @SerializedName("position")
+    protected int mPosition;
 
     @Nullable
-    @GsonAdapterKey("resource_key")
-    public String mResourceKey;
+    @SerializedName("metadata")
+    protected Metadata mMetadata;
+
+    @Nullable
+    @SerializedName("resource_key")
+    protected String mResourceKey;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Getters">
+
+    @Nullable
+    public String getType() {
+        return mType;
+    }
 
     @Nullable
     public String getUri() {
@@ -146,13 +154,13 @@ public class Season implements Serializable {
 
     @Nullable
     public ConnectionCollection getConnections() {
-        return mMetadata != null ? mMetadata.connections : null;
+        return mMetadata != null ? mMetadata.getConnections() : null;
     }
 
     @Nullable
     public Connection getVideosConnection() {
         ConnectionCollection connections = getConnections();
-        return connections != null ? connections.videos : null;
+        return connections != null ? connections.getVideos() : null;
     }
 
     @Nullable

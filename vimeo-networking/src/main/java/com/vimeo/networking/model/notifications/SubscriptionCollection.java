@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model.notifications;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,21 +37,23 @@ import java.util.Date;
  * <p>
  * Created by zetterstromk on 12/15/16.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class SubscriptionCollection implements Serializable {
 
     private static final long serialVersionUID = -6392190720319669273L;
 
     @Nullable
-    @GsonAdapterKey("uri")
-    String mUri;
+    @SerializedName("uri")
+    protected String mUri;
 
     @Nullable
-    @GsonAdapterKey("modified_time")
-    Date mModifiedTime;
+    @SerializedName("modified_time")
+    protected Date mModifiedTime;
 
     @Nullable
-    @GsonAdapterKey("subscriptions")
-    Subscriptions mSubscriptions;
+    @SerializedName("subscriptions")
+    protected Subscriptions mSubscriptions;
 
     @Nullable
     public String getUri() {

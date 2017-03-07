@@ -22,7 +22,8 @@
 
 package com.vimeo.networking.model;
 
-import com.vimeo.stag.GsonAdapterKey;
+import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -31,10 +32,13 @@ import java.io.Serializable;
 /**
  * Created by hanssena on 4/23/15.
  */
+@SuppressWarnings("unused")
+@UseStag
 public class StatsCollection implements Serializable {
 
     private static final long serialVersionUID = -348202198117360187L;
+
     @Nullable
-    @GsonAdapterKey("plays")
-    public Integer plays; // If this is null, that means the uploader has disabled play count [KZ] 9/9/15
+    @SerializedName("plays")
+    public Integer mPlays; // If this is null, that means the uploader has disabled play count [KZ] 9/9/15
 }
