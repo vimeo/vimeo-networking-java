@@ -27,6 +27,8 @@ package com.vimeo.networking.model.cinema;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.Category;
 import com.vimeo.networking.model.Channel;
+import com.vimeo.networking.model.Connection;
+import com.vimeo.networking.model.ConnectionCollection;
 import com.vimeo.networking.model.Metadata;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
@@ -170,10 +172,11 @@ public class ProgramContentItem implements Serializable {
      */
     @Nullable
     public String getNextPageUri() {
-        if (mMetadata != null && mMetadata.connections != null && mMetadata.connections.contents != null) {
-            return mMetadata.connections.contents.getUri();
-        }
-        return null;
+
+        ConnectionCollection connections = mMetadata != null ? mMetadata.getConnections() : null;
+        Connection contents = connections != null ? connections.getContents() : null;
+
+        return contents != null ? contents.getUri() : null;
     }
 
 }
