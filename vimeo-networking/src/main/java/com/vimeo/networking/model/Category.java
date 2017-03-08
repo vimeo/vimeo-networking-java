@@ -142,7 +142,7 @@ public class Category implements Serializable, Followable {
 
         Category that = (Category) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
     }
 
     @Override

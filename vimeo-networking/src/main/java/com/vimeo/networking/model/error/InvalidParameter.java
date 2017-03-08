@@ -36,13 +36,13 @@ import com.google.gson.annotations.SerializedName;
 public class InvalidParameter {
 
     @SerializedName("field")
-    private String field;
+    private final String field;
     @SerializedName("error_code")
-    private ErrorCode errorCode;
+    private final ErrorCode errorCode;
     @SerializedName("user_message")
     private String userMessage;
     @SerializedName("developer_message")
-    private String developerMessage;
+    private final String developerMessage;
 
     public InvalidParameter(String field, ErrorCode errorCode, String developerMessage) {
         this.field = field;

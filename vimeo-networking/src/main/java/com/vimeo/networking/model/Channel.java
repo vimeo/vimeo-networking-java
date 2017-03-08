@@ -122,7 +122,7 @@ public class Channel implements Serializable, Followable {
 
         Channel that = (Channel) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
     }
 
     @Override

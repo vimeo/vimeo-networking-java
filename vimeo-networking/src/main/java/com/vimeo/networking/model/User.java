@@ -353,7 +353,7 @@ public class User implements Serializable, Followable {
 
         User that = (User) o;
 
-        return ((this.uri != null && that.uri != null) ? this.uri.equals(that.uri) : false);
+        return ((this.uri != null && that.uri != null) && this.uri.equals(that.uri));
     }
 
     @Override

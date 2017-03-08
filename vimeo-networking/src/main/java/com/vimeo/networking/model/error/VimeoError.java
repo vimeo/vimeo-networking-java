@@ -205,15 +205,12 @@ public class VimeoError extends RuntimeException {
     }
 
     public boolean isPasswordRequiredError() {
-        if (((getInvalidParameter() != null) &&
-             (getInvalidParameter().getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD)) ||
-            ((getInvalidParameter() != null) &&
-             (getInvalidParameter().getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH)) ||
-            (getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD) ||
-            (getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH)) {
-            return true;
-        }
-        return false;
+        return ((getInvalidParameter() != null) &&
+                (getInvalidParameter().getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD)) ||
+               ((getInvalidParameter() != null) &&
+                (getInvalidParameter().getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH)) ||
+               (getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_NO_PASSWORD) ||
+               (getErrorCode() == ErrorCode.INVALID_INPUT_VIDEO_PASSWORD_MISMATCH);
     }
 
     public void addInvalidParameter(String field, ErrorCode code, String developerMessage) {

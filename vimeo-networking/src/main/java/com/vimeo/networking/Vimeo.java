@@ -172,7 +172,7 @@ public final class Vimeo {
         ZA(SORT_DIRECTION_DESCENDING);
 
 
-        private String text;
+        private final String text;
 
         RefineSort(String text) {
             this.text = text;
@@ -201,7 +201,7 @@ public final class Vimeo {
         THIS_MONTH(FILTER_UPLOAD_DATE_MONTH),
         THIS_YEAR(FILTER_UPLOAD_DATE_YEAR);
 
-        private String text;
+        private final String text;
 
         RefineUploadDate(String text) {
             this.text = text;

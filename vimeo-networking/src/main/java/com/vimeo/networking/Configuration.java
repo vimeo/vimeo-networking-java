@@ -60,7 +60,7 @@ public class Configuration {
     public String accessToken;
 
     @Nullable
-    private AccountStore accountStore;
+    private final AccountStore accountStore;
     public GsonDeserializer deserializer;
 
     public final List<Interceptor> networkInterceptors = new ArrayList<>();

@@ -62,8 +62,8 @@ public class RetrofitClientBuilder {
     private int readTimeout = NO_TIMEOUT;
     private TimeUnit readTimeoutTimeUnit;
     private Cache cache;
-    private List<Interceptor> interceptorList = new ArrayList<>();
-    private List<Interceptor> networkInterceptorList = new ArrayList<>();
+    private final List<Interceptor> interceptorList = new ArrayList<>();
+    private final List<Interceptor> networkInterceptorList = new ArrayList<>();
     private SSLSocketFactory sSLSocketFactory;
 
     public RetrofitClientBuilder setConnectionTimeout(int connectionTimeout, TimeUnit timeUnit) {
