@@ -173,14 +173,14 @@ public final class VimeoClient {
                 .addNetworkInterceptors(mConfiguration.networkInterceptors)
                 .addInterceptors(mConfiguration.interceptors);
 
-        if (mConfiguration.certPinningEnabled) {
-            // Try and pin certificates to prevent man-in-the-middle attacks (if pinning is enabled)
-            try {
-                retrofitClientBuilder.pinCertificates();
-            } catch (Exception e) {
-                ClientLogger.e("Exception when pinning certificate: " + e.getMessage(), e);
-            }
-        }
+//        if (mConfiguration.certPinningEnabled) {
+//            // Try and pin certificates to prevent man-in-the-middle attacks (if pinning is enabled)
+//            try {
+//                retrofitClientBuilder.pinCertificates();
+//            } catch (Exception e) {
+//                ClientLogger.e("Exception when pinning certificate: " + e.getMessage(), e);
+//            }
+//        }
 
         return retrofitClientBuilder.build();
     }
