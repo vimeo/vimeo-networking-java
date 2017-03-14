@@ -7,7 +7,7 @@ android:
   - platform-tools
   - platform-tools-preview
   - tools
-  - build-tools-23.0.3
+  - build-tools-25.0
   - extra-android-m2repository
   - extra-google-google_play_services
   - extra-google-m2repository
