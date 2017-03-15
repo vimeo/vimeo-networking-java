@@ -42,11 +42,6 @@ import java.util.Date;
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class SvodInteraction extends Interaction {
 
-    enum SubscriptionStatus {
-        NOT_PURCHASED,
-        MONTHLY
-    }
-
     private static final long serialVersionUID = -3156332163901015302L;
 
     @Nullable
