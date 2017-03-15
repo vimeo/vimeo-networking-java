@@ -27,7 +27,6 @@ import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.networking.model.notifications.NotificationConnection;
-import com.vimeo.networking.model.vod.SvodInteraction;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;

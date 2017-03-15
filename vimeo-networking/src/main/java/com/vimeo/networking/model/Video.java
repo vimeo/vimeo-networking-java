@@ -27,7 +27,6 @@ import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
-import com.vimeo.networking.model.vod.SvodInteraction;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;

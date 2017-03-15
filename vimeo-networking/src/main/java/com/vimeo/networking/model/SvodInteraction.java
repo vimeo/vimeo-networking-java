@@ -22,10 +22,9 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.vod;
+package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.Interaction;
 import com.vimeo.stag.UseStag;
 import com.vimeo.stag.UseStag.FieldOption;
 

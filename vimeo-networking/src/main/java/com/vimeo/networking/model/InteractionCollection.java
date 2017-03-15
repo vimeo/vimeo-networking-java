@@ -23,7 +23,6 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.vod.SvodInteraction;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
