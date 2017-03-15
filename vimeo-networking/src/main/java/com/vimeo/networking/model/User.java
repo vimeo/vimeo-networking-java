@@ -27,6 +27,7 @@ import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.networking.model.notifications.NotificationConnection;
+import com.vimeo.networking.model.vod.SvodInteraction;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
@@ -160,7 +161,7 @@ public class User implements Serializable, Followable {
     @Nullable
     private ConnectionCollection getMetadataConnections() {
         if (mMetadata != null) {
-            return mMetadata.mConnections;
+            return mMetadata.getConnections();
         }
         return null;
     }
@@ -168,94 +169,114 @@ public class User implements Serializable, Followable {
     @Nullable
     private InteractionCollection getMetadataInteractions() {
         if (mMetadata != null) {
-            return mMetadata.mInteractions;
+            return mMetadata.getInteractions();
         }
         return null;
+    }
+
+    /**
+     * @return the {@link SvodInteraction}. Will be null if the requesting application does not have the
+     * permission to view the interaction, and will be null for users other than the current user.
+     */
+    @Nullable
+    public SvodInteraction getSvodInteraction() {
+        InteractionCollection interactions = getMetadataInteractions();
+        return interactions != null ? interactions.getSvod() : null;
+    }
+
+    /**
+     * @return true if the user is an SVOD subscriber. False will be returned if the user is not an
+     * SVOD subscriber. False will always be returned for users other than the currently authenticated
+     * user.
+     */
+    public boolean isSvodSubscriber() {
+        SvodInteraction svod = getSvodInteraction();
+        return svod != null && svod.getPurchaseDate() != null;
     }
 
     @Nullable
     @Override
     public Interaction getFollowInteraction() {
         InteractionCollection interactions = getMetadataInteractions();
-        return interactions != null ? interactions.mFollow : null;
+        return interactions != null ? interactions.getFollow() : null;
     }
 
     @Nullable
     public Connection getFollowingConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.mFollowing : null;
+        return connections != null ? connections.getFollowing() : null;
     }
 
     @Nullable
     public Connection getFollowersConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.mFollowers : null;
+        return connections != null ? connections.getFollowers() : null;
     }
 
     public int getFollowerCount() {
         Connection followers = getFollowersConnection();
-        return followers != null ? followers.mTotal : 0;
+        return followers != null ? followers.getTotal() : 0;
     }
 
     public int getFollowingCount() {
         Connection following = getFollowingConnection();
-        return following != null ? following.mTotal : 0;
+        return following != null ? following.getTotal() : 0;
     }
 
     @Nullable
     public Connection getLikesConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.mLikes : null;
+        return connections != null ? connections.getLikes() : null;
     }
 
     public int getLikesCount() {
         Connection likes = getLikesConnection();
-        return likes != null ? likes.mTotal : 0;
+        return likes != null ? likes.getTotal() : 0;
     }
 
     @Nullable
     public Connection getFollowedChannelsConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.mChannels : null;
+        return connections != null ? connections.getChannels() : null;
     }
 
     public int getChannelsCount() {
         Connection channels = getFollowedChannelsConnection();
-        return channels != null ? channels.mTotal : 0;
+        return channels != null ? channels.getTotal() : 0;
     }
 
     @Nullable
     public Connection getModeratedChannelsConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.mModeratedChannels : null;
+        return connections != null ? connections.getModeratedChannels() : null;
     }
 
     public int getModeratedChannelsConnectionCount() {
         Connection moderatedChannels = getModeratedChannelsConnection();
-        return moderatedChannels != null ? moderatedChannels.mTotal : 0;
+        return moderatedChannels != null ? moderatedChannels.getTotal() : 0;
     }
 
     @Nullable
     public Connection getAppearancesConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.mAppearances : null;
+        return connections != null ? connections.getAppearances() : null;
     }
 
     public int getAppearancesCount() {
         Connection appearances = getAppearancesConnection();
-        return appearances != null ? appearances.mTotal : 0;
+        return appearances != null ? appearances.getTotal() : 0;
     }
 
     @Nullable
     public Connection getWatchLaterConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.mWatchlater : null;
+        return connections != null ? connections.getWatchlater() : null;
     }
 
     @Nullable
     public Connection getWatchedVideosConnection() {
         ConnectionCollection connections = getMetadataConnections();
-        return connections != null ? connections.mWatchedVideos : null;
+        return connections != null ? connections.getWatchedVideos() : null;
     }
 
     @Nullable
