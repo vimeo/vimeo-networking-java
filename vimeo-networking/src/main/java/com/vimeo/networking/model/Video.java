@@ -638,6 +638,15 @@ public class Video implements Serializable {
     // <editor-fold desc="VOD">
 
     /**
+     * @return the {@link SvodInteraction}. Will be null if this video is not part of SVOD
+     */
+    @Nullable
+    public SvodInteraction getSvodInteraction() {
+        InteractionCollection interactions = mMetadata != null ? mMetadata.getInteractions() : null;
+        return interactions != null ? interactions.getSvod() : null;
+    }
+
+    /**
      * A VOD video can have multiple purchase types active at once, this is a convenience method that
      * picks one of them based on the following priority:
      * 1) trailer
@@ -734,6 +743,26 @@ public class Video implements Serializable {
     }
 
     /**
+     * @return The expiration date for the SVOD subscription, or null if the Video is not an SVOD video
+     * or if the user is not subscribed to SVOD
+     */
+    @Nullable
+    public Date getSvodExpiration() {
+        SvodInteraction svodInteraction = getSvodInteraction();
+        return svodInteraction != null ? svodInteraction.getExpiration() : null;
+    }
+
+    /**
+     * @return The purchase date for the SVOD subscription, or null if the Video is not an SVOD video
+     * or if the user is not subscribed to SVOD
+     */
+    @Nullable
+    public Date getSvodPurchaseDate() {
+        SvodInteraction svodInteraction = getSvodInteraction();
+        return svodInteraction != null ? svodInteraction.getPurchaseDate() : null;
+    }
+
+    /**
      * Videos that are VODs are part of Seasons. Included on a Season
      * Connection is the name of that season.
      *
@@ -754,6 +783,26 @@ public class Video implements Serializable {
 
     public boolean isSubscription() {
         return (isPossiblePurchase() && isPurchased(mMetadata.mInteractions.mSubscribe));
+    }
+
+    /**
+     * Helper to determine if this video is part of the SVOD library and included in the subscription. If wanting
+     * to know if a user also has access to the video, use {@link #canAccessVideoInSvod()}
+     *
+     * @return true if this video can be accessed with an SVOD subscription
+     */
+    public boolean isSvod() {
+        return getSvodInteraction() != null;
+    }
+
+    /**
+     * Helper to determine if the video is part of the SVOD library and that the user currently has access to it.
+     * This will be true if the user has purchased an SVOD subscription that is active.
+     *
+     * @return true if this video can be accessed with an SVOD subscription and the user's subscription is active
+     */
+    public boolean canAccessVideoInSvod() {
+        return getSvodPurchaseDate() != null;
     }
 
     public boolean isPurchase() {
