@@ -642,7 +642,7 @@ public class Video implements Serializable {
      */
     @Nullable
     public SvodInteraction getSvodInteraction() {
-        InteractionCollection interactions = mMetadata.getInteractions();
+        InteractionCollection interactions = mMetadata != null ? mMetadata.getInteractions() : null;
         return interactions != null ? interactions.getSvod() : null;
     }
 
@@ -748,12 +748,8 @@ public class Video implements Serializable {
      */
     @Nullable
     public Date getSvodExpiration() {
-        if (isSvod()) {
-            // isSubscription will validate and prevent possible npes
-            assert mMetadata.getInteractions().getSvod() != null;
-            return mMetadata.getInteractions().getSvod().getExpiration();
-        }
-        return null;
+        SvodInteraction svodInteraction = getSvodInteraction();
+        return svodInteraction != null ? svodInteraction.getExpiration() : null;
     }
 
     /**
@@ -762,12 +758,8 @@ public class Video implements Serializable {
      */
     @Nullable
     public Date getSvodPurchaseDate() {
-        if (isSvod()) {
-            // isSubscription will validate and prevent possible npes
-            assert mMetadata.getInteractions().getSvod() != null;
-            return mMetadata.getInteractions().getSvod().getPurchaseDate();
-        }
-        return null;
+        SvodInteraction svodInteraction = getSvodInteraction();
+        return svodInteraction != null ? svodInteraction.getPurchaseDate() : null;
     }
 
     /**
@@ -800,7 +792,7 @@ public class Video implements Serializable {
      * @return true if this video can be accessed with an SVOD subscription
      */
     public boolean isSvod() {
-        return mMetadata.getInteractions().getSvod() != null;
+        return getSvodInteraction() != null;
     }
 
     /**
