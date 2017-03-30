@@ -688,7 +688,7 @@ public class Video implements Serializable {
         return VodVideoType.NONE;
     }
 
-    private static boolean isPurchased(Interaction interaction) {
+    private static boolean isInteractionPurchased(Interaction interaction) {
         return (interaction != null && interaction.mStream == Stream.PURCHASED);
     }
 
@@ -718,7 +718,7 @@ public class Video implements Serializable {
         return null;
     }
 
-    private boolean isPossiblePurchase() {
+    private boolean isPossibleVodPurchase() {
         return (isVod() && !isTrailer() && mMetadata != null && mMetadata.mInteractions != null);
     }
 
@@ -778,16 +778,16 @@ public class Video implements Serializable {
     }
 
     public boolean isRental() {
-        return (isPossiblePurchase() && isPurchased(mMetadata.mInteractions.mRent));
+        return (isPossibleVodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mRent));
     }
 
     public boolean isSubscription() {
-        return (isPossiblePurchase() && isPurchased(mMetadata.mInteractions.mSubscribe));
+        return (isPossibleVodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mSubscribe));
     }
 
     /**
      * Helper to determine if this video is part of the SVOD library and included in the subscription. If wanting
-     * to know if a user also has access to the video, use {@link #canAccessVideoInSvod()}
+     * to know if a user also has access to the video, use {@link #isPlayable()} or {@link #isUnpurchasedSvod()}
      *
      * @return true if this video can be accessed with an SVOD subscription
      */
@@ -796,21 +796,44 @@ public class Video implements Serializable {
     }
 
     /**
-     * Helper to determine if the video is part of the SVOD library and that the user currently has access to it.
-     * This will be true if the user has purchased an SVOD subscription that is active.
+     * Helper to determine if this video is theoretically playable. Note that there may be device limitations
+     * that cause a video to fail to play back in practice.
      *
-     * @return true if this video can be accessed with an SVOD subscription and the user's subscription is active
+     * @return true if this video can be played, false otherwise
      */
-    public boolean canAccessVideoInSvod() {
-        return getSvodPurchaseDate() != null;
+    public boolean isPlayable() {
+        return getPlayStatus() == Play.Status.PLAYABLE;
     }
 
+    /**
+     * Helper to determine if this is a trailer that is associated with an SVOD title
+     *
+     * @return true if this is a trailer that is associated with an SVOD title, false otherwise
+     */
+    public boolean isSvodRelatedTrailer() {
+        return isTrailer() && isSvod();
+    }
+
+
+    /**
+     * Helper to determine if this is an SVOD video (not a trailer) that has not been purchased.
+     * @return true if it is an unpurchased video, false otherwise
+     */
+    public boolean isUnpurchasedSvod() {
+        return !isTrailer() &&
+               isSvod() &&
+               !isPlayable() &&
+               getSvodInteraction() != null &&
+               getSvodInteraction().getPurchaseDate() == null;
+    }
+
+
     public boolean isPurchase() {
-        return (isPossiblePurchase() && isPurchased(mMetadata.mInteractions.mBuy));
+        return (isPossibleVodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mBuy));
     }
 
     public boolean isTrailer() {
-        return (isVod() && mMetadata.mConnections.mTrailer == null);
+        return ((isVod() || isSvod()) && mMetadata.mConnections.mTrailer == null);
     }
 
     public boolean isVod() {
