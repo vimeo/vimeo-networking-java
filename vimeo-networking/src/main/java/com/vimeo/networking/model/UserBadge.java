@@ -65,16 +65,16 @@ public class UserBadge implements Serializable {
         SUPPORT
     }
 
-    @SerializedName("type")
+    @SerializedName(value = "type", alternate = "m_badge_type")
     protected String mBadgeType;
 
-    @SerializedName("text")
+    @SerializedName(value = "text", alternate = "m_text")
     protected String mText;
 
-    @SerializedName("alt_text")
+    @SerializedName(value = "alt_text", alternate = "m_alternate_text")
     protected String mAlternateText;
 
-    @SerializedName("url")
+    @SerializedName(value = "url", alternate = "m_url")
     protected String mUrl;
 
     public String getText() {

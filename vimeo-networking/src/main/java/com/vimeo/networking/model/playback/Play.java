@@ -74,31 +74,31 @@ public class Play implements Serializable {
     }
 
     @Nullable
-    @SerializedName(value = "embed", alternate = {"m_embed"})
+    @SerializedName(value = "embed", alternate = "m_embed")
     protected Embed mEmbed;
 
     @Nullable
-    @SerializedName(value = "hls", alternate = {"m_hls"})
+    @SerializedName(value = "hls", alternate = "m_hls")
     protected VideoFile mHls;
 
     @Nullable
-    @SerializedName(value = "dash", alternate = {"m_dash"})
+    @SerializedName(value = "dash", alternate = "m_dash")
     protected VideoFile mDash;
 
     @Nullable
-    @SerializedName(value = "progressive", alternate = {"m_progressive"})
+    @SerializedName(value = "progressive", alternate = "m_progressive")
     protected ArrayList<VideoFile> mProgressive;
 
     @Nullable
-    @SerializedName(value = "progress", alternate = {"m_progress"})
+    @SerializedName(value = "progress", alternate = "m_progress")
     protected PlayProgress mProgress;
 
     @Nullable
-    @SerializedName(value = "status", alternate = {"m_status"})
+    @SerializedName(value = "status", alternate = "m_status")
     protected Status mStatus;
 
     @Nullable
-    @SerializedName(value = "drm", alternate = {"m_drm"})
+    @SerializedName(value = "drm", alternate = "m_drm")
     protected Drm mDrm;
 
     @Nullable
