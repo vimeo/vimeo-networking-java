@@ -204,7 +204,7 @@ public class Video implements Serializable {
     public ArrayList<VideoFile> mDownload;
 
     @Nullable
-    @SerializedName("badge")
+    @SerializedName(value = "badge", alternate = "m_video_badge")
     public VideoBadge mVideoBadge;
 
     @Nullable
