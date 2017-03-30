@@ -811,7 +811,7 @@ public class Video implements Serializable {
      * @return true if this is a trailer that is associated with an SVOD title, false otherwise
      */
     public boolean isSvodRelatedTrailer() {
-        return isTrailer() && getSvodInteraction() != null;
+        return isTrailer() && isSvod();
     }
 
 
