@@ -40,11 +40,11 @@ public class VideosPreference implements Serializable {
     private static final long serialVersionUID = 1956447486226253433L;
 
     @Nullable
-    @SerializedName("privacy")
+    @SerializedName(value = "privacy", alternate = "m_privacy")
     protected Privacy mPrivacy;
 
     @Nullable
-    @SerializedName("password")
+    @SerializedName(value = "password", alternate = "m_password")
     protected String mPassword;
 
     /**

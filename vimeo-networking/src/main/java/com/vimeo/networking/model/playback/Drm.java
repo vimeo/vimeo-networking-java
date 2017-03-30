@@ -47,11 +47,11 @@ public class Drm implements Serializable {
     private static final long serialVersionUID = 3048847922257143776L;
 
     @Nullable
-    @SerializedName("widevine")
+    @SerializedName(value = "widevine", alternate = "m_widevine")
     public VideoFile mWidevine;
 
     @Nullable
-    @SerializedName("playready")
+    @SerializedName(value = "playready", alternate = "m_play_ready")
     public VideoFile mPlayReady;
 
     @Nullable

@@ -43,7 +43,7 @@ public class PlayProgress implements Serializable {
     private static final long serialVersionUID = -3745271302058282379L;
 
     @Nullable
-    @SerializedName("seconds")
+    @SerializedName(value = "seconds", alternate = "m_seconds")
     protected Float mSeconds;
 
     /**
