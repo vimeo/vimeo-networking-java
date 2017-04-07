@@ -68,7 +68,7 @@ public class Privacy implements Serializable {
         DISABLE(PRIVACY_DISABLE);
 
         @NotNull
-        private final String text;
+        String text;
 
         PrivacyValue(@NotNull String text) {
             this.text = text;
