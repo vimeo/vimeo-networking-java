@@ -50,7 +50,7 @@ public class VideoFile implements Serializable {
         @SerializedName("vp6/x-video")
         VP6("vp6/x-video"); // Flash
 
-        private final String mTypeName;
+        String mTypeName;
 
         MimeType(String typeName) {
             mTypeName = typeName;
@@ -76,7 +76,7 @@ public class VideoFile implements Serializable {
         @SerializedName("mobile")
         MOBILE("mobile");
 
-        private final String mTypeName;
+        String mTypeName;
 
         VideoQuality(String typeName) {
             mTypeName = typeName;

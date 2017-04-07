@@ -50,7 +50,7 @@ public enum SearchType {
     GROUP("group");
 
     @NotNull
-    private final String string;
+    String string;
 
     SearchType(@NotNull String string) {
         this.string = string;
