@@ -6,6 +6,9 @@ vimeo-networking is a Java networking library used for interacting with the Vime
 | master | [![Build Status](https://travis-ci.org/vimeo/vimeo-networking-java.svg?branch=master)](https://travis-ci.org/vimeo/vimeo-networking-java) |
 | v2.0.0 | [![Build Status](https://travis-ci.org/vimeo/vimeo-networking-java.svg?branch=v2.0.0)](https://travis-ci.org/vimeo/vimeo-networking-java) |
 
+| Latest Version |
+|----------------|
+| [![Download](https://api.bintray.com/packages/vimeo/maven/vimeo-networking/images/download.svg)](https://bintray.com/vimeo/maven/vimeo-networking/_latestVersion) |
 
 ## Contents
 * [Prerequisites](#prerequisites)
