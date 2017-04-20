@@ -31,7 +31,8 @@ import com.vimeo.stag.UseStag.FieldOption;
 import java.io.Serializable;
 
 /**
- * A {@link BaseResponseList} of {@link ProgramContentItem}s
+ * A {@link BaseResponseList} of {@link ProgramContentItem}s.
+ * <p>
  * Created by rigbergh on 3/1/17.
  */
 @UseStag(FieldOption.SERIALIZED_NAME)

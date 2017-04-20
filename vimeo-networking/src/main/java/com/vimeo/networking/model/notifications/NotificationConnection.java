@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 
 /**
- * A specialized {@link Connection} returned for notification connections
+ * A specialized {@link Connection} returned for notification connections.
  * <p>
  * Created by zetterstromk on 2/22/17.
  */

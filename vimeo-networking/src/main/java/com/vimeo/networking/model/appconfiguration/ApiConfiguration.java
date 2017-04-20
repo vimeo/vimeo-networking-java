@@ -26,7 +26,7 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 
 /**
- * An object returned from the /configs endpoint to specify the host base url for api requests
+ * An object returned from the /configs endpoint to specify the host base url for api requests.
  * <p/>
  * Created by kylevenn on 5/20/15.
  */

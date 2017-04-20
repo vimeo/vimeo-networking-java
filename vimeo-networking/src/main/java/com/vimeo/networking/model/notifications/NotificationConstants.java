@@ -23,7 +23,8 @@
 package com.vimeo.networking.model.notifications;
 
 /**
- * Constants shared amongst notification related classes
+ * Constants shared among notification related classes.
+ * <p>
  * Created by zetterstromk on 1/11/17.
  */
 public final class NotificationConstants {

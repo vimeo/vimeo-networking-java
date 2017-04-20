@@ -44,7 +44,8 @@ import java.util.List;
 
 /**
  * This class represents the data returned from the Cinema endpoint. It contains a short list of videos as well
- * as the data object that represents its root source (e.g. category/channel)
+ * as the data object that represents its root source (e.g. category/channel).
+ * <p>
  * Created by rigbergh on 3/1/17.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
