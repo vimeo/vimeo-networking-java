@@ -15,4 +15,9 @@ public class UserTest {
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(User.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_AccountType() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(User.AccountType.class);
+    }
 }

@@ -15,4 +15,9 @@ public class UserBadgeTest {
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(UserBadge.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_UserBadgeType() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(UserBadge.UserBadgeType.class);
+    }
 }

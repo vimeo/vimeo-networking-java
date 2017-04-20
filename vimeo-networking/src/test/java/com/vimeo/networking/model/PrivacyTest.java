@@ -15,4 +15,9 @@ public class PrivacyTest {
     public void verifyTypeAdapterWasNotGenerated() throws Exception {
         Utils.verifyNoTypeAdapterGeneration(Privacy.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_PrivacyValue() throws Exception {
+        Utils.verifyTypeAdapterGeneration(Privacy.PrivacyValue.class);
+    }
 }

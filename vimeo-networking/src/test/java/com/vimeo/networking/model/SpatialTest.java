@@ -15,4 +15,14 @@ public class SpatialTest {
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(Spatial.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_Projection() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(Spatial.Projection.class);
+    }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_Format() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(Spatial.Format.class);
+    }
 }

@@ -56,6 +56,7 @@ public class ProgramContentItem implements Serializable {
     private static final String S_CATEGORY = "category";
     private static final String S_CHANNEL = "channel";
 
+    @UseStag
     public enum Type {
         @SerializedName(S_CATEGORY)
         CATEGORY(S_CATEGORY),

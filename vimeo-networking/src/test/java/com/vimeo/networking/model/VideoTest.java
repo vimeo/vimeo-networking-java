@@ -15,4 +15,24 @@ public class VideoTest {
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(Video.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_Status() throws Exception {
+        Utils.verifyTypeAdapterGeneration(Video.Status.class);
+    }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_ContentRating() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(Video.ContentRating.class);
+    }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_LicenseValue() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(Video.LicenseValue.class);
+    }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_VodVideoType() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(Video.VodVideoType.class);
+    }
 }

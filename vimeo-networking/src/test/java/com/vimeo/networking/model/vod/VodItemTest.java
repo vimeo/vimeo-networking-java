@@ -15,4 +15,14 @@ public class VodItemTest {
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(VodItem.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_VodType() throws Exception {
+        Utils.verifyTypeAdapterGeneration(VodItem.VodType.class);
+    }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_Publish() throws Exception {
+        Utils.verifyTypeAdapterGeneration(VodItem.Publish.class);
+    }
 }

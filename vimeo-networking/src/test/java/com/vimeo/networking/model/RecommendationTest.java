@@ -19,6 +19,11 @@ public class RecommendationTest {
     }
 
     @Test
+    public void verifyTypeAdapterWasNotGenerated_RecommendationType() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(Recommendation.RecommendationType.class);
+    }
+
+    @Test
     public void testGetRecommendationType() throws Exception {
         Recommendation recommendation = new Recommendation();
 

@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.networking.Utils;
+import com.vimeo.networking.model.FeedItem.AttributionType;
 
 import org.junit.Test;
 
@@ -14,5 +15,10 @@ public class FeedItemTest {
     @Test
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(FeedItem.class);
+    }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_AttributionType() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(AttributionType.class);
     }
 }

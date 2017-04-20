@@ -15,4 +15,9 @@ public class PlayTest {
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(Play.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_Status() throws Exception {
+        Utils.verifyTypeAdapterGeneration(Play.Status.class);
+    }
 }

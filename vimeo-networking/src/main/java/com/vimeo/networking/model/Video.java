@@ -85,6 +85,7 @@ public class Video implements Serializable {
     private static final String STATUS_TRANSCODING_ERROR = "transcoding_error";
     private static final String STATUS_QUOTA_EXCEEDED = "quota_exceeded";
 
+    @UseStag
     public enum Status {
         NONE(STATUS_NONE),
         @SerializedName(STATUS_AVAILABLE)

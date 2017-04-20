@@ -15,4 +15,9 @@ public class CommentTest {
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(Comment.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_CommentType() throws Exception {
+        Utils.verifyTypeAdapterGeneration(Comment.CommentType.class);
+    }
 }

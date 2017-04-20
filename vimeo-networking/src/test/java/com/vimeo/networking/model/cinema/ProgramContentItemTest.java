@@ -10,8 +10,14 @@ import org.junit.Test;
  * Created by restainoa on 4/20/17.
  */
 public class ProgramContentItemTest {
+
     @Test
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(ProgramContentItem.class);
+    }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_Type() throws Exception {
+        Utils.verifyTypeAdapterGeneration(ProgramContentItem.Type.class);
     }
 }

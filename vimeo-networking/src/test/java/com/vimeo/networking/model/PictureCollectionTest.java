@@ -15,4 +15,9 @@ public class PictureCollectionTest {
     public void verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(PictureCollection.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasNotGenerated_PictureType() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(PictureCollection.PictureType.class);
+    }
 }
