@@ -38,6 +38,7 @@ public class Comment implements Serializable {
 
     private static final long serialVersionUID = -7716027694845877155L;
 
+    @UseStag
     public enum CommentType {
         @SerializedName("video")
         VIDEO

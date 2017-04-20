@@ -12,7 +12,7 @@ import org.junit.Test;
 public class NotificationTypeTest {
 
     @Test
-    public void verifyTypeAdapterWasGenerated() throws Exception {
-        Utils.verifyTypeAdapterGeneration(NotificationType.class);
+    public void verifyTypeAdapterWasNotGenerated() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(NotificationType.class);
     }
 }

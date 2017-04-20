@@ -46,6 +46,7 @@ public class Interaction implements Serializable {
     private static final String STREAM_AVAILABLE = "available";
     private static final String STREAM_UNAVAILABLE = "unavailable";
 
+    @UseStag
     public enum Stream {
         @SerializedName(STREAM_PURCHASED)
         PURCHASED(STREAM_PURCHASED), // you have purchased it (without using a promo code)

@@ -817,6 +817,7 @@ public class Video implements Serializable {
 
     /**
      * Helper to determine if this is an SVOD video (not a trailer) that has not been purchased.
+     *
      * @return true if it is an unpurchased video, false otherwise
      */
     public boolean isUnpurchasedSvod() {
