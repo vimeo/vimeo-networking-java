@@ -1,15 +1,22 @@
 package com.vimeo.networking.model;
 
+import com.vimeo.networking.Utils;
 import com.vimeo.networking.model.Recommendation.RecommendationType;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link Recommendation}
+ * Unit tests for {@link Recommendation}.
+ * <p>
  * Created by zetterstromk on 8/15/16.
  */
 public class RecommendationTest {
+
+    @Test
+    public void verifyTypeAdapterWasGenerated() throws Exception {
+        Utils.verifyTypeAdapterGeneration(Recommendation.class);
+    }
 
     @Test
     public void testGetRecommendationType() throws Exception {
