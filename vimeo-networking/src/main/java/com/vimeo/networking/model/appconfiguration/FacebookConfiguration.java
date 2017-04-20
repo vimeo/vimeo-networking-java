@@ -27,6 +27,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Arrays;
 
 /**
+ * An object returned from the /configs endpoint to specify how Facebook login should be configured.
+ * <p>
  * Created by vennk on 5/20/15.
  */
 public class FacebookConfiguration {

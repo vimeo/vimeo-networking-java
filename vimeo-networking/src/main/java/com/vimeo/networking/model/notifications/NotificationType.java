@@ -26,7 +26,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A simple enum describing notification types
+ * A simple enum describing notification types.
+ * This enum is not directly returned by the API.
+ * Instead, a string is returned by the API in
+ * {@link Notification#mType}, and then the
+ * {@link Notification#getNotificationType()}
+ * chooses the correct enum.
+ * <p>
  * Created by zetterstromk on 1/11/17.
  */
 @SuppressWarnings("unused")

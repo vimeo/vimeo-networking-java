@@ -37,6 +37,7 @@ import java.util.Date;
 
 /**
  * A model representing activity that a user may be notified about.
+ * <p>
  * Created by zetterstromk on 1/11/17.
  */
 @SuppressWarnings("unused")

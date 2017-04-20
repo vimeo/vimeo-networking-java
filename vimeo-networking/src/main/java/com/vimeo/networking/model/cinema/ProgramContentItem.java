@@ -44,7 +44,8 @@ import java.util.List;
 
 /**
  * This class represents the data returned from the Cinema endpoint. It contains a short list of videos as well
- * as the data object that represents its root source (e.g. category/channel)
+ * as the data object that represents its root source (e.g. category/channel).
+ * <p>
  * Created by rigbergh on 3/1/17.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
@@ -55,6 +56,7 @@ public class ProgramContentItem implements Serializable {
     private static final String S_CATEGORY = "category";
     private static final String S_CHANNEL = "channel";
 
+    @UseStag
     public enum Type {
         @SerializedName(S_CATEGORY)
         CATEGORY(S_CATEGORY),

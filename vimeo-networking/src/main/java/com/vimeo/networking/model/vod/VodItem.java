@@ -51,6 +51,7 @@ public class VodItem implements Serializable {
     private static final String S_FILM = "film";
     private static final String S_SERIES = "series";
 
+    @UseStag
     public enum VodType {
         @SerializedName(S_FILM)
         FILM(S_FILM),
@@ -70,6 +71,7 @@ public class VodItem implements Serializable {
         }
     }
 
+    @UseStag
     public static class Publish implements Serializable {
 
         private static final long serialVersionUID = -994389241935894370L;

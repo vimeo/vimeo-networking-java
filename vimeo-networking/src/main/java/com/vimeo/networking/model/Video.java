@@ -85,6 +85,7 @@ public class Video implements Serializable {
     private static final String STATUS_TRANSCODING_ERROR = "transcoding_error";
     private static final String STATUS_QUOTA_EXCEEDED = "quota_exceeded";
 
+    @UseStag
     public enum Status {
         NONE(STATUS_NONE),
         @SerializedName(STATUS_AVAILABLE)
@@ -817,6 +818,7 @@ public class Video implements Serializable {
 
     /**
      * Helper to determine if this is an SVOD video (not a trailer) that has not been purchased.
+     *
      * @return true if it is an unpurchased video, false otherwise
      */
     public boolean isUnpurchasedSvod() {

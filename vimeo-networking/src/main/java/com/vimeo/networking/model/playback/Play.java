@@ -46,6 +46,7 @@ public class Play implements Serializable {
 
     private static final long serialVersionUID = -7429617944240759711L;
 
+    @UseStag
     public enum Status {
         // if not done transcoding
         @SerializedName("unavailable")

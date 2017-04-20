@@ -26,7 +26,7 @@ import com.vimeo.networking.model.BaseResponseList;
 import com.vimeo.stag.UseStag;
 
 /**
- * The response from the notifications endpoint
+ * The response from the notifications endpoint.
  * <p>
  * Created by zetterstromk on 1/11/17.
  */
