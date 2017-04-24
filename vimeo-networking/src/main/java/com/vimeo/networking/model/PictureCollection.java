@@ -65,18 +65,18 @@ public class PictureCollection implements Serializable {
     }
 
     @Nullable
-    @SerializedName("uri")
+    @SerializedName(value = "uri", alternate = "m_uri")
     protected String mUri;
 
-    @SerializedName("active")
+    @SerializedName(value = "active", alternate = "m_is_active")
     protected boolean mIsActive;
 
     @Nullable
-    @SerializedName("type")
+    @SerializedName(value = "type", alternate = "m_type")
     protected String mType;
 
     @Nullable
-    @SerializedName("sizes")
+    @SerializedName(value = "sizes", alternate = "m_pictures")
     protected ArrayList<Picture> mPictures;
 
     @Nullable

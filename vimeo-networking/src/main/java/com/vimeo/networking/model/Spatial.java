@@ -58,11 +58,11 @@ public class Spatial implements Serializable {
     }
 
     @NotNull
-    @SerializedName("projection")
+    @SerializedName(value = "projection", alternate = "m_projection")
     protected String mProjection;
 
     @NotNull
-    @SerializedName("stereo_format")
+    @SerializedName(value = "stereo_format", alternate = "m_stereo_format")
     protected String mStereoFormat;
 
     @NotNull

@@ -42,7 +42,7 @@ public class Preferences implements Serializable {
     private static final long serialVersionUID = -251634859829805204L;
 
     @Nullable
-    @SerializedName("videos")
+    @SerializedName(value = "videos", alternate = "m_videos")
     protected VideosPreference mVideos;
 
     /**
