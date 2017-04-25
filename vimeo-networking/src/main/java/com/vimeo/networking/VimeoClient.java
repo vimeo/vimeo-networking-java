@@ -102,11 +102,9 @@ public final class VimeoClient {
      */
     private VimeoAccount mVimeoAccount;
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Configuration
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Configuration
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Configuration">
     @Nullable
     private static VimeoClient sSharedInstance;
@@ -204,6 +202,7 @@ public final class VimeoClient {
         }
     }
 
+    @NotNull
     public Retrofit getRetrofit() {
         return mRetrofit;
     }
@@ -255,11 +254,9 @@ public final class VimeoClient {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Authentication
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Authentication
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Authentication">
 
     /**
@@ -694,6 +691,7 @@ public final class VimeoClient {
      */
     private static class PinCodeAccountCallback extends AccountCallback {
 
+        @NotNull
         private final Timer mTimer;
 
         public PinCodeAccountCallback(@NotNull VimeoClient client, @NotNull AuthCallback callback,
@@ -704,9 +702,7 @@ public final class VimeoClient {
 
         private void cancelPolling() {
             VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
-            if (mTimer != null) {
-                mTimer.cancel();
-            }
+            mTimer.cancel();
         }
 
         @Override
@@ -854,11 +850,9 @@ public final class VimeoClient {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Editing (Video, User)
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Editing (Video, User)
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Editing (Video, User)">
     @Nullable
     public Call<Object> editVideo(String uri, String title, String description, @Nullable String password,
@@ -1035,11 +1029,9 @@ public final class VimeoClient {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Pictures
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Pictures
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Pictures">
 
     /**
@@ -1100,11 +1092,9 @@ public final class VimeoClient {
 
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Video actions (Like, Watch Later, Commenting)
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Video actions (Like, Watch Later, Commenting)
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Video actions (Like, Watch Later, Commenting)">
     public Call<Object> updateFollow(boolean follow, String uri, ModelCallback callback) {
         return updateFollow(follow, uri, callback, true);
@@ -1237,11 +1227,9 @@ public final class VimeoClient {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Gets, posts, puts, deletes
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Gets, posts, puts, deletes
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Gets, posts, puts, deletes">
     public void deleteVideo(String uri, Map<String, String> options, ModelCallback callback) {
         deleteContent(uri, options, callback, true);
@@ -1609,11 +1597,9 @@ public final class VimeoClient {
 
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Header values
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Header values
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Header values">
     public String getUserAgent() {
         return mConfiguration.mUserAgentString;
