@@ -73,7 +73,7 @@ public final class Vimeo {
     public static final String PARAMETER_VIDEO_PRIVACY = "privacy";
     public static final String PARAMETER_VIDEO_PASSWORD = "password";
 
-    public static final String PARAMETER_COMMENT_TEXT_BODY = "mText";
+    public static final String PARAMETER_COMMENT_TEXT_BODY = "text";
 
     public static final String PARAMETER_ACTIVE = "active";
 
