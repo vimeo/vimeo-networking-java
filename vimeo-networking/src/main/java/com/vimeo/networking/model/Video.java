@@ -132,6 +132,11 @@ public class Video implements Serializable {
     @SerializedName("duration")
     public int mDuration;
 
+    /**
+     * Deprecated in favor of {@link Play}
+     * and the multiple {@link VideoFile}
+     * that it contains.
+     */
     @Deprecated
     @SerializedName("files")
     public ArrayList<VideoFile> mVideoFiles;
@@ -144,7 +149,7 @@ public class Video implements Serializable {
 
     @Deprecated
     @SerializedName("embed")
-    public com.vimeo.networking.model.Embed mEmbed;
+    public Embed mEmbed;
 
     @SerializedName("language")
     public String mLanguage;
