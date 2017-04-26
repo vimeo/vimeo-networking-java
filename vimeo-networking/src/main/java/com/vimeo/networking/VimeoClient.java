@@ -42,6 +42,7 @@ import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
+import com.vimeo.networking.utils.BaseUrlInterceptor;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -85,9 +86,11 @@ public final class VimeoClient {
 
     @NotNull
     private final Configuration mConfiguration;
+    @NotNull
     private final VimeoService mVimeoService;
     @Nullable
     private final Cache mCache;
+    @Nullable
     private String mCurrentCodeGrantState;
 
     @NotNull
@@ -95,11 +98,16 @@ public final class VimeoClient {
 
     @NotNull
     private final Gson mGson;
+    @Nullable
     private Timer mPinCodeAuthorizationTimer;
+
+    @NotNull
+    private final BaseUrlInterceptor mBaseUrlInterceptor = new BaseUrlInterceptor();
 
     /**
      * Currently authenticated account
      */
+    @Nullable
     private VimeoAccount mVimeoAccount;
 
     // -----------------------------------------------------------------------------------------------------
@@ -135,6 +143,20 @@ public final class VimeoClient {
         setVimeoAccount(vimeoAccount);
     }
 
+    /**
+     * Sets a new base URL to be used for requests
+     * by the VimeoClient for specific paths. If a null
+     * base URL is provided, the default base URL will be
+     * used by the client.
+     *
+     * @param path    the path for which to change the base URL.
+     * @param baseUrl the new base URL to use, may be null.
+     */
+    public void setBaseUrlForRequest(@NotNull String path, @Nullable String baseUrl) {
+        mBaseUrlInterceptor.setBaseUrlForRequest(path, baseUrl);
+    }
+
+    @NotNull
     private Retrofit createRetrofit() {
         return new Retrofit.Builder().baseUrl(mConfiguration.mBaseURLString)
                 .client(createOkHttpClient())
@@ -142,6 +164,7 @@ public final class VimeoClient {
                 .build();
     }
 
+    @NotNull
     private OkHttpClient createOkHttpClient() {
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
         retrofitClientBuilder.setCache(mCache)
@@ -159,6 +182,7 @@ public final class VimeoClient {
                 .setReadTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
                 .setConnectionTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
                 .addInterceptor(new LoggingInterceptor())
+                .addInterceptor(mBaseUrlInterceptor)
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -591,7 +615,7 @@ public final class VimeoClient {
     public Call<Object> logOut(@Nullable final VimeoCallback<Object> callback) {
         // If you've provided an access token to the configuration builder, we're assuming that you wouldn't
         // want to be able to log out of it, because this would invalidate the constant you've provided us.
-        if (mConfiguration.mAccessToken != null &&
+        if (mConfiguration.mAccessToken != null && mVimeoAccount != null &&
             mConfiguration.mAccessToken.equals(mVimeoAccount.getAccessToken())) {
             if (callback != null) {
                 callback.failure(new VimeoError(
@@ -836,7 +860,7 @@ public final class VimeoClient {
                 VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = true;
                 mPinCodeAuthorizationTimer.scheduleAtFixedRate(
                         new PinCodePollingTimerTask(pinCodeInfo, mPinCodeAuthorizationTimer,
-                                                    pinCodeInfo.getExpiresIn(), authCallback, sSharedInstance,
+                                                    pinCodeInfo.getExpiresIn(), authCallback, getInstance(),
                                                     SCOPE), 0,
                         SECONDS_TO_MILLISECONDS * pinCodeInfo.getInterval());
             }
