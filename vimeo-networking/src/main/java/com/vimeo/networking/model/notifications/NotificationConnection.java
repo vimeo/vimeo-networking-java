@@ -135,14 +135,14 @@ public class NotificationConnection extends Connection {
         @SerializedName(NotificationConstants.NOTIFICATION_ACCOUNT_EXPIRATION_WARNING)
         protected int mAccountExpirationWarningTotal;
 
-        @SerializedName(NotificationConstants.NOTIFICATION_VOD_PURCHASE)
-        protected int mVodPurchaseTotal;
+        @SerializedName(NotificationConstants.NOTIFICATION_TVOD_PURCHASE)
+        protected int mTvodPurchaseTotal;
 
-        @SerializedName(NotificationConstants.NOTIFICATION_VOD_PREORDER_AVAILABLE)
-        protected int mVodPreorderAvailableTotal;
+        @SerializedName(NotificationConstants.NOTIFICATION_TVOD_PREORDER_AVAILABLE)
+        protected int mTvodPreorderAvailableTotal;
 
-        @SerializedName(NotificationConstants.NOTIFICATION_VOD_RENTAL_EXPIRATION_WARNING)
-        protected int mVodRentailExpirationWarningTotal;
+        @SerializedName(NotificationConstants.NOTIFICATION_TVOD_RENTAL_EXPIRATION_WARNING)
+        protected int mTvodRentailExpirationWarningTotal;
 
         public int getCommentTotal() {
             return mCommentTotal;
@@ -184,16 +184,16 @@ public class NotificationConnection extends Connection {
             return mAccountExpirationWarningTotal;
         }
 
-        public int getVodPurchaseTotal() {
-            return mVodPurchaseTotal;
+        public int getTvodPurchaseTotal() {
+            return mTvodPurchaseTotal;
         }
 
-        public int getVodPreorderAvailableTotal() {
-            return mVodPreorderAvailableTotal;
+        public int getTvodPreorderAvailableTotal() {
+            return mTvodPreorderAvailableTotal;
         }
 
-        public int getVodRentailExpirationWarningTotal() {
-            return mVodRentailExpirationWarningTotal;
+        public int getTvodRentailExpirationWarningTotal() {
+            return mTvodRentailExpirationWarningTotal;
         }
     }
 }

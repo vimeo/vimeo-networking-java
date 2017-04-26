@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Vimeo
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.vod;
+package com.vimeo.networking.model.tvod;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.Connection;
@@ -46,13 +46,13 @@ import java.util.Date;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class VodItem implements Serializable {
+public class TvodItem implements Serializable {
 
     private static final String S_FILM = "film";
     private static final String S_SERIES = "series";
 
     @UseStag
-    public enum VodType {
+    public enum TvodType {
         @SerializedName(S_FILM)
         FILM(S_FILM),
         @SerializedName(S_SERIES)
@@ -61,7 +61,7 @@ public class VodItem implements Serializable {
         @NotNull
         private final String mType;
 
-        VodType(@NotNull String type) {
+        TvodType(@NotNull String type) {
             mType = type;
         }
 
@@ -99,7 +99,7 @@ public class VodItem implements Serializable {
 
     @Nullable
     @SerializedName("type")
-    protected VodType mType;
+    protected TvodType mType;
 
     @Nullable
     @SerializedName("link")
@@ -185,7 +185,7 @@ public class VodItem implements Serializable {
     }
 
     @Nullable
-    public VodType getType() {
+    public TvodType getType() {
         return mType;
     }
 
@@ -226,7 +226,7 @@ public class VodItem implements Serializable {
         mDescription = description;
     }
 
-    public void setType(@Nullable VodType type) {
+    public void setType(@Nullable TvodType type) {
         mType = type;
     }
 
@@ -259,10 +259,10 @@ public class VodItem implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (obj == null || !(obj instanceof VodItem)) {
+        if (obj == null || !(obj instanceof TvodItem)) {
             return false;
         }
-        VodItem that = (VodItem) obj;
+        TvodItem that = (TvodItem) obj;
 
         return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
     }

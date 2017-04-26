@@ -51,14 +51,14 @@ public final class Search {
     }
 
     public static final String FILTER_TYPE_VIDEO = "clip";
-    public static final String FILTER_TYPE_VOD = "ondemand";
+    public static final String FILTER_TYPE_TVOD = "ondemand";
     public static final String FILTER_TYPE_USER = "people";
     public static final String FILTER_TYPE_CHANNEL = "channel";
     public static final String FILTER_TYPE_GROUP = "group";
 
     public enum FilterType {
         VIDEO(FILTER_TYPE_VIDEO),
-        VOD(FILTER_TYPE_VOD),
+        TVOD(FILTER_TYPE_TVOD),
         USER(FILTER_TYPE_USER),
         CHANNEL(FILTER_TYPE_CHANNEL),
         GROUP(FILTER_TYPE_GROUP);
@@ -235,7 +235,7 @@ public final class Search {
     }
 
     private static final String PARAM_VIDEO_SUGGESTION = "video_count";
-    private static final String PARAM_VOD_SUGGESTION = "ondemand_title_count";
+    private static final String PARAM_TVOD_SUGGESTION = "ondemand_title_count";
 
     /**
      * API access to search suggestions.
@@ -247,15 +247,15 @@ public final class Search {
      * @param videoSuggestionCount the number of video suggestions to receive. This determines the maximum number of
      *                             items in the {@link SuggestionResponse#getVideoSuggestions()} list. This will
      *                             be ignored if a value less than or equal to 0 is provided.
-     * @param vodSuggestionCount   the number of ondemand suggestions to receive. This determines the maximum number of
-     *                             items in the {@link SuggestionResponse#getOndemandSuggestionList()} list. This will
+     * @param tvodSuggestionCount   the number of ondemand suggestions to receive. This determines the maximum number of
+     *                             items in the {@link SuggestionResponse#getTvodSuggestionList()} list. This will
      *                             be ignored if a value less than or equal to 0 is provided.
      * @param callback             the callback to be invoked upon completion of this request
      * @return a {@link Call} that can be used to cancel this request
      */
     @Nullable
     public static Call<SuggestionResponse> suggest(@NotNull String query, int videoSuggestionCount,
-                                                   int vodSuggestionCount,
+                                                   int tvodSuggestionCount,
                                                    @NotNull ModelCallback<SuggestionResponse> callback) {
 
         if (query.isEmpty()) {
@@ -270,8 +270,8 @@ public final class Search {
             queryMap.put(PARAM_VIDEO_SUGGESTION, String.valueOf(videoSuggestionCount));
         }
 
-        if (vodSuggestionCount > 0) {
-            queryMap.put(PARAM_VOD_SUGGESTION, String.valueOf(vodSuggestionCount));
+        if (tvodSuggestionCount > 0) {
+            queryMap.put(PARAM_TVOD_SUGGESTION, String.valueOf(tvodSuggestionCount));
         }
 
         return VimeoClient.getInstance().suggest(queryMap, callback);

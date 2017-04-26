@@ -1,6 +1,7 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.networking.Utils;
+import com.vimeo.networking.model.Video.TvodVideoType;
 
 import org.junit.Test;
 
@@ -32,7 +33,7 @@ public class VideoTest {
     }
 
     @Test
-    public void verifyTypeAdapterWasNotGenerated_VodVideoType() throws Exception {
-        Utils.verifyNoTypeAdapterGeneration(Video.VodVideoType.class);
+    public void verifyTypeAdapterWasNotGenerated_TvodVideoType() throws Exception {
+        Utils.verifyNoTypeAdapterGeneration(TvodVideoType.class);
     }
 }

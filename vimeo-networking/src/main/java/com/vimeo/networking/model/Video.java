@@ -67,7 +67,7 @@ public class Video implements Serializable {
         PUBLIC_DOMAIN_DEDICATION
     }
 
-    public enum VodVideoType {
+    public enum TvodVideoType {
         NONE,
         TRAILER,
         RENTAL,
@@ -648,7 +648,7 @@ public class Video implements Serializable {
     }
 
     /**
-     * A VOD video can have multiple purchase types active at once, this is a convenience method that
+     * A TVOD video can have multiple purchase types active at once, this is a convenience method that
      * picks one of them based on the following priority:
      * 1) trailer
      * 2) purchased
@@ -656,37 +656,37 @@ public class Video implements Serializable {
      * 4) subscription
      * 5) rental
      *
-     * @return the VodVideoType of the video or {@code VodVideoType.NONE} if it is not a VOD video or
-     * {@code VodVideoType.UNKNOWN} if it is a VOD video that is not marked as rented, subscribed or bought
+     * @return the VodVideoType of the video or {@code VodVideoType.NONE} if it is not a TVOD video or
+     * {@code VodVideoType.UNKNOWN} if it is a TVOD video that is not marked as rented, subscribed or bought
      */
-    public VodVideoType getVodVideoType() {
-        if (isVod()) {
+    public TvodVideoType getTvodVideoType() {
+        if (isTvod()) {
             if (isTrailer()) {
-                return VodVideoType.TRAILER;
+                return TvodVideoType.TRAILER;
             }
-            if (isPurchase()) {
-                return VodVideoType.PURCHASE;
+            if (isTvodPurchase()) {
+                return TvodVideoType.PURCHASE;
             }
             // rentals or subscriptions that have been purchased will always have an expiration date
-            Date rentalExpires = getRentalExpiration();
-            Date subscriptionExpires = getSubscriptionExpiration();
+            Date rentalExpires = getTvodRentalExpiration();
+            Date subscriptionExpires = getTvodSubscriptionExpiration();
             if (rentalExpires != null && subscriptionExpires != null) {
                 if (rentalExpires.after(subscriptionExpires)) {
-                    return VodVideoType.RENTAL;
+                    return TvodVideoType.RENTAL;
                 }
             }
-            if (isSubscription()) {
-                return VodVideoType.SUBSCRIPTION;
+            if (isTvodSubscription()) {
+                return TvodVideoType.SUBSCRIPTION;
             }
-            if (isRental()) {
-                return VodVideoType.RENTAL;
+            if (isTvodRental()) {
+                return TvodVideoType.RENTAL;
             }
-            // it is a VOD, but it was not purchased.
+            // it is a TVOD, but it was not purchased.
             // it is either the user's own video or promo code access or possibly an extra on a series
             // regardless, we don't have a way to determine it at this point 5/4/16 [HR]
-            return VodVideoType.UNKNOWN;
+            return TvodVideoType.UNKNOWN;
         }
-        return VodVideoType.NONE;
+        return TvodVideoType.NONE;
     }
 
     private static boolean isInteractionPurchased(Interaction interaction) {
@@ -694,16 +694,16 @@ public class Video implements Serializable {
     }
 
     /**
-     * Returns the date the VOD video will expire. In the event that a video is both rented and subscribed,
+     * Returns the date the TVOD video will expire. In the event that a video is both rented and subscribed,
      * this will return the later expiration date. If they are equal, subscription date will be returned.
      *
      * @return the expiration date or null if there is no expiration
      */
     @Nullable
-    public Date getVodExpiration() {
-        if (isVod()) {
-            Date rentalExpires = getRentalExpiration();
-            Date subscriptionExpires = getSubscriptionExpiration();
+    public Date getTvodExpiration() {
+        if (isTvod()) {
+            Date rentalExpires = getTvodRentalExpiration();
+            Date subscriptionExpires = getTvodSubscriptionExpiration();
             if (rentalExpires != null && subscriptionExpires != null) {
                 if (rentalExpires.after(subscriptionExpires)) {
                     return rentalExpires;
@@ -719,14 +719,14 @@ public class Video implements Serializable {
         return null;
     }
 
-    private boolean isPossibleVodPurchase() {
-        return (isVod() && !isTrailer() && mMetadata != null && mMetadata.mInteractions != null);
+    private boolean isPossibleTvodPurchase() {
+        return (isTvod() && !isTrailer() && mMetadata != null && mMetadata.mInteractions != null);
     }
 
     @Nullable
-    public Date getRentalExpiration() {
-        if (isRental()) {
-            // isRental will validate and prevent possible npes
+    public Date getTvodRentalExpiration() {
+        if (isTvodRental()) {
+            // isTvodRental will validate and prevent possible npes
             assert mMetadata.mInteractions.mRent != null;
             return mMetadata.mInteractions.mRent.mExpiration;
         }
@@ -734,9 +734,9 @@ public class Video implements Serializable {
     }
 
     @Nullable
-    public Date getSubscriptionExpiration() {
-        if (isSubscription()) {
-            // isSubscription will validate and prevent possible npes
+    public Date getTvodSubscriptionExpiration() {
+        if (isTvodSubscription()) {
+            // isTvodSubscription will validate and prevent possible npes
             assert mMetadata.mInteractions.mSubscribe != null;
             return mMetadata.mInteractions.mSubscribe.mExpiration;
         }
@@ -764,13 +764,13 @@ public class Video implements Serializable {
     }
 
     /**
-     * Videos that are VODs are part of Seasons. Included on a Season
+     * Videos that are TVODs are part of Seasons. Included on a Season
      * Connection is the name of that season.
      *
      * @return the Season name, or null if this Video is not part of a Season
      */
     @Nullable
-    public String getSeasonName() {
+    public String getTvodSeasonName() {
         if (mMetadata != null && mMetadata.mConnections != null &&
             mMetadata.mConnections.mSeason != null) {
             return mMetadata.mConnections.mSeason.getName();
@@ -778,12 +778,12 @@ public class Video implements Serializable {
         return null;
     }
 
-    public boolean isRental() {
-        return (isPossibleVodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mRent));
+    public boolean isTvodRental() {
+        return (isPossibleTvodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mRent));
     }
 
-    public boolean isSubscription() {
-        return (isPossibleVodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mSubscribe));
+    public boolean isTvodSubscription() {
+        return (isPossibleTvodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mSubscribe));
     }
 
     /**
@@ -830,16 +830,16 @@ public class Video implements Serializable {
     }
 
 
-    public boolean isPurchase() {
-        return (isPossibleVodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mBuy));
+    public boolean isTvodPurchase() {
+        return (isPossibleTvodPurchase() && isInteractionPurchased(mMetadata.mInteractions.mBuy));
     }
 
     public boolean isTrailer() {
-        return ((isVod() || isSvod()) && mMetadata.mConnections.mTrailer == null);
+        return ((isTvod() || isSvod()) && mMetadata.mConnections.mTrailer == null);
     }
 
-    public boolean isVod() {
-        return (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mOndemand != null);
+    public boolean isTvod() {
+        return (mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mTvod != null);
     }
 
     @Nullable

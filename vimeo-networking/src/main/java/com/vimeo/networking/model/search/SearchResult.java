@@ -29,7 +29,7 @@ import com.vimeo.networking.model.Channel;
 import com.vimeo.networking.model.Group;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
-import com.vimeo.networking.model.vod.VodItem;
+import com.vimeo.networking.model.tvod.TvodItem;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
@@ -85,11 +85,11 @@ public class SearchResult implements Serializable {
     protected Group mGroup;
 
     /**
-     * Non-null when {@link #mSearchType} is {@link SearchType#VOD}
+     * Non-null when {@link #mSearchType} is {@link SearchType#TVOD}
      */
     @Nullable
     @SerializedName("ondemand")
-    protected VodItem mVod;
+    protected TvodItem mTvod;
 
     public boolean isStaffPick() {
         return mIsStaffPick;
@@ -124,7 +124,7 @@ public class SearchResult implements Serializable {
     }
 
     @Nullable
-    public VodItem getVod() {
-        return mVod;
+    public TvodItem getTvod() {
+        return mTvod;
     }
 }

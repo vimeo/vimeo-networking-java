@@ -42,7 +42,7 @@ public class Privacy implements Serializable {
     private static final String PRIVACY_NOBODY = "nobody";
     private static final String PRIVACY_USERS = "users";
     private static final String PRIVACY_ANYBODY = "anybody";
-    private static final String PRIVACY_VOD = "ptv";
+    private static final String PRIVACY_TVOD = "ptv";
     private static final String PRIVACY_CONTACTS = "contacts";
     private static final String PRIVACY_PASSWORD = "password";
     private static final String PRIVACY_DISABLE = "disable";
@@ -56,8 +56,8 @@ public class Privacy implements Serializable {
         USERS(PRIVACY_USERS),
         @SerializedName(PRIVACY_ANYBODY)
         ANYBODY(PRIVACY_ANYBODY),
-        @SerializedName(PRIVACY_VOD)
-        VOD(PRIVACY_VOD), // "ptv"
+        @SerializedName(PRIVACY_TVOD)
+        TVOD(PRIVACY_TVOD), // "ptv"
         @SerializedName(PRIVACY_CONTACTS)
         CONTACTS(PRIVACY_CONTACTS),
         @SerializedName(PRIVACY_PASSWORD)
