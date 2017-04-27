@@ -152,7 +152,7 @@ public final class VimeoClient {
      * @param path    the path for which to change the base URL.
      * @param baseUrl the new base URL to use, may be null.
      */
-    public void setBaseUrlForRequest(@NotNull String path, @Nullable String baseUrl) {
+    public void setBaseUrlForRequest(@NotNull String path, @Nullable HttpUrl baseUrl) {
         mBaseUrlInterceptor.setBaseUrlForRequest(path, baseUrl);
     }
 
@@ -773,7 +773,7 @@ public final class VimeoClient {
         private final String mScope;
 
         PinCodePollingTimerTask(@NotNull PinCodeInfo pinCodeInfo, @NotNull Timer timer, int expiresInSeconds,
-                                @NotNull AuthCallback authCallback, @NotNull VimeoClient client,
+                                @NotNull AuthCallback authCallback, @Nullable VimeoClient client,
                                 @NotNull String scope) {
             mTimer = timer;
             mPinCodeInfo = pinCodeInfo;
@@ -860,7 +860,7 @@ public final class VimeoClient {
                 VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = true;
                 mPinCodeAuthorizationTimer.scheduleAtFixedRate(
                         new PinCodePollingTimerTask(pinCodeInfo, mPinCodeAuthorizationTimer,
-                                                    pinCodeInfo.getExpiresIn(), authCallback, getInstance(),
+                                                    pinCodeInfo.getExpiresIn(), authCallback, sSharedInstance,
                                                     SCOPE), 0,
                         SECONDS_TO_MILLISECONDS * pinCodeInfo.getInterval());
             }

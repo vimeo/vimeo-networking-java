@@ -45,7 +45,7 @@ public final class BaseUrlInterceptor implements Interceptor {
     public BaseUrlInterceptor() {}
 
     @NotNull
-    private final Map<String, String> mBaseUrlMap = new HashMap<>();
+    private final Map<String, HttpUrl> mBaseUrlMap = new HashMap<>();
 
     /**
      * Sets the base URL used for requests
@@ -54,7 +54,7 @@ public final class BaseUrlInterceptor implements Interceptor {
      * @param path    the path to redirect to a different host.
      * @param baseUrl the different host to use.
      */
-    public void setBaseUrlForRequest(@NotNull String path, @Nullable String baseUrl) {
+    public void setBaseUrlForRequest(@NotNull String path, @Nullable HttpUrl baseUrl) {
         if (!path.startsWith("/")) {
             path = '/' + path;
         }
@@ -65,15 +65,14 @@ public final class BaseUrlInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        String baseUrl = mBaseUrlMap.get(request.url().encodedPath());
+        HttpUrl baseUrl = mBaseUrlMap.get(request.url().encodedPath());
         if (baseUrl != null) {
-            HttpUrl httpUrl = HttpUrl.parse(baseUrl);
             HttpUrl newUrl = request.url().newBuilder()
-                    .host(httpUrl.host())
-                    .scheme(httpUrl.scheme())
-                    .username(httpUrl.username())
-                    .password(httpUrl.password())
-                    .port(httpUrl.port())
+                    .host(baseUrl.host())
+                    .scheme(baseUrl.scheme())
+                    .username(baseUrl.username())
+                    .password(baseUrl.password())
+                    .port(baseUrl.port())
                     .build();
             request = request.newBuilder()
                     .url(newUrl)
