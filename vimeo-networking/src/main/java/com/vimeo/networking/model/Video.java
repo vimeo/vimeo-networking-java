@@ -661,8 +661,8 @@ public class Video implements Serializable {
      * 4) subscription
      * 5) rental
      *
-     * @return the VodVideoType of the video or {@code VodVideoType.NONE} if it is not a TVOD video or
-     * {@code VodVideoType.UNKNOWN} if it is a TVOD video that is not marked as rented, subscribed or bought
+     * @return the TvodVideoType of the video or {@code TvodVideoType.NONE} if it is not a TVOD video or
+     * {@code TvodVideoType.UNKNOWN} if it is a TVOD video that is not marked as rented, subscribed or bought
      */
     public TvodVideoType getTvodVideoType() {
         if (isTvod()) {

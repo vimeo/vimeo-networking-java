@@ -46,7 +46,7 @@ public final class TvodSuggestion extends BaseSuggestion implements Serializable
     TvodSuggestionMetadata mMetadata;
 
     /**
-     * Return the {@link PictureCollection} associated with this VOD.
+     * Return the {@link PictureCollection} associated with this TVOD.
      */
     @Nullable
     public PictureCollection getPictures() {
@@ -54,7 +54,7 @@ public final class TvodSuggestion extends BaseSuggestion implements Serializable
     }
 
     /**
-     * Returns the url representative of this VOD.
+     * Returns the url representative of this TVOD.
      */
     @Nullable
     public String getTvodUrl() {
