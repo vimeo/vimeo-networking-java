@@ -27,8 +27,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -44,28 +46,103 @@ public final class BaseUrlInterceptor implements Interceptor {
 
     public BaseUrlInterceptor() {}
 
-    @NotNull
-    private final Map<String, HttpUrl> mBaseUrlMap = new HashMap<>();
+    private byte mState = 0;
 
-    /**
-     * Sets the base URL used for requests
-     * on a specific path.
-     *
-     * @param path    the path to redirect to a different host.
-     * @param baseUrl the different host to use.
-     */
-    public void setBaseUrlForRequest(@NotNull String path, @Nullable HttpUrl baseUrl) {
-        if (!path.startsWith("/")) {
-            path = '/' + path;
+    @Nullable
+    private HttpUrl mNewBaseUrl = null;
+
+    @NotNull
+    private final Set<String> mIncludeOrExclude = new HashSet<>();
+
+    @NotNull
+    private static Collection<String> sanitizePaths(@NotNull String[] paths) {
+        Collection<String> sanitizedPaths = new ArrayList<>();
+
+        for (String path : paths) {
+            if (!path.startsWith("/")) {
+                path = '/' + path;
+            }
+            sanitizedPaths.add(path);
         }
 
-        mBaseUrlMap.put(path, baseUrl);
+        return sanitizedPaths;
+    }
+
+    /**
+     * Sets the base URL for requests based on an
+     * inclusivity principle. Only future requests that
+     * are included in the supplied list of paths will
+     * have their base URL replaced. Call {@link #resetBaseUrl()}
+     * to reset to the original base URL for all paths.
+     * Any call to this method will overwrite the previously
+     * used base URL, but will not erase inclusions.
+     *
+     * @param baseUrl    the new base URL.
+     * @param inclusions the list of paths to be included,
+     *                   if you don't pass anything no
+     *                   base URLs will be overridden.
+     */
+    public void includePathsForBaseUrl(@NotNull HttpUrl baseUrl, @NotNull String... inclusions) {
+        Preconditions.checkIsTrue(mState == 0 || mState == 1,
+                                  "resetBaseUrl() must be called before switching from exclude to include");
+        mState = 1;
+        mNewBaseUrl = baseUrl;
+        mIncludeOrExclude.addAll(sanitizePaths(inclusions));
+    }
+
+    /**
+     * Sets the base URL for all requests based on an
+     * exclusivity principle. All future requests will
+     * use the new base URL unless they are to a path
+     * supplied as an exclusion. Call {@link #resetBaseUrl()}
+     * to reset to the original base URL for all paths.
+     * Any call to this method will overwrite the previously
+     * used base URL, but will not erase exclusions.
+     *
+     * @param baseUrl    the new base URL.
+     * @param exclusions the list of paths to be excluded,
+     *                   don't pass anything if you wish to
+     *                   override all URLs.
+     */
+    public void excludePathsForBaseUrl(@NotNull HttpUrl baseUrl, @NotNull String... exclusions) {
+        Preconditions.checkIsTrue(mState == 0 || mState == 2,
+                                  "resetBaseUrl() must be called before switching from include to exclude");
+        mState = 2;
+        mNewBaseUrl = baseUrl;
+        mIncludeOrExclude.addAll(sanitizePaths(exclusions));
+    }
+
+    /**
+     * Resets the base URL. Required to be called
+     * after {@link #includePathsForBaseUrl(HttpUrl, String...)}
+     * of {@link #excludePathsForBaseUrl(HttpUrl, String...)} if
+     * you wish to switch between include/exclude mode or if you
+     * wish to stop overriding the base URL.
+     */
+    public void resetBaseUrl() {
+        mState = 0;
+        mNewBaseUrl = null;
+        mIncludeOrExclude.clear();
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        HttpUrl baseUrl = mBaseUrlMap.get(request.url().encodedPath());
+
+        HttpUrl baseUrl;
+
+        switch (mState) {
+            case 1:
+                baseUrl = mIncludeOrExclude.contains(request.url().encodedPath()) ? mNewBaseUrl : null;
+                break;
+            case 2:
+                baseUrl = mIncludeOrExclude.contains(request.url().encodedPath()) ? null : mNewBaseUrl;
+                break;
+            default:
+                baseUrl = null;
+                break;
+        }
+
         if (baseUrl != null) {
             HttpUrl newUrl = request.url().newBuilder()
                     .host(baseUrl.host())

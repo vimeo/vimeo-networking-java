@@ -144,16 +144,44 @@ public final class VimeoClient {
     }
 
     /**
-     * Sets a new base URL to be used for requests
-     * by the VimeoClient for specific paths. If a null
-     * base URL is provided, the default base URL will be
-     * used by the client.
+     * Sets a new base URL to be used for requests by the
+     * VimeoClient for specific paths. Only the included
+     * paths will have there base URL changed. If you
+     * have called {@link #excludePathsForBaseUrl(HttpUrl, String...)}
+     * before this, you must also call {@link #resetBaseUrl()}
+     * before calling this method. Any call to this method will
+     * override the previously used base URL.
      *
-     * @param path    the path for which to change the base URL.
-     * @param baseUrl the new base URL to use, may be null.
+     * @param baseUrl    the base URL.
+     * @param inclusions the paths to include. If this is empty,
+     *                   then no paths will be changed.
      */
-    public void setBaseUrlForRequest(@NotNull String path, @Nullable HttpUrl baseUrl) {
-        mBaseUrlInterceptor.setBaseUrlForRequest(path, baseUrl);
+    public void includePathsForBaseUrl(@NotNull HttpUrl baseUrl, @NotNull String... inclusions) {
+        mBaseUrlInterceptor.includePathsForBaseUrl(baseUrl, inclusions);
+    }
+
+    /**
+     * Sets a new base URL to be used for all requests
+     * by VimeoClient except the excluded paths. Excluded
+     * paths will be the only ones to not have their base
+     * changed. If you have called {@link #includePathsForBaseUrl(HttpUrl, String...)}
+     * before this, you must also call {@link #resetBaseUrl()}
+     * before calling this method. Any call to this method will
+     * override the previously used base URL.
+     *
+     * @param baseUrl    the base URL.
+     * @param exclusions the paths to exclude. If this is empty,
+     *                   then all paths will be changed.
+     */
+    public void excludePathsForBaseUrl(@NotNull HttpUrl baseUrl, @NotNull String... exclusions) {
+        mBaseUrlInterceptor.excludePathsForBaseUrl(baseUrl, exclusions);
+    }
+
+    /**
+     * Resets the base URL used by the VimeoClient.
+     */
+    public void resetBaseUrl() {
+        mBaseUrlInterceptor.resetBaseUrl();
     }
 
     @NotNull
