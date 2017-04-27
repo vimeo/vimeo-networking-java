@@ -16,27 +16,27 @@ import org.junit.Test;
 public class VideoTest {
 
     @Test
-    public void verifyTypeAdapterWasGenerated() throws Exception {
+    public void test_verifyTypeAdapterWasGenerated() throws Exception {
         Utils.verifyTypeAdapterGeneration(Video.class);
     }
 
     @Test
-    public void verifyTypeAdapterWasGenerated_Status() throws Exception {
+    public void test_verifyTypeAdapterWasGenerated_Status() throws Exception {
         Utils.verifyTypeAdapterGeneration(Video.Status.class);
     }
 
     @Test
-    public void verifyTypeAdapterWasNotGenerated_ContentRating() throws Exception {
+    public void test_verifyTypeAdapterWasNotGenerated_ContentRating() throws Exception {
         Utils.verifyNoTypeAdapterGeneration(Video.ContentRating.class);
     }
 
     @Test
-    public void verifyTypeAdapterWasNotGenerated_LicenseValue() throws Exception {
+    public void test_verifyTypeAdapterWasNotGenerated_LicenseValue() throws Exception {
         Utils.verifyNoTypeAdapterGeneration(Video.LicenseValue.class);
     }
 
     @Test
-    public void verifyTypeAdapterWasNotGenerated_TvodVideoType() throws Exception {
+    public void test_verifyTypeAdapterWasNotGenerated_TvodVideoType() throws Exception {
         Utils.verifyNoTypeAdapterGeneration(TvodVideoType.class);
     }
 
@@ -51,7 +51,7 @@ public class VideoTest {
     }
 
     @Test
-    public void isTvod_Tvod() throws Exception {
+    public void test_isTvod_Tvod() throws Exception {
         ConnectionCollection connectionCollection = new ConnectionCollection();
         connectionCollection.mTvod = new Connection();
         Video tvod = createVideoWithConnectionCollection(connectionCollection);
@@ -60,7 +60,7 @@ public class VideoTest {
     }
 
     @Test
-    public void isTvod_NotTvod() throws Exception {
+    public void test_isTvod_NotTvod() throws Exception {
         // Null tvod field
         ConnectionCollection connectionCollection = new ConnectionCollection();
         connectionCollection.mTvod = null;
@@ -93,14 +93,14 @@ public class VideoTest {
     }
 
     @Test
-    public void isSvod_Svod() throws Exception {
+    public void test_isSvod_Svod() throws Exception {
         Video video = createVideoWithSvodInteraction(new SvodInteraction());
 
         Assert.assertTrue(video.isSvod());
     }
 
     @Test
-    public void isSvod_NotSvod() throws Exception {
+    public void test_isSvod_NotSvod() throws Exception {
         // Null svod interaction
         Video video1 = createVideoWithSvodInteraction(null);
 
@@ -118,5 +118,63 @@ public class VideoTest {
 
         Assert.assertFalse(video3.isSvod());
 
+    }
+
+    @Test
+    public void test_isTrailer_SvodNonTrailer() throws Exception {
+        Video video = createVideoWithSvodInteraction(new SvodInteraction());
+        Assert.assertTrue(video.isSvod());
+
+        video.mMetadata.mConnections = new ConnectionCollection();
+        video.mMetadata.mConnections.mTrailer = new Connection();
+
+        Assert.assertFalse(video.isTrailer());
+    }
+
+    @Test
+    public void test_isTrailer_SvodTrailer() throws Exception {
+        Video video = createVideoWithSvodInteraction(new SvodInteraction());
+        Assert.assertTrue(video.isSvod());
+
+        video.mMetadata.mConnections = new ConnectionCollection();
+        video.mMetadata.mConnections.mTrailer = null;
+
+        Assert.assertTrue(video.isTrailer());
+    }
+
+    @Test
+    public void test_isTrailer_TvodNonTrailer() throws Exception {
+        ConnectionCollection connectionCollection = new ConnectionCollection();
+        connectionCollection.mTvod = new Connection();
+        Video tvod = createVideoWithConnectionCollection(connectionCollection);
+        Assert.assertTrue(tvod.isTvod());
+
+        tvod.mMetadata.mConnections.mTrailer = new Connection();
+
+        Assert.assertFalse(tvod.isTrailer());
+    }
+
+    @Test
+    public void test_isTrailer_TvodTrailer() throws Exception {
+        ConnectionCollection connectionCollection = new ConnectionCollection();
+        connectionCollection.mTvod = new Connection();
+        Video tvod = createVideoWithConnectionCollection(connectionCollection);
+        Assert.assertTrue(tvod.isTvod());
+
+        tvod.mMetadata.mConnections.mTrailer = null;
+        Assert.assertTrue(tvod.isTrailer());
+    }
+
+    @Test
+    public void test_isTrailer_NonVodNonTrailer() throws Exception {
+        Video video = new Video();
+
+        Assert.assertFalse(video.isTrailer());
+
+        video.mMetadata = new Metadata();
+        video.mMetadata.mConnections = new ConnectionCollection();
+        video.mMetadata.mConnections.mTrailer = null;
+
+        Assert.assertFalse(video.isTrailer());
     }
 }

@@ -37,6 +37,6 @@ public class SeasonListTest {
 
     @Test
     public void verifyTypeAdapterWasGenerated() throws Exception {
-        Utils.verifyTypeAdapterGeneration(com.vimeo.networking.model.tvod.SeasonList.class);
+        Utils.verifyTypeAdapterGeneration(SeasonList.class);
     }
 }
