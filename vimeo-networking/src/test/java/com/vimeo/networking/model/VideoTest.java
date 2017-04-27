@@ -2,6 +2,8 @@ package com.vimeo.networking.model;
 
 import com.vimeo.networking.Utils;
 import com.vimeo.networking.model.Video.TvodVideoType;
+import com.vimeo.networking.model.playback.Play;
+import com.vimeo.networking.model.playback.Play.Status;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -176,5 +178,35 @@ public class VideoTest {
         video.mMetadata.mConnections.mTrailer = null;
 
         Assert.assertFalse(video.isTrailer());
+    }
+
+    @Test
+    public void test_isPlayable_Playable() throws Exception {
+        Video video = new Video();
+        video.mPlay = new Play();
+
+        video.mPlay.setStatus(Status.PLAYABLE);
+        Assert.assertTrue(video.isPlayable());
+    }
+
+    @Test
+    public void test_isPlayable_NotPlayable() throws Exception {
+        Video video = new Video();
+        video.mPlay = new Play();
+
+        video.mPlay.setStatus(Status.PURCHASE_REQUIRED);
+        Assert.assertFalse(video.isPlayable());
+
+        video.mPlay.setStatus(Status.RESTRICTED);
+        Assert.assertFalse(video.isPlayable());
+
+        video.mPlay.setStatus(Status.UNAVAILABLE);
+        Assert.assertFalse(video.isPlayable());
+
+        video.mPlay.setStatus(null);
+        Assert.assertFalse(video.isPlayable());
+
+        video.mPlay = null;
+        Assert.assertFalse(video.isPlayable());
     }
 }
