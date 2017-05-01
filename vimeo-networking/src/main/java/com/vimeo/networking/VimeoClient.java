@@ -133,7 +133,7 @@ public final class VimeoClient {
         mCache = mConfiguration.getCache();
         mRetrofit = createRetrofit();
         mVimeoService = mRetrofit.create(VimeoService.class);
-        mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION;
+        mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION + " (Java)";
         ClientLogger.setLogProvider(mConfiguration.mLogProvider);
         ClientLogger.setLogLevel(mConfiguration.mLogLevel);
 
