@@ -97,6 +97,9 @@ public final class VimeoClient {
     private final Gson mGson;
     private Timer mPinCodeAuthorizationTimer;
 
+    @NotNull
+    private final String mLibraryUserAgentComponent;
+
     /**
      * Currently authenticated account
      */
@@ -130,11 +133,23 @@ public final class VimeoClient {
         mCache = mConfiguration.getCache();
         mRetrofit = createRetrofit();
         mVimeoService = mRetrofit.create(VimeoService.class);
+        mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION + " (Java)";
         ClientLogger.setLogProvider(mConfiguration.mLogProvider);
         ClientLogger.setLogLevel(mConfiguration.mLogLevel);
 
         VimeoAccount vimeoAccount = mConfiguration.loadAccount();
         setVimeoAccount(vimeoAccount);
+    }
+
+    @NotNull
+    private String createUserAgent() {
+        String userProvidedAgent = mConfiguration.getUserAgentString();
+
+        if (userProvidedAgent != null && !userProvidedAgent.isEmpty()) {
+            return userProvidedAgent + ' ' + mLibraryUserAgentComponent;
+        } else {
+            return mLibraryUserAgentComponent;
+        }
     }
 
     private Retrofit createRetrofit() {
@@ -168,7 +183,7 @@ public final class VimeoClient {
 
                         // Customize the request to add the user agent and accept header to all of them
                         Request request = original.newBuilder()
-                                .header(Vimeo.HEADER_USER_AGENT, mConfiguration.mUserAgentString)
+                                .header(Vimeo.HEADER_USER_AGENT, createUserAgent())
                                 .header(Vimeo.HEADER_ACCEPT, getAcceptHeader())
                                 .method(original.method(), original.body())
                                 .build();
@@ -1616,7 +1631,7 @@ public final class VimeoClient {
      */
     // <editor-fold desc="Header values">
     public String getUserAgent() {
-        return mConfiguration.mUserAgentString;
+        return createUserAgent();
     }
 
     public String getAcceptHeader() {
