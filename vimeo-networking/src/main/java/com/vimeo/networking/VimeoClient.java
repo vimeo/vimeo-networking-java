@@ -146,7 +146,7 @@ public final class VimeoClient {
         String userProvidedAgent = mConfiguration.getUserAgentString();
 
         if (userProvidedAgent != null && !userProvidedAgent.isEmpty()) {
-            return userProvidedAgent + ' ' + mLibraryUserAgentComponent;
+            return mLibraryUserAgentComponent + ' ' + userProvidedAgent;
         } else {
             return mLibraryUserAgentComponent;
         }
