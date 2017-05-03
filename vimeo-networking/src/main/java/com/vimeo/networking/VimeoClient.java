@@ -104,6 +104,9 @@ public final class VimeoClient {
     @NotNull
     private final BaseUrlInterceptor mBaseUrlInterceptor = new BaseUrlInterceptor();
 
+    @NotNull
+    private final String mLibraryUserAgentComponent;
+
     /**
      * Currently authenticated account
      */
@@ -136,6 +139,7 @@ public final class VimeoClient {
         mCache = mConfiguration.getCache();
         mRetrofit = createRetrofit();
         mVimeoService = mRetrofit.create(VimeoService.class);
+        mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION + " (Java)";
         ClientLogger.setLogProvider(mConfiguration.mLogProvider);
         ClientLogger.setLogLevel(mConfiguration.mLogLevel);
 
@@ -185,6 +189,17 @@ public final class VimeoClient {
     }
 
     @NotNull
+    private String createUserAgent() {
+        String userProvidedAgent = mConfiguration.getUserAgentString();
+
+        if (userProvidedAgent != null && !userProvidedAgent.isEmpty()) {
+            return userProvidedAgent + ' ' + mLibraryUserAgentComponent;
+        } else {
+            return mLibraryUserAgentComponent;
+        }
+    }
+
+    @NotNull
     private Retrofit createRetrofit() {
         return new Retrofit.Builder().baseUrl(mConfiguration.mBaseURLString)
                 .client(createOkHttpClient())
@@ -218,7 +233,7 @@ public final class VimeoClient {
 
                         // Customize the request to add the user agent and accept header to all of them
                         Request request = original.newBuilder()
-                                .header(Vimeo.HEADER_USER_AGENT, mConfiguration.mUserAgentString)
+                                .header(Vimeo.HEADER_USER_AGENT, createUserAgent())
                                 .header(Vimeo.HEADER_ACCEPT, getAcceptHeader())
                                 .method(original.method(), original.body())
                                 .build();
@@ -1654,7 +1669,7 @@ public final class VimeoClient {
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Header values">
     public String getUserAgent() {
-        return mConfiguration.mUserAgentString;
+        return createUserAgent();
     }
 
     public String getAcceptHeader() {
