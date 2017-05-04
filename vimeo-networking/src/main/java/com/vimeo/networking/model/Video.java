@@ -29,6 +29,7 @@ import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -664,6 +665,7 @@ public class Video implements Serializable {
      * @return the TvodVideoType of the video or {@code TvodVideoType.NONE} if it is not a TVOD video or
      * {@code TvodVideoType.UNKNOWN} if it is a TVOD video that is not marked as rented, subscribed or bought
      */
+    @NotNull
     public TvodVideoType getTvodVideoType() {
         if (isTvod()) {
             if (isTrailer()) {
