@@ -135,7 +135,7 @@ public class ConnectionCollection implements Serializable {
 
     @Nullable
     @SerializedName("ondemand")
-    protected Connection mOndemand;
+    protected Connection mTvod;
 
     @Nullable
     @SerializedName("season")
@@ -289,8 +289,8 @@ public class ConnectionCollection implements Serializable {
     }
 
     @Nullable
-    public Connection getOndemand() {
-        return mOndemand;
+    public Connection getTvod() {
+        return mTvod;
     }
 
     @Nullable

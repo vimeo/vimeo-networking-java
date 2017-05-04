@@ -134,9 +134,9 @@ public final class Vimeo {
     public static final String FILTER_VIEWABLE = "viewable";
     public static final String FILTER_PLAYABLE = "playable";
     public static final String FILTER_TRENDING = "trending";
-    public static final String FILTER_VOD_RENTALS = "rented";
-    public static final String FILTER_VOD_SUBSCRIPTIONS = "subscription";
-    public static final String FILTER_VOD_PURCHASES = "purchased";
+    public static final String FILTER_TVOD_RENTALS = "rented";
+    public static final String FILTER_TVOD_SUBSCRIPTIONS = "subscription";
+    public static final String FILTER_TVOD_PURCHASES = "purchased";
     public static final String FILTER_NOTIFICATION_TYPES = "notification_types";
     // Filter Upload Date Values
     public static final String FILTER_UPLOAD_DATE_TODAY = "day";

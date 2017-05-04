@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Vimeo
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,42 +22,22 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.search;
+package com.vimeo.networking.model.tvod;
 
-import com.google.gson.annotations.SerializedName;
-import com.vimeo.stag.UseStag;
+import com.vimeo.networking.Utils;
+import com.vimeo.networking.model.tvod.TvodList;
 
-import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
 /**
- * Enum representing types of searches.
- * <p/>
- * Created by zetterstromk on 6/27/16.
+ * Unit tests for {@link TvodList}.
+ * <p>
+ * Created by restainoa on 4/20/17.
  */
-@SuppressWarnings("unused")
-@UseStag
-public enum SearchType {
+public class TvodListTest {
 
-    @SerializedName("clip")
-    VIDEO("clip"),
-    @SerializedName("ondemand")
-    TVOD("ondemand"),
-    @SerializedName("people")
-    USER("people"),
-    @SerializedName("channel")
-    CHANNEL("channel"),
-    @SerializedName("group")
-    GROUP("group");
-
-    @NotNull
-    private final String string;
-
-    SearchType(@NotNull String string) {
-        this.string = string;
-    }
-
-    @Override
-    public String toString() {
-        return this.string;
+    @Test
+    public void verifyTypeAdapterWasGenerated() throws Exception {
+        Utils.verifyTypeAdapterGeneration(TvodList.class);
     }
 }

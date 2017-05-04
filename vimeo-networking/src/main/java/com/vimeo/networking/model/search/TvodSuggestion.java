@@ -37,16 +37,16 @@ import java.io.Serializable;
  * Created by zetterstromk on 2/21/17.
  */
 @UseStag(FieldOption.SERIALIZED_NAME)
-public final class OndemandSuggestion extends BaseSuggestion implements Serializable {
+public final class TvodSuggestion extends BaseSuggestion implements Serializable {
 
     private static final long serialVersionUID = -1176546228110567452L;
 
     @Nullable
     @SerializedName("meta")
-    OndemandSuggestionMetadata mMetadata;
+    TvodSuggestionMetadata mMetadata;
 
     /**
-     * Return the {@link PictureCollection} associated with this VOD.
+     * Return the {@link PictureCollection} associated with this TVOD.
      */
     @Nullable
     public PictureCollection getPictures() {
@@ -54,10 +54,10 @@ public final class OndemandSuggestion extends BaseSuggestion implements Serializ
     }
 
     /**
-     * Returns the url representative of this VOD.
+     * Returns the url representative of this TVOD.
      */
     @Nullable
-    public String getOnDemandUrl() {
+    public String getTvodUrl() {
         return mMetadata != null ? mMetadata.mTargetUrl : null;
     }
 
@@ -66,7 +66,7 @@ public final class OndemandSuggestion extends BaseSuggestion implements Serializ
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
 
-        OndemandSuggestion that = (OndemandSuggestion) o;
+        TvodSuggestion that = (TvodSuggestion) o;
 
         if (!mText.equals(that.mText)) { return false; }
         return mMetadata != null ? mMetadata.equals(that.mMetadata) : that.mMetadata == null;
@@ -82,14 +82,14 @@ public final class OndemandSuggestion extends BaseSuggestion implements Serializ
 
     @Override
     public String toString() {
-        return "OndemandSuggestion{" +
+        return "TvodSuggestion{" +
                "mText='" + mText + '\'' +
                ", mMetadata=" + mMetadata +
                '}';
     }
 
     @UseStag(FieldOption.SERIALIZED_NAME)
-    public final static class OndemandSuggestionMetadata implements Serializable {
+    public final static class TvodSuggestionMetadata implements Serializable {
 
         private static final long serialVersionUID = 7538947801290601850L;
 

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Vimeo
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,23 +22,23 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.vod;
+package com.vimeo.networking.model.tvod;
 
 import com.vimeo.networking.model.BaseResponseList;
 import com.vimeo.stag.UseStag;
 
 /**
- * A list of {@link VodItem} objects
+ * A list of {@link TvodItem} objects
  * Created by rigbergh on 4/25/16.
  */
 @SuppressWarnings("unused")
 @UseStag
-public class VodList extends BaseResponseList<VodItem> {
+public class TvodList extends BaseResponseList<TvodItem> {
 
     private static final long serialVersionUID = 2086096986453255372L;
 
     @Override
-    public Class<VodItem> getModelClass() {
-        return VodItem.class;
+    public Class<TvodItem> getModelClass() {
+        return TvodItem.class;
     }
 }

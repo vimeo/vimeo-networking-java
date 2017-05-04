@@ -145,6 +145,10 @@ public class Play implements Serializable {
         return mStatus;
     }
 
+    public void setStatus(@Nullable Status status) {
+        mStatus = status;
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // Helpers
     // -----------------------------------------------------------------------------------------------------

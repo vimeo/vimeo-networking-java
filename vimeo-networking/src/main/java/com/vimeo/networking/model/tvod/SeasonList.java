@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Vimeo
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,42 +22,23 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.search;
+package com.vimeo.networking.model.tvod;
 
-import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.BaseResponseList;
 import com.vimeo.stag.UseStag;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
- * Enum representing types of searches.
- * <p/>
- * Created by zetterstromk on 6/27/16.
+ * A list of {@link Season} items
+ * Created by zetterstromk on 10/4/16.
  */
 @SuppressWarnings("unused")
 @UseStag
-public enum SearchType {
+public class SeasonList extends BaseResponseList<Season> {
 
-    @SerializedName("clip")
-    VIDEO("clip"),
-    @SerializedName("ondemand")
-    TVOD("ondemand"),
-    @SerializedName("people")
-    USER("people"),
-    @SerializedName("channel")
-    CHANNEL("channel"),
-    @SerializedName("group")
-    GROUP("group");
-
-    @NotNull
-    private final String string;
-
-    SearchType(@NotNull String string) {
-        this.string = string;
-    }
+    private static final long serialVersionUID = -2072805722241898821L;
 
     @Override
-    public String toString() {
-        return this.string;
+    public Class<Season> getModelClass() {
+        return Season.class;
     }
 }

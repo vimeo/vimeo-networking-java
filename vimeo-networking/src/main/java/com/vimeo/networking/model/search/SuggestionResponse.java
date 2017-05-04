@@ -43,15 +43,15 @@ public class SuggestionResponse implements Serializable {
 
     @Nullable
     @SerializedName("ondemand_title")
-    ArrayList<OndemandSuggestion> mOndemandSuggestions;
+    ArrayList<TvodSuggestion> mTvodSuggestions;
 
     @Nullable
     @SerializedName("video")
     ArrayList<VideoSuggestion> mVideoSuggestions;
 
     @Nullable
-    public ArrayList<OndemandSuggestion> getOndemandSuggestionList() {
-        return mOndemandSuggestions;
+    public ArrayList<TvodSuggestion> getTvodSuggestionList() {
+        return mTvodSuggestions;
     }
 
     @Nullable
@@ -66,7 +66,7 @@ public class SuggestionResponse implements Serializable {
 
         SuggestionResponse that = (SuggestionResponse) o;
 
-        if (mOndemandSuggestions != null ? !mOndemandSuggestions.equals(that.mOndemandSuggestions) : that.mOndemandSuggestions != null) {
+        if (mTvodSuggestions != null ? !mTvodSuggestions.equals(that.mTvodSuggestions) : that.mTvodSuggestions != null) {
             return false;
         }
         return mVideoSuggestions != null ? mVideoSuggestions.equals(that.mVideoSuggestions) : that.mVideoSuggestions == null;
@@ -75,7 +75,7 @@ public class SuggestionResponse implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = mOndemandSuggestions != null ? mOndemandSuggestions.hashCode() : 0;
+        int result = mTvodSuggestions != null ? mTvodSuggestions.hashCode() : 0;
         result = 31 * result + (mVideoSuggestions != null ? mVideoSuggestions.hashCode() : 0);
         return result;
     }
@@ -83,7 +83,7 @@ public class SuggestionResponse implements Serializable {
     @Override
     public String toString() {
         return "SuggestionResponse{" +
-               "mOndemandSuggestions=" + mOndemandSuggestions +
+               "mTvodSuggestions=" + mTvodSuggestions +
                ", mVideoSuggestions=" + mVideoSuggestions +
                '}';
     }

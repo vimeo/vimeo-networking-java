@@ -39,9 +39,9 @@ public final class NotificationConstants {
     public static final String NOTIFICATION_MENTION = "mention";
     public static final String NOTIFICATION_STORAGE_WARNING = "storage_warning";
     public static final String NOTIFICATION_ACCOUNT_EXPIRATION_WARNING = "account_expiration_warning";
-    public static final String NOTIFICATION_VOD_PURCHASE = "vod_purchase";
-    public static final String NOTIFICATION_VOD_PREORDER_AVAILABLE = "vod_preorder_available";
-    public static final String NOTIFICATION_VOD_RENTAL_EXPIRATION_WARNING = "vod_rental_expiration_warning";
+    public static final String NOTIFICATION_TVOD_PURCHASE = "vod_purchase";
+    public static final String NOTIFICATION_TVOD_PREORDER_AVAILABLE = "vod_preorder_available";
+    public static final String NOTIFICATION_TVOD_RENTAL_EXPIRATION_WARNING = "vod_rental_expiration_warning";
 
     private NotificationConstants() {
     }
