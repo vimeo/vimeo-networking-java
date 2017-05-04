@@ -42,6 +42,7 @@ import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
+import com.vimeo.networking.utils.BaseUrlInterceptor;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -85,9 +86,11 @@ public final class VimeoClient {
 
     @NotNull
     private final Configuration mConfiguration;
+    @NotNull
     private final VimeoService mVimeoService;
     @Nullable
     private final Cache mCache;
+    @Nullable
     private String mCurrentCodeGrantState;
 
     @NotNull
@@ -95,7 +98,11 @@ public final class VimeoClient {
 
     @NotNull
     private final Gson mGson;
+    @Nullable
     private Timer mPinCodeAuthorizationTimer;
+
+    @NotNull
+    private final BaseUrlInterceptor mBaseUrlInterceptor = new BaseUrlInterceptor();
 
     @NotNull
     private final String mLibraryUserAgentComponent;
@@ -103,13 +110,12 @@ public final class VimeoClient {
     /**
      * Currently authenticated account
      */
+    @Nullable
     private VimeoAccount mVimeoAccount;
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Configuration
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Configuration
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Configuration">
     @Nullable
     private static VimeoClient sSharedInstance;
@@ -141,6 +147,47 @@ public final class VimeoClient {
         setVimeoAccount(vimeoAccount);
     }
 
+    /**
+     * Sets a new base URL to be used for requests by the
+     * VimeoClient for specific paths. Only the included
+     * paths will have there base URL changed. If you
+     * have called {@link #excludePathsForBaseUrl(HttpUrl, String...)}
+     * before this, you must also call {@link #resetBaseUrl()}
+     * before calling this method. Any call to this method will
+     * override the previously used base URL.
+     *
+     * @param baseUrl    the base URL.
+     * @param inclusions the paths to include. If this is empty,
+     *                   then no paths will be changed.
+     */
+    public void includePathsForBaseUrl(@NotNull HttpUrl baseUrl, @NotNull String... inclusions) {
+        mBaseUrlInterceptor.includePathsForBaseUrl(baseUrl, inclusions);
+    }
+
+    /**
+     * Sets a new base URL to be used for all requests
+     * by VimeoClient except the excluded paths. Excluded
+     * paths will be the only ones to not have their base
+     * changed. If you have called {@link #includePathsForBaseUrl(HttpUrl, String...)}
+     * before this, you must also call {@link #resetBaseUrl()}
+     * before calling this method. Any call to this method will
+     * override the previously used base URL.
+     *
+     * @param baseUrl    the base URL.
+     * @param exclusions the paths to exclude. If this is empty,
+     *                   then all paths will be changed.
+     */
+    public void excludePathsForBaseUrl(@NotNull HttpUrl baseUrl, @NotNull String... exclusions) {
+        mBaseUrlInterceptor.excludePathsForBaseUrl(baseUrl, exclusions);
+    }
+
+    /**
+     * Resets the base URL used by the VimeoClient.
+     */
+    public void resetBaseUrl() {
+        mBaseUrlInterceptor.resetBaseUrl();
+    }
+
     @NotNull
     private String createUserAgent() {
         String userProvidedAgent = mConfiguration.getUserAgentString();
@@ -152,6 +199,7 @@ public final class VimeoClient {
         }
     }
 
+    @NotNull
     private Retrofit createRetrofit() {
         return new Retrofit.Builder().baseUrl(mConfiguration.mBaseURLString)
                 .client(createOkHttpClient())
@@ -159,6 +207,7 @@ public final class VimeoClient {
                 .build();
     }
 
+    @NotNull
     private OkHttpClient createOkHttpClient() {
         RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
         retrofitClientBuilder.setCache(mCache)
@@ -176,6 +225,7 @@ public final class VimeoClient {
                 .setReadTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
                 .setConnectionTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
                 .addInterceptor(new LoggingInterceptor())
+                .addInterceptor(mBaseUrlInterceptor)
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -219,6 +269,7 @@ public final class VimeoClient {
         }
     }
 
+    @NotNull
     public Retrofit getRetrofit() {
         return mRetrofit;
     }
@@ -270,11 +321,9 @@ public final class VimeoClient {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Authentication
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Authentication
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Authentication">
 
     /**
@@ -609,7 +658,7 @@ public final class VimeoClient {
     public Call<Object> logOut(@Nullable final VimeoCallback<Object> callback) {
         // If you've provided an access token to the configuration builder, we're assuming that you wouldn't
         // want to be able to log out of it, because this would invalidate the constant you've provided us.
-        if (mConfiguration.mAccessToken != null &&
+        if (mConfiguration.mAccessToken != null && mVimeoAccount != null &&
             mConfiguration.mAccessToken.equals(mVimeoAccount.getAccessToken())) {
             if (callback != null) {
                 callback.failure(new VimeoError(
@@ -709,6 +758,7 @@ public final class VimeoClient {
      */
     private static class PinCodeAccountCallback extends AccountCallback {
 
+        @NotNull
         private final Timer mTimer;
 
         public PinCodeAccountCallback(@NotNull VimeoClient client, @NotNull AuthCallback callback,
@@ -719,9 +769,7 @@ public final class VimeoClient {
 
         private void cancelPolling() {
             VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
-            if (mTimer != null) {
-                mTimer.cancel();
-            }
+            mTimer.cancel();
         }
 
         @Override
@@ -768,7 +816,7 @@ public final class VimeoClient {
         private final String mScope;
 
         PinCodePollingTimerTask(@NotNull PinCodeInfo pinCodeInfo, @NotNull Timer timer, int expiresInSeconds,
-                                @NotNull AuthCallback authCallback, @NotNull VimeoClient client,
+                                @NotNull AuthCallback authCallback, @Nullable VimeoClient client,
                                 @NotNull String scope) {
             mTimer = timer;
             mPinCodeInfo = pinCodeInfo;
@@ -869,11 +917,9 @@ public final class VimeoClient {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Editing (Video, User)
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Editing (Video, User)
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Editing (Video, User)">
     @Nullable
     public Call<Object> editVideo(String uri, String title, String description, @Nullable String password,
@@ -1050,11 +1096,9 @@ public final class VimeoClient {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Pictures
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Pictures
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Pictures">
 
     /**
@@ -1115,11 +1159,9 @@ public final class VimeoClient {
 
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Video actions (Like, Watch Later, Commenting)
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Video actions (Like, Watch Later, Commenting)
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Video actions (Like, Watch Later, Commenting)">
     public Call<Object> updateFollow(boolean follow, String uri, ModelCallback callback) {
         return updateFollow(follow, uri, callback, true);
@@ -1252,11 +1294,9 @@ public final class VimeoClient {
     }
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Gets, posts, puts, deletes
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Gets, posts, puts, deletes
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Gets, posts, puts, deletes">
     public void deleteVideo(String uri, Map<String, String> options, ModelCallback callback) {
         deleteContent(uri, options, callback, true);
@@ -1624,11 +1664,9 @@ public final class VimeoClient {
 
     // </editor-fold>
 
-    /**
-     * -----------------------------------------------------------------------------------------------------
-     * Header values
-     * -----------------------------------------------------------------------------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------
+    // Header values
+    // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Header values">
     public String getUserAgent() {
         return createUserAgent();
