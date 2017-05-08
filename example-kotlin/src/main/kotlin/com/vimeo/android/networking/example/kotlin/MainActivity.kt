@@ -220,7 +220,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     // <editor-fold desc="Helpers">
 
     private fun toast(string: String) {
-        Toast.makeText(this@MainActivity, string, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
@@ -230,29 +230,26 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     /*
     // Can only fetch quota if you have the upload privilege
-    private void fetchAccountType() {
-        mProgressDialog.show();
-        mApiClient.fetchCurrentUser(new ModelCallback<User>(User.class) {
-            @Override
-            public void success(User user) {
-                long fileSizeBytes = user.getFreeUploadSpace();
-                if (user.getFreeUploadSpace() != Vimeo.NOT_FOUND) {
-                    String formattedFileSize =
-                            Formatter.formatShortFileSize(TestApp.getAppContext(), fileSizeBytes);
-                    mRequestOutputTv.setText("Available Space: " + formattedFileSize);
-                    toast("Quote Check Success");
+    private fun fetchAccountTypes() {
+        mProgressDialog!!.show()
+        mApiClient.fetchCurrentUser(object : ModelCallback<User>(User::class.java) {
+            override fun success(user: User) {
+                val fileSizeBytes = user.freeUploadSpace
+                if (user.freeUploadSpace.compareTo(Vimeo.NOT_FOUND) != 0) {
+                    val formattedFileSize = Formatter.formatShortFileSize(TestApp.appContext, fileSizeBytes)
+                    mRequestOutputTv!!.text = "Available Space: " + formattedFileSize
+                    toast("Quote Check Success")
                 } else {
-                    toast("Quote Check Failure");
+                    toast("Quote Check Failure")
                 }
-                mProgressDialog.hide();
+                mProgressDialog!!.hide()
             }
 
-            @Override
-            public void failure(VimeoError error) {
-                mRequestOutputTv.setText(error.getDeveloperMessage());
-                mProgressDialog.hide();
+            override fun failure(error: VimeoError) {
+                mRequestOutputTv!!.text = error.developerMessage
+                mProgressDialog!!.hide()
             }
-        });
+        })
     }
     */
 
