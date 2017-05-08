@@ -13,7 +13,9 @@ import com.vimeo.networking.Vimeo.LogLevel
 import com.vimeo.networking.VimeoClient
 
 /**
- * Created by kylevenn on 1/27/16.
+ * The application class.
+ *
+ * Created by anthonyr on 5/8/17.
  */
 class TestApp : Application() {
 

@@ -7,8 +7,7 @@ import com.vimeo.networking.logging.LogProvider
 /**
  * Logger delegate for handling logs coming from the Networking library
  *
- *
- * Created by kylevenn on 1/27/16.
+ * Created by anthonyr on 5/8/17.
  */
 class NetworkingLogger : LogProvider {
 
@@ -29,7 +28,6 @@ class NetworkingLogger : LogProvider {
     }
 
     companion object {
-
         private val TEST_APP = "~NET TEST APP~"
     }
 }

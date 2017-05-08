@@ -6,7 +6,10 @@ import com.vimeo.networking.GsonDeserializer
 import com.vimeo.networking.callbacks.ModelCallback
 
 /**
- * Created by zetterstromk on 7/24/15.
+ * An instance of the GsonDeserializer
+ * that deserializes content on an AsyncTask.
+ *
+ * Created by anthonyr on 5/8/17.
  */
 class AndroidGsonDeserializer : GsonDeserializer() {
 

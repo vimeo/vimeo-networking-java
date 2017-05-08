@@ -3,7 +3,6 @@ package com.vimeo.android.networking.example.kotlin
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-
 import com.vimeo.networking.model.User
 import com.vimeo.networking.model.VimeoAccount
 import com.vimeo.networking.utils.VimeoNetworkUtil
@@ -11,8 +10,7 @@ import com.vimeo.networking.utils.VimeoNetworkUtil
 /**
  * Class for persisting the the auth access token (and possibly the user)
  *
- *
- * Created by kylevenn on 5/26/15.
+ * Created by anthonyr on 5/8/17.
  */
 object AccountPreferenceManager {
 
@@ -37,12 +35,9 @@ object AccountPreferenceManager {
     // NOTE: This happens on the main thread, don't do this
     var clientAccount: VimeoAccount?
         get() {
-            val accountJSON = sSharedPreferences!!.getString(CLIENT_ACCOUNT_JSON, null)
-            return if (accountJSON == null) {
-                null
-            } else {
-                VimeoNetworkUtil.getGson().fromJson(accountJSON, VimeoAccount::class.java)
-            }
+            val accountJSON = sSharedPreferences!!.getString(CLIENT_ACCOUNT_JSON, null) ?: return null
+
+            return VimeoNetworkUtil.getGson().fromJson(accountJSON, VimeoAccount::class.java)
         }
         set(vimeoAccount) {
             if (vimeoAccount != null) {
@@ -57,8 +52,7 @@ object AccountPreferenceManager {
 
     val currentUser: User?
         get() {
-            val clientAccount = AccountPreferenceManager.clientAccount
-            return clientAccount?.user
+            return AccountPreferenceManager.clientAccount?.user
         }
 
     fun cacheClientCredentialsAccount(vimeoAccount: VimeoAccount?) {
@@ -70,12 +64,9 @@ object AccountPreferenceManager {
 
     val cachedClientCredentialsAccount: VimeoAccount?
         get() {
-            val accountJSON = sSharedPreferences!!.getString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, null)
-            return if (accountJSON == null) {
-                null
-            } else {
-                VimeoNetworkUtil.getGson().fromJson(accountJSON, VimeoAccount::class.java)
-            }
+            val accountJSON = sSharedPreferences!!.getString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, null) ?: return null
+
+            return VimeoNetworkUtil.getGson().fromJson(accountJSON, VimeoAccount::class.java)
         }
 
     // </editor-fold>

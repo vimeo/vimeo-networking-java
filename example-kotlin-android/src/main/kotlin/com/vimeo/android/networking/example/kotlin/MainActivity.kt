@@ -20,6 +20,11 @@ import com.vimeo.networking.model.User
 import com.vimeo.networking.model.VideoList
 import com.vimeo.networking.model.error.VimeoError
 
+/**
+ * The main activity.
+ *
+ * Created by anthonyr on 5/8/17.
+ **/
 class MainActivity : AppCompatActivity(), OnClickListener {
 
     private val mApiClient = VimeoClient.getInstance()
@@ -92,15 +97,15 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         mProgressDialog!!.show()
         mApiClient.fetchNetworkContent(STAFF_PICKS_VIDEO_URI, object : ModelCallback<VideoList>(VideoList::class.java) {
             override fun success(videoList: VideoList?) {
-                if (videoList != null && videoList.mData != null) {
+                if (videoList != null && videoList.data != null) {
                     var videoTitlesString = ""
                     var addNewLine = false
-                    for (video in videoList.mData) {
+                    for (video in videoList.data) {
                         if (addNewLine) {
                             videoTitlesString += "\n"
                         }
                         addNewLine = true
-                        videoTitlesString += video.mName
+                        videoTitlesString += video.name
                     }
                     mRequestOutputTv!!.text = videoTitlesString
                 }
@@ -121,7 +126,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         mApiClient.fetchCurrentUser(object : ModelCallback<User>(User::class.java) {
             override fun success(user: User?) {
                 if (user != null) {
-                    mRequestOutputTv!!.text = "Current account type: " + user.mAccount
+                    mRequestOutputTv!!.text = "Current account type: " + user.account
                     toast("Account Check Success")
                 } else {
                     toast("Account Check Failure")
