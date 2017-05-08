@@ -120,8 +120,8 @@ public class NotificationConnection extends Connection {
         @SerializedName(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
         protected int mVideoAvailableTotal;
 
-        @SerializedName(NotificationConstants.NOTIFICATION_CREATOR_VIDEO_UPLOADED)
-        protected int mCreatorVideoUploadedTotal;
+        @SerializedName(NotificationConstants.NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE)
+        protected int mFollowedUserVideoAvailableTotal;
 
         @SerializedName(NotificationConstants.NOTIFICATION_MENTION)
         protected int mMentionTotal;
@@ -167,8 +167,8 @@ public class NotificationConnection extends Connection {
             return mVideoAvailableTotal;
         }
 
-        public int getCreatorVideoUploadedTotal() {
-            return mCreatorVideoUploadedTotal;
+        public int getFollowedUserVideoAvailableTotal() {
+            return mFollowedUserVideoAvailableTotal;
         }
 
         public int getMentionTotal() {

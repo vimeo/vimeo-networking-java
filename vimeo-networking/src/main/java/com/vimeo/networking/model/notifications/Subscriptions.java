@@ -63,8 +63,8 @@ public class Subscriptions implements Serializable {
     @SerializedName(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
     protected boolean mVideoAvailable;
 
-    @SerializedName(NotificationConstants.NOTIFICATION_CREATOR_VIDEO_UPLOADED)
-    protected boolean mCreatorUploads;
+    @SerializedName(NotificationConstants.NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE)
+    protected boolean mFollowedUserVideoAvailable;
 
     public boolean isReceivingComment() {
         return mComment;
@@ -114,12 +114,12 @@ public class Subscriptions implements Serializable {
         mVideoAvailable = receive;
     }
 
-    public boolean isReceivingCreatorUploads() {
-        return mCreatorUploads;
+    public boolean isReceivingFollowedUserVideoAvailable() {
+        return mFollowedUserVideoAvailable;
     }
 
-    public void receiveCreatorUploads(boolean receive) {
-        mCreatorUploads = receive;
+    public void receiveFollowedUserVideoAvailable(boolean receive) {
+        mFollowedUserVideoAvailable = receive;
     }
 
     @NotNull
@@ -132,7 +132,7 @@ public class Subscriptions implements Serializable {
         map.put(NotificationConstants.NOTIFICATION_REPLY, mReply);
         map.put(NotificationConstants.NOTIFICATION_FOLLOW, mFollow);
         map.put(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE, mVideoAvailable);
-        map.put(NotificationConstants.NOTIFICATION_CREATOR_VIDEO_UPLOADED, mCreatorUploads);
+        map.put(NotificationConstants.NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE, mFollowedUserVideoAvailable);
 
         return map;
     }
