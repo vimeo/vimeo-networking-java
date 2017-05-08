@@ -63,6 +63,9 @@ public class Subscriptions implements Serializable {
     @SerializedName(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
     protected boolean mVideoAvailable;
 
+    @SerializedName(NotificationConstants.NOTIFICATION_CREATOR_VIDEO_UPLOADED)
+    protected boolean mCreatorUploads;
+
     public boolean isReceivingComment() {
         return mComment;
     }
@@ -111,6 +114,14 @@ public class Subscriptions implements Serializable {
         mVideoAvailable = receive;
     }
 
+    public boolean isReceivingCreatorUploads() {
+        return mCreatorUploads;
+    }
+
+    public void receiveCreatorUploads(boolean receive) {
+        mCreatorUploads = receive;
+    }
+
     @NotNull
     public Map<String, Boolean> getMapFromSubscriptions() {
         Map<String, Boolean> map = new HashMap<>();
@@ -121,6 +132,7 @@ public class Subscriptions implements Serializable {
         map.put(NotificationConstants.NOTIFICATION_REPLY, mReply);
         map.put(NotificationConstants.NOTIFICATION_FOLLOW, mFollow);
         map.put(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE, mVideoAvailable);
+        map.put(NotificationConstants.NOTIFICATION_CREATOR_VIDEO_UPLOADED, mCreatorUploads);
 
         return map;
     }
