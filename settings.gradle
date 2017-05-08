@@ -1,1 +1,1 @@
-include ':vimeo-networking', ':example'
+include ':vimeo-networking', ':example', ':example-kotlin'
