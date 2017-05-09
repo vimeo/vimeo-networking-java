@@ -43,6 +43,7 @@ public enum NotificationType {
     NOTIFICATION_TYPE_LIKE,
     NOTIFICATION_TYPE_REPLY,
     NOTIFICATION_TYPE_VIDEO_AVAILABLE,
+    NOTIFICATION_TYPE_FOLLOWED_USER_VIDEO_AVAILABLE,
     NOTIFICATION_TYPE_UNKNOWN;
 
     @NotNull
@@ -60,6 +61,8 @@ public enum NotificationType {
                 return NOTIFICATION_TYPE_REPLY;
             case NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE:
                 return NOTIFICATION_TYPE_VIDEO_AVAILABLE;
+            case NotificationConstants.NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE:
+                return NOTIFICATION_TYPE_FOLLOWED_USER_VIDEO_AVAILABLE;
             default:
                 return NOTIFICATION_TYPE_UNKNOWN;
         }
@@ -80,6 +83,8 @@ public enum NotificationType {
                 return NotificationConstants.NOTIFICATION_REPLY;
             case NOTIFICATION_TYPE_VIDEO_AVAILABLE:
                 return NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE;
+            case NOTIFICATION_TYPE_FOLLOWED_USER_VIDEO_AVAILABLE:
+                return NotificationConstants.NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE;
             case NOTIFICATION_TYPE_UNKNOWN:
             default:
                 return null;

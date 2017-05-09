@@ -63,6 +63,9 @@ public class Subscriptions implements Serializable {
     @SerializedName(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE)
     protected boolean mVideoAvailable;
 
+    @SerializedName(NotificationConstants.NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE)
+    protected boolean mFollowedUserVideoAvailable;
+
     public boolean isReceivingComment() {
         return mComment;
     }
@@ -111,6 +114,24 @@ public class Subscriptions implements Serializable {
         mVideoAvailable = receive;
     }
 
+    /**
+     * @return true if this user is subscribed to receiving the push notification
+     * for {@link NotificationConstants#NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE}
+     */
+    public boolean isReceivingFollowedUserVideoAvailable() {
+        return mFollowedUserVideoAvailable;
+    }
+
+    /**
+     * Allows the followed user video available subscription to be set for use in
+     * {@link #getMapFromSubscriptions()} or {@link #isReceivingFollowedUserVideoAvailable()}
+     *
+     * @param receive true if the user should receive the notification, false otherwise
+     */
+    public void receiveFollowedUserVideoAvailable(boolean receive) {
+        mFollowedUserVideoAvailable = receive;
+    }
+
     @NotNull
     public Map<String, Boolean> getMapFromSubscriptions() {
         Map<String, Boolean> map = new HashMap<>();
@@ -121,6 +142,7 @@ public class Subscriptions implements Serializable {
         map.put(NotificationConstants.NOTIFICATION_REPLY, mReply);
         map.put(NotificationConstants.NOTIFICATION_FOLLOW, mFollow);
         map.put(NotificationConstants.NOTIFICATION_VIDEO_AVAILABLE, mVideoAvailable);
+        map.put(NotificationConstants.NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE, mFollowedUserVideoAvailable);
 
         return map;
     }

@@ -42,6 +42,7 @@ public final class NotificationConstants {
     public static final String NOTIFICATION_TVOD_PURCHASE = "vod_purchase";
     public static final String NOTIFICATION_TVOD_PREORDER_AVAILABLE = "vod_preorder_available";
     public static final String NOTIFICATION_TVOD_RENTAL_EXPIRATION_WARNING = "vod_rental_expiration_warning";
+    public static final String NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE = "followed_user_video_available";
 
     private NotificationConstants() {
     }
