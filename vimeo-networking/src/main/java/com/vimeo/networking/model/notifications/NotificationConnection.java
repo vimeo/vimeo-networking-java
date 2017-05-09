@@ -167,6 +167,9 @@ public class NotificationConnection extends Connection {
             return mVideoAvailableTotal;
         }
 
+        /**
+         * @return the count of followed user video available notifications
+         */
         public int getFollowedUserVideoAvailableTotal() {
             return mFollowedUserVideoAvailableTotal;
         }

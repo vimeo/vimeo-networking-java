@@ -114,10 +114,20 @@ public class Subscriptions implements Serializable {
         mVideoAvailable = receive;
     }
 
+    /**
+     * @return true if this user is subscribed to receiving the push notification
+     * for {@link NotificationConstants#NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE}
+     */
     public boolean isReceivingFollowedUserVideoAvailable() {
         return mFollowedUserVideoAvailable;
     }
 
+    /**
+     * Allows the followed user video available subscription to be set for use in
+     * {@link #getMapFromSubscriptions()} or {@link #isReceivingFollowedUserVideoAvailable()}
+     *
+     * @param receive true if the user should receive the notification, false otherwise
+     */
     public void receiveFollowedUserVideoAvailable(boolean receive) {
         mFollowedUserVideoAvailable = receive;
     }
