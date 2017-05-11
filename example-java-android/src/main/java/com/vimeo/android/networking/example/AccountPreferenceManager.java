@@ -16,16 +16,11 @@ import com.vimeo.networking.utils.VimeoNetworkUtil;
  */
 public class AccountPreferenceManager {
 
-    private static AccountPreferenceManager sInstance;
     private static SharedPreferences sSharedPreferences;
 
-    private AccountPreferenceManager(Context context) {
-        sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
     public static synchronized void initializeInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new AccountPreferenceManager(context.getApplicationContext());
+        if (sSharedPreferences == null) {
+            sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         }
     }
 

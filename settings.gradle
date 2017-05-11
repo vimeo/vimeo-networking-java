@@ -1,1 +1,1 @@
-include ':vimeo-networking', ':example'
+include ':vimeo-networking', ':example-java-android', ':example-kotlin-android'
