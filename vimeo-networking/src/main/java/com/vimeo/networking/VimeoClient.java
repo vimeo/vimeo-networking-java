@@ -60,6 +60,7 @@ import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Credentials;
@@ -68,8 +69,10 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -204,6 +207,7 @@ public final class VimeoClient {
         return new Retrofit.Builder().baseUrl(mConfiguration.mBaseURLString)
                 .client(createOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(mGson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
@@ -1292,6 +1296,7 @@ public final class VimeoClient {
             return null;
         }
     }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -1420,6 +1425,36 @@ public final class VimeoClient {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    @Nullable
+    public Observable<retrofit2.Response<ResponseBody>> fetchContentRx(String uri, CacheControl cacheControl,
+                                                                       @Nullable String query,
+                                                                       @Nullable Map<String, String> refinementMap,
+                                                                       @Nullable String fieldFilter) {
+        if (uri == null || uri.isEmpty()) {
+            throw new AssertionError("uri cannot be null or empty");
+        }
+        String cacheHeaderValue = createCacheControlString(cacheControl);
+
+        Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
+
+        return mVimeoService.GET_RX(getAuthHeader(), uri, queryMap, cacheHeaderValue);
+    }
+
+    @Nullable
+    public Observable<retrofit2.Response<List<Video>>> fetchContentRxVideos(String uri, CacheControl cacheControl,
+                                                                       @Nullable String query,
+                                                                       @Nullable Map<String, String> refinementMap,
+                                                                       @Nullable String fieldFilter) {
+        if (uri == null || uri.isEmpty()) {
+            throw new AssertionError("uri cannot be null or empty");
+        }
+        String cacheHeaderValue = createCacheControlString(cacheControl);
+
+        Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
+
+        return mVimeoService.GET_RX_VIDEOS(getAuthHeader(), uri, queryMap, cacheHeaderValue);
     }
 
     /**
