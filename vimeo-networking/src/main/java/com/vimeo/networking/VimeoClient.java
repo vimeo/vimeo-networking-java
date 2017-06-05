@@ -1442,21 +1442,6 @@ public final class VimeoClient {
         return mVimeoService.GET_RX(getAuthHeader(), uri, queryMap, cacheHeaderValue);
     }
 
-    @Nullable
-    public Observable<retrofit2.Response<List<Video>>> fetchContentRxVideos(String uri, CacheControl cacheControl,
-                                                                       @Nullable String query,
-                                                                       @Nullable Map<String, String> refinementMap,
-                                                                       @Nullable String fieldFilter) {
-        if (uri == null || uri.isEmpty()) {
-            throw new AssertionError("uri cannot be null or empty");
-        }
-        String cacheHeaderValue = createCacheControlString(cacheControl);
-
-        Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
-
-        return mVimeoService.GET_RX_VIDEOS(getAuthHeader(), uri, queryMap, cacheHeaderValue);
-    }
-
     /**
      * A generic GET call that takes in the URI of the specific resource.
      *

@@ -34,7 +34,6 @@ import com.vimeo.networking.model.search.SuggestionResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -202,10 +201,6 @@ public interface VimeoService {
     @GET
     Observable<retrofit2.Response<ResponseBody>> GET_RX(@Header("Authorization") String authHeader, @Url String uri,
                                                         @QueryMap Map<String, String> options, @Header("Cache-Control") String cacheHeaderValue);
-
-    @GET
-    Observable<retrofit2.Response<List<Video>>> GET_RX_VIDEOS(@Header("Authorization") String authHeader, @Url String uri,
-                                                              @QueryMap Map<String, String> options, @Header("Cache-Control") String cacheHeaderValue);
 
     @POST
     Call<Object> POST(@Header("Authorization") String authHeader, @Url String uri,
