@@ -43,7 +43,6 @@ dependencies {
 }
 
 group = 'com.vimeo.networking'
-version = '1.1.0'
 
 buildConfig {
     appName = project.name
@@ -91,10 +90,15 @@ allprojects {
         def bintrayProject = project.plugins.hasPlugin('com.jfrog.bintray')
         if (bintrayProject) {
             bintray {
-                Properties properties = new Properties()
-                properties.load(project.rootProject.file('local.properties').newDataInputStream())
-                user = properties.getProperty('bintray.user')
-                key = properties.getProperty('bintray.apikey')
+                // CI Publish - next 2 lines
+                user = System.getenv('BINTRAY_USER')
+                // api key
+                key = System.getenv('BINTRAY_API_KEY')
+                // Local publish - uncomment the next 4 lines
+                // Properties properties = new Properties()
+                // properties.load(project.rootProject.file('local.properties').newDataInputStream())
+                // user = properties.getProperty('bintray.user')
+                // key = properties.getProperty('bintray.apikey')
                 publications = ['mavenJava']
                 dryRun = false // Whether to run this as dry-run, without deploying
                 pkg {
