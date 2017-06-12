@@ -28,6 +28,38 @@ platform :android do
     end
   end
 
+  desc "main entrypoint for CI"
+  lane :shipit do
+    if is_ci
+      # If the build was triggered by a Pull Request
+      if ENV['TRAVIS_PULL_REQUEST']
+        test
+      else
+        # This build was triggered by a branch update
+        branch = git_branch
+        # If the branch is master, this means new updates were merged into master
+        # Then publish the artifacts to bintray
+        if branch == 'origin/master'
+          publish_artifacts
+        end
+      end
+    end
+  end
+
+  desc "publish artifacts to bintray"
+  lane :publish_artifacts do
+
+    # Upload to bintray
+    gradle(
+      task: "vimeo-networking:bintrayUpload"
+    )
+
+    # Sync version files to a oss.sonatype.org staging repository to publish these files to Maven Central.
+    # https://bintray.com/docs/api/#_sync_version_artifacts_to_maven_central
+    sh "curl -X POST -d '{\"username\": \"#{ENV['SONATYPE_TOKEN_USER']}\", \"password\": \"#{ENV['SONATYPE_TOKEN_PASSWORD']}\"}' https://api.bintray.com/maven_central_sync/vimeo/maven/vimeo-networking/versions/#{get_version}"
+
+  end
+    
   desc "test"
   lane :test do
     
@@ -61,6 +93,13 @@ platform :android do
 
     pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
 
+  end
+  
+  desc "get the version from gradle.properties"
+  private_lane :get_version do
+    str = IO.read('../gradle.properties')    
+    match = str.match(/version[ ]?=[ ]?'([0-9.]+)'/)
+    match.length == 2 ? match[1] : 0
   end
 
   # You can define as many lanes as you want
