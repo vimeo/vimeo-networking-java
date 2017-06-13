@@ -39,7 +39,7 @@ platform :android do
         branch = git_branch
         # If the branch is master, this means new updates were merged into master
         # Then publish the artifacts to bintray
-        if branch == 'origin/master'
+        if branch == 'master'
           publish_artifacts
         end
       end
