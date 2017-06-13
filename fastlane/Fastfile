@@ -32,7 +32,7 @@ platform :android do
   lane :shipit do
     if is_ci
       # If the build was triggered by a Pull Request
-      if ENV['TRAVIS_PULL_REQUEST']
+      if ENV['TRAVIS_PULL_REQUEST'] && ENV['TRAVIS_PULL_REQUEST'] != 'false'
         test
       else
         # This build was triggered by a branch update
@@ -48,16 +48,18 @@ platform :android do
 
   desc "publish artifacts to bintray"
   lane :publish_artifacts do
+    if ENV['SONATYPE_TOKEN_USER'] && ENV['SONATYPE_TOKEN_PASSWORD']
+      # Upload to bintray
+      gradle(
+        task: "vimeo-networking:bintrayUpload"
+      )
 
-    # Upload to bintray
-    gradle(
-      task: "vimeo-networking:bintrayUpload"
-    )
-
-    # Sync version files to a oss.sonatype.org staging repository to publish these files to Maven Central.
-    # https://bintray.com/docs/api/#_sync_version_artifacts_to_maven_central
-    sh "curl -X POST -d '{\"username\": \"#{ENV['SONATYPE_TOKEN_USER']}\", \"password\": \"#{ENV['SONATYPE_TOKEN_PASSWORD']}\"}' https://api.bintray.com/maven_central_sync/vimeo/maven/vimeo-networking/versions/#{get_version}"
-
+      # Sync version files to a oss.sonatype.org staging repository to publish these files to Maven Central.
+      # https://bintray.com/docs/api/#_sync_version_artifacts_to_maven_central
+      sh "curl -X POST -d '{\"username\": \"#{ENV['SONATYPE_TOKEN_USER']}\", \"password\": \"#{ENV['SONATYPE_TOKEN_PASSWORD']}\"}' https://api.bintray.com/maven_central_sync/vimeo/maven/vimeo-networking/versions/#{get_version}"
+    else
+      UI.user_error!("Failed to publish artifacts to bintray since the SONATYPE_TOKEN_USER and SONATYPE_TOKEN_PASSWORD are not set.")
+    end
   end
     
   desc "test"
