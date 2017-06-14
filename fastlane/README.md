@@ -30,9 +30,9 @@ xcode-select --install
 
 # Available Actions
 ## Android
-### android entrypoint
+### android shipit
 ```
-fastlane android entrypoint
+fastlane android shipit
 ```
 main entrypoint for CI
 ### android publish_artifacts

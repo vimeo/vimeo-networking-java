@@ -40,28 +40,27 @@ platform :android do
         # If the branch is master, this means new updates were merged into master
         # Then publish the artifacts to bintray
         if branch == 'master'
-          publish_artifacts
+          publish_artifacts(
+            snapshot: false
+          )
+
+          # TODO: publish Snapshots with snapshot = true
         end
       end
     end
   end
 
-  desc "publish artifacts to bintray"
-  lane :publish_artifacts do
-    if ENV['SONATYPE_TOKEN_USER'] && ENV['SONATYPE_TOKEN_PASSWORD']
-      # Upload to bintray
-      gradle(
-        task: "vimeo-networking:bintrayUpload"
-      )
-
-      # Sync version files to a oss.sonatype.org staging repository to publish these files to Maven Central.
-      # https://bintray.com/docs/api/#_sync_version_artifacts_to_maven_central
-      sh "curl -X POST -d '{\"username\": \"#{ENV['SONATYPE_TOKEN_USER']}\", \"password\": \"#{ENV['SONATYPE_TOKEN_PASSWORD']}\"}' https://api.bintray.com/maven_central_sync/vimeo/maven/vimeo-networking/versions/#{get_version}"
-    else
-      UI.user_error!("Failed to publish artifacts to bintray since the SONATYPE_TOKEN_USER and SONATYPE_TOKEN_PASSWORD are not set.")
-    end
+  desc "publish artifacts to bintray. Use the 'snapshot' option (boolean) to publish a Snapshot instead of a release (not implemented yet)"
+  lane :publish_artifacts do |options|
+    # Upload to bintray
+    gradle(
+      task: "vimeo-networking:bintrayUpload",
+      properties: {
+        "snapshot" => options[:snapshot]
+      }
+    )
   end
-    
+
   desc "test"
   lane :test do
     
