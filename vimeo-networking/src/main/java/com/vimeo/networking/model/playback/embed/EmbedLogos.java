@@ -33,7 +33,7 @@ import java.io.Serializable;
 
 /**
  * Logo data contained in {@link Embed} objects. These are here to allow you to edit a video's embed settings.
- * <p/>
+ * <p>
  * Created by zetterstromk on 4/25/16.
  */
 @SuppressWarnings("unused")

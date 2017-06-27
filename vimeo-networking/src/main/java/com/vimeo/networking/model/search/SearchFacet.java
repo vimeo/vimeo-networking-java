@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 /**
  * Search Facet
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")

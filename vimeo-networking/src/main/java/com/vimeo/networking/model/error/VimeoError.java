@@ -36,7 +36,7 @@ import retrofit2.Response;
 /**
  * This class represents an error response from the Vimeo API. It holds useful getters to understand
  * why your request might have failed.
- * <p/>
+ * <p>
  * Created by zetterstromk on 5/27/15.
  */
 @SuppressWarnings("unused")

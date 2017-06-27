@@ -33,22 +33,22 @@ import org.jetbrains.annotations.Nullable;
  * require a class to be declared up front). Since this is a Java library and we don't have access to
  * the UI thread, consumers of this library will need to provide their own implementation of deserialization
  * on a background thread and calling their callback on the platform's main/UI thread
- * <p/>
+ * <p>
  * For Android, you can achieve this task by extending this class and calling {@link GsonDeserializer#deserializeObject}
  * on any background thread and {@link ModelCallback#success(Object)} on their UI thread.
- * <p/>
+ * <p>
  * By default, this class will just deserialize objects and callback on the calling thread.
- * <p/>
+ * <p>
  * Created by zetterstromk on 7/24/15.
  */
 public class GsonDeserializer {
 
     /**
      * Deserialize the json and call a callback method.
-     * <p/>
+     * <p>
      * Override this method to perform custom deserialization. For example,
      * on Android, you may want to use a AsyncTask to do this work on
-     * <p/>
+     * <p>
      *
      * @param gson     The Gson object do do the lifting
      * @param object   The Object object deserialize

@@ -390,7 +390,7 @@ public class Video implements Serializable {
      * This will return the value as it's given to us from the API (or {@link Status#NONE if null}). Unlike
      * {@link Video#getStatus()}, this will return all known statuses for a video (including {@link
      * Status#TRANSCODE_STARTING}.
-     * <p/>
+     * <p>
      * For a more simplified representation of the video status, use {@link Video#getStatus()}.
      */
     public Status getRawStatus() {
@@ -402,7 +402,7 @@ public class Video implements Serializable {
      * {@link Status#NONE if null}. If the Status is equal to {@link Status#TRANSCODE_STARTING}
      * then we'll just return the Status {@link Status#TRANSCODING}
      * since they're functionally equivalent from a client-side perspective.
-     * <p/>
+     * <p>
      * For an all-inclusive getter of the video status, use {@link Video#getRawStatus()}.
      */
     public Status getStatus() {
@@ -550,9 +550,9 @@ public class Video implements Serializable {
     /**
      * The password for the video, only sent when the following conditions are true:
      * <ul>
-     * <ol>The privacy is set to password</ol>
-     * <ol>The user making the request owns the video</ol>
-     * <ol>The application making the request is granted access to view this field</ol>
+     * <li>The privacy is set to password</li>
+     * <li>The user making the request owns the video</li>
+     * <li>The application making the request is granted access to view this field</li>
      * </ul>
      *
      * @return the password if applicable

@@ -35,7 +35,7 @@ import java.io.Serializable;
 /**
  * This class represents an authenticated account with Vimeo. It can be through client credentials or a
  * truly authenticated {@link User}
- * <p/>
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  */
 @SuppressWarnings("unused")

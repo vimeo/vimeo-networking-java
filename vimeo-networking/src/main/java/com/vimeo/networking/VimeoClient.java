@@ -74,7 +74,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Client class used for making networking calls to Vimeo API.
- * <p/>
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  *
  * @see <a href="https://developer.vimeo.com/api">The Vimeo API Docs</a>
@@ -297,7 +297,7 @@ public final class VimeoClient {
 
     /**
      * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
-     * <p/>
+     * <p>
      * We find no use in storing the password when you can persist the {@link VimeoAccount} across
      * application sessions.
      */
@@ -329,7 +329,7 @@ public final class VimeoClient {
     /**
      * Provides a URI that can be opened in a web view that will prompt for login and permissions
      * or used currently logged in users credentials.
-     * <p/>
+     * <p>
      * If the user accepts your app, they are redirected to your redirect_uri along with two parameters:
      * {@link Vimeo#CODE_GRANT_RESPONSE_TYPE} or {@link Vimeo#CODE_GRANT_STATE}
      *
@@ -357,7 +357,7 @@ public final class VimeoClient {
 
     /**
      * Authenticates the user from the {@link #getCodeGrantAuthorizationURI()}.
-     * <p/>
+     * <p>
      * Exchanges the code for the access token.
      *
      * @param uri      URI from {@link #getCodeGrantAuthorizationURI()}
@@ -404,7 +404,7 @@ public final class VimeoClient {
     /**
      * Authorizes users of the app who are not signed in. This call requires a client id and client secret
      * to be set on the initial Configuration.
-     * <p/>
+     * <p>
      * Leaves User as null in {@link VimeoAccount} model and populates the rest.
      *
      * @param callback Callback pertaining to authentication
@@ -424,9 +424,9 @@ public final class VimeoClient {
     /**
      * Authorizes users of the app who are not signed in. This call requires a client id and client secret
      * to be set on the initial Configuration.
-     * <p/>
+     * <p>
      * Leaves User as null in {@link VimeoAccount} model and populates the rest.
-     * <p/>
+     * <p>
      * WARNING: This contains a synchronous network call. Use {@link #authorizeWithClientCredentialsGrant(AuthCallback)}
      * for asynchronous use.
      */
@@ -473,10 +473,10 @@ public final class VimeoClient {
 
     /**
      * This method is used to exchange a user access token from app A for a token for app B.
-     * <p/>
+     * <p>
      * An app can use this to exchange an authenticated user's access token from app A for a new access
      * token for app B, using the mScope associated with app B. The caller of this method will be app B.
-     * <p/>
+     * <p>
      * <b>This method is application restricted, and not meant to be consumed by the general public.</b>
      *
      * @param token    the authenticated user access token from application A. This <b>cannot</b> be a client
@@ -592,7 +592,7 @@ public final class VimeoClient {
 
     /**
      * Synchronous version of login call
-     * <p/>
+     * <p>
      * Useful when dealing with Android AccountAuthenticator [AH]
      *
      * @param email    user's email address
@@ -651,7 +651,7 @@ public final class VimeoClient {
 
     /**
      * Must be called when user logs out to ensure that the tokens have been invalidated
-     * <p/>
+     * <p>
      *
      * @param callback Callback for handling logout
      */
@@ -692,7 +692,7 @@ public final class VimeoClient {
 
     /**
      * Class responsible for setting the account on successful authorization.
-     * <p/>
+     * <p>
      * Sets the account on the {@link VimeoClient} as well as the {@link AccountStore}
      */
     private static class AccountCallback extends VimeoCallback<VimeoAccount> {
@@ -722,7 +722,7 @@ public final class VimeoClient {
 
         /**
          * @deprecated use {@link #AccountCallback(VimeoClient, String, AuthCallback)} instead
-         * <p/>
+         * <p>
          * We find no use in storing the password when you can persist the {@link VimeoAccount} across
          * application sessions.
          */
@@ -753,7 +753,7 @@ public final class VimeoClient {
 
     /**
      * {@link AccountCallback} class responsible for setting the account on successful pin code authorization.
-     * <p/>
+     * <p>
      * Sets the account on the {@link VimeoClient} as well as the {@link AccountStore}
      */
     private static class PinCodeAccountCallback extends AccountCallback {
@@ -1103,7 +1103,7 @@ public final class VimeoClient {
 
     /**
      * Create a picture resource using the given uri
-     * <p/>
+     * <p>
      * For more in depth documentation on this flow, see https://developer.vimeo.com/api/upload/pictures
      *
      * @param uri      should be in the format /videos/{video_id}/pictures or /user/{user_id}/pictures

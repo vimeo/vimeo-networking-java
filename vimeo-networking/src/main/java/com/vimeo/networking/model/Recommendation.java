@@ -33,7 +33,7 @@ import java.io.Serializable;
 /**
  * A model that contains recommendations for a User to follow.
  * A recommendation can either be a {@link User} or {@link Channel}
- * <p/>
+ * <p>
  * Created by zetterstromk on 8/15/16.
  */
 @SuppressWarnings("unused")

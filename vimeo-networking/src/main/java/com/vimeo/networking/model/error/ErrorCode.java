@@ -27,8 +27,8 @@ import com.vimeo.stag.UseStag;
 
 /**
  * All the error codes that can come back from the Vimeo Api.
- * <p/>
- * Vimean reference: {@link <a href="https://docs.google.com/a/vimeo.com/spreadsheets/d/1DlkbeOFDuogvwyG2QDqExqBd_Yb3M7w7ku25AJN7QU0/edit?usp=sharing">Spreadsheet</a>}.
+ * <p>
+ * Vimean reference: <a href="https://docs.google.com/a/vimeo.com/spreadsheets/d/1DlkbeOFDuogvwyG2QDqExqBd_Yb3M7w7ku25AJN7QU0/edit?usp=sharing">Spreadsheet</a>.
  * <p>
  * Created by kylevenn on 7/15/15.
  */

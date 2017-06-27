@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Simple utility class to delegate logging when it is not known whether VimeoClient has been initialized yet
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/22/16.
  */
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
