@@ -33,7 +33,7 @@ import java.io.Serializable;
 
 /**
  * Model representing a facets option
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")

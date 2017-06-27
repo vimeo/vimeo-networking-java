@@ -31,7 +31,7 @@ import java.io.Serializable;
 
 /**
  * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.playback.embed.Embed}.
- * <p/>
+ * <p>
  * Created by hanssena on 4/23/15.
  */
 @SuppressWarnings("unused")

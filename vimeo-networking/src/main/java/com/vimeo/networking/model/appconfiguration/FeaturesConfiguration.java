@@ -26,7 +26,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * An object returned from the /configs endpoint to specify which features are enabled or disabled.
- * <p/>
+ * <p>
  * Created by vennk on 5/20/15.
  */
 @SuppressWarnings("unused")

@@ -49,7 +49,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * Builder for creating Square OkHttpClient with pinned certificate that can be used with Retrofit.
- * </p>
+ * <p>
  * Created by kylevenn on 6/10/15.
  */
 @SuppressWarnings("unused")

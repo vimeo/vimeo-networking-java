@@ -37,7 +37,7 @@ import java.io.Serializable;
  * Since this is a Java library and only Apple products support fairplay, that type is omitted. Clients will
  * only receive these if given the app-specific permission, essentially this class is not consumable by the
  * general public.
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/22/16.
  */
 @SuppressWarnings("unused")

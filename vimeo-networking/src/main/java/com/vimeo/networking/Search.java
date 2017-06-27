@@ -41,7 +41,7 @@ import retrofit2.Call;
 /**
  * Class to handle searching. To use this class, your app must be whitelisted. If you are not an approved app,
  * you can still use the existing search mechanism {@link VimeoClient#search(String, String, ModelCallback, Map, String)}.
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")

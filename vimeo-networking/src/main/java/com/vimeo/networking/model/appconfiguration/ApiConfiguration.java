@@ -27,7 +27,7 @@ import com.vimeo.networking.Vimeo;
 
 /**
  * An object returned from the /configs endpoint to specify the host base url for api requests.
- * <p/>
+ * <p>
  * Created by kylevenn on 5/20/15.
  */
 public class ApiConfiguration {

@@ -27,7 +27,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * An object returned from the /configs endpoint.
  * This is a way for the api to specify configuration for our application.
- * <p/>
+ * <p>
  * Created by kylevenn on 5/20/15.
  */
 public class AppConfiguration {

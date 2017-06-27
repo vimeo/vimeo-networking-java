@@ -34,7 +34,7 @@ import java.io.Serializable;
 /**
  * Representation of the html data within a {@link Embed} object. This contains the necessary iframe html for
  * embedding. This is for getting
- * <p/>
+ * <p>
  * Created by zetterstromk on 4/25/16.
  */
 @SuppressWarnings("unused")
