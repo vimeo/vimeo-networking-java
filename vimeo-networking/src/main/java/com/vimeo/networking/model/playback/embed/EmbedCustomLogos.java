@@ -32,7 +32,7 @@ import java.io.Serializable;
 
 /**
  * Custom field in {@link EmbedLogos}. These are here to allow you to edit a video's embed settings.
- * <p/>
+ * <p>
  * Created by zetterstromk on 4/25/16.
  */
 public class EmbedCustomLogos implements Serializable {

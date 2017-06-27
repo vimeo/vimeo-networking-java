@@ -30,7 +30,7 @@ import java.io.Serializable;
 
 /**
  * Detail on the progress of a play.
- * <p/>
+ * <p>
  * Created by zetterstromk on 4/25/16.
  */
 public class PlayProgress implements Serializable {

@@ -30,9 +30,9 @@ import java.io.Serializable;
 
 /**
  * A badge that can be associated with a user.
- * <p/>
+ * <p>
  * This data is not available to the general public.
- * <p/>
+ * <p>
  * Created by zetterstromk on 7/18/16.
  */
 @SuppressWarnings("unused")

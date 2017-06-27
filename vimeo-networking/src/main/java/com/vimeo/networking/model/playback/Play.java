@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 /**
  * Playback
- * <p/>
+ * <p>
  * Created by zetterstromk on 4/25/16.
  */
 public class Play implements Serializable {

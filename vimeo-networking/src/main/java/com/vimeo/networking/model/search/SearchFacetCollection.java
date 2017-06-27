@@ -32,7 +32,7 @@ import java.io.Serializable;
 
 /**
  * A grouping of all facets
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")

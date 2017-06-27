@@ -37,7 +37,7 @@ import java.io.Serializable;
 
 /**
  * An individual search response item
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/27/16.
  */
 public class SearchResult implements Serializable {

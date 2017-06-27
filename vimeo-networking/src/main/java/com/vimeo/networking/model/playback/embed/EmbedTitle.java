@@ -32,7 +32,7 @@ import java.io.Serializable;
 
 /**
  * Title representation of an {@link Embed} object. These are here to allow you to edit a video's embed settings.
- * <p/>
+ * <p>
  * Created by zetterstromk on 4/25/16.
  */
 public class EmbedTitle implements Serializable {

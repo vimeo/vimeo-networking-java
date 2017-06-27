@@ -37,9 +37,9 @@ import okhttp3.Interceptor;
 
 /**
  * The configuration object for making API calls with Retrofit.
- * <p/>
+ * <p>
  * An instance of this class is used the initialize the {@link VimeoClient}.
- * <p/>
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  */
 public class Configuration {
@@ -98,7 +98,7 @@ public class Configuration {
 
     /**
      * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
-     * <p/>
+     * <p>
      * We find no use in storing the password when you can persist the {@link VimeoAccount} across
      * application sessions.
      */
@@ -211,7 +211,7 @@ public class Configuration {
         /**
          * The most basic builder constructor. If you've only provided an access token, you'll only be able to
          * make requests for the given access token's account.
-         * <p/>
+         * <p>
          * If you'd like the ability to switch accounts or request a client credentials grant, you'll have to set a client id and client secret.
          * If you'd like the ability to persist accounts, you'll have to set an account store.
          * If you'd like the ability to issue code grant, you'll have to set a code grant redirect uri.
@@ -245,7 +245,7 @@ public class Configuration {
          * @param clientId      The client id provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
          * @param clientSecret  The client secret provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
          * @param scope         Space separated list of <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
-         *                      <p/>
+         *                      <p>
          *                      Example: "private public create"
          * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Androids <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">Account Manager</a>
          * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread

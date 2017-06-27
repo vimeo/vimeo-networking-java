@@ -24,7 +24,7 @@ package com.vimeo.networking;
 
 /**
  * The constants class for Vimeo API calls. This includes parameters, fields, and defaults
- * <p/>
+ * <p>
  * Created by kylevenn on 7/7/15.
  */
 public class Vimeo {

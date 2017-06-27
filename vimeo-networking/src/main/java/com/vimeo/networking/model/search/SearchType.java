@@ -28,7 +28,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Enum representing types of searches.
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/27/16.
  */
 public enum SearchType {

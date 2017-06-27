@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Response of /search
- * <p/>
+ * <p>
  * Created by zetterstromk on 6/27/16.
  */
 @SuppressWarnings("unused")
