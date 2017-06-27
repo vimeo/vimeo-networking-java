@@ -32,7 +32,7 @@ import java.io.Serializable;
 
 /**
  * Logging endpoints. This class is NOT consumable by the general public.
- * <p/>
+ * <p>
  * Created by alfredhanssen on 4/25/15.
  */
 public class VideoLog implements Serializable {

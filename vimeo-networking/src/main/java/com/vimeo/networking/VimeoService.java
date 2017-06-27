@@ -48,7 +48,7 @@ import retrofit2.http.Url;
 
 /**
  * Interface of available API calls that can be made using Retrofit.
- * <p/>
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  */
 public interface VimeoService {

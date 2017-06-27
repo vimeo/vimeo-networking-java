@@ -31,7 +31,7 @@ import java.io.Serializable;
 /**
  * Buttons that can be contained in the {@link Embed} object. These are here to allow you to edit a video's
  * embed settings.
- * <p/>
+ * <p>
  * Created by zetterstromk on 4/25/16.
  */
 public class EmbedButtons implements Serializable {

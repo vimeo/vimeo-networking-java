@@ -32,11 +32,11 @@ import java.io.Serializable;
 
 /**
  * Embed model with access to the html iframe
- * <p/>
+ * <p>
  * Only the html data structure will be accessible unless the requesting user owns the video.
- * <p/>
+ * <p>
  * All other fields besides {@link #mHtml} are here for allowing you to edit a video's embed settings
- * <p/>
+ * <p>
  * Created by zetterstromk on 4/25/16.
  */
 public class Embed implements Serializable {

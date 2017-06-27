@@ -35,7 +35,7 @@ import retrofit2.Response;
 
 /**
  * This class allows intercepting and analyzing of the responses for errors and invalid tokens
- * <p/>
+ * <p>
  * Created by zetterstromk on 5/27/15.
  */
 public abstract class VimeoCallback<T> implements Callback<T> {

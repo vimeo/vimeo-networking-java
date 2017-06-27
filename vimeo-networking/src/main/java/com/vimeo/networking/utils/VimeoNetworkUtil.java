@@ -45,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A utility class that can eventually be shared across various retrofit/vimeo-api reliant libraries
- * <p/>
+ * <p>
  * Created by kylevenn on 10/30/15.
  */
 public class VimeoNetworkUtil {
@@ -54,7 +54,7 @@ public class VimeoNetworkUtil {
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
-     * </p>
+     * <p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
      * @return Gson object that can be passed into a {@link GsonConverterFactory} create() method
      */
@@ -67,7 +67,7 @@ public class VimeoNetworkUtil {
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
-     * </p>
+     * <p>
      * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
      * @return GsonBuilder that can be built upon and then created
      */

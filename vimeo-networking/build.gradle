@@ -23,6 +23,8 @@ repositories {
     jcenter()
 }
 
+tasks.withType(Javadoc).all { enabled = true }
+
 dependencies {
     testCompile 'junit:junit:4.12'
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -50,19 +52,51 @@ artifacts {
     archives sourcesJar, javadocJar
 }
 
+// Create the pom configuration
+// All the fields below are required by Maven Central
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT License"
+            url "http://www.opensource.org/licenses/mit-license.php"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "vimeo"
+            name "Vimeo Mobile"
+            email "mobileops@vimeo.com"
+            organisation "Vimeo"
+            organisationUrl "https://github.com/vimeo"
+        }
+    }
+    
+    scm {
+        connection "scm:git:git://github.com/vimeo/vimeo-networking-java.git"
+        developerConnection "scm:git:ssh://github.com:vimeo/vimeo-networking-java.git"
+        url "https://github.com/vimeo/vimeo-networking-java"
+    }
+}
+
+// Create the publication with the pom configuration:
 // Requires apply plugin: maven-publish
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            // We dont have any complex artifacts, so let's just reference the fact that we
-            // rely on plugin java
+        MyPublication(MavenPublication) {
             from components.java
+            artifact sourcesJar
+            artifact javadocJar
             groupId project.group
             artifactId 'vimeo-networking'
             version project.version
-
-            artifact sourcesJar
-            artifact javadocJar
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'vimeo-networking is a Java networking library used for interacting with the Vimeo API.')
+                root.appendNode('name', 'vimeo-networking')
+                root.appendNode('url', 'https://github.com/vimeo/vimeo-networking-java')
+                root.children().last() + pomConfig
+            }
         }
     }
 }
@@ -73,17 +107,12 @@ allprojects {
         def bintrayProject = project.plugins.hasPlugin('com.jfrog.bintray')
         if (bintrayProject) {
             bintray {
-                // CI Publish - next 2 lines
                 user = System.getenv('BINTRAY_USER')
                 // api key
                 key = System.getenv('BINTRAY_API_KEY')
-                // Local publish - uncomment the next 4 lines
-                // Properties properties = new Properties()
-                // properties.load(project.rootProject.file('local.properties').newDataInputStream())
-                // user = properties.getProperty('bintray.user')
-                // key = properties.getProperty('bintray.apikey')
-                publications = ['mavenJava']
+                publications = ['MyPublication']
                 dryRun = false // Whether to run this as dry-run, without deploying
+                override = false
                 pkg {
                     repo = 'maven'
                     name = 'vimeo-networking'
@@ -97,6 +126,16 @@ allprojects {
                     version {
                         name = project.version
                         vcsTag = project.version
+                        gpg {
+                            sign = true
+                            passphrase = System.getenv('BINTRAY_GPG_PASSWORD')
+                        }
+                        mavenCentralSync {
+                            sync = true //Optional (true by default). Determines whether to sync the version to Maven Central.
+                            user = System.getenv('SONATYPE_TOKEN_USER') //OSS user token
+                            password = System.getenv('SONATYPE_TOKEN_PASSWORD') //OSS user password
+                            close = '1' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+                        }
                     }
                 }
             }

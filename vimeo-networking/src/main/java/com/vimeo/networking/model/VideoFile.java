@@ -33,7 +33,7 @@ import java.util.Date;
 
 /**
  * Representation of a Video stream/playback file
- * <p/>
+ * <p>
  * Created by alfredhanssen on 4/25/15.
  */
 public class VideoFile implements Serializable {

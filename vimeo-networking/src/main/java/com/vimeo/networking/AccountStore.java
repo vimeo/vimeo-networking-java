@@ -26,7 +26,7 @@ import com.vimeo.networking.model.VimeoAccount;
 
 /**
  * Interface responsible for handling the creation, deletion, and loading of Vimeo accounts on the client.
- * <p/>
+ * <p>
  * Created by hanssena on 4/27/15.
  */
 public interface AccountStore {
@@ -35,7 +35,7 @@ public interface AccountStore {
 
     /**
      * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
-     * <p/>
+     * <p>
      * We find no use in storing the password when you can persist the {@link VimeoAccount} across
      * application sessions.
      */

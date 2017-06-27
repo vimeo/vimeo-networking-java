@@ -45,7 +45,7 @@ import java.util.Locale;
  * <br>
  * Gson has  added support for parsing ISO 8601 strings into Date objects, removing the need for this class.
  * This class will be removed in release 2.0.0 of vimeo-networking. See {@link ISO8601Utils}
- * <p/>
+ * <p>
  * <b>Original JavaDoc:</b>
  * <br>
  * We have to write our own serializer and deserializer because Android doesn't currently
@@ -53,11 +53,11 @@ import java.util.Locale;
  * but this is only available in Android 4.3 and up. Java 7 has the 'X' character to represent
  * ISO 8601 but Android treats this differently. So in the mean time the ISO8601 class will convert
  * the strings to RFC 822 which is something the DateFormatter can handle regardless of version.
- * <p/>
- * {@link <a href="http://developer.android.com/reference/java/text/SimpleDateFormat.html">Android SimpleDateFormat</a>}
- * {@link <a href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Oracle SimpleDateFormat</a>}
- * {@link <a href="http://stackoverflow.com/questions/2201925/converting-iso-8601-compliant-string-to-java-util-date">Stack Overflow</a>}
- * <p/>
+ * <p>
+ * <a href="http://developer.android.com/reference/java/text/SimpleDateFormat.html">Android SimpleDateFormat</a>
+ * <a href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Oracle SimpleDateFormat</a>
+ * <a href="http://stackoverflow.com/questions/2201925/converting-iso-8601-compliant-string-to-java-util-date">Stack Overflow</a>
+ * <p>
  * Created by kylevenn on 8/26/15.
  */
 @SuppressWarnings({"UtilityClassWithoutPrivateConstructor", "unused", "NonFinalUtilityClass", "MagicNumber"})

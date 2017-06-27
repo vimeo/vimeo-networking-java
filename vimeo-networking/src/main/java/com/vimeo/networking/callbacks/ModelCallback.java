@@ -23,8 +23,8 @@
 package com.vimeo.networking.callbacks;
 
 /**
- * Abstract callback class for @param <T> type of model.
- * <p/>
+ * Abstract callback class for {@code T} type of model.
+ * <p>
  * Created by hanssena on 4/27/15.
  */
 public abstract class ModelCallback<T> extends VimeoCallback<T> {

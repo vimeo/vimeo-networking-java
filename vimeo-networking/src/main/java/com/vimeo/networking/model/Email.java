@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * An email that the user has verified.
- * <p/>
+ * <p>
  * Created by anthonyrestaino on 6/16/16.
  */
 public class Email implements Serializable {
