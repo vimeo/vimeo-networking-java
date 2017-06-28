@@ -80,7 +80,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @see <a href="https://developer.vimeo.com/api">The Vimeo API Docs</a>
  */
 @SuppressWarnings("unused")
-public final class VimeoClient {
+public class VimeoClient {
 
     private static volatile boolean sContinuePinCodeAuthorizationRefreshCycle;
 
