@@ -26,6 +26,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
+import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
@@ -176,6 +177,9 @@ public interface VimeoService {
 
     @GET
     Call<Document> getDocument(@Header("Authorization") String authHeader, @Url String uri);
+
+    @GET
+    Call<TextTrackList> getTextTrackList(@Header("Authorization") String authHeader, @Url String uri);
     // </editor-fold>
 
     /**
