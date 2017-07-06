@@ -11,6 +11,8 @@ import com.vimeo.networking.logging.LogProvider
  */
 class NetworkingLogger : LogProvider {
 
+    private val TEST_APP = "~NET TEST APP~"
+
     override fun e(error: String) {
         Log.e(TEST_APP, error)
     }
@@ -27,7 +29,4 @@ class NetworkingLogger : LogProvider {
         Log.v(TEST_APP, verbose)
     }
 
-    companion object {
-        private val TEST_APP = "~NET TEST APP~"
-    }
 }
