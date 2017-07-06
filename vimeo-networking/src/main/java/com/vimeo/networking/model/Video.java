@@ -475,6 +475,13 @@ public class Video implements Serializable {
         return null;
     }
 
+    public int likeCount() {
+        if (getLikesConnection() != null) {
+            return getLikesConnection().mTotal;
+        }
+        return 0;
+    }
+
     @Nullable
     public Connection getRelatedConnection() {
         if ((mMetadata != null) && (mMetadata.mConnections != null)) {
@@ -483,12 +490,14 @@ public class Video implements Serializable {
         return null;
     }
 
-    public int likeCount() {
-        if (getLikesConnection() != null) {
-            return getLikesConnection().mTotal;
+    @Nullable
+    public Connection getTexttracksConnection() {
+        if ((mMetadata != null) && (mMetadata.mConnections != null) && (mMetadata.mConnections.mTexttracks != null)) {
+            return mMetadata.mConnections.mTexttracks;
         }
-        return 0;
+        return null;
     }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
