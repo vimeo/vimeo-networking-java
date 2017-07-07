@@ -348,7 +348,7 @@ If you'd like to contribute, please follow our guidelines found in [CONTRIBUTING
 
 ## Questions?
 
-Tweet at us here: [@vimeoapi](https://twitter.com/vimeoapi).
+Tweet at us here: [@VimeoEng](https://twitter.com/VimeoEng).
 
 Post on [Stackoverflow](http://stackoverflow.com/questions/tagged/vimeo-android) with the tag `vimeo-android`.
 
