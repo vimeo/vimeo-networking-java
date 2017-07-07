@@ -491,9 +491,9 @@ public class Video implements Serializable {
     }
 
     @Nullable
-    public Connection getTexttracksConnection() {
-        if ((mMetadata != null) && (mMetadata.mConnections != null) && (mMetadata.mConnections.mTexttracks != null)) {
-            return mMetadata.mConnections.mTexttracks;
+    public Connection getTextTracksConnection() {
+        if ((mMetadata != null) && (mMetadata.mConnections != null) && (mMetadata.mConnections.mTextTracks != null)) {
+            return mMetadata.mConnections.mTextTracks;
         }
         return null;
     }
