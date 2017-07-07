@@ -39,7 +39,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    def stagVersion = '2.2.0'
+    def stagVersion = '2.3.1'
     compile "com.vimeo.stag:stag-library:$stagVersion"
     apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
 }
@@ -157,6 +157,12 @@ allprojects {
                 }
             }
         }
+    }
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs += [ "-AstagAssumeHungarianNotation=true" ]
     }
 }
 

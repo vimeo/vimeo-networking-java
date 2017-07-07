@@ -67,7 +67,7 @@ public class ConnectionCollection implements Serializable {
 
     @Nullable
     @SerializedName("texttracks")
-    protected Connection mTexttracks;
+    protected Connection mTextTracks;
 
     @Nullable
     @SerializedName("activities")
@@ -204,8 +204,8 @@ public class ConnectionCollection implements Serializable {
     }
 
     @Nullable
-    public Connection getTexttracks() {
-        return mTexttracks;
+    public Connection getTextTracks() {
+        return mTextTracks;
     }
 
     @Nullable
