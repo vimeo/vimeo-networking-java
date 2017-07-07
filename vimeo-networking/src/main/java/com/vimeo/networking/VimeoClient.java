@@ -1099,7 +1099,7 @@ public class VimeoClient {
     /**
      * Gets a {@link TextTrackList} at the provided uri. When finished, the callback will be invoked.
      *
-     * @param uri      the uri of the Document
+     * @param uri      the uri of the text track.
      * @param callback the {@link ModelCallback} to be invoked when the request finishes
      * @return a {@link Call} with the {@link TextTrackList} type. This can be used for request
      * cancellation.
