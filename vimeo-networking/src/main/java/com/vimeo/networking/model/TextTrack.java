@@ -38,19 +38,19 @@ public class TextTrack implements Serializable {
 
     @Nullable
     @SerializedName("link_expires_time")
-    private Date linkExpiresTime;
+    private Date mLinkExpiresTime;
 
     @Nullable
     @SerializedName("hls_link")
-    private String hlsLink;
+    private String mHlsLink;
 
     @Nullable
     @SerializedName("hls_link_expires_time")
-    private Date hlsLinkExpiresTime;
+    private Date mHlsLinkExpiresTime;
 
     @Nullable
     @SerializedName("name")
-    private String name;
+    private String mName;
 
     @Nullable
     public String getUri() {
@@ -98,37 +98,37 @@ public class TextTrack implements Serializable {
 
     @Nullable
     public Date getLinkExpiresTime() {
-        return linkExpiresTime;
+        return mLinkExpiresTime;
     }
 
     public void setLinkExpiresTime(@Nullable Date linkExpiresTime) {
-        this.linkExpiresTime = linkExpiresTime;
+        this.mLinkExpiresTime = linkExpiresTime;
     }
 
     @Nullable
     public String getHlsLink() {
-        return hlsLink;
+        return mHlsLink;
     }
 
     public void setHlsLink(@Nullable String hlsLink) {
-        this.hlsLink = hlsLink;
+        this.mHlsLink = hlsLink;
     }
 
     @Nullable
     public Date getHlsLinkExpiresTime() {
-        return hlsLinkExpiresTime;
+        return mHlsLinkExpiresTime;
     }
 
     public void setHlsLinkExpiresTime(@Nullable Date hlsLinkExpiresTime) {
-        this.hlsLinkExpiresTime = hlsLinkExpiresTime;
+        this.mHlsLinkExpiresTime = hlsLinkExpiresTime;
     }
 
     @Nullable
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(@Nullable String name) {
-        this.name = name;
+        this.mName = name;
     }
 }
