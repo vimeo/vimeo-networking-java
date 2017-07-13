@@ -27,6 +27,17 @@ package com.vimeo.networking.callers;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.VimeoService;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.model.CategoryList;
+import com.vimeo.networking.model.ChannelList;
+import com.vimeo.networking.model.CommentList;
+import com.vimeo.networking.model.FeedList;
+import com.vimeo.networking.model.RecommendationList;
+import com.vimeo.networking.model.UserList;
+import com.vimeo.networking.model.VideoList;
+import com.vimeo.networking.model.cinema.ProgramContentItemList;
+import com.vimeo.networking.model.notifications.NotificationList;
+import com.vimeo.networking.model.tvod.SeasonList;
+import com.vimeo.networking.model.tvod.TvodList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,100 +66,158 @@ public final class GetRequestType {
     }
 
 
-    public static final Caller<com.vimeo.networking.model.CategoryList> CATEGORY_LIST =
-            new Caller<com.vimeo.networking.model.CategoryList>() {
+    public static final Caller<CategoryList> CATEGORY_LIST =
+            new Caller<CategoryList>() {
 
                 @NotNull
                 @Override
-                public Call<com.vimeo.networking.model.CategoryList> call(@NotNull String authHeader,
-                                                                          @NotNull String uri,
-                                                                          @NotNull Map<String, String> queryMap,
-                                                                          @NotNull String cacheHeader,
-                                                                          VimeoService vimeoService) {
+                public Call<CategoryList> call(@NotNull String authHeader,
+                                               @NotNull String uri,
+                                               @NotNull Map<String, String> queryMap,
+                                               @NotNull String cacheHeader,
+                                               VimeoService vimeoService) {
                     return vimeoService.getCategoryList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
-    public static final Caller<com.vimeo.networking.model.ChannelList> CHANNEL_LIST =
-            new Caller<com.vimeo.networking.model.ChannelList>() {
+    public static final Caller<ChannelList> CHANNEL_LIST =
+            new Caller<ChannelList>() {
 
                 @NotNull
                 @Override
-                public Call<com.vimeo.networking.model.ChannelList> call(@NotNull String authHeader,
-                                                                         @NotNull String uri,
-                                                                         @NotNull Map<String, String> queryMap,
-                                                                         @NotNull String cacheHeader,
-                                                                         VimeoService vimeoService) {
+                public Call<ChannelList> call(@NotNull String authHeader,
+                                              @NotNull String uri,
+                                              @NotNull Map<String, String> queryMap,
+                                              @NotNull String cacheHeader,
+                                              VimeoService vimeoService) {
                     return vimeoService.getChannelList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
-    public static final Caller<com.vimeo.networking.model.CommentList> COMMENT_LIST =
-            new Caller<com.vimeo.networking.model.CommentList>() {
+    public static final Caller<CommentList> COMMENT_LIST =
+            new Caller<CommentList>() {
 
                 @NotNull
                 @Override
-                public Call<com.vimeo.networking.model.CommentList> call(@NotNull String authHeader,
-                                                                         @NotNull String uri,
-                                                                         @NotNull Map<String, String> queryMap,
-                                                                         @NotNull String cacheHeader,
-                                                                         VimeoService vimeoService) {
+                public Call<CommentList> call(@NotNull String authHeader,
+                                              @NotNull String uri,
+                                              @NotNull Map<String, String> queryMap,
+                                              @NotNull String cacheHeader,
+                                              VimeoService vimeoService) {
                     return vimeoService.getCommentList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
-    public static final Caller<com.vimeo.networking.model.FeedList> FEED_LIST =
-            new Caller<com.vimeo.networking.model.FeedList>() {
+    public static final Caller<FeedList> FEED_LIST =
+            new Caller<FeedList>() {
 
                 @NotNull
                 @Override
-                public Call<com.vimeo.networking.model.FeedList> call(@NotNull String authHeader,
-                                                                      @NotNull String uri,
-                                                                      @NotNull Map<String, String> queryMap,
-                                                                      @NotNull String cacheHeader,
-                                                                      VimeoService vimeoService) {
+                public Call<FeedList> call(@NotNull String authHeader,
+                                           @NotNull String uri,
+                                           @NotNull Map<String, String> queryMap,
+                                           @NotNull String cacheHeader,
+                                           VimeoService vimeoService) {
                     return vimeoService.getFeedList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
-    public static final Caller<com.vimeo.networking.model.RecommendationList> RECOMMENDATION_LIST =
-            new Caller<com.vimeo.networking.model.RecommendationList>() {
+    public static final Caller<NotificationList> NOTIFICATION_LIST =
+            new Caller<NotificationList>() {
 
                 @NotNull
                 @Override
-                public Call<com.vimeo.networking.model.RecommendationList> call(@NotNull String authHeader,
-                                                                                @NotNull String uri,
-                                                                                @NotNull Map<String, String> queryMap,
-                                                                                @NotNull String cacheHeader,
-                                                                                VimeoService vimeoService) {
+                public Call<NotificationList> call(
+                        @NotNull String authHeader,
+                        @NotNull String uri,
+                        @NotNull Map<String, String> queryMap,
+                        @NotNull String cacheHeader,
+                        VimeoService vimeoService) {
+                    return vimeoService.getNotificationList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<ProgramContentItemList> PROGRAM_CONTENT_ITEM_LIST =
+            new Caller<ProgramContentItemList>() {
+
+                @NotNull
+                @Override
+                public Call<ProgramContentItemList> call(
+                        @NotNull String authHeader,
+                        @NotNull String uri,
+                        @NotNull Map<String, String> queryMap,
+                        @NotNull String cacheHeader,
+                        VimeoService vimeoService) {
+                    return vimeoService.getProgramContentItemList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<RecommendationList> RECOMMENDATION_LIST =
+            new Caller<RecommendationList>() {
+
+                @NotNull
+                @Override
+                public Call<RecommendationList> call(@NotNull String authHeader,
+                                                     @NotNull String uri,
+                                                     @NotNull Map<String, String> queryMap,
+                                                     @NotNull String cacheHeader,
+                                                     VimeoService vimeoService) {
                     return vimeoService.getRecommendationList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
-    public static final Caller<com.vimeo.networking.model.UserList> USER_LIST =
-            new Caller<com.vimeo.networking.model.UserList>() {
+    public static final Caller<SeasonList> SEASON_LIST =
+            new Caller<SeasonList>() {
 
                 @NotNull
                 @Override
-                public Call<com.vimeo.networking.model.UserList> call(@NotNull String authHeader,
-                                                                      @NotNull String uri,
-                                                                      @NotNull Map<String, String> queryMap,
-                                                                      @NotNull String cacheHeader,
-                                                                      VimeoService vimeoService) {
+                public Call<SeasonList> call(@NotNull String authHeader,
+                                             @NotNull String uri,
+                                             @NotNull Map<String, String> queryMap,
+                                             @NotNull String cacheHeader,
+                                             VimeoService vimeoService) {
+                    return vimeoService.getSeasonList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<TvodList> TVOD_LIST =
+            new Caller<TvodList>() {
+
+                @NotNull
+                @Override
+                public Call<TvodList> call(@NotNull String authHeader,
+                                           @NotNull String uri,
+                                           @NotNull Map<String, String> queryMap,
+                                           @NotNull String cacheHeader,
+                                           VimeoService vimeoService) {
+                    return vimeoService.getTvodList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<UserList> USER_LIST =
+            new Caller<UserList>() {
+
+                @NotNull
+                @Override
+                public Call<UserList> call(@NotNull String authHeader,
+                                           @NotNull String uri,
+                                           @NotNull Map<String, String> queryMap,
+                                           @NotNull String cacheHeader,
+                                           VimeoService vimeoService) {
                     return vimeoService.getUserList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
-    public static final Caller<com.vimeo.networking.model.VideoList> VIDEO_LIST =
-            new Caller<com.vimeo.networking.model.VideoList>() {
+    public static final Caller<VideoList> VIDEO_LIST =
+            new Caller<VideoList>() {
 
                 @NotNull
                 @Override
-                public Call<com.vimeo.networking.model.VideoList> call(@NotNull String authHeader,
-                                                                       @NotNull String uri,
-                                                                       @NotNull Map<String, String> queryMap,
-                                                                       @NotNull String cacheHeader,
-                                                                       VimeoService vimeoService) {
+                public Call<VideoList> call(@NotNull String authHeader,
+                                            @NotNull String uri,
+                                            @NotNull Map<String, String> queryMap,
+                                            @NotNull String cacheHeader,
+                                            VimeoService vimeoService) {
                     return vimeoService.getVideoList(authHeader, uri, queryMap, cacheHeader);
                 }
             };

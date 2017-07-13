@@ -1059,8 +1059,7 @@ final public class VimeoClient {
      */
     @Nullable
     public Call<SubscriptionCollection> editSubscriptions(@NotNull Map<String, Boolean> subscriptionMap,
-                                                          @NotNull
-                                                                  ModelCallback<SubscriptionCollection> callback) {
+                                                          @NotNull ModelCallback<SubscriptionCollection> callback) {
 
         final Call<SubscriptionCollection> call = mVimeoService.editSubscriptions(getAuthHeader(), subscriptionMap);
         call.enqueue(callback);

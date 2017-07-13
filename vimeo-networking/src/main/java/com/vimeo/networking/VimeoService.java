@@ -35,9 +35,13 @@ import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking.model.cinema.ProgramContentItemList;
+import com.vimeo.networking.model.notifications.NotificationList;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
+import com.vimeo.networking.model.tvod.SeasonList;
+import com.vimeo.networking.model.tvod.TvodList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -178,7 +182,8 @@ public interface VimeoService {
     // <editor-fold desc="Concrete Region">
     @GET
     Call<Video> getVideo(@Header("Authorization") String authHeader,
-                         @Header("Cache-Control") String cacheHeaderValue, @Url String uri,
+                         @Header("Cache-Control") String cacheHeaderValue,
+                         @Url String uri,
                          @QueryMap Map<String, String> options);
 
     @GET
@@ -216,10 +221,34 @@ public interface VimeoService {
                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
+    Call<NotificationList> getNotificationList(@Header("Authorization") String authHeader,
+                                               @Url String uri,
+                                               @QueryMap Map<String, String> options,
+                                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<ProgramContentItemList> getProgramContentItemList(@Header("Authorization") String authHeader,
+                                                           @Url String uri,
+                                                           @QueryMap Map<String, String> options,
+                                                           @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
     Call<RecommendationList> getRecommendationList(@Header("Authorization") String authHeader,
                                                    @Url String uri,
                                                    @QueryMap Map<String, String> options,
                                                    @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<SeasonList> getSeasonList(@Header("Authorization") String authHeader,
+                                   @Url String uri,
+                                   @QueryMap Map<String, String> options,
+                                   @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<TvodList> getTvodList(@Header("Authorization") String authHeader,
+                               @Url String uri,
+                               @QueryMap Map<String, String> options,
+                               @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<UserList> getUserList(@Header("Authorization") String authHeader,
