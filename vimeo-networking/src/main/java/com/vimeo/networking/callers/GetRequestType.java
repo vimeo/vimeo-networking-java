@@ -32,10 +32,12 @@ import com.vimeo.networking.model.ChannelList;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.FeedList;
 import com.vimeo.networking.model.RecommendationList;
+import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.cinema.ProgramContentItemList;
 import com.vimeo.networking.model.notifications.NotificationList;
+import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.tvod.SeasonList;
 import com.vimeo.networking.model.tvod.TvodList;
 
@@ -166,6 +168,20 @@ public final class GetRequestType {
                 }
             };
 
+    public static final Caller<SearchResponse> SEARCH_RESPONSE_LIST =
+            new Caller<SearchResponse>() {
+
+                @NotNull
+                @Override
+                public Call<SearchResponse> call(@NotNull String authHeader,
+                                             @NotNull String uri,
+                                             @NotNull Map<String, String> queryMap,
+                                             @NotNull String cacheHeader,
+                                             VimeoService vimeoService) {
+                    return vimeoService.getSearchResponse(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
     public static final Caller<SeasonList> SEASON_LIST =
             new Caller<SeasonList>() {
 
@@ -191,6 +207,20 @@ public final class GetRequestType {
                                            @NotNull String cacheHeader,
                                            VimeoService vimeoService) {
                     return vimeoService.getTvodList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<User> USER =
+            new Caller<User>() {
+
+                @NotNull
+                @Override
+                public Call<User> call(@NotNull String authHeader,
+                                           @NotNull String uri,
+                                           @NotNull Map<String, String> queryMap,
+                                           @NotNull String cacheHeader,
+                                           VimeoService vimeoService) {
+                    return vimeoService.getUser(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 

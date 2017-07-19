@@ -31,6 +31,7 @@ import com.vimeo.networking.model.FeedList;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.RecommendationList;
+import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
@@ -188,13 +189,19 @@ public interface VimeoService {
 
     @GET
     Call<Document> getDocument(@Header("Authorization") String authHeader, @Url String uri);
+
+    @GET
+    Call<User> getUser(@Header("Authorization") String authHeader,
+                       @Url String uri,
+                       @QueryMap Map<String, String> options,
+                       @Header("Cache-Control") String cacheHeaderValue);
     // </editor-fold>
 
 
     // -----------------------------------------------------------------------------------------------------
-    // List Getters
+    // General List Getters
     // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="List Getters">
+    // <editor-fold desc="General List Getters">
 
     @GET
     Call<CategoryList> getCategoryList(@Header("Authorization") String authHeader,
@@ -237,6 +244,12 @@ public interface VimeoService {
                                                    @Url String uri,
                                                    @QueryMap Map<String, String> options,
                                                    @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<SearchResponse> getSearchResponse(@Header("Authorization") String authHeader,
+                                           @Url String uri,
+                                           @QueryMap Map<String, String> options,
+                                           @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<SeasonList> getSeasonList(@Header("Authorization") String authHeader,

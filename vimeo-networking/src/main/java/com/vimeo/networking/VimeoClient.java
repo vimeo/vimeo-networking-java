@@ -53,6 +53,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1357,25 +1358,6 @@ final public class VimeoClient {
         };
     }
 
-    @Nullable
-    public Call<Object> search(String uri, String query, ModelCallback callback,
-                               @Nullable Map<String, String> searchRefinement, @Nullable String fieldFilter) {
-        if (query == null || query.isEmpty()) {
-            callback.failure(new VimeoError("Query cannot be empty!"));
-            return null;
-        }
-
-        // If no sort refinement specified, default to relevance
-        if (searchRefinement == null) {
-            searchRefinement = new SearchRefinementBuilder(Vimeo.RefineSort.RELEVANCE).build();
-        } else if (!searchRefinement.containsKey(Vimeo.PARAMETER_GET_SORT)) {
-            searchRefinement.put(Vimeo.PARAMETER_GET_SORT, Vimeo.RefineSort.RELEVANCE.getText());
-        }
-
-        // Search always defaults to using the network
-        return fetchContent(uri, CacheControl.FORCE_NETWORK, callback, query, searchRefinement, fieldFilter);
-    }
-
     /**
      * A package private search method: use
      * {@link Search#search(String, FilterType, ModelCallback, Map, List, String, String)}
@@ -1425,10 +1407,10 @@ final public class VimeoClient {
      * Fetches the currently authenticated user from the API
      *
      * @param callback    the callback to be invoked when the request finishes
-     * @param fieldFilter the field filter to apply to the request
+     * @param filter the field filter to apply to the request
      */
-    public void fetchCurrentUser(@NotNull ModelCallback<User> callback, @Nullable String fieldFilter) {
-        fetchContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, fieldFilter);
+    public void fetchCurrentUser(@NotNull ModelCallback<User> callback, @Nullable String filter) {
+        getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, null, null, filter, GetRequestType.USER);
     }
 
     /**
@@ -1815,7 +1797,7 @@ final public class VimeoClient {
                                               @Nullable String fieldFilter) {
         Map<String, String> queryMap = new HashMap<>();
         if (refinementMap != null && !refinementMap.isEmpty()) {
-            queryMap = refinementMap;
+            queryMap = new HashMap<>(refinementMap);
         }
         if (query != null && !query.isEmpty()) {
             queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);

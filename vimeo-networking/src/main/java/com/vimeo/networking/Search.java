@@ -39,8 +39,7 @@ import java.util.Map;
 import retrofit2.Call;
 
 /**
- * Class to handle searching. To use this class, your app must be whitelisted. If you are not an approved app,
- * you can still use the existing search mechanism {@link VimeoClient#search(String, String, ModelCallback, Map, String)}.
+ * Class to handle searching. To use this class, your app must be white-listed.
  * <p>
  * Created by zetterstromk on 6/27/16.
  */
@@ -75,7 +74,7 @@ public final class Search {
 
         public static FilterType fromString(String text) {
             if (text != null) {
-                for (FilterType b : FilterType.values()) {
+                for (final FilterType b : FilterType.values()) {
                     if (text.equalsIgnoreCase(b.mText)) {
                         return b;
                     }
@@ -103,7 +102,7 @@ public final class Search {
 
         public static FilterUpload fromString(String text) {
             if (text != null) {
-                for (FilterUpload b : FilterUpload.values()) {
+                for (final FilterUpload b : FilterUpload.values()) {
                     if (text.equalsIgnoreCase(b.mText)) {
                         return b;
                     }
@@ -133,7 +132,7 @@ public final class Search {
 
         public static Sort fromString(String text) {
             if (text != null) {
-                for (Sort b : Sort.values()) {
+                for (final Sort b : Sort.values()) {
                     if (text.equalsIgnoreCase(b.mText)) {
                         return b;
                     }
@@ -160,7 +159,7 @@ public final class Search {
 
         public static FilterDuration fromString(String text) {
             if (text != null) {
-                for (FilterDuration b : FilterDuration.values()) {
+                for (final FilterDuration b : FilterDuration.values()) {
                     if (text.equalsIgnoreCase(b.mText)) {
                         return b;
                     }
@@ -190,7 +189,7 @@ public final class Search {
 
         public static Facet fromString(String text) {
             if (text != null) {
-                for (Facet b : Facet.values()) {
+                for (final Facet b : Facet.values()) {
                     if (text.equalsIgnoreCase(b.mText)) {
                         return b;
                     }
@@ -200,36 +199,39 @@ public final class Search {
         }
     }
 
-    static final String FILTER_CATEGORY = "filter_category";
-    static final String FILTER_UPLOADED = "filter_uploaded";
-    static final String FILTER_DURATION = "filter_duration";
-    static final String FILTER_TYPE = "filter_type";
-    static final String FILTER_FEATURED_COUNT = "featured_clip_count";
-    static final String PARAMETER_GET_FACETS = "facets";
+    private static final String FILTER_CATEGORY = "filter_category";
+    private static final String FILTER_UPLOADED = "filter_uploaded";
+    private static final String FILTER_DURATION = "filter_duration";
+    private static final String FILTER_TYPE = "filter_type";
+    private static final String FILTER_FEATURED_COUNT = "featured_clip_count";
+    private static final String PARAMETER_GET_FACETS = "facets";
 
     public static Call<SearchResponse> search(@NotNull String query, @NotNull FilterType type,
                                               @NotNull ModelCallback<SearchResponse> callback,
                                               @Nullable Map<String, String> refinementMap,
-                                              @Nullable List<Facet> facets, @Nullable String containerFilter,
+                                              @Nullable List<Facet> facets,
+                                              @Nullable String containerFilter,
                                               @Nullable String fieldFilter) {
-        if (refinementMap == null) {
-            refinementMap = new HashMap<>();
+        Map<String, String> searchRefinementMap = new HashMap<>();
+        if (refinementMap != null) {
+            searchRefinementMap = new HashMap<>(refinementMap);
         }
-        refinementMap.put(FILTER_TYPE, type.getText());
+        searchRefinementMap.put(FILTER_TYPE, type.getText());
         if (facets != null) {
-            StringBuilder facetsToUse = new StringBuilder();
+            final StringBuilder facetsToUse = new StringBuilder();
             String delim = "";
-            for (Facet facet : facets) {
+            for (final Facet facet : facets) {
                 facetsToUse.append(delim).append(facet.getText());
                 delim = ",";
             }
-            refinementMap.put(PARAMETER_GET_FACETS, facetsToUse.toString());
+            searchRefinementMap.put(PARAMETER_GET_FACETS, facetsToUse.toString());
         }
         if (containerFilter != null) {
-            refinementMap.put(Vimeo.PARAMETER_GET_CONTAINER_FIELD_FILTER, containerFilter);
+            searchRefinementMap.put(Vimeo.PARAMETER_GET_CONTAINER_FIELD_FILTER, containerFilter);
         }
-        Map<String, String> queryMap =
-                VimeoClient.getInstance().createQueryMap(query, refinementMap, fieldFilter);
+        @SuppressWarnings("AccessStaticViaInstance")
+        final Map<String, String> queryMap =
+                VimeoClient.getInstance().createQueryMap(query, searchRefinementMap, fieldFilter);
         // VimeoClient is the end-all interactor with the retrofit service
         return VimeoClient.getInstance().search(queryMap, callback);
     }
@@ -263,7 +265,7 @@ public final class Search {
             return null;
         }
 
-        Map<String, String> queryMap = new HashMap<>(3);
+        final Map<String, String> queryMap = new HashMap<>(3);
         queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
 
         if (videoSuggestionCount > 0) {
