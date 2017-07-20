@@ -55,16 +55,16 @@ public class GsonDeserializer {
      * @param callback The callback to call (and get the object type from)
      */
     public void deserialize(Gson gson, Object object, ModelCallback<Object> callback) {
-        Object result = deserializeObject(gson, object, callback);
+        final Object result = deserializeObject(gson, object, callback);
         callback.success(result);
     }
 
     @Nullable
     protected Object deserializeObject(Gson gson, Object object, ModelCallback<Object> callback) {
         try {
-            String JSON = gson.toJson(object);
+            final String JSON = gson.toJson(object);
             return gson.fromJson(JSON, callback.getObjectType());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             ClientLogger.e("Error when deserializing object!", e);
             return null;
         }
