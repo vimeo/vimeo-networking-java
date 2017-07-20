@@ -1,5 +1,5 @@
 # vimeo-networking
-vimeo-networking is a Java networking library used for interacting with the Vimeo API. The 
+vimeo-networking is a Java networking library used for interacting with the Vimeo API. The example app
 provided in this project shows the implementation in the context of an Android app.
 
 | Branch | Build Status |
