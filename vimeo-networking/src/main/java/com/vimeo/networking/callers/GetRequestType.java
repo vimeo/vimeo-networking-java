@@ -27,7 +27,9 @@ package com.vimeo.networking.callers;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.VimeoService;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.model.Category;
 import com.vimeo.networking.model.CategoryList;
+import com.vimeo.networking.model.Channel;
 import com.vimeo.networking.model.ChannelList;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.FeedList;
@@ -36,6 +38,7 @@ import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
+import com.vimeo.networking.model.appconfiguration.AppConfiguration;
 import com.vimeo.networking.model.cinema.ProgramContentItemList;
 import com.vimeo.networking.model.notifications.NotificationList;
 import com.vimeo.networking.model.search.SearchResponse;
@@ -66,6 +69,49 @@ public final class GetRequestType {
                                         @NotNull String cacheHeader,
                                         VimeoService vimeoService);
     }
+
+
+    public static final Caller<AppConfiguration> APP_CONFIGURATION =
+            new Caller<AppConfiguration>() {
+
+                @NotNull
+                @Override
+                public Call<AppConfiguration> call(@NotNull String authHeader,
+                                                   @NotNull String uri,
+                                                   @NotNull Map<String, String> queryMap,
+                                                   @NotNull String cacheHeader,
+                                                   VimeoService vimeoService) {
+                    return vimeoService.getAppConfiguration(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<Category> CATEGORY =
+            new Caller<Category>() {
+
+                @NotNull
+                @Override
+                public Call<Category> call(@NotNull String authHeader,
+                                           @NotNull String uri,
+                                           @NotNull Map<String, String> queryMap,
+                                           @NotNull String cacheHeader,
+                                           VimeoService vimeoService) {
+                    return vimeoService.getCategory(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<Channel> CHANNEL =
+            new Caller<Channel>() {
+
+                @NotNull
+                @Override
+                public Call<Channel> call(@NotNull String authHeader,
+                                          @NotNull String uri,
+                                          @NotNull Map<String, String> queryMap,
+                                          @NotNull String cacheHeader,
+                                          VimeoService vimeoService) {
+                    return vimeoService.getChannel(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
 
     public static final Caller<CategoryList> CATEGORY_LIST =
             new Caller<CategoryList>() {

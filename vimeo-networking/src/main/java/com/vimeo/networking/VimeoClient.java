@@ -1519,19 +1519,6 @@ final public class VimeoClient {
         }
     }
 
-    @Nullable
-    public Call<Object> fetchContent(String uri, CacheControl cacheControl, ModelCallback callback) {
-        return fetchContent(uri, cacheControl, callback, null, null, null);
-    }
-
-    @Nullable
-    public Call<Object> fetchContent(String uri,
-                                     CacheControl cacheControl,
-                                     ModelCallback callback,
-                                     String fieldFilter) {
-        return fetchContent(uri, cacheControl, callback, null, null, fieldFilter);
-    }
-
     /**
      * A generic POST call that takes in the URI of the specific resource.
      *

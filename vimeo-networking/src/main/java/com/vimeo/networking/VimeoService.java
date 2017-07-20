@@ -22,7 +22,9 @@
 
 package com.vimeo.networking;
 
+import com.vimeo.networking.model.Category;
 import com.vimeo.networking.model.CategoryList;
+import com.vimeo.networking.model.Channel;
 import com.vimeo.networking.model.ChannelList;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
@@ -36,6 +38,7 @@ import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking.model.appconfiguration.AppConfiguration;
 import com.vimeo.networking.model.cinema.ProgramContentItemList;
 import com.vimeo.networking.model.notifications.NotificationList;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
@@ -181,11 +184,24 @@ public interface VimeoService {
     // Concrete Region
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Concrete Region">
+
     @GET
-    Call<Video> getVideo(@Header("Authorization") String authHeader,
-                         @Url String uri,
-                         @QueryMap Map<String, String> options,
-                         @Header("Cache-Control") String cacheHeaderValue);
+    Call<AppConfiguration> getAppConfiguration(@Header("Authorization") String authHeader,
+                                               @Url String uri,
+                                               @QueryMap Map<String, String> options,
+                                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Category> getCategory(@Header("Authorization") String authHeader,
+                               @Url String uri,
+                               @QueryMap Map<String, String> options,
+                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Channel> getChannel(@Header("Authorization") String authHeader,
+                             @Url String uri,
+                             @QueryMap Map<String, String> options,
+                             @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<Document> getDocument(@Header("Authorization") String authHeader, @Url String uri);
@@ -197,10 +213,17 @@ public interface VimeoService {
                        @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    Call<Void> getVoid(@Header("Authorization") String authHeader,
+    Call<Video> getVideo(@Header("Authorization") String authHeader,
                          @Url String uri,
                          @QueryMap Map<String, String> options,
                          @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Void> getVoid(@Header("Authorization") String authHeader,
+                       @Url String uri,
+                       @QueryMap Map<String, String> options,
+                       @Header("Cache-Control") String cacheHeaderValue);
+
     // </editor-fold>
 
 

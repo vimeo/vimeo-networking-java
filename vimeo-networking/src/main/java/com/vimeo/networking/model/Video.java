@@ -527,6 +527,20 @@ public class Video implements Serializable {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
+    // Comments
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Comments">
+    @Nullable
+    public Connection getCommentsConnection() {
+        if ((mMetadata != null) && (mMetadata.mConnections != null) && (mMetadata.mConnections.mComments != null)) {
+            return mMetadata.mConnections.mComments;
+        }
+        return null;
+    }
+
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
     // Recommendation
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Recommendation">
