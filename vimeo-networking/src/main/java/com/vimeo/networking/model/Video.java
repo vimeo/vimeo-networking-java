@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
+import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
 import com.vimeo.stag.UseStag;
@@ -878,6 +879,17 @@ public class Video implements Serializable {
     // Playback failure Endpoint
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Playback failure Endpoint">
+
+    /**
+     * In the event of playback failure for a Video, this uri can be hit to get a reason for the failure.
+     * At the time of this writing, the failures that will be reported are only related to DRM. The protocol is a bit
+     * odd in that it will return a failure if there has been a corresponding DRM failure with the video.
+     * The error code that will come back is one of the DRM-related error codes listed in {@link ErrorCode}
+     * <p>
+     * If there is no related DRM failure for this video, the API will return a Void success.
+     *
+     * @return a uri string to hit for failure info, or null if none is available
+     */
     @Nullable
     public String getPlaybackFailureUri() {
         String playbackFailureUri = null;

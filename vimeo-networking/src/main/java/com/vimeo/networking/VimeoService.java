@@ -183,9 +183,9 @@ public interface VimeoService {
     // <editor-fold desc="Concrete Region">
     @GET
     Call<Video> getVideo(@Header("Authorization") String authHeader,
-                         @Header("Cache-Control") String cacheHeaderValue,
                          @Url String uri,
-                         @QueryMap Map<String, String> options);
+                         @QueryMap Map<String, String> options,
+                         @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<Document> getDocument(@Header("Authorization") String authHeader, @Url String uri);
@@ -195,6 +195,12 @@ public interface VimeoService {
                        @Url String uri,
                        @QueryMap Map<String, String> options,
                        @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Void> getVoid(@Header("Authorization") String authHeader,
+                         @Url String uri,
+                         @QueryMap Map<String, String> options,
+                         @Header("Cache-Control") String cacheHeaderValue);
     // </editor-fold>
 
 

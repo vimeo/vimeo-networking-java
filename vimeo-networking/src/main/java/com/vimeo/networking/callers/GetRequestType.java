@@ -34,6 +34,7 @@ import com.vimeo.networking.model.FeedList;
 import com.vimeo.networking.model.RecommendationList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.UserList;
+import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.cinema.ProgramContentItemList;
 import com.vimeo.networking.model.notifications.NotificationList;
@@ -56,7 +57,6 @@ import retrofit2.Call;
  */
 public final class GetRequestType {
 
-
     public interface Caller<DataType_T> {
 
         @NotNull
@@ -66,7 +66,6 @@ public final class GetRequestType {
                                         @NotNull String cacheHeader,
                                         VimeoService vimeoService);
     }
-
 
     public static final Caller<CategoryList> CATEGORY_LIST =
             new Caller<CategoryList>() {
@@ -174,10 +173,10 @@ public final class GetRequestType {
                 @NotNull
                 @Override
                 public Call<SearchResponse> call(@NotNull String authHeader,
-                                             @NotNull String uri,
-                                             @NotNull Map<String, String> queryMap,
-                                             @NotNull String cacheHeader,
-                                             VimeoService vimeoService) {
+                                                 @NotNull String uri,
+                                                 @NotNull Map<String, String> queryMap,
+                                                 @NotNull String cacheHeader,
+                                                 VimeoService vimeoService) {
                     return vimeoService.getSearchResponse(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -216,11 +215,39 @@ public final class GetRequestType {
                 @NotNull
                 @Override
                 public Call<User> call(@NotNull String authHeader,
-                                           @NotNull String uri,
-                                           @NotNull Map<String, String> queryMap,
-                                           @NotNull String cacheHeader,
-                                           VimeoService vimeoService) {
+                                       @NotNull String uri,
+                                       @NotNull Map<String, String> queryMap,
+                                       @NotNull String cacheHeader,
+                                       VimeoService vimeoService) {
                     return vimeoService.getUser(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<Video> VIDEO =
+            new Caller<Video>() {
+
+                @NotNull
+                @Override
+                public Call<Video> call(@NotNull String authHeader,
+                                        @NotNull String uri,
+                                        @NotNull Map<String, String> queryMap,
+                                        @NotNull String cacheHeader,
+                                        VimeoService vimeoService) {
+                    return vimeoService.getVideo(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<Void> VOID =
+            new Caller<Void>() {
+
+                @NotNull
+                @Override
+                public Call<Void> call(@NotNull String authHeader,
+                                       @NotNull String uri,
+                                       @NotNull Map<String, String> queryMap,
+                                       @NotNull String cacheHeader,
+                                       VimeoService vimeoService) {
+                    return vimeoService.getVoid(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 

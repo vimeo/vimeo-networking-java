@@ -53,7 +53,6 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1326,9 +1325,9 @@ final public class VimeoClient {
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         try {
             return mVimeoService.getVideo(getAuthHeader(),
-                                          cacheHeaderValue,
                                           uri,
-                                          createQueryMap(null, null, fieldFilter)).execute();
+                                          createQueryMap(null, null, fieldFilter),
+                                          cacheHeaderValue).execute();
         } catch (final IOException e) {
             return null;
         }
@@ -1406,8 +1405,8 @@ final public class VimeoClient {
     /**
      * Fetches the currently authenticated user from the API
      *
-     * @param callback    the callback to be invoked when the request finishes
-     * @param filter the field filter to apply to the request
+     * @param callback the callback to be invoked when the request finishes
+     * @param filter   the field filter to apply to the request
      */
     public void fetchCurrentUser(@NotNull ModelCallback<User> callback, @Nullable String filter) {
         getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, null, null, filter, GetRequestType.USER);
@@ -1422,7 +1421,7 @@ final public class VimeoClient {
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
-     *                      {@link SearchRefinementBuilder}
+     *                      {@link RequestRefinementBuilder}
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     @Nullable
@@ -1453,7 +1452,7 @@ final public class VimeoClient {
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
-     *                      {@link SearchRefinementBuilder}
+     *                      {@link RequestRefinementBuilder}
      * @param caller        The {@link GetRequestType.Caller} for the expected response type
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
@@ -1489,7 +1488,7 @@ final public class VimeoClient {
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
-     *                      {@link SearchRefinementBuilder}
+     *                      {@link RequestRefinementBuilder}
      * @param caller        The {@link GetRequestType.Caller} for the expected response type
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
@@ -1531,28 +1530,6 @@ final public class VimeoClient {
                                      ModelCallback callback,
                                      String fieldFilter) {
         return fetchContent(uri, cacheControl, callback, null, null, fieldFilter);
-    }
-
-    @Nullable
-    public Call<Object> fetchNetworkSortedContent(String uri, ModelCallback callback, String fieldFilter) {
-        return fetchContent(uri, CacheControl.FORCE_NETWORK, callback, null,
-                            new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
-    }
-
-    @Nullable
-    public Call<Object> fetchCachedSortedContent(String uri, ModelCallback callback, String fieldFilter) {
-        return fetchContent(uri, CacheControl.FORCE_CACHE, callback, null,
-                            new SearchRefinementBuilder(Vimeo.RefineSort.DEFAULT).build(), fieldFilter);
-    }
-
-    @Nullable
-    public Call<Object> fetchCachedContent(String uri, ModelCallback callback) {
-        return fetchContent(uri, CacheControl.FORCE_CACHE, callback);
-    }
-
-    @Nullable
-    public Call<Object> fetchNetworkContent(String uri, ModelCallback callback) {
-        return fetchContent(uri, CacheControl.FORCE_NETWORK, callback);
     }
 
     /**
