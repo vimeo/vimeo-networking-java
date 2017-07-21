@@ -30,6 +30,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.FeedList;
+import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.RecommendationList;
@@ -148,8 +149,25 @@ public interface VimeoService {
      */
     // <editor-fold desc="Editing">
     @PATCH
-    Call<Object> edit(@Header("Authorization") String authHeader, @Url String uri,
+    Call<Object> edit(@Header("Authorization") String authHeader,
+                      @Url String uri,
                       @Body HashMap<String, Object> parameters);
+
+    @PATCH
+    Call<Video> editVideo(@Header("Authorization") String authHeader,
+                          @Url String uri,
+                          @Body HashMap<String, Object> parameters);
+
+    @PATCH
+    Call<User> editUser(@Header("Authorization") String authHeader,
+                        @Url String uri,
+                        @Body HashMap<String, Object> parameters);
+
+    @PATCH
+    Call<PictureCollection> editPictureCollection(@Header("Authorization") String authHeader,
+                                                  @Url String uri,
+                                                  @Body HashMap<String, Object> parameters);
+
 
     @PATCH("me/notifications/subscriptions")
     Call<SubscriptionCollection> editSubscriptions(@Header("Authorization") String authHeader,

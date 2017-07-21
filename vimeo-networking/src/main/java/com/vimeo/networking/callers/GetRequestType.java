@@ -67,7 +67,7 @@ public final class GetRequestType {
                                         @NotNull String uri,
                                         @NotNull Map<String, String> queryMap,
                                         @NotNull String cacheHeader,
-                                        VimeoService vimeoService);
+                                        @NotNull VimeoService vimeoService);
     }
 
 
@@ -80,7 +80,7 @@ public final class GetRequestType {
                                                    @NotNull String uri,
                                                    @NotNull Map<String, String> queryMap,
                                                    @NotNull String cacheHeader,
-                                                   VimeoService vimeoService) {
+                                                   @NotNull VimeoService vimeoService) {
                     return vimeoService.getAppConfiguration(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -94,7 +94,7 @@ public final class GetRequestType {
                                            @NotNull String uri,
                                            @NotNull Map<String, String> queryMap,
                                            @NotNull String cacheHeader,
-                                           VimeoService vimeoService) {
+                                           @NotNull VimeoService vimeoService) {
                     return vimeoService.getCategory(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -108,7 +108,7 @@ public final class GetRequestType {
                                           @NotNull String uri,
                                           @NotNull Map<String, String> queryMap,
                                           @NotNull String cacheHeader,
-                                          VimeoService vimeoService) {
+                                          @NotNull VimeoService vimeoService) {
                     return vimeoService.getChannel(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -122,7 +122,7 @@ public final class GetRequestType {
                                                @NotNull String uri,
                                                @NotNull Map<String, String> queryMap,
                                                @NotNull String cacheHeader,
-                                               VimeoService vimeoService) {
+                                               @NotNull VimeoService vimeoService) {
                     return vimeoService.getCategoryList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -136,7 +136,7 @@ public final class GetRequestType {
                                               @NotNull String uri,
                                               @NotNull Map<String, String> queryMap,
                                               @NotNull String cacheHeader,
-                                              VimeoService vimeoService) {
+                                              @NotNull VimeoService vimeoService) {
                     return vimeoService.getChannelList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -150,7 +150,7 @@ public final class GetRequestType {
                                               @NotNull String uri,
                                               @NotNull Map<String, String> queryMap,
                                               @NotNull String cacheHeader,
-                                              VimeoService vimeoService) {
+                                              @NotNull VimeoService vimeoService) {
                     return vimeoService.getCommentList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -164,7 +164,7 @@ public final class GetRequestType {
                                            @NotNull String uri,
                                            @NotNull Map<String, String> queryMap,
                                            @NotNull String cacheHeader,
-                                           VimeoService vimeoService) {
+                                           @NotNull VimeoService vimeoService) {
                     return vimeoService.getFeedList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -179,7 +179,7 @@ public final class GetRequestType {
                         @NotNull String uri,
                         @NotNull Map<String, String> queryMap,
                         @NotNull String cacheHeader,
-                        VimeoService vimeoService) {
+                        @NotNull VimeoService vimeoService) {
                     return vimeoService.getNotificationList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -194,7 +194,7 @@ public final class GetRequestType {
                         @NotNull String uri,
                         @NotNull Map<String, String> queryMap,
                         @NotNull String cacheHeader,
-                        VimeoService vimeoService) {
+                        @NotNull VimeoService vimeoService) {
                     return vimeoService.getProgramContentItemList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -208,7 +208,7 @@ public final class GetRequestType {
                                                      @NotNull String uri,
                                                      @NotNull Map<String, String> queryMap,
                                                      @NotNull String cacheHeader,
-                                                     VimeoService vimeoService) {
+                                                     @NotNull VimeoService vimeoService) {
                     return vimeoService.getRecommendationList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -222,7 +222,7 @@ public final class GetRequestType {
                                                  @NotNull String uri,
                                                  @NotNull Map<String, String> queryMap,
                                                  @NotNull String cacheHeader,
-                                                 VimeoService vimeoService) {
+                                                 @NotNull VimeoService vimeoService) {
                     return vimeoService.getSearchResponse(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -236,7 +236,7 @@ public final class GetRequestType {
                                              @NotNull String uri,
                                              @NotNull Map<String, String> queryMap,
                                              @NotNull String cacheHeader,
-                                             VimeoService vimeoService) {
+                                             @NotNull VimeoService vimeoService) {
                     return vimeoService.getSeasonList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -250,7 +250,7 @@ public final class GetRequestType {
                                            @NotNull String uri,
                                            @NotNull Map<String, String> queryMap,
                                            @NotNull String cacheHeader,
-                                           VimeoService vimeoService) {
+                                           @NotNull VimeoService vimeoService) {
                     return vimeoService.getTvodList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -264,7 +264,7 @@ public final class GetRequestType {
                                        @NotNull String uri,
                                        @NotNull Map<String, String> queryMap,
                                        @NotNull String cacheHeader,
-                                       VimeoService vimeoService) {
+                                       @NotNull VimeoService vimeoService) {
                     return vimeoService.getUser(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -278,7 +278,7 @@ public final class GetRequestType {
                                         @NotNull String uri,
                                         @NotNull Map<String, String> queryMap,
                                         @NotNull String cacheHeader,
-                                        VimeoService vimeoService) {
+                                        @NotNull VimeoService vimeoService) {
                     return vimeoService.getVideo(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -292,7 +292,7 @@ public final class GetRequestType {
                                        @NotNull String uri,
                                        @NotNull Map<String, String> queryMap,
                                        @NotNull String cacheHeader,
-                                       VimeoService vimeoService) {
+                                       @NotNull VimeoService vimeoService) {
                     return vimeoService.getVoid(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -306,7 +306,7 @@ public final class GetRequestType {
                                            @NotNull String uri,
                                            @NotNull Map<String, String> queryMap,
                                            @NotNull String cacheHeader,
-                                           VimeoService vimeoService) {
+                                           @NotNull VimeoService vimeoService) {
                     return vimeoService.getUserList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -320,7 +320,7 @@ public final class GetRequestType {
                                             @NotNull String uri,
                                             @NotNull Map<String, String> queryMap,
                                             @NotNull String cacheHeader,
-                                            VimeoService vimeoService) {
+                                            @NotNull VimeoService vimeoService) {
                     return vimeoService.getVideoList(authHeader, uri, queryMap, cacheHeader);
                 }
             };

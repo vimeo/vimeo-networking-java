@@ -25,6 +25,7 @@ package com.vimeo.networking;
 import com.google.gson.Gson;
 import com.vimeo.networking.Search.FilterType;
 import com.vimeo.networking.callbacks.AuthCallback;
+import com.vimeo.networking.callbacks.IgnoreResponseVimeoCallback;
 import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestType;
@@ -32,6 +33,7 @@ import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
+import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Privacy;
@@ -72,6 +74,7 @@ import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 /**
  * Client class used for making networking calls to Vimeo API.
@@ -951,10 +954,13 @@ final public class VimeoClient {
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Editing (Video, User)">
     @Nullable
-    public Call<Object> editVideo(String uri, String title, String description, @Nullable String password,
-                                  @Nullable Privacy.PrivacyValue privacyValue,
-                                  @Nullable HashMap<String, Object> parameters,
-                                  ModelCallback<Object> callback) {
+    public Call<Video> editVideo(String uri,
+                                 String title,
+                                 String description,
+                                 @Nullable String password,
+                                 @Nullable Privacy.PrivacyValue privacyValue,
+                                 @Nullable HashMap<String, Object> parameters,
+                                 ModelCallback<Video> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1002,18 +1008,18 @@ final public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
         }
 
-        final Call<Object> call = mVimeoService.edit(getAuthHeader(), uri, parameters);
-        call.enqueue(getRetrofitCallback(callback));
+        final Call<Video> call = mVimeoService.editVideo(getAuthHeader(), uri, parameters);
+        call.enqueue(callback);
 
         return call;
     }
 
     @Nullable
-    public Call<Object> editUser(String uri,
-                                 @Nullable String name,
-                                 @Nullable String location,
-                                 @Nullable String bio,
-                                 ModelCallback<Object> callback) {
+    public Call<User> editUser(String uri,
+                               @Nullable String name,
+                               @Nullable String location,
+                               @Nullable String bio,
+                               ModelCallback<User> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1045,8 +1051,8 @@ final public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_USERS_BIO, bio);
         }
 
-        final Call<Object> call = mVimeoService.edit(getAuthHeader(), uri, parameters);
-        call.enqueue(getRetrofitCallback(callback));
+        final Call<User> call = mVimeoService.editUser(getAuthHeader(), uri, parameters);
+        call.enqueue(callback);
         return call;
     }
 
@@ -1160,62 +1166,43 @@ final public class VimeoClient {
      *            {@link #createPictureResource(String, ModelCallback)}
      */
     @Nullable
-    public Call<Object> activatePictureResource(String uri, ModelCallback callback) {
+    public Call<PictureCollection> activatePictureResource(String uri, ModelCallback<PictureCollection> callback) {
         if (uri == null || uri.trim().isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
         }
         final HashMap<String, Object> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_ACTIVE, true);
-        final Call<Object> call = mVimeoService.edit(getAuthHeader(), uri, parameters);
-        call.enqueue(getRetrofitCallback(callback));
+        final Call<PictureCollection> call = mVimeoService.editPictureCollection(getAuthHeader(), uri, parameters);
+        call.enqueue(callback);
         return call;
     }
-
-    /**
-     * Delete a picture resource
-     * This is helpful if your activation or upload step fails - you can delete the resource allocated
-     *
-     * @param uri The Uri that is found in the PictureResource returned from
-     *            {@link #createPictureResource(String, ModelCallback)}
-     */
-    public void deletePictureResource(String uri, ModelCallback callback) {
-        if (uri == null || uri.trim().isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-            return;
-        }
-
-        deleteContent(uri, callback);
-    }
-
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
     // Video actions (Like, Watch Later, Commenting)
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Video actions (Like, Watch Later, Commenting)">
-    public Call<Object> updateFollow(boolean follow, String uri, ModelCallback callback) {
-        return updateFollow(follow, uri, callback, true);
-    }
-
-    public Call<Object> updateFollow(boolean follow, String uri, ModelCallback callback, boolean enqueue) {
+    public Call updateFollow(boolean follow, String uri, IgnoreResponseVimeoCallback callback) {
         if (follow) {
-            return follow(uri, callback, enqueue);
+            return follow(uri, callback);
         } else {
-            return unfollow(uri, callback, enqueue);
+            return unfollow(uri, callback);
         }
     }
 
-    public Call<Object> follow(String uri, ModelCallback callback, boolean enqueue) {
-        return putContent(uri, null, callback, enqueue);
+    private Call follow(String uri, IgnoreResponseVimeoCallback callback) {
+        return putContent(uri, null, callback);
     }
 
-    public Call<Object> unfollow(String uri, ModelCallback callback, boolean enqueue) {
-        return deleteContent(uri, callback, enqueue);
+    private Call unfollow(@Nullable String uri, @NotNull IgnoreResponseVimeoCallback callback) {
+        return deleteContent(uri, null, callback);
     }
 
-    public Call<Object> updateLikeVideo(boolean like, String uri, @Nullable String password,
-                                        ModelCallback callback) {
+    public Call updateLikeVideo(boolean like,
+                                @Nullable String uri,
+                                @Nullable String password,
+                                @NotNull IgnoreResponseVimeoCallback callback) {
         if (like) {
             return likeVideo(uri, password, callback);
         } else {
@@ -1223,26 +1210,30 @@ final public class VimeoClient {
         }
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public Call<Object> likeVideo(String uri, @Nullable String password, ModelCallback callback) {
+    private Call likeVideo(@Nullable String uri,
+                           @Nullable String password,
+                           @NotNull IgnoreResponseVimeoCallback callback) {
         final Map<String, String> options = new HashMap<>();
         if (password != null) {
             options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-        return putContent(uri, options, callback, true);
+        return putContent(uri, options, callback);
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public Call<Object> unlikeVideo(String uri, @Nullable String password, ModelCallback callback) {
+    private Call unlikeVideo(@Nullable String uri,
+                             @Nullable String password,
+                             @NotNull IgnoreResponseVimeoCallback callback) {
         final Map<String, String> options = new HashMap<>();
         if (password != null) {
             options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-        return deleteContent(uri, options, callback, true);
+        return deleteContent(uri, options, callback);
     }
 
-    public Call<Object> updateWatchLaterVideo(boolean watchLater, String uri, @Nullable String password,
-                                              ModelCallback callback) {
+    public Call updateWatchLaterVideo(boolean watchLater,
+                                      @Nullable String uri,
+                                      @Nullable String password,
+                                      @NotNull IgnoreResponseVimeoCallback callback) {
         if (watchLater) {
             return watchLaterVideo(uri, password, callback);
         } else {
@@ -1250,24 +1241,25 @@ final public class VimeoClient {
         }
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public Call<Object> watchLaterVideo(String uri, @Nullable String password, ModelCallback callback) {
+    private Call watchLaterVideo(@Nullable String uri,
+                                 @Nullable String password,
+                                 @NotNull IgnoreResponseVimeoCallback callback) {
         final Map<String, String> options = new HashMap<>();
         if (password != null) {
             options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-        return putContent(uri, options, callback, true);
+        return putContent(uri, options, callback);
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public Call<Object> unwatchLaterVideo(String uri, @Nullable String password, ModelCallback callback) {
+    private Call unwatchLaterVideo(@Nullable String uri,
+                                   @Nullable String password,
+                                   @NotNull IgnoreResponseVimeoCallback callback) {
         final Map<String, String> options = new HashMap<>();
         if (password != null) {
             options.put(Vimeo.PARAMETER_PASSWORD, password);
         }
-        return deleteContent(uri, options, callback, true);
+        return deleteContent(uri, options, callback);
     }
-
 
     @Nullable
     public Call<Comment> comment(String uri,
@@ -1338,9 +1330,6 @@ final public class VimeoClient {
     // Gets, posts, puts, deletes
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Gets, posts, puts, deletes">
-    public void deleteVideo(String uri, Map<String, String> options, ModelCallback callback) {
-        deleteContent(uri, options, callback, true);
-    }
 
     private VimeoCallback<Object> getRetrofitCallback(final ModelCallback<Object> callback) {
         return new VimeoCallback<Object>() {
@@ -1424,9 +1413,12 @@ final public class VimeoClient {
      *                      {@link RequestRefinementBuilder}
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
+    @Deprecated
     @Nullable
-    public Call<Object> fetchContent(@NotNull String uri, CacheControl cacheControl,
-                                     @NotNull ModelCallback callback, @Nullable String query,
+    public Call<Object> fetchContent(@NotNull String uri,
+                                     @Nullable CacheControl cacheControl,
+                                     @NotNull ModelCallback callback,
+                                     @Nullable String query,
                                      @Nullable Map<String, String> refinementMap,
                                      @Nullable String fieldFilter) {
         if (uri.isEmpty()) {
@@ -1527,34 +1519,10 @@ final public class VimeoClient {
      * @param postBody     The body of the POST request
      * @param callback     The callback for the specific model type of the resource
      */
-    @Nullable
-    public Call<Object> postContent(@NotNull String uri, CacheControl cacheControl,
-                                    HashMap<String, String> postBody, @NotNull VimeoCallback callback) {
-
-        if (postBody == null) {
-            postBody = new HashMap<>();
-        }
-
-        String cacheHeaderValue = null;
-        if (cacheControl != null) {
-            cacheHeaderValue = cacheControl.toString();
-        }
-
-        // Don't use the deserialization callback because we don't get objects returned with post
-        return POST(getAuthHeader(), uri, cacheHeaderValue, postBody, callback);
-    }
-
-    /**
-     * A generic POST call that takes in the URI of the specific resource.
-     *
-     * @param uri          URI of the resource to POST
-     * @param cacheControl Cache control type
-     * @param postBody     The body of the POST request
-     * @param callback     The callback for the specific model type of the resource
-     */
-    @Nullable
-    public Call<Object> postContent(@NotNull String uri, CacheControl cacheControl,
-                                    ArrayList<Object> postBody, @NotNull VimeoCallback<Object> callback) {
+    public Call postContent(@NotNull String uri,
+                            @Nullable CacheControl cacheControl,
+                            @Nullable ArrayList<Object> postBody,
+                            @NotNull IgnoreResponseVimeoCallback callback) {
 
         if (postBody == null) {
             postBody = new ArrayList<>();
@@ -1564,7 +1532,6 @@ final public class VimeoClient {
         if (cacheControl != null) {
             cacheHeaderValue = cacheControl.toString();
         }
-
         final Call<Object> call = mVimeoService.POST(getAuthHeader(), uri, cacheHeaderValue, postBody);
         call.enqueue(callback);
         return call;
@@ -1627,14 +1594,9 @@ final public class VimeoClient {
     }
 
     @Nullable
-    public Call<Object> putContent(String uri,
-                                   @Nullable Map<String, String> options,
-                                   ModelCallback callback,
-                                   boolean enqueue) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
+    public Call putContent(@Nullable String uri,
+                           @Nullable Map<String, String> options,
+                           @NotNull IgnoreResponseVimeoCallback callback) {
 
         if (uri == null || uri.isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
@@ -1645,60 +1607,23 @@ final public class VimeoClient {
             options = new HashMap<>();
         }
 
-        return PUT(getAuthHeader(), uri, options, getRetrofitCallback(callback), enqueue);
+        final Call<Object> call = mVimeoService.PUT(getAuthHeader(), uri, options);
+        call.enqueue(callback);
+        return call;
     }
 
     @Nullable
-    public Call<Object> deleteContent(String uri,
-                                      @Nullable Map<String, String> options,
-                                      ModelCallback callback,
-                                      boolean enqueue) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
+    public Call deleteContent(@Nullable String uri,
+                              @Nullable Map<String, String> options,
+                              @NotNull IgnoreResponseVimeoCallback callback) {
         if (uri == null || uri.isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
-
             return null;
         }
         if (options == null) {
             options = new HashMap<>();
         }
-
-        return DELETE(getAuthHeader(), uri, options, getRetrofitCallback(callback), enqueue);
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public Call<Object> deleteContent(String uri, ModelCallback callback, boolean enqueue) {
-        return deleteContent(uri, null, callback, enqueue);
-    }
-
-    public Call<Object> deleteContent(String uri, ModelCallback callback) {
-        return deleteContent(uri, callback, true);
-    }
-
-    private Call<Object> PUT(String authHeader, String uri, Map<String, String> options,
-                             VimeoCallback<Object> callback, boolean enqueue) {
-        final Call<Object> call = mVimeoService.PUT(authHeader, uri, options);
-        if (enqueue) {
-            call.enqueue(callback);
-        }
-        return call;
-    }
-
-    private Call<Object> DELETE(String authHeader, String uri, Map<String, String> options,
-                                VimeoCallback<Object> callback, boolean enqueue) {
-        final Call<Object> call = mVimeoService.DELETE(authHeader, uri, options);
-        if (enqueue) {
-            call.enqueue(callback);
-        }
-        return call;
-    }
-
-    private Call<Object> POST(String authHeader, String uri, String cacheHeaderValue,
-                              HashMap<String, String> parameters, VimeoCallback<Object> callback) {
-        final Call<Object> call = mVimeoService.POST(authHeader, uri, cacheHeaderValue, parameters);
+        final Call<Object> call = mVimeoService.DELETE(getAuthHeader(), uri, options);
         call.enqueue(callback);
         return call;
     }
@@ -1730,7 +1655,8 @@ final public class VimeoClient {
         return credential;
     }
 
-    private String getBasicAuthHeader() {
+    @SuppressWarnings("WeakerAccess")
+    public String getBasicAuthHeader() {
         return Credentials.basic(mConfiguration.mClientID, mConfiguration.mClientSecret);
     }
 
@@ -1755,8 +1681,9 @@ final public class VimeoClient {
         return cacheControl.toString();
     }
 
+    @SuppressWarnings("WeakerAccess")
     @NotNull
-    static Map<String, String> createQueryMap(@Nullable String query,
+    public static Map<String, String> createQueryMap(@Nullable String query,
                                               @Nullable Map<String, String> refinementMap,
                                               @Nullable String fieldFilter) {
         Map<String, String> queryMap = new HashMap<>();
