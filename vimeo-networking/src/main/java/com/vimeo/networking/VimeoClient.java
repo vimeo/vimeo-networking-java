@@ -26,7 +26,6 @@ import com.google.gson.Gson;
 import com.vimeo.networking.Search.FilterType;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.IgnoreResponseVimeoCallback;
-import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestType;
 import com.vimeo.networking.logging.ClientLogger;
@@ -348,8 +347,6 @@ final public class VimeoClient {
     @SuppressWarnings("WeakerAccess")
     public String getCodeGrantAuthorizationURI() {
         mCurrentCodeGrantState = UUID.randomUUID().toString();
-
-        // TODO: TEST
         // Will look like the following: https://api.vimeo.com/oauth/authorize?<UTF8 encoded params>
         final HttpUrl baseUrl = HttpUrl.parse(mConfiguration.mBaseURLString);
         final HttpUrl uri = new HttpUrl.Builder().scheme(baseUrl.scheme())
@@ -386,7 +383,6 @@ final public class VimeoClient {
             return null;
         }
 
-        // TODO: TEST
         final Map<String, String> queryMap = VimeoNetworkUtil.getSimpleQueryMap(uri);
         final String code = queryMap.get(Vimeo.CODE_GRANT_RESPONSE_TYPE);
         final String state = queryMap.get(Vimeo.CODE_GRANT_STATE);
@@ -839,8 +835,11 @@ final public class VimeoClient {
         private final WeakReference<VimeoClient> mVimeoClient;
         private final String mScope;
 
-        PinCodePollingTimerTask(@NotNull PinCodeInfo pinCodeInfo, @NotNull Timer timer, int expiresInSeconds,
-                                @NotNull AuthCallback authCallback, @Nullable VimeoClient client,
+        PinCodePollingTimerTask(@NotNull PinCodeInfo pinCodeInfo,
+                                @NotNull Timer timer,
+                                int expiresInSeconds,
+                                @NotNull AuthCallback authCallback,
+                                @Nullable VimeoClient client,
                                 @NotNull String scope) {
             mTimer = timer;
             mPinCodeInfo = pinCodeInfo;
@@ -895,13 +894,13 @@ final public class VimeoClient {
      * call the completion handler (authCallback) when that happens.  If the pin code expires while we're
      * waiting, completion handler (authCallback) will be called with an error
      *
-     * @param pinCodeCallback {@link ModelCallback} that will receive {@link PinCodeInfo} to display.
+     * @param pinCodeCallback {@link VimeoCallback} that will receive {@link PinCodeInfo} to display.
      *                        This is held as weak reference.
      * @param authCallback    {@link AuthCallback} that will be notified when Authorization is complete.
      *                        This is held as a weak reference. It may be called back on a different thread.
      * @return a call object for the pin code request
      */
-    public Call<PinCodeInfo> logInWithPinCode(@NotNull final ModelCallback<PinCodeInfo> pinCodeCallback,
+    public Call<PinCodeInfo> logInWithPinCode(@NotNull final VimeoCallback<PinCodeInfo> pinCodeCallback,
                                               @NotNull final AuthCallback authCallback) {
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
@@ -914,7 +913,7 @@ final public class VimeoClient {
                                                                     Vimeo.DEVICE_GRANT_TYPE,
                                                                     SCOPE);
 
-        call.enqueue(new ModelCallback<PinCodeInfo>(PinCodeInfo.class) {
+        call.enqueue(new VimeoCallback<PinCodeInfo>() {
             @Override
             public void success(PinCodeInfo pinCodeInfo) {
                 if (pinCodeInfo.getUserCode() == null ||
@@ -960,7 +959,7 @@ final public class VimeoClient {
                                  @Nullable String password,
                                  @Nullable Privacy.PrivacyValue privacyValue,
                                  @Nullable HashMap<String, Object> parameters,
-                                 ModelCallback<Video> callback) {
+                                 VimeoCallback<Video> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1019,7 +1018,7 @@ final public class VimeoClient {
                                @Nullable String name,
                                @Nullable String location,
                                @Nullable String bio,
-                               ModelCallback<User> callback) {
+                               VimeoCallback<User> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1065,7 +1064,7 @@ final public class VimeoClient {
      */
     @Nullable
     public Call<SubscriptionCollection> editSubscriptions(@NotNull Map<String, Boolean> subscriptionMap,
-                                                          @NotNull ModelCallback<SubscriptionCollection> callback) {
+                                                          @NotNull VimeoCallback<SubscriptionCollection> callback) {
 
         final Call<SubscriptionCollection> call = mVimeoService.editSubscriptions(getAuthHeader(), subscriptionMap);
         call.enqueue(callback);
@@ -1083,36 +1082,36 @@ final public class VimeoClient {
     /**
      * An asynchronous request to get a {@link Document} representing the Vimeo Terms of Service
      *
-     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
      * @return a {@link Call} with the {@link Document} type. This can be used for request
      * cancellation.
      */
     @NotNull
-    public Call<Document> getTermsOfService(@NotNull ModelCallback<Document> callback) {
+    public Call<Document> getTermsOfService(@NotNull VimeoCallback<Document> callback) {
         return getDocument(Vimeo.ENDPOINT_TERMS_OF_SERVICE, callback);
     }
 
     /**
      * An asynchronous request to get a {@link Document} representing the Vimeo Privacy Policy
      *
-     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
      * @return a {@link Call} with the {@link Document} type. This can be used for request
      * cancellation.
      */
     @NotNull
-    public Call<Document> getPrivacyPolicy(@NotNull ModelCallback<Document> callback) {
+    public Call<Document> getPrivacyPolicy(@NotNull VimeoCallback<Document> callback) {
         return getDocument(Vimeo.ENDPOINT_PRIVACY_POLICY, callback);
     }
 
     /**
      * An asynchronous request to get a {@link Document} representing the Vimeo Payment Addendum
      *
-     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
      * @return a {@link Call} with the {@link Document} type. This can be used for request
      * cancellation.
      */
     @NotNull
-    public Call<Document> getPaymentAddendum(@NotNull ModelCallback<Document> callback) {
+    public Call<Document> getPaymentAddendum(@NotNull VimeoCallback<Document> callback) {
         return getDocument(Vimeo.ENDPOINT_PAYMENT_ADDENDUM, callback);
     }
 
@@ -1120,12 +1119,12 @@ final public class VimeoClient {
      * Gets a {@link Document} at the provided uri. When finished, the callback will be invoked.
      *
      * @param uri      the uri of the Document
-     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
      * @return a {@link Call} with the {@link Document} type. This can be used for request
      * cancellation.
      */
     @NotNull
-    public Call<Document> getDocument(@NotNull String uri, @NotNull ModelCallback<Document> callback) {
+    public Call<Document> getDocument(@NotNull String uri, @NotNull VimeoCallback<Document> callback) {
         final Call<Document> call = mVimeoService.getDocument(getAuthHeader(), uri);
         call.enqueue(callback);
 
@@ -1145,10 +1144,10 @@ final public class VimeoClient {
      *
      * @param uri      should be in the format /videos/{video_id}/pictures or /user/{user_id}/pictures
      *                 The Uri should be obtained from metadata.connections.pictures.uri
-     * @param callback The ModelCallback containing PictureResource data
+     * @param callback The VimeoCallback containing PictureResource data
      */
     @Nullable
-    public Call<PictureResource> createPictureResource(String uri, ModelCallback<PictureResource> callback) {
+    public Call<PictureResource> createPictureResource(String uri, VimeoCallback<PictureResource> callback) {
         if (uri == null || uri.trim().isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
@@ -1163,10 +1162,10 @@ final public class VimeoClient {
      * Activate a picture resource
      *
      * @param uri The Uri that is found in the PictureResource returned from
-     *            {@link #createPictureResource(String, ModelCallback)}
+     *            {@link #createPictureResource(String, VimeoCallback)}
      */
     @Nullable
-    public Call<PictureCollection> activatePictureResource(String uri, ModelCallback<PictureCollection> callback) {
+    public Call<PictureCollection> activatePictureResource(String uri, VimeoCallback<PictureCollection> callback) {
         if (uri == null || uri.trim().isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
@@ -1265,7 +1264,7 @@ final public class VimeoClient {
     public Call<Comment> comment(String uri,
                                  String comment,
                                  @Nullable String password,
-                                 ModelCallback<Comment> callback) {
+                                 VimeoCallback<Comment> callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -1333,7 +1332,7 @@ final public class VimeoClient {
 
     /**
      * A package private search method: use
-     * {@link Search#search(String, FilterType, ModelCallback, Map, List, String, String)}
+     * {@link Search#search(String, FilterType, VimeoCallback, Map, List, String, String)}
      * which relies on this method.
      *
      * @param queryMap the query parameters
@@ -1342,7 +1341,7 @@ final public class VimeoClient {
      */
     @NotNull
     Call<SearchResponse> search(@NotNull Map<String, String> queryMap,
-                                @NotNull ModelCallback<SearchResponse> callback) {
+                                @NotNull VimeoCallback<SearchResponse> callback) {
 
         final Call<SearchResponse> call = mVimeoService.search(getAuthHeader(), queryMap);
         call.enqueue(callback);
@@ -1350,7 +1349,7 @@ final public class VimeoClient {
     }
 
     /**
-     * A package private search suggestions method. See {@link Search#suggest(String, int, int, ModelCallback)} for
+     * A package private search suggestions method. See {@link Search#suggest(String, int, int, VimeoCallback)} for
      * public usage of the suggestion API.
      *
      * @param queryMap the query parameters
@@ -1359,7 +1358,7 @@ final public class VimeoClient {
      */
     @NotNull
     Call<SuggestionResponse> suggest(@NotNull Map<String, String> queryMap,
-                                     @NotNull ModelCallback<SuggestionResponse> callback) {
+                                     @NotNull VimeoCallback<SuggestionResponse> callback) {
         final Call<SuggestionResponse> call = mVimeoService.suggest(getAuthHeader(), queryMap);
         call.enqueue(callback);
 
@@ -1372,7 +1371,7 @@ final public class VimeoClient {
      *
      * @param callback the callback to be invoked when the request finishes
      */
-    public void fetchCurrentUser(@NotNull ModelCallback<User> callback) {
+    public void fetchCurrentUser(@NotNull VimeoCallback<User> callback) {
         fetchCurrentUser(callback, null);
     }
 
@@ -1382,7 +1381,7 @@ final public class VimeoClient {
      * @param callback the callback to be invoked when the request finishes
      * @param filter   the field filter to apply to the request
      */
-    public void fetchCurrentUser(@NotNull ModelCallback<User> callback, @Nullable String filter) {
+    public void fetchCurrentUser(@NotNull VimeoCallback<User> callback, @Nullable String filter) {
         getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, null, null, filter, GetRequestType.USER);
     }
 

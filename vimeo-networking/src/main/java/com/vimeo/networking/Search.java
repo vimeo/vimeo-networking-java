@@ -25,6 +25,7 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.callbacks.ModelCallback;
+import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
@@ -249,16 +250,17 @@ public final class Search {
      * @param videoSuggestionCount the number of video suggestions to receive. This determines the maximum number of
      *                             items in the {@link SuggestionResponse#getVideoSuggestions()} list. This will
      *                             be ignored if a value less than or equal to 0 is provided.
-     * @param tvodSuggestionCount   the number of ondemand suggestions to receive. This determines the maximum number of
+     * @param tvodSuggestionCount  the number of ondemand suggestions to receive. This determines the maximum number of
      *                             items in the {@link SuggestionResponse#getTvodSuggestionList()} list. This will
      *                             be ignored if a value less than or equal to 0 is provided.
      * @param callback             the callback to be invoked upon completion of this request
      * @return a {@link Call} that can be used to cancel this request
      */
     @Nullable
-    public static Call<SuggestionResponse> suggest(@NotNull String query, int videoSuggestionCount,
+    public static Call<SuggestionResponse> suggest(@NotNull String query,
+                                                   int videoSuggestionCount,
                                                    int tvodSuggestionCount,
-                                                   @NotNull ModelCallback<SuggestionResponse> callback) {
+                                                   @NotNull VimeoCallback<SuggestionResponse> callback) {
 
         if (query.isEmpty()) {
             callback.failure(new VimeoError("Query cannot be empty!"));

@@ -1,6 +1,6 @@
 package com.vimeo.networking;
 
-import com.vimeo.networking.callbacks.ModelCallback;
+import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.search.SuggestionResponse;
 
@@ -18,7 +18,7 @@ public class SearchTest {
 
     @Test
     public void testSuggest_emptyQuery() throws Exception {
-        ModelCallback<SuggestionResponse> callback = new ModelCallback<SuggestionResponse>(SuggestionResponse.class) {
+        VimeoCallback<SuggestionResponse> callback = new VimeoCallback<SuggestionResponse>() {
             @Override
             public void success(SuggestionResponse suggestionResponse) {
 
