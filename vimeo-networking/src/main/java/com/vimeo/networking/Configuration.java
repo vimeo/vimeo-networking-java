@@ -277,7 +277,6 @@ public class Configuration {
         private String mAccessToken;
 
         private AccountStore mAccountStore;
-        private GsonDeserializer mDeserializer = new GsonDeserializer();
 
         private String mApiVersionString = DEFAULT_VERSION_STRING;
         private File mCacheDirectory;
@@ -326,9 +325,7 @@ public class Configuration {
         }
 
         /**
-         * The constructor for the Configuration Builder. Only the last two arguments are optional but it is
-         * highly recommended that you pass in a deserializer since, without one, deserialization will occur
-         * on the main thread (which can be a lengthy operation)
+         * The constructor for the Configuration Builder.
          *
          * @param baseURLString The base url pointing to the Vimeo api. Something like:
          *                      {@link Vimeo#VIMEO_BASE_URL_STRING}

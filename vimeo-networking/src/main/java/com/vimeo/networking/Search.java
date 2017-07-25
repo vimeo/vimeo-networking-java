@@ -24,7 +24,6 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.search.SearchResponse;
@@ -208,7 +207,7 @@ public final class Search {
     private static final String PARAMETER_GET_FACETS = "facets";
 
     public static Call<SearchResponse> search(@NotNull String query, @NotNull FilterType type,
-                                              @NotNull ModelCallback<SearchResponse> callback,
+                                              @NotNull VimeoCallback<SearchResponse> callback,
                                               @Nullable Map<String, String> refinementMap,
                                               @Nullable List<Facet> facets,
                                               @Nullable String containerFilter,
