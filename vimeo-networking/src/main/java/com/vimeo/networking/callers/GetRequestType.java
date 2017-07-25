@@ -31,6 +31,7 @@ import com.vimeo.networking.model.Category;
 import com.vimeo.networking.model.CategoryList;
 import com.vimeo.networking.model.Channel;
 import com.vimeo.networking.model.ChannelList;
+import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.FeedList;
 import com.vimeo.networking.model.RecommendationList;
@@ -43,6 +44,7 @@ import com.vimeo.networking.model.cinema.ProgramContentItemList;
 import com.vimeo.networking.model.notifications.NotificationList;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.tvod.SeasonList;
+import com.vimeo.networking.model.tvod.TvodItem;
 import com.vimeo.networking.model.tvod.TvodList;
 
 import org.jetbrains.annotations.NotNull;
@@ -138,6 +140,20 @@ public final class GetRequestType {
                                               @NotNull String cacheHeader,
                                               @NotNull VimeoService vimeoService) {
                     return vimeoService.getChannelList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<Comment> COMMENT =
+            new Caller<Comment>() {
+
+                @NotNull
+                @Override
+                public Call<Comment> call(@NotNull String authHeader,
+                                          @NotNull String uri,
+                                          @NotNull Map<String, String> queryMap,
+                                          @NotNull String cacheHeader,
+                                          @NotNull VimeoService vimeoService) {
+                    return vimeoService.getComment(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
@@ -238,6 +254,20 @@ public final class GetRequestType {
                                              @NotNull String cacheHeader,
                                              @NotNull VimeoService vimeoService) {
                     return vimeoService.getSeasonList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    public static final Caller<TvodItem> TVOD_ITEM =
+            new Caller<TvodItem>() {
+
+                @NotNull
+                @Override
+                public Call<TvodItem> call(@NotNull String authHeader,
+                                           @NotNull String uri,
+                                           @NotNull Map<String, String> queryMap,
+                                           @NotNull String cacheHeader,
+                                           @NotNull VimeoService vimeoService) {
+                    return vimeoService.getTvodItem(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 

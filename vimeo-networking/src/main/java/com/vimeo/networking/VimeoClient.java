@@ -1331,21 +1331,6 @@ final public class VimeoClient {
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Gets, posts, puts, deletes">
 
-    private VimeoCallback<Object> getRetrofitCallback(final ModelCallback<Object> callback) {
-        return new VimeoCallback<Object>() {
-            @Override
-            public void success(Object o) {
-                // Handle the gson parsing using a mGsonDeserializer object
-                mConfiguration.mGsonDeserializer.deserialize(mGson, o, callback);
-            }
-
-            @Override
-            public void failure(VimeoError error) {
-                callback.failure(error);
-            }
-        };
-    }
-
     /**
      * A package private search method: use
      * {@link Search#search(String, FilterType, ModelCallback, Map, List, String, String)}
@@ -1399,40 +1384,6 @@ final public class VimeoClient {
      */
     public void fetchCurrentUser(@NotNull ModelCallback<User> callback, @Nullable String filter) {
         getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, null, null, filter, GetRequestType.USER);
-    }
-
-    /**
-     * A generic GET call that takes in the URI of the specific resource.
-     *
-     * @param uri           URI of the resource to GET
-     * @param cacheControl  Cache control type (includes max age and other cache policy information)
-     * @param callback      The callback for the specific model type of the resource
-     * @param query         Query string for hitting the search endpoint
-     * @param refinementMap Used to refine lists (generally for search) with sorts and filters
-     * @param fieldFilter   The string of fields to include in the response (highly recommended!)
-     *                      {@link RequestRefinementBuilder}
-     * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
-     */
-    @Deprecated
-    @Nullable
-    public Call<Object> fetchContent(@NotNull String uri,
-                                     @Nullable CacheControl cacheControl,
-                                     @NotNull ModelCallback callback,
-                                     @Nullable String query,
-                                     @Nullable Map<String, String> refinementMap,
-                                     @Nullable String fieldFilter) {
-        if (uri.isEmpty()) {
-            callback.failure(new VimeoError("Uri cannot be empty!"));
-            return null;
-        }
-
-        final String cacheHeaderValue = createCacheControlString(cacheControl);
-
-        final Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
-
-        final Call<Object> call = mVimeoService.GET(getAuthHeader(), uri, queryMap, cacheHeaderValue);
-        call.enqueue(getRetrofitCallback(callback));
-        return call;
     }
 
     /**
@@ -1684,8 +1635,8 @@ final public class VimeoClient {
     @SuppressWarnings("WeakerAccess")
     @NotNull
     public static Map<String, String> createQueryMap(@Nullable String query,
-                                              @Nullable Map<String, String> refinementMap,
-                                              @Nullable String fieldFilter) {
+                                                     @Nullable Map<String, String> refinementMap,
+                                                     @Nullable String fieldFilter) {
         Map<String, String> queryMap = new HashMap<>();
         if (refinementMap != null && !refinementMap.isEmpty()) {
             queryMap = new HashMap<>(refinementMap);

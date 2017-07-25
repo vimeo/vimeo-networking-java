@@ -46,6 +46,7 @@ import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.model.tvod.SeasonList;
+import com.vimeo.networking.model.tvod.TvodItem;
 import com.vimeo.networking.model.tvod.TvodList;
 
 import java.util.ArrayList;
@@ -222,7 +223,19 @@ public interface VimeoService {
                              @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
+    Call<Comment> getComment(@Header("Authorization") String authHeader,
+                             @Url String uri,
+                             @QueryMap Map<String, String> options,
+                             @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
     Call<Document> getDocument(@Header("Authorization") String authHeader, @Url String uri);
+
+    @GET
+    Call<TvodItem> getTvodItem(@Header("Authorization") String authHeader,
+                               @Url String uri,
+                               @QueryMap Map<String, String> options,
+                               @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<User> getUser(@Header("Authorization") String authHeader,
