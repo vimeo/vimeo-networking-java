@@ -27,7 +27,7 @@ import com.vimeo.networking.Search.FilterType;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.IgnoreResponseVimeoCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
-import com.vimeo.networking.callers.GetRequestType;
+import com.vimeo.networking.callers.GetRequestCaller;
 import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Comment;
@@ -115,6 +115,16 @@ final public class VimeoClient {
      */
     @Nullable
     private VimeoAccount mVimeoAccount;
+
+    public interface Caller<DataType_T> {
+
+        @NotNull
+        retrofit2.Call<DataType_T> call(@NotNull String authHeader,
+                                        @NotNull String uri,
+                                        @NotNull Map<String, String> queryMap,
+                                        @NotNull String cacheHeader,
+                                        @NotNull VimeoService vimeoService);
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // Configuration
@@ -1379,7 +1389,7 @@ final public class VimeoClient {
      * @param filter   the field filter to apply to the request
      */
     public void fetchCurrentUser(@NotNull VimeoCallback<User> callback, @Nullable String filter) {
-        getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, null, null, filter, GetRequestType.USER);
+        getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, null, null, filter, GetRequestCaller.USER);
     }
 
     /**
@@ -1392,7 +1402,7 @@ final public class VimeoClient {
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
      *                      {@link RequestRefinementBuilder}
-     * @param caller        The {@link GetRequestType.Caller} for the expected response type
+     * @param caller        The {@link Caller} for the expected response type
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     @Nullable
@@ -1402,7 +1412,7 @@ final public class VimeoClient {
                                                               @Nullable String query,
                                                               @Nullable Map<String, String> refinementMap,
                                                               @Nullable String fieldFilter,
-                                                              @NotNull GetRequestType.Caller<DataType_T> caller) {
+                                                              @NotNull Caller<DataType_T> caller) {
         if (uri.isEmpty()) {
             callback.failure(new VimeoError("Uri cannot be empty!"));
             return null;
@@ -1428,7 +1438,7 @@ final public class VimeoClient {
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
      *                      {@link RequestRefinementBuilder}
-     * @param caller        The {@link GetRequestType.Caller} for the expected response type
+     * @param caller        The {@link Caller} for the expected response type
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     @Nullable
@@ -1438,7 +1448,7 @@ final public class VimeoClient {
             @Nullable String query,
             @Nullable Map<String, String> refinementMap,
             @Nullable String fieldFilter,
-            @NotNull GetRequestType.Caller<DataType_T> caller) {
+            @NotNull Caller<DataType_T> caller) {
 
         if (uri.isEmpty()) {
             throw new AssertionError("uri cannot be null or empty");

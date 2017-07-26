@@ -25,6 +25,7 @@
 package com.vimeo.networking.callers;
 
 import com.vimeo.networking.VimeoClient;
+import com.vimeo.networking.VimeoClient.Caller;
 import com.vimeo.networking.VimeoService;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.model.Category;
@@ -60,18 +61,7 @@ import retrofit2.Call;
  * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
  * Created by rigbergh on 7/9/17.
  */
-public final class GetRequestType {
-
-    public interface Caller<DataType_T> {
-
-        @NotNull
-        retrofit2.Call<DataType_T> call(@NotNull String authHeader,
-                                        @NotNull String uri,
-                                        @NotNull Map<String, String> queryMap,
-                                        @NotNull String cacheHeader,
-                                        @NotNull VimeoService vimeoService);
-    }
-
+public final class GetRequestCaller {
 
     public static final Caller<AppConfiguration> APP_CONFIGURATION =
             new Caller<AppConfiguration>() {
@@ -355,8 +345,6 @@ public final class GetRequestType {
                 }
             };
 
-    private GetRequestType() {
-
-    }
+    private GetRequestCaller() {}
 
 }
