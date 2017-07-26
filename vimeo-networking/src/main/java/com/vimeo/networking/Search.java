@@ -212,9 +212,11 @@ public final class Search {
                                               @Nullable List<Facet> facets,
                                               @Nullable String containerFilter,
                                               @Nullable String fieldFilter) {
-        Map<String, String> searchRefinementMap = new HashMap<>();
+        final Map<String, String> searchRefinementMap;
         if (refinementMap != null) {
             searchRefinementMap = new HashMap<>(refinementMap);
+        } else {
+            searchRefinementMap = new HashMap<>();
         }
         searchRefinementMap.put(FILTER_TYPE, type.getText());
         if (facets != null) {
@@ -229,9 +231,8 @@ public final class Search {
         if (containerFilter != null) {
             searchRefinementMap.put(Vimeo.PARAMETER_GET_CONTAINER_FIELD_FILTER, containerFilter);
         }
-        @SuppressWarnings("AccessStaticViaInstance")
-        final Map<String, String> queryMap =
-                VimeoClient.getInstance().createQueryMap(query, searchRefinementMap, fieldFilter);
+
+        final Map<String, String> queryMap = VimeoClient.createQueryMap(query, searchRefinementMap, fieldFilter);
         // VimeoClient is the end-all interactor with the retrofit service
         return VimeoClient.getInstance().search(queryMap, callback);
     }

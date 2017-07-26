@@ -952,18 +952,15 @@ final public class VimeoClient {
     // Editing (Video, User)
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Editing (Video, User)">
+
     @Nullable
-    public Call<Video> editVideo(String uri,
-                                 String title,
-                                 String description,
+    public Call<Video> editVideo(@Nullable String uri,
+                                 @Nullable String title,
+                                 @Nullable String description,
                                  @Nullable String password,
                                  @Nullable Privacy.PrivacyValue privacyValue,
                                  @Nullable HashMap<String, Object> parameters,
-                                 VimeoCallback<Video> callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
+                                 @NotNull VimeoCallback<Video> callback) {
         if (uri == null || uri.isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
 
@@ -1636,9 +1633,11 @@ final public class VimeoClient {
     public static Map<String, String> createQueryMap(@Nullable String query,
                                                      @Nullable Map<String, String> refinementMap,
                                                      @Nullable String fieldFilter) {
-        Map<String, String> queryMap = new HashMap<>();
+        final Map<String, String> queryMap;
         if (refinementMap != null && !refinementMap.isEmpty()) {
             queryMap = new HashMap<>(refinementMap);
+        } else {
+            queryMap = new HashMap<>();
         }
         if (query != null && !query.isEmpty()) {
             queryMap.put(Vimeo.PARAMETER_GET_QUERY, query);
