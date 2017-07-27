@@ -74,7 +74,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
 /**
  * Client class used for making networking calls to Vimeo API.
  * <p>
@@ -119,7 +118,7 @@ final public class VimeoClient {
     public interface Caller<DataType_T> {
 
         @NotNull
-        retrofit2.Call<DataType_T> call(@NotNull String authHeader,
+        Call<DataType_T> call(@NotNull String authHeader,
                                         @NotNull String uri,
                                         @NotNull Map<String, String> queryMap,
                                         @NotNull String cacheHeader,
@@ -1297,15 +1296,15 @@ final public class VimeoClient {
 
     /**
      * This will fetch a video synchronously by-passing the cache. To fetch from cache, use
-     * {@link #fetchVideoSync(String, CacheControl, String)}
+     * {@link #getVideoSync(String, CacheControl, String)}
      *
      * @param uri         the uri of the video to fetch
      * @param fieldFilter any field filters to apply for the video response, may be null
      * @return a Retrofit response object with the Video as the body
      */
     @Nullable
-    public retrofit2.Response<Video> fetchVideoSync(String uri, @Nullable String fieldFilter) {
-        return fetchVideoSync(uri, CacheControl.FORCE_NETWORK, fieldFilter);
+    public retrofit2.Response<Video> getVideoSync(String uri, @Nullable String fieldFilter) {
+        return getVideoSync(uri, CacheControl.FORCE_NETWORK, fieldFilter);
     }
 
     /**
@@ -1317,9 +1316,9 @@ final public class VimeoClient {
      * @return a Retrofit response object with the Video as the body
      */
     @Nullable
-    public retrofit2.Response<Video> fetchVideoSync(String uri,
-                                                    CacheControl cacheControl,
-                                                    @Nullable String fieldFilter) {
+    public retrofit2.Response<Video> getVideoSync(String uri,
+                                                  CacheControl cacheControl,
+                                                  @Nullable String fieldFilter) {
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         try {
             return mVimeoService.getVideo(getAuthHeader(),
@@ -1378,8 +1377,8 @@ final public class VimeoClient {
      *
      * @param callback the callback to be invoked when the request finishes
      */
-    public void fetchCurrentUser(@NotNull VimeoCallback<User> callback) {
-        fetchCurrentUser(callback, null);
+    public void getCurrentUser(@NotNull VimeoCallback<User> callback) {
+        getCurrentUser(callback, null);
     }
 
     /**
@@ -1388,7 +1387,7 @@ final public class VimeoClient {
      * @param callback the callback to be invoked when the request finishes
      * @param filter   the field filter to apply to the request
      */
-    public void fetchCurrentUser(@NotNull VimeoCallback<User> callback, @Nullable String filter) {
+    public void getCurrentUser(@NotNull VimeoCallback<User> callback, @Nullable String filter) {
         getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, null, null, filter, GetRequestCaller.USER);
     }
 
@@ -1406,7 +1405,7 @@ final public class VimeoClient {
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     @Nullable
-    public <DataType_T> retrofit2.Call<DataType_T> getContent(@NotNull String uri,
+    public <DataType_T> Call<DataType_T> getContent(@NotNull String uri,
                                                               @NotNull CacheControl cacheControl,
                                                               @NotNull VimeoCallback<DataType_T> callback,
                                                               @Nullable String query,
@@ -1420,7 +1419,7 @@ final public class VimeoClient {
 
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         final Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
-        final retrofit2.Call<DataType_T> call = caller.call(getAuthHeader(),
+        final Call<DataType_T> call = caller.call(getAuthHeader(),
                                                             uri,
                                                             queryMap,
                                                             cacheHeaderValue,
@@ -1456,7 +1455,7 @@ final public class VimeoClient {
 
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         final Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
-        final retrofit2.Call<DataType_T> call = caller.call(getAuthHeader(),
+        final Call<DataType_T> call = caller.call(getAuthHeader(),
                                                             uri,
                                                             queryMap,
                                                             cacheHeaderValue,

@@ -56,13 +56,20 @@ import okhttp3.CacheControl;
 import retrofit2.Call;
 
 /**
- * This is a collection of classes that should be used for get requests to
+ * This is a collection of classes that should be used for GET requests to
  * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
  * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
  * Created by rigbergh on 7/9/17.
  */
 public final class GetRequestCaller {
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get an {@link AppConfiguration} response from an API endpoint. This caller will call through to
+     * {@link VimeoService#getAppConfiguration(String, String, Map, String)}
+     */
     public static final Caller<AppConfiguration> APP_CONFIGURATION =
             new Caller<AppConfiguration>() {
 
@@ -77,6 +84,13 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get an {@link Category} response from an API endpoint. This caller will call through to
+     * {@link VimeoService#getCategory(String, String, Map, String)}
+     */
     public static final Caller<Category> CATEGORY =
             new Caller<Category>() {
 
@@ -91,6 +105,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link Channel} response from an API endpoint.
+     */
     public static final Caller<Channel> CHANNEL =
             new Caller<Channel>() {
 
@@ -105,6 +125,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link CategoryList} response from an API endpoint.
+     */
     public static final Caller<CategoryList> CATEGORY_LIST =
             new Caller<CategoryList>() {
 
@@ -119,6 +145,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link ChannelList} response from an API endpoint.
+     */
     public static final Caller<ChannelList> CHANNEL_LIST =
             new Caller<ChannelList>() {
 
@@ -133,6 +165,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link Comment} response from an API endpoint.
+     */
     public static final Caller<Comment> COMMENT =
             new Caller<Comment>() {
 
@@ -147,6 +185,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link CommentList} response from an API endpoint.
+     */
     public static final Caller<CommentList> COMMENT_LIST =
             new Caller<CommentList>() {
 
@@ -161,6 +205,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link FeedList} response from an API endpoint.
+     */
     public static final Caller<FeedList> FEED_LIST =
             new Caller<FeedList>() {
 
@@ -175,6 +225,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link NotificationList} response from an API endpoint.
+     */
     public static final Caller<NotificationList> NOTIFICATION_LIST =
             new Caller<NotificationList>() {
 
@@ -190,6 +246,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link ProgramContentItemList} response from an API endpoint.
+     */
     public static final Caller<ProgramContentItemList> PROGRAM_CONTENT_ITEM_LIST =
             new Caller<ProgramContentItemList>() {
 
@@ -205,6 +267,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link RecommendationList} response from an API endpoint.
+     */
     public static final Caller<RecommendationList> RECOMMENDATION_LIST =
             new Caller<RecommendationList>() {
 
@@ -219,6 +287,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link SearchResponse} response from an API endpoint.
+     */
     public static final Caller<SearchResponse> SEARCH_RESPONSE_LIST =
             new Caller<SearchResponse>() {
 
@@ -233,6 +307,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link SeasonList} response from an API endpoint.
+     */
     public static final Caller<SeasonList> SEASON_LIST =
             new Caller<SeasonList>() {
 
@@ -247,6 +327,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link TvodItem} response from an API endpoint.
+     */
     public static final Caller<TvodItem> TVOD_ITEM =
             new Caller<TvodItem>() {
 
@@ -261,6 +347,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link TvodList} response from an API endpoint.
+     */
     public static final Caller<TvodList> TVOD_LIST =
             new Caller<TvodList>() {
 
@@ -275,6 +367,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link User} response from an API endpoint.
+     */
     public static final Caller<User> USER =
             new Caller<User>() {
 
@@ -289,6 +387,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link Video} response from an API endpoint.
+     */
     public static final Caller<Video> VIDEO =
             new Caller<Video>() {
 
@@ -303,6 +407,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link Void} response from an API endpoint.
+     */
     public static final Caller<Void> VOID =
             new Caller<Void>() {
 
@@ -317,6 +427,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link UserList} response from an API endpoint.
+     */
     public static final Caller<UserList> USER_LIST =
             new Caller<UserList>() {
 
@@ -331,6 +447,12 @@ public final class GetRequestCaller {
                 }
             };
 
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link VideoList} response from an API endpoint.
+     */
     public static final Caller<VideoList> VIDEO_LIST =
             new Caller<VideoList>() {
 
