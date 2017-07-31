@@ -296,17 +296,6 @@ public class VimeoClient {
     }
 
     /**
-     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
-     * <p>
-     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
-     * application sessions.
-     */
-    @Deprecated
-    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email, String password) {
-        saveAccount(vimeoAccount, email);
-    }
-
-    /**
      * Sets the {@link #mVimeoAccount} field as well as triggering the saveAccount event for the
      * account store
      */
