@@ -645,15 +645,6 @@ public class Video implements Serializable {
     // <editor-fold desc="VOD">
 
     /**
-     * @return the {@link SvodInteraction}. Will be null if this video is not part of SVOD
-     */
-    @Nullable
-    public SvodInteraction getSvodInteraction() {
-        InteractionCollection interactions = mMetadata != null ? mMetadata.getInteractions() : null;
-        return interactions != null ? interactions.getSvod() : null;
-    }
-
-    /**
      * A TVOD video can have multiple purchase types active at once, this is a convenience method that
      * picks one of them based on the following priority:
      * 1) trailer
@@ -766,26 +757,6 @@ public class Video implements Serializable {
     }
 
     /**
-     * @return The expiration date for the SVOD subscription, or null if the Video is not an SVOD video
-     * or if the user is not subscribed to SVOD.
-     */
-    @Nullable
-    public Date getSvodExpiration() {
-        SvodInteraction svodInteraction = getSvodInteraction();
-        return svodInteraction != null ? svodInteraction.getExpiration() : null;
-    }
-
-    /**
-     * @return The purchase date for the SVOD subscription, or null if the Video is not an SVOD video
-     * or if the user is not subscribed to SVOD.
-     */
-    @Nullable
-    public Date getSvodPurchaseDate() {
-        SvodInteraction svodInteraction = getSvodInteraction();
-        return svodInteraction != null ? svodInteraction.getPurchaseDate() : null;
-    }
-
-    /**
      * Videos that are TVODs are part of Seasons. Included on a Season
      * Connection is the name of that season.
      *
@@ -847,16 +818,6 @@ public class Video implements Serializable {
     }
 
     /**
-     * Helper to determine if this video is part of the SVOD library and included in the subscription. If wanting
-     * to know if a user also has access to the video, use {@link #isPlayable()} or {@link #isUnpurchasedSvod()}
-     *
-     * @return true if this video can be accessed with an SVOD subscription.
-     */
-    public boolean isSvod() {
-        return getSvodInteraction() != null;
-    }
-
-    /**
      * Helper to determine if this video is theoretically playable. Note that there may be device limitations
      * that cause a video to fail to play back in practice.
      *
@@ -867,37 +828,13 @@ public class Video implements Serializable {
     }
 
     /**
-     * Helper to determine if this is a trailer that is associated with an SVOD title
-     *
-     * @return true if this is a trailer that is associated with an SVOD title, false otherwise.
-     */
-    public boolean isSvodRelatedTrailer() {
-        return isTrailer() && isSvod();
-    }
-
-
-    /**
-     * Helper to determine if this is an SVOD video (not a trailer) that has not been purchased.
-     *
-     * @return true if it is an unpurchased video, false otherwise.
-     */
-    public boolean isUnpurchasedSvod() {
-        return !isTrailer() &&
-               isSvod() &&
-               !isPlayable() &&
-               getSvodInteraction() != null &&
-               getSvodInteraction().getPurchaseDate() == null;
-    }
-
-    /**
-     * Determines if the video is a trailer for
-     * either a TVOD or SVOD video.
+     * Determines if the video is a trailer for a TVOD video.
      *
      * @return true if the video has a trailer connection
-     * and is an SVOD or TVOD video, false otherwise.
+     * and is a TVOD video, false otherwise.
      */
     public boolean isTrailer() {
-        return ((isTvod() || isSvod()) && mMetadata.mConnections.mTrailer == null);
+        return isTvod() && mMetadata.mConnections.mTrailer == null;
     }
 
     @Nullable
