@@ -72,6 +72,8 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.vimeo.networking.Vimeo.API_VERSION;
+
 /**
  * Client class used for making networking calls to Vimeo API.
  * <p>
@@ -1672,8 +1674,8 @@ public class VimeoClient {
         return createUserAgent();
     }
 
-    public String getAcceptHeader() {
-        return "application/vnd.vimeo.*+json; version=" + mConfiguration.mApiVersionString;
+    public static String getAcceptHeader() {
+        return "application/vnd.vimeo.*+json; version=" + Vimeo.API_VERSION;
     }
 
     public String getAuthHeader() {
