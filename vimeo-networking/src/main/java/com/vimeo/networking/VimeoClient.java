@@ -1672,8 +1672,8 @@ public class VimeoClient {
         return createUserAgent();
     }
 
-    public String getAcceptHeader() {
-        return "application/vnd.vimeo.*+json; version=" + mConfiguration.mApiVersionString;
+    public static String getAcceptHeader() {
+        return "application/vnd.vimeo.*+json; version=" + Vimeo.API_VERSION;
     }
 
     public String getAuthHeader() {
