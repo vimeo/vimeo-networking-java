@@ -119,10 +119,10 @@ final public class VimeoClient {
 
         @NotNull
         Call<DataType_T> call(@NotNull String authHeader,
-                                        @NotNull String uri,
-                                        @NotNull Map<String, String> queryMap,
-                                        @NotNull String cacheHeader,
-                                        @NotNull VimeoService vimeoService);
+                              @NotNull String uri,
+                              @NotNull Map<String, String> queryMap,
+                              @NotNull String cacheHeader,
+                              @NotNull VimeoService vimeoService);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -1406,12 +1406,12 @@ final public class VimeoClient {
      */
     @Nullable
     public <DataType_T> Call<DataType_T> getContent(@NotNull String uri,
-                                                              @NotNull CacheControl cacheControl,
-                                                              @NotNull VimeoCallback<DataType_T> callback,
-                                                              @Nullable String query,
-                                                              @Nullable Map<String, String> refinementMap,
-                                                              @Nullable String fieldFilter,
-                                                              @NotNull Caller<DataType_T> caller) {
+                                                    @NotNull CacheControl cacheControl,
+                                                    @NotNull VimeoCallback<DataType_T> callback,
+                                                    @Nullable String query,
+                                                    @Nullable Map<String, String> refinementMap,
+                                                    @Nullable String fieldFilter,
+                                                    @NotNull Caller<DataType_T> caller) {
         if (uri.isEmpty()) {
             callback.failure(new VimeoError("Uri cannot be empty!"));
             return null;
@@ -1420,10 +1420,10 @@ final public class VimeoClient {
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         final Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
         final Call<DataType_T> call = caller.call(getAuthHeader(),
-                                                            uri,
-                                                            queryMap,
-                                                            cacheHeaderValue,
-                                                            mVimeoService);
+                                                  uri,
+                                                  queryMap,
+                                                  cacheHeaderValue,
+                                                  mVimeoService);
         call.enqueue(callback);
         return call;
     }
@@ -1456,10 +1456,10 @@ final public class VimeoClient {
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         final Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
         final Call<DataType_T> call = caller.call(getAuthHeader(),
-                                                            uri,
-                                                            queryMap,
-                                                            cacheHeaderValue,
-                                                            mVimeoService);
+                                                  uri,
+                                                  queryMap,
+                                                  cacheHeaderValue,
+                                                  mVimeoService);
         try {
             return call.execute();
         } catch (final IOException ioe) {
