@@ -133,15 +133,6 @@ public class Video implements Serializable {
     @SerializedName("duration")
     public int mDuration;
 
-    /**
-     * Deprecated in favor of {@link Play}
-     * and the multiple {@link VideoFile}
-     * that it contains.
-     */
-    @Deprecated
-    @SerializedName("files")
-    public ArrayList<VideoFile> mVideoFiles;
-
     @SerializedName("width")
     public int mWidth;
 
@@ -207,10 +198,6 @@ public class Video implements Serializable {
     public Play mPlay;
 
     @Nullable
-    @SerializedName("download")
-    public ArrayList<VideoFile> mDownload;
-
-    @Nullable
     @SerializedName(value = "badge", alternate = "m_video_badge")
     public VideoBadge mVideoBadge;
 
@@ -247,10 +234,6 @@ public class Video implements Serializable {
 
     public int getDuration() {
         return mDuration;
-    }
-
-    public ArrayList<VideoFile> getVideoFiles() {
-        return mVideoFiles;
     }
 
     public int getWidth() {
@@ -626,16 +609,6 @@ public class Video implements Serializable {
             return Vimeo.NOT_FOUND;
         }
         return TimeUnit.SECONDS.toMillis((long) progressSeconds);
-    }
-    // </editor-fold>
-
-    // -----------------------------------------------------------------------------------------------------
-    // Download - an array of VideoFile objects that may be downloaded
-    // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Download">
-    @Nullable
-    public ArrayList<VideoFile> getDownload() {
-        return mDownload;
     }
     // </editor-fold>
 

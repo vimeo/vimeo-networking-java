@@ -709,17 +709,6 @@ public class VimeoClient {
             mCallback = callback;
         }
 
-        /**
-         * @deprecated use {@link #AccountCallback(VimeoClient, String, AuthCallback)} instead
-         * <p>
-         * We find no use in storing the password when you can persist the {@link VimeoAccount} across
-         * application sessions.
-         */
-        @Deprecated
-        public AccountCallback(VimeoClient client, String email, String password, AuthCallback callback) {
-            this(client, email, callback);
-        }
-
         @Override
         public void success(VimeoAccount vimeoAccount) {
             if (vimeoAccount.getUser() != null && (mEmail == null || mEmail.isEmpty())) {

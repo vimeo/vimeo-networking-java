@@ -29,7 +29,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.vimeo.networking.model.VideoFile.MimeType;
-import com.vimeo.networking.model.VideoFile.VideoQuality;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -76,13 +75,11 @@ public final class VideoFileDeserializer {
     private static final class VideoFileTypeAdapter extends TypeAdapter<com.vimeo.networking.model.VideoFile> {
 
         private final TypeAdapter<MimeType> mMimeTypeTypeAdapter;
-        private final TypeAdapter<VideoQuality> mVideoQualityTypeAdapter;
         private final TypeAdapter<Date> mDateTypeAdpter;
 
         @SuppressWarnings("unchecked")
         VideoFileTypeAdapter(@NotNull Gson gsonInternal) {
             this.mMimeTypeTypeAdapter = gsonInternal.getAdapter(MimeType.class);
-            this.mVideoQualityTypeAdapter = gsonInternal.getAdapter(VideoQuality.class);
             this.mDateTypeAdpter = gsonInternal.getAdapter(Date.class);
         }
 
@@ -117,16 +114,6 @@ public final class VideoFileDeserializer {
             if (object.mLicenseLink != null) {
                 writer.name("license_link");
                 com.google.gson.internal.bind.TypeAdapters.STRING.write(writer, object.mLicenseLink);
-            }
-
-            if (object.mQuality != null) {
-                writer.name("quality");
-                mVideoQualityTypeAdapter.write(writer, object.mQuality);
-            }
-
-            if (object.mExpires != null) {
-                writer.name("expires");
-                mDateTypeAdpter.write(writer, object.mExpires);
             }
 
             if (object.mMimeType != null) {
@@ -198,12 +185,6 @@ public final class VideoFileDeserializer {
                         break;
                     case "license_link":
                         object.mLicenseLink = com.google.gson.internal.bind.TypeAdapters.STRING.read(reader);
-                        break;
-                    case "quality":
-                        object.mQuality = mVideoQualityTypeAdapter.read(reader);
-                        break;
-                    case "expires":
-                        object.mExpires = mDateTypeAdpter.read(reader);
                         break;
                     case "type":
                         object.mMimeType = mMimeTypeTypeAdapter.read(reader);

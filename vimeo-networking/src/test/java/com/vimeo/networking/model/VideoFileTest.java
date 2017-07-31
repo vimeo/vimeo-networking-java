@@ -20,9 +20,4 @@ public class VideoFileTest {
     public void verifyTypeAdapterWasGenerated_MimeType() throws Exception {
         Utils.verifyTypeAdapterGeneration(VideoFile.MimeType.class);
     }
-
-    @Test
-    public void verifyTypeAdapterWasGenerated_VideoQuality() throws Exception {
-        Utils.verifyTypeAdapterGeneration(VideoFile.VideoQuality.class);
-    }
 }

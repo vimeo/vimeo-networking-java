@@ -63,32 +63,6 @@ public class VideoFile implements Serializable {
         }
     }
 
-    @Deprecated
-    @UseStag
-    public enum VideoQuality {
-        NONE("N/A"),
-        @SerializedName("hls")
-        HLS("hls"),
-        @SerializedName("hd")
-        HD("hd"),
-        @SerializedName("sd")
-        SD("sd"),
-        @SerializedName("mobile")
-        MOBILE("mobile");
-
-        private final String mTypeName;
-
-        VideoQuality(String typeName) {
-            mTypeName = typeName;
-        }
-
-        @Override
-        // Overridden for analytics.
-        public String toString() {
-            return mTypeName;
-        }
-    }
-
     private static final long serialVersionUID = -5256416394912086020L;
 
     // -----------------------------------------------------------------------------------------------------
@@ -122,10 +96,7 @@ public class VideoFile implements Serializable {
     /** @return true if this VideoFile doesn't have an expired field or if the expires date is before the current date */
     public boolean isExpired() {
         // If expires is null, we should probably refresh the video object regardless [KV] 3/31/16
-        // TODO: Simplify this when expires is deprecated 4/25/16 [KZ]
-        return (mExpires == null && mLinkExpirationTime == null) ||
-               (mExpires != null && mExpires.before(new Date())) ||
-               (mLinkExpirationTime != null && mLinkExpirationTime.before(new Date()));
+        return mLinkExpirationTime == null || mLinkExpirationTime.before(new Date());
     }
 
     public String getLink() {
@@ -153,17 +124,6 @@ public class VideoFile implements Serializable {
     // Progressive files only - these fields are not relevant to HLS/Dash
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Progressive files only">
-    /** quality will be removed in the future when {@link Video#mVideoFiles} is removed */
-    @Deprecated
-    @Nullable
-    @SerializedName("quality")
-    protected VideoQuality mQuality;
-
-    /** expires will be removed in the future when {@link Video#mVideoFiles} is removed */
-    @Deprecated
-    @Nullable
-    @SerializedName("expires")
-    protected Date mExpires;
 
     @Nullable
     @SerializedName("type")
@@ -189,17 +149,6 @@ public class VideoFile implements Serializable {
     @Nullable
     @SerializedName("created_time")
     protected Date mCreatedTime; // time indicating when this transcode was completed
-
-    /**
-     * quality is no longer included in VideoFiles under {@link Video#getPlay()} - it will be removed
-     * in a future release once {@link Video#mVideoFiles} is removed.
-     *
-     * @return the VideoQuality
-     */
-    @Deprecated
-    public VideoQuality getQuality() {
-        return mQuality == null ? VideoQuality.NONE : mQuality;
-    }
 
     public MimeType getType() {
         return mMimeType == null ? MimeType.NONE : mMimeType;
