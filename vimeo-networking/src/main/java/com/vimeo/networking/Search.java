@@ -206,12 +206,13 @@ public final class Search {
     private static final String FILTER_FEATURED_COUNT = "featured_clip_count";
     private static final String PARAMETER_GET_FACETS = "facets";
 
-    public static Call<SearchResponse> search(@NotNull String query, @NotNull FilterType type,
-                                              @NotNull VimeoCallback<SearchResponse> callback,
+    public static Call<SearchResponse> search(@NotNull String query,
+                                              @NotNull FilterType type,
+                                              @Nullable String fieldFilter,
                                               @Nullable Map<String, String> refinementMap,
                                               @Nullable List<Facet> facets,
                                               @Nullable String containerFilter,
-                                              @Nullable String fieldFilter) {
+                                              @NotNull VimeoCallback<SearchResponse> callback) {
         final Map<String, String> searchRefinementMap;
         if (refinementMap != null) {
             searchRefinementMap = new HashMap<>(refinementMap);

@@ -57,7 +57,7 @@ import retrofit2.Call;
 
 /**
  * This is a collection of classes that should be used for GET requests to
- * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+ * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
  * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
  * Created by rigbergh on 7/9/17.
  */
@@ -65,7 +65,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get an {@link AppConfiguration} response from an API endpoint. This caller will call through to
      * {@link VimeoService#getAppConfiguration(String, String, Map, String)}
@@ -86,7 +86,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get an {@link Category} response from an API endpoint. This caller will call through to
      * {@link VimeoService#getCategory(String, String, Map, String)}
@@ -107,7 +107,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link Channel} response from an API endpoint.
      */
@@ -127,7 +127,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link CategoryList} response from an API endpoint.
      */
@@ -147,7 +147,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link ChannelList} response from an API endpoint.
      */
@@ -167,7 +167,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link Comment} response from an API endpoint.
      */
@@ -187,7 +187,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link CommentList} response from an API endpoint.
      */
@@ -207,7 +207,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link FeedList} response from an API endpoint.
      */
@@ -227,7 +227,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link NotificationList} response from an API endpoint.
      */
@@ -248,7 +248,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link ProgramContentItemList} response from an API endpoint.
      */
@@ -269,7 +269,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link RecommendationList} response from an API endpoint.
      */
@@ -289,7 +289,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link SearchResponse} response from an API endpoint.
      */
@@ -309,7 +309,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link SeasonList} response from an API endpoint.
      */
@@ -329,7 +329,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link TvodItem} response from an API endpoint.
      */
@@ -349,7 +349,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link TvodList} response from an API endpoint.
      */
@@ -369,7 +369,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link User} response from an API endpoint.
      */
@@ -389,7 +389,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link Video} response from an API endpoint.
      */
@@ -409,7 +409,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link Void} response from an API endpoint.
      */
@@ -429,7 +429,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link UserList} response from an API endpoint.
      */
@@ -449,7 +449,7 @@ public final class GetRequestCaller {
 
     /**
      * Used in association with
-     * {@link VimeoClient#getContent(String, CacheControl, VimeoCallback, String, Map, String, Caller)} or
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link VideoList} response from an API endpoint.
      */

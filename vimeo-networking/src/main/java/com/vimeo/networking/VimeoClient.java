@@ -554,8 +554,7 @@ final public class VimeoClient {
     }
 
     @Nullable
-    public Call<VimeoAccount> joinWithFacebookToken(String facebookToken, String email,
-                                                    AuthCallback callback) {
+    public Call<VimeoAccount> joinWithFacebookToken(String facebookToken, String email, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -788,8 +787,7 @@ final public class VimeoClient {
         @NotNull
         private final Timer mTimer;
 
-        PinCodeAccountCallback(@NotNull VimeoClient client, @NotNull AuthCallback callback,
-                               @NotNull Timer timer) {
+        PinCodeAccountCallback(@NotNull VimeoClient client, @NotNull AuthCallback callback, @NotNull Timer timer) {
             super(client, callback);
             mTimer = timer;
         }
@@ -847,9 +845,9 @@ final public class VimeoClient {
         PinCodePollingTimerTask(@NotNull PinCodeInfo pinCodeInfo,
                                 @NotNull Timer timer,
                                 int expiresInSeconds,
-                                @NotNull AuthCallback authCallback,
+                                @NotNull String scope,
                                 @Nullable VimeoClient client,
-                                @NotNull String scope) {
+                                @NotNull AuthCallback authCallback) {
             mTimer = timer;
             mPinCodeInfo = pinCodeInfo;
 
@@ -941,9 +939,8 @@ final public class VimeoClient {
                 final TimerTask task = new PinCodePollingTimerTask(pinCodeInfo,
                                                                    mPinCodeAuthorizationTimer,
                                                                    pinCodeInfo.getExpiresIn(),
-                                                                   authCallback,
-                                                                   sSharedInstance,
-                                                                   SCOPE);
+                                                                   SCOPE, sSharedInstance, authCallback
+                );
                 final long period = SECONDS_TO_MILLISECONDS * pinCodeInfo.getInterval();
                 mPinCodeAuthorizationTimer.scheduleAtFixedRate(task, 0, period);
             }
@@ -1336,7 +1333,7 @@ final public class VimeoClient {
 
     /**
      * A package private search method: use
-     * {@link Search#search(String, FilterType, VimeoCallback, Map, List, String, String)}
+     * {@link Search#search(String, FilterType, String, Map, List, String, VimeoCallback)}
      * which relies on this method.
      *
      * @param queryMap the query parameters
@@ -1376,17 +1373,17 @@ final public class VimeoClient {
      * @param callback the callback to be invoked when the request finishes
      */
     public void getCurrentUser(@NotNull VimeoCallback<User> callback) {
-        getCurrentUser(callback, null);
+        getCurrentUser(null, callback);
     }
 
     /**
      * Fetches the currently authenticated user from the API
      *
-     * @param callback the callback to be invoked when the request finishes
      * @param filter   the field filter to apply to the request
+     * @param callback the callback to be invoked when the request finishes
      */
-    public void getCurrentUser(@NotNull VimeoCallback<User> callback, @Nullable String filter) {
-        getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, callback, null, null, filter, GetRequestCaller.USER);
+    public void getCurrentUser(@Nullable String filter, @NotNull VimeoCallback<User> callback) {
+        getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, GetRequestCaller.USER, null, null, filter, callback);
     }
 
     /**
@@ -1394,22 +1391,22 @@ final public class VimeoClient {
      *
      * @param uri           URI of the resource to GET
      * @param cacheControl  Cache control type (includes max age and other cache policy information)
-     * @param callback      The callback for the specific model type of the resource
+     * @param caller        The {@link GetRequestCaller} for the expected response type
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
      *                      {@link RequestRefinementBuilder}
-     * @param caller        The {@link GetRequestCaller} for the expected response type
+     * @param callback      The callback for the specific model type of the resource
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     @Nullable
     public <DataType_T> Call<DataType_T> getContent(@NotNull String uri,
                                                     @NotNull CacheControl cacheControl,
-                                                    @NotNull VimeoCallback<DataType_T> callback,
+                                                    @NotNull Caller<DataType_T> caller,
                                                     @Nullable String query,
                                                     @Nullable Map<String, String> refinementMap,
                                                     @Nullable String fieldFilter,
-                                                    @NotNull Caller<DataType_T> caller) {
+                                                    @NotNull VimeoCallback<DataType_T> callback) {
         if (uri.isEmpty()) {
             callback.failure(new VimeoError("Uri cannot be empty!"));
             return null;
