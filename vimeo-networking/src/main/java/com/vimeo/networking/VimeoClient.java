@@ -1321,10 +1321,8 @@ final public class VimeoClient {
                                                   @Nullable String fieldFilter) {
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         try {
-            return mVimeoService.getVideo(getAuthHeader(),
-                                          uri,
-                                          createQueryMap(null, null, fieldFilter),
-                                          cacheHeaderValue).execute();
+            Map<String, String> queryMap = createQueryMap(null, null, fieldFilter);
+            return mVimeoService.getVideo(getAuthHeader(), uri, queryMap, cacheHeaderValue).execute();
         } catch (final IOException e) {
             return null;
         }
@@ -1401,7 +1399,7 @@ final public class VimeoClient {
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
      *                      {@link RequestRefinementBuilder}
-     * @param caller        The {@link Caller} for the expected response type
+     * @param caller        The {@link GetRequestCaller} for the expected response type
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     @Nullable
@@ -1437,7 +1435,7 @@ final public class VimeoClient {
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      * @param fieldFilter   The string of fields to include in the response (highly recommended!)
      *                      {@link RequestRefinementBuilder}
-     * @param caller        The {@link Caller} for the expected response type
+     * @param caller        The {@link GetRequestCaller} for the expected response type
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
     @Nullable
