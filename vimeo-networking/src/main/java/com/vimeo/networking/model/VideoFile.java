@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -36,8 +37,7 @@ import java.util.Date;
  * Created by alfredhanssen on 4/25/15.
  */
 @SuppressWarnings("unused")
-// TODO: Remove the VideoFileDeserializer and use Stag instead, once API corrects log issue behind version 2/16/17 [KZ]
-// @UseStag(FieldOption.SERIALIZED_NAME)
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class VideoFile implements Serializable {
 
     @UseStag

@@ -27,7 +27,6 @@ package com.vimeo.networking.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.vimeo.networking.model.VideoFileDeserializer;
 import com.vimeo.stag.generated.Stag;
 
 import org.jetbrains.annotations.NotNull;
@@ -86,7 +85,6 @@ public class VimeoNetworkUtil {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().registerTypeAdapterFactory(new Stag.Factory())
                 .registerTypeAdapterFactory(new PrivacyDeserializer.TypeAdapterFactory())
-                .registerTypeAdapterFactory(new VideoFileDeserializer.TypeAdapterFactory())
                 .registerTypeAdapter(Date.class, ISO8601Wrapper.getDateSerializer())
                 .registerTypeAdapter(Date.class, ISO8601Wrapper.getDateDeserializer())
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
