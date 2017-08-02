@@ -84,7 +84,6 @@ public class VimeoNetworkUtil {
     public static GsonBuilder getGsonBuilder() {
         // Example date: "2015-05-21T14:24:03+00:00"
         return new GsonBuilder().registerTypeAdapterFactory(new Stag.Factory())
-                .registerTypeAdapterFactory(new PrivacyDeserializer.TypeAdapterFactory())
                 .registerTypeAdapter(Date.class, ISO8601Wrapper.getDateSerializer())
                 .registerTypeAdapter(Date.class, ISO8601Wrapper.getDateDeserializer())
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
