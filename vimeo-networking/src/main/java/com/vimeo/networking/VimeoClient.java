@@ -1318,7 +1318,7 @@ final public class VimeoClient {
                                                   @Nullable String fieldFilter) {
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         try {
-            Map<String, String> queryMap = createQueryMap(null, null, fieldFilter);
+            final Map<String, String> queryMap = createQueryMap(null, null, fieldFilter);
             return mVimeoService.getVideo(getAuthHeader(), uri, queryMap, cacheHeaderValue).execute();
         } catch (final IOException e) {
             return null;
@@ -1590,8 +1590,8 @@ final public class VimeoClient {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public String getAcceptHeader() {
-        return "application/vnd.vimeo.*+json; version=" + mConfiguration.mApiVersionString;
+    public static String getAcceptHeader() {
+        return "application/vnd.vimeo.*+json; version=" + Vimeo.API_VERSION;
     }
 
     public String getAuthHeader() {

@@ -82,68 +82,6 @@ public class VideoTest {
         Assert.assertFalse(nonTvod3.isTvod());
     }
 
-    @NotNull
-    private static Video createVideoWithSvodInteraction(@Nullable SvodInteraction interaction) {
-        InteractionCollection interactions = new InteractionCollection();
-        interactions.mSvod = interaction;
-        Metadata metadata = new Metadata();
-        metadata.mInteractions = interactions;
-        Video video = new Video();
-        video.mMetadata = metadata;
-
-        return video;
-    }
-
-    @Test
-    public void test_isSvod_Svod() throws Exception {
-        Video video = createVideoWithSvodInteraction(new SvodInteraction());
-
-        Assert.assertTrue(video.isSvod());
-    }
-
-    @Test
-    public void test_isSvod_NotSvod() throws Exception {
-        // Null svod interaction
-        Video video1 = createVideoWithSvodInteraction(null);
-
-        Assert.assertFalse(video1.isSvod());
-
-        // Null interaction collection
-        Video video2 = new Video();
-        video2.mMetadata = new Metadata();
-        video2.mMetadata.mInteractions = null;
-
-        Assert.assertFalse(video2.isSvod());
-
-        // Null metadata
-        Video video3 = new Video();
-
-        Assert.assertFalse(video3.isSvod());
-
-    }
-
-    @Test
-    public void test_isTrailer_SvodNonTrailer() throws Exception {
-        Video video = createVideoWithSvodInteraction(new SvodInteraction());
-        Assert.assertTrue(video.isSvod());
-
-        video.mMetadata.mConnections = new ConnectionCollection();
-        video.mMetadata.mConnections.mTrailer = new Connection();
-
-        Assert.assertFalse(video.isTrailer());
-    }
-
-    @Test
-    public void test_isTrailer_SvodTrailer() throws Exception {
-        Video video = createVideoWithSvodInteraction(new SvodInteraction());
-        Assert.assertTrue(video.isSvod());
-
-        video.mMetadata.mConnections = new ConnectionCollection();
-        video.mMetadata.mConnections.mTrailer = null;
-
-        Assert.assertTrue(video.isTrailer());
-    }
-
     @Test
     public void test_isTrailer_TvodNonTrailer() throws Exception {
         ConnectionCollection connectionCollection = new ConnectionCollection();
