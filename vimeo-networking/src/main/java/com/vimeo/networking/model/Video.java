@@ -140,6 +140,13 @@ public class Video implements Serializable {
     @SerializedName("height")
     public int mHeight;
 
+    /**
+     * The Embed field is in the process of moving on to the {@link #mPlay} field
+     * as a much more robust object. The API will put this behind a future
+     * version release, and when this library is updated to that version,
+     * this field will no longer be accessible, and consumers will use the newer
+     * representation.
+     */
     @Deprecated
     @SerializedName("embed")
     public Embed mEmbed;
@@ -245,6 +252,7 @@ public class Video implements Serializable {
         return mHeight;
     }
 
+    @Deprecated
     public Embed getEmbed() {
         return mEmbed;
     }

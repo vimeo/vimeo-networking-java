@@ -26,6 +26,7 @@ import com.vimeo.networking.Vimeo.LogLevel;
 import com.vimeo.networking.logging.LogProvider;
 import com.vimeo.networking.model.VimeoAccount;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -208,7 +209,7 @@ public class Configuration {
      */
     // <editor-fold desc="Builder">
     private Configuration(Builder builder) {
-        this.mBaseURLString = builder.mBaseURLString;
+        this.mBaseURLString = Vimeo.VIMEO_BASE_URL_STRING;
         this.mClientID = builder.mClientID;
         this.mClientSecret = builder.mClientSecret;
         this.mScope = builder.mScope;
@@ -251,7 +252,6 @@ public class Configuration {
      */
     public static class Builder {
 
-        private String mBaseURLString = Vimeo.VIMEO_BASE_URL_STRING;
         private String mClientID;
         private String mClientSecret;
         private String mScope;
@@ -291,25 +291,13 @@ public class Configuration {
             this.mAccessToken = accessToken;
         }
 
-        public Builder(String clientID, String clientSecret, String scope) {
-            this(null, clientID, clientSecret, scope, null);
-        }
-
-        @Deprecated
-        public Builder(String baseURLString, String clientID, String clientSecret, String scope) {
-            this(baseURLString, clientID, clientSecret, scope, null);
-        }
-
-        public Builder(String clientId, String clientSecret, String scope,
-                       @Nullable AccountStore accountStore) {
-            this(null, clientId, clientSecret, scope, accountStore);
+        public Builder(@NotNull String clientID, @NotNull String clientSecret, @NotNull String scope) {
+            this(clientID, clientSecret, scope, null);
         }
 
         /**
          * The constructor for the Configuration Builder.
          *
-         * @param baseURLString The base url pointing to the Vimeo api. Something like:
-         *                      {@link Vimeo#VIMEO_BASE_URL_STRING}
          * @param clientId      The client id provided to you from
          *                      <a href="https://developer.vimeo.com/apps/">the developer console</a>
          * @param clientSecret  The client secret provided to you from
@@ -321,22 +309,14 @@ public class Configuration {
          * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Android's
          *                      <a href="https://goo.gl/QZ7rm">Account Manager</a>
          */
-        @Deprecated
-        public Builder(@Nullable String baseURLString,
-                       String clientId,
-                       String clientSecret,
-                       String scope,
+        public Builder(@NotNull String clientId,
+                       @NotNull String clientSecret,
+                       @NotNull String scope,
                        @Nullable AccountStore accountStore) {
-            this.mBaseURLString = baseURLString == null ? this.mBaseURLString : baseURLString;
             this.mClientID = clientId;
             this.mClientSecret = clientSecret;
             this.mScope = scope;
             this.mAccountStore = accountStore;
-        }
-
-        public Builder setBaseUrl(String baseUrl) {
-            this.mBaseURLString = baseUrl;
-            return this;
         }
 
         /** If you used the basic Builder access token constructor but have the intent of */
