@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2015 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,24 +24,18 @@
 
 package com.vimeo.networking.callbacks;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
- * Abstract callback class for {@code T} type of model.
+ * Use this callback when you don't care about the server response and therefore don't need to deal
+ * with typed network calls.
  * <p>
- * Created by hanssena on 4/27/15.
+ * Created by rigbergh on 7/20/17.
  */
-public abstract class ModelCallback<T> extends VimeoCallback<T> {
+public abstract class IgnoreResponseVimeoCallback extends VimeoCallback<Object> {
 
-    @NotNull
-    private Class mObjectType;
+    abstract public void success();
 
-    public ModelCallback(@NotNull Class objectType) {
-        mObjectType = objectType;
-    }
-
-    @NotNull
-    public Class getObjectType() {
-        return this.mObjectType;
+    @Override
+    final public void success(Object o) {
+        success();
     }
 }
