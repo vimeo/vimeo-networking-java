@@ -22,33 +22,32 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.callbacks.ModelCallback;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A builder for constructing the parameter map that should be sent along with {@link VimeoClient#search(String, String, ModelCallback, Map, String)}.
- * This is used to refine any of your searches. It returns a map so you can add additional parameters to it.
+ * A builder for constructing the parameter map that should be sent along
+ * with a request. This is used to refine any requests that accept sort parameters or filters.
+ * It returns a map so you can add additional parameters to it.
  * <p>
  * Created by kylevenn on 7/9/15.
  */
 @SuppressWarnings("unused")
-public class SearchRefinementBuilder {
+public class RequestRefinementBuilder {
 
     private final static int FIVE_MINUTES = 60 * 5; // 60 seconds * 5 minutes = 300 seconds
     Map<String, String> mParameterMap;
 
-    public SearchRefinementBuilder() {
+    public RequestRefinementBuilder() {
         mParameterMap = new HashMap<>();
     }
 
-    public SearchRefinementBuilder(Vimeo.RefineSort sort) {
+    public RequestRefinementBuilder(Vimeo.RefineSort sort) {
         mParameterMap = new HashMap<>();
         this.setSort(sort);
     }
 
-    public SearchRefinementBuilder setSort(Vimeo.RefineSort sort) {
+    public RequestRefinementBuilder setSort(Vimeo.RefineSort sort) {
         switch (sort) {
             case AZ:
             case ZA:
@@ -62,26 +61,26 @@ public class SearchRefinementBuilder {
         return this;
     }
 
-    public SearchRefinementBuilder setMinDuration(int duration) {
+    public RequestRefinementBuilder setMinDuration(int duration) {
         mParameterMap.put(Vimeo.PARAMETER_GET_LENGTH_MIN_DURATION, String.valueOf(duration));
         return this;
     }
 
-    public SearchRefinementBuilder setMaxDuration(int duration) {
+    public RequestRefinementBuilder setMaxDuration(int duration) {
         mParameterMap.put(Vimeo.PARAMETER_GET_LENGTH_MAX_DURATION, String.valueOf(duration));
         return this;
     }
 
-    public SearchRefinementBuilder setDurationUnderFiveMinutes() {
+    public RequestRefinementBuilder setDurationUnderFiveMinutes() {
         return setMaxDuration(FIVE_MINUTES);
     }
 
-    public SearchRefinementBuilder setDurationOverFiveMinutes() {
+    public RequestRefinementBuilder setDurationOverFiveMinutes() {
         return setMinDuration(FIVE_MINUTES);
     }
 
     // Example: ?filter=upload_date&filter_upload_date=day
-    public SearchRefinementBuilder setUploadDateFilter(Vimeo.RefineUploadDate uploadDateFilter) {
+    public RequestRefinementBuilder setUploadDateFilter(Vimeo.RefineUploadDate uploadDateFilter) {
         // Only include in refinement parameters if it's not ANYTIME
         if (uploadDateFilter != Vimeo.RefineUploadDate.ANYTIME) {
             mParameterMap.put(Vimeo.PARAMETER_GET_FILTER, Vimeo.FILTER_UPLOAD);

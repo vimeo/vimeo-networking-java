@@ -187,6 +187,12 @@ public class User implements Serializable, Followable {
     }
 
     @Nullable
+    public Connection getFeedConnection() {
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.getFeed() : null;
+    }
+
+    @Nullable
     public Connection getFollowersConnection() {
         ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getFollowers() : null;
