@@ -26,6 +26,7 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 import com.vimeo.stag.UseStag.FieldOption;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @SuppressWarnings("unused")
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class VideoFile implements Serializable {
+public abstract class VideoFile implements Serializable {
 
     @UseStag
     public enum MimeType {
@@ -63,7 +64,30 @@ public class VideoFile implements Serializable {
         }
     }
 
+    public enum VideoQuality {
+        NONE("N/A"),
+        DASH("dash"),
+        HLS("hls"),
+        HD("hd"),
+        SD("sd");
+
+        private final String mTypeName;
+
+        VideoQuality(String typeName) {
+            mTypeName = typeName;
+        }
+
+        @Override
+        // Overridden for analytics.
+        public String toString() {
+            return mTypeName;
+        }
+    }
+
     private static final long serialVersionUID = -5256416394912086020L;
+
+    @NotNull
+    public abstract VideoQuality getQuality();
 
     // -----------------------------------------------------------------------------------------------------
     // Fields common between all file types - HLS, Dash, Progressive
@@ -79,14 +103,6 @@ public class VideoFile implements Serializable {
     @Nullable
     @SerializedName("log")
     protected String mLog;
-
-    @Nullable
-    @SerializedName("token")
-    protected String mToken;
-
-    @Nullable
-    @SerializedName("license_link")
-    protected String mLicenseLink;
 
     @Nullable
     public Date getLinkExpirationTime() {
@@ -108,81 +124,6 @@ public class VideoFile implements Serializable {
         return mLog;
     }
 
-    @Nullable
-    public String getToken() {
-        return mToken;
-    }
-
-    @Nullable
-    public String getLicenseLink() {
-        return mLicenseLink;
-    }
-
-    // </editor-fold>
-
-    // -----------------------------------------------------------------------------------------------------
-    // Progressive files only - these fields are not relevant to HLS/Dash
-    // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Progressive files only">
-
-    @Nullable
-    @SerializedName("type")
-    protected MimeType mMimeType;
-
-    @SerializedName("fps")
-    protected double mFps;
-
-    @SerializedName("width")
-    protected int mWidth;
-
-    @SerializedName("height")
-    protected int mHeight;
-
-    @SerializedName("size")
-    protected long mSize; // size of the file, in bytes
-
-    /** The md5 provides us with a way to uniquely identify video files at {@link #getLink()} */
-    @Nullable
-    @SerializedName("md5")
-    protected String mMd5;
-
-    @Nullable
-    @SerializedName("created_time")
-    protected Date mCreatedTime; // time indicating when this transcode was completed
-
-    public MimeType getType() {
-        return mMimeType == null ? MimeType.NONE : mMimeType;
-    }
-
-    public boolean isVP6() {
-        return getType() == MimeType.VP6;
-    }
-
-    public int getWidth() {
-        return mWidth;
-    }
-
-    public int getHeight() {
-        return mHeight;
-    }
-
-    public long getSize() {
-        return mSize;
-    }
-
-    public double getFps() {
-        return mFps;
-    }
-
-    @Nullable
-    public String getMd5() {
-        return mMd5;
-    }
-
-    @Nullable
-    public Date getCreatedTime() {
-        return mCreatedTime;
-    }
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------

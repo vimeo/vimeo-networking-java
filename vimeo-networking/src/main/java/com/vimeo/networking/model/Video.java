@@ -503,12 +503,12 @@ public class Video implements Serializable {
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Files">
     @Nullable
-    public VideoFile getVideoFileForMd5(String md5) {
+    public ProgressiveVideoFile getVideoFileForMd5(String md5) {
         // Only Progressive video files have an md5
         if (mPlay == null || mPlay.getProgressiveVideoFiles() == null) {
             return null;
         }
-        for (VideoFile file : mPlay.getProgressiveVideoFiles()) {
+        for (final ProgressiveVideoFile file : mPlay.getProgressiveVideoFiles()) {
             if (file != null && file.getMd5() != null && file.getMd5().equals(md5)) {
                 return file;
             }

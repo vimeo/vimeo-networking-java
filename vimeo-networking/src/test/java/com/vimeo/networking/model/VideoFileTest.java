@@ -12,11 +12,6 @@ import org.junit.Test;
 public class VideoFileTest {
 
     @Test
-    public void verifyTypeAdapterWasGenerated() throws Exception {
-        Utils.verifyTypeAdapterGeneration(VideoFile.class);
-    }
-
-    @Test
     public void verifyTypeAdapterWasGenerated_MimeType() throws Exception {
         Utils.verifyTypeAdapterGeneration(VideoFile.MimeType.class);
     }
