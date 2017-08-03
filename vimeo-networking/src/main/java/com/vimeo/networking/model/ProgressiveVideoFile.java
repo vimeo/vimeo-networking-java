@@ -103,11 +103,17 @@ public class ProgressiveVideoFile extends VideoFile {
         return mCreatedTime;
     }
 
+    private static final int HEIGHT_720P = 720;
+    private static final int WIDTH_720P = 1280;
+
     @NotNull
     @Override
     public VideoQuality getQuality() {
-        // TODO:  8/3/17 [KZ]
-        return VideoQuality.HD;
+        if (mHeight > HEIGHT_720P || mWidth > WIDTH_720P) {
+            return VideoQuality.HD;
+        } else {
+            return VideoQuality.SD;
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------
