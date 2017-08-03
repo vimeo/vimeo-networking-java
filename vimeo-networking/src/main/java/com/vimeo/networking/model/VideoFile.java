@@ -33,7 +33,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Representation of a Video stream/playback file
+ * Base representation of a Video stream/playback file
  * <p>
  * Created by alfredhanssen on 4/25/15.
  */

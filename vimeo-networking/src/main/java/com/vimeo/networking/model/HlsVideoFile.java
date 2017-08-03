@@ -30,11 +30,15 @@ import com.vimeo.stag.UseStag.FieldOption;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Representation of a HLS Video stream/playback file.
+ * <p>
  * Created by zetterstromk on 8/3/17.
  */
 @SuppressWarnings("unused")
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class HlsVideoFile extends VideoFile {
+
+    private static final long serialVersionUID = -1238371468337472674L;
 
     @NotNull
     @Override

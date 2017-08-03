@@ -32,11 +32,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
+ * Representation of a DASH Video stream/playback file.
+ * <p>
  * Created by zetterstromk on 8/3/17.
  */
 @SuppressWarnings("unused")
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class DashVideoFile extends VideoFile {
+
+    private static final long serialVersionUID = -5721104078876753376L;
 
     @Nullable
     @SerializedName("token")

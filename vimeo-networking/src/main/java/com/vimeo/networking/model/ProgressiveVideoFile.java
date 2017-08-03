@@ -34,11 +34,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 
 /**
+ * Representation of a progressive Video stream/playback file.
+ * <p>
  * Created by zetterstromk on 8/3/17.
  */
 @SuppressWarnings("unused")
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class ProgressiveVideoFile extends VideoFile {
+
+    private static final long serialVersionUID = 2834083637971280026L;
 
     @Nullable
     @SerializedName("type")
