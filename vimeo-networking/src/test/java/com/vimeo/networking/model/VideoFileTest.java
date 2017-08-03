@@ -12,8 +12,8 @@ import org.junit.Test;
 public class VideoFileTest {
 
     @Test
-    public void verifyTypeAdapterWasNotGenerated() throws Exception {
-        Utils.verifyNoTypeAdapterGeneration(VideoFile.class);
+    public void verifyTypeAdapterWasGenerated() throws Exception {
+        Utils.verifyTypeAdapterGeneration(VideoFile.class);
     }
 
     @Test
