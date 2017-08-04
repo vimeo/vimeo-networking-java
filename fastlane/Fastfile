@@ -84,6 +84,18 @@ platform :android do
       <string name="client_secret">SECRET</string>
     </resources>')
     }
+    
+    begin
+      gradle(
+       task: "example-java-android:build"
+      )
+    end
+    
+    begin
+      gradle(
+        task: "example-kotlin-android:build"
+      )
+    end
 
     # run the tests, but dont puke everywhere until the report is printed.
     begin
