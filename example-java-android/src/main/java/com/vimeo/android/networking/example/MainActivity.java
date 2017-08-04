@@ -15,12 +15,14 @@ import android.widget.Toast;
 
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.AuthCallback;
-import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.callers.GetRequestCaller;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.error.VimeoError;
+
+import okhttp3.CacheControl;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private void fetchStaffPicks() {
         mProgressDialog.show();
-        mApiClient.fetchNetworkContent(STAFF_PICKS_VIDEO_URI, new ModelCallback<VideoList>(VideoList.class) {
+        mApiClient.getContent(STAFF_PICKS_VIDEO_URI, CacheControl.FORCE_NETWORK, GetRequestCaller.VIDEO_LIST, null, null, null, new VimeoCallback<VideoList>() {
             @Override
             public void success(VideoList videoList) {
                 if (videoList != null && videoList.mData != null) {
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private void fetchAccountType() {
         mProgressDialog.show();
-        mApiClient.fetchCurrentUser(new ModelCallback<User>(User.class) {
+        mApiClient.getCurrentUser(new VimeoCallback<User>() {
             @Override
             public void success(User user) {
                 if (user != null) {

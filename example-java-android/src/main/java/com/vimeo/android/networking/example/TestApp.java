@@ -6,7 +6,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.vimeo.android.networking.example.vimeonetworking.AndroidGsonDeserializer;
 import com.vimeo.android.networking.example.vimeonetworking.NetworkingLogger;
 import com.vimeo.android.networking.example.vimeonetworking.TestAccountStore;
 import com.vimeo.networking.Configuration;
@@ -64,8 +63,7 @@ public class TestApp extends Application {
                                       getString(R.string.deeplink_redirect_host);
         TestAccountStore testAccountStore = new TestAccountStore(this.getApplicationContext());
         Configuration.Builder configBuilder =
-                new Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore,
-                                          new AndroidGsonDeserializer());
+                new Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore);
         configBuilder.setCacheDirectory(this.getCacheDir())
                 .setUserAgentString(getUserAgentString(this)).setDebugLogger(new NetworkingLogger())
                 // Used for oauth flow

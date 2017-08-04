@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 
-import com.vimeo.android.networking.example.kotlin.vimeonetworking.AndroidGsonDeserializer
 import com.vimeo.android.networking.example.kotlin.vimeonetworking.NetworkingLogger
 import com.vimeo.android.networking.example.kotlin.vimeonetworking.TestAccountStore
 import com.vimeo.networking.Configuration
@@ -57,8 +56,7 @@ class TestApp : Application() {
             val clientSecret = getString(R.string.client_secret)
             val codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" + getString(R.string.deeplink_redirect_host)
             val testAccountStore = TestAccountStore(this.applicationContext)
-            val configBuilder = Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore,
-                    AndroidGsonDeserializer())
+            val configBuilder = Configuration.Builder(clientId, clientSecret, SCOPE)
             configBuilder.setCacheDirectory(this.cacheDir)
                     .setUserAgentString(getUserAgentString(this)).setDebugLogger(NetworkingLogger())
                     .setCodeGrantRedirectUri(codeGrantRedirectUri)
