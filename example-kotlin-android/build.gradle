@@ -32,7 +32,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
 
-    compile project(':vimeo-networking')
+    compile(project(':vimeo-networking')) {
+        exclude group: 'com.intellij', module: 'annotations'
+    }
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
