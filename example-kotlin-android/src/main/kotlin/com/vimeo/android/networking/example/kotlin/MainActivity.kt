@@ -28,10 +28,10 @@ import okhttp3.CacheControl
  **/
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    private val mApiClient = VimeoClient.getInstance()
+    private val apiClient = VimeoClient.getInstance()
 
-    private lateinit var mProgressDialog: ProgressDialog
-    private lateinit var mRequestOutputTv: TextView
+    private lateinit var progressDialog: ProgressDialog
+    private lateinit var requestOutputTv: TextView
 
     // <editor-fold desc="Life Cycle">
 
@@ -42,20 +42,20 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         // ---- Initial UI Setup ----
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        mProgressDialog = ProgressDialog(this)
-        mProgressDialog.setMessage("All of your API are belong to us...")
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("All of your API are belong to us...")
 
         // ---- Code Grant Check ----
         handleCodeGrantIfNecessary()
 
         // ---- Client Credentials Auth ----
-        if (mApiClient.vimeoAccount.accessToken == null) {
+        if (apiClient.vimeoAccount.accessToken == null) {
             // If there is no access token, fetch one on first app open
             authenticateWithClientCredentials()
         }
 
         // ---- View Binding ----
-        mRequestOutputTv = findViewById(R.id.request_output_tv) as TextView
+        requestOutputTv = findViewById(R.id.request_output_tv) as TextView
         findViewById(R.id.fab)!!.setOnClickListener(this)
         findViewById(R.id.code_grant_btn)!!.setOnClickListener(this)
         findViewById(R.id.request_output_tv)!!.setOnClickListener(this)
@@ -95,8 +95,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     // <editor-fold desc="Requests">
 
     private fun fetchStaffPicks() {
-        mProgressDialog.show()
-        mApiClient.getContent(STAFF_PICKS_VIDEO_URI, CacheControl.FORCE_NETWORK, GetRequestCaller.VIDEO_LIST, null, null, null, object : VimeoCallback<VideoList>() {
+        progressDialog.show()
+        apiClient.getContent(STAFF_PICKS_VIDEO_URI, CacheControl.FORCE_NETWORK, GetRequestCaller.VIDEO_LIST, null, null, null, object : VimeoCallback<VideoList>() {
             override fun success(videoList: VideoList?) {
                 if (videoList != null && videoList.data != null) {
                     var videoTitlesString = ""
@@ -108,56 +108,56 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                         addNewLine = true
                         videoTitlesString += video.name
                     }
-                    mRequestOutputTv.text = videoTitlesString
+                    requestOutputTv.text = videoTitlesString
                 }
                 toast("Staff Picks Success")
-                mProgressDialog.hide()
+                progressDialog.hide()
             }
 
             override fun failure(error: VimeoError?) {
                 toast("Staff Picks Failure")
-                mRequestOutputTv.text = error?.developerMessage
-                mProgressDialog.hide()
+                requestOutputTv.text = error?.developerMessage
+                progressDialog.hide()
             }
 
         })
     }
 
     private fun fetchAccountType() {
-        mProgressDialog.show()
-        mApiClient.getCurrentUser(object : VimeoCallback<User>() {
+        progressDialog.show()
+        apiClient.getCurrentUser(object : VimeoCallback<User>() {
             override fun success(user: User?) {
                 if (user != null) {
-                    mRequestOutputTv.text = "Current account type: ${user.account}"
+                    requestOutputTv.text = "Current account type: ${user.account}"
                     toast("Account Check Success")
                 } else {
                     toast("Account Check Failure")
                 }
-                mProgressDialog.hide()
+                progressDialog.hide()
             }
 
             override fun failure(error: VimeoError) {
                 toast("Account Check Failure")
-                mRequestOutputTv.text = error.developerMessage
-                mProgressDialog.hide()
+                requestOutputTv.text = error.developerMessage
+                progressDialog.hide()
             }
         })
     }
 
     private fun logout() {
-        mProgressDialog.show()
-        mApiClient.logOut(object : VimeoCallback<Any>() {
+        progressDialog.show()
+        apiClient.logOut(object : VimeoCallback<Any>() {
             override fun success(o: Any) {
                 AccountPreferenceManager.removeClientAccount()
                 toast("Logout Success")
-                mProgressDialog.hide()
+                progressDialog.hide()
             }
 
             override fun failure(error: VimeoError) {
                 AccountPreferenceManager.removeClientAccount()
                 toast("Logout Failure")
-                mRequestOutputTv.text = error.developerMessage
-                mProgressDialog.hide()
+                requestOutputTv.text = error.developerMessage
+                progressDialog.hide()
             }
         })
     }
@@ -165,37 +165,37 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     // You can't make any requests to the api without an access token. This will get you a basic
     // "Client Credentials" gran which will allow you to make requests
     private fun authenticateWithClientCredentials() {
-        mProgressDialog.show()
-        mApiClient.authorizeWithClientCredentialsGrant(object : AuthCallback {
+        progressDialog.show()
+        apiClient.authorizeWithClientCredentialsGrant(object : AuthCallback {
             override fun success() {
                 toast("Client Credentials Authorization Success")
-                mProgressDialog.hide()
+                progressDialog.hide()
             }
 
             override fun failure(error: VimeoError) {
                 toast("Client Credentials Authorization Failure")
-                mRequestOutputTv.text = error.developerMessage
-                mProgressDialog.hide()
+                requestOutputTv.text = error.developerMessage
+                progressDialog.hide()
             }
         })
     }
 
     private fun authenticateWithCodeGrant(uri: Uri) {
-        mProgressDialog.show()
+        progressDialog.show()
         if (uri.query == null || uri.query.isEmpty()) {
             toast("Bad deep link - no query parameters")
             return
         }
-        mApiClient.authenticateWithCodeGrant(uri.toString(), object : AuthCallback {
+        apiClient.authenticateWithCodeGrant(uri.toString(), object : AuthCallback {
             override fun success() {
                 toast("Code Grant Success")
-                mProgressDialog.hide()
+                progressDialog.hide()
             }
 
             override fun failure(error: VimeoError) {
                 toast("Code Grant Failure")
-                mRequestOutputTv.text = error.developerMessage
-                mProgressDialog.hide()
+                requestOutputTv.text = error.developerMessage
+                progressDialog.hide()
             }
         })
     }
@@ -217,7 +217,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun goToWebForCodeGrantAuth() {
-        val uri = mApiClient.codeGrantAuthorizationURI
+        val uri = apiClient.codeGrantAuthorizationURI
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
         startActivity(browserIntent)
     }

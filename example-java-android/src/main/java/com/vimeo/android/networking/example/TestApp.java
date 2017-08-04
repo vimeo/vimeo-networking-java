@@ -72,10 +72,6 @@ public class TestApp extends Application {
         return configBuilder;
     }
 
-    public static Context getAppContext() {
-        return sContext;
-    }
-
     public static String getUserAgentString(Context context) {
         String packageName = context.getPackageName();
 

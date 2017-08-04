@@ -21,8 +21,7 @@ class TestApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        appContext = this
-        AccountPreferenceManager.initializeInstance(appContext!!)
+        AccountPreferenceManager.initializeInstance(this)
 
         // <editor-fold desc="Vimeo API Library Initialization">
         val configBuilder: Configuration.Builder
@@ -71,9 +70,6 @@ class TestApp : Application() {
         private val IS_DEBUG_BUILD = false
         // Switch to true to see how access token auth works.
         private val ACCESS_TOKEN_PROVIDED = false
-
-        var appContext: Context? = null
-            private set
 
         fun getUserAgentString(context: Context): String {
             val packageName = context.packageName
