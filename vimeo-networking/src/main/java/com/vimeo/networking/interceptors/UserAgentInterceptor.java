@@ -48,9 +48,7 @@ public class UserAgentInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        return chain.proceed(chain.request())
-                .newBuilder()
-                .header(Vimeo.HEADER_USER_AGENT, mUserAgent)
-                .build();
+        return chain.proceed(
+                chain.request().newBuilder().header(Vimeo.HEADER_USER_AGENT, mUserAgent).build());
     }
 }
