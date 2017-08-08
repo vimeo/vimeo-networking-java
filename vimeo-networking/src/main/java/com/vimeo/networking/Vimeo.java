@@ -32,6 +32,8 @@ public final class Vimeo {
 
     public static final String VIMEO_BASE_URL_STRING = "https://api.vimeo.com/";
 
+    public static final String API_VERSION = "3.3.3";
+
     // Global Constants
     public static final int NOT_FOUND = -1;
 

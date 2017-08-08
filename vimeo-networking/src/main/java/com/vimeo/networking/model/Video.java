@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
+import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
 import com.vimeo.stag.UseStag;
@@ -535,6 +536,20 @@ public class Video implements Serializable {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
+    // Comments
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Comments">
+    @Nullable
+    public Connection getCommentsConnection() {
+        if ((mMetadata != null) && (mMetadata.mConnections != null) && (mMetadata.mConnections.mComments != null)) {
+            return mMetadata.mConnections.mComments;
+        }
+        return null;
+    }
+
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
     // Recommendation
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Recommendation">
@@ -654,15 +669,6 @@ public class Video implements Serializable {
     // <editor-fold desc="VOD">
 
     /**
-     * @return the {@link SvodInteraction}. Will be null if this video is not part of SVOD
-     */
-    @Nullable
-    public SvodInteraction getSvodInteraction() {
-        InteractionCollection interactions = mMetadata != null ? mMetadata.getInteractions() : null;
-        return interactions != null ? interactions.getSvod() : null;
-    }
-
-    /**
      * A TVOD video can have multiple purchase types active at once, this is a convenience method that
      * picks one of them based on the following priority:
      * 1) trailer
@@ -775,26 +781,6 @@ public class Video implements Serializable {
     }
 
     /**
-     * @return The expiration date for the SVOD subscription, or null if the Video is not an SVOD video
-     * or if the user is not subscribed to SVOD.
-     */
-    @Nullable
-    public Date getSvodExpiration() {
-        SvodInteraction svodInteraction = getSvodInteraction();
-        return svodInteraction != null ? svodInteraction.getExpiration() : null;
-    }
-
-    /**
-     * @return The purchase date for the SVOD subscription, or null if the Video is not an SVOD video
-     * or if the user is not subscribed to SVOD.
-     */
-    @Nullable
-    public Date getSvodPurchaseDate() {
-        SvodInteraction svodInteraction = getSvodInteraction();
-        return svodInteraction != null ? svodInteraction.getPurchaseDate() : null;
-    }
-
-    /**
      * Videos that are TVODs are part of Seasons. Included on a Season
      * Connection is the name of that season.
      *
@@ -856,16 +842,6 @@ public class Video implements Serializable {
     }
 
     /**
-     * Helper to determine if this video is part of the SVOD library and included in the subscription. If wanting
-     * to know if a user also has access to the video, use {@link #isPlayable()} or {@link #isUnpurchasedSvod()}
-     *
-     * @return true if this video can be accessed with an SVOD subscription.
-     */
-    public boolean isSvod() {
-        return getSvodInteraction() != null;
-    }
-
-    /**
      * Helper to determine if this video is theoretically playable. Note that there may be device limitations
      * that cause a video to fail to play back in practice.
      *
@@ -876,37 +852,13 @@ public class Video implements Serializable {
     }
 
     /**
-     * Helper to determine if this is a trailer that is associated with an SVOD title
-     *
-     * @return true if this is a trailer that is associated with an SVOD title, false otherwise.
-     */
-    public boolean isSvodRelatedTrailer() {
-        return isTrailer() && isSvod();
-    }
-
-
-    /**
-     * Helper to determine if this is an SVOD video (not a trailer) that has not been purchased.
-     *
-     * @return true if it is an unpurchased video, false otherwise.
-     */
-    public boolean isUnpurchasedSvod() {
-        return !isTrailer() &&
-               isSvod() &&
-               !isPlayable() &&
-               getSvodInteraction() != null &&
-               getSvodInteraction().getPurchaseDate() == null;
-    }
-
-    /**
-     * Determines if the video is a trailer for
-     * either a TVOD or SVOD video.
+     * Determines if the video is a trailer for a TVOD video.
      *
      * @return true if the video has a trailer connection
-     * and is an SVOD or TVOD video, false otherwise.
+     * and is a TVOD video, false otherwise.
      */
     public boolean isTrailer() {
-        return ((isTvod() || isSvod()) && mMetadata.mConnections.mTrailer == null);
+        return isTvod() && mMetadata.mConnections.mTrailer == null;
     }
 
     @Nullable
@@ -938,6 +890,17 @@ public class Video implements Serializable {
     // Playback failure Endpoint
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Playback failure Endpoint">
+
+    /**
+     * In the event of playback failure for a Video, this uri can be hit to get a reason for the failure.
+     * At the time of this writing, the failures that will be reported are only related to DRM. The protocol is a bit
+     * odd in that it will return a failure if there has been a corresponding DRM failure with the video.
+     * The error code that will come back is one of the DRM-related error codes listed in {@link ErrorCode}
+     * <p>
+     * If there is no related DRM failure for this video, the API will return a Void success.
+     *
+     * @return a uri string to hit for failure info, or null if none is available
+     */
     @Nullable
     public String getPlaybackFailureUri() {
         String playbackFailureUri = null;

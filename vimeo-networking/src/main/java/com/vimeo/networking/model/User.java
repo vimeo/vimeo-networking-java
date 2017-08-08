@@ -173,26 +173,6 @@ public class User implements Serializable, Followable {
         return null;
     }
 
-    /**
-     * @return the {@link SvodInteraction}. Will be null if the requesting application does not have the
-     * permission to view the interaction, and will be null for users other than the current user.
-     */
-    @Nullable
-    public SvodInteraction getSvodInteraction() {
-        InteractionCollection interactions = getMetadataInteractions();
-        return interactions != null ? interactions.getSvod() : null;
-    }
-
-    /**
-     * @return true if the user is an SVOD subscriber. False will be returned if the user is not an
-     * SVOD subscriber. False will always be returned for users other than the currently authenticated
-     * user.
-     */
-    public boolean isSvodSubscriber() {
-        SvodInteraction svod = getSvodInteraction();
-        return svod != null && svod.getPurchaseDate() != null;
-    }
-
     @Nullable
     @Override
     public Interaction getFollowInteraction() {
@@ -204,6 +184,12 @@ public class User implements Serializable, Followable {
     public Connection getFollowingConnection() {
         ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getFollowing() : null;
+    }
+
+    @Nullable
+    public Connection getFeedConnection() {
+        ConnectionCollection connections = getMetadataConnections();
+        return connections != null ? connections.getFeed() : null;
     }
 
     @Nullable

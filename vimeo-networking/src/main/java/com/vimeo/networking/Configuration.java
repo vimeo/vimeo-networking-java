@@ -45,7 +45,6 @@ import okhttp3.Interceptor;
 @SuppressWarnings("unused")
 public class Configuration {
 
-    private static final String DEFAULT_VERSION_STRING = "3.2";
     // Potentially set max_age to match the age of video expiration 10/7/15 [KV]
     private static final int DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2; // Default to 2 hours
     // If implementing on Android, it will be cleared when space is needed automatically 1/27/16 [KV]
@@ -62,12 +61,10 @@ public class Configuration {
 
     @Nullable
     private AccountStore mAccountStore;
-    protected GsonDeserializer mGsonDeserializer;
 
     protected final List<Interceptor> mNetworkInterceptors = new ArrayList<>();
     protected final List<Interceptor> mInterceptors = new ArrayList<>();
 
-    protected String mApiVersionString;
     protected String mCodeGrantRedirectURI;
     protected String mUserAgentString;
 
@@ -110,20 +107,12 @@ public class Configuration {
         return mAccountStore;
     }
 
-    public GsonDeserializer getGsonDeserializer() {
-        return mGsonDeserializer;
-    }
-
     public List<Interceptor> getNetworkInterceptors() {
         return mNetworkInterceptors;
     }
 
     public List<Interceptor> getInterceptors() {
         return mInterceptors;
-    }
-
-    public String getApiVersionString() {
-        return mApiVersionString;
     }
 
     public String getCodeGrantRedirectURI() {
@@ -238,7 +227,6 @@ public class Configuration {
         this.mAccessToken = builder.mAccessToken;
 
         this.mAccountStore = builder.mAccountStore;
-        this.mGsonDeserializer = builder.mDeserializer;
 
         if (!this.isValid()) {
             throw new AssertionError("Built invalid VimeoClientConfiguration");
@@ -246,7 +234,6 @@ public class Configuration {
 
         this.mCodeGrantRedirectURI = builder.mCodeGrantRedirectUri;
 
-        this.mApiVersionString = builder.mApiVersionString;
         this.mCacheDirectory = builder.mCacheDirectory;
         this.mCacheSize = builder.mCacheSize;
         this.mCacheMaxAge = builder.mCacheMaxAge;
@@ -283,9 +270,7 @@ public class Configuration {
         private String mAccessToken;
 
         private AccountStore mAccountStore;
-        private GsonDeserializer mDeserializer = new GsonDeserializer();
 
-        private String mApiVersionString = DEFAULT_VERSION_STRING;
         private File mCacheDirectory;
         private int mCacheSize = DEFAULT_CACHE_SIZE;
         private int mCacheMaxAge = DEFAULT_CACHE_MAX_AGE;
@@ -318,42 +303,46 @@ public class Configuration {
         }
 
         public Builder(String clientID, String clientSecret, String scope) {
-            this(null, clientID, clientSecret, scope, null, null);
+            this(null, clientID, clientSecret, scope, null);
         }
 
         @Deprecated
         public Builder(String baseURLString, String clientID, String clientSecret, String scope) {
-            this(baseURLString, clientID, clientSecret, scope, null, null);
+            this(baseURLString, clientID, clientSecret, scope, null);
         }
 
         public Builder(String clientId, String clientSecret, String scope,
-                       @Nullable AccountStore accountStore, @Nullable GsonDeserializer deserializer) {
-            this(null, clientId, clientSecret, scope, accountStore, deserializer);
+                       @Nullable AccountStore accountStore) {
+            this(null, clientId, clientSecret, scope, accountStore);
         }
 
         /**
-         * The constructor for the Configuration Builder. Only the last two arguments are optional but it is
-         * highly recommended that you pass in a deserializer since, without one, deserialization will occur
-         * on the main thread (which can be a lengthy operation)
+         * The constructor for the Configuration Builder.
          *
-         * @param baseURLString The base url pointing to the Vimeo api. Something like: {@link Vimeo#VIMEO_BASE_URL_STRING}
-         * @param clientId      The client id provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
-         * @param clientSecret  The client secret provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
-         * @param scope         Space separated list of <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
+         * @param baseURLString The base url pointing to the Vimeo api. Something like:
+         *                      {@link Vimeo#VIMEO_BASE_URL_STRING}
+         * @param clientId      The client id provided to you from
+         *                      <a href="https://developer.vimeo.com/apps/">the developer console</a>
+         * @param clientSecret  The client secret provided to you from
+         *                      <a href="https://developer.vimeo.com/apps/">the developer console</a>
+         * @param scope         Space separated list of
+         *                      <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
          *                      <p>
          *                      Example: "private public create"
-         * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Androids <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">Account Manager</a>
-         * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread
+         * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Android's
+         *                      <a href="https://goo.gl/QZ7rm">Account Manager</a>
          */
         @Deprecated
-        public Builder(@Nullable String baseURLString, String clientId, String clientSecret, String scope,
-                       @Nullable AccountStore accountStore, @Nullable GsonDeserializer deserializer) {
+        public Builder(@Nullable String baseURLString,
+                       String clientId,
+                       String clientSecret,
+                       String scope,
+                       @Nullable AccountStore accountStore) {
             this.mBaseURLString = baseURLString == null ? this.mBaseURLString : baseURLString;
             this.mClientID = clientId;
             this.mClientSecret = clientSecret;
             this.mScope = scope;
             this.mAccountStore = accountStore;
-            this.mDeserializer = deserializer;
         }
 
         public Builder setBaseUrl(String baseUrl) {
@@ -368,13 +357,13 @@ public class Configuration {
             return this;
         }
 
-        public Builder setAccountStore(AccountStore accountStore) {
-            this.mAccountStore = accountStore;
+        public Builder setScope(String scope) {
+            this.mScope = scope;
             return this;
         }
 
-        public Builder setGsonDeserializer(GsonDeserializer deserializer) {
-            this.mDeserializer = deserializer;
+        public Builder setAccountStore(AccountStore accountStore) {
+            this.mAccountStore = accountStore;
             return this;
         }
 
@@ -385,11 +374,6 @@ public class Configuration {
 
         public Builder setCodeGrantRedirectUri(String redirectUri) {
             this.mCodeGrantRedirectUri = redirectUri;
-            return this;
-        }
-
-        public Builder setApiVersionString(String apiVersionString) {
-            this.mApiVersionString = apiVersionString;
             return this;
         }
 
