@@ -54,7 +54,7 @@ public class Configuration {
     private static final String DEFAULT_USER_AGENT = "sample_user_agent";
 
     @NotNull
-    protected String mBaseURLString;
+    protected String mBaseUrl;
     protected String mClientID;
     protected String mClientSecret;
     protected String mScope;
@@ -156,8 +156,8 @@ public class Configuration {
     }
 
     @NotNull
-    public String getBaseURLString() {
-        return mBaseURLString;
+    public String getBaseUrl() {
+        return mBaseUrl;
     }
 
     @Nullable
@@ -194,8 +194,8 @@ public class Configuration {
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Setters">
 
-    public void setBaseURLString(@NotNull String baseURLString) {
-        mBaseURLString = baseURLString;
+    public void setBaseUrl(@NotNull String baseUrl) {
+        mBaseUrl = baseUrl;
     }
 
     public void setCertPinningEnabled(boolean certPinningEnabled) {
@@ -211,7 +211,7 @@ public class Configuration {
      */
     // <editor-fold desc="Builder">
     private Configuration(@NotNull Builder builder) {
-        this.mBaseURLString = builder.mBaseUrl;
+        this.mBaseUrl = builder.mBaseUrl;
         this.mClientID = builder.mClientID;
         this.mClientSecret = builder.mClientSecret;
         this.mScope = builder.mScope;
@@ -241,7 +241,7 @@ public class Configuration {
     }
 
     private boolean isValid() {
-        return (!this.mBaseURLString.trim().isEmpty() &&
+        return (!this.mBaseUrl.trim().isEmpty() &&
                 this.mClientID != null && !this.mClientID.trim().isEmpty() &&
                 this.mClientSecret != null &&
                 !this.mClientSecret.trim().isEmpty() &&
@@ -340,8 +340,9 @@ public class Configuration {
             return this;
         }
 
-        public void setBaseUrl(@NotNull String baseUrl) {
-            mBaseUrl = baseUrl;
+        public Builder setBaseUrl(@NotNull String baseUrl) {
+            this.mBaseUrl = baseUrl;
+            return this;
         }
 
         public Builder setCodeGrantRedirectUri(String redirectUri) {
