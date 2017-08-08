@@ -83,7 +83,9 @@ public class ProgressiveVideoFile extends VideoFile {
     @SerializedName("size")
     protected long mSize; // size of the file, in bytes
 
-    /** The md5 provides us with a way to uniquely identify video files at {@link #getLink()} */
+    /**
+     * The md5 provides us with a way to uniquely identify video files at {@link #getLink()}
+     */
     @Nullable
     @SerializedName("md5")
     protected String mMd5;
@@ -138,28 +140,4 @@ public class ProgressiveVideoFile extends VideoFile {
             return VideoQuality.SD;
         }
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // Equals/Hashcode
-    // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Equals/Hashcode">
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || !(o instanceof ProgressiveVideoFile)) {
-            return false;
-        }
-
-        ProgressiveVideoFile that = (ProgressiveVideoFile) o;
-
-        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
-    }
-
-    @Override
-    public int hashCode() {
-        return mLink != null ? mLink.hashCode() : 0;
-    }
-    // </editor-fold>
 }

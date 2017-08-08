@@ -109,16 +109,13 @@ public abstract class VideoFile implements Serializable {
     // <editor-fold desc="Equals/Hashcode">
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || !(o instanceof VideoFile)) {
-            return false;
-        }
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
 
-        VideoFile that = (VideoFile) o;
+        VideoFile videoFile = (VideoFile) o;
 
-        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
+        return mLink != null ? mLink.equals(videoFile.mLink) : videoFile.mLink == null;
+
     }
 
     @Override

@@ -66,27 +66,4 @@ public class DashVideoFile extends VideoFile {
         return VideoQuality.DASH;
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // Equals/Hashcode
-    // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Equals/Hashcode">
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || !(o instanceof DashVideoFile)) {
-            return false;
-        }
-
-        DashVideoFile that = (DashVideoFile) o;
-
-        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
-    }
-
-    @Override
-    public int hashCode() {
-        return mLink != null ? mLink.hashCode() : 0;
-    }
-    // </editor-fold>
 }

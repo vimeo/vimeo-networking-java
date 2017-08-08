@@ -46,27 +46,4 @@ public class HlsVideoFile extends VideoFile {
         return VideoQuality.HLS;
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // Equals/Hashcode
-    // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Equals/Hashcode">
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || !(o instanceof HlsVideoFile)) {
-            return false;
-        }
-
-        HlsVideoFile that = (HlsVideoFile) o;
-
-        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
-    }
-
-    @Override
-    public int hashCode() {
-        return mLink != null ? mLink.hashCode() : 0;
-    }
-    // </editor-fold>
 }
