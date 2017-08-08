@@ -22,21 +22,21 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model
 
-import com.vimeo.networking.Utils;
+import com.vimeo.networking.Utils
 
-import org.junit.Test;
+import org.junit.Test
 
 /**
- * Unit tests for {@link ProgressiveVideoFile}.
- * <p>
+ * Unit tests for [DashVideoFile].
+ *
  * Created by zetterstromk on 8/3/17.
  */
-public class ProgressiveVideoFileTest {
+class DashVideoFileTest {
 
     @Test
-    public void verifyTypeAdapterWasGenerated() throws Exception {
-        Utils.verifyTypeAdapterGeneration(ProgressiveVideoFile.class);
+    fun verifyTypeAdapterWasGenerated() {
+        Utils.verifyTypeAdapterGeneration(DashVideoFile::class.java)
     }
 }

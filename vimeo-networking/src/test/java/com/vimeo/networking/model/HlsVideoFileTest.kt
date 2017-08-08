@@ -22,21 +22,21 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model
 
-import com.vimeo.networking.Utils;
+import com.vimeo.networking.Utils
 
-import org.junit.Test;
+import org.junit.Test
 
 /**
- * Unit tests for {@link DashVideoFile}.
- * <p>
+ * Unit tests for [HlsVideoFile].
+ *
  * Created by zetterstromk on 8/3/17.
  */
-public class DashVideoFileTest {
+class HlsVideoFileTest {
 
     @Test
-    public void verifyTypeAdapterWasGenerated() throws Exception {
-        Utils.verifyTypeAdapterGeneration(DashVideoFile.class);
+    fun verifyTypeAdapterWasGenerated() {
+        Utils.verifyTypeAdapterGeneration(HlsVideoFile::class.java)
     }
 }

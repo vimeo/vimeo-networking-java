@@ -22,21 +22,26 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model
 
-import com.vimeo.networking.Utils;
+import com.vimeo.networking.Utils
 
-import org.junit.Test;
+import org.junit.Test
 
 /**
- * Unit tests for {@link HlsVideoFile}.
- * <p>
+ * Unit tests for [ProgressiveVideoFile].
+ *
  * Created by zetterstromk on 8/3/17.
  */
-public class HlsVideoFileTest {
+class ProgressiveVideoFileTest {
 
     @Test
-    public void verifyTypeAdapterWasGenerated() throws Exception {
-        Utils.verifyTypeAdapterGeneration(HlsVideoFile.class);
+    fun verifyTypeAdapterWasGenerated() {
+        Utils.verifyTypeAdapterGeneration(ProgressiveVideoFile::class.java)
+    }
+
+    @Test
+    fun verifyTypeAdapterWasGenerated_MimeType() {
+        Utils.verifyTypeAdapterGeneration(ProgressiveVideoFile.MimeType::class.java)
     }
 }

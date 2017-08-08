@@ -44,6 +44,29 @@ public class ProgressiveVideoFile extends VideoFile {
 
     private static final long serialVersionUID = 2834083637971280026L;
 
+    @UseStag
+    public enum MimeType {
+        NONE("None"),
+        @SerializedName("video/mp4")
+        MP4("video/mp4"),
+        @SerializedName("video/webm")
+        WEBM("video/webm"), // Flash
+        @SerializedName("vp6/x-video")
+        VP6("vp6/x-video"); // Flash
+
+        private final String mTypeName;
+
+        MimeType(String typeName) {
+            mTypeName = typeName;
+        }
+
+        @Override
+        // Overridden for analytics.
+        public String toString() {
+            return mTypeName;
+        }
+    }
+
     @Nullable
     @SerializedName("type")
     protected MimeType mMimeType;
