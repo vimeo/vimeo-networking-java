@@ -96,7 +96,7 @@ class RetrofitSetup {
      * OkHttp setup.
      */
     @NotNull
-    private OkHttpClient createOkHttpClient() {
+    OkHttpClient createOkHttpClient() {
         final RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
         if (mCache != null) {
             retrofitClientBuilder.setCache(mCache);
