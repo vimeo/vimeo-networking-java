@@ -117,7 +117,7 @@ class RetrofitSetup {
     /**
      * Try and pin certificates to prevent man-in-the-middle attacks (if pinning is enabled)
      */
-    private void setupCertPinning(RetrofitClientBuilder retrofitClientBuilder) {
+    private void setupCertPinning(@NotNull RetrofitClientBuilder retrofitClientBuilder) {
         if (mConfiguration.mCertPinningEnabled) {
             try {
                 retrofitClientBuilder.pinCertificates();
