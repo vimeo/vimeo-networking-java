@@ -210,7 +210,7 @@ public class Configuration {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Builder">
-    private Configuration(Builder builder) {
+    private Configuration(@NotNull Builder builder) {
         this.mBaseURLString = Vimeo.VIMEO_BASE_URL_STRING;
         this.mClientID = builder.mClientID;
         this.mClientSecret = builder.mClientSecret;
