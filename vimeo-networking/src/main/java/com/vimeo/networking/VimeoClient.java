@@ -216,7 +216,7 @@ final public class VimeoClient {
 
     @NotNull
     private Retrofit createRetrofit() {
-        return new Retrofit.Builder().baseUrl(mConfiguration.mBaseURLString)
+        return new Retrofit.Builder().baseUrl(mConfiguration.getBaseUrl())
                 .client(createOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(mGson))
                 .build();
@@ -346,7 +346,7 @@ final public class VimeoClient {
     public String getCodeGrantAuthorizationURI() {
         mCurrentCodeGrantState = UUID.randomUUID().toString();
         // Will look like the following: https://api.vimeo.com/oauth/authorize?<UTF8 encoded params>
-        final HttpUrl baseUrl = HttpUrl.parse(mConfiguration.mBaseURLString);
+        final HttpUrl baseUrl = HttpUrl.parse(mConfiguration.getBaseUrl());
         final HttpUrl uri = new HttpUrl.Builder().scheme(baseUrl.scheme())
                 .host(baseUrl.host())
                 .encodedPath(Vimeo.CODE_GRANT_PATH)
