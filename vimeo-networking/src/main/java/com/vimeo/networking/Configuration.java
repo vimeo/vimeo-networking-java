@@ -53,6 +53,7 @@ public class Configuration {
     private static final int DEFAULT_TIMEOUT = 60; // seconds
     private static final String DEFAULT_USER_AGENT = "sample_user_agent";
 
+    @NotNull
     protected String mBaseURLString;
     protected String mClientID;
     protected String mClientSecret;
@@ -154,6 +155,7 @@ public class Configuration {
         return mLogLevel;
     }
 
+    @NotNull
     public String getBaseURLString() {
         return mBaseURLString;
     }
@@ -192,7 +194,7 @@ public class Configuration {
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Setters">
 
-    public void setBaseURLString(String baseURLString) {
+    public void setBaseURLString(@NotNull String baseURLString) {
         mBaseURLString = baseURLString;
     }
 
@@ -239,11 +241,11 @@ public class Configuration {
     }
 
     private boolean isValid() {
-        return this.mBaseURLString != null && (!this.mBaseURLString.trim().isEmpty() &&
-                                               this.mClientID != null && !this.mClientID.trim().isEmpty() &&
-                                               this.mClientSecret != null &&
-                                               !this.mClientSecret.trim().isEmpty() &&
-                                               this.mScope != null && !this.mScope.trim().isEmpty()) ||
+        return (!this.mBaseURLString.trim().isEmpty() &&
+                this.mClientID != null && !this.mClientID.trim().isEmpty() &&
+                this.mClientSecret != null &&
+                !this.mClientSecret.trim().isEmpty() &&
+                this.mScope != null && !this.mScope.trim().isEmpty()) ||
                (this.mAccessToken != null && !this.mAccessToken.trim().isEmpty());
     }
 
@@ -298,16 +300,16 @@ public class Configuration {
         /**
          * The constructor for the Configuration Builder.
          *
-         * @param clientId      The client id provided to you from
-         *                      <a href="https://developer.vimeo.com/apps/">the developer console</a>
-         * @param clientSecret  The client secret provided to you from
-         *                      <a href="https://developer.vimeo.com/apps/">the developer console</a>
-         * @param scope         Space separated list of
-         *                      <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
-         *                      <p>
-         *                      Example: "private public create"
-         * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Android's
-         *                      <a href="https://goo.gl/QZ7rm">Account Manager</a>
+         * @param clientId     The client id provided to you from
+         *                     <a href="https://developer.vimeo.com/apps/">the developer console</a>
+         * @param clientSecret The client secret provided to you from
+         *                     <a href="https://developer.vimeo.com/apps/">the developer console</a>
+         * @param scope        Space separated list of
+         *                     <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
+         *                     <p>
+         *                     Example: "private public create"
+         * @param accountStore (Optional, Recommended) An implementation that can be used to interface with Android's
+         *                     <a href="https://goo.gl/QZ7rm">Account Manager</a>
          */
         public Builder(@NotNull String clientId,
                        @NotNull String clientSecret,
