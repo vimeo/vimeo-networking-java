@@ -22,14 +22,12 @@
 
 package com.vimeo.networking;
 
-import com.google.gson.Gson;
 import com.vimeo.networking.Search.FilterType;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.IgnoreResponseVimeoCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
 import com.vimeo.networking.logging.ClientLogger;
-import com.vimeo.networking.logging.LoggingInterceptor;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureCollection;
@@ -66,13 +64,8 @@ import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Client class used for making networking calls to Vimeo API.
@@ -99,15 +92,13 @@ final public class VimeoClient {
     private final Retrofit mRetrofit;
 
     @NotNull
-    private final Gson mGson;
+    private final String mUserAgent;
+
     @Nullable
     private Timer mPinCodeAuthorizationTimer;
 
     @NotNull
     private final BaseUrlInterceptor mBaseUrlInterceptor = new BaseUrlInterceptor();
-
-    @NotNull
-    private final String mLibraryUserAgentComponent;
 
     /**
      * Currently authenticated account
@@ -147,11 +138,12 @@ final public class VimeoClient {
 
     private VimeoClient(@NotNull Configuration configuration) {
         mConfiguration = configuration;
-        mGson = VimeoNetworkUtil.getGson();
+        mConfiguration.mInterceptors.add(mBaseUrlInterceptor);
         mCache = mConfiguration.getCache();
-        mRetrofit = createRetrofit();
+        final RetrofitSetup retrofitSetup = new RetrofitSetup(mConfiguration, mCache);
+        mRetrofit = retrofitSetup.createRetrofit();
+        mUserAgent = retrofitSetup.createUserAgent();
         mVimeoService = mRetrofit.create(VimeoService.class);
-        mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION + " (Java)";
         ClientLogger.setLogProvider(mConfiguration.mLogProvider);
         ClientLogger.setLogLevel(mConfiguration.mLogLevel);
 
@@ -201,75 +193,6 @@ final public class VimeoClient {
     @SuppressWarnings("WeakerAccess")
     public void resetBaseUrl() {
         mBaseUrlInterceptor.resetBaseUrl();
-    }
-
-    @NotNull
-    private String createUserAgent() {
-        final String userProvidedAgent = mConfiguration.getUserAgentString();
-
-        if (userProvidedAgent != null && !userProvidedAgent.isEmpty()) {
-            return userProvidedAgent + ' ' + mLibraryUserAgentComponent;
-        } else {
-            return mLibraryUserAgentComponent;
-        }
-    }
-
-    @NotNull
-    private Retrofit createRetrofit() {
-        return new Retrofit.Builder().baseUrl(mConfiguration.mBaseURLString)
-                .client(createOkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create(mGson))
-                .build();
-    }
-
-    @NotNull
-    private OkHttpClient createOkHttpClient() {
-        final RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
-        retrofitClientBuilder.setCache(mCache)
-                .addNetworkInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        // Rewrite the server's cache-control header because are server sets all Cache-Control
-                        // headers to no-store [AH] 4/24/2015
-                        return chain.proceed(chain.request())
-                                .newBuilder()
-                                .header(Vimeo.HEADER_CACHE_CONTROL, Vimeo.HEADER_CACHE_PUBLIC)
-                                .build();
-                    }
-                })
-                .setReadTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
-                .setConnectionTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
-                .addInterceptor(new LoggingInterceptor())
-                .addInterceptor(mBaseUrlInterceptor)
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        final Request original = chain.request();
-
-                        // Customize the request to add the user agent and accept header to all of them
-                        final Request request = original.newBuilder()
-                                .header(Vimeo.HEADER_USER_AGENT, createUserAgent())
-                                .header(Vimeo.HEADER_ACCEPT, getAcceptHeader())
-                                .method(original.method(), original.body())
-                                .build();
-
-                        // Customize or return the response
-                        return chain.proceed(request);
-                    }
-                })
-                .addNetworkInterceptors(mConfiguration.mNetworkInterceptors)
-                .addInterceptors(mConfiguration.mInterceptors);
-
-        if (mConfiguration.mCertPinningEnabled) {
-            // Try and pin certificates to prevent man-in-the-middle attacks (if pinning is enabled)
-            try {
-                retrofitClientBuilder.pinCertificates();
-            } catch (final Exception e) {
-                ClientLogger.e("Exception when pinning certificate: " + e.getMessage(), e);
-            }
-        }
-
-        return retrofitClientBuilder.build();
     }
 
     public void clearRequestCache() {
@@ -1354,7 +1277,7 @@ final public class VimeoClient {
      * public usage of the suggestion API.
      *
      * @param queryMap the query parameters
-     * @param callback the callback to be invokedn when the call finishes
+     * @param callback the callback to be invoked when the call finishes
      * @return the {@link Call} object provided by Retrofit
      */
     @NotNull
@@ -1585,13 +1508,9 @@ final public class VimeoClient {
     // Header values
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Header values">
+    @NotNull
     public String getUserAgent() {
-        return createUserAgent();
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public static String getAcceptHeader() {
-        return "application/vnd.vimeo.*+json; version=" + Vimeo.API_VERSION;
+        return mUserAgent;
     }
 
     public String getAuthHeader() {
