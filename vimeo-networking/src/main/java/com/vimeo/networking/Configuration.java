@@ -211,7 +211,7 @@ public class Configuration {
      */
     // <editor-fold desc="Builder">
     private Configuration(@NotNull Builder builder) {
-        this.mBaseURLString = Vimeo.VIMEO_BASE_URL_STRING;
+        this.mBaseURLString = builder.mBaseUrl;
         this.mClientID = builder.mClientID;
         this.mClientSecret = builder.mClientSecret;
         this.mScope = builder.mScope;
@@ -254,6 +254,8 @@ public class Configuration {
      */
     public static class Builder {
 
+        @NotNull
+        private String mBaseUrl = Vimeo.VIMEO_BASE_URL_STRING;
         private String mClientID;
         private String mClientSecret;
         private String mScope;
@@ -336,6 +338,10 @@ public class Configuration {
         public Builder setAccessToken(String accessToken) {
             this.mAccessToken = accessToken;
             return this;
+        }
+
+        public void setBaseUrl(@NotNull String baseUrl) {
+            mBaseUrl = baseUrl;
         }
 
         public Builder setCodeGrantRedirectUri(String redirectUri) {
