@@ -1062,13 +1062,13 @@ final public class VimeoClient {
      * Gets a {@link TextTrackList} at the provided uri. When finished, the callback will be invoked.
      *
      * @param uri      the uri of the text track.
-     * @param callback the {@link ModelCallback} to be invoked when the request finishes
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
      * @return a {@link Call} with the {@link TextTrackList} type. This can be used for request
      * cancellation.
      */
     @NotNull
     public Call<TextTrackList> getTextTrackList(@NotNull String uri,
-                                                @NotNull ModelCallback<TextTrackList> callback) {
+                                                @NotNull VimeoCallback<TextTrackList> callback) {
         Call<TextTrackList> call = mVimeoService.getTextTrackList(getAuthHeader(), uri);
         call.enqueue(callback);
 
