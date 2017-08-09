@@ -330,6 +330,11 @@ public class Configuration {
             return this;
         }
 
+        public Builder setScope(String scope) {
+            this.mScope = scope;
+            return this;
+        }
+
         public Builder setAccountStore(AccountStore accountStore) {
             this.mAccountStore = accountStore;
             return this;

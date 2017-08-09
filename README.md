@@ -316,11 +316,11 @@ Video video = ...; // obtain a video in a manner described in the Requests secti
 String html = video.embed != null ? video.embed.html : null;
 if(html != null) {
      // html is in the form "<iframe .... ></iframe>"
-     // load the html, for instance, if using a WebView on Android, you can perform the following:
-     WebView webview = ...; // obtain a handle to your webview
-     webview.loadData(html, "text/html", "utf-8");
+     // display the html however you wish
 }
 ```
+**Note** Android WebViews are not officially supported by our embeddable player.
+
 #### Native playback
 If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to Dash, HLS, and progressive streaming video files through a video's ```play``` representation.
 ```java
