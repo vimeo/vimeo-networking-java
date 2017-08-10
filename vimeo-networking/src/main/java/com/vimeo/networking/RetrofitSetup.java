@@ -86,7 +86,7 @@ class RetrofitSetup {
     @NotNull
     @SuppressWarnings("WeakerAccess")
     public Retrofit createRetrofit() {
-        return new Retrofit.Builder().baseUrl(mConfiguration.mBaseURLString)
+        return new Retrofit.Builder().baseUrl(mConfiguration.getBaseUrl())
                 .client(createOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(mGson))
                 .build();

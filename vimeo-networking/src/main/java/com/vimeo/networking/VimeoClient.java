@@ -235,17 +235,6 @@ final public class VimeoClient {
     }
 
     /**
-     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
-     * <p>
-     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
-     * application sessions.
-     */
-    @Deprecated
-    public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email, String password) {
-        saveAccount(vimeoAccount, email);
-    }
-
-    /**
      * Sets the {@link #mVimeoAccount} field as well as triggering the saveAccount event for the
      * account store
      */
@@ -280,7 +269,7 @@ final public class VimeoClient {
     public String getCodeGrantAuthorizationURI() {
         mCurrentCodeGrantState = UUID.randomUUID().toString();
         // Will look like the following: https://api.vimeo.com/oauth/authorize?<UTF8 encoded params>
-        final HttpUrl baseUrl = HttpUrl.parse(mConfiguration.mBaseURLString);
+        final HttpUrl baseUrl = HttpUrl.parse(mConfiguration.getBaseUrl());
         final HttpUrl uri = new HttpUrl.Builder().scheme(baseUrl.scheme())
                 .host(baseUrl.host())
                 .encodedPath(Vimeo.CODE_GRANT_PATH)
@@ -667,17 +656,6 @@ final public class VimeoClient {
             mClient = client;
             mEmail = email;
             mCallback = callback;
-        }
-
-        /**
-         * @deprecated use {@link #AccountCallback(VimeoClient, String, AuthCallback)} instead
-         * <p>
-         * We find no use in storing the password when you can persist the {@link VimeoAccount} across
-         * application sessions.
-         */
-        @Deprecated
-        public AccountCallback(VimeoClient client, String email, String password, AuthCallback callback) {
-            this(client, email, callback);
         }
 
         @Override
