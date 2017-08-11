@@ -24,57 +24,29 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Representation of a Video stream/playback file
+ * Base representation of a Video stream/playback file
  * <p>
  * Created by alfredhanssen on 4/25/15.
  */
 @SuppressWarnings("unused")
-// TODO: Remove the VideoFileDeserializer and use Stag instead, once API corrects log issue behind version 2/16/17 [KZ]
-// @UseStag(FieldOption.SERIALIZED_NAME)
-public class VideoFile implements Serializable {
+@UseStag(FieldOption.SERIALIZED_NAME)
+public abstract class VideoFile implements Serializable {
 
-    @UseStag
-    public enum MimeType {
-        NONE("None"),
-        @SerializedName("video/mp4")
-        MP4("video/mp4"),
-        @SerializedName("video/webm")
-        WEBM("video/webm"), // Flash
-        @SerializedName("vp6/x-video")
-        VP6("vp6/x-video"); // Flash
-
-        private final String mTypeName;
-
-        MimeType(String typeName) {
-            mTypeName = typeName;
-        }
-
-        @Override
-        // Overridden for analytics.
-        public String toString() {
-            return mTypeName;
-        }
-    }
-
-    @Deprecated
-    @UseStag
     public enum VideoQuality {
         NONE("N/A"),
-        @SerializedName("hls")
+        DASH("dash"),
         HLS("hls"),
-        @SerializedName("hd")
         HD("hd"),
-        @SerializedName("sd")
-        SD("sd"),
-        @SerializedName("mobile")
-        MOBILE("mobile");
+        SD("sd");
 
         private final String mTypeName;
 
@@ -90,6 +62,9 @@ public class VideoFile implements Serializable {
     }
 
     private static final long serialVersionUID = -5256416394912086020L;
+
+    @NotNull
+    public abstract VideoQuality getQuality();
 
     // -----------------------------------------------------------------------------------------------------
     // Fields common between all file types - HLS, Dash, Progressive
@@ -107,14 +82,6 @@ public class VideoFile implements Serializable {
     protected String mLog;
 
     @Nullable
-    @SerializedName("token")
-    protected String mToken;
-
-    @Nullable
-    @SerializedName("license_link")
-    protected String mLicenseLink;
-
-    @Nullable
     public Date getLinkExpirationTime() {
         return mLinkExpirationTime;
     }
@@ -122,10 +89,7 @@ public class VideoFile implements Serializable {
     /** @return true if this VideoFile doesn't have an expired field or if the expires date is before the current date */
     public boolean isExpired() {
         // If expires is null, we should probably refresh the video object regardless [KV] 3/31/16
-        // TODO: Simplify this when expires is deprecated 4/25/16 [KZ]
-        return (mExpires == null && mLinkExpirationTime == null) ||
-               (mExpires != null && mExpires.before(new Date())) ||
-               (mLinkExpirationTime != null && mLinkExpirationTime.before(new Date()));
+        return mLinkExpirationTime == null || mLinkExpirationTime.before(new Date());
     }
 
     public String getLink() {
@@ -137,103 +101,6 @@ public class VideoFile implements Serializable {
         return mLog;
     }
 
-    @Nullable
-    public String getToken() {
-        return mToken;
-    }
-
-    @Nullable
-    public String getLicenseLink() {
-        return mLicenseLink;
-    }
-
-    // </editor-fold>
-
-    // -----------------------------------------------------------------------------------------------------
-    // Progressive files only - these fields are not relevant to HLS/Dash
-    // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Progressive files only">
-    /** quality will be removed in the future when {@link Video#mVideoFiles} is removed */
-    @Deprecated
-    @Nullable
-    @SerializedName("quality")
-    protected VideoQuality mQuality;
-
-    /** expires will be removed in the future when {@link Video#mVideoFiles} is removed */
-    @Deprecated
-    @Nullable
-    @SerializedName("expires")
-    protected Date mExpires;
-
-    @Nullable
-    @SerializedName("type")
-    protected MimeType mMimeType;
-
-    @SerializedName("fps")
-    protected double mFps;
-
-    @SerializedName("width")
-    protected int mWidth;
-
-    @SerializedName("height")
-    protected int mHeight;
-
-    @SerializedName("size")
-    protected long mSize; // size of the file, in bytes
-
-    /** The md5 provides us with a way to uniquely identify video files at {@link #getLink()} */
-    @Nullable
-    @SerializedName("md5")
-    protected String mMd5;
-
-    @Nullable
-    @SerializedName("created_time")
-    protected Date mCreatedTime; // time indicating when this transcode was completed
-
-    /**
-     * quality is no longer included in VideoFiles under {@link Video#getPlay()} - it will be removed
-     * in a future release once {@link Video#mVideoFiles} is removed.
-     *
-     * @return the VideoQuality
-     */
-    @Deprecated
-    public VideoQuality getQuality() {
-        return mQuality == null ? VideoQuality.NONE : mQuality;
-    }
-
-    public MimeType getType() {
-        return mMimeType == null ? MimeType.NONE : mMimeType;
-    }
-
-    public boolean isVP6() {
-        return getType() == MimeType.VP6;
-    }
-
-    public int getWidth() {
-        return mWidth;
-    }
-
-    public int getHeight() {
-        return mHeight;
-    }
-
-    public long getSize() {
-        return mSize;
-    }
-
-    public double getFps() {
-        return mFps;
-    }
-
-    @Nullable
-    public String getMd5() {
-        return mMd5;
-    }
-
-    @Nullable
-    public Date getCreatedTime() {
-        return mCreatedTime;
-    }
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -242,16 +109,13 @@ public class VideoFile implements Serializable {
     // <editor-fold desc="Equals/Hashcode">
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || !(o instanceof VideoFile)) {
-            return false;
-        }
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
 
-        VideoFile that = (VideoFile) o;
+        VideoFile videoFile = (VideoFile) o;
 
-        return (mLink != null && that.getLink() != null) && mLink.equals(that.getLink());
+        return mLink != null ? mLink.equals(videoFile.mLink) : videoFile.mLink == null;
+
     }
 
     @Override

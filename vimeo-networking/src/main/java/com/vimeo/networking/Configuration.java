@@ -26,6 +26,7 @@ import com.vimeo.networking.Vimeo.LogLevel;
 import com.vimeo.networking.logging.LogProvider;
 import com.vimeo.networking.model.VimeoAccount;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -52,7 +53,8 @@ public class Configuration {
     private static final int DEFAULT_TIMEOUT = 60; // seconds
     private static final String DEFAULT_USER_AGENT = "sample_user_agent";
 
-    protected String mBaseURLString;
+    @NotNull
+    protected String mBaseUrl;
     protected String mClientID;
     protected String mClientSecret;
     protected String mScope;
@@ -153,8 +155,9 @@ public class Configuration {
         return mLogLevel;
     }
 
-    public String getBaseURLString() {
-        return mBaseURLString;
+    @NotNull
+    public String getBaseUrl() {
+        return mBaseUrl;
     }
 
     @Nullable
@@ -163,17 +166,6 @@ public class Configuration {
             return null;
         }
         return new Cache(mCacheDirectory, mCacheSize);
-    }
-
-    /**
-     * @deprecated use {@link #saveAccount(VimeoAccount, String)} instead
-     * <p>
-     * We find no use in storing the password when you can persist the {@link VimeoAccount} across
-     * application sessions.
-     */
-    @Deprecated
-    public void saveAccount(VimeoAccount account, String email, String password) {
-        saveAccount(account, email);
     }
 
     public void saveAccount(VimeoAccount account, String email) {
@@ -202,8 +194,8 @@ public class Configuration {
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Setters">
 
-    public void setBaseURLString(String baseURLString) {
-        mBaseURLString = baseURLString;
+    public void setBaseUrl(@NotNull String baseUrl) {
+        mBaseUrl = baseUrl;
     }
 
     public void setCertPinningEnabled(boolean certPinningEnabled) {
@@ -218,8 +210,8 @@ public class Configuration {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Builder">
-    private Configuration(Builder builder) {
-        this.mBaseURLString = builder.mBaseURLString;
+    private Configuration(@NotNull Builder builder) {
+        this.mBaseUrl = builder.mBaseUrl;
         this.mClientID = builder.mClientID;
         this.mClientSecret = builder.mClientSecret;
         this.mScope = builder.mScope;
@@ -249,11 +241,11 @@ public class Configuration {
     }
 
     private boolean isValid() {
-        return this.mBaseURLString != null && (!this.mBaseURLString.trim().isEmpty() &&
-                                               this.mClientID != null && !this.mClientID.trim().isEmpty() &&
-                                               this.mClientSecret != null &&
-                                               !this.mClientSecret.trim().isEmpty() &&
-                                               this.mScope != null && !this.mScope.trim().isEmpty()) ||
+        return (!this.mBaseUrl.trim().isEmpty() &&
+                this.mClientID != null && !this.mClientID.trim().isEmpty() &&
+                this.mClientSecret != null &&
+                !this.mClientSecret.trim().isEmpty() &&
+                this.mScope != null && !this.mScope.trim().isEmpty()) ||
                (this.mAccessToken != null && !this.mAccessToken.trim().isEmpty());
     }
 
@@ -262,7 +254,8 @@ public class Configuration {
      */
     public static class Builder {
 
-        private String mBaseURLString = Vimeo.VIMEO_BASE_URL_STRING;
+        @NotNull
+        private String mBaseUrl = Vimeo.VIMEO_BASE_URL_STRING;
         private String mClientID;
         private String mClientSecret;
         private String mScope;
@@ -302,52 +295,32 @@ public class Configuration {
             this.mAccessToken = accessToken;
         }
 
-        public Builder(String clientID, String clientSecret, String scope) {
-            this(null, clientID, clientSecret, scope, null);
-        }
-
-        @Deprecated
-        public Builder(String baseURLString, String clientID, String clientSecret, String scope) {
-            this(baseURLString, clientID, clientSecret, scope, null);
-        }
-
-        public Builder(String clientId, String clientSecret, String scope,
-                       @Nullable AccountStore accountStore) {
-            this(null, clientId, clientSecret, scope, accountStore);
+        public Builder(@NotNull String clientID, @NotNull String clientSecret, @NotNull String scope) {
+            this(clientID, clientSecret, scope, null);
         }
 
         /**
          * The constructor for the Configuration Builder.
          *
-         * @param baseURLString The base url pointing to the Vimeo api. Something like:
-         *                      {@link Vimeo#VIMEO_BASE_URL_STRING}
-         * @param clientId      The client id provided to you from
-         *                      <a href="https://developer.vimeo.com/apps/">the developer console</a>
-         * @param clientSecret  The client secret provided to you from
-         *                      <a href="https://developer.vimeo.com/apps/">the developer console</a>
-         * @param scope         Space separated list of
-         *                      <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
-         *                      <p>
-         *                      Example: "private public create"
-         * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Android's
-         *                      <a href="https://goo.gl/QZ7rm">Account Manager</a>
+         * @param clientId     The client id provided to you from
+         *                     <a href="https://developer.vimeo.com/apps/">the developer console</a>
+         * @param clientSecret The client secret provided to you from
+         *                     <a href="https://developer.vimeo.com/apps/">the developer console</a>
+         * @param scope        Space separated list of
+         *                     <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
+         *                     <p>
+         *                     Example: "private public create"
+         * @param accountStore (Optional, Recommended) An implementation that can be used to interface with Android's
+         *                     <a href="https://goo.gl/QZ7rm">Account Manager</a>
          */
-        @Deprecated
-        public Builder(@Nullable String baseURLString,
-                       String clientId,
-                       String clientSecret,
-                       String scope,
+        public Builder(@NotNull String clientId,
+                       @NotNull String clientSecret,
+                       @NotNull String scope,
                        @Nullable AccountStore accountStore) {
-            this.mBaseURLString = baseURLString == null ? this.mBaseURLString : baseURLString;
             this.mClientID = clientId;
             this.mClientSecret = clientSecret;
             this.mScope = scope;
             this.mAccountStore = accountStore;
-        }
-
-        public Builder setBaseUrl(String baseUrl) {
-            this.mBaseURLString = baseUrl;
-            return this;
         }
 
         /** If you used the basic Builder access token constructor but have the intent of */
@@ -369,6 +342,11 @@ public class Configuration {
 
         public Builder setAccessToken(String accessToken) {
             this.mAccessToken = accessToken;
+            return this;
+        }
+
+        public Builder setBaseUrl(@NotNull String baseUrl) {
+            this.mBaseUrl = baseUrl;
             return this;
         }
 

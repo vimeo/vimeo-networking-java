@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Vimeo
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,36 +22,48 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.playback;
+package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.DashVideoFile;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.Serializable;
-
 /**
- * An object that holds on to the drm content. There are three types, fairplay, widevine, and playready.
- * Since this is a Java library and only Apple products support fairplay, that type is omitted. Clients will
- * only receive these if given the app-specific permission, essentially this class is not consumable by the
- * general public.
+ * Representation of a DASH Video stream/playback file.
  * <p>
- * Created by zetterstromk on 6/22/16.
+ * Created by zetterstromk on 8/3/17.
  */
 @SuppressWarnings("unused")
-@UseStag
-public class Drm implements Serializable {
+@UseStag(FieldOption.SERIALIZED_NAME)
+public class DashVideoFile extends VideoFile {
 
-    private static final long serialVersionUID = 3048847922257143776L;
-
-    @Nullable
-    @SerializedName(value = "widevine", alternate = "m_widevine")
-    public DashVideoFile mWidevine;
+    private static final long serialVersionUID = -5721104078876753376L;
 
     @Nullable
-    public DashVideoFile getWidevine() {
-        return mWidevine;
+    @SerializedName("token")
+    protected String mToken;
+
+    @Nullable
+    @SerializedName("license_link")
+    protected String mLicenseLink;
+
+    @Nullable
+    public String getToken() {
+        return mToken;
     }
+
+    @Nullable
+    public String getLicenseLink() {
+        return mLicenseLink;
+    }
+
+    @NotNull
+    @Override
+    public VideoQuality getQuality() {
+        return VideoQuality.DASH;
+    }
+
 }

@@ -77,11 +77,9 @@ If you choose to pass in an `AccountStore`, the authenticated account will autom
     *                      <p/>
     *                      Example: "private public create"
     * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Androids <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">Account Manager</a>
-    * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread
     */
 Configuration.Builder configBuilder =
-      new Configuration.Builder(clientId, clientSecret, SCOPE,
-                                testAccountStore, new AndroidGsonDeserializer())
+      new Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore)
           .setCacheDirectory(this.getCacheDir())
 ```
 Setting the cache directory and deserializer are optional but highly recommended.
@@ -324,14 +322,21 @@ if(html != null) {
 **Note** Android WebViews are not officially supported by our embeddable player.
 
 #### Native playback
-If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array.
+If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to Dash, HLS, and progressive streaming video files through a video's ```play``` representation.
 ```java
 Video video = ...; // obtain a video you own as described above
-ArrayList<VideoFile> videoFiles = video.files;
-if(videoFiles != null && !videoFiles.isEmpty()) {
-     VideoFile videoFile = videoFiles.get(0); // you could sort these files by size, fps, width/height
-     String link = videoFile.getLink();
+Play play = video.getPlay();
+if (play != null) {
+     VideoFile dashFile = play.getDashVideoFile();
+     String dashLike = dashFile.getLink();
      // load link
+     
+     VideoFile hlsFile = play.getHlsVideoFile();
+     String hlsLink = hlsFile.getLink();
+     // load link
+     
+     ArrayList<VideoFile> progressiveFiles = play.getProgressiveVideoFiles();
+     // pick a progressive file to play
 }
 ```
 

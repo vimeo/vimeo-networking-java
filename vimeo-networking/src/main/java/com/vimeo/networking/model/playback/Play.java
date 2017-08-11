@@ -25,7 +25,9 @@
 package com.vimeo.networking.model.playback;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.VideoFile;
+import com.vimeo.networking.model.ProgressiveVideoFile;
+import com.vimeo.networking.model.DashVideoFile;
+import com.vimeo.networking.model.HlsVideoFile;
 import com.vimeo.networking.model.playback.embed.Embed;
 import com.vimeo.stag.UseStag;
 
@@ -80,15 +82,15 @@ public class Play implements Serializable {
 
     @Nullable
     @SerializedName(value = "hls", alternate = "m_hls")
-    protected VideoFile mHls;
+    protected HlsVideoFile mHls;
 
     @Nullable
     @SerializedName(value = "dash", alternate = "m_dash")
-    protected VideoFile mDash;
+    protected DashVideoFile mDash;
 
     @Nullable
     @SerializedName(value = "progressive", alternate = "m_progressive")
-    protected ArrayList<VideoFile> mProgressive;
+    protected ArrayList<ProgressiveVideoFile> mProgressive;
 
     @Nullable
     @SerializedName(value = "progress", alternate = "m_progress")
@@ -112,17 +114,17 @@ public class Play implements Serializable {
     }
 
     @Nullable
-    public VideoFile getHlsVideoFile() {
+    public HlsVideoFile getHlsVideoFile() {
         return mHls;
     }
 
     @Nullable
-    public VideoFile getDashVideoFile() {
+    public DashVideoFile getDashVideoFile() {
         return mDash;
     }
 
     @Nullable
-    public ArrayList<VideoFile> getProgressiveVideoFiles() {
+    public ArrayList<ProgressiveVideoFile> getProgressiveVideoFiles() {
         return mProgressive;
     }
 
@@ -165,9 +167,6 @@ public class Play implements Serializable {
             count += mProgressive.size();
         }
         if (mDrm != null && mDrm.getWidevine() != null) {
-            count++;
-        }
-        if (mDrm != null && mDrm.getPlayReady() != null) {
             count++;
         }
         return count;
