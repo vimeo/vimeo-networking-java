@@ -75,7 +75,7 @@ import retrofit2.Retrofit;
  * @see <a href="https://developer.vimeo.com/api">The Vimeo API Docs</a>
  */
 @SuppressWarnings("unused")
-final public class VimeoClient {
+public class VimeoClient {
 
     private static volatile boolean sContinuePinCodeAuthorizationRefreshCycle;
 
