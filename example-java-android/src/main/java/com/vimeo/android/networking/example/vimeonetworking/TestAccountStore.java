@@ -35,12 +35,6 @@ public class TestAccountStore implements AccountStore {
         return AccountPreferenceManager.getClientAccount();
     }
 
-    @Deprecated
-    @Override
-    public void saveAccount(VimeoAccount vimeoAccount, String email, String password) {
-        saveAccount(vimeoAccount, email);
-    }
-
     @Override
     public void saveAccount(VimeoAccount vimeoAccount, String email) {
         AccountPreferenceManager.setClientAccount(vimeoAccount);

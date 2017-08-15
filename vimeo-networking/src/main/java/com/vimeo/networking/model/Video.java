@@ -134,21 +134,19 @@ public class Video implements Serializable {
     @SerializedName("duration")
     public int mDuration;
 
-    /**
-     * Deprecated in favor of {@link Play}
-     * and the multiple {@link VideoFile}
-     * that it contains.
-     */
-    @Deprecated
-    @SerializedName("files")
-    public ArrayList<VideoFile> mVideoFiles;
-
     @SerializedName("width")
     public int mWidth;
 
     @SerializedName("height")
     public int mHeight;
 
+    /**
+     * @deprecated The Embed field is in the process of moving on to the {@link #mPlay} field
+     * as a much more robust object. The API will put this behind a future
+     * version release, and when this library is updated to that version,
+     * this field will no longer be accessible, and consumers will use the newer
+     * representation.
+     */
     @Deprecated
     @SerializedName("embed")
     public Embed mEmbed;
@@ -208,10 +206,6 @@ public class Video implements Serializable {
     public Play mPlay;
 
     @Nullable
-    @SerializedName("download")
-    public ArrayList<VideoFile> mDownload;
-
-    @Nullable
     @SerializedName(value = "badge", alternate = "m_video_badge")
     public VideoBadge mVideoBadge;
 
@@ -250,10 +244,6 @@ public class Video implements Serializable {
         return mDuration;
     }
 
-    public ArrayList<VideoFile> getVideoFiles() {
-        return mVideoFiles;
-    }
-
     public int getWidth() {
         return mWidth;
     }
@@ -262,6 +252,7 @@ public class Video implements Serializable {
         return mHeight;
     }
 
+    @Deprecated
     public Embed getEmbed() {
         return mEmbed;
     }
@@ -508,25 +499,6 @@ public class Video implements Serializable {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
-    // Files
-    // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Files">
-    @Nullable
-    public VideoFile getVideoFileForMd5(String md5) {
-        // Only Progressive video files have an md5
-        if (mPlay == null || mPlay.getProgressiveVideoFiles() == null) {
-            return null;
-        }
-        for (VideoFile file : mPlay.getProgressiveVideoFiles()) {
-            if (file != null && file.getMd5() != null && file.getMd5().equals(md5)) {
-                return file;
-            }
-        }
-        return null;
-    }
-    // </editor-fold>
-
-    // -----------------------------------------------------------------------------------------------------
     // Comments
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Comments">
@@ -641,16 +613,6 @@ public class Video implements Serializable {
             return Vimeo.NOT_FOUND;
         }
         return TimeUnit.SECONDS.toMillis((long) progressSeconds);
-    }
-    // </editor-fold>
-
-    // -----------------------------------------------------------------------------------------------------
-    // Download - an array of VideoFile objects that may be downloaded
-    // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Download">
-    @Nullable
-    public ArrayList<VideoFile> getDownload() {
-        return mDownload;
     }
     // </editor-fold>
 

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Vimeo
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,36 +22,27 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.playback;
+package com.vimeo.networking.interceptors;
 
-import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.DashVideoFile;
-import com.vimeo.stag.UseStag;
+import com.vimeo.networking.Vimeo;
 
-import org.jetbrains.annotations.Nullable;
+import java.io.IOException;
 
-import java.io.Serializable;
+import okhttp3.Interceptor;
+import okhttp3.Response;
 
 /**
- * An object that holds on to the drm content. There are three types, fairplay, widevine, and playready.
- * Since this is a Java library and only Apple products support fairplay, that type is omitted. Clients will
- * only receive these if given the app-specific permission, essentially this class is not consumable by the
- * general public.
- * <p>
- * Created by zetterstromk on 6/22/16.
+ * Rewrite the server's cache-control header because our server sets all {@code Cache-Control} headers
+ * to {@code no-store}
+ * Created by brentwatson on 8/7/17.
  */
-@SuppressWarnings("unused")
-@UseStag
-public class Drm implements Serializable {
+public class CacheControlInterceptor implements Interceptor {
 
-    private static final long serialVersionUID = 3048847922257143776L;
-
-    @Nullable
-    @SerializedName(value = "widevine", alternate = "m_widevine")
-    public DashVideoFile mWidevine;
-
-    @Nullable
-    public DashVideoFile getWidevine() {
-        return mWidevine;
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        return chain.proceed(chain.request()
+                                     .newBuilder()
+                                     .header(Vimeo.HEADER_CACHE_CONTROL, Vimeo.HEADER_CACHE_PUBLIC)
+                                     .build());
     }
 }

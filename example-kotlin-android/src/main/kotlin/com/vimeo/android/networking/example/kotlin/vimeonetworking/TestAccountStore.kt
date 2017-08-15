@@ -25,11 +25,6 @@ class TestAccountStore(context: Context?) : AccountStore {
         return AccountPreferenceManager.clientAccount
     }
 
-    @Deprecated("Passwords should not be saved", ReplaceWith("saveAccount(vimeoAccount, email)"))
-    override fun saveAccount(vimeoAccount: VimeoAccount, email: String, password: String) {
-        saveAccount(vimeoAccount, email)
-    }
-
     override fun saveAccount(vimeoAccount: VimeoAccount, email: String) {
         AccountPreferenceManager.clientAccount = vimeoAccount
     }
