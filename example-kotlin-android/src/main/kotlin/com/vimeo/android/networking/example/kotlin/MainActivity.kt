@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         setContentView(R.layout.activity_main)
 
         // ---- Initial UI Setup ----
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         progressDialog = ProgressDialog(this)
         progressDialog.setMessage("All of your API are belong to us...")
@@ -55,13 +55,13 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
 
         // ---- View Binding ----
-        requestOutputTv = findViewById(R.id.request_output_tv) as TextView
-        findViewById(R.id.fab)!!.setOnClickListener(this)
-        findViewById(R.id.code_grant_btn)!!.setOnClickListener(this)
-        findViewById(R.id.request_output_tv)!!.setOnClickListener(this)
-        findViewById(R.id.staff_picks_btn)!!.setOnClickListener(this)
-        findViewById(R.id.account_type_btn)!!.setOnClickListener(this)
-        findViewById(R.id.logout_btn)!!.setOnClickListener(this)
+        requestOutputTv = findViewById(R.id.request_output_tv)
+        findViewById<View>(R.id.fab).setOnClickListener(this)
+        findViewById<View>(R.id.code_grant_btn).setOnClickListener(this)
+        findViewById<View>(R.id.request_output_tv).setOnClickListener(this)
+        findViewById<View>(R.id.staff_picks_btn).setOnClickListener(this)
+        findViewById<View>(R.id.account_type_btn).setOnClickListener(this)
+        findViewById<View>(R.id.logout_btn).setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
