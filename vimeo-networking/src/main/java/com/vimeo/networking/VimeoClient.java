@@ -466,18 +466,12 @@ final public class VimeoClient {
     }
 
     @Nullable
-    public Call<VimeoAccount> joinWithFacebookToken(String facebookToken, String email, AuthCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (facebookToken == null || facebookToken.isEmpty()) {
+    public Call<VimeoAccount> joinWithFacebookToken(@NotNull final String facebookToken, @NotNull final String email,
+                                                    @NotNull final AuthCallback callback) {
+        if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
-
-            if (facebookToken == null || facebookToken.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                                          "An empty or null Facebook access token was provided.");
-            }
+            error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                      "An empty or null Facebook access token was provided.");
             callback.failure(error);
             return null;
         }
@@ -492,26 +486,20 @@ final public class VimeoClient {
     }
 
     /**
-     * Register the user using Google authentication token.
+     * Register the user using a Google authentication token.
      *
      * @param googleToken {@code id_token} value received by Google after authenticating.
-     * @param email User email address.
-     * @param callback This callback will be executed after the request succeeds or fails.
+     * @param email       User email address.
+     * @param callback    This callback will be executed after the request succeeds or fails.
      * @return a retrofit {@link Call} object, which <b>has already been enqueued</b>.
      */
     @Nullable
-    public Call<VimeoAccount> joinWithGoogleToken(String googleToken, String email, AuthCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (googleToken == null || googleToken.isEmpty()) {
+    public Call<VimeoAccount> joinWithGoogleToken(@NotNull final String googleToken, @NotNull final String email,
+                                                  @NotNull final AuthCallback callback) {
+        if (googleToken.isEmpty()) {
             final VimeoError error = new VimeoError("Google authentication error.");
-
-            if (googleToken == null || googleToken.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                                          "An empty or null Google access token was provided.");
-            }
+            error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                      "An empty or null Google access token was provided.");
             callback.failure(error);
             return null;
         }
@@ -595,20 +583,13 @@ final public class VimeoClient {
     }
 
     @Nullable
-    public Call<VimeoAccount> loginWithFacebookToken(String facebookToken, String email, AuthCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (facebookToken == null || facebookToken.isEmpty()) {
+    public Call<VimeoAccount> loginWithFacebookToken(@NotNull final String facebookToken, @NotNull final String email,
+                                                     @NotNull final AuthCallback callback) {
+        if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
-
-            if (facebookToken == null || facebookToken.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_TOKEN,
-                                          ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                                          "An empty or null Facebook access token was provided.");
-            }
-            callback.failure(error);
+            error.addInvalidParameter(Vimeo.FIELD_TOKEN,
+                                      ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                      "An empty or null Facebook access token was provided.");
             return null;
         }
 
@@ -624,24 +605,18 @@ final public class VimeoClient {
      * Allow a user to login to their account using a Google authentication token.
      *
      * @param googleToken {@code id_token} value received by Google after authenticating.
-     * @param email User email address.
-     * @param callback This callback will be executed after the request succeeds or fails.
+     * @param email       User email address.
+     * @param callback    This callback will be executed after the request succeeds or fails.
      * @return a retrofit {@link Call} object, which <b>has already been enqueued</b>.
      */
     @Nullable
-    public Call<VimeoAccount> loginWithGoogleToken(String googleToken, String email, AuthCallback callback) {
-        if (callback == null) {
-            throw new AssertionError("Callback cannot be null");
-        }
-
-        if (googleToken == null || googleToken.isEmpty()) {
+    public Call<VimeoAccount> loginWithGoogleToken(@NotNull final String googleToken, @NotNull final String email,
+                                                   @NotNull final AuthCallback callback) {
+        if (googleToken.isEmpty()) {
             final VimeoError error = new VimeoError("Google authentication error.");
-
-            if (googleToken == null || googleToken.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_TOKEN,
-                                          ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                                          "An empty or null Google access token was provided.");
-            }
+            error.addInvalidParameter(Vimeo.FIELD_TOKEN,
+                                      ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                      "An empty or null Google access token was provided.");
             callback.failure(error);
             return null;
         }
