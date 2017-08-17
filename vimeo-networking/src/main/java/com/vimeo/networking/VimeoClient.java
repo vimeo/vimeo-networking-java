@@ -491,6 +491,40 @@ final public class VimeoClient {
         return call;
     }
 
+    /**
+     * Register the user using Google authentication token.
+     *
+     * @param googleToken {@code id_token} value received by Google after authenticating.
+     * @param email User email address.
+     * @param callback This callback will be executed after the request succeeds or fails.
+     * @return a retrofit {@link Call} object, which <b>has already been enqueued</b>.
+     */
+    @Nullable
+    public Call<VimeoAccount> joinWithGoogleToken(String googleToken, String email, AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (googleToken == null || googleToken.isEmpty()) {
+            final VimeoError error = new VimeoError("Google authentication error.");
+
+            if (googleToken == null || googleToken.isEmpty()) {
+                error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                          "An empty or null Google access token was provided.");
+            }
+            callback.failure(error);
+            return null;
+        }
+
+        final HashMap<String, String> parameters = new HashMap<>();
+        parameters.put(Vimeo.PARAMETER_ID_TOKEN, googleToken);
+        parameters.put(Vimeo.PARAMETER_SCOPE, mConfiguration.mScope);
+
+        final Call<VimeoAccount> call = mVimeoService.join(getBasicAuthHeader(), parameters);
+        call.enqueue(new AccountCallback(this, email, callback));
+        return call;
+    }
+
     @Nullable
     public Call<VimeoAccount> logIn(String email, String password, AuthCallback callback) {
         if (callback == null) {
@@ -586,6 +620,39 @@ final public class VimeoClient {
         return call;
     }
 
+    /**
+     * Allow a user to login to their account using a Google authentication token.
+     *
+     * @param googleToken {@code id_token} value received by Google after authenticating.
+     * @param email User email address.
+     * @param callback This callback will be executed after the request succeeds or fails.
+     * @return a retrofit {@link Call} object, which <b>has already been enqueued</b>.
+     */
+    @Nullable
+    public Call<VimeoAccount> loginWithGoogleToken(String googleToken, String email, AuthCallback callback) {
+        if (callback == null) {
+            throw new AssertionError("Callback cannot be null");
+        }
+
+        if (googleToken == null || googleToken.isEmpty()) {
+            final VimeoError error = new VimeoError("Google authentication error.");
+
+            if (googleToken == null || googleToken.isEmpty()) {
+                error.addInvalidParameter(Vimeo.FIELD_TOKEN,
+                                          ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                          "An empty or null Google access token was provided.");
+            }
+            callback.failure(error);
+            return null;
+        }
+
+        final Call<VimeoAccount> call = mVimeoService.logInWithGoogle(getBasicAuthHeader(),
+                                                                      Vimeo.GOOGLE_GRANT_TYPE,
+                                                                      googleToken,
+                                                                      mConfiguration.mScope);
+        call.enqueue(new AccountCallback(this, email, callback));
+        return call;
+    }
 
     /**
      * Must be called when user logs out to ensure that the tokens have been invalidated
