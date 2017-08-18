@@ -36,5 +36,5 @@ dependencies {
         exclude group: 'com.intellij', module: 'annotations'
     }
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
