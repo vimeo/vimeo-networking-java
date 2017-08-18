@@ -33,7 +33,7 @@ tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
     testCompile 'junit:junit:4.12'
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.intellij:annotations:12.0@jar'
 
