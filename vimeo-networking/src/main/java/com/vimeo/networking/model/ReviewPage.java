@@ -65,4 +65,31 @@ public final class ReviewPage implements Serializable {
     public void setLink(@Nullable String link) {
         mLink = link;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+
+        ReviewPage that = (ReviewPage) o;
+
+        if (mActive != that.mActive) { return false; }
+        return mLink != null ? mLink.equals(that.mLink) : that.mLink == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (mActive ? 1 : 0);
+        result = 31 * result + (mLink != null ? mLink.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ReviewPage{" +
+               "mActive=" + mActive +
+               ", mLink='" + mLink + '\'' +
+               '}';
+    }
 }
