@@ -46,7 +46,7 @@ import java.util.concurrent.TimeUnit;
 @UseStag
 public class Video implements Serializable {
 
-    private static final long serialVersionUID = -1282907783845240057L;
+    private static final long serialVersionUID = 1150337574935384641L;
 
     public enum ContentRating // TODO: use this enum [AH] 4/24/2015
     {
@@ -198,8 +198,8 @@ public class Video implements Serializable {
     public String mPassword;
 
     @Nullable
-    @SerializedName("review_link")
-    public String mReviewLink;
+    @SerializedName("review_page")
+    protected ReviewPage mReviewPage;
 
     @Nullable
     @SerializedName("play")
@@ -556,7 +556,16 @@ public class Video implements Serializable {
     // <editor-fold desc="Review Link">
     @Nullable
     public String getReviewLink() {
-        return mReviewLink;
+        return mReviewPage != null ? mReviewPage.getLink() : null;
+    }
+
+    @Nullable
+    public ReviewPage getReviewPage() {
+        return mReviewPage;
+    }
+
+    public void setReviewPage(@Nullable ReviewPage reviewPage) {
+        mReviewPage = reviewPage;
     }
     // </editor-fold>
 
