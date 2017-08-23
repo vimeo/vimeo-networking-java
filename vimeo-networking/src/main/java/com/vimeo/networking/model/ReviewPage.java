@@ -71,7 +71,7 @@ public final class ReviewPage implements Serializable {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
 
-        ReviewPage that = (ReviewPage) o;
+        final ReviewPage that = (ReviewPage) o;
 
         if (mActive != that.mActive) { return false; }
         return mLink != null ? mLink.equals(that.mLink) : that.mLink == null;
