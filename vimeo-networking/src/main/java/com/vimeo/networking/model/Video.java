@@ -215,7 +215,7 @@ public class Video implements Serializable {
 
     @Nullable
     @SerializedName("live")
-    private Live mLive;
+    public Live mLive;
 
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
