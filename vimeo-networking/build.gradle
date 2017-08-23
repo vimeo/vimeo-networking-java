@@ -169,7 +169,7 @@ task wrapper(type: Wrapper) {
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
         aptOptions.processorArgs = [
-                stagAssumeHungarianNotation: "true",
+                stagAssumeHungarianNotation: "true"
         ]
     }
 }
