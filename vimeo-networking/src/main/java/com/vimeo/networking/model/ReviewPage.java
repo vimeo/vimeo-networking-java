@@ -43,11 +43,11 @@ public final class ReviewPage implements Serializable {
     private static final long serialVersionUID = 8715222706118546099L;
 
     @SerializedName("active")
-    protected boolean mActive;
+    private boolean mActive;
 
     @Nullable
     @SerializedName("link")
-    protected String mLink;
+    private String mLink;
 
     public boolean getActive() {
         return mActive;

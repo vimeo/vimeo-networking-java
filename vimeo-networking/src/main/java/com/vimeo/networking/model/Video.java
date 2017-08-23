@@ -199,7 +199,7 @@ public class Video implements Serializable {
 
     @Nullable
     @SerializedName("review_page")
-    protected ReviewPage mReviewPage;
+    private ReviewPage mReviewPage;
 
     @Nullable
     @SerializedName("play")
