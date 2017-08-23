@@ -40,7 +40,7 @@ import java.io.Serializable;
 @UseStag
 public final class ReviewPage implements Serializable {
 
-    private static final long serialVersionUID = 8715222706118546099L;
+    private static final long serialVersionUID = -8674129392575328878L;
 
     @SerializedName("active")
     private boolean mActive;

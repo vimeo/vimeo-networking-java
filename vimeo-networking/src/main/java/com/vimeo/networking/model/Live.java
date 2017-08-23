@@ -45,8 +45,8 @@ import java.util.Date;
 @SuppressWarnings("unused")
 @UseStag
 public final class Live implements Serializable {
-
-    private static final long serialVersionUID = -293744442903838563L;
+    
+    private static final long serialVersionUID = 306332863721878119L;
 
     public enum LiveStatus {
         ENDED,
@@ -57,7 +57,7 @@ public final class Live implements Serializable {
 
         @NotNull
         static LiveStatus getLiveStatusFromString(@NotNull String status) {
-            switch (status) {
+            switch (status.toLowerCase()) {
                 case "ended":
                     return ENDED;
                 case "ready":
