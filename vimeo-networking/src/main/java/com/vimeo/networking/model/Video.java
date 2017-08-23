@@ -213,6 +213,10 @@ public class Video implements Serializable {
     @SerializedName("spatial")
     public Spatial mSpatial;
 
+    @Nullable
+    @SerializedName("live")
+    public Live mLive;
+
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
      * comparison.
@@ -313,6 +317,12 @@ public class Video implements Serializable {
     public Spatial getSpatial() {
         return mSpatial;
     }
+
+    @Nullable
+    public Live getLive() {
+        return mLive;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -339,6 +349,11 @@ public class Video implements Serializable {
     public void setUser(User user) {
         mUser = user;
     }
+
+    public void setLive(@Nullable Live live) {
+        mLive = live;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
