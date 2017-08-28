@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
+import com.vimeo.networking.model.Live.LiveStatus;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
@@ -637,6 +638,38 @@ public class Video implements Serializable {
             return Vimeo.NOT_FOUND;
         }
         return TimeUnit.SECONDS.toMillis((long) progressSeconds);
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Live
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Live">
+
+    /**
+     * @return true if this video is a live video. This will be true even if the video is no
+     * longer streaming currently, but in the archived state.
+     */
+    public boolean isLiveVideo() {
+        return mLive != null;
+    }
+
+    /**
+     * @return true if this video is a live video and the live stream has ended.
+     */
+    public boolean isEndedLiveVideo() {
+        final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
+
+        return liveStatus != null && liveStatus == LiveStatus.ENDED;
+    }
+
+    /**
+     * @return true if this video is a live video that is currently streaming.
+     */
+    public boolean isStreamingLiveVideo() {
+        final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
+
+        return liveStatus != null && liveStatus == LiveStatus.STREAMING;
     }
     // </editor-fold>
 
