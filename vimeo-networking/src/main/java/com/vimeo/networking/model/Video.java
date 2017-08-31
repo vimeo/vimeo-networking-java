@@ -671,6 +671,15 @@ public class Video implements Serializable {
 
         return liveStatus != null && liveStatus == LiveStatus.STREAMING;
     }
+
+    /**
+     * @return true if this video is a live video that is currently in a pre-stream state.
+     */
+    public boolean isPreStreamLiveVideo() {
+        final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
+
+        return liveStatus != null && (liveStatus == LiveStatus.UNAVAILABLE || liveStatus == LiveStatus.READY);
+    }
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
