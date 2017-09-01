@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
+import com.vimeo.networking.model.Live.LiveStatus;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
@@ -46,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 @UseStag
 public class Video implements Serializable {
 
-    private static final long serialVersionUID = -1282907783845240057L;
+    private static final long serialVersionUID = 1150337574935384641L;
 
     public enum ContentRating // TODO: use this enum [AH] 4/24/2015
     {
@@ -198,8 +199,8 @@ public class Video implements Serializable {
     public String mPassword;
 
     @Nullable
-    @SerializedName("review_link")
-    public String mReviewLink;
+    @SerializedName("review_page")
+    private ReviewPage mReviewPage;
 
     @Nullable
     @SerializedName("play")
@@ -212,6 +213,10 @@ public class Video implements Serializable {
     @Nullable
     @SerializedName("spatial")
     public Spatial mSpatial;
+
+    @Nullable
+    @SerializedName("live")
+    public Live mLive;
 
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
@@ -313,6 +318,12 @@ public class Video implements Serializable {
     public Spatial getSpatial() {
         return mSpatial;
     }
+
+    @Nullable
+    public Live getLive() {
+        return mLive;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -339,6 +350,11 @@ public class Video implements Serializable {
     public void setUser(User user) {
         mUser = user;
     }
+
+    public void setLive(@Nullable Live live) {
+        mLive = live;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -556,7 +572,16 @@ public class Video implements Serializable {
     // <editor-fold desc="Review Link">
     @Nullable
     public String getReviewLink() {
-        return mReviewLink;
+        return mReviewPage != null ? mReviewPage.getLink() : null;
+    }
+
+    @Nullable
+    public ReviewPage getReviewPage() {
+        return mReviewPage;
+    }
+
+    public void setReviewPage(@Nullable ReviewPage reviewPage) {
+        mReviewPage = reviewPage;
     }
     // </editor-fold>
 
@@ -613,6 +638,47 @@ public class Video implements Serializable {
             return Vimeo.NOT_FOUND;
         }
         return TimeUnit.SECONDS.toMillis((long) progressSeconds);
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Live
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Live">
+
+    /**
+     * @return true if this video is a live video. This will be true even if the video is no
+     * longer streaming currently, but in the archived state.
+     */
+    public boolean isLiveVideo() {
+        return mLive != null;
+    }
+
+    /**
+     * @return true if this video is a live video and the live stream has ended.
+     */
+    public boolean isEndedLiveVideo() {
+        final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
+
+        return liveStatus != null && liveStatus == LiveStatus.ENDED;
+    }
+
+    /**
+     * @return true if this video is a live video that is currently streaming.
+     */
+    public boolean isStreamingLiveVideo() {
+        final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
+
+        return liveStatus != null && liveStatus == LiveStatus.STREAMING;
+    }
+
+    /**
+     * @return true if this video is a live video that is currently in a pre-stream state.
+     */
+    public boolean isPreStreamLiveVideo() {
+        final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
+
+        return liveStatus != null && (liveStatus == LiveStatus.UNAVAILABLE || liveStatus == LiveStatus.READY);
     }
     // </editor-fold>
 
