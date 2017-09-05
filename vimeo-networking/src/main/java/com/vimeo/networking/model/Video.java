@@ -455,6 +455,17 @@ public class Video implements Serializable {
     }
     // </editor-fold>
 
+    // <editor-fold desc="Channel">
+    @Nullable
+    public Interaction getChannelMembershipInteraction() {
+        if (mMetadata != null && mMetadata.getInteractions() != null && mMetadata.getInteractions().getChannelMembership() != null) {
+            return mMetadata.getInteractions().getChannelMembership();
+        }
+
+        return null;
+    }
+    // </editor-fold>
+
     // -----------------------------------------------------------------------------------------------------
     // Likes
     // -----------------------------------------------------------------------------------------------------

@@ -64,6 +64,10 @@ public class InteractionCollection implements Serializable {
     protected Interaction mSubscribe;
 
     @Nullable
+    @SerializedName("channel")
+    protected Interaction mChannelMembership;
+
+    @Nullable
     public Interaction getWatchLater() {
         return mWatchLater;
     }
@@ -91,6 +95,15 @@ public class InteractionCollection implements Serializable {
     @Nullable
     public Interaction getSubscribe() {
         return mSubscribe;
+    }
+
+    @Nullable
+    public Interaction getChannelMembership() {
+        return mChannelMembership;
+    }
+
+    public void setChannelMembership(@Nullable Interaction channelMembership) {
+        mChannelMembership = channelMembership;
     }
 
     public void setLike(@Nullable Interaction like) {
