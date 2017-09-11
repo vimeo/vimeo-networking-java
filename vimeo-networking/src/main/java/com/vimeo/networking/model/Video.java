@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 @UseStag
 public class Video implements Serializable {
 
-    private static final long serialVersionUID = 1150337574935384641L;
+    private static final long serialVersionUID = -2289103918709562107L;
 
     public enum ContentRating // TODO: use this enum [AH] 4/24/2015
     {
