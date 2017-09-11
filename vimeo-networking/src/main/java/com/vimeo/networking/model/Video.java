@@ -669,7 +669,7 @@ public class Video implements Serializable {
     public boolean isEndedLiveVideo() {
         final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
 
-        return liveStatus != null && liveStatus == LiveStatus.ENDED;
+        return liveStatus != null && (liveStatus == LiveStatus.DONE || liveStatus == LiveStatus.STREAMING_ERROR);
     }
 
     /**
@@ -687,7 +687,9 @@ public class Video implements Serializable {
     public boolean isPreStreamLiveVideo() {
         final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
 
-        return liveStatus != null && (liveStatus == LiveStatus.UNAVAILABLE || liveStatus == LiveStatus.READY);
+        return liveStatus != null && (liveStatus == LiveStatus.UNAVAILABLE ||
+                                      liveStatus == LiveStatus.READY ||
+                                      liveStatus == LiveStatus.PENDING);
     }
     // </editor-fold>
 
