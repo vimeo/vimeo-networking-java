@@ -43,7 +43,7 @@ import java.util.Date;
 @UseStag
 public class User implements Serializable, Followable {
 
-    private static final long serialVersionUID = -4112910222188194647L;
+    private static final long serialVersionUID = 4317573825273169510L;
     private static final String ACCOUNT_BASIC = "basic";
     private static final String ACCOUNT_BUSINESS = "business";
     private static final String ACCOUNT_PLUS = "plus";
@@ -100,6 +100,13 @@ public class User implements Serializable, Followable {
     @Nullable
     @SerializedName("badge")
     public UserBadge mBadge;
+
+    /**
+     * Live streaming quota information
+     */
+    @Nullable
+    @SerializedName("live_quota")
+    public LiveQuota mLiveQuota;
 
     @Nullable
     public UserBadge getBadge() {
@@ -379,6 +386,11 @@ public class User implements Serializable, Followable {
         return mPreferences;
     }
 
+    @Nullable
+    public LiveQuota getLiveQuota() {
+        return mLiveQuota;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -400,6 +412,10 @@ public class User implements Serializable, Followable {
 
     public void setBio(String bio) {
         mBio = bio;
+    }
+
+    public void setLiveQuota(@Nullable LiveQuota liveQuota) {
+        mLiveQuota = liveQuota;
     }
 
     // </editor-fold>

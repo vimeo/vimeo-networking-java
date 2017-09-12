@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 @UseStag
 public class Video implements Serializable {
 
-    private static final long serialVersionUID = 1150337574935384641L;
+    private static final long serialVersionUID = -2289103918709562107L;
 
     public enum ContentRating // TODO: use this enum [AH] 4/24/2015
     {
@@ -669,7 +669,7 @@ public class Video implements Serializable {
     public boolean isEndedLiveVideo() {
         final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
 
-        return liveStatus != null && liveStatus == LiveStatus.ENDED;
+        return liveStatus != null && (liveStatus == LiveStatus.DONE || liveStatus == LiveStatus.STREAMING_ERROR);
     }
 
     /**
@@ -687,7 +687,9 @@ public class Video implements Serializable {
     public boolean isPreStreamLiveVideo() {
         final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
 
-        return liveStatus != null && (liveStatus == LiveStatus.UNAVAILABLE || liveStatus == LiveStatus.READY);
+        return liveStatus != null && (liveStatus == LiveStatus.UNAVAILABLE ||
+                                      liveStatus == LiveStatus.READY ||
+                                      liveStatus == LiveStatus.PENDING);
     }
     // </editor-fold>
 
