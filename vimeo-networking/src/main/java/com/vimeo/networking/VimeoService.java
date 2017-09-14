@@ -22,15 +22,32 @@
 
 package com.vimeo.networking;
 
+import com.vimeo.networking.model.Category;
+import com.vimeo.networking.model.CategoryList;
+import com.vimeo.networking.model.Channel;
+import com.vimeo.networking.model.ChannelList;
 import com.vimeo.networking.model.Comment;
+import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.Document;
+import com.vimeo.networking.model.FeedList;
+import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
+import com.vimeo.networking.model.RecommendationList;
+import com.vimeo.networking.model.User;
+import com.vimeo.networking.model.UserList;
 import com.vimeo.networking.model.Video;
+import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking.model.appconfiguration.AppConfiguration;
+import com.vimeo.networking.model.cinema.ProgramContentItemList;
+import com.vimeo.networking.model.notifications.NotificationList;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
+import com.vimeo.networking.model.tvod.SeasonList;
+import com.vimeo.networking.model.tvod.TvodItem;
+import com.vimeo.networking.model.tvod.TvodList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,6 +109,14 @@ public interface VimeoService {
                                          @Field("grant_type") String grantType, @Field("token") String token,
                                          @Field("scope") String scope);
 
+    @FormUrlEncoded
+    @POST("oauth/authorize/google")
+    Call<VimeoAccount> logInWithGoogle(@Header("Authorization") String authHeader,
+                                       @Field("grant_type") String grantType,
+                                       @Field("id_token") String idToken,
+                                       @Field("scope") String scope);
+
+
     @Headers("Cache-Control: no-cache, no-store")
     @DELETE("tokens")
     Call<Object> logOut(@Header("Authorization") String authHeader);
@@ -133,8 +158,25 @@ public interface VimeoService {
      */
     // <editor-fold desc="Editing">
     @PATCH
-    Call<Object> edit(@Header("Authorization") String authHeader, @Url String uri,
+    Call<Object> edit(@Header("Authorization") String authHeader,
+                      @Url String uri,
                       @Body HashMap<String, Object> parameters);
+
+    @PATCH
+    Call<Video> editVideo(@Header("Authorization") String authHeader,
+                          @Url String uri,
+                          @Body HashMap<String, Object> parameters);
+
+    @PATCH
+    Call<User> editUser(@Header("Authorization") String authHeader,
+                        @Url String uri,
+                        @Body HashMap<String, Object> parameters);
+
+    @PATCH
+    Call<PictureCollection> editPictureCollection(@Header("Authorization") String authHeader,
+                                                  @Url String uri,
+                                                  @Body HashMap<String, Object> parameters);
+
 
     @PATCH("me/notifications/subscriptions")
     Call<SubscriptionCollection> editSubscriptions(@Header("Authorization") String authHeader,
@@ -169,13 +211,138 @@ public interface VimeoService {
     // Concrete Region
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Concrete Region">
+
     @GET
-    Call<Video> getVideo(@Header("Authorization") String authHeader,
-                         @Header("Cache-Control") String cacheHeaderValue, @Url String uri,
-                         @QueryMap Map<String, String> options);
+    Call<AppConfiguration> getAppConfiguration(@Header("Authorization") String authHeader,
+                                               @Url String uri,
+                                               @QueryMap Map<String, String> options,
+                                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Category> getCategory(@Header("Authorization") String authHeader,
+                               @Url String uri,
+                               @QueryMap Map<String, String> options,
+                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Channel> getChannel(@Header("Authorization") String authHeader,
+                             @Url String uri,
+                             @QueryMap Map<String, String> options,
+                             @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Comment> getComment(@Header("Authorization") String authHeader,
+                             @Url String uri,
+                             @QueryMap Map<String, String> options,
+                             @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<Document> getDocument(@Header("Authorization") String authHeader, @Url String uri);
+
+    @GET
+    Call<TvodItem> getTvodItem(@Header("Authorization") String authHeader,
+                               @Url String uri,
+                               @QueryMap Map<String, String> options,
+                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<User> getUser(@Header("Authorization") String authHeader,
+                       @Url String uri,
+                       @QueryMap Map<String, String> options,
+                       @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Video> getVideo(@Header("Authorization") String authHeader,
+                         @Url String uri,
+                         @QueryMap Map<String, String> options,
+                         @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Void> getVoid(@Header("Authorization") String authHeader,
+                       @Url String uri,
+                       @QueryMap Map<String, String> options,
+                       @Header("Cache-Control") String cacheHeaderValue);
+
+    // </editor-fold>
+
+
+    // -----------------------------------------------------------------------------------------------------
+    // General List Getters
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="General List Getters">
+
+    @GET
+    Call<CategoryList> getCategoryList(@Header("Authorization") String authHeader,
+                                       @Url String uri,
+                                       @QueryMap Map<String, String> options,
+                                       @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<ChannelList> getChannelList(@Header("Authorization") String authHeader,
+                                     @Url String uri,
+                                     @QueryMap Map<String, String> options,
+                                     @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<CommentList> getCommentList(@Header("Authorization") String authHeader,
+                                     @Url String uri,
+                                     @QueryMap Map<String, String> options,
+                                     @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<FeedList> getFeedList(@Header("Authorization") String authHeader,
+                               @Url String uri,
+                               @QueryMap Map<String, String> options,
+                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<NotificationList> getNotificationList(@Header("Authorization") String authHeader,
+                                               @Url String uri,
+                                               @QueryMap Map<String, String> options,
+                                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<ProgramContentItemList> getProgramContentItemList(@Header("Authorization") String authHeader,
+                                                           @Url String uri,
+                                                           @QueryMap Map<String, String> options,
+                                                           @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<RecommendationList> getRecommendationList(@Header("Authorization") String authHeader,
+                                                   @Url String uri,
+                                                   @QueryMap Map<String, String> options,
+                                                   @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<SearchResponse> getSearchResponse(@Header("Authorization") String authHeader,
+                                           @Url String uri,
+                                           @QueryMap Map<String, String> options,
+                                           @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<SeasonList> getSeasonList(@Header("Authorization") String authHeader,
+                                   @Url String uri,
+                                   @QueryMap Map<String, String> options,
+                                   @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<TvodList> getTvodList(@Header("Authorization") String authHeader,
+                               @Url String uri,
+                               @QueryMap Map<String, String> options,
+                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<UserList> getUserList(@Header("Authorization") String authHeader,
+                               @Url String uri,
+                               @QueryMap Map<String, String> options,
+                               @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<VideoList> getVideoList(@Header("Authorization") String authHeader,
+                                 @Url String uri,
+                                 @QueryMap Map<String, String> options,
+                                 @Header("Cache-Control") String cacheHeaderValue);
+
     // </editor-fold>
 
     /**
@@ -185,25 +352,32 @@ public interface VimeoService {
      */
     // <editor-fold desc="Generic Region">
     @PUT
-    Call<Object> PUT(@Header("Authorization") String authHeader, @Url String uri,
+    Call<Object> PUT(@Header("Authorization") String authHeader,
+                     @Url String uri,
                      @QueryMap Map<String, String> options);
 
     @DELETE
-    Call<Object> DELETE(@Header("Authorization") String authHeader, @Url String uri,
+    Call<Object> DELETE(@Header("Authorization") String authHeader,
+                        @Url String uri,
                         @QueryMap Map<String, String> options);
 
     @GET
-    Call<Object> GET(@Header("Authorization") String authHeader, @Url String uri,
-                     @QueryMap Map<String, String> options, @Header("Cache-Control") String cacheHeaderValue);
+    Call<Object> GET(@Header("Authorization") String authHeader,
+                     @Url String uri,
+                     @QueryMap Map<String, String> options,
+                     @Header("Cache-Control") String cacheHeaderValue);
 
     @POST
-    Call<Object> POST(@Header("Authorization") String authHeader, @Url String uri,
+    Call<Object> POST(@Header("Authorization") String authHeader,
+                      @Url String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
                       @Body HashMap<String, String> parameters);
 
     @POST
-    Call<Object> POST(@Header("Authorization") String authHeader, @Url String uri,
-                      @Header("Cache-Control") String cacheHeaderValue, @Body ArrayList<Object> parameters);
+    Call<Object> POST(@Header("Authorization") String authHeader,
+                      @Url String uri,
+                      @Header("Cache-Control") String cacheHeaderValue,
+                      @Body ArrayList<Object> parameters);
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 
-import com.vimeo.android.networking.example.kotlin.vimeonetworking.AndroidGsonDeserializer
 import com.vimeo.android.networking.example.kotlin.vimeonetworking.NetworkingLogger
 import com.vimeo.android.networking.example.kotlin.vimeonetworking.TestAccountStore
 import com.vimeo.networking.Configuration
@@ -22,8 +21,7 @@ class TestApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        appContext = this
-        AccountPreferenceManager.initializeInstance(appContext!!)
+        AccountPreferenceManager.initializeInstance(this)
 
         // <editor-fold desc="Vimeo API Library Initialization">
         val configBuilder: Configuration.Builder
@@ -57,8 +55,7 @@ class TestApp : Application() {
             val clientSecret = getString(R.string.client_secret)
             val codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" + getString(R.string.deeplink_redirect_host)
             val testAccountStore = TestAccountStore(this.applicationContext)
-            val configBuilder = Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore,
-                    AndroidGsonDeserializer())
+            val configBuilder = Configuration.Builder(clientId, clientSecret, SCOPE)
             configBuilder.setCacheDirectory(this.cacheDir)
                     .setUserAgentString(getUserAgentString(this)).setDebugLogger(NetworkingLogger())
                     .setCodeGrantRedirectUri(codeGrantRedirectUri)
@@ -73,9 +70,6 @@ class TestApp : Application() {
         private val IS_DEBUG_BUILD = false
         // Switch to true to see how access token auth works.
         private val ACCESS_TOKEN_PROVIDED = false
-
-        var appContext: Context? = null
-            private set
 
         fun getUserAgentString(context: Context): String {
             val packageName = context.packageName

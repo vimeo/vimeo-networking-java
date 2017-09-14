@@ -30,7 +30,10 @@ import com.vimeo.stag.UseStag;
 import java.io.Serializable;
 
 /**
- * This class is being deprecated. Please use the new {@link com.vimeo.networking.model.playback.embed.Embed}.
+ * @deprecated This class is being deprecated. The API is in the process of switching over
+ * to a more robust Embed representation. The switch will be behind an API release, and once
+ * this library has updated to that release, this object will be removed in favor of the new
+ * {@link com.vimeo.networking.model.playback.embed.Embed} model.
  * <p>
  * Created by hanssena on 4/23/15.
  */

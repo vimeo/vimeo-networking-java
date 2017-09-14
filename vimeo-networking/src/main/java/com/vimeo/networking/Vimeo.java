@@ -32,6 +32,8 @@ public final class Vimeo {
 
     public static final String VIMEO_BASE_URL_STRING = "https://api.vimeo.com/";
 
+    public static final String API_VERSION = "3.3.12";
+
     // Global Constants
     public static final int NOT_FOUND = -1;
 
@@ -42,6 +44,7 @@ public final class Vimeo {
     public static final String CODE_GRANT_TYPE = "authorization_code";
     public static final String DEVICE_GRANT_TYPE = "device_grant";
     public static final String FACEBOOK_GRANT_TYPE = "facebook";
+    public static final String GOOGLE_GRANT_TYPE = "google";
     public static final String PASSWORD_GRANT_TYPE = "password";
     public static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
     public static final String OAUTH_ONE_GRANT_TYPE = "vimeo_oauth1";
@@ -59,6 +62,7 @@ public final class Vimeo {
     public static final String PARAMETER_STATE = "state";
     public static final String PARAMETER_SCOPE = "scope";
     public static final String PARAMETER_TOKEN = "token";
+    public static final String PARAMETER_ID_TOKEN = "id_token";
     public static final String PARAMETER_CLIENT_ID = "client_id";
 
     public static final String PARAMETER_USERS_NAME = "name";

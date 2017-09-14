@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Vimeo
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,36 +22,20 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model.playback;
-
-import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.DashVideoFile;
-import com.vimeo.stag.UseStag;
-
-import org.jetbrains.annotations.Nullable;
-
-import java.io.Serializable;
+package com.vimeo.networking.callbacks;
 
 /**
- * An object that holds on to the drm content. There are three types, fairplay, widevine, and playready.
- * Since this is a Java library and only Apple products support fairplay, that type is omitted. Clients will
- * only receive these if given the app-specific permission, essentially this class is not consumable by the
- * general public.
+ * Use this callback when you don't care about the server response and therefore don't need to deal
+ * with typed network calls.
  * <p>
- * Created by zetterstromk on 6/22/16.
+ * Created by rigbergh on 7/20/17.
  */
-@SuppressWarnings("unused")
-@UseStag
-public class Drm implements Serializable {
+public abstract class IgnoreResponseVimeoCallback extends VimeoCallback<Object> {
 
-    private static final long serialVersionUID = 3048847922257143776L;
+    abstract public void success();
 
-    @Nullable
-    @SerializedName(value = "widevine", alternate = "m_widevine")
-    public DashVideoFile mWidevine;
-
-    @Nullable
-    public DashVideoFile getWidevine() {
-        return mWidevine;
+    @Override
+    final public void success(Object o) {
+        success();
     }
 }

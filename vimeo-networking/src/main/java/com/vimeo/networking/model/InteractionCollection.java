@@ -64,8 +64,8 @@ public class InteractionCollection implements Serializable {
     protected Interaction mSubscribe;
 
     @Nullable
-    @SerializedName("svod")
-    protected SvodInteraction mSvod;
+    @SerializedName("channel")
+    protected Interaction mChannelMembership;
 
     @Nullable
     public Interaction getWatchLater() {
@@ -98,8 +98,12 @@ public class InteractionCollection implements Serializable {
     }
 
     @Nullable
-    public SvodInteraction getSvod() {
-        return mSvod;
+    public Interaction getChannelMembership() {
+        return mChannelMembership;
+    }
+
+    public void setChannelMembership(@Nullable Interaction channelMembership) {
+        mChannelMembership = channelMembership;
     }
 
     public void setLike(@Nullable Interaction like) {
@@ -126,7 +130,4 @@ public class InteractionCollection implements Serializable {
         mSubscribe = subscribe;
     }
 
-    public void setSvod(@Nullable SvodInteraction svod) {
-        mSvod = svod;
-    }
 }

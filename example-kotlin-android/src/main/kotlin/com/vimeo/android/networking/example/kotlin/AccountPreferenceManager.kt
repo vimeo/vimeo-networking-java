@@ -14,12 +14,10 @@ import com.vimeo.networking.utils.VimeoNetworkUtil
  */
 object AccountPreferenceManager {
 
-    private var sSharedPreferences: SharedPreferences? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
     @Synchronized fun initializeInstance(context: Context) {
-        if (sSharedPreferences == null) {
-            sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        }
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
     // <editor-fold desc="Account">
@@ -28,14 +26,14 @@ object AccountPreferenceManager {
     val CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON = "CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON"
 
     fun removeClientAccount() {
-        sSharedPreferences!!.edit().remove(CLIENT_ACCOUNT_JSON).apply()
+        sharedPreferences.edit().remove(CLIENT_ACCOUNT_JSON).apply()
     }
 
     // NOTE: This happens on the main thread, don't do this
     // NOTE: This happens on the main thread, don't do this
     var clientAccount: VimeoAccount?
         get() {
-            val accountJSON = sSharedPreferences!!.getString(CLIENT_ACCOUNT_JSON, null) ?: return null
+            val accountJSON = sharedPreferences.getString(CLIENT_ACCOUNT_JSON, null) ?: return null
 
             return VimeoNetworkUtil.getGson().fromJson(accountJSON, VimeoAccount::class.java)
         }
@@ -46,7 +44,7 @@ object AccountPreferenceManager {
                     removeClientAccount()
                     return
                 }
-                sSharedPreferences!!.edit().putString(CLIENT_ACCOUNT_JSON, accountJSON).apply()
+                sharedPreferences.edit().putString(CLIENT_ACCOUNT_JSON, accountJSON).apply()
             }
         }
 
@@ -58,13 +56,13 @@ object AccountPreferenceManager {
     fun cacheClientCredentialsAccount(vimeoAccount: VimeoAccount?) {
         if (vimeoAccount != null) {
             val accountJSON = VimeoNetworkUtil.getGson().toJson(vimeoAccount) ?: return
-            sSharedPreferences!!.edit().putString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, accountJSON).apply()
+            sharedPreferences.edit().putString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, accountJSON).apply()
         }
     }
 
     val cachedClientCredentialsAccount: VimeoAccount?
         get() {
-            val accountJSON = sSharedPreferences!!.getString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, null) ?: return null
+            val accountJSON = sharedPreferences.getString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, null) ?: return null
 
             return VimeoNetworkUtil.getGson().fromJson(accountJSON, VimeoAccount::class.java)
         }

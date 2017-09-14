@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2015 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2017 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,26 +22,20 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.callbacks;
+package com.vimeo.networking.model
 
-import org.jetbrains.annotations.NotNull;
+import com.vimeo.networking.Utils
+import org.junit.Test
 
 /**
- * Abstract callback class for {@code T} type of model.
- * <p>
- * Created by hanssena on 4/27/15.
+ * Tests for the [LiveQuota] class
+ *
+ * Created by zetterstromk on 9/11/17.
  */
-public abstract class ModelCallback<T> extends VimeoCallback<T> {
+class LiveQuotaTest {
 
-    @NotNull
-    private Class mObjectType;
-
-    public ModelCallback(@NotNull Class objectType) {
-        mObjectType = objectType;
-    }
-
-    @NotNull
-    public Class getObjectType() {
-        return this.mObjectType;
+    @Test
+    fun verifyTypeAdapterWasGenerated() {
+        Utils.verifyTypeAdapterGeneration(LiveQuota::class.java)
     }
 }

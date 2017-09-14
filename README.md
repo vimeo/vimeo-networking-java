@@ -1,5 +1,6 @@
 # vimeo-networking
-vimeo-networking is a Java networking library used for interacting with the Vimeo API. The example provided in this project shows the implementation in the context of an Android app.
+vimeo-networking is a Java networking library used for interacting with the Vimeo API. The example app
+provided in this project shows the implementation in the context of an Android app.
 
 | Branch | Build Status |
 |--------|--------------|
@@ -43,7 +44,7 @@ More information about this and other API questions can be found on the [API hom
 
 
 ## Getting Started
-For a more in depth look at the usage, refer to the [example Android app](example). The example project includes implementation of all of the below features.
+For a more in depth look at the usage, refer to the [example Android app](example-java-android). The example project includes implementation of all of the below features.
 
 ### Gradle
 Specify the dependency in your `build.gradle` file (make sure `jcenter()` is included as a repository)
@@ -82,7 +83,7 @@ In the below sections, we cover examples of ways to customize your `VimeoClient`
 #### Configuration Builder for Apps with Account Management
 On app launch, configure `VimeoClient` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary. This authentication can include [client credentials](#client-credentials-grant) or authentication via [code grant](#oauth-authorization-code-grant).
 
-If you choose to pass in an `AccountStore`, the authenticated account will automatically be persisted. Once authentication is complete, you can access the persisted `VimeoAccount` object through `VimeoClient#getVimeoAccount()`. For a basic implementation of an `AccountStore`, please refer to [this file in the example app](example/src/main/java/com/vimeo/android/networking/example/vimeonetworking/TestAccountStore.java)
+If you choose to pass in an `AccountStore`, the authenticated account will automatically be persisted. Once authentication is complete, you can access the persisted `VimeoAccount` object through `VimeoClient#getVimeoAccount()`. For a basic implementation of an `AccountStore`, please refer to [this file in the example app](example-java-android/src/main/java/com/vimeo/android/networking/example/vimeonetworking/TestAccountStore.java)
 ```java
   /**
     * @param clientId      The client id provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
@@ -91,11 +92,9 @@ If you choose to pass in an `AccountStore`, the authenticated account will autom
     *                      <p/>
     *                      Example: "private public create"
     * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Androids <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">Account Manager</a>
-    * @param deserializer  (Optional, Recommended) Extend GsonDeserializer to allow for deserialization on a background thread
     */
 Configuration.Builder configBuilder =
-      new Configuration.Builder(clientId, clientSecret, SCOPE,
-                                testAccountStore, new AndroidGsonDeserializer())
+      new Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore)
           .setCacheDirectory(this.getCacheDir())
 ```
 Setting the cache directory and deserializer are optional but highly recommended.
@@ -165,7 +164,7 @@ private void onLoginClick() {
 ```
 3) The web browser will open and the user will be presented with a webpage asking them to grant access based on the `scope` that you specified in your `ClientBuilder` above.
 
-4) Add an intent filter to your activity in the [`AndroidManifest`](example/src/main/AndroidManifest.xml) to listen for the deeplink.
+4) Add an intent filter to your activity in the [`AndroidManifest`](example-java-android/src/main/AndroidManifest.xml) to listen for the deeplink.
 ```xml
 <intent-filter>
       <action android:name="android.intent.action.VIEW"/>
@@ -182,7 +181,7 @@ private void onLoginClick() {
 
 5) Then call `VimeoClient#authenticateWithCodeGrant(...)` passing in the `Uri` retrieved from `Uri uri = getIntent().getData();` which will be supplied from the intent filter.
 
-*You can find an example of both stategies in [MainActivity.java of the example app](example/src/main/java/com/vimeo/android/networking/example/MainActivity.java)
+*You can find an example of both stategies in [MainActivity.java of the example app](example-java-android/src/main/java/com/vimeo/android/networking/example/MainActivity.java)
 
 ## Requests
 With `vimeo-networking` configured and authenticated, you’re ready to start making requests to the Vimeo API.
@@ -332,20 +331,27 @@ Video video = ...; // obtain a video in a manner described in the Requests secti
 String html = video.embed != null ? video.embed.html : null;
 if(html != null) {
      // html is in the form "<iframe .... ></iframe>"
-     // load the html, for instance, if using a WebView on Android, you can perform the following:
-     WebView webview = ...; // obtain a handle to your webview
-     webview.loadData(html, "text/html", "utf-8");
+     // display the html however you wish
 }
 ```
+**Note** Android WebViews are not officially supported by our embeddable player.
+
 #### Native playback
-If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array.
+If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to Dash, HLS, and progressive streaming video files through a video's ```play``` representation.
 ```java
 Video video = ...; // obtain a video you own as described above
-ArrayList<VideoFile> videoFiles = video.files;
-if(videoFiles != null && !videoFiles.isEmpty()) {
-     VideoFile videoFile = videoFiles.get(0); // you could sort these files by size, fps, width/height
-     String link = videoFile.getLink();
+Play play = video.getPlay();
+if (play != null) {
+     VideoFile dashFile = play.getDashVideoFile();
+     String dashLike = dashFile.getLink();
      // load link
+     
+     VideoFile hlsFile = play.getHlsVideoFile();
+     String hlsLink = hlsFile.getLink();
+     // load link
+     
+     ArrayList<VideoFile> progressiveFiles = play.getProgressiveVideoFiles();
+     // pick a progressive file to play
 }
 ```
 

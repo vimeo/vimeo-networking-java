@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'kotlin'
 apply plugin: 'maven-publish'
 
 compileJava {
@@ -16,7 +17,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.6'
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.11'
         classpath 'gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8'
     }
 }
@@ -32,6 +33,7 @@ tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.intellij:annotations:12.0@jar'
 
@@ -162,4 +164,12 @@ allprojects {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3.0'
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        aptOptions.processorArgs = [
+                stagAssumeHungarianNotation: "true"
+        ]
+    }
 }
