@@ -23,7 +23,6 @@ buildscript {
 
 apply plugin: 'net.ltgt.apt'
 apply plugin: 'de.fuerstenau.buildconfig'
-apply plugin: 'com.github.dcendents.android-maven'
 
 repositories {
     jcenter()

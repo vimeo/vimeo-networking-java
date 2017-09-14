@@ -52,7 +52,11 @@ compile 'com.vimeo.networking:vimeo-networking:1.1.0'
 ```
 
 ### JitPack
-Add jitpack.io to as a repository.  [Instructions](https://jitpack.io/docs/#how-to).
+
+repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+ }
 
 To use the latest build: `compile 'com.github.vimeo:vimeo-networking-java:SNAPSHOT'`
 
