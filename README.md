@@ -15,6 +15,7 @@ vimeo-networking is a Java networking library used for interacting with the Vime
      * [API Registration](#api-registration)
 * [Getting Started](#getting-started)
      * [Gradle](#gradle)
+     * [JitPack](#jitpack)
      * [Submodule](#submodule)
      * [Initialization](#initialization)
      * [Authentication](#authentication)
@@ -48,6 +49,13 @@ Specify the dependency in your `build.gradle` file (make sure `jcenter()` is inc
 ```groovy
 compile 'com.vimeo.networking:vimeo-networking:1.1.0'
 ```
+
+### JitPack
+Add jitpack.io to as a repository.  [Instructions](https://jitpack.io/docs/#how-to).
+
+To use the latest build: `compile 'com.github.vimeo:vimeo-networking-java:SNAPSHOT'`
+
+To use a build from a specific commit: `compile 'com.github.vimeo:vimeo-networking-java:COMMIT_HASH'`
 
 ### Submodule
 We recommend using JCenter, but if you'd like to use the library as a submodule:
