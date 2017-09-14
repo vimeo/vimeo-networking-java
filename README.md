@@ -53,10 +53,12 @@ compile 'com.vimeo.networking:vimeo-networking:1.1.0'
 
 ### JitPack
 
+```groovy
 repositories {
     ...
     maven { url 'https://jitpack.io' }
  }
+ ```
 
 To use the latest build: `compile 'com.github.vimeo:vimeo-networking-java:SNAPSHOT'`
 
