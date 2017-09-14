@@ -1,1 +1,5 @@
-include ':vimeo-networking', ':example-java-android', ':example-kotlin-android'
+include ':vimeo-networking'
+
+if (!System.env.JITPACK) {
+    include ':example-java-android', ':example-kotlin-android'
+}
