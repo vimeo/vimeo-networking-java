@@ -66,7 +66,7 @@ To use the latest build: `compile 'com.github.vimeo:vimeo-networking-java:SNAPSH
 To use a build from a specific commit: `compile 'com.github.vimeo:vimeo-networking-java:COMMIT_HASH'`
 
 ### Submodule
-We recommend using JCenter, but if you'd like to use the library as a submodule:
+We recommend using JCenter or JitPack, but if you'd like to use the library as a submodule:
 ```
 git submodule add git@github.com:vimeo/vimeo-networking-java.git
 ```
