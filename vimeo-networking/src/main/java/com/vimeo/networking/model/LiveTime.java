@@ -55,14 +55,14 @@ public class LiveTime implements Serializable {
      */
     @Nullable
     @SerializedName("monthly_maximum")
-    private Integer mMonthlyMaximum;
+    private Long mMonthlyMaximum;
 
     /**
      * The amount of time remaining this month, in seconds, that the user can live stream.
      */
     @Nullable
     @SerializedName("monthly_remaining")
-    private Integer mMonthlyRemaining;
+    private Long mMonthlyRemaining;
 
     @Nullable
     public Integer getEventMaximum() {
@@ -74,20 +74,20 @@ public class LiveTime implements Serializable {
     }
 
     @Nullable
-    public Integer getMonthlyMaximum() {
+    public Long getMonthlyMaximum() {
         return mMonthlyMaximum;
     }
 
-    public void setMonthlyMaximum(@Nullable Integer monthlyMaximum) {
+    public void setMonthlyMaximum(@Nullable Long monthlyMaximum) {
         mMonthlyMaximum = monthlyMaximum;
     }
 
     @Nullable
-    public Integer getMonthlyRemaining() {
+    public Long getMonthlyRemaining() {
         return mMonthlyRemaining;
     }
 
-    public void setMonthlyRemaining(@Nullable Integer monthlyRemaining) {
+    public void setMonthlyRemaining(@Nullable Long monthlyRemaining) {
         mMonthlyRemaining = monthlyRemaining;
     }
 
