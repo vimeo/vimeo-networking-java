@@ -465,6 +465,24 @@ public class Video implements Serializable {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
+    // Report
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Report">
+    /**
+     * @return an {@link Interaction} containing the necessary data for reporting a video to the API
+     * for a terms of service violation. This method will return null in the event that reporting is
+     * unavailable for this {@code Video}
+     */
+    @Nullable
+    public Interaction getReportInteraction() {
+        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.getReport() != null) {
+            return mMetadata.mInteractions.getReport();
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
     // Likes
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Like">
