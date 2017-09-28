@@ -77,7 +77,7 @@ public class InteractionCollection implements Serializable {
     }
 
     /**
-     * @return the uri for sending a terms of service violation report for the parent object
+     * @return the {@link Interaction} for sending a terms of service violation report for the parent object
      */
     @Nullable
     public Interaction getReport() {
