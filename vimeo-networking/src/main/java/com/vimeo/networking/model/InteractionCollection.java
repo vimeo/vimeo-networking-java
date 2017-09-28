@@ -68,8 +68,20 @@ public class InteractionCollection implements Serializable {
     protected Interaction mChannelMembership;
 
     @Nullable
+    @SerializedName("report")
+    protected Interaction mReport;
+
+    @Nullable
     public Interaction getWatchLater() {
         return mWatchLater;
+    }
+
+    /**
+     * @return the {@link Interaction} for sending a terms of service violation report for the parent object
+     */
+    @Nullable
+    public Interaction getReport() {
+        return mReport;
     }
 
     @Nullable
