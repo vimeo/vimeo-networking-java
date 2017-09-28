@@ -17,7 +17,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.6'
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.11'
         classpath 'gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8'
     }
 }
@@ -170,4 +170,12 @@ gradle.projectsEvaluated {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3.0'
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        aptOptions.processorArgs = [
+                stagAssumeHungarianNotation: "true"
+        ]
+    }
 }

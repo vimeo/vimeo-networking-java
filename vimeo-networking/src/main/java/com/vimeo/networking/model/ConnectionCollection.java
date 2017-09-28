@@ -70,10 +70,6 @@ public class ConnectionCollection implements Serializable {
     protected Connection mTextTracks;
 
     @Nullable
-    @SerializedName("activities")
-    protected Connection mActivities;
-
-    @Nullable
     @SerializedName("albums")
     protected Connection mAlbums;
 
@@ -174,6 +170,10 @@ public class ConnectionCollection implements Serializable {
     protected Connection mContents;
 
     @Nullable
+    @SerializedName("folders")
+    private Connection mFolders;
+
+    @Nullable
     public Connection getVideos() {
         return mVideos;
     }
@@ -206,11 +206,6 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     public Connection getTextTracks() {
         return mTextTracks;
-    }
-
-    @Nullable
-    public Connection getActivities() {
-        return mActivities;
     }
 
     @Nullable
@@ -336,5 +331,14 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     public Connection getContents() {
         return mContents;
+    }
+
+    @Nullable
+    public Connection getFolders() {
+        return mFolders;
+    }
+
+    public void setFolders(@Nullable Connection folders) {
+        mFolders = folders;
     }
 }

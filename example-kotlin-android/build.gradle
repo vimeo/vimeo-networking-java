@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
     defaultConfig {
         applicationId 'com.vimeo.android.networking.example.kotlin'
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion 16
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
@@ -29,10 +29,12 @@ android {
 
 dependencies {
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile "com.android.support:design:$supportLibraryVersion"
 
-    compile project(':vimeo-networking')
+    compile(project(':vimeo-networking')) {
+        exclude group: 'com.intellij', module: 'annotations'
+    }
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }

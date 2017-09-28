@@ -10,12 +10,14 @@ provided in this project shows the implementation in the context of an Android a
 | Latest Version |
 |----------------|
 | [![Download](https://api.bintray.com/packages/vimeo/maven/vimeo-networking/images/download.svg)](https://bintray.com/vimeo/maven/vimeo-networking/_latestVersion) |
+| [![JitPack](https://jitpack.io/v/vimeo/vimeo-networking-java.svg)](https://jitpack.io/#vimeo/vimeo-networking-java) |
 
 ## Contents
 * [Prerequisites](#prerequisites)
      * [API Registration](#api-registration)
 * [Getting Started](#getting-started)
      * [Gradle](#gradle)
+     * [JitPack](#jitpack)
      * [Submodule](#submodule)
      * [Initialization](#initialization)
      * [Authentication](#authentication)
@@ -50,8 +52,21 @@ Specify the dependency in your `build.gradle` file (make sure `jcenter()` is inc
 compile 'com.vimeo.networking:vimeo-networking:1.1.0'
 ```
 
+### JitPack
+
+```groovy
+repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+ }
+ ```
+
+To use the latest build: `compile 'com.github.vimeo:vimeo-networking-java:SNAPSHOT'`
+
+To use a build from a specific commit: `compile 'com.github.vimeo:vimeo-networking-java:COMMIT_HASH'`
+
 ### Submodule
-We recommend using JCenter, but if you'd like to use the library as a submodule:
+We recommend using JCenter or JitPack, but if you'd like to use the library as a submodule:
 ```
 git submodule add git@github.com:vimeo/vimeo-networking-java.git
 ```
