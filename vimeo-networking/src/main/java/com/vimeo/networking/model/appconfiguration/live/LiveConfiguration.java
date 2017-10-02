@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Vimeo (https://vimeo.com)
+ * Copyright (c) 2017 Vimeo (https://vimeo.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,58 +19,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.vimeo.networking.model.appconfiguration;
+package com.vimeo.networking.model.appconfiguration.live;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.appconfiguration.live.LiveChatConfiguration;
-import com.vimeo.networking.model.appconfiguration.live.LiveConfiguration;
-import com.vimeo.networking.model.appconfiguration.live.LiveHeartbeatConfiguration;
 import com.vimeo.stag.UseStag;
 import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
 /**
- * An object returned from the /configs endpoint containing configuration details for various API features.
- * <p>
- * Created by vennk on 5/20/15.
+ * An object that contains information about the configuration of features related to live video playback.
+ * Created by rigbergh on 10/2/17.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class FeaturesConfiguration {
+public class LiveConfiguration {
 
     @Nullable
-    @SerializedName("live")
-    private LiveConfiguration mLiveConfiguration;
+    @SerializedName("heartbeat")
+    private LiveHeartbeatConfiguration mLiveHeartbeatConfiguration;
 
-    /**
-     * @return a {@link LiveConfiguration} object containing configuration information for live video
-     * playback related features if available
-     */
     @Nullable
-    public LiveConfiguration getLiveConfiguration() {
-        return mLiveConfiguration;
-    }
+    @SerializedName("chat")
+    private LiveChatConfiguration mLiveChatConfiguration;
 
     /**
-     * @return a {@link LiveHeartbeatConfiguration} object containing information for live video heartbeat settings
-     * if available
+     * @return the {@link LiveHeartbeatConfiguration} (if available) for configuring the live video heartbeat
      */
     @Nullable
     public LiveHeartbeatConfiguration getLiveHeartbeatConfiguration() {
-        return mLiveConfiguration != null ? mLiveConfiguration.getLiveHeartbeatConfiguration() : null;
+        return mLiveHeartbeatConfiguration;
     }
 
     /**
-     * @return a {@link LiveChatConfiguration} object containing information for live chat settings if available
+     * @return the {@link LiveChatConfiguration} for setting up live chat capabilities during a live video
+     * broadcast (if available)
      */
     @Nullable
     public LiveChatConfiguration getLiveChatConfiguration() {
-        return mLiveConfiguration != null ? mLiveConfiguration.getLiveChatConfiguration() : null;
+        return mLiveChatConfiguration;
     }
 
-    void setLiveConfiguration(@Nullable LiveConfiguration liveConfiguration) {
-        mLiveConfiguration = liveConfiguration;
+    void setLiveHeartbeatConfiguration(@Nullable LiveHeartbeatConfiguration liveConfiguration) {
+        mLiveHeartbeatConfiguration = liveConfiguration;
+    }
+
+    void setLiveChatConfiguration(@Nullable LiveChatConfiguration liveChatConfiguration) {
+        mLiveChatConfiguration = liveChatConfiguration;
     }
 }
