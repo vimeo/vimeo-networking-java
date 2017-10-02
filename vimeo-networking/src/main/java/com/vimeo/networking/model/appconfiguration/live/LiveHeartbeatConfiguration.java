@@ -49,7 +49,7 @@ public class LiveHeartbeatConfiguration {
      * @return a {@code boolean} indicating whether the client should send heartbeat data from the player
      * to the api while live videos are playing
      */
-    public boolean isEnabled() {
+    public boolean getIsEnabled() {
         return mIsEnabled;
     }
 
@@ -62,7 +62,7 @@ public class LiveHeartbeatConfiguration {
         return mInterval;
     }
 
-    void setEnabled(boolean enabled) {
+    void setIsEnabled(boolean enabled) {
         mIsEnabled = enabled;
     }
 
