@@ -23,9 +23,6 @@
 package com.vimeo.networking.model.appconfiguration;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.model.appconfiguration.live.LiveChatConfiguration;
-import com.vimeo.networking.model.appconfiguration.live.LiveConfiguration;
-import com.vimeo.networking.model.appconfiguration.live.LiveHeartbeatConfiguration;
 import com.vimeo.stag.UseStag;
 import com.vimeo.stag.UseStag.FieldOption;
 
@@ -41,36 +38,41 @@ import org.jetbrains.annotations.Nullable;
 public class FeaturesConfiguration {
 
     @Nullable
-    @SerializedName("live")
-    private LiveConfiguration mLiveConfiguration;
+    @SerializedName("play_tracking")
+    private String mPlayTracking;
 
     /**
-     * @return a {@link LiveConfiguration} object containing configuration information for live video
-     * playback related features if available
+     * @return whether play tracking logs should be enabled on the client
      */
     @Nullable
-    public LiveConfiguration getLiveConfiguration() {
-        return mLiveConfiguration;
+    public String getPlayTracking() {
+        return mPlayTracking;
     }
 
-    /**
-     * @return a {@link LiveHeartbeatConfiguration} object containing information for live video heartbeat settings
-     * if available
-     */
-    @Nullable
-    public LiveHeartbeatConfiguration getLiveHeartbeatConfiguration() {
-        return mLiveConfiguration != null ? mLiveConfiguration.getLiveHeartbeatConfiguration() : null;
+    void setPlayTracking(@Nullable String playTracking) {
+        mPlayTracking = playTracking;
     }
 
-    /**
-     * @return a {@link LiveChatConfiguration} object containing information for live chat settings if available
-     */
-    @Nullable
-    public LiveChatConfiguration getLiveChatConfiguration() {
-        return mLiveConfiguration != null ? mLiveConfiguration.getLiveChatConfiguration() : null;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+
+        final FeaturesConfiguration that = (FeaturesConfiguration) o;
+
+        return mPlayTracking != null ? mPlayTracking.equals(that.mPlayTracking) : that.mPlayTracking == null;
+
     }
 
-    void setLiveConfiguration(@Nullable LiveConfiguration liveConfiguration) {
-        mLiveConfiguration = liveConfiguration;
+    @Override
+    public int hashCode() {
+        return mPlayTracking != null ? mPlayTracking.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "FeaturesConfiguration{" +
+               "mPlayTracking='" + mPlayTracking + '\'' +
+               '}';
     }
 }

@@ -23,6 +23,11 @@
 package com.vimeo.networking.model.appconfiguration;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.appconfiguration.live.LiveChatConfiguration;
+import com.vimeo.networking.model.appconfiguration.live.LiveConfiguration;
+import com.vimeo.networking.model.appconfiguration.live.LiveHeartbeatConfiguration;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An object returned from the /configs endpoint.
@@ -33,13 +38,47 @@ import com.google.gson.annotations.SerializedName;
 public class AppConfiguration {
 
     @SerializedName("facebook")
-    protected FacebookConfiguration mFacebook;
+    private FacebookConfiguration mFacebook;
 
     @SerializedName("api")
-    protected ApiConfiguration mApi;
+    private ApiConfiguration mApi;
 
     @SerializedName("features")
-    protected FeaturesConfiguration mFeatures;
+    private FeaturesConfiguration mFeatures;
+
+    @Nullable
+    @SerializedName("live")
+    private LiveConfiguration mLiveConfiguration;
+
+    /**
+     * @return a {@link LiveConfiguration} object containing configuration information for live video
+     * playback related features if available
+     */
+    @Nullable
+    public LiveConfiguration getLiveConfiguration() {
+        return mLiveConfiguration;
+    }
+
+    /**
+     * @return a {@link LiveHeartbeatConfiguration} object containing information for live video heartbeat settings
+     * if available
+     */
+    @Nullable
+    public LiveHeartbeatConfiguration getLiveHeartbeatConfiguration() {
+        return mLiveConfiguration != null ? mLiveConfiguration.getLiveHeartbeatConfiguration() : null;
+    }
+
+    /**
+     * @return a {@link LiveChatConfiguration} object containing information for live chat settings if available
+     */
+    @Nullable
+    public LiveChatConfiguration getLiveChatConfiguration() {
+        return mLiveConfiguration != null ? mLiveConfiguration.getLiveChatConfiguration() : null;
+    }
+
+    void setLiveConfiguration(@Nullable LiveConfiguration liveConfiguration) {
+        mLiveConfiguration = liveConfiguration;
+    }
 
     public void setFacebook(FacebookConfiguration facebook) {
         mFacebook = facebook;
