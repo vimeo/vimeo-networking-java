@@ -136,6 +136,22 @@ public final class Live implements Serializable {
     private VimeoError mError;
 
     @Nullable
+    @SerializedName("chat")
+    private LiveChat mLiveChat;
+
+    /**
+     * @return the {@link LiveChat}
+     */
+    @Nullable
+    public LiveChat getLiveChat() {
+        return mLiveChat;
+    }
+
+    void setLiveChat(@Nullable LiveChat liveChat) {
+        mLiveChat = liveChat;
+    }
+
+    @Nullable
     public Date getActiveTime() {
         return mActiveTime;
     }
