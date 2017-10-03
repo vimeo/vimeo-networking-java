@@ -28,6 +28,8 @@ import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
+
 /**
  * An object returned from the /configs endpoint containing configuration details for various API features.
  * <p>
@@ -35,7 +37,9 @@ import org.jetbrains.annotations.Nullable;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class FeaturesConfiguration {
+public class FeaturesConfiguration implements Serializable {
+
+    private static final long serialVersionUID = 8741925066769737513L;
 
     @Nullable
     @SerializedName("play_tracking")

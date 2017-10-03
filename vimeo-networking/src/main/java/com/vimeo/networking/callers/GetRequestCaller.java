@@ -35,6 +35,7 @@ import com.vimeo.networking.model.ChannelList;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.FeedList;
+import com.vimeo.networking.model.LiveStats;
 import com.vimeo.networking.model.RecommendationList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.UserList;
@@ -222,6 +223,26 @@ public final class GetRequestCaller {
                                            @NotNull String cacheHeader,
                                            @NotNull VimeoService vimeoService) {
                     return vimeoService.getFeedList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link LiveStats} response from an API endpoint.
+     */
+    public static final Caller<LiveStats> LIVE_STATS =
+            new Caller<LiveStats>() {
+
+                @NotNull
+                @Override
+                public Call<LiveStats> call(@NotNull String authHeader,
+                                            @NotNull String uri,
+                                            @NotNull Map<String, String> queryMap,
+                                            @NotNull String cacheHeader,
+                                            @NotNull VimeoService vimeoService) {
+                    return vimeoService.getLiveStats(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 

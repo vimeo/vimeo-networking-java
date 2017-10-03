@@ -28,6 +28,8 @@ import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
+
 /**
  * This object stores information related to the expected client heartbeat that
  * is sent up to the server from the player while a live video is playing.
@@ -36,7 +38,9 @@ import org.jetbrains.annotations.Nullable;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class LiveHeartbeatConfiguration {
+public class LiveHeartbeatConfiguration implements Serializable {
+
+    private static final long serialVersionUID = 1623467664638069314L;
 
     @Nullable
     @SerializedName("interval")

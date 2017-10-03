@@ -27,6 +27,8 @@ import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
+
 /**
  * This object stores information related to the chat client feature that
  * is available during live video playback.
@@ -35,7 +37,9 @@ import org.jetbrains.annotations.Nullable;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class LiveChatConfiguration {
+public class LiveChatConfiguration implements Serializable {
+
+    private static final long serialVersionUID = 8481311601401804651L;
 
     @Nullable
     @SerializedName("api_key")

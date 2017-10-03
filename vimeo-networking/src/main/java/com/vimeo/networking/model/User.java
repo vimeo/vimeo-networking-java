@@ -438,4 +438,25 @@ public class User implements Serializable, Followable {
     public int hashCode() {
         return this.mUri != null ? this.mUri.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+               "mUri='" + mUri + '\'' +
+               ", mName='" + mName + '\'' +
+               ", mLink='" + mLink + '\'' +
+               ", mLocation='" + mLocation + '\'' +
+               ", mBio='" + mBio + '\'' +
+               ", mCreatedTime=" + mCreatedTime +
+               ", mAccount='" + mAccount + '\'' +
+               ", mPictures=" + mPictures +
+               ", mEmails=" + mEmails +
+               ", mWebsites=" + mWebsites +
+               ", mMetadata=" + mMetadata +
+               ", mUploadQuota=" + mUploadQuota +
+               ", mPreferences=" + mPreferences +
+               ", mBadge=" + mBadge +
+               ", mLiveQuota=" + mLiveQuota +
+               '}';
+    }
 }

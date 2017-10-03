@@ -30,6 +30,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.FeedList;
+import com.vimeo.networking.model.LiveStats;
 import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
@@ -256,6 +257,12 @@ public interface VimeoService {
                          @Url String uri,
                          @QueryMap Map<String, String> options,
                          @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<LiveStats> getLiveStats(@Header("Authorization") String authHeader,
+                                 @Url String uri,
+                                 @QueryMap Map<String, String> options,
+                                 @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<Void> getVoid(@Header("Authorization") String authHeader,
