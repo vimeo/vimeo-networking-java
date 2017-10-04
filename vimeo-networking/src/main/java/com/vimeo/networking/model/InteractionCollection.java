@@ -72,18 +72,6 @@ public class InteractionCollection implements Serializable {
     protected Interaction mReport;
 
     @Nullable
-    @SerializedName("live_stats")
-    private Interaction mLiveStats;
-
-    /**
-     * @return the {@link Interaction} for getting the {@link LiveStats} for a live {@link Video}
-     */
-    @Nullable
-    public Interaction getLiveStats() {
-        return mLiveStats;
-    }
-
-    @Nullable
     public Interaction getWatchLater() {
         return mWatchLater;
     }
@@ -153,10 +141,5 @@ public class InteractionCollection implements Serializable {
     public void setSubscribe(@Nullable Interaction subscribe) {
         mSubscribe = subscribe;
     }
-
-    void setLiveStats(@Nullable Interaction liveStats) {
-        mLiveStats = liveStats;
-    }
-
 
 }

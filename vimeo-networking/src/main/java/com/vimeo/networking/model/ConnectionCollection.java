@@ -174,6 +174,18 @@ public class ConnectionCollection implements Serializable {
     private Connection mFolders;
 
     @Nullable
+    @SerializedName("live_stats")
+    private Interaction mLiveStats;
+
+    /**
+     * @return the {@link Interaction} for getting the {@link LiveStats} for a live {@link Video}
+     */
+    @Nullable
+    public Interaction getLiveStats() {
+        return mLiveStats;
+    }
+
+    @Nullable
     public Connection getVideos() {
         return mVideos;
     }
@@ -340,5 +352,9 @@ public class ConnectionCollection implements Serializable {
 
     public void setFolders(@Nullable Connection folders) {
         mFolders = folders;
+    }
+
+    void setLiveStats(@Nullable Interaction liveStats) {
+        mLiveStats = liveStats;
     }
 }
