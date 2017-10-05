@@ -37,16 +37,26 @@ public class LiveChat implements Serializable {
         return serialVersionUID;
     }
 
+    /**
+     * @return the room id for live chat
+     */
     @Nullable
     public String getRoomId() {
         return mRoomId;
     }
 
+    /**
+     * @return the request token for live chat
+     */
     @Nullable
     public String getToken() {
         return mToken;
     }
 
+    /**
+     * @return a {@link User} object. Note that this object will only contain the necessary subset
+     * of user features necessary for chat display.
+     */
     @Nullable
     public User getUser() {
         return mUser;
