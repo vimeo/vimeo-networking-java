@@ -137,18 +137,18 @@ public final class Live implements Serializable {
 
     @Nullable
     @SerializedName("chat")
-    private LiveChat mLiveChat;
+    private LiveChat mChat;
 
     /**
      * @return the {@link LiveChat}
      */
     @Nullable
-    public LiveChat getLiveChat() {
-        return mLiveChat;
+    public LiveChat getChat() {
+        return mChat;
     }
 
-    void setLiveChat(@Nullable LiveChat liveChat) {
-        mLiveChat = liveChat;
+    void setChat(@Nullable LiveChat chat) {
+        mChat = chat;
     }
 
     @Nullable
