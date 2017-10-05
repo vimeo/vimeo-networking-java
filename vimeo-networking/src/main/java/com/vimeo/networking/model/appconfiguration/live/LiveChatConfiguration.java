@@ -46,6 +46,10 @@ public class LiveChatConfiguration implements Serializable {
     private String mApiKey;
 
     @Nullable
+    @SerializedName("app_id")
+    private String mAppId;
+
+    @Nullable
     @SerializedName("auth_domain")
     private String mAuthDomain;
 
@@ -113,27 +117,39 @@ public class LiveChatConfiguration implements Serializable {
         return mStorageBucket;
     }
 
-    public void setAuthDomain(@Nullable String authDomain) {
+    /**
+     * @return the app id for live chat (if available)
+     */
+    @Nullable
+    public String getAppId() {
+        return mAppId;
+    }
+
+    void setAppId(@Nullable String appId) {
+        mAppId = appId;
+    }
+
+    void setAuthDomain(@Nullable String authDomain) {
         mAuthDomain = authDomain;
     }
 
-    public void setDatabaseUrl(@Nullable String databaseUrl) {
+    void setDatabaseUrl(@Nullable String databaseUrl) {
         mDatabaseUrl = databaseUrl;
     }
 
-    public void setApiKey(@Nullable String apiKey) {
+    void setApiKey(@Nullable String apiKey) {
         mApiKey = apiKey;
     }
 
-    public void setMessagingSenderId(@Nullable String messagingSenderId) {
+    void setMessagingSenderId(@Nullable String messagingSenderId) {
         mMessagingSenderId = messagingSenderId;
     }
 
-    public void setProjectId(@Nullable String projectId) {
+    void setProjectId(@Nullable String projectId) {
         mProjectId = projectId;
     }
 
-    public void setStorageBucket(@Nullable String storageBucket) {
+    void setStorageBucket(@Nullable String storageBucket) {
         mStorageBucket = storageBucket;
     }
 
@@ -145,6 +161,7 @@ public class LiveChatConfiguration implements Serializable {
         final LiveChatConfiguration that = (LiveChatConfiguration) o;
 
         if (mApiKey != null ? !mApiKey.equals(that.mApiKey) : that.mApiKey != null) { return false; }
+        if (mAppId != null ? !mAppId.equals(that.mAppId) : that.mAppId != null) { return false; }
         if (mAuthDomain != null ? !mAuthDomain.equals(that.mAuthDomain) : that.mAuthDomain != null) { return false; }
         if (mDatabaseUrl != null ? !mDatabaseUrl.equals(that.mDatabaseUrl) : that.mDatabaseUrl != null) {
             return false;
@@ -162,6 +179,7 @@ public class LiveChatConfiguration implements Serializable {
     @Override
     public int hashCode() {
         int result = mApiKey != null ? mApiKey.hashCode() : 0;
+        result = 31 * result + (mAppId != null ? mAppId.hashCode() : 0);
         result = 31 * result + (mAuthDomain != null ? mAuthDomain.hashCode() : 0);
         result = 31 * result + (mDatabaseUrl != null ? mDatabaseUrl.hashCode() : 0);
         result = 31 * result + (mMessagingSenderId != null ? mMessagingSenderId.hashCode() : 0);
@@ -174,6 +192,7 @@ public class LiveChatConfiguration implements Serializable {
     public String toString() {
         return "LiveChatConfiguration{" +
                "mApiKey='" + mApiKey + '\'' +
+               ", mAppId='" + mAppId + '\'' +
                ", mAuthDomain='" + mAuthDomain + '\'' +
                ", mDatabaseUrl='" + mDatabaseUrl + '\'' +
                ", mMessagingSenderId='" + mMessagingSenderId + '\'' +
