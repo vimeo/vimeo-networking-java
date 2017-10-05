@@ -38,9 +38,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ * This object contains the data for a Vimeo user
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class User implements Serializable, Followable {
 
@@ -50,13 +52,19 @@ public class User implements Serializable, Followable {
     private static final String ACCOUNT_PLUS = "plus";
     private static final String ACCOUNT_PRO = "pro";
     private static final String ACCOUNT_STAFF = "staff";
+    private static final String ACCOUNT_LIVE_BUSINESS = "live_business";
+    private static final String ACCOUNT_LIVE_PRO = "live_pro";
+    private static final String ACCOUNT_PRO_UNLIMITED = "pro_unlimited";
 
     public enum AccountType {
         BASIC,
         BUSINESS,
         PRO,
         PLUS,
-        STAFF
+        STAFF,
+        LIVE_BUSINESS,
+        LIVE_PRO,
+        PRO_UNLIMITED
     }
 
     @SerializedName("uri")
@@ -114,6 +122,12 @@ public class User implements Serializable, Followable {
     @SerializedName("id")
     private String mId;
 
+    @SerializedName("is_staff")
+    private boolean mIsStaff;
+
+    @SerializedName("is_creator")
+    private boolean mIsVideoCreator;
+
     @Nullable
     public UserBadge getBadge() {
         return mBadge;
@@ -135,6 +149,12 @@ public class User implements Serializable, Followable {
                 return AccountType.PRO;
             case ACCOUNT_STAFF:
                 return AccountType.STAFF;
+            case ACCOUNT_LIVE_BUSINESS:
+                return AccountType.LIVE_BUSINESS;
+            case ACCOUNT_LIVE_PRO:
+                return AccountType.LIVE_PRO;
+            case ACCOUNT_PRO_UNLIMITED:
+                return AccountType.PRO_UNLIMITED;
             case ACCOUNT_BASIC:
             default:
                 return AccountType.BASIC;
@@ -405,6 +425,21 @@ public class User implements Serializable, Followable {
         return mId;
     }
 
+    /**
+     * @return whether the user is an active staff member of Vimeo
+     */
+    public boolean getIsStaff() {
+        return mIsStaff;
+    }
+
+    /**
+     * @return whether the user is the creator of the containing {@link Video} object. This value is only
+     * set for a user object that is contained within a {@link Video} object.
+     */
+    public boolean getIsVideoCreator() {
+        return mIsVideoCreator;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -434,6 +469,14 @@ public class User implements Serializable, Followable {
 
     void setId(@Nullable String id) {
         mId = id;
+    }
+
+    void setVideoCreator(boolean videoCreator) {
+        mIsVideoCreator = videoCreator;
+    }
+
+    void setStaff(boolean staff) {
+        mIsStaff = staff;
     }
 
     // </editor-fold>
