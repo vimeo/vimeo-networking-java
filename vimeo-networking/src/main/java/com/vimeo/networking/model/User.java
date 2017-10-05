@@ -28,6 +28,7 @@ import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.networking.model.notifications.NotificationConnection;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,7 +41,7 @@ import java.util.Date;
  * Created by alfredhanssen on 4/12/15.
  */
 @SuppressWarnings("unused")
-@UseStag
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class User implements Serializable, Followable {
 
     private static final long serialVersionUID = 4317573825273169510L;
@@ -97,6 +98,7 @@ public class User implements Serializable, Followable {
     @Nullable
     @SerializedName("preferences")
     public Preferences mPreferences;
+
     @Nullable
     @SerializedName("badge")
     public UserBadge mBadge;
@@ -107,6 +109,10 @@ public class User implements Serializable, Followable {
     @Nullable
     @SerializedName("live_quota")
     public LiveQuota mLiveQuota;
+
+    @Nullable
+    @SerializedName("id")
+    private String mId;
 
     @Nullable
     public UserBadge getBadge() {
@@ -391,6 +397,14 @@ public class User implements Serializable, Followable {
         return mLiveQuota;
     }
 
+    /**
+     * @return a unique identifier for the user within Vimeo
+     */
+    @Nullable
+    public String getId() {
+        return mId;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -416,6 +430,10 @@ public class User implements Serializable, Followable {
 
     public void setLiveQuota(@Nullable LiveQuota liveQuota) {
         mLiveQuota = liveQuota;
+    }
+
+    void setId(@Nullable String id) {
+        mId = id;
     }
 
     // </editor-fold>
