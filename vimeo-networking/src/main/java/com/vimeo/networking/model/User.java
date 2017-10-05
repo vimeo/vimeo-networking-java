@@ -471,11 +471,11 @@ public class User implements Serializable, Followable {
         mId = id;
     }
 
-    void setVideoCreator(boolean videoCreator) {
+    void setIsVideoCreator(boolean videoCreator) {
         mIsVideoCreator = videoCreator;
     }
 
-    void setStaff(boolean staff) {
+    void setIsStaff(boolean staff) {
         mIsStaff = staff;
     }
 
