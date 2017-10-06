@@ -12,7 +12,7 @@ import org.junit.Test;
 public class AppConfigurationTest {
 
     @Test
-    public void verifyTypeAdapterWasNotGenerated() throws Exception {
-        Utils.verifyNoTypeAdapterGeneration(AppConfiguration.class);
+    public void verifyTypeAdapterWasGenerated() throws Exception {
+        Utils.verifyTypeAdapterGeneration(AppConfiguration.class);
     }
 }

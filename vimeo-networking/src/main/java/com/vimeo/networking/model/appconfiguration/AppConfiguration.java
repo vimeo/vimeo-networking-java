@@ -41,12 +41,15 @@ import org.jetbrains.annotations.Nullable;
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class AppConfiguration {
 
+    @Nullable
     @SerializedName("facebook")
     private FacebookConfiguration mFacebook;
 
+    @Nullable
     @SerializedName("api")
     private ApiConfiguration mApi;
 
+    @Nullable
     @SerializedName("features")
     private FeaturesConfiguration mFeatures;
 
@@ -104,15 +107,15 @@ public class AppConfiguration {
         return mFeatures;
     }
 
-    void setFacebook(FacebookConfiguration facebook) {
+    void setFacebook(@Nullable FacebookConfiguration facebook) {
         mFacebook = facebook;
     }
 
-    void setApi(ApiConfiguration api) {
+    void setApi(@Nullable ApiConfiguration api) {
         mApi = api;
     }
 
-    void setFeatures(FeaturesConfiguration features) {
+    void setFeatures(@Nullable FeaturesConfiguration features) {
         mFeatures = features;
     }
 
