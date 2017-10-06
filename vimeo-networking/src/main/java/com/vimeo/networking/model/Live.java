@@ -50,6 +50,8 @@ public final class Live implements Serializable {
     private static final long serialVersionUID = 6341657287285717326L;
 
     public enum LiveStatus {
+        ARCHIVING,
+        ARCHIVE_ERROR,
         DONE,
         PENDING,
         READY,
@@ -61,6 +63,10 @@ public final class Live implements Serializable {
         @NotNull
         static LiveStatus getLiveStatusFromString(@NotNull String status) {
             switch (status.toLowerCase()) {
+                case "archiving":
+                    return ARCHIVING;
+                case "archive_error":
+                    return ARCHIVE_ERROR;
                 case "done":
                     return DONE;
                 case "pending":
