@@ -30,7 +30,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.FeedList;
-import com.vimeo.networking.model.LiveStats;
+import com.vimeo.networking.model.live.LiveStats;
 import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;

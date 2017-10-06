@@ -116,17 +116,19 @@ public class User implements Serializable, Followable {
      */
     @Nullable
     @SerializedName("live_quota")
-    public LiveQuota mLiveQuota;
+    public com.vimeo.networking.model.live.LiveQuota mLiveQuota;
 
     @Nullable
     @SerializedName("id")
     private String mId;
 
+    @Nullable
     @SerializedName("is_staff")
-    private boolean mIsStaff;
+    private Boolean mIsStaff;
 
+    @Nullable
     @SerializedName("is_creator")
-    private boolean mIsVideoCreator;
+    private Boolean mIsVideoCreator;
 
     @Nullable
     public UserBadge getBadge() {
@@ -413,7 +415,7 @@ public class User implements Serializable, Followable {
     }
 
     @Nullable
-    public LiveQuota getLiveQuota() {
+    public com.vimeo.networking.model.live.LiveQuota getLiveQuota() {
         return mLiveQuota;
     }
 
@@ -428,7 +430,8 @@ public class User implements Serializable, Followable {
     /**
      * @return whether the user is an active staff member of Vimeo
      */
-    public boolean getIsStaff() {
+    @Nullable
+    public Boolean getIsStaff() {
         return mIsStaff;
     }
 
@@ -436,7 +439,8 @@ public class User implements Serializable, Followable {
      * @return whether the user is the creator of the containing {@link Video} object. This value is only
      * set for a user object that is contained within a {@link Video} object.
      */
-    public boolean getIsVideoCreator() {
+    @Nullable
+    public Boolean getIsVideoCreator() {
         return mIsVideoCreator;
     }
 
@@ -463,7 +467,7 @@ public class User implements Serializable, Followable {
         mBio = bio;
     }
 
-    public void setLiveQuota(@Nullable LiveQuota liveQuota) {
+    public void setLiveQuota(@Nullable com.vimeo.networking.model.live.LiveQuota liveQuota) {
         mLiveQuota = liveQuota;
     }
 
@@ -471,11 +475,11 @@ public class User implements Serializable, Followable {
         mId = id;
     }
 
-    void setIsVideoCreator(boolean videoCreator) {
+    void setIsVideoCreator(@Nullable Boolean videoCreator) {
         mIsVideoCreator = videoCreator;
     }
 
-    void setIsStaff(boolean staff) {
+    void setIsStaff(@Nullable Boolean staff) {
         mIsStaff = staff;
     }
 

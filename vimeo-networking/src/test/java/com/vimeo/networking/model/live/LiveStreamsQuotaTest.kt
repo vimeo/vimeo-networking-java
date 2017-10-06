@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model
+package com.vimeo.networking.model.live
 
 import com.vimeo.networking.Utils
 import org.junit.Test

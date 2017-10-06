@@ -1,6 +1,7 @@
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.live;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.appconfiguration.AppConfiguration;
 import com.vimeo.networking.model.appconfiguration.live.LiveChatConfiguration;
 import com.vimeo.stag.UseStag;

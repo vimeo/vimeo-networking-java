@@ -178,7 +178,7 @@ public class ConnectionCollection implements Serializable {
     private Interaction mLiveStats;
 
     /**
-     * @return the {@link Interaction} for getting the {@link LiveStats} for a live {@link Video}
+     * @return the {@link Interaction} for getting the {@link com.vimeo.networking.model.live.LiveStats} for a live {@link Video}
      */
     @Nullable
     public Interaction getLiveStats() {

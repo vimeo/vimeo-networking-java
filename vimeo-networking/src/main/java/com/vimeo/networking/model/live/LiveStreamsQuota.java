@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.live;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
@@ -32,38 +32,46 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 
 /**
+ * A model representing the streams details of the live quota for a user
+ * <p>
  * Created by zetterstromk on 9/11/17.
  */
 @SuppressWarnings("unused")
 @UseStag
-public class LiveQuota implements Serializable {
+public class LiveStreamsQuota implements Serializable {
 
-    private static final long serialVersionUID = -2144444972795249825L;
+    private static final long serialVersionUID = 9008379903145719978L;
+
+    /**
+     * The maximum amount of streams that the user can create.
+     */
+    @Nullable
+    @SerializedName("maximum")
+    private Integer mMaximum;
+
+    /**
+     * The amount of remaining live streams that the user can create this month.
+     */
+    @Nullable
+    @SerializedName("remaining")
+    private Integer mRemaining;
 
     @Nullable
-    @SerializedName("streams")
-    private LiveStreamsQuota mStreams;
-
-    @Nullable
-    @SerializedName("time")
-    private LiveTime mTime;
-
-    @Nullable
-    public LiveStreamsQuota getStreams() {
-        return mStreams;
+    public Integer getMaximum() {
+        return mMaximum;
     }
 
-    public void setStreams(@Nullable LiveStreamsQuota streams) {
-        mStreams = streams;
+    public void setMaximum(@Nullable Integer maximum) {
+        mMaximum = maximum;
     }
 
     @Nullable
-    public LiveTime getTime() {
-        return mTime;
+    public Integer getRemaining() {
+        return mRemaining;
     }
 
-    public void setTime(@Nullable LiveTime time) {
-        mTime = time;
+    public void setRemaining(@Nullable Integer remaining) {
+        mRemaining = remaining;
     }
 
     @Override
@@ -71,25 +79,25 @@ public class LiveQuota implements Serializable {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
 
-        LiveQuota liveQuota = (LiveQuota) o;
+        LiveStreamsQuota that = (LiveStreamsQuota) o;
 
-        if (mStreams != null ? !mStreams.equals(liveQuota.mStreams) : liveQuota.mStreams != null) { return false; }
-        return mTime != null ? mTime.equals(liveQuota.mTime) : liveQuota.mTime == null;
+        if (mMaximum != null ? !mMaximum.equals(that.mMaximum) : that.mMaximum != null) { return false; }
+        return mRemaining != null ? mRemaining.equals(that.mRemaining) : that.mRemaining == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = mStreams != null ? mStreams.hashCode() : 0;
-        result = 31 * result + (mTime != null ? mTime.hashCode() : 0);
+        int result = mMaximum != null ? mMaximum.hashCode() : 0;
+        result = 31 * result + (mRemaining != null ? mRemaining.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "LiveQuota{" +
-               "mStreams=" + mStreams +
-               ", mTime=" + mTime +
+        return "LiveStreamsQuota{" +
+               "mMaximum=" + mMaximum +
+               ", mRemaining=" + mRemaining +
                '}';
     }
 }

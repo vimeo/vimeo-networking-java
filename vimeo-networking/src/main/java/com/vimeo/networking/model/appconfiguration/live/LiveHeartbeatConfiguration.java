@@ -46,14 +46,16 @@ public class LiveHeartbeatConfiguration implements Serializable {
     @SerializedName("interval")
     private Integer mInterval;
 
+    @Nullable
     @SerializedName("enabled")
-    private boolean mIsEnabled;
+    private Boolean mIsEnabled;
 
     /**
      * @return a {@code boolean} indicating whether the client should send heartbeat data from the player
      * to the api while live videos are playing
      */
-    public boolean getIsEnabled() {
+    @Nullable
+    public Boolean getIsEnabled() {
         return mIsEnabled;
     }
 
@@ -66,7 +68,7 @@ public class LiveHeartbeatConfiguration implements Serializable {
         return mInterval;
     }
 
-    void setIsEnabled(boolean enabled) {
+    void setIsEnabled(@Nullable Boolean enabled) {
         mIsEnabled = enabled;
     }
 
@@ -82,15 +84,15 @@ public class LiveHeartbeatConfiguration implements Serializable {
         final LiveHeartbeatConfiguration that = (LiveHeartbeatConfiguration) o;
 
         //noinspection SimplifiableIfStatement
-        if (mIsEnabled != that.mIsEnabled) { return false; }
-        return mInterval != null ? mInterval.equals(that.mInterval) : that.mInterval == null;
+        if (mInterval != null ? !mInterval.equals(that.mInterval) : that.mInterval != null) { return false; }
+        return mIsEnabled != null ? mIsEnabled.equals(that.mIsEnabled) : that.mIsEnabled == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = mInterval != null ? mInterval.hashCode() : 0;
-        result = 31 * result + (mIsEnabled ? 1 : 0);
+        result = 31 * result + (mIsEnabled != null ? mIsEnabled.hashCode() : 0);
         return result;
     }
 

@@ -1,4 +1,4 @@
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.live;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
@@ -18,73 +18,7 @@ public class LiveStats implements Serializable {
 
     private static final long serialVersionUID = -8174242949801535304L;
 
-    /**
-     * Contains information about viewers of the live video
-     */
-    public static class Viewers implements Serializable {
 
-        private static final long serialVersionUID = -2487854074511211912L;
-
-        @Nullable
-        @SerializedName("current")
-        private Long mCurrent;
-
-        @Nullable
-        @SerializedName("peak")
-        private Long mPeak;
-
-        /**
-         * @return The current amount of people watching this video.
-         */
-        @Nullable
-        public Long getCurrent() {
-            return mCurrent;
-        }
-
-        /**
-         * @return The peak amount of people watching this video at any time in the provided date range.
-         */
-        @Nullable
-        public Long getPeak() {
-            return mPeak;
-        }
-
-        void setCurrent(@Nullable Long current) {
-            mCurrent = current;
-        }
-
-        void setPeak(@Nullable Long peak) {
-            mPeak = peak;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) { return true; }
-            if (o == null || getClass() != o.getClass()) { return false; }
-
-            final Viewers viewers = (Viewers) o;
-
-            //noinspection SimplifiableIfStatement
-            if (mCurrent != null ? !mCurrent.equals(viewers.mCurrent) : viewers.mCurrent != null) { return false; }
-            return mPeak != null ? mPeak.equals(viewers.mPeak) : viewers.mPeak == null;
-
-        }
-
-        @Override
-        public int hashCode() {
-            int result = mCurrent != null ? mCurrent.hashCode() : 0;
-            result = 31 * result + (mPeak != null ? mPeak.hashCode() : 0);
-            return result;
-        }
-
-        @Override
-        public String toString() {
-            return "Viewers{" +
-                   "mCurrent=" + mCurrent +
-                   ", mPeak=" + mPeak +
-                   '}';
-        }
-    }
 
     @Nullable
     @SerializedName("plays")
@@ -96,7 +30,7 @@ public class LiveStats implements Serializable {
 
     @Nullable
     @SerializedName("viewers")
-    private Viewers mViewers;
+    private LiveStatsViewers mViewers;
 
     /**
      * @return The current total amount of plays this video has received.
@@ -115,15 +49,15 @@ public class LiveStats implements Serializable {
     }
 
     /**
-     * @return The {@link Viewers} data for this video
+     * @return The {@link LiveStatsViewers} data for this video
      */
     @Nullable
-    public Viewers getViewers() {
+    public LiveStatsViewers getViewers() {
         return mViewers;
     }
 
     /**
-     * @see Viewers#getCurrent()
+     * @see LiveStatsViewers#getCurrent()
      */
     @Nullable
     public Long getCurrentViewerCount() {
@@ -131,7 +65,7 @@ public class LiveStats implements Serializable {
     }
 
     /**
-     * @see Viewers#getPeak()
+     * @see LiveStatsViewers#getPeak()
      */
     @Nullable
     public Long getPeakViewerCount() {
@@ -146,7 +80,7 @@ public class LiveStats implements Serializable {
         mPlays = plays;
     }
 
-    void setViewers(@Nullable Viewers viewers) {
+    void setViewers(@Nullable LiveStatsViewers viewers) {
         mViewers = viewers;
     }
 

@@ -25,7 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
-import com.vimeo.networking.model.Live.LiveStatus;
+import com.vimeo.networking.model.live.Live.LiveStatus;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
@@ -216,7 +216,7 @@ public class Video implements Serializable {
 
     @Nullable
     @SerializedName("live")
-    public Live mLive;
+    public com.vimeo.networking.model.live.Live mLive;
 
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
@@ -320,7 +320,7 @@ public class Video implements Serializable {
     }
 
     @Nullable
-    public Live getLive() {
+    public com.vimeo.networking.model.live.Live getLive() {
         return mLive;
     }
 
@@ -351,7 +351,7 @@ public class Video implements Serializable {
         mUser = user;
     }
 
-    public void setLive(@Nullable Live live) {
+    public void setLive(@Nullable com.vimeo.networking.model.live.Live live) {
         mLive = live;
     }
 
