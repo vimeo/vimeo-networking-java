@@ -43,7 +43,7 @@ import java.util.Date;
  * <p>
  * Created by zetterstromk on 8/23/17.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
 public final class Live implements Serializable {
 
@@ -233,7 +233,7 @@ public final class Live implements Serializable {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
 
-        Live live = (Live) o;
+        final Live live = (Live) o;
 
         if (mActiveTime != null ? !mActiveTime.equals(live.mActiveTime) : live.mActiveTime != null) { return false; }
         if (mArchivedTime != null ? !mArchivedTime.equals(live.mArchivedTime) : live.mArchivedTime != null) {
@@ -243,6 +243,7 @@ public final class Live implements Serializable {
         if (mStartTime != null ? !mStartTime.equals(live.mStartTime) : live.mStartTime != null) { return false; }
         if (mLink != null ? !mLink.equals(live.mLink) : live.mLink != null) { return false; }
         if (mKey != null ? !mKey.equals(live.mKey) : live.mKey != null) { return false; }
+        //noinspection SimplifiableIfStatement
         if (mStatus != null ? !mStatus.equals(live.mStatus) : live.mStatus != null) { return false; }
         return mError != null ? mError.equals(live.mError) : live.mError == null;
 

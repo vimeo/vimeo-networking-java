@@ -122,11 +122,17 @@ public class LiveStats implements Serializable {
         return mViewers;
     }
 
+    /**
+     * @see Viewers#getCurrent()
+     */
     @Nullable
     public Long getCurrentViewerCount() {
         return mViewers != null ? mViewers.getCurrent() : null;
     }
 
+    /**
+     * @see Viewers#getPeak()
+     */
     @Nullable
     public Long getPeakViewerCount() {
         return mViewers != null ? mViewers.getPeak() : null;

@@ -70,6 +70,9 @@ public abstract class VideoFile implements Serializable {
         @SerializedName("heartbeat")
         private String mHeartbeat;
 
+        /**
+         * @return the uri for sending up heartbeat logs when this is a live video
+         */
         @Nullable
         public String getHeartbeat() {
             return mHeartbeat;
@@ -127,6 +130,9 @@ public abstract class VideoFile implements Serializable {
     @SerializedName("live")
     private Live mLive;
 
+    /**
+     * @return The {@link Live} object associated with this video format
+     */
     @Nullable
     Live getLive() {
         return mLive;
@@ -136,6 +142,9 @@ public abstract class VideoFile implements Serializable {
         mLive = live;
     }
 
+    /**
+     * @see Live#getHeartbeat()
+     */
     @Nullable
     public String getLiveHeartbeatUri() {
         return mLive != null ? mLive.getHeartbeat() : null;

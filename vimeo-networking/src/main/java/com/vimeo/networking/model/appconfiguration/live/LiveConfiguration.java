@@ -67,4 +67,37 @@ public class LiveConfiguration {
     void setLiveChatConfiguration(@Nullable LiveChatConfiguration liveChatConfiguration) {
         mLiveChatConfiguration = liveChatConfiguration;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+
+        final LiveConfiguration that = (LiveConfiguration) o;
+
+        //noinspection SimplifiableIfStatement
+        if (mLiveHeartbeatConfiguration != null ?
+                !mLiveHeartbeatConfiguration.equals(that.mLiveHeartbeatConfiguration) :
+                that.mLiveHeartbeatConfiguration != null) {
+            return false;
+        }
+        return mLiveChatConfiguration != null ?
+                mLiveChatConfiguration.equals(that.mLiveChatConfiguration) : that.mLiveChatConfiguration == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mLiveHeartbeatConfiguration != null ? mLiveHeartbeatConfiguration.hashCode() : 0;
+        result = 31 * result + (mLiveChatConfiguration != null ? mLiveChatConfiguration.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "LiveConfiguration{" +
+               "mLiveHeartbeatConfiguration=" + mLiveHeartbeatConfiguration +
+               ", mLiveChatConfiguration=" + mLiveChatConfiguration +
+               '}';
+    }
 }

@@ -186,7 +186,7 @@ public class User implements Serializable, Followable {
 
     @Override
     public boolean isFollowing() {
-        Interaction follow = getFollowInteraction();
+        final Interaction follow = getFollowInteraction();
         return follow != null && follow.mAdded;
     }
 
@@ -209,97 +209,97 @@ public class User implements Serializable, Followable {
     @Nullable
     @Override
     public Interaction getFollowInteraction() {
-        InteractionCollection interactions = getMetadataInteractions();
+        final InteractionCollection interactions = getMetadataInteractions();
         return interactions != null ? interactions.getFollow() : null;
     }
 
     @Nullable
     public Connection getFollowingConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getFollowing() : null;
     }
 
     @Nullable
     public Connection getFeedConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getFeed() : null;
     }
 
     @Nullable
     public Connection getFollowersConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getFollowers() : null;
     }
 
     public int getFollowerCount() {
-        Connection followers = getFollowersConnection();
+        final Connection followers = getFollowersConnection();
         return followers != null ? followers.getTotal() : 0;
     }
 
     public int getFollowingCount() {
-        Connection following = getFollowingConnection();
+        final Connection following = getFollowingConnection();
         return following != null ? following.getTotal() : 0;
     }
 
     @Nullable
     public Connection getLikesConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getLikes() : null;
     }
 
     public int getLikesCount() {
-        Connection likes = getLikesConnection();
+        final Connection likes = getLikesConnection();
         return likes != null ? likes.getTotal() : 0;
     }
 
     @Nullable
     public Connection getFollowedChannelsConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getChannels() : null;
     }
 
     public int getChannelsCount() {
-        Connection channels = getFollowedChannelsConnection();
+        final Connection channels = getFollowedChannelsConnection();
         return channels != null ? channels.getTotal() : 0;
     }
 
     @Nullable
     public Connection getModeratedChannelsConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getModeratedChannels() : null;
     }
 
     public int getModeratedChannelsConnectionCount() {
-        Connection moderatedChannels = getModeratedChannelsConnection();
+        final Connection moderatedChannels = getModeratedChannelsConnection();
         return moderatedChannels != null ? moderatedChannels.getTotal() : 0;
     }
 
     @Nullable
     public Connection getAppearancesConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getAppearances() : null;
     }
 
     public int getAppearancesCount() {
-        Connection appearances = getAppearancesConnection();
+        final Connection appearances = getAppearancesConnection();
         return appearances != null ? appearances.getTotal() : 0;
     }
 
     @Nullable
     public Connection getWatchLaterConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getWatchlater() : null;
     }
 
     @Nullable
     public Connection getWatchedVideosConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getWatchedVideos() : null;
     }
 
     @Nullable
     public NotificationConnection getNotificationConnection() {
-        ConnectionCollection collections = getMetadataConnections();
+        final ConnectionCollection collections = getMetadataConnections();
         return collections != null ? collections.getNotifications() : null;
     }
     // </editor-fold>
@@ -314,12 +314,12 @@ public class User implements Serializable, Followable {
 
     @Nullable
     public Connection getVideosConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.mVideos : null;
     }
 
     public int getVideoCount() {
-        Connection videos = getVideosConnection();
+        final Connection videos = getVideosConnection();
         return videos != null ? videos.mTotal : 0;
     }
 
@@ -490,7 +490,7 @@ public class User implements Serializable, Followable {
             return false;
         }
 
-        User that = (User) o;
+        final User that = (User) o;
 
         return ((this.mUri != null && that.mUri != null) && this.mUri.equals(that.mUri));
     }

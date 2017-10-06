@@ -35,7 +35,7 @@ import java.io.Serializable;
  * Stores a collection of Connection objects.
  * Created by hanssena on 4/23/15.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class ConnectionCollection implements Serializable {
 
