@@ -671,9 +671,9 @@ public class Video implements Serializable {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
-    // LiveFormat
+    // Live
     // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="LiveFormat">
+    // <editor-fold desc="Live">
 
     /**
      * @return true if this video is a live video. This will be true even if the video is no
