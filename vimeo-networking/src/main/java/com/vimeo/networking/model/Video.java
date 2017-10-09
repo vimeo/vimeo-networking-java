@@ -25,8 +25,9 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
-import com.vimeo.networking.model.Live.LiveStatus;
 import com.vimeo.networking.model.error.ErrorCode;
+import com.vimeo.networking.model.live.Live;
+import com.vimeo.networking.model.live.Live.LiveStatus;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
 import com.vimeo.stag.UseStag;
@@ -43,7 +44,7 @@ import java.util.concurrent.TimeUnit;
  * A model class representing a Video.
  * Created by alfredhanssen on 4/12/15.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
 public class Video implements Serializable {
 
@@ -216,7 +217,7 @@ public class Video implements Serializable {
 
     @Nullable
     @SerializedName("live")
-    public Live mLive;
+    public com.vimeo.networking.model.live.Live mLive;
 
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
@@ -468,6 +469,7 @@ public class Video implements Serializable {
     // Report
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Report">
+
     /**
      * @return an {@link Interaction} containing the necessary data for reporting a video to the API
      * for a terms of service violation. This method will return null in the event that reporting is

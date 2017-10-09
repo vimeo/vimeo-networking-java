@@ -26,8 +26,10 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
+import com.vimeo.networking.model.live.LiveQuota;
 import com.vimeo.networking.model.notifications.NotificationConnection;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,10 +39,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ * This object contains the data for a Vimeo user
+ * <p>
  * Created by alfredhanssen on 4/12/15.
  */
-@SuppressWarnings("unused")
-@UseStag
+@SuppressWarnings({"WeakerAccess", "unused"})
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class User implements Serializable, Followable {
 
     private static final long serialVersionUID = 4317573825273169510L;
@@ -49,13 +53,19 @@ public class User implements Serializable, Followable {
     private static final String ACCOUNT_PLUS = "plus";
     private static final String ACCOUNT_PRO = "pro";
     private static final String ACCOUNT_STAFF = "staff";
+    private static final String ACCOUNT_LIVE_BUSINESS = "live_business";
+    private static final String ACCOUNT_LIVE_PRO = "live_pro";
+    private static final String ACCOUNT_PRO_UNLIMITED = "pro_unlimited";
 
     public enum AccountType {
         BASIC,
         BUSINESS,
         PRO,
         PLUS,
-        STAFF
+        STAFF,
+        LIVE_BUSINESS,
+        LIVE_PRO,
+        PRO_UNLIMITED
     }
 
     @SerializedName("uri")
@@ -97,6 +107,7 @@ public class User implements Serializable, Followable {
     @Nullable
     @SerializedName("preferences")
     public Preferences mPreferences;
+
     @Nullable
     @SerializedName("badge")
     public UserBadge mBadge;
@@ -107,6 +118,18 @@ public class User implements Serializable, Followable {
     @Nullable
     @SerializedName("live_quota")
     public LiveQuota mLiveQuota;
+
+    @Nullable
+    @SerializedName("id")
+    private String mId;
+
+    @Nullable
+    @SerializedName("is_staff")
+    private Boolean mIsStaff;
+
+    @Nullable
+    @SerializedName("is_creator")
+    private Boolean mIsVideoCreator;
 
     @Nullable
     public UserBadge getBadge() {
@@ -129,6 +152,12 @@ public class User implements Serializable, Followable {
                 return AccountType.PRO;
             case ACCOUNT_STAFF:
                 return AccountType.STAFF;
+            case ACCOUNT_LIVE_BUSINESS:
+                return AccountType.LIVE_BUSINESS;
+            case ACCOUNT_LIVE_PRO:
+                return AccountType.LIVE_PRO;
+            case ACCOUNT_PRO_UNLIMITED:
+                return AccountType.PRO_UNLIMITED;
             case ACCOUNT_BASIC:
             default:
                 return AccountType.BASIC;
@@ -160,7 +189,7 @@ public class User implements Serializable, Followable {
 
     @Override
     public boolean isFollowing() {
-        Interaction follow = getFollowInteraction();
+        final Interaction follow = getFollowInteraction();
         return follow != null && follow.mAdded;
     }
 
@@ -183,97 +212,97 @@ public class User implements Serializable, Followable {
     @Nullable
     @Override
     public Interaction getFollowInteraction() {
-        InteractionCollection interactions = getMetadataInteractions();
+        final InteractionCollection interactions = getMetadataInteractions();
         return interactions != null ? interactions.getFollow() : null;
     }
 
     @Nullable
     public Connection getFollowingConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getFollowing() : null;
     }
 
     @Nullable
     public Connection getFeedConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getFeed() : null;
     }
 
     @Nullable
     public Connection getFollowersConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getFollowers() : null;
     }
 
     public int getFollowerCount() {
-        Connection followers = getFollowersConnection();
+        final Connection followers = getFollowersConnection();
         return followers != null ? followers.getTotal() : 0;
     }
 
     public int getFollowingCount() {
-        Connection following = getFollowingConnection();
+        final Connection following = getFollowingConnection();
         return following != null ? following.getTotal() : 0;
     }
 
     @Nullable
     public Connection getLikesConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getLikes() : null;
     }
 
     public int getLikesCount() {
-        Connection likes = getLikesConnection();
+        final Connection likes = getLikesConnection();
         return likes != null ? likes.getTotal() : 0;
     }
 
     @Nullable
     public Connection getFollowedChannelsConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getChannels() : null;
     }
 
     public int getChannelsCount() {
-        Connection channels = getFollowedChannelsConnection();
+        final Connection channels = getFollowedChannelsConnection();
         return channels != null ? channels.getTotal() : 0;
     }
 
     @Nullable
     public Connection getModeratedChannelsConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getModeratedChannels() : null;
     }
 
     public int getModeratedChannelsConnectionCount() {
-        Connection moderatedChannels = getModeratedChannelsConnection();
+        final Connection moderatedChannels = getModeratedChannelsConnection();
         return moderatedChannels != null ? moderatedChannels.getTotal() : 0;
     }
 
     @Nullable
     public Connection getAppearancesConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getAppearances() : null;
     }
 
     public int getAppearancesCount() {
-        Connection appearances = getAppearancesConnection();
+        final Connection appearances = getAppearancesConnection();
         return appearances != null ? appearances.getTotal() : 0;
     }
 
     @Nullable
     public Connection getWatchLaterConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getWatchlater() : null;
     }
 
     @Nullable
     public Connection getWatchedVideosConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.getWatchedVideos() : null;
     }
 
     @Nullable
     public NotificationConnection getNotificationConnection() {
-        ConnectionCollection collections = getMetadataConnections();
+        final ConnectionCollection collections = getMetadataConnections();
         return collections != null ? collections.getNotifications() : null;
     }
     // </editor-fold>
@@ -288,12 +317,12 @@ public class User implements Serializable, Followable {
 
     @Nullable
     public Connection getVideosConnection() {
-        ConnectionCollection connections = getMetadataConnections();
+        final ConnectionCollection connections = getMetadataConnections();
         return connections != null ? connections.mVideos : null;
     }
 
     public int getVideoCount() {
-        Connection videos = getVideosConnection();
+        final Connection videos = getVideosConnection();
         return videos != null ? videos.mTotal : 0;
     }
 
@@ -391,6 +420,31 @@ public class User implements Serializable, Followable {
         return mLiveQuota;
     }
 
+    /**
+     * @return a unique identifier for the user within Vimeo
+     */
+    @Nullable
+    public String getId() {
+        return mId;
+    }
+
+    /**
+     * @return whether the user is an active staff member of Vimeo
+     */
+    @Nullable
+    public Boolean getIsStaff() {
+        return mIsStaff;
+    }
+
+    /**
+     * @return whether the user is the creator of the containing {@link Video} object. This value is only
+     * set for a user object that is contained within a {@link Video} object.
+     */
+    @Nullable
+    public Boolean getIsVideoCreator() {
+        return mIsVideoCreator;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -418,6 +472,18 @@ public class User implements Serializable, Followable {
         mLiveQuota = liveQuota;
     }
 
+    void setId(@Nullable String id) {
+        mId = id;
+    }
+
+    void setIsVideoCreator(@Nullable Boolean videoCreator) {
+        mIsVideoCreator = videoCreator;
+    }
+
+    void setIsStaff(@Nullable Boolean staff) {
+        mIsStaff = staff;
+    }
+
     // </editor-fold>
 
     @Override
@@ -429,7 +495,7 @@ public class User implements Serializable, Followable {
             return false;
         }
 
-        User that = (User) o;
+        final User that = (User) o;
 
         return ((this.mUri != null && that.mUri != null) && this.mUri.equals(that.mUri));
     }
@@ -437,5 +503,26 @@ public class User implements Serializable, Followable {
     @Override
     public int hashCode() {
         return this.mUri != null ? this.mUri.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+               "mUri='" + mUri + '\'' +
+               ", mName='" + mName + '\'' +
+               ", mLink='" + mLink + '\'' +
+               ", mLocation='" + mLocation + '\'' +
+               ", mBio='" + mBio + '\'' +
+               ", mCreatedTime=" + mCreatedTime +
+               ", mAccount='" + mAccount + '\'' +
+               ", mPictures=" + mPictures +
+               ", mEmails=" + mEmails +
+               ", mWebsites=" + mWebsites +
+               ", mMetadata=" + mMetadata +
+               ", mUploadQuota=" + mUploadQuota +
+               ", mPreferences=" + mPreferences +
+               ", mBadge=" + mBadge +
+               ", mLiveQuota=" + mLiveQuota +
+               '}';
     }
 }
