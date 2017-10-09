@@ -43,7 +43,7 @@ class TestApp : Application() {
     // The values file is left out of git, so you'll have to provide your own access token
     val accessTokenBuilder: Configuration.Builder
         get() {
-            val accessToken = getString(R.string.access_token)
+            val accessToken = "PROVIDE AN ACCESS TOKEN"
             return Configuration.Builder(accessToken)
         }
 
@@ -51,8 +51,8 @@ class TestApp : Application() {
     // Used for oauth flow
     val clientIdAndClientSecretBuilder: Configuration.Builder
         get() {
-            val clientId = getString(R.string.client_id)
-            val clientSecret = getString(R.string.client_secret)
+            val clientId = "PROVIDE A CLIENT ID"
+            val clientSecret = "PROVIDE A CLIENT SECRET"
             val codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" + getString(R.string.deeplink_redirect_host)
             val testAccountStore = TestAccountStore(this.applicationContext)
             val configBuilder = Configuration.Builder(clientId, clientSecret, SCOPE)

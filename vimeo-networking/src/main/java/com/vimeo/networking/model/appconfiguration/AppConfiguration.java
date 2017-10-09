@@ -23,6 +23,13 @@
 package com.vimeo.networking.model.appconfiguration;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.appconfiguration.live.LiveChatConfiguration;
+import com.vimeo.networking.model.appconfiguration.live.LiveConfiguration;
+import com.vimeo.networking.model.appconfiguration.live.LiveHeartbeatConfiguration;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An object returned from the /configs endpoint.
@@ -30,59 +37,105 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Created by kylevenn on 5/20/15.
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class AppConfiguration {
 
+    @Nullable
     @SerializedName("facebook")
-    protected FacebookConfiguration mFacebook;
+    private FacebookConfiguration mFacebook;
 
+    @Nullable
     @SerializedName("api")
-    protected ApiConfiguration mApi;
+    private ApiConfiguration mApi;
 
+    @Nullable
     @SerializedName("features")
-    protected FeaturesConfiguration mFeatures;
+    private FeaturesConfiguration mFeatures;
 
-    public void setFacebook(FacebookConfiguration facebook) {
-        mFacebook = facebook;
+    @Nullable
+    @SerializedName("live")
+    private LiveConfiguration mLiveConfiguration;
+
+    /**
+     * @return a {@link LiveConfiguration} object containing configuration information for live video
+     * playback related features if available
+     */
+    @Nullable
+    public LiveConfiguration getLiveConfiguration() {
+        return mLiveConfiguration;
     }
 
-    public void setApi(ApiConfiguration api) {
-        mApi = api;
+    /**
+     * @return a {@link LiveHeartbeatConfiguration} object containing information for live video heartbeat settings
+     * if available
+     */
+    @Nullable
+    public LiveHeartbeatConfiguration getLiveHeartbeatConfiguration() {
+        return mLiveConfiguration != null ? mLiveConfiguration.getLiveHeartbeatConfiguration() : null;
     }
 
-    public void setFeatures(FeaturesConfiguration features) {
-        mFeatures = features;
+    /**
+     * @return a {@link LiveChatConfiguration} object containing information for live chat settings if available
+     */
+    @Nullable
+    public LiveChatConfiguration getLiveChatConfiguration() {
+        return mLiveConfiguration != null ? mLiveConfiguration.getLiveChatConfiguration() : null;
     }
 
+    /**
+     * @return a {@link FacebookConfiguration} object if available
+     */
+    @Nullable
     public FacebookConfiguration getFacebook() {
         return mFacebook;
     }
 
+    /**
+     * @return an {@link ApiConfiguration} object if available
+     */
+    @Nullable
     public ApiConfiguration getApi() {
         return mApi;
     }
 
+    /**
+     * @return a {@link LiveChatConfiguration} object containing information for live chat settings if available
+     */
+    @Nullable
     public FeaturesConfiguration getFeatures() {
         return mFeatures;
     }
 
+    void setFacebook(@Nullable FacebookConfiguration facebook) {
+        mFacebook = facebook;
+    }
+
+    void setApi(@Nullable ApiConfiguration api) {
+        mApi = api;
+    }
+
+    void setFeatures(@Nullable FeaturesConfiguration features) {
+        mFeatures = features;
+    }
+
+    void setLiveConfiguration(@Nullable LiveConfiguration liveConfiguration) {
+        mLiveConfiguration = liveConfiguration;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
 
-        AppConfiguration that = (AppConfiguration) o;
+        final AppConfiguration that = (AppConfiguration) o;
 
-        if (mFacebook != null ? !mFacebook.equals(that.mFacebook) : that.mFacebook != null) {
-            return false;
-        }
-        if (mApi != null ? !mApi.equals(that.mApi) : that.mApi != null) {
-            return false;
-        }
-        return !(mFeatures != null ? !mFeatures.equals(that.mFeatures) : that.mFeatures != null);
+        if (mFacebook != null ? !mFacebook.equals(that.mFacebook) : that.mFacebook != null) { return false; }
+        if (mApi != null ? !mApi.equals(that.mApi) : that.mApi != null) { return false; }
+        //noinspection SimplifiableIfStatement
+        if (mFeatures != null ? !mFeatures.equals(that.mFeatures) : that.mFeatures != null) { return false; }
+        return mLiveConfiguration != null ?
+                mLiveConfiguration.equals(that.mLiveConfiguration) : that.mLiveConfiguration == null;
 
     }
 
@@ -91,6 +144,7 @@ public class AppConfiguration {
         int result = mFacebook != null ? mFacebook.hashCode() : 0;
         result = 31 * result + (mApi != null ? mApi.hashCode() : 0);
         result = 31 * result + (mFeatures != null ? mFeatures.hashCode() : 0);
+        result = 31 * result + (mLiveConfiguration != null ? mLiveConfiguration.hashCode() : 0);
         return result;
     }
 }

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.live;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
