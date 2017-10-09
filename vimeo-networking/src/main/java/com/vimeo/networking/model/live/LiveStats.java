@@ -17,9 +17,7 @@ import java.io.Serializable;
 public class LiveStats implements Serializable {
 
     private static final long serialVersionUID = -8174242949801535304L;
-
-
-
+    
     @Nullable
     @SerializedName("plays")
     private Long mPlays;

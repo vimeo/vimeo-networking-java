@@ -273,6 +273,7 @@ public final class Live implements Serializable {
                ", mKey='" + mKey + '\'' +
                ", mStatus='" + mStatus + '\'' +
                ", mError=" + mError +
+               ", mChat=" + mChat +
                '}';
     }
 }

@@ -25,8 +25,9 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
-import com.vimeo.networking.model.live.Live.LiveStatus;
 import com.vimeo.networking.model.error.ErrorCode;
+import com.vimeo.networking.model.live.Live;
+import com.vimeo.networking.model.live.Live.LiveStatus;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
 import com.vimeo.stag.UseStag;
@@ -43,7 +44,7 @@ import java.util.concurrent.TimeUnit;
  * A model class representing a Video.
  * Created by alfredhanssen on 4/12/15.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
 public class Video implements Serializable {
 
@@ -320,7 +321,7 @@ public class Video implements Serializable {
     }
 
     @Nullable
-    public com.vimeo.networking.model.live.Live getLive() {
+    public Live getLive() {
         return mLive;
     }
 
@@ -351,7 +352,7 @@ public class Video implements Serializable {
         mUser = user;
     }
 
-    public void setLive(@Nullable com.vimeo.networking.model.live.Live live) {
+    public void setLive(@Nullable Live live) {
         mLive = live;
     }
 
@@ -468,6 +469,7 @@ public class Video implements Serializable {
     // Report
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Report">
+
     /**
      * @return an {@link Interaction} containing the necessary data for reporting a video to the API
      * for a terms of service violation. This method will return null in the event that reporting is
@@ -669,9 +671,9 @@ public class Video implements Serializable {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
-    // Live
+    // LiveFormat
     // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Live">
+    // <editor-fold desc="LiveFormat">
 
     /**
      * @return true if this video is a live video. This will be true even if the video is no

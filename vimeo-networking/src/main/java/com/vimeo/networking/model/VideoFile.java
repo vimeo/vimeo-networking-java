@@ -62,7 +62,7 @@ public abstract class VideoFile implements Serializable {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static class Live implements Serializable {
+    public static class LiveFormat implements Serializable {
 
         private static final long serialVersionUID = -4662813629024544219L;
 
@@ -87,9 +87,9 @@ public abstract class VideoFile implements Serializable {
             if (this == o) { return true; }
             if (o == null || getClass() != o.getClass()) { return false; }
 
-            final Live live = (Live) o;
+            final LiveFormat liveFormat = (LiveFormat) o;
 
-            return mHeartbeat != null ? mHeartbeat.equals(live.mHeartbeat) : live.mHeartbeat == null;
+            return mHeartbeat != null ? mHeartbeat.equals(liveFormat.mHeartbeat) : liveFormat.mHeartbeat == null;
 
         }
 
@@ -100,7 +100,7 @@ public abstract class VideoFile implements Serializable {
 
         @Override
         public String toString() {
-            return "Live{" +
+            return "LiveFormat{" +
                    "mHeartbeat='" + mHeartbeat + '\'' +
                    '}';
         }
@@ -128,22 +128,22 @@ public abstract class VideoFile implements Serializable {
 
     @Nullable
     @SerializedName("live")
-    private Live mLive;
+    private LiveFormat mLive;
 
     /**
-     * @return The {@link Live} object associated with this video format
+     * @return The {@link LiveFormat} object associated with this video format
      */
     @Nullable
-    Live getLive() {
+    LiveFormat getLive() {
         return mLive;
     }
 
-    void setLive(@Nullable Live live) {
+    void setLive(@Nullable LiveFormat live) {
         mLive = live;
     }
 
     /**
-     * @see Live#getHeartbeat()
+     * @see LiveFormat#getHeartbeat()
      */
     @Nullable
     public String getLiveHeartbeatUri() {

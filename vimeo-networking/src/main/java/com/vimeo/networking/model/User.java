@@ -26,6 +26,7 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Privacy.PrivacyValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
+import com.vimeo.networking.model.live.LiveQuota;
 import com.vimeo.networking.model.notifications.NotificationConnection;
 import com.vimeo.stag.UseStag;
 import com.vimeo.stag.UseStag.FieldOption;
@@ -116,7 +117,7 @@ public class User implements Serializable, Followable {
      */
     @Nullable
     @SerializedName("live_quota")
-    public com.vimeo.networking.model.live.LiveQuota mLiveQuota;
+    public LiveQuota mLiveQuota;
 
     @Nullable
     @SerializedName("id")
@@ -415,7 +416,7 @@ public class User implements Serializable, Followable {
     }
 
     @Nullable
-    public com.vimeo.networking.model.live.LiveQuota getLiveQuota() {
+    public LiveQuota getLiveQuota() {
         return mLiveQuota;
     }
 
@@ -467,7 +468,7 @@ public class User implements Serializable, Followable {
         mBio = bio;
     }
 
-    public void setLiveQuota(@Nullable com.vimeo.networking.model.live.LiveQuota liveQuota) {
+    public void setLiveQuota(@Nullable LiveQuota liveQuota) {
         mLiveQuota = liveQuota;
     }
 
