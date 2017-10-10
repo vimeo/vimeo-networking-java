@@ -23,107 +23,60 @@
 package com.vimeo.networking.model.appconfiguration;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
+
+import org.jetbrains.annotations.Nullable;
+
+import java.io.Serializable;
 
 /**
- * An object returned from the /configs endpoint to specify which features are enabled or disabled.
+ * An object returned from the /configs endpoint containing configuration details for various API features.
  * <p>
  * Created by vennk on 5/20/15.
  */
-@SuppressWarnings("unused")
-public class FeaturesConfiguration {
+@SuppressWarnings({"WeakerAccess", "unused"})
+@UseStag(FieldOption.SERIALIZED_NAME)
+public class FeaturesConfiguration implements Serializable {
 
-    @SerializedName("iap")
-    protected boolean mIapEnabled;
+    private static final long serialVersionUID = 8741925066769737513L;
 
-    @SerializedName("autoupload")
-    protected boolean mAutoUploadEnabled;
-
-    @SerializedName("comscore")
-    protected boolean mComScoreEnabled;
-
+    @Nullable
     @SerializedName("play_tracking")
-    protected boolean mPlayTrackingEnabled = true; // Default to true
+    private String mPlayTracking;
 
-    @SerializedName("chromecast_app_id")
-    protected String mChromecastReceiverAppID;
-
-    public boolean isIapEnabled() {
-        return mIapEnabled;
+    /**
+     * @return whether play tracking logs should be enabled on the client
+     */
+    @Nullable
+    public String getPlayTracking() {
+        return mPlayTracking;
     }
 
-    public boolean isAutoUploadEnabled() {
-        return mAutoUploadEnabled;
-    }
-
-    public boolean isComScoreEnabled() {
-        return mComScoreEnabled;
-    }
-
-    public boolean isPlayTrackingEnabled() {
-        return mPlayTrackingEnabled;
-    }
-
-    public String getChromecastReceiverAppID() {
-        return mChromecastReceiverAppID;
-    }
-
-    public void setIapEnabled(boolean iapEnabled) {
-        mIapEnabled = iapEnabled;
-    }
-
-    public void setAutoUploadEnabled(boolean autoUploadEnabled) {
-        mAutoUploadEnabled = autoUploadEnabled;
-    }
-
-    public void setComScoreEnabled(boolean comScoreEnabled) {
-        mComScoreEnabled = comScoreEnabled;
-    }
-
-    public void setPlayTrackingEnabled(boolean playTrackingEnabled) {
-        mPlayTrackingEnabled = playTrackingEnabled;
-    }
-
-    public void setChromecastReceiverAppID(String chromecastReceiverAppID) {
-        mChromecastReceiverAppID = chromecastReceiverAppID;
+    void setPlayTracking(@Nullable String playTracking) {
+        mPlayTracking = playTracking;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
 
-        FeaturesConfiguration that = (FeaturesConfiguration) o;
+        final FeaturesConfiguration that = (FeaturesConfiguration) o;
 
-        if (mIapEnabled != that.mIapEnabled) {
-            return false;
-        }
-        if (mAutoUploadEnabled != that.mAutoUploadEnabled) {
-            return false;
-        }
-        if (mComScoreEnabled != that.mComScoreEnabled) {
-            return false;
-        }
-        if (mPlayTrackingEnabled != that.mPlayTrackingEnabled) {
-            return false;
-        }
-        if (mChromecastReceiverAppID != null && that.mChromecastReceiverAppID != null) {
-            return mChromecastReceiverAppID.equals(that.mChromecastReceiverAppID);
-        } else {
-            return mChromecastReceiverAppID == null && that.mChromecastReceiverAppID == null;
-        }
+        return mPlayTracking != null ? mPlayTracking.equals(that.mPlayTracking) : that.mPlayTracking == null;
+
     }
 
     @Override
     public int hashCode() {
-        int result = (mIapEnabled ? 1 : 0);
-        result = 31 * result + (mAutoUploadEnabled ? 1 : 0);
-        result = 31 * result + (mComScoreEnabled ? 1 : 0);
-        result = 31 * result + (mPlayTrackingEnabled ? 1 : 0);
-        result = 31 * result + (mChromecastReceiverAppID != null ? mChromecastReceiverAppID.hashCode() : 0);
-        return result;
+        return mPlayTracking != null ? mPlayTracking.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "FeaturesConfiguration{" +
+               "mPlayTracking='" + mPlayTracking + '\'' +
+               '}';
     }
 }

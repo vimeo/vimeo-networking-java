@@ -37,7 +37,7 @@ import java.util.Date;
  * <p>
  * Created by alfredhanssen on 4/25/15.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
 public abstract class VideoFile implements Serializable {
 
@@ -58,6 +58,51 @@ public abstract class VideoFile implements Serializable {
         // Overridden for analytics.
         public String toString() {
             return mTypeName;
+        }
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static class LiveFormat implements Serializable {
+
+        private static final long serialVersionUID = -4662813629024544219L;
+
+        @Nullable
+        @SerializedName("heartbeat")
+        private String mHeartbeat;
+
+        /**
+         * @return the uri for sending up heartbeat logs when this is a live video
+         */
+        @Nullable
+        public String getHeartbeat() {
+            return mHeartbeat;
+        }
+
+        void setHeartbeat(@Nullable String heartbeat) {
+            mHeartbeat = heartbeat;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) { return true; }
+            if (o == null || getClass() != o.getClass()) { return false; }
+
+            final LiveFormat liveFormat = (LiveFormat) o;
+
+            return mHeartbeat != null ? mHeartbeat.equals(liveFormat.mHeartbeat) : liveFormat.mHeartbeat == null;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return mHeartbeat != null ? mHeartbeat.hashCode() : 0;
+        }
+
+        @Override
+        public String toString() {
+            return "LiveFormat{" +
+                   "mHeartbeat='" + mHeartbeat + '\'' +
+                   '}';
         }
     }
 
@@ -82,11 +127,37 @@ public abstract class VideoFile implements Serializable {
     protected String mLog;
 
     @Nullable
+    @SerializedName("live")
+    private LiveFormat mLive;
+
+    /**
+     * @return The {@link LiveFormat} object associated with this video format
+     */
+    @Nullable
+    LiveFormat getLive() {
+        return mLive;
+    }
+
+    void setLive(@Nullable LiveFormat live) {
+        mLive = live;
+    }
+
+    /**
+     * @see LiveFormat#getHeartbeat()
+     */
+    @Nullable
+    public String getLiveHeartbeatUri() {
+        return mLive != null ? mLive.getHeartbeat() : null;
+    }
+
+    @Nullable
     public Date getLinkExpirationTime() {
         return mLinkExpirationTime;
     }
 
-    /** @return true if this VideoFile doesn't have an expired field or if the expires date is before the current date */
+    /**
+     * @return true if this VideoFile doesn't have an expired field or if the expires date is before the current date
+     */
     public boolean isExpired() {
         // If expires is null, we should probably refresh the video object regardless [KV] 3/31/16
         return mLinkExpirationTime == null || mLinkExpirationTime.before(new Date());
@@ -112,7 +183,7 @@ public abstract class VideoFile implements Serializable {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
 
-        VideoFile videoFile = (VideoFile) o;
+        final VideoFile videoFile = (VideoFile) o;
 
         return mLink != null ? mLink.equals(videoFile.mLink) : videoFile.mLink == null;
 

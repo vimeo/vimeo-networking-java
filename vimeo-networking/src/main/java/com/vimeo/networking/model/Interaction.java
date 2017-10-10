@@ -29,7 +29,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * This model object represents an Interaction.
@@ -89,6 +91,10 @@ public class Interaction implements Serializable {
     @SerializedName("expires_time")
     protected Date mExpiration;
 
+    @Nullable
+    @SerializedName("reason")
+    protected ArrayList<String> mReportingReasons;
+
     public boolean isAdded() {
         return mAdded;
     }
@@ -115,5 +121,15 @@ public class Interaction implements Serializable {
 
     public void setIsAdded(boolean added) {
         mAdded = added;
+    }
+
+    /**
+     * @return a {@code List<String>} containing the allowable reasons that can be sent to the API
+     * when POSTing a report of a terms of service violation. This method will return null in the event
+     * that it is not a "report" {@link Interaction}
+     */
+    @Nullable
+    public List<String> getReportingReasons() {
+        return mReportingReasons;
     }
 }

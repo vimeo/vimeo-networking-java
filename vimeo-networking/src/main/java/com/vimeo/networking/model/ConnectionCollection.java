@@ -35,7 +35,7 @@ import java.io.Serializable;
  * Stores a collection of Connection objects.
  * Created by hanssena on 4/23/15.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class ConnectionCollection implements Serializable {
 
@@ -172,6 +172,18 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     @SerializedName("folders")
     private Connection mFolders;
+
+    @Nullable
+    @SerializedName("live_stats")
+    private Interaction mLiveStats;
+
+    /**
+     * @return the {@link Interaction} for getting the {@link com.vimeo.networking.model.live.LiveStats} for a live {@link Video}
+     */
+    @Nullable
+    public Interaction getLiveStats() {
+        return mLiveStats;
+    }
 
     @Nullable
     public Connection getVideos() {
@@ -340,5 +352,9 @@ public class ConnectionCollection implements Serializable {
 
     public void setFolders(@Nullable Connection folders) {
         mFolders = folders;
+    }
+
+    void setLiveStats(@Nullable Interaction liveStats) {
+        mLiveStats = liveStats;
     }
 }

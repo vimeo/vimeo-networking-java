@@ -22,20 +22,20 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model
+package com.vimeo.networking.model.live
 
 import com.vimeo.networking.Utils
 import org.junit.Test
 
 /**
- * Tests for the [LiveTime] class
+ * Tests for the [LiveQuota] class
  *
  * Created by zetterstromk on 9/11/17.
  */
-class LiveTimeTest {
+class LiveQuotaTest {
 
     @Test
     fun verifyTypeAdapterWasGenerated() {
-        Utils.verifyTypeAdapterGeneration(LiveTime::class.java)
+        Utils.verifyTypeAdapterGeneration(LiveQuota::class.java)
     }
 }
