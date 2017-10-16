@@ -227,6 +227,8 @@ public class Video implements Serializable {
     public String mResourceKey;
 
     // <editor-fold desc="Constructors">
+    public Video() {}
+
     public Video(@NotNull Video other) {
         this.mUri = other.mUri;
         this.mName = other.mName;
