@@ -82,6 +82,7 @@ public class Video implements Serializable {
 
     private static final String STATUS_NONE = "N/A";
     private static final String STATUS_AVAILABLE = "available";
+    private static final String STATUS_UNAVAILABLE = "unavailable";
     private static final String STATUS_UPLOADING = "uploading";
     private static final String STATUS_TRANSCODE_STARTING = "transcode_starting";
     private static final String STATUS_TRANSCODING = "transcoding";
@@ -94,6 +95,8 @@ public class Video implements Serializable {
         NONE(STATUS_NONE),
         @SerializedName(STATUS_AVAILABLE)
         AVAILABLE(STATUS_AVAILABLE),
+        @SerializedName(STATUS_UNAVAILABLE)
+        UNAVAILABLE(STATUS_UNAVAILABLE),
         @SerializedName(STATUS_UPLOADING)
         UPLOADING(STATUS_UPLOADING),
         @SerializedName(STATUS_TRANSCODE_STARTING)
