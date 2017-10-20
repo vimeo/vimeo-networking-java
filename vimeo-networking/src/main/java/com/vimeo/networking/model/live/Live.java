@@ -50,14 +50,14 @@ public final class Live implements Serializable {
     private static final long serialVersionUID = 6341657287285717326L;
 
     public enum LiveStatus {
-        ARCHIVING,
-        ARCHIVE_ERROR,
-        DONE,
-        PENDING,
-        READY,
-        STREAMING,
-        STREAMING_ERROR,
-        UNAVAILABLE,
+        ARCHIVING, // The stream has ended and is currently being archived.
+        ARCHIVE_ERROR, // There was a problem archiving the stream.
+        DONE, // The stream has been ended intentionally by the end user.
+        PENDING, // Vimeo is working on setting up the connection.
+        READY, // The RTMP url is ready to receive video content.
+        STREAMING, // The stream is open and receiving content.
+        STREAMING_ERROR, // The stream has been terminated by Vimeo. Vimeo may terminate a stream for many reasons.
+        UNAVAILABLE, // At this state the RTMP link will be visible, but cannot yet receive the stream.
         UNKNOWN;
 
         @NotNull

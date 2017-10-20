@@ -692,7 +692,10 @@ public class Video implements Serializable {
     public boolean isEndedLiveVideo() {
         final LiveStatus liveStatus = mLive != null ? mLive.getLiveStatus() : null;
 
-        return liveStatus != null && (liveStatus == LiveStatus.DONE || liveStatus == LiveStatus.STREAMING_ERROR);
+        return liveStatus != null && (liveStatus == LiveStatus.DONE ||
+                                      liveStatus == LiveStatus.STREAMING_ERROR ||
+                                      liveStatus == LiveStatus.ARCHIVING ||
+                                      liveStatus == LiveStatus.ARCHIVE_ERROR);
     }
 
     /**
