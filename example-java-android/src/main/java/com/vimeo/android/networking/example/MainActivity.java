@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         mApiClient.getContent(STAFF_PICKS_VIDEO_URI, CacheControl.FORCE_NETWORK, GetRequestCaller.VIDEO_LIST, null, null, null, new VimeoCallback<VideoList>() {
             @Override
             public void success(VideoList videoList) {
-                if (videoList != null && videoList.mData != null) {
+                if (videoList != null && videoList.getData() != null) {
                     String videoTitlesString = "";
                     boolean addNewLine = false;
-                    for (Video video : videoList.mData) {
+                    for (Video video : videoList.getData()) {
                         if (addNewLine) {
                             videoTitlesString += "\n";
                         }

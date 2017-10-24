@@ -37,43 +37,60 @@ public abstract class BaseResponseList<T> implements Serializable {
 
     private static final long serialVersionUID = -1641146617506148394L;
 
-    // TODO: Due to a STAG limitation, members of this class must be public 2/14/17 [AR]
-
     @SerializedName("total")
-    public int mTotal;
+    private int mTotal;
 
     @SerializedName("page")
-    public int mPage;
+    private int mPage;
 
     @SerializedName("per_page")
-    public int mPerPage;
+    private int mPerPage;
 
     @SerializedName("paging")
-    public Paging mPaging;
+    private Paging mPaging;
 
     @SerializedName("data")
-    public ArrayList<T> mData;
+    private ArrayList<T> mData;
 
     public int getTotal() {
         return mTotal;
+    }
+
+    public void setTotal(int total) {
+        mTotal = total;
     }
 
     public int getPage() {
         return mPage;
     }
 
+    public void setPage(int page) {
+        mPage = page;
+    }
+
     public int getPerPage() {
         return mPerPage;
+    }
+
+    public void setPerPage(int perPage) {
+        mPerPage = perPage;
     }
 
     public Paging getPaging() {
         return mPaging;
     }
 
+    public void setPaging(Paging paging) {
+        mPaging = paging;
+    }
+
     public ArrayList<T> getData() {
         return mData;
     }
 
-    // TODO: maybe don't need
+    public void setData(ArrayList<T> data) {
+        mData = data;
+    }
+
     public abstract Class<T> getModelClass();
 }
