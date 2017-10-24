@@ -2,6 +2,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -9,9 +10,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * DTO for a closed captions language. This DTO contains information such as
+ * language id, HLS link and to show closed caption for a language.
+ *
  * Created by Mohit Sarveiya on 6/29/17.
  */
-@UseStag
+@UseStag(FieldOption.SERIALIZED_NAME)
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class TextTrack implements Serializable {
 
