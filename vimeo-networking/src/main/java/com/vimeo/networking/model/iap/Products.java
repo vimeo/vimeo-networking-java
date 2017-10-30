@@ -6,7 +6,7 @@ import com.vimeo.stag.UseStag;
 /**
  * List of {@link Product} objects.
  *
- * Created by watsonbr on 10/30/17.
+ * Created by brentwatson on 10/30/17.
  */
 @UseStag
 public class Products extends BaseResponseList<Product> {

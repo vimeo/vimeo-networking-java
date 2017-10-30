@@ -6,7 +6,7 @@ import org.junit.Test
 /**
  * Tests for the [Products] class
  *
- * Created by brentw on 10/30/17.
+ * Created by brentwatson on 10/30/17.
  */
 class ProductsTest {
 

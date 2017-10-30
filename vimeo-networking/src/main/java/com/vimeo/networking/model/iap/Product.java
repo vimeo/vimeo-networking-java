@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * Represents a Product that can be purchased, such as a Vimeo subscription.
  *
- * Created by watsonbr on 10/30/17.
+ * Created by brentwatson on 10/30/17.
  */
 @SuppressWarnings("unused")
 @UseStag
