@@ -30,19 +30,21 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.FeedList;
-import com.vimeo.networking.model.live.LiveStats;
 import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.RecommendationList;
+import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.UserList;
-import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.appconfiguration.AppConfiguration;
 import com.vimeo.networking.model.cinema.ProgramContentItemList;
+import com.vimeo.networking.model.iap.Product;
+import com.vimeo.networking.model.iap.Products;
+import com.vimeo.networking.model.live.LiveStats;
 import com.vimeo.networking.model.notifications.NotificationList;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
@@ -66,6 +68,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
@@ -389,6 +392,23 @@ public interface VimeoService {
                       @Url String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
                       @Body ArrayList<Object> parameters);
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // IAP
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="In-App Purchases">
+    @GET("products")
+    Call<Products> getProducts(@Header("Authorization") String authHeader);
+
+    @GET("products/{product_id}")
+    Call<Product> getProduct(@Header("Authorization") String authHeader,
+                             @Path("product_id") String productId);
+
+    @PUT("/me/purchases/{product_id}")
+    Call<User> purchaseSubscription(@Header("Authorization") String authHeader,
+                                   @Path("product_id") String productId,
+                                   @Body Map<String, String> parameters);
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------

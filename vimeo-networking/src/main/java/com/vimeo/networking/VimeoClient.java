@@ -40,6 +40,8 @@ import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking.model.iap.Product;
+import com.vimeo.networking.model.iap.Products;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
@@ -1092,6 +1094,64 @@ public class VimeoClient {
         Call<TextTrackList> call = mVimeoService.getTextTrackList(getAuthHeader(), uri);
         call.enqueue(callback);
 
+        return call;
+    }
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // IAP
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="In-App Purchasing">
+
+    /**
+     * Gets a list of {@link Products} that can be purchased, such as Vimeo subscriptions.
+     *
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
+     * @return a {@link Call} with the {@link Products}. This can be used for request cancellation.
+     */
+    @NotNull
+    public Call<Products> getProducts( @NotNull VimeoCallback<Products> callback) {
+        Call<Products> call = mVimeoService.getProducts(getAuthHeader());
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * Get details for a single {@link Product} that can be purchased.
+     *
+     * @param productId the product ID
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
+     * @return a {@link Call} with the {@link Product}. This can be used for request cancellation.
+     */
+    @NotNull
+    public Call<Product> getProduct(@NotNull String productId, @NotNull VimeoCallback<Product> callback) {
+        Call<Product> call = mVimeoService.getProduct(getAuthHeader(), productId);
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * Once a purchase has been made through Google Play Billing, this endpoint can be used to inform
+     * Vimeo that the user has purchased the given item.  An updated {@link User} object will be returned if
+     * the purchase was found to be be valid and successful.
+     *
+     * @param productId the product the user purchased
+     * @param purchaseToken The purchase token provided by Google Play after a successful purchase
+     * @param orderId The order ID provided by Google Play after a successful purchase
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
+     * @return a {@link Call} object that contains an updated User object, with the purchase applied.
+     */
+    @NotNull
+    public Call<User> purchaseSubscription(@NotNull String productId,
+                                           @NotNull String purchaseToken,
+                                           @NotNull String orderId,
+                                           @NotNull VimeoCallback<User> callback) {
+        final Map<String, String> params = new HashMap<>();
+        params.put("purchase_token", purchaseToken);
+        params.put("order_id", orderId);
+
+        Call<User> call = mVimeoService.purchaseSubscription(getAuthHeader(), productId, params);
+        call.enqueue(callback);
         return call;
     }
     // </editor-fold>

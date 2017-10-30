@@ -37,7 +37,7 @@ import java.io.Serializable;
 @UseStag
 public class InteractionCollection implements Serializable {
 
-    private static final long serialVersionUID = 489519386122782640L;
+    private static final long serialVersionUID = 4765732340221908005L;
 
     @Nullable
     @SerializedName("watchlater")
@@ -54,6 +54,10 @@ public class InteractionCollection implements Serializable {
     @Nullable
     @SerializedName("buy")
     protected Interaction mBuy;
+
+    @Nullable
+    @SerializedName("purchase")
+    protected Interaction mPurchase;
 
     @Nullable
     @SerializedName("rent")
@@ -100,6 +104,11 @@ public class InteractionCollection implements Serializable {
     }
 
     @Nullable
+    public Interaction getPurchase() {
+        return mPurchase;
+    }
+
+    @Nullable
     public Interaction getRent() {
         return mRent;
     }
@@ -132,6 +141,10 @@ public class InteractionCollection implements Serializable {
 
     public void setBuy(@Nullable Interaction buy) {
         mBuy = buy;
+    }
+
+    public void setPurchase(@Nullable Interaction purchase) {
+        mPurchase = purchase;
     }
 
     public void setRent(@Nullable Interaction rent) {
