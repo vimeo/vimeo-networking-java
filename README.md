@@ -95,7 +95,9 @@ If you choose to pass in an `AccountStore`, the authenticated account will autom
     */
 Configuration.Builder configBuilder =
       new Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore)
-          .setCacheDirectory(this.getCacheDir())
+          .setCacheDirectory(this.getCacheDir());
+VimeoClient.initialize(configBuilder.build());
+// VimeoClient is now ready for use
 ```
 Setting the cache directory and deserializer are optional but highly recommended.
 * The deserializer allows for deserialization on a background thread. Without it, object deserialization will occur on the main (UI) thread. This can be bad for performance if the API response bodies are large.

@@ -37,6 +37,7 @@ import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.RecommendationList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.UserList;
+import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
@@ -350,6 +351,9 @@ public interface VimeoService {
                                  @QueryMap Map<String, String> options,
                                  @Header("Cache-Control") String cacheHeaderValue);
 
+
+    @GET
+    Call<TextTrackList> getTextTrackList(@Header("Authorization") String authHeader, @Url String uri);
     // </editor-fold>
 
     /**
