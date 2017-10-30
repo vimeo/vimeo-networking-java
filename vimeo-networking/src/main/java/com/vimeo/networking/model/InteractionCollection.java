@@ -69,15 +69,15 @@ public class InteractionCollection implements Serializable {
 
     @Nullable
     @SerializedName("report")
-    protected Interaction mReport;
+    private Interaction mReport;
 
     @Nullable
     @SerializedName("add_moderators")
-    protected Interaction mAddModerators;
+    private Interaction mAddModerators;
 
     @Nullable
     @SerializedName("moderate_videos")
-    protected Interaction mModerateVideos;
+    private Interaction mModerateVideos;
 
     @Nullable
     public Interaction getWatchLater() {
@@ -126,7 +126,7 @@ public class InteractionCollection implements Serializable {
         mChannelMembership = channelMembership;
     }
 
-    public void setReport(@Nullable Interaction report) {
+    void setReport(@Nullable Interaction report) {
         mReport = report;
     }
 
@@ -135,7 +135,7 @@ public class InteractionCollection implements Serializable {
         return mAddModerators;
     }
 
-    public void setAddModerators(@Nullable Interaction addModerators) {
+    void setAddModerators(@Nullable Interaction addModerators) {
         mAddModerators = addModerators;
     }
 
@@ -144,7 +144,7 @@ public class InteractionCollection implements Serializable {
         return mModerateVideos;
     }
 
-    public void setModerateVideos(@Nullable Interaction moderateVideos) {
+    void setModerateVideos(@Nullable Interaction moderateVideos) {
         mModerateVideos = moderateVideos;
     }
 
