@@ -226,42 +226,6 @@ public class Video implements Serializable {
     @SerializedName("resource_key")
     public String mResourceKey;
 
-    // <editor-fold desc="Constructors">
-    public Video() {}
-
-    public Video(@NotNull Video other) {
-        this.mUri = other.mUri;
-        this.mName = other.mName;
-        this.mDescription = other.mDescription;
-        this.mLink = other.mLink;
-        this.mDuration = other.mDuration;
-        this.mWidth = other.mWidth;
-        this.mHeight = other.mHeight;
-        this.mEmbed = other.mEmbed;
-        this.mLanguage = other.mLanguage;
-        this.mCreatedTime = other.mCreatedTime;
-        this.mModifiedTime = other.mModifiedTime;
-        this.mReleaseTime = other.mReleaseTime;
-        this.mContentRating = other.mContentRating;
-        this.mLicense = other.mLicense;
-        this.mPrivacy = other.mPrivacy;
-        this.mPictures = other.mPictures;
-        this.mTags = other.mTags;
-        this.mStats = other.mStats;
-        this.mMetadata = other.mMetadata;
-        this.mUser = other.mUser;
-        this.mStatus = other.mStatus;
-        this.mCategories = other.mCategories;
-        this.mPassword = other.mPassword;
-        this.mReviewPage = other.mReviewPage;
-        this.mPlay = other.mPlay;
-        this.mVideoBadge = other.mVideoBadge;
-        this.mSpatial = other.mSpatial;
-        this.mLive = other.mLive;
-        this.mResourceKey = other.mResourceKey;
-    }
-    // </editor-fold>
-
     // -----------------------------------------------------------------------------------------------------
     // Getters
     // -----------------------------------------------------------------------------------------------------
