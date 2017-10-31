@@ -22,15 +22,11 @@
 
 package com.vimeo.networking.callbacks;
 
-import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking.utils.VimeoNetworkUtil;
 
-import java.lang.annotation.Annotation;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
 
 /**
@@ -54,17 +50,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
             T t = response.body();
             success(t);
         } else {
-            VimeoError vimeoError = null;
-            if (response.errorBody() != null && response.errorBody().contentLength() > 0) {
-                try {
-                    Converter<ResponseBody, VimeoError> errorConverter = VimeoClient.getInstance()
-                            .getRetrofit()
-                            .responseBodyConverter(VimeoError.class, new Annotation[0]);
-                    vimeoError = errorConverter.convert(response.errorBody());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            VimeoError vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
             if (vimeoError == null) {
                 vimeoError = new VimeoError();
             }
