@@ -17,27 +17,27 @@ import java.io.Serializable;
 @UseStag
 public class Product implements Serializable {
 
-    private static final long serialVersionUID = 27901675080110352L;
+    private static final long serialVersionUID = 3597655131745491159L;
 
     @Nullable
     @SerializedName("product_id")
-    protected String mProductId;
+    private String mProductId;
 
     @Nullable
     @SerializedName("name")
-    protected String mName;
+    private String mName;
 
     @Nullable
     @SerializedName("description")
-    protected String mDescription;
+    private String mDescription;
 
     @Nullable
     @SerializedName("uri")
-    protected String mUri;
+    private String mUri;
 
     @Nullable
     @SerializedName("metadata")
-    protected Metadata mMetadata;
+    private Metadata mMetadata;
 
     /**
      * Equals and hashCode use {@link #mProductId} to check for equality.
@@ -56,35 +56,39 @@ public class Product implements Serializable {
         return mProductId != null ? mProductId.hashCode() : 0;
     }
 
+    @Nullable
     public String getProductId() {
         return mProductId;
     }
 
-    public void setProductId(String productId) {
+    void setProductId(@Nullable String productId) {
         mProductId = productId;
     }
 
+    @Nullable
     public String getName() {
         return mName;
     }
 
-    public void setName(String name) {
+    void setName(@Nullable String name) {
         mName = name;
     }
 
+    @Nullable
     public String getDescription() {
         return mDescription;
     }
 
-    public void setDescription(String description) {
+    void setDescription(@Nullable String description) {
         mDescription = description;
     }
 
+    @Nullable
     public String getUri() {
         return mUri;
     }
 
-    public void setUri(String uri) {
+    void setUri(@Nullable String uri) {
         mUri = uri;
     }
 
@@ -93,7 +97,7 @@ public class Product implements Serializable {
         return mMetadata;
     }
 
-    public void setMetadata(@Nullable Metadata metadata) {
+    void setMetadata(@Nullable Metadata metadata) {
         mMetadata = metadata;
     }
 
