@@ -34,6 +34,7 @@ import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Privacy;
+import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
@@ -1072,6 +1073,23 @@ public class VimeoClient {
     @NotNull
     public Call<Document> getDocument(@NotNull String uri, @NotNull VimeoCallback<Document> callback) {
         final Call<Document> call = mVimeoService.getDocument(getAuthHeader(), uri);
+        call.enqueue(callback);
+
+        return call;
+    }
+
+    /**
+     * Gets a {@link TextTrackList} at the provided uri. When finished, the callback will be invoked.
+     *
+     * @param uri      the uri of the text track.
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
+     * @return a {@link Call} with the {@link TextTrackList} type. This can be used for request
+     * cancellation.
+     */
+    @NotNull
+    public Call<TextTrackList> getTextTrackList(@NotNull String uri,
+                                                @NotNull VimeoCallback<TextTrackList> callback) {
+        Call<TextTrackList> call = mVimeoService.getTextTrackList(getAuthHeader(), uri);
         call.enqueue(callback);
 
         return call;
