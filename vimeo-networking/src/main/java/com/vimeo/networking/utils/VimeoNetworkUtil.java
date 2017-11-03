@@ -27,12 +27,15 @@ package com.vimeo.networking.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.vimeo.networking.VimeoClient;
+import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.stag.generated.Stag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Annotation;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,7 +47,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CacheControl;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Converter;
+import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -167,5 +173,36 @@ public class VimeoNetworkUtil {
                 }
             }
         }).start();
+    }
+
+    /**
+     * This utility method takes a Retrofit response and extracts a {@link VimeoError} object out of it if
+     * applicable. It will return null in the case where there has been a successful response.
+     *
+     * @param response A non-null response from the Vimeo API
+     * @return a {@link VimeoError} object extracted from the response or null
+     */
+    @Nullable
+    public static <ResponseType_T> VimeoError getErrorFromResponse(@Nullable final Response<ResponseType_T> response) {
+        if (response != null && response.isSuccessful()) {
+            return null;
+        }
+        VimeoError vimeoError = null;
+        if (response != null && response.errorBody() != null && response.errorBody().contentLength() > 0) {
+            try {
+                final Converter<ResponseBody, VimeoError> errorConverter = VimeoClient.getInstance()
+                        .getRetrofit()
+                        .responseBodyConverter(VimeoError.class, new Annotation[0]);
+                vimeoError = errorConverter.convert(response.errorBody());
+            } catch (final Exception e) {
+                //noinspection CallToPrintStackTrace
+                e.printStackTrace();
+            }
+        }
+        if (vimeoError == null) {
+            vimeoError = new VimeoError();
+        }
+        vimeoError.setResponse(response);
+        return vimeoError;
     }
 }
