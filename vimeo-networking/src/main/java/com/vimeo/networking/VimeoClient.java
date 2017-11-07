@@ -1335,7 +1335,7 @@ public class VimeoClient {
      * @return a {@link Call} with the {@link Products}. This can be used for request cancellation.
      */
     @NotNull
-    public Call<Products> getProducts( @NotNull VimeoCallback<Products> callback) {
+    public Call<Products> getProducts(@NotNull VimeoCallback<Products> callback) {
         Call<Products> call = mVimeoService.getProducts(getAuthHeader());
         call.enqueue(callback);
         return call;

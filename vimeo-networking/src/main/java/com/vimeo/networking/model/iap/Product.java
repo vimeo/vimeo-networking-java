@@ -3,6 +3,7 @@ package com.vimeo.networking.model.iap;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.Metadata;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
  * Created by brentwatson on 10/30/17.
  */
 @SuppressWarnings("unused")
-@UseStag
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 3597655131745491159L;
@@ -56,6 +57,9 @@ public class Product implements Serializable {
         return mProductId != null ? mProductId.hashCode() : 0;
     }
 
+    /**
+     * @return ID for the product (aka product SKU).  This is a unique value for the product.
+     */
     @Nullable
     public String getProductId() {
         return mProductId;
@@ -65,6 +69,9 @@ public class Product implements Serializable {
         mProductId = productId;
     }
 
+    /**
+     * @return Product name.
+     */
     @Nullable
     public String getName() {
         return mName;
@@ -74,6 +81,9 @@ public class Product implements Serializable {
         mName = name;
     }
 
+    /**
+     * @return Product description.
+     */
     @Nullable
     public String getDescription() {
         return mDescription;
@@ -83,6 +93,9 @@ public class Product implements Serializable {
         mDescription = description;
     }
 
+    /**
+     * @return relative URI that can be used to request product details.
+     */
     @Nullable
     public String getUri() {
         return mUri;
@@ -92,6 +105,9 @@ public class Product implements Serializable {
         mUri = uri;
     }
 
+    /**
+     * @return {@link #mMetadata}.
+     */
     @Nullable
     public Metadata getMetadata() {
         return mMetadata;
