@@ -42,6 +42,7 @@ import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.appconfiguration.AppConfiguration;
 import com.vimeo.networking.model.cinema.ProgramContentItemList;
+import com.vimeo.networking.model.iap.Product;
 import com.vimeo.networking.model.iap.Products;
 import com.vimeo.networking.model.live.LiveStats;
 import com.vimeo.networking.model.notifications.NotificationList;
@@ -271,6 +272,12 @@ public interface VimeoService {
                        @Url String uri,
                        @QueryMap Map<String, String> options,
                        @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET
+    Call<Product> getProduct(@Header("Authorization") String authHeader,
+                             @Url String uri,
+                             @QueryMap Map<String, String> options,
+                             @Header("Cache-Control") String cacheHeaderValue);
 
     // </editor-fold>
 
