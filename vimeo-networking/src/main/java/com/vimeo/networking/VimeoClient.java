@@ -68,6 +68,7 @@ import okhttp3.CacheControl;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
@@ -1504,6 +1505,37 @@ public class VimeoClient {
         final Call<Void> call = mVimeoService.emptyResponsePost(getAuthHeader(), uri, postBody);
         call.enqueue(callback);
         return call;
+    }
+
+    @Nullable
+    public VimeoError emptyResponsePostSync(String uri, @Nullable HashMap<String, String> postBody) {
+        VimeoError vimeoError = null;
+        if (uri == null) {
+            return new VimeoError("uri cannot be empty!");
+        }
+
+        if (postBody == null) {
+            postBody = new HashMap<>();
+        }
+
+        final Call<Void> call = mVimeoService.emptyResponsePost(getAuthHeader(), uri, postBody);
+        try {
+            final Response<Void> response = call.execute();
+            if (!isSuccessfulResponse(response)) {
+                vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
+                if (vimeoError == null) {
+                    vimeoError = new VimeoError();
+                }
+            }
+        } catch (final Exception e) {
+            vimeoError = new VimeoError();
+            vimeoError.setException(e);
+        }
+        return vimeoError;
+    }
+
+    private boolean isSuccessfulResponse(retrofit2.Response response) {
+        return response != null && response.isSuccessful() && response.body() != null;
     }
 
     /**
