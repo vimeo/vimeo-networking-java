@@ -1485,7 +1485,7 @@ public class VimeoClient {
      * @param callback The callback for the specific model type of the resource
      */
     @Nullable
-    public Call<Void> emptyResponsePost(String uri,
+    public Call<Void> emptyResponsePost(@Nullable String uri,
                                         @Nullable HashMap<String, String> postBody,
                                         VimeoCallback<Void> callback) {
         if (callback == null) {
@@ -1514,7 +1514,7 @@ public class VimeoClient {
      * @see #emptyResponsePost
      */
     @Nullable
-    public VimeoError emptyResponsePostSync(String uri, @Nullable HashMap<String, String> postBody) {
+    public VimeoError emptyResponsePostSync(@Nullable String uri, @Nullable HashMap<String, String> postBody) {
 
         VimeoError vimeoError = null;
         if (uri == null) {
@@ -1548,7 +1548,7 @@ public class VimeoClient {
      * @param response A network response
      * @return true if the response is successful and false otherwise
      */
-    private boolean isSuccessfulResponse(retrofit2.Response response) {
+    private boolean isSuccessfulResponse(@Nullable retrofit2.Response response) {
         return response != null && response.isSuccessful() && response.body() != null;
     }
 
