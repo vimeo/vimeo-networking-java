@@ -188,7 +188,7 @@ public class VimeoNetworkUtil {
             return null;
         }
         VimeoError vimeoError = null;
-        if (response != null && response.errorBody() != null && response.errorBody().contentLength() > 0) {
+        if (response != null && response.errorBody() != null) {
             try {
                 final Converter<ResponseBody, VimeoError> errorConverter = VimeoClient.getInstance()
                         .getRetrofit()
