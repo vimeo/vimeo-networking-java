@@ -1507,8 +1507,15 @@ public class VimeoClient {
         return call;
     }
 
+    /**
+     * A synchronous version of {@link #emptyResponsePost(String, HashMap, VimeoCallback)}
+     *
+     * @return A {@link VimeoError} if there has been a network error or null if the call has been successful.
+     * @see #emptyResponsePost
+     */
     @Nullable
     public VimeoError emptyResponsePostSync(String uri, @Nullable HashMap<String, String> postBody) {
+
         VimeoError vimeoError = null;
         if (uri == null) {
             return new VimeoError("uri cannot be empty!");
@@ -1531,9 +1538,16 @@ public class VimeoClient {
             vimeoError = new VimeoError();
             vimeoError.setException(e);
         }
+
         return vimeoError;
     }
 
+    /**
+     * Determines if a network response has been successful.
+     *
+     * @param response A network response
+     * @return true if the response is successful and false otherwise
+     */
     private boolean isSuccessfulResponse(retrofit2.Response response) {
         return response != null && response.isSuccessful() && response.body() != null;
     }
