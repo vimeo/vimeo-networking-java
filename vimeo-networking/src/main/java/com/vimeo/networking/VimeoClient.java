@@ -40,6 +40,8 @@ import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking.model.iap.Product;
+import com.vimeo.networking.model.iap.Products;
 import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
@@ -1327,6 +1329,29 @@ public class VimeoClient {
         return call;
     }
 
+    /**
+     * Gets a list of {@link Products} that can be purchased, such as Vimeo subscriptions.
+     *
+     * @param callback the {@link VimeoCallback} to be invoked when the request finishes
+     * @return a {@link Call} with the {@link Products}. This can be used for request cancellation.
+     */
+    @NotNull
+    public Call<Products> getProducts(@NotNull VimeoCallback<Products> callback) {
+        Call<Products> call = mVimeoService.getProducts(getAuthHeader());
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * Get a single {@link Product} item from a given product URI.
+     *
+     * @param uri      URI for a product. Can be obtained from {@link Product#getUri()}.
+     * @param callback Callback that will be executed once a {@link Product} has been loaded.
+     * @return {@link Call} that can be used to cancel network requests.
+     */
+    public Call<Product> getProduct(String uri, VimeoCallback<Product> callback) {
+        return getContent(uri, CacheControl.FORCE_NETWORK, GetRequestCaller.PRODUCT, null, null, null, callback);
+    }
 
     /**
      * Fetches the currently authenticated user from the API

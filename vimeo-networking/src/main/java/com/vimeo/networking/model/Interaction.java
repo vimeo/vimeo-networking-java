@@ -41,28 +41,50 @@ import java.util.List;
 @UseStag
 public class Interaction implements Serializable {
 
-    private static final long serialVersionUID = 2033767841952340400L;
+    private static final long serialVersionUID = -5159299959634106837L;
 
-    private static final String STREAM_PURCHASED = "purchased";
-    private static final String STREAM_RESTRICTED = "restricted";
-    private static final String STREAM_AVAILABLE = "available";
-    private static final String STREAM_UNAVAILABLE = "unavailable";
+    private static final String PURCHASED = "purchased";
+    private static final String RESTRICTED = "restricted";
+    private static final String AVAILABLE = "available";
+    private static final String UNAVAILABLE = "unavailable";
 
     @UseStag
     public enum Stream {
-        @SerializedName(STREAM_PURCHASED)
-        PURCHASED(STREAM_PURCHASED), // you have purchased it (without using a promo code)
-        @SerializedName(STREAM_RESTRICTED)
-        RESTRICTED(STREAM_RESTRICTED), // you don't have it, can't purchase it in this country
-        @SerializedName(STREAM_AVAILABLE)
-        AVAILABLE(STREAM_AVAILABLE), // you don't have it, can purchase it
-        @SerializedName(STREAM_UNAVAILABLE)
-        UNAVAILABLE(STREAM_UNAVAILABLE); // you don't have it, can't purchase it
+        @SerializedName(Interaction.PURCHASED)
+        PURCHASED(Interaction.PURCHASED), // you have purchased it (without using a promo code)
+        @SerializedName(Interaction.RESTRICTED)
+        RESTRICTED(Interaction.RESTRICTED), // you don't have it, can't purchase it in this country
+        @SerializedName(Interaction.AVAILABLE)
+        AVAILABLE(Interaction.AVAILABLE), // you don't have it, can purchase it
+        @SerializedName(Interaction.UNAVAILABLE)
+        UNAVAILABLE(Interaction.UNAVAILABLE); // you don't have it, can't purchase it
 
         @NotNull
         private final String mName;
 
         Stream(@NotNull String name) {
+            mName = name;
+        }
+
+        @Override
+        public String toString() {
+            return mName;
+        }
+    }
+
+    @UseStag
+    public enum IapStatus {
+        @SerializedName(Interaction.PURCHASED)
+        PURCHASED(Interaction.PURCHASED),
+        @SerializedName(Interaction.AVAILABLE)
+        AVAILABLE(Interaction.AVAILABLE),
+        @SerializedName(Interaction.UNAVAILABLE)
+        UNAVAILABLE(Interaction.UNAVAILABLE);
+
+        @NotNull
+        private final String mName;
+
+        IapStatus(@NotNull String name) {
             mName = name;
         }
 
@@ -86,6 +108,10 @@ public class Interaction implements Serializable {
     @Nullable
     @SerializedName("stream")
     protected Stream mStream;
+
+    @Nullable
+    @SerializedName("status")
+    protected IapStatus mStatus;
 
     @Nullable
     @SerializedName("expires_time")
