@@ -68,6 +68,7 @@ import okhttp3.CacheControl;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
@@ -1484,7 +1485,7 @@ public class VimeoClient {
      * @param callback The callback for the specific model type of the resource
      */
     @Nullable
-    public Call<Void> emptyResponsePost(String uri,
+    public Call<Void> emptyResponsePost(@Nullable String uri,
                                         @Nullable HashMap<String, String> postBody,
                                         VimeoCallback<Void> callback) {
         if (callback == null) {
@@ -1504,6 +1505,51 @@ public class VimeoClient {
         final Call<Void> call = mVimeoService.emptyResponsePost(getAuthHeader(), uri, postBody);
         call.enqueue(callback);
         return call;
+    }
+
+    /**
+     * A synchronous version of {@link #emptyResponsePost(String, HashMap, VimeoCallback)}
+     *
+     * @return A {@link VimeoError} if there has been a network error or null if the call has been successful.
+     * @see #emptyResponsePost
+     */
+    @Nullable
+    public VimeoError emptyResponsePostSync(@Nullable String uri, @Nullable HashMap<String, String> postBody) {
+
+        VimeoError vimeoError = null;
+        if (uri == null) {
+            return new VimeoError("uri cannot be empty!");
+        }
+
+        if (postBody == null) {
+            postBody = new HashMap<>();
+        }
+
+        final Call<Void> call = mVimeoService.emptyResponsePost(getAuthHeader(), uri, postBody);
+        try {
+            final Response<Void> response = call.execute();
+            if (!isSuccessfulResponse(response)) {
+                vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
+                if (vimeoError == null) {
+                    vimeoError = new VimeoError();
+                }
+            }
+        } catch (final Exception e) {
+            vimeoError = new VimeoError();
+            vimeoError.setException(e);
+        }
+
+        return vimeoError;
+    }
+
+    /**
+     * Determines if a network response has been successful.
+     *
+     * @param response A network response
+     * @return true if the response is successful and false otherwise
+     */
+    private boolean isSuccessfulResponse(@Nullable retrofit2.Response response) {
+        return response != null && response.isSuccessful();
     }
 
     /**
