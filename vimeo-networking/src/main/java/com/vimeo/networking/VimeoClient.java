@@ -1549,7 +1549,7 @@ public class VimeoClient {
      * @return true if the response is successful and false otherwise
      */
     private boolean isSuccessfulResponse(@Nullable retrofit2.Response response) {
-        return response != null && response.isSuccessful() && response.body() != null;
+        return response != null && response.isSuccessful();
     }
 
     /**
