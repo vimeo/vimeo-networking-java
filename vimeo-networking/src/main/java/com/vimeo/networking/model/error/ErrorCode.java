@@ -281,6 +281,10 @@ public enum ErrorCode {
     INVALID_INPUT_EMPTY_USER_URI,
     @SerializedName("4003")
     UPLOAD_TICKET_CREATION_ERROR,
+    @SerializedName("4101")
+    UPLOAD_QUOTA_SIZE_EXCEEDED,
+    @SerializedName("4102")
+    UPLOAD_QUOTA_COUNT_EXCEEDED,
     // Unused
     // These most likely won't affect the Vimeo app since we don't currently have these settings
     @SerializedName("2254")
