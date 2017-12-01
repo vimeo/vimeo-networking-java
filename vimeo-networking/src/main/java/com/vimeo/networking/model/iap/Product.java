@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  * Represents a Product that can be purchased, such as a Vimeo subscription.
- *
+ * <p>
  * Created by brentwatson on 10/30/17.
  */
 @SuppressWarnings("unused")
@@ -31,6 +31,10 @@ public class Product implements Serializable {
     @Nullable
     @SerializedName("description")
     private String mDescription;
+
+    @Nullable
+    @SerializedName("billing_period")
+    private String mBillingPeriod;
 
     @Nullable
     @SerializedName("uri")
@@ -93,6 +97,15 @@ public class Product implements Serializable {
         mDescription = description;
     }
 
+    @Nullable
+    public String getBillingPeriod() {
+        return mBillingPeriod;
+    }
+
+    void setBillingPeriod(@Nullable String billingPeriod) {
+        mBillingPeriod = billingPeriod;
+    }
+
     /**
      * @return relative URI that can be used to request product details.
      */
@@ -123,6 +136,7 @@ public class Product implements Serializable {
                "mProductId='" + mProductId + '\'' +
                ", mName='" + mName + '\'' +
                ", mDescription='" + mDescription + '\'' +
+               ", mBillingPeriod ='" + mBillingPeriod + '\'' +
                ", mUri='" + mUri + '\'' +
                ", mMetadata='" + mMetadata + '\'' +
                '}';
