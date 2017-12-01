@@ -37,6 +37,10 @@ public class Product implements Serializable {
     private String mBillingPeriod;
 
     @Nullable
+    @SerializedName("price")
+    private String mPrice;
+
+    @Nullable
     @SerializedName("uri")
     private String mUri;
 
@@ -106,6 +110,15 @@ public class Product implements Serializable {
         mBillingPeriod = billingPeriod;
     }
 
+    @Nullable
+    public String getPrice() {
+        return mPrice;
+    }
+
+    void setPrice(@Nullable String price) {
+        mPrice = price;
+    }
+
     /**
      * @return relative URI that can be used to request product details.
      */
@@ -136,7 +149,8 @@ public class Product implements Serializable {
                "mProductId='" + mProductId + '\'' +
                ", mName='" + mName + '\'' +
                ", mDescription='" + mDescription + '\'' +
-               ", mBillingPeriod ='" + mBillingPeriod + '\'' +
+               ", mBillingPeriod='" + mBillingPeriod + '\'' +
+               ", mPrice='" + mPrice + '\'' +
                ", mUri='" + mUri + '\'' +
                ", mMetadata='" + mMetadata + '\'' +
                '}';
