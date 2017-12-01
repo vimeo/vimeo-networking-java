@@ -115,7 +115,7 @@ public class Product implements Serializable {
         return mPrice;
     }
 
-    void setPrice(@Nullable String price) {
+    public void setPrice(@Nullable String price) {
         mPrice = price;
     }
 
