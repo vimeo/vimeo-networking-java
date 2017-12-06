@@ -84,7 +84,7 @@ public class VimeoClient {
     private static volatile boolean sContinuePinCodeAuthorizationRefreshCycle;
 
     @NotNull
-    private final Configuration mConfiguration;
+    private Configuration mConfiguration;
     @NotNull
     private final VimeoService mVimeoService;
     @Nullable
@@ -137,7 +137,11 @@ public class VimeoClient {
     }
 
     public static void initialize(@NotNull Configuration configuration) {
-        sSharedInstance = new VimeoClient(configuration);
+        if (sSharedInstance != null) {
+            sSharedInstance.mConfiguration = configuration;
+        } else {
+            sSharedInstance = new VimeoClient(configuration);
+        }
     }
 
     private VimeoClient(@NotNull Configuration configuration) {
@@ -246,6 +250,10 @@ public class VimeoClient {
     public void saveAccount(@Nullable VimeoAccount vimeoAccount, String email) {
         setVimeoAccount(vimeoAccount);
         mConfiguration.saveAccount(vimeoAccount, email);
+    }
+
+    public void setConfiguration(@NotNull Configuration configuration) {
+        mConfiguration = configuration;
     }
 
     @NotNull
