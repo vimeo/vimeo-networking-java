@@ -18,7 +18,7 @@ import java.io.Serializable;
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class Product implements Serializable {
 
-    private static final long serialVersionUID = 3597655131745491159L;
+    private static final long serialVersionUID = -8874937816078232655L;
 
     @Nullable
     @SerializedName("product_id")
@@ -35,10 +35,6 @@ public class Product implements Serializable {
     @Nullable
     @SerializedName("billing_period")
     private String mBillingPeriod;
-
-    @Nullable
-    @SerializedName("price")
-    private String mPrice;
 
     @Nullable
     @SerializedName("uri")
@@ -110,15 +106,6 @@ public class Product implements Serializable {
         mBillingPeriod = billingPeriod;
     }
 
-    @Nullable
-    public String getPrice() {
-        return mPrice;
-    }
-
-    public void setPrice(@Nullable String price) {
-        mPrice = price;
-    }
-
     /**
      * @return relative URI that can be used to request product details.
      */
@@ -150,7 +137,6 @@ public class Product implements Serializable {
                ", mName='" + mName + '\'' +
                ", mDescription='" + mDescription + '\'' +
                ", mBillingPeriod='" + mBillingPeriod + '\'' +
-               ", mPrice='" + mPrice + '\'' +
                ", mUri='" + mUri + '\'' +
                ", mMetadata='" + mMetadata + '\'' +
                '}';
