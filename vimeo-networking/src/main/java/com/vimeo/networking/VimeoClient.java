@@ -1588,7 +1588,7 @@ public class VimeoClient {
     public Call putContent(@Nullable final String uri,
                            @Nullable final CacheControl cacheControl,
                            @Nullable final Map<String, String> options,
-                           @Nullable final ArrayList<Object> body,
+                           @Nullable final Object body,
                            @NotNull final IgnoreResponseVimeoCallback callback) {
 
         if (uri == null || uri.isEmpty()) {
@@ -1601,7 +1601,7 @@ public class VimeoClient {
         final Map<String, String> optionsMap = options == null ? new HashMap<String, String>() : options;
 
         final Call<Object> call;
-        if (body != null && !body.isEmpty()) {
+        if (body != null) {
             call = mVimeoService.PUT(getAuthHeader(), uri, cacheHeaderValue, optionsMap, body);
         } else {
             call = mVimeoService.PUT(getAuthHeader(), uri, optionsMap);

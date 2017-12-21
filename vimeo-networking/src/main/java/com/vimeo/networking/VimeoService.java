@@ -383,7 +383,7 @@ public interface VimeoService {
                      @Url String uri,
                      @Header("Cache-Control") String cacheHeaderValue,
                      @QueryMap Map<String, String> options,
-                     @Body ArrayList<Object> body);
+                     @Body Object body);
 
     @DELETE
     Call<Object> DELETE(@Header("Authorization") String authHeader,
