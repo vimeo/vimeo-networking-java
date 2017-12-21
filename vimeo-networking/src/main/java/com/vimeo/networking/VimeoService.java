@@ -378,6 +378,13 @@ public interface VimeoService {
                      @Url String uri,
                      @QueryMap Map<String, String> options);
 
+    @PUT
+    Call<Object> PUT(@Header("Authorization") String authHeader,
+                     @Url String uri,
+                     @Header("Cache-Control") String cacheHeaderValue,
+                     @QueryMap Map<String, String> options,
+                     @Body ArrayList<Object> body);
+
     @DELETE
     Call<Object> DELETE(@Header("Authorization") String authHeader,
                         @Url String uri,
