@@ -86,17 +86,17 @@ public class VimeoClient {
     @NotNull
     private Configuration mConfiguration;
     @NotNull
-    private final VimeoService mVimeoService;
+    private VimeoService mVimeoService;
     @Nullable
-    private final Cache mCache;
+    private Cache mCache;
     @Nullable
     private String mCurrentCodeGrantState;
 
     @NotNull
-    private final Retrofit mRetrofit;
+    private Retrofit mRetrofit;
 
     @NotNull
-    private final String mUserAgent;
+    private String mUserAgent;
 
     @Nullable
     private Timer mPinCodeAuthorizationTimer;
@@ -138,13 +138,23 @@ public class VimeoClient {
 
     public static void initialize(@NotNull Configuration configuration) {
         if (sSharedInstance != null) {
-            sSharedInstance.mConfiguration = configuration;
+            sSharedInstance.mConfiguration.deleteAccount(sSharedInstance.mVimeoAccount);
+            sSharedInstance.setVimeoAccount(null);
+            sSharedInstance.setup(configuration);
         } else {
             sSharedInstance = new VimeoClient(configuration);
         }
     }
 
     private VimeoClient(@NotNull Configuration configuration) {
+        setup(configuration);
+    }
+
+    /**
+     * Setup Retrofit object, API service and cache object to make requests.
+     * This setup is done when a new {@link Configuration} object is initialized.
+     */
+    private void setup(final Configuration configuration) {
         mConfiguration = configuration;
         mConfiguration.mInterceptors.add(mBaseUrlInterceptor);
         mCache = mConfiguration.getCache();
