@@ -39,7 +39,7 @@ import java.io.Serializable;
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class NotificationConnection extends Connection {
 
-    private static final long serialVersionUID = 4908222195478449252L;
+    private static final long serialVersionUID = -8043872922883259170L;
 
     @SerializedName("new_total")
     protected int mNewTotal;
@@ -50,6 +50,10 @@ public class NotificationConnection extends Connection {
     @Nullable
     @SerializedName("type_count")
     protected NotificationTypeCount mTypeCount;
+
+    @Nullable
+    @SerializedName("type_unseen_count")
+    protected NotificationTypeCount mTypeUnseenCount;
 
     public int getNewTotal() {
         return mNewTotal;
@@ -64,6 +68,11 @@ public class NotificationConnection extends Connection {
         return mTypeCount;
     }
 
+    @Nullable
+    public NotificationTypeCount getTypeUnseenCount() {
+        return mTypeUnseenCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) { return true; }
@@ -75,6 +84,7 @@ public class NotificationConnection extends Connection {
         if (mUnreadTotal != that.mUnreadTotal) { return false; }
         if (mTotal != that.mTotal) { return false; }
         if (mTypeCount != null ? !mTypeCount.equals(that.mTypeCount) : that.mTypeCount != null) { return false; }
+        if (mTypeUnseenCount != null ? !mTypeUnseenCount.equals(that.mTypeUnseenCount) : that.mTypeUnseenCount != null) { return false; }
         return mUri != null ? mUri.equals(that.mUri) : that.mUri == null;
 
     }
@@ -84,6 +94,7 @@ public class NotificationConnection extends Connection {
         int result = mNewTotal;
         result = 31 * result + mUnreadTotal;
         result = 31 * result + (mTypeCount != null ? mTypeCount.hashCode() : 0);
+        result = 31 * result + (mTypeUnseenCount != null ? mTypeUnseenCount.hashCode() : 0);
         result = 31 * result + (mUri != null ? mUri.hashCode() : 0);
         result = 31 * result + mTotal;
         return result;
@@ -95,6 +106,7 @@ public class NotificationConnection extends Connection {
                "newTotal=" + mNewTotal +
                ", unreadTotal=" + mUnreadTotal +
                ", mTypeCount=" + mTypeCount +
+               ", mTypeUnseenCount=" + mTypeUnseenCount +
                ", uri='" + mUri + '\'' +
                ", total=" + mTotal +
                '}';
