@@ -370,6 +370,13 @@ public interface VimeoService {
     @PUT
     Call<User> putContentWithUserResponse(@Header("Authorization") String authHeader,
                                           @Url String uri,
+                                          @Header("Cache-Control") String cacheHeaderValue,
+                                          @QueryMap Map<String, String> options,
+                                          @Body Object body);
+
+    @PUT
+    Call<User> putContentWithUserResponse(@Header("Authorization") String authHeader,
+                                          @Url String uri,
                                           @QueryMap Map<String, String> options);
 
     /**
@@ -382,6 +389,13 @@ public interface VimeoService {
     Call<Object> PUT(@Header("Authorization") String authHeader,
                      @Url String uri,
                      @QueryMap Map<String, String> options);
+
+    @PUT
+    Call<Object> PUT(@Header("Authorization") String authHeader,
+                     @Url String uri,
+                     @Header("Cache-Control") String cacheHeaderValue,
+                     @QueryMap Map<String, String> options,
+                     @Body Object body);
 
     @DELETE
     Call<Object> DELETE(@Header("Authorization") String authHeader,

@@ -1599,19 +1599,57 @@ public class VimeoClient {
      * @return a call with the request, or null if the parameters passed are invalid.
      */
     @Nullable
-    public Call<User> putContentWithUserResponse(@Nullable String uri,
-                                                 @Nullable Map<String, String> options,
-                                                 @NotNull VimeoCallback<User> callback) {
+    public Call<User> putContentWithUserResponse(@Nullable final String uri,
+                                                 @Nullable final CacheControl cacheControl,
+                                                 @Nullable final Map<String, String> options,
+                                                 @Nullable final Object body,
+                                                 @NotNull final VimeoCallback<User> callback) {
         if (uri == null || uri.isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
         }
 
-        if (options == null) {
-            options = new HashMap<>();
+        final String cacheHeaderValue = cacheControl != null ? cacheControl.toString() : null;
+
+        final Map<String, String> optionsMap = options == null ? new HashMap<String, String>() : options;
+
+        final Call<User> call = body != null
+                ? mVimeoService.putContentWithUserResponse(getAuthHeader(), uri, cacheHeaderValue, optionsMap, body)
+                : mVimeoService.putContentWithUserResponse(getAuthHeader(), uri, optionsMap);
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * A generic PUT call that takes in the URI of the specific resource.
+     *
+     * @param uri          URI of the resource to PUT
+     * @param cacheControl Cache control type
+     * @param body         The body of the PUT request
+     * @param callback     The callback for the specific model type of the resource
+     */
+    @Nullable
+    public Call putContent(@Nullable final String uri,
+                           @Nullable final CacheControl cacheControl,
+                           @Nullable final Map<String, String> options,
+                           @Nullable final Object body,
+                           @NotNull final IgnoreResponseVimeoCallback callback) {
+
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+            return null;
         }
 
-        final Call<User> call = mVimeoService.putContentWithUserResponse(getAuthHeader(), uri, options);
+        final String cacheHeaderValue = cacheControl != null ? cacheControl.toString() : null;
+
+        final Map<String, String> optionsMap = options == null ? new HashMap<String, String>() : options;
+
+        final Call<Object> call;
+        if (body != null) {
+            call = mVimeoService.PUT(getAuthHeader(), uri, cacheHeaderValue, optionsMap, body);
+        } else {
+            call = mVimeoService.PUT(getAuthHeader(), uri, optionsMap);
+        }
         call.enqueue(callback);
         return call;
     }
@@ -1620,19 +1658,7 @@ public class VimeoClient {
     public Call putContent(@Nullable String uri,
                            @Nullable Map<String, String> options,
                            @NotNull IgnoreResponseVimeoCallback callback) {
-
-        if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
-            return null;
-        }
-
-        if (options == null) {
-            options = new HashMap<>();
-        }
-
-        final Call<Object> call = mVimeoService.PUT(getAuthHeader(), uri, options);
-        call.enqueue(callback);
-        return call;
+        return putContent(uri, null, options, null, callback);
     }
 
     @Nullable
