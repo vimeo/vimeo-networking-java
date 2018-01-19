@@ -1589,6 +1589,33 @@ public class VimeoClient {
         return call;
     }
 
+    /**
+     * Certain endpoints will return the current user in the response when you perform a PUT on them. Use this method to
+     * interact with them.
+     *
+     * @param uri      the URI to connect to.
+     * @param options  the options that can be sent with the request.
+     * @param callback the callback that will be invoked.
+     * @return a call with the request, or null if the parameters passed are invalid.
+     */
+    @Nullable
+    public Call<User> putContentWithUserResponse(@Nullable String uri,
+                                                 @Nullable Map<String, String> options,
+                                                 @NotNull VimeoCallback<User> callback) {
+        if (uri == null || uri.isEmpty()) {
+            callback.failure(new VimeoError("uri cannot be empty!"));
+            return null;
+        }
+
+        if (options == null) {
+            options = new HashMap<>();
+        }
+
+        final Call<User> call = mVimeoService.putContentWithUserResponse(getAuthHeader(), uri, options);
+        call.enqueue(callback);
+        return call;
+    }
+
     @Nullable
     public Call putContent(@Nullable String uri,
                            @Nullable Map<String, String> options,
