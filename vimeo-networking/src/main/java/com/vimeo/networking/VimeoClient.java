@@ -1589,23 +1589,45 @@ public class VimeoClient {
         return call;
     }
 
+    /**
+     * A generic PUT call that takes in the URI of the specific resource.
+     *
+     * @param uri          URI of the resource to PUT
+     * @param cacheControl Cache control type
+     * @param body         The body of the PUT request
+     * @param callback     The callback for the specific model type of the resource
+     */
     @Nullable
-    public Call putContent(@Nullable String uri,
-                           @Nullable Map<String, String> options,
-                           @NotNull IgnoreResponseVimeoCallback callback) {
+    public Call putContent(@Nullable final String uri,
+                           @Nullable final CacheControl cacheControl,
+                           @Nullable final Map<String, String> options,
+                           @Nullable final Object body,
+                           @NotNull final IgnoreResponseVimeoCallback callback) {
 
         if (uri == null || uri.isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
         }
 
-        if (options == null) {
-            options = new HashMap<>();
-        }
+        final String cacheHeaderValue = cacheControl != null ? cacheControl.toString() : null;
 
-        final Call<Object> call = mVimeoService.PUT(getAuthHeader(), uri, options);
+        final Map<String, String> optionsMap = options == null ? new HashMap<String, String>() : options;
+
+        final Call<Object> call;
+        if (body != null) {
+            call = mVimeoService.PUT(getAuthHeader(), uri, cacheHeaderValue, optionsMap, body);
+        } else {
+            call = mVimeoService.PUT(getAuthHeader(), uri, optionsMap);
+        }
         call.enqueue(callback);
         return call;
+    }
+
+    @Nullable
+    public Call putContent(@Nullable String uri,
+                           @Nullable Map<String, String> options,
+                           @NotNull IgnoreResponseVimeoCallback callback) {
+        return putContent(uri, null, options, null, callback);
     }
 
     @Nullable
