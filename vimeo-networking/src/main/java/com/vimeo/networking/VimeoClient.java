@@ -138,7 +138,6 @@ public class VimeoClient {
 
     public static void initialize(@NotNull Configuration configuration) {
         if (sSharedInstance != null) {
-            sSharedInstance.mConfiguration.deleteAccount(sSharedInstance.mVimeoAccount);
             sSharedInstance.setup(configuration);
         } else {
             sSharedInstance = new VimeoClient(configuration);
