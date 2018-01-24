@@ -1593,9 +1593,11 @@ public class VimeoClient {
      * Certain endpoints will return the current user in the response when you perform a PUT on them. Use this method to
      * interact with them.
      *
-     * @param uri      the URI to connect to.
-     * @param options  the options that can be sent with the request.
-     * @param callback the callback that will be invoked.
+     * @param uri          the URI to connect to.
+     * @param cacheControl allows the consumer to force a request from cache or network.
+     * @param options      the options that can be sent with the request.
+     * @param body         The body of the PUT request
+     * @param callback     the callback that will be invoked.
      * @return a call with the request, or null if the parameters passed are invalid.
      */
     @Nullable
