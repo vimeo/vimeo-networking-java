@@ -427,5 +427,94 @@ public class Configuration {
             return new Configuration(this);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Configuration that = (Configuration) o;
+
+        if (mCacheSize != that.mCacheSize) {
+            return false;
+        }
+        if (mCacheMaxAge != that.mCacheMaxAge) {
+            return false;
+        }
+        if (mTimeout != that.mTimeout) {
+            return false;
+        }
+        if (mCertPinningEnabled != that.mCertPinningEnabled) {
+            return false;
+        }
+        if (!mBaseUrl.equals(that.mBaseUrl)) {
+            return false;
+        }
+        if (mClientID != null ? !mClientID.equals(that.mClientID) : that.mClientID != null) {
+            return false;
+        }
+        if (mClientSecret != null ? !mClientSecret.equals(that.mClientSecret) : that.mClientSecret != null) {
+            return false;
+        }
+        if (mScope != null ? !mScope.equals(that.mScope) : that.mScope != null) {
+            return false;
+        }
+        if (mAccessToken != null ? !mAccessToken.equals(that.mAccessToken) : that.mAccessToken != null) {
+            return false;
+        }
+        if (mAccountStore != null ? !mAccountStore.equals(that.mAccountStore) : that.mAccountStore != null) {
+            return false;
+        }
+        if (mNetworkInterceptors != null ? !mNetworkInterceptors.equals(that.mNetworkInterceptors) :
+                that.mNetworkInterceptors != null) {
+            return false;
+        }
+        if (mInterceptors != null ? !mInterceptors.equals(that.mInterceptors) : that.mInterceptors != null) {
+            return false;
+        }
+        if (mCodeGrantRedirectURI != null ? !mCodeGrantRedirectURI.equals(that.mCodeGrantRedirectURI) :
+                that.mCodeGrantRedirectURI != null) {
+            return false;
+        }
+        if (mUserAgentString != null ? !mUserAgentString.equals(that.mUserAgentString) :
+                that.mUserAgentString != null) {
+            return false;
+        }
+        if (mCacheDirectory != null ? !mCacheDirectory.equals(that.mCacheDirectory) :
+                that.mCacheDirectory != null) {
+            return false;
+        }
+        if (mLogProvider != null ? !mLogProvider.equals(that.mLogProvider) : that.mLogProvider != null) {
+            return false;
+        }
+        return mLogLevel == that.mLogLevel;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mBaseUrl.hashCode();
+        result = 31 * result + (mClientID != null ? mClientID.hashCode() : 0);
+        result = 31 * result + (mClientSecret != null ? mClientSecret.hashCode() : 0);
+        result = 31 * result + (mScope != null ? mScope.hashCode() : 0);
+        result = 31 * result + (mAccessToken != null ? mAccessToken.hashCode() : 0);
+        result = 31 * result + (mAccountStore != null ? mAccountStore.hashCode() : 0);
+        result = 31 * result + (mNetworkInterceptors != null ? mNetworkInterceptors.hashCode() : 0);
+        result = 31 * result + (mInterceptors != null ? mInterceptors.hashCode() : 0);
+        result = 31 * result + (mCodeGrantRedirectURI != null ? mCodeGrantRedirectURI.hashCode() : 0);
+        result = 31 * result + (mUserAgentString != null ? mUserAgentString.hashCode() : 0);
+        result = 31 * result + (mCacheDirectory != null ? mCacheDirectory.hashCode() : 0);
+        result = 31 * result + mCacheSize;
+        result = 31 * result + mCacheMaxAge;
+        result = 31 * result + mTimeout;
+        result = 31 * result + (mCertPinningEnabled ? 1 : 0);
+        result = 31 * result + (mLogProvider != null ? mLogProvider.hashCode() : 0);
+        result = 31 * result + (mLogLevel != null ? mLogLevel.hashCode() : 0);
+        return result;
+    }
+
     // </editor-fold>
 }
