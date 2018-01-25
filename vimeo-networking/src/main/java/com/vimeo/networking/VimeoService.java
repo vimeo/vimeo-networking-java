@@ -367,6 +367,18 @@ public interface VimeoService {
     Call<Products> getProducts(@Header("Authorization") String authHeader);
     // </editor-fold>
 
+    @PUT
+    Call<User> putContentWithUserResponse(@Header("Authorization") String authHeader,
+                                          @Url String uri,
+                                          @Header("Cache-Control") String cacheHeaderValue,
+                                          @QueryMap Map<String, String> options,
+                                          @Body Object body);
+
+    @PUT
+    Call<User> putContentWithUserResponse(@Header("Authorization") String authHeader,
+                                          @Url String uri,
+                                          @QueryMap Map<String, String> options);
+
     /**
      * ---------------------------------------------------------------------------------------------------
      * Generic Region
