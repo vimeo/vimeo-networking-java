@@ -144,4 +144,35 @@ public class Upload implements Serializable{
         return mUploadLink;
     }
 
+    void setApproach(@Nullable String approach) {
+        mApproach = approach;
+    }
+
+    void setCompleteUri(@Nullable String completeUri) {
+        mCompleteUri = completeUri;
+    }
+
+    void setStatus(@Nullable Status status) {
+        mStatus = status;
+    }
+
+    void setUploadLink(@Nullable String uploadLink) {
+        mUploadLink = uploadLink;
+    }
+
+    void setForm(@Nullable String form) {
+        mForm = form;
+    }
+
+    void setLink(@Nullable String link) {
+        mLink = link;
+    }
+
+    void setRedirectUrl(@Nullable String redirectUrl) {
+        mRedirectUrl = redirectUrl;
+    }
+
+    void setSize(long size) {
+        mSize = size;
+    }
 }
