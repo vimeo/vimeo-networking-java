@@ -224,7 +224,7 @@ public class Video implements Serializable {
 
     @Nullable
     @SerializedName("upload")
-    private Upload mUpload;
+    public Upload mUpload;
 
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
