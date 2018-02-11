@@ -222,6 +222,10 @@ public class Video implements Serializable {
     @SerializedName("live")
     public com.vimeo.networking.model.live.Live mLive;
 
+    @Nullable
+    @SerializedName("upload")
+    private Upload mUpload;
+
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
      * comparison.
@@ -233,6 +237,12 @@ public class Video implements Serializable {
     // Getters
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Getters">
+
+    @Nullable
+    public Upload getUpload() {
+        return mUpload;
+    }
+
     public String getUri() {
         return mUri;
     }
@@ -665,7 +675,7 @@ public class Video implements Serializable {
      * @see PlayProgress#getSeconds() for nullable value
      */
     public float getPlayProgressSeconds() {
-        PlayProgress playProgress = getPlayProgress();
+        final PlayProgress playProgress = getPlayProgress();
         if (playProgress == null) {
             return Vimeo.NOT_FOUND;
         }
@@ -674,7 +684,7 @@ public class Video implements Serializable {
 
     /** @see #getPlayProgressSeconds() */
     public long getPlayProgressMillis() {
-        float progressSeconds = getPlayProgressSeconds();
+        final float progressSeconds = getPlayProgressSeconds();
         if (progressSeconds == Vimeo.NOT_FOUND) {
             return Vimeo.NOT_FOUND;
         }
@@ -755,8 +765,8 @@ public class Video implements Serializable {
                 return TvodVideoType.PURCHASE;
             }
             // rentals or subscriptions that have been purchased will always have an expiration date
-            Date rentalExpires = getTvodRentalExpiration();
-            Date subscriptionExpires = getTvodSubscriptionExpiration();
+            final Date rentalExpires = getTvodRentalExpiration();
+            final Date subscriptionExpires = getTvodSubscriptionExpiration();
             if (rentalExpires != null && subscriptionExpires != null) {
                 if (rentalExpires.after(subscriptionExpires)) {
                     return TvodVideoType.RENTAL;
@@ -796,8 +806,8 @@ public class Video implements Serializable {
     @Nullable
     public Date getTvodExpiration() {
         if (isTvod()) {
-            Date rentalExpires = getTvodRentalExpiration();
-            Date subscriptionExpires = getTvodSubscriptionExpiration();
+            final Date rentalExpires = getTvodRentalExpiration();
+            final Date subscriptionExpires = getTvodSubscriptionExpiration();
             if (rentalExpires != null && subscriptionExpires != null) {
                 if (rentalExpires.after(subscriptionExpires)) {
                     return rentalExpires;
@@ -990,7 +1000,7 @@ public class Video implements Serializable {
             return false;
         }
 
-        Video that = (Video) o;
+        final Video that = (Video) o;
 
         return (this.mResourceKey != null && that.mResourceKey != null) &&
                this.mResourceKey.equals(that.mResourceKey);
