@@ -36,6 +36,10 @@ class TestApp : Application() {
             configBuilder.enableCertPinning(false)
             configBuilder.setLogLevel(LogLevel.VERBOSE)
         }
+        configBuilder
+                .setCacheDirectory(this.cacheDir)
+                .setUserAgentString(getUserAgentString(this))
+                .setDebugLogger(NetworkingLogger())
         VimeoClient.initialize(configBuilder.build())
         // </editor-fold>
     }
@@ -56,8 +60,7 @@ class TestApp : Application() {
             val codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" + getString(R.string.deeplink_redirect_host)
             val testAccountStore = TestAccountStore(this.applicationContext)
             val configBuilder = Configuration.Builder(clientId, clientSecret, SCOPE)
-            configBuilder.setCacheDirectory(this.cacheDir)
-                    .setUserAgentString(getUserAgentString(this)).setDebugLogger(NetworkingLogger())
+            configBuilder
                     .setCodeGrantRedirectUri(codeGrantRedirectUri)
 
             return configBuilder
