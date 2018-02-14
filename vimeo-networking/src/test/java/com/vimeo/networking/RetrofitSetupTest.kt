@@ -27,6 +27,7 @@ package com.vimeo.networking
 import com.vimeo.networking.Configuration.Builder
 import com.vimeo.networking.logging.ClientLogger
 import okhttp3.*
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -40,6 +41,32 @@ class RetrofitSetupTest {
     @Before
     fun setUp() {
         ClientLogger.setLogLevel(Vimeo.LogLevel.ERROR)
+    }
+
+    @Test
+    fun `user agent is successfully created with valid characters`() {
+        val retrofitSetup = RetrofitSetup(
+                Configuration.Builder("test")
+                        .setBaseUrl("http://unittesting")
+                        .setUserAgentString("test/test")
+                        .build(),
+                null
+        )
+
+        assertEquals("test/test VimeoNetworking/${BuildConfig.VERSION} (Java)", retrofitSetup.createUserAgent())
+    }
+
+    @Test
+    fun `user agent is created without provided characters if invalid`() {
+        val retrofitSetup = RetrofitSetup(
+                Configuration.Builder("test")
+                        .setBaseUrl("http://unittesting")
+                        .setUserAgentString("test/™")
+                        .build(),
+                null
+        )
+
+        assertEquals("VimeoNetworking/${BuildConfig.VERSION} (Java)", retrofitSetup.createUserAgent())
     }
 
     /**

@@ -38,6 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -134,10 +135,25 @@ class RetrofitSetup {
     String createUserAgent() {
         final String userProvidedAgent = mConfiguration.getUserAgentString();
 
-        if (userProvidedAgent != null && !userProvidedAgent.isEmpty()) {
+        if (userProvidedAgent != null && !userProvidedAgent.isEmpty() && isValidUserAgent(userProvidedAgent)) {
             return userProvidedAgent + ' ' + mLibraryUserAgentComponent;
         } else {
             return mLibraryUserAgentComponent;
+        }
+    }
+
+    /**
+     * Determines if the provided {@code userAgent} is valid and can be sent in an HTTP request.
+     *
+     * @param userAgent the user agent to check.
+     * @return true if the user agent is valid, false if it contains invalid characters.
+     */
+    private boolean isValidUserAgent(@NotNull final String userAgent) {
+        try {
+            new Headers.Builder().set("User-Agent", userAgent);
+            return true;
+        } catch (IllegalArgumentException ignored) {
+            return false;
         }
     }
 }
