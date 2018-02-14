@@ -45,6 +45,10 @@ public class TestApp extends Application {
             configBuilder.enableCertPinning(false);
             configBuilder.setLogLevel(LogLevel.VERBOSE);
         }
+        configBuilder
+                .setCacheDirectory(this.getCacheDir())
+                .setUserAgentString(getUserAgentString(this))
+                .setDebugLogger(new NetworkingLogger());
         VimeoClient.initialize(configBuilder.build());
         // </editor-fold>
     }
@@ -64,8 +68,7 @@ public class TestApp extends Application {
         TestAccountStore testAccountStore = new TestAccountStore(this.getApplicationContext());
         Configuration.Builder configBuilder =
                 new Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore);
-        configBuilder.setCacheDirectory(this.getCacheDir())
-                .setUserAgentString(getUserAgentString(this)).setDebugLogger(new NetworkingLogger())
+        configBuilder
                 // Used for oauth flow
                 .setCodeGrantRedirectUri(codeGrantRedirectUri);
 
