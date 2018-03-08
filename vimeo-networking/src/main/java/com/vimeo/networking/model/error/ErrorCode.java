@@ -103,6 +103,10 @@ public enum ErrorCode {
     APP_DOES_NOT_HAVE_DELETE_CAPABILITY,
     @SerializedName("2700")
     INVALID_INPUT_NON_JSON_CONTENT_TYPE,
+    @SerializedName("2507")
+    PRODUCT_NOT_FOUND,
+    @SerializedName("3115")
+    INVALID_INPUT_RECEIPT_VALIDATION_UNSUCCESSFUL,
     @SerializedName("4000")
     OPERATION_TIMED_OUT,
     @SerializedName("5000")
