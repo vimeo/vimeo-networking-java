@@ -72,6 +72,7 @@ public final class Vimeo {
     public static final String PARAMETER_USERS_BIO = "bio";
 
     public static final String PARAMETER_VIDEO_VIEW = "view";
+    public static final String PARAMETER_VIDEO_COMMENTS = "comments";
     public static final String PARAMETER_VIDEO_NAME = "name";
     public static final String PARAMETER_VIDEO_DESCRIPTION = "description";
     public static final String PARAMETER_VIDEO_PRIVACY = "privacy";

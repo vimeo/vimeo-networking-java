@@ -34,6 +34,8 @@ import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
 import com.vimeo.networking.model.Privacy;
+import com.vimeo.networking.model.Privacy.PrivacyValue;
+import com.vimeo.networking.model.PrivacyType;
 import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
@@ -55,6 +57,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -911,55 +914,51 @@ public class VimeoClient {
                                  @Nullable String title,
                                  @Nullable String description,
                                  @Nullable String password,
-                                 @Nullable Privacy.PrivacyValue privacyValue,
+                                 @Nullable Map<PrivacyType, Privacy.PrivacyValue> privacySettings,
                                  @Nullable HashMap<String, Object> parameters,
                                  @NotNull VimeoCallback<Video> callback) {
         if (uri == null || uri.isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
-
             return null;
         }
-
-        if (title == null && description == null && privacyValue == null) {
+        if (title == null && description == null && privacySettings == null) {
             // The fields above can be null individually, but if they're all null there is no point
             // in making the request 1/26/16 [KV]
             callback.failure(new VimeoError("title, description, and privacyValue cannot be empty!"));
-
             return null;
         }
-
         if (parameters == null) {
             parameters = new HashMap<>();
         }
-
         if (title != null) {
             parameters.put(Vimeo.PARAMETER_VIDEO_NAME, title);
         }
-
         if (description != null) {
             parameters.put(Vimeo.PARAMETER_VIDEO_DESCRIPTION, description);
         }
-
-        if (privacyValue != null) {
-            if (privacyValue == Privacy.PrivacyValue.PASSWORD) {
-                if (password == null) {
-                    callback.failure(new VimeoError("Password cannot be null password privacy type"));
-
-                    return null;
+        if (privacySettings != null && !privacySettings.isEmpty()) {
+            final PrivacyValue viewPrivacyValue = privacySettings.get(PrivacyType.VIEW);
+            if (viewPrivacyValue != null) {
+                if (viewPrivacyValue == Privacy.PrivacyValue.PASSWORD) {
+                    if (password == null) {
+                        callback.failure(new VimeoError("Password cannot be null password privacy type"));
+                        return null;
+                    }
+                    parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
                 }
-
-                parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
+                parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY,
+                               Collections.singletonMap(Vimeo.PARAMETER_VIDEO_VIEW,
+                                                        viewPrivacyValue.getText()));
             }
-
-            final String privacyString = privacyValue.getText();
-            final HashMap<String, String> privacyMap = new HashMap<>();
-            privacyMap.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyString);
-            parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
+            final PrivacyValue commentPrivacyValue = privacySettings.get(PrivacyType.COMMENTS);
+            if (commentPrivacyValue != null) {
+                parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY,
+                               Collections.singletonMap(Vimeo.PARAMETER_VIDEO_COMMENTS,
+                                                        commentPrivacyValue.getText()));
+            }
         }
-
         final Call<Video> call = mVimeoService.editVideo(getAuthHeader(), uri, parameters);
         call.enqueue(callback);
-
         return call;
     }
 
