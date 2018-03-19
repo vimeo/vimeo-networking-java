@@ -57,7 +57,6 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -937,6 +936,7 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_VIDEO_DESCRIPTION, description);
         }
         if (privacySettings != null && !privacySettings.isEmpty()) {
+            final Map<String, String> privacyMap = new HashMap<>();
             final PrivacyValue viewPrivacyValue = privacySettings.get(PrivacyType.VIEW);
             if (viewPrivacyValue != null) {
                 if (viewPrivacyValue == Privacy.PrivacyValue.PASSWORD) {
@@ -946,16 +946,13 @@ public class VimeoClient {
                     }
                     parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
                 }
-                parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY,
-                               Collections.singletonMap(Vimeo.PARAMETER_VIDEO_VIEW,
-                                                        viewPrivacyValue.getText()));
+                privacyMap.put(Vimeo.PARAMETER_VIDEO_VIEW, viewPrivacyValue.getText());
             }
             final PrivacyValue commentPrivacyValue = privacySettings.get(PrivacyType.COMMENTS);
             if (commentPrivacyValue != null) {
-                parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY,
-                               Collections.singletonMap(Vimeo.PARAMETER_VIDEO_COMMENTS,
-                                                        commentPrivacyValue.getText()));
+                privacyMap.put(Vimeo.PARAMETER_VIDEO_COMMENTS, commentPrivacyValue.getText());
             }
+            parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
         }
         final Call<Video> call = mVimeoService.editVideo(getAuthHeader(), uri, parameters);
         call.enqueue(callback);
