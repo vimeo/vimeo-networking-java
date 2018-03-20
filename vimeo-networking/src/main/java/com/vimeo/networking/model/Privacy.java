@@ -155,9 +155,9 @@ public class Privacy implements Serializable {
         }
 
         @Nullable
-        public static PrivacyEmbedValue privacyValueFromString(String string) {
+        public static PrivacyViewValue privacyValueFromString(String string) {
             if (string != null) {
-                for (final PrivacyEmbedValue privacyValue : PrivacyEmbedValue.values()) {
+                for (final PrivacyViewValue privacyValue : PrivacyViewValue.values()) {
                     if (string.equalsIgnoreCase(privacyValue.text)) {
                         return privacyValue;
                     }
