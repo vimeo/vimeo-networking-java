@@ -92,7 +92,7 @@ public class Privacy implements Serializable {
         @SerializedName(PRIVACY_PUBLIC)
         PUBLIC(PRIVACY_PUBLIC),
 
-        @SerializedName(PRIVACY_NOBODY)
+        @SerializedName(PRIVACY_WHITE_LIST)
         WHITE_LIST(PRIVACY_WHITE_LIST);
 
         @NotNull
