@@ -71,7 +71,7 @@ public class Privacy implements Serializable {
         }
 
         @Nullable
-        public static PrivacyCommentValue privacyValueFromString(String string) {
+        public static PrivacyCommentValue privacyValueFromString(@Nullable final String string) {
             if (string != null) {
                 for (final PrivacyCommentValue privacyValue : PrivacyCommentValue.values()) {
                     if (string.equalsIgnoreCase(privacyValue.text)) {
@@ -103,7 +103,7 @@ public class Privacy implements Serializable {
         }
 
         @Nullable
-        public static PrivacyEmbedValue privacyValueFromString(String string) {
+        public static PrivacyEmbedValue privacyValueFromString(@Nullable final String string) {
             if (string != null) {
                 for (final PrivacyEmbedValue privacyValue : PrivacyEmbedValue.values()) {
                     if (string.equalsIgnoreCase(privacyValue.text)) {
@@ -140,7 +140,7 @@ public class Privacy implements Serializable {
         USERS(PRIVACY_USERS),
 
         @SerializedName(PRIVACY_TVOD)
-        TVOD(PRIVACY_TVOD); // "ptv"
+        TVOD(PRIVACY_TVOD);
 
         @NotNull
         private final String text;
@@ -155,7 +155,7 @@ public class Privacy implements Serializable {
         }
 
         @Nullable
-        public static PrivacyViewValue privacyValueFromString(String string) {
+        public static PrivacyViewValue privacyValueFromString(@Nullable final String string) {
             if (string != null) {
                 for (final PrivacyViewValue privacyValue : PrivacyViewValue.values()) {
                     if (string.equalsIgnoreCase(privacyValue.text)) {
