@@ -42,35 +42,110 @@ public class Privacy implements Serializable {
     private static final String PRIVACY_NOBODY = "nobody";
     private static final String PRIVACY_USERS = "users";
     private static final String PRIVACY_ANYBODY = "anybody";
+    private static final String PRIVACY_PRIVATE = "private";
+    private static final String PRIVACY_PUBLIC = "public";
     private static final String PRIVACY_TVOD = "ptv";
     private static final String PRIVACY_CONTACTS = "contacts";
     private static final String PRIVACY_PASSWORD = "password";
     private static final String PRIVACY_DISABLE = "disable";
     private static final String PRIVACY_UNLISTED = "unlisted";
+    private static final String PRIVACY_WHITE_LIST = "white_list";
 
     @UseStag
-    public enum PrivacyValue {
-        @SerializedName(PRIVACY_NOBODY)
-        NOBODY(PRIVACY_NOBODY),
-        @SerializedName(PRIVACY_USERS)
-        USERS(PRIVACY_USERS),
+    public enum PrivacyCommentValue {
+
         @SerializedName(PRIVACY_ANYBODY)
         ANYBODY(PRIVACY_ANYBODY),
-        @SerializedName(PRIVACY_TVOD)
-        TVOD(PRIVACY_TVOD), // "ptv"
+
         @SerializedName(PRIVACY_CONTACTS)
         CONTACTS(PRIVACY_CONTACTS),
-        @SerializedName(PRIVACY_PASSWORD)
-        PASSWORD(PRIVACY_PASSWORD),
-        @SerializedName(PRIVACY_UNLISTED)
-        UNLISTED(PRIVACY_UNLISTED),
-        @SerializedName(PRIVACY_DISABLE)
-        DISABLE(PRIVACY_DISABLE);
+
+        @SerializedName(PRIVACY_NOBODY)
+        NOBODY(PRIVACY_NOBODY);
 
         @NotNull
         private final String text;
 
-        PrivacyValue(@NotNull String text) {
+        PrivacyCommentValue(@NotNull String text) {
+            this.text = text;
+        }
+
+        @Nullable
+        public static PrivacyCommentValue privacyValueFromString(@Nullable final String string) {
+            if (string != null) {
+                for (final PrivacyCommentValue privacyValue : PrivacyCommentValue.values()) {
+                    if (string.equalsIgnoreCase(privacyValue.text)) {
+                        return privacyValue;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+    @UseStag
+    public enum PrivacyEmbedValue {
+
+        @SerializedName(PRIVACY_PRIVATE)
+        PRIVATE(PRIVACY_PRIVATE),
+
+        @SerializedName(PRIVACY_PUBLIC)
+        PUBLIC(PRIVACY_PUBLIC),
+
+        @SerializedName(PRIVACY_WHITE_LIST)
+        WHITE_LIST(PRIVACY_WHITE_LIST);
+
+        @NotNull
+        private final String text;
+
+        PrivacyEmbedValue(@NotNull String text) {
+            this.text = text;
+        }
+
+        @Nullable
+        public static PrivacyEmbedValue privacyValueFromString(@Nullable final String string) {
+            if (string != null) {
+                for (final PrivacyEmbedValue privacyValue : PrivacyEmbedValue.values()) {
+                    if (string.equalsIgnoreCase(privacyValue.text)) {
+                        return privacyValue;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+    @UseStag
+    public enum PrivacyViewValue {
+
+        @SerializedName(PRIVACY_ANYBODY)
+        ANYBODY(PRIVACY_ANYBODY),
+
+        @SerializedName(PRIVACY_CONTACTS)
+        CONTACTS(PRIVACY_CONTACTS),
+
+        @SerializedName(PRIVACY_DISABLE)
+        DISABLE(PRIVACY_DISABLE),
+
+        @SerializedName(PRIVACY_NOBODY)
+        NOBODY(PRIVACY_NOBODY),
+
+        @SerializedName(PRIVACY_PASSWORD)
+        PASSWORD(PRIVACY_PASSWORD),
+
+        @SerializedName(PRIVACY_UNLISTED)
+        UNLISTED(PRIVACY_UNLISTED),
+
+        @SerializedName(PRIVACY_USERS)
+        USERS(PRIVACY_USERS),
+
+        @SerializedName(PRIVACY_TVOD)
+        TVOD(PRIVACY_TVOD);
+
+        @NotNull
+        private final String text;
+
+        PrivacyViewValue(@NotNull String text) {
             this.text = text;
         }
 
@@ -80,9 +155,9 @@ public class Privacy implements Serializable {
         }
 
         @Nullable
-        public static PrivacyValue privacyValueFromString(String string) {
+        public static PrivacyViewValue privacyValueFromString(@Nullable final String string) {
             if (string != null) {
-                for (PrivacyValue privacyValue : PrivacyValue.values()) {
+                for (final PrivacyViewValue privacyValue : PrivacyViewValue.values()) {
                     if (string.equalsIgnoreCase(privacyValue.text)) {
                         return privacyValue;
                     }
@@ -94,11 +169,11 @@ public class Privacy implements Serializable {
 
     @Nullable
     @SerializedName("view")
-    public PrivacyValue mView;
+    public PrivacyViewValue mView;
 
     @Nullable
     @SerializedName("embed")
-    public String mEmbed;
+    public PrivacyEmbedValue mEmbed;
 
     @SerializedName("download")
     public boolean mDownload;
@@ -108,15 +183,15 @@ public class Privacy implements Serializable {
 
     @Nullable
     @SerializedName("comments")
-    public PrivacyValue mComments;
+    public PrivacyCommentValue mComments;
 
     @Nullable
-    public PrivacyValue getView() {
+    public PrivacyViewValue getView() {
         return mView;
     }
 
     @Nullable
-    public String getEmbed() {
+    public PrivacyEmbedValue getEmbed() {
         return mEmbed;
     }
 
@@ -129,7 +204,7 @@ public class Privacy implements Serializable {
     }
 
     @Nullable
-    public PrivacyValue getComments() {
+    public PrivacyCommentValue getComments() {
         return mComments;
     }
 }

@@ -17,7 +17,18 @@ public class PrivacyTest {
     }
 
     @Test
-    public void verifyTypeAdapterWasGenerated_PrivacyValue() throws Exception {
-        Utils.verifyTypeAdapterGeneration(Privacy.PrivacyValue.class);
+    public void verifyTypeAdapterWasGenerated_PrivacyCommentValue() throws Exception {
+        Utils.verifyTypeAdapterGeneration(Privacy.PrivacyCommentValue.class);
     }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_PrivacyEmbedValue() throws Exception {
+        Utils.verifyTypeAdapterGeneration(Privacy.PrivacyEmbedValue.class);
+    }
+
+    @Test
+    public void verifyTypeAdapterWasGenerated_PrivacyViewValue() throws Exception {
+        Utils.verifyTypeAdapterGeneration(Privacy.PrivacyViewValue.class);
+    }
+
 }

@@ -24,7 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
-import com.vimeo.networking.model.Privacy.PrivacyValue;
+import com.vimeo.networking.model.Privacy.PrivacyViewValue;
 import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.networking.model.live.LiveQuota;
 import com.vimeo.networking.model.notifications.NotificationConnection;
@@ -335,8 +335,8 @@ public class User implements Serializable, Followable {
     }
 
     @Nullable
-    public PrivacyValue getPreferredVideoPrivacyValue() {
-        PrivacyValue privacyValue = null;
+    public PrivacyViewValue getPreferredVideoPrivacyValue() {
+        PrivacyViewValue privacyValue = null;
         if (mPreferences != null && mPreferences.getVideos() != null &&
             mPreferences.getVideos().getPrivacy() != null) {
             privacyValue = mPreferences.getVideos().getPrivacy().getView();
