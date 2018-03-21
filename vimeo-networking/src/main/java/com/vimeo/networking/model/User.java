@@ -56,6 +56,7 @@ public class User implements Serializable, Followable {
     private static final String ACCOUNT_LIVE_BUSINESS = "live_business";
     private static final String ACCOUNT_LIVE_PRO = "live_pro";
     private static final String ACCOUNT_PRO_UNLIMITED = "pro_unlimited";
+    private static final String ACCOUNT_PREMIUM = "premium";
 
     public enum AccountType {
         BASIC,
@@ -65,6 +66,7 @@ public class User implements Serializable, Followable {
         STAFF,
         LIVE_BUSINESS,
         LIVE_PRO,
+        PREMIUM,
         PRO_UNLIMITED
     }
 
@@ -158,6 +160,8 @@ public class User implements Serializable, Followable {
                 return AccountType.LIVE_PRO;
             case ACCOUNT_PRO_UNLIMITED:
                 return AccountType.PRO_UNLIMITED;
+            case ACCOUNT_PREMIUM:
+                return AccountType.PREMIUM;
             case ACCOUNT_BASIC:
             default:
                 return AccountType.BASIC;
