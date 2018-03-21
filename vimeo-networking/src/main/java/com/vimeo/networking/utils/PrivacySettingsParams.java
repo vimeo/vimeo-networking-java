@@ -26,7 +26,7 @@ public final class PrivacySettingsParams {
     }
 
     public PrivacySettingsParams addToCollections(final boolean add) {
-        params.put(Vimeo.PARAMETER_VIDEO_DOWNLOAD, add);
+        params.put(Vimeo.PARAMETER_VIDEO_ADD, add);
         return this;
     }
 
