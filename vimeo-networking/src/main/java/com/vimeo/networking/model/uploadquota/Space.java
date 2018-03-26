@@ -27,25 +27,43 @@ package com.vimeo.networking.model.uploadquota;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
- * Created by kylevenn on 8/19/15.
+ * The representation of the user's remaining upload space. Provides information about how much total space is
+ * available, how much space has been used, and how much is free. Also provides information about whether the data shown
+ * here represents the periodic or lifetime spatial limits imposed on the user, via the {@link Type} enum.
  */
 @SuppressWarnings("unused")
 @UseStag
 public class Space implements Serializable {
 
+    /**
+     * Signifies the periodic or lifetime nature of this spatial limit.
+     */
+    public enum Type {
+        @SerializedName("periodic")
+        PERIODIC,
+        @SerializedName("lifetime")
+        LIFETIME
+    }
+
     private static final long serialVersionUID = -1985382617862372889L;
 
     @SerializedName("free")
-    protected long mFree;
+    private long mFree;
 
     @SerializedName("max")
-    protected long mMax;
+    private long mMax;
 
     @SerializedName("used")
-    protected long mUsed;
+    private long mUsed;
+
+    @NotNull
+    @SerializedName("showing")
+    private Type mShowing;
 
     public long getFree() {
         return mFree;
@@ -57,5 +75,26 @@ public class Space implements Serializable {
 
     public long getUsed() {
         return mUsed;
+    }
+
+    @NotNull
+    public Type getShowing() {
+        return mShowing;
+    }
+
+    void setFree(long free) {
+        mFree = free;
+    }
+
+    void setMax(long max) {
+        mMax = max;
+    }
+
+    void setUsed(long used) {
+        mUsed = used;
+    }
+
+    void setShowing(@NotNull Type showing) {
+        mShowing = showing;
     }
 }
