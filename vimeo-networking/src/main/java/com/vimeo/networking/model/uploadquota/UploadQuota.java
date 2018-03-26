@@ -68,12 +68,10 @@ public class UploadQuota implements Serializable {
 
     /**
      * The amount of free upload space left for the user.
-     * Returns -1 if there is no space object on this user.
      *
-     * @return the amount of upload space left, or -1 if
-     * there is none left.
+     * @return the amount of upload space left.
      */
     public long getFreeUploadSpace() {
-        return mSpace.mFree;
+        return mSpace.getFree();
     }
 }
