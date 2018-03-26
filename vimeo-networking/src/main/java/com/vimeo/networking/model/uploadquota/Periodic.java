@@ -1,6 +1,7 @@
 package com.vimeo.networking.model.uploadquota;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * Represents the periodic quota limits imposed on the user. If there are no periodic limits imposed on the user, then
  * the fields will all be {@code null}.
  */
+@UseStag
 public class Periodic implements Serializable {
 
     private static final long serialVersionUID = -8796669202213204100L;

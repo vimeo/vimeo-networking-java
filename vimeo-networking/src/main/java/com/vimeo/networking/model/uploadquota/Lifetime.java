@@ -1,6 +1,7 @@
 package com.vimeo.networking.model.uploadquota;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * Represents the lifetime quota limits imposed on the user. If there are no lifetime limits imposed on the user, then
  * the fields will all be {@code null}.
  */
+@UseStag
 public class Lifetime implements Serializable {
 
     private static final long serialVersionUID = 5169142182182319211L;
