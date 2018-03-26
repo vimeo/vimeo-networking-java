@@ -1,6 +1,7 @@
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.uploadquota;
 
 import com.vimeo.networking.Utils;
+import com.vimeo.networking.model.uploadquota.UploadQuota;
 
 import org.junit.Test;
 
