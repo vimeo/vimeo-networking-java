@@ -69,29 +69,29 @@ public class Space implements Serializable {
         return mFree;
     }
 
-    public long getMax() {
-        return mMax;
-    }
-
-    public long getUsed() {
-        return mUsed;
-    }
-
-    @NotNull
-    public Type getShowing() {
-        return mShowing;
-    }
-
     void setFree(long free) {
         mFree = free;
+    }
+
+    public long getMax() {
+        return mMax;
     }
 
     void setMax(long max) {
         mMax = max;
     }
 
+    public long getUsed() {
+        return mUsed;
+    }
+
     void setUsed(long used) {
         mUsed = used;
+    }
+
+    @NotNull
+    public Type getShowing() {
+        return mShowing;
     }
 
     void setShowing(@NotNull Type showing) {

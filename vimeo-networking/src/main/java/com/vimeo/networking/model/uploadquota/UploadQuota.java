@@ -58,12 +58,38 @@ public class UploadQuota implements Serializable {
     private Space mSpace;
 
     @NotNull
+    @SerializedName("periodic")
+    private Periodic mPeriodic;
+
+    @NotNull
+    @SerializedName("lifetime")
+    private Lifetime mLifetime;
+
+    @NotNull
     public Space getSpace() {
         return mSpace;
     }
 
     void setSpace(@NotNull Space space) {
         mSpace = space;
+    }
+
+    @NotNull
+    public Periodic getPeriodic() {
+        return mPeriodic;
+    }
+
+    void setPeriodic(@NotNull Periodic periodic) {
+        mPeriodic = periodic;
+    }
+
+    @NotNull
+    public Lifetime getLifetime() {
+        return mLifetime;
+    }
+
+    void setLifetime(@NotNull Lifetime lifetime) {
+        mLifetime = lifetime;
     }
 
     /**
