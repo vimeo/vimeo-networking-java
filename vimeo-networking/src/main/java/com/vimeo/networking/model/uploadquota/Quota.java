@@ -22,11 +22,9 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
-
+package com.vimeo.networking.model.uploadquota;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking.Vimeo;
 import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
@@ -36,44 +34,21 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class UploadQuota implements Serializable {
+public class Quota implements Serializable {
 
-    private static final long serialVersionUID = 4050488085481972886L;
+    private static final long serialVersionUID = -9173641301792409558L;
 
-    @SerializedName("space")
-    protected Space mSpace;
+    @SerializedName("hd")
+    protected boolean mHd;
 
-    @SerializedName("quota")
-    protected Quota mQuota;
+    @SerializedName("sd")
+    protected boolean mSd;
 
-    public Space getSpace() {
-        return mSpace;
+    public boolean isHd() {
+        return mHd;
     }
 
-    public void setSpace(Space space) {
-        mSpace = space;
-    }
-
-    public Quota getQuota() {
-        return mQuota;
-    }
-
-    public void setQuota(Quota quota) {
-        mQuota = quota;
-    }
-
-    /**
-     * The amount of free upload space left for the user.
-     * Returns -1 if there is no space object on this user.
-     *
-     * @return the amount of upload space left, or -1 if
-     * there is none left.
-     */
-    public long getFreeUploadSpace() {
-        if (mSpace != null) {
-            return mSpace.mFree;
-        } else {
-            return Vimeo.NOT_FOUND;
-        }
+    public boolean isSd() {
+        return mSd;
     }
 }
