@@ -36,7 +36,7 @@ import java.io.Serializable;
  * the fields will all be {@code null}.
  */
 @UseStag
-public class Periodic implements Serializable {
+public class Periodic implements Serializable, Quota {
 
     private static final long serialVersionUID = -8796669202213204100L;
 

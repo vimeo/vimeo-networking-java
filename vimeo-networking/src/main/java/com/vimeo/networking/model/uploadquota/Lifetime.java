@@ -36,7 +36,7 @@ import java.io.Serializable;
  * the fields will all be {@code null}.
  */
 @UseStag
-public class Lifetime implements Serializable {
+public class Lifetime implements Serializable, Quota {
 
     private static final long serialVersionUID = 5169142182182319211L;
 

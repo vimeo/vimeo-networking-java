@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class Space implements Serializable {
+public class Space implements Serializable, Quota {
 
     /**
      * Signifies the periodic or lifetime nature of this spatial limit.
@@ -52,49 +52,55 @@ public class Space implements Serializable {
 
     private static final long serialVersionUID = -1985382617862372889L;
 
+    @NotNull
     @SerializedName("free")
-    private long mFree;
+    private Long mFree;
 
+    @NotNull
     @SerializedName("max")
-    private long mMax;
+    private Long mMax;
 
+    @NotNull
     @SerializedName("used")
-    private long mUsed;
+    private Long mUsed;
 
     @NotNull
     @SerializedName("showing")
-    private Type mShowing;
+    private Type mType;
 
-    public long getFree() {
+    @NotNull
+    public Long getFree() {
         return mFree;
     }
 
-    void setFree(long free) {
+    void setFree(@NotNull Long free) {
         mFree = free;
     }
 
-    public long getMax() {
+    @NotNull
+    public Long getMax() {
         return mMax;
     }
 
-    void setMax(long max) {
+    void setMax(@NotNull Long max) {
         mMax = max;
     }
 
-    public long getUsed() {
+    @NotNull
+    public Long getUsed() {
         return mUsed;
     }
 
-    void setUsed(long used) {
+    void setUsed(@NotNull Long used) {
         mUsed = used;
     }
 
     @NotNull
-    public Type getShowing() {
-        return mShowing;
+    public Type getType() {
+        return mType;
     }
 
-    void setShowing(@NotNull Type showing) {
-        mShowing = showing;
+    void setType(@NotNull Type type) {
+        mType = type;
     }
 }
