@@ -45,7 +45,7 @@ import java.io.Serializable;
  * periodic quota, the field will still be populated, but object will be internally empty.
  * <p>
  * "lifetime": The total amount of space available to the current user. If the user does not have the restriction of a
- * lifetime quota, the field will still be populated, but the object will be internally empty.
+ * lifetime quota, the field will still non-null, but the object will be internally empty.
  */
 @SuppressWarnings("unused")
 @UseStag
