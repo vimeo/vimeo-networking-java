@@ -234,15 +234,6 @@ public class Video implements Serializable {
     @SerializedName("upload")
     private Upload mUpload;
 
-    @Nullable
-    public Upload getUpload() {
-        return mUpload;
-    }
-
-    public void setUpload(@Nullable Upload upload) {
-        mUpload = upload;
-    }
-
     // -----------------------------------------------------------------------------------------------------
     // Getters
     // -----------------------------------------------------------------------------------------------------
@@ -342,6 +333,11 @@ public class Video implements Serializable {
         return mLive;
     }
 
+    @Nullable
+    public Upload getUpload() {
+        return mUpload;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -371,6 +367,10 @@ public class Video implements Serializable {
 
     public void setLive(@Nullable Live live) {
         mLive = live;
+    }
+
+    void setUpload(@Nullable Upload upload) {
+        mUpload = upload;
     }
 
     // </editor-fold>
