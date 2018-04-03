@@ -29,6 +29,7 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -57,11 +58,11 @@ public class UploadQuota implements Serializable {
     @SerializedName("space")
     private Space mSpace;
 
-    @NotNull
+    @Nullable
     @SerializedName("periodic")
     private Periodic mPeriodic;
 
-    @NotNull
+    @Nullable
     @SerializedName("lifetime")
     private Lifetime mLifetime;
 
@@ -74,21 +75,21 @@ public class UploadQuota implements Serializable {
         mSpace = space;
     }
 
-    @NotNull
+    @Nullable
     public Periodic getPeriodic() {
         return mPeriodic;
     }
 
-    void setPeriodic(@NotNull Periodic periodic) {
+    void setPeriodic(@Nullable Periodic periodic) {
         mPeriodic = periodic;
     }
 
-    @NotNull
+    @Nullable
     public Lifetime getLifetime() {
         return mLifetime;
     }
 
-    void setLifetime(@NotNull Lifetime lifetime) {
+    void setLifetime(@Nullable Lifetime lifetime) {
         mLifetime = lifetime;
     }
 

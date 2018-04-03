@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -64,7 +65,7 @@ public class Space implements Serializable, Quota {
     @SerializedName("used")
     private Long mUsed;
 
-    @NotNull
+    @Nullable
     @SerializedName("showing")
     private Type mType;
 
@@ -95,7 +96,7 @@ public class Space implements Serializable, Quota {
         mUsed = used;
     }
 
-    @NotNull
+    @Nullable
     public Type getType() {
         return mType;
     }
