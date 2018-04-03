@@ -3,7 +3,6 @@ package com.vimeo.networking.upload;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -30,7 +29,7 @@ public class Upload implements Serializable {
         IN_PROGRESS
     }
 
-    @NotNull
+    @Nullable
     @SerializedName("approach")
     private String mApproach;
 
@@ -38,7 +37,7 @@ public class Upload implements Serializable {
     @SerializedName("complete_uri")
     private String mCompleteUri;
 
-    @NotNull
+    @Nullable
     @SerializedName("form")
     private String mForm;
 
@@ -54,20 +53,20 @@ public class Upload implements Serializable {
     @SerializedName("size")
     private Long mSize;
 
-    @NotNull
+    @Nullable
     @SerializedName("status")
     private Status mStatus;
 
-    @NotNull
+    @Nullable
     @SerializedName("upload_link")
     private String mUploadLink;
 
-    @NotNull
+    @Nullable
     public String getApproach() {
         return mApproach;
     }
 
-    void setApproach(@NotNull String approach) {
+    void setApproach(@Nullable String approach) {
         mApproach = approach;
     }
 
@@ -80,12 +79,12 @@ public class Upload implements Serializable {
         mCompleteUri = completeUri;
     }
 
-    @NotNull
+    @Nullable
     public String getForm() {
         return mForm;
     }
 
-    void setForm(@NotNull String form) {
+    void setForm(@Nullable String form) {
         mForm = form;
     }
 
@@ -116,21 +115,21 @@ public class Upload implements Serializable {
         mSize = size;
     }
 
-    @NotNull
+    @Nullable
     public Status getStatus() {
         return mStatus;
     }
 
-    void setStatus(@NotNull Status status) {
+    void setStatus(@Nullable Status status) {
         mStatus = status;
     }
 
-    @NotNull
+    @Nullable
     public String getUploadLink() {
         return mUploadLink;
     }
 
-    void setUploadLink(@NotNull String uploadLink) {
+    void setUploadLink(@Nullable String uploadLink) {
         mUploadLink = uploadLink;
     }
 }
