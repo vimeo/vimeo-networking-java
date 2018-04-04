@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Vimeo
+ * Copyright (c) 2018 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,60 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.uploadquota;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
- * Created by kylevenn on 8/19/15.
+ * Represents the periodic quota limits imposed on the user. If there are no periodic limits imposed on the user, then
+ * the fields will all be {@code null}.
  */
-@SuppressWarnings("unused")
 @UseStag
-public class Space implements Serializable {
+public class Periodic implements Serializable, Quota {
 
-    private static final long serialVersionUID = -1985382617862372889L;
+    private static final long serialVersionUID = -8796669202213204100L;
 
+    @Nullable
     @SerializedName("free")
-    protected long mFree;
+    private Long mFree;
 
+    @Nullable
     @SerializedName("max")
-    protected long mMax;
+    private Long mMax;
 
+    @Nullable
     @SerializedName("used")
-    protected long mUsed;
+    private Long mUsed;
 
-    public long getFree() {
+    @Nullable
+    public Long getFree() {
         return mFree;
     }
 
-    public long getMax() {
+    void setFree(@Nullable Long free) {
+        mFree = free;
+    }
+
+    @Nullable
+    public Long getMax() {
         return mMax;
     }
 
-    public long getUsed() {
+    void setMax(@Nullable Long max) {
+        mMax = max;
+    }
+
+    @Nullable
+    public Long getUsed() {
         return mUsed;
+    }
+
+    void setUsed(@Nullable Long used) {
+        mUsed = used;
     }
 }
