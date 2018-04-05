@@ -30,6 +30,7 @@ import com.vimeo.networking.model.live.Live;
 import com.vimeo.networking.model.live.Live.LiveStatus;
 import com.vimeo.networking.model.playback.Play;
 import com.vimeo.networking.model.playback.PlayProgress;
+import com.vimeo.networking.upload.Upload;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
@@ -220,7 +221,7 @@ public class Video implements Serializable {
 
     @Nullable
     @SerializedName("live")
-    public com.vimeo.networking.model.live.Live mLive;
+    public Live mLive;
 
     /**
      * The resource_key field is the unique identifier for a Video object. It may be used for object
@@ -228,6 +229,10 @@ public class Video implements Serializable {
      */
     @SerializedName("resource_key")
     public String mResourceKey;
+
+    @Nullable
+    @SerializedName("upload")
+    private Upload mUpload;
 
     // -----------------------------------------------------------------------------------------------------
     // Getters
@@ -328,6 +333,11 @@ public class Video implements Serializable {
         return mLive;
     }
 
+    @Nullable
+    public Upload getUpload() {
+        return mUpload;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -357,6 +367,10 @@ public class Video implements Serializable {
 
     public void setLive(@Nullable Live live) {
         mLive = live;
+    }
+
+    void setUpload(@Nullable Upload upload) {
+        mUpload = upload;
     }
 
     // </editor-fold>

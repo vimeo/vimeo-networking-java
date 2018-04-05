@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Vimeo
+ * Copyright (c) 2018 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,33 +22,60 @@
  * SOFTWARE.
  */
 
-package com.vimeo.networking.model;
+package com.vimeo.networking.model.uploadquota;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
- * Created by kylevenn on 8/19/15.
+ * Represents the lifetime quota limits imposed on the user. If there are no lifetime limits imposed on the user, then
+ * the fields will all be {@code null}.
  */
-@SuppressWarnings("unused")
 @UseStag
-public class Quota implements Serializable {
+public class Lifetime implements Serializable, Quota {
 
-    private static final long serialVersionUID = -9173641301792409558L;
+    private static final long serialVersionUID = 5169142182182319211L;
 
-    @SerializedName("hd")
-    protected boolean mHd;
+    @Nullable
+    @SerializedName("free")
+    private Long mFree;
 
-    @SerializedName("sd")
-    protected boolean mSd;
+    @Nullable
+    @SerializedName("max")
+    private Long mMax;
 
-    public boolean isHd() {
-        return mHd;
+    @Nullable
+    @SerializedName("used")
+    private Long mUsed;
+
+    @Nullable
+    public Long getFree() {
+        return mFree;
     }
 
-    public boolean isSd() {
-        return mSd;
+    void setFree(@Nullable Long free) {
+        mFree = free;
+    }
+
+    @Nullable
+    public Long getMax() {
+        return mMax;
+    }
+
+    void setMax(@Nullable Long max) {
+        mMax = max;
+    }
+
+    @Nullable
+    public Long getUsed() {
+        return mUsed;
+    }
+
+    void setUsed(@Nullable Long used) {
+        mUsed = used;
     }
 }
