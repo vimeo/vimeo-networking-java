@@ -162,6 +162,10 @@ public class ConnectionCollection implements Serializable {
     protected Connection mWatchedVideos;
 
     @Nullable
+    @SerializedName("users_with_access")
+    protected Connection mUsersWithAccess;
+
+    @Nullable
     @SerializedName("notifications")
     protected NotificationConnection mNotifications;
 
@@ -348,6 +352,15 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     public Connection getFolders() {
         return mFolders;
+    }
+
+    @Nullable
+    public Connection getUsersWithAccess() {
+        return mUsersWithAccess;
+    }
+
+    public void setUsersWithAccess(@Nullable Connection usersWithAccess) {
+        mUsersWithAccess = usersWithAccess;
     }
 
     public void setFolders(@Nullable Connection folders) {
