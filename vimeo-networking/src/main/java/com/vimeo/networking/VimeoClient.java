@@ -431,7 +431,7 @@ public class VimeoClient {
     }
 
     @Nullable
-    public Call<VimeoAccount> join(String displayName, String email, String password, AuthCallback callback) {
+    public Call<VimeoAccount> join(String displayName, String email, String password, boolean marketingOptIn, AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -463,6 +463,7 @@ public class VimeoClient {
         parameters.put(Vimeo.PARAMETER_EMAIL, email);
         parameters.put(Vimeo.PARAMETER_PASSWORD, password);
         parameters.put(Vimeo.PARAMETER_SCOPE, mConfiguration.mScope);
+        parameters.put(Vimeo.PARAMETER_MARKETING_OPT_IN, Boolean.toString(marketingOptIn));
 
         final Call<VimeoAccount> call = mVimeoService.join(getBasicAuthHeader(), parameters);
         call.enqueue(new AccountCallback(this, email, callback));

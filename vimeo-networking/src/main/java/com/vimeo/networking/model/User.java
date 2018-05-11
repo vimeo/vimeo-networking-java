@@ -83,6 +83,9 @@ public class User implements Serializable, Followable {
     @SerializedName("location")
     public String mLocation;
 
+    @SerializedName("marketing_opt_in")
+    public String mMarketingOptIn;
+
     @SerializedName("bio")
     public String mBio;
 
