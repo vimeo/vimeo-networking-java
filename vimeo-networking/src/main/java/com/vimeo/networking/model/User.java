@@ -83,9 +83,6 @@ public class User implements Serializable, Followable {
     @SerializedName("location")
     public String mLocation;
 
-    @SerializedName("marketing_opt_in")
-    public String mMarketingOptIn;
-
     @SerializedName("bio")
     public String mBio;
 
@@ -394,10 +391,6 @@ public class User implements Serializable, Followable {
         return mLocation;
     }
 
-    public String getMarketingOptIn() {
-        return mMarketingOptIn;
-    }
-
     public String getBio() {
         return mBio;
     }
@@ -476,10 +469,6 @@ public class User implements Serializable, Followable {
         mLocation = location;
     }
 
-    public void setMarketingOptIn(String marketingOptIn) {
-        mMarketingOptIn = marketingOptIn;
-    }
-
     public void setBio(String bio) {
         mBio = bio;
     }
@@ -528,7 +517,6 @@ public class User implements Serializable, Followable {
                ", mName='" + mName + '\'' +
                ", mLink='" + mLink + '\'' +
                ", mLocation='" + mLocation + '\'' +
-               ", mMarketingOptIn='" + mMarketingOptIn + '\'' +
                ", mBio='" + mBio + '\'' +
                ", mCreatedTime=" + mCreatedTime +
                ", mAccount='" + mAccount + '\'' +
