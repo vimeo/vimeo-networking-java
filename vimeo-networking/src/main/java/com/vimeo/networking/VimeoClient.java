@@ -471,7 +471,9 @@ public class VimeoClient {
     }
 
     @Nullable
-    public Call<VimeoAccount> joinWithFacebookToken(@NotNull final String facebookToken, @NotNull final String email,
+    public Call<VimeoAccount> joinWithFacebookToken(@NotNull final String facebookToken,
+                                                    @NotNull final String email,
+                                                    boolean marketingOptIn,
                                                     @NotNull final AuthCallback callback) {
         if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
@@ -484,6 +486,7 @@ public class VimeoClient {
         final HashMap<String, String> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_TOKEN, facebookToken);
         parameters.put(Vimeo.PARAMETER_SCOPE, mConfiguration.mScope);
+        parameters.put(Vimeo.PARAMETER_MARKETING_OPT_IN, Boolean.toString(marketingOptIn));
 
         final Call<VimeoAccount> call = mVimeoService.join(getBasicAuthHeader(), parameters);
         call.enqueue(new AccountCallback(this, email, callback));
@@ -499,7 +502,9 @@ public class VimeoClient {
      * @return a retrofit {@link Call} object, which <b>has already been enqueued</b>.
      */
     @Nullable
-    public Call<VimeoAccount> joinWithGoogleToken(@NotNull final String googleToken, @NotNull final String email,
+    public Call<VimeoAccount> joinWithGoogleToken(@NotNull final String googleToken,
+                                                  @NotNull final String email,
+                                                  boolean marketingOptIn,
                                                   @NotNull final AuthCallback callback) {
         if (googleToken.isEmpty()) {
             final VimeoError error = new VimeoError("Google authentication error.");
@@ -512,6 +517,7 @@ public class VimeoClient {
         final HashMap<String, String> parameters = new HashMap<>();
         parameters.put(Vimeo.PARAMETER_ID_TOKEN, googleToken);
         parameters.put(Vimeo.PARAMETER_SCOPE, mConfiguration.mScope);
+        parameters.put(Vimeo.PARAMETER_MARKETING_OPT_IN, Boolean.toString(marketingOptIn));
 
         final Call<VimeoAccount> call = mVimeoService.join(getBasicAuthHeader(), parameters);
         call.enqueue(new AccountCallback(this, email, callback));
@@ -588,7 +594,8 @@ public class VimeoClient {
     }
 
     @Nullable
-    public Call<VimeoAccount> loginWithFacebookToken(@NotNull final String facebookToken, @NotNull final String email,
+    public Call<VimeoAccount> loginWithFacebookToken(@NotNull final String facebookToken,
+                                                     @NotNull final String email,
                                                      @NotNull final AuthCallback callback) {
         if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
