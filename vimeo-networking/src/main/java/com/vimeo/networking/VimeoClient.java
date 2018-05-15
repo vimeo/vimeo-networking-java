@@ -430,8 +430,24 @@ public class VimeoClient {
         return call;
     }
 
+    /**
+     * This method is used to create an account on Vimeo with the credentials {@code email} and
+     * {@code password}. It is used to join with an email and password.
+     *
+     * @param displayName                The display name for the account.
+     * @param email                      Account's email.
+     * @param password                   Account's password.
+     * @param marketingOptIn             Flag to opt in or out of email marketing emails.
+     * @param callback                   Callback to inform you of the result of login.
+     *
+     * @return A Call object.
+     */
     @Nullable
-    public Call<VimeoAccount> join(String displayName, String email, String password, boolean marketingOptIn, AuthCallback callback) {
+    public Call<VimeoAccount> join(@Nullable final String displayName,
+                                   @Nullable final String email,
+                                   @Nullable final String password,
+                                             final boolean marketingOptIn,
+                                   @Nullable final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
         }
@@ -470,10 +486,20 @@ public class VimeoClient {
         return call;
     }
 
+    /**
+     * This method is used to create an account on Vimeo with through Facebook.
+     *
+     * @param facebookToken              Facebook token.
+     * @param email                      Account's email.
+     * @param marketingOptIn             Flag to opt in or out of email marketing emails.
+     * @param callback                   Callback to inform you of the result of login.
+     *
+     * @return A Call object.
+     */
     @Nullable
     public Call<VimeoAccount> joinWithFacebookToken(@NotNull final String facebookToken,
                                                     @NotNull final String email,
-                                                    boolean marketingOptIn,
+                                                             final boolean marketingOptIn,
                                                     @NotNull final AuthCallback callback) {
         if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
@@ -496,15 +522,16 @@ public class VimeoClient {
     /**
      * Register the user using a Google authentication token.
      *
-     * @param googleToken {@code id_token} value received by Google after authenticating.
-     * @param email       User email address.
-     * @param callback    This callback will be executed after the request succeeds or fails.
+     * @param googleToken               {@code id_token} value received by Google after authenticating.
+     * @param email                     User email address.
+     * @param marketingOptIn            Flag to opt in or out of marketing emails.
+     * @param callback                  This callback will be executed after the request succeeds or fails.
      * @return a retrofit {@link Call} object, which <b>has already been enqueued</b>.
      */
     @Nullable
     public Call<VimeoAccount> joinWithGoogleToken(@NotNull final String googleToken,
                                                   @NotNull final String email,
-                                                  boolean marketingOptIn,
+                                                           final boolean marketingOptIn,
                                                   @NotNull final AuthCallback callback) {
         if (googleToken.isEmpty()) {
             final VimeoError error = new VimeoError("Google authentication error.");
@@ -596,7 +623,6 @@ public class VimeoClient {
     @Nullable
     public Call<VimeoAccount> loginWithFacebookToken(@NotNull final String facebookToken,
                                                      @NotNull final String email,
-                                                     final boolean marketingOptIn,
                                                      @NotNull final AuthCallback callback) {
         if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
@@ -609,8 +635,7 @@ public class VimeoClient {
         final Call<VimeoAccount> call = mVimeoService.logInWithFacebook(getBasicAuthHeader(),
                                                                         Vimeo.FACEBOOK_GRANT_TYPE,
                                                                         facebookToken,
-                                                                        mConfiguration.mScope,
-                                                                        marketingOptIn);
+                                                                        mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
@@ -626,7 +651,6 @@ public class VimeoClient {
     @Nullable
     public Call<VimeoAccount> loginWithGoogleToken(@NotNull final String googleToken,
                                                    @NotNull final String email,
-                                                   final boolean marketingOptIn,
                                                    @NotNull final AuthCallback callback) {
         if (googleToken.isEmpty()) {
             final VimeoError error = new VimeoError("Google authentication error.");
@@ -640,8 +664,7 @@ public class VimeoClient {
         final Call<VimeoAccount> call = mVimeoService.logInWithGoogle(getBasicAuthHeader(),
                                                                       Vimeo.GOOGLE_GRANT_TYPE,
                                                                       googleToken,
-                                                                      mConfiguration.mScope,
-                                                                      marketingOptIn);
+                                                                      mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }

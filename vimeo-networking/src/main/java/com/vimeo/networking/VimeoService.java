@@ -112,16 +112,14 @@ public interface VimeoService {
     Call<VimeoAccount> logInWithFacebook(@Header("Authorization") String authHeader,
                                          @Field("grant_type") String grantType,
                                          @Field("token") String token,
-                                         @Field("scope") String scope,
-                                         @Field("marketing_opt_in") boolean marketingOptIn);
+                                         @Field("scope") String scope);
 
     @FormUrlEncoded
     @POST("oauth/authorize/google")
     Call<VimeoAccount> logInWithGoogle(@Header("Authorization") String authHeader,
                                        @Field("grant_type") String grantType,
                                        @Field("id_token") String idToken,
-                                       @Field("scope") String scope,
-                                       @Field("marketing_opt_in") boolean marketingOptIn);
+                                       @Field("scope") String scope);
 
 
     @Headers("Cache-Control: no-cache, no-store")
