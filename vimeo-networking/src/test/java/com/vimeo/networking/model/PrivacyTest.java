@@ -1,6 +1,9 @@
 package com.vimeo.networking.model;
 
 import com.vimeo.networking.Utils;
+import com.vimeo.networking.model.Privacy.CommentValue;
+import com.vimeo.networking.model.Privacy.EmbedValue;
+import com.vimeo.networking.model.Privacy.ViewValue;
 
 import org.junit.Test;
 
@@ -18,17 +21,17 @@ public class PrivacyTest {
 
     @Test
     public void verifyTypeAdapterWasGenerated_PrivacyCommentValue() throws Exception {
-        Utils.verifyTypeAdapterGeneration(Privacy.PrivacyCommentValue.class);
+        Utils.verifyTypeAdapterGeneration(CommentValue.class);
     }
 
     @Test
     public void verifyTypeAdapterWasGenerated_PrivacyEmbedValue() throws Exception {
-        Utils.verifyTypeAdapterGeneration(Privacy.PrivacyEmbedValue.class);
+        Utils.verifyTypeAdapterGeneration(EmbedValue.class);
     }
 
     @Test
     public void verifyTypeAdapterWasGenerated_PrivacyViewValue() throws Exception {
-        Utils.verifyTypeAdapterGeneration(Privacy.PrivacyViewValue.class);
+        Utils.verifyTypeAdapterGeneration(ViewValue.class);
     }
 
 }

@@ -474,9 +474,7 @@ public class Video implements Serializable {
 
     @Nullable
     public Connection getUsersWithAccessConnection() {
-        if (mMetadata != null
-            && mMetadata.mConnections != null
-            && mMetadata.mConnections.getUsersWithAccess() != null) {
+        if (mMetadata != null && mMetadata.mConnections != null) {
             return mMetadata.mConnections.getUsersWithAccess();
         }
         return null;

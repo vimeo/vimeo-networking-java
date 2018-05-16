@@ -34,6 +34,7 @@ tasks.withType(Javadoc).all { enabled = true }
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    testCompile "org.assertj:assertj-core:3.10.0"
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.intellij:annotations:12.0@jar'
 
@@ -44,6 +45,7 @@ dependencies {
     def stagVersion = '2.5.1'
     compile "com.vimeo.stag:stag-library:$stagVersion"
     apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
+    compile 'junit:junit:4.12'
 }
 
 group = 'com.vimeo.networking'

@@ -33,8 +33,7 @@ import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
-import com.vimeo.networking.model.Privacy;
-import com.vimeo.networking.model.Privacy.PrivacyViewValue;
+import com.vimeo.networking.model.Privacy.ViewValue;
 import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
@@ -942,16 +941,14 @@ public class VimeoClient {
 
         if (privacySettingsParams != null && !privacySettingsParams.getParams().isEmpty()) {
             final Map<String, Object> privacyMap = privacySettingsParams.getParams();
-            final PrivacyViewValue viewPrivacyValue = (PrivacyViewValue) privacyMap.get(Vimeo.PARAMETER_VIDEO_VIEW);
+            final ViewValue viewPrivacyValue = (ViewValue) privacyMap.get(Vimeo.PARAMETER_VIDEO_VIEW);
 
-            if (viewPrivacyValue != null) {
-                if (viewPrivacyValue == Privacy.PrivacyViewValue.PASSWORD) {
-                    if (password == null) {
-                        callback.failure(new VimeoError("Password cannot be null password privacy type"));
-                        return null;
-                    }
-                    parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
+            if (viewPrivacyValue == ViewValue.PASSWORD) {
+                if (password == null) {
+                    callback.failure(new VimeoError("Password cannot be null password privacy type"));
+                    return null;
                 }
+                parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
             }
             parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
         }
