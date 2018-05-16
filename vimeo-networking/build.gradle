@@ -45,7 +45,6 @@ dependencies {
     def stagVersion = '2.5.1'
     compile "com.vimeo.stag:stag-library:$stagVersion"
     apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
-    compile 'junit:junit:4.12'
 }
 
 group = 'com.vimeo.networking'
