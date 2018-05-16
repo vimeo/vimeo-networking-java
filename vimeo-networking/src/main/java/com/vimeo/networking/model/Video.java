@@ -471,6 +471,15 @@ public class Video implements Serializable {
         }
         return null;
     }
+
+    @Nullable
+    public Connection getUsersWithAccessConnection() {
+        if (mMetadata != null && mMetadata.mConnections != null) {
+            return mMetadata.mConnections.getUsersWithAccess();
+        }
+        return null;
+    }
+
     // </editor-fold>
 
     // <editor-fold desc="Channel">

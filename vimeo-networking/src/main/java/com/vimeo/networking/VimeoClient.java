@@ -46,6 +46,7 @@ import com.vimeo.networking.model.notifications.SubscriptionCollection;
 import com.vimeo.networking.model.search.SearchResponse;
 import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.utils.BaseUrlInterceptor;
+import com.vimeo.networking.utils.PrivacySettingsParams;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -911,7 +912,7 @@ public class VimeoClient {
                                  @Nullable String title,
                                  @Nullable String description,
                                  @Nullable String password,
-                                 @Nullable Privacy.PrivacyValue privacyValue,
+                                 @Nullable PrivacySettingsParams privacySettingsParams,
                                  @Nullable HashMap<String, Object> parameters,
                                  @NotNull VimeoCallback<Video> callback) {
         if (uri == null || uri.isEmpty()) {
@@ -919,15 +920,13 @@ public class VimeoClient {
 
             return null;
         }
-
-        if (title == null && description == null && privacyValue == null) {
+        if (title == null && description == null && (privacySettingsParams == null || privacySettingsParams.getParams().isEmpty())) {
             // The fields above can be null individually, but if they're all null there is no point
             // in making the request 1/26/16 [KV]
-            callback.failure(new VimeoError("title, description, and privacyValue cannot be empty!"));
+            callback.failure(new VimeoError("title, description, and privacy settings cannot be empty!"));
 
             return null;
         }
-
         if (parameters == null) {
             parameters = new HashMap<>();
         }
@@ -940,20 +939,17 @@ public class VimeoClient {
             parameters.put(Vimeo.PARAMETER_VIDEO_DESCRIPTION, description);
         }
 
-        if (privacyValue != null) {
-            if (privacyValue == Privacy.PrivacyValue.PASSWORD) {
+        if (privacySettingsParams != null && !privacySettingsParams.getParams().isEmpty()) {
+            final Map<String, Object> privacyMap = privacySettingsParams.getParams();
+            final Privacy.ViewValue viewPrivacyValue = (Privacy.ViewValue) privacyMap.get(Vimeo.PARAMETER_VIDEO_VIEW);
+
+            if (viewPrivacyValue == Privacy.ViewValue.PASSWORD) {
                 if (password == null) {
                     callback.failure(new VimeoError("Password cannot be null password privacy type"));
-
                     return null;
                 }
-
                 parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
             }
-
-            final String privacyString = privacyValue.getText();
-            final HashMap<String, String> privacyMap = new HashMap<>();
-            privacyMap.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyString);
             parameters.put(Vimeo.PARAMETER_VIDEO_PRIVACY, privacyMap);
         }
 
