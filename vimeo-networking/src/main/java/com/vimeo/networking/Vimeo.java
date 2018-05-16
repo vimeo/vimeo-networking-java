@@ -70,6 +70,7 @@ public final class Vimeo {
     public static final String PARAMETER_PASSWORD = "password";
     public static final String PARAMETER_USERS_LOCATION = "location";
     public static final String PARAMETER_USERS_BIO = "bio";
+    public static final String PARAMETER_MARKETING_OPT_IN = "marketing_opt_in";
 
     public static final String PARAMETER_VIDEO_VIEW = "view";
     public static final String PARAMETER_VIDEO_NAME = "name";
