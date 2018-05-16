@@ -487,7 +487,7 @@ public class VimeoClient {
     }
 
     /**
-     * This method is used to create an account on Vimeo with through Facebook.
+     * This method is used to create an account on Vimeo with Facebook.
      *
      * @param facebookToken              Facebook token.
      * @param email                      Account's email.
