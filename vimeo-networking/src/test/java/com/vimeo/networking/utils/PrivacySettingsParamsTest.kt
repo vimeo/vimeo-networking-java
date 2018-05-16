@@ -12,10 +12,9 @@ import org.junit.Test
  */
 class PrivacySettingsParamsTest {
 
-    private val privacySettingsParams = PrivacySettingsParams()
-
     @Test
     fun `Check privacy settings are set`() {
+        val privacySettingsParams = PrivacySettingsParams()
         privacySettingsParams
                 .comments(Privacy.CommentValue.ANYBODY)
                 .embed(Privacy.EmbedValue.PRIVATE)
@@ -23,23 +22,24 @@ class PrivacySettingsParamsTest {
                 .addToCollections(true)
                 .download(true)
 
-        privacySettingsParams.params.let {
-            assertThat(it[Vimeo.PARAMETER_VIDEO_COMMENTS]).isEqualTo(Privacy.CommentValue.ANYBODY)
-            assertThat(it[Vimeo.PARAMETER_VIDEO_EMBED]).isEqualTo(Privacy.EmbedValue.PRIVATE)
-            assertThat(it[Vimeo.PARAMETER_VIDEO_VIEW]).isEqualTo(Privacy.ViewValue.ANYBODY)
-            assertThat(it[Vimeo.PARAMETER_VIDEO_ADD]).isEqualTo(true)
-            assertThat(it[Vimeo.PARAMETER_VIDEO_DOWNLOAD]).isEqualTo(true)
+        with(privacySettingsParams.params) {
+            assertThat(this[Vimeo.PARAMETER_VIDEO_COMMENTS]).isEqualTo(Privacy.CommentValue.ANYBODY)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_EMBED]).isEqualTo(Privacy.EmbedValue.PRIVATE)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_VIEW]).isEqualTo(Privacy.ViewValue.ANYBODY)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_ADD]).isEqualTo(true)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_DOWNLOAD]).isEqualTo(true)
         }
     }
 
     @Test
     fun `Check empty privacy settings are null`() {
-        privacySettingsParams.params.let {
-            assertThat(it[Vimeo.PARAMETER_VIDEO_COMMENTS]).isNull()
-            assertThat(it[Vimeo.PARAMETER_VIDEO_EMBED]).isNull()
-            assertThat(it[Vimeo.PARAMETER_VIDEO_VIEW]).isNull()
-            assertThat(it[Vimeo.PARAMETER_VIDEO_ADD]).isNull()
-            assertThat(it[Vimeo.PARAMETER_VIDEO_DOWNLOAD]).isNull()
+        with(PrivacySettingsParams().params) {
+            assertThat(this[Vimeo.PARAMETER_VIDEO_COMMENTS]).isNull()
+            assertThat(this[Vimeo.PARAMETER_VIDEO_EMBED]).isNull()
+            assertThat(this[Vimeo.PARAMETER_VIDEO_VIEW]).isNull()
+            assertThat(this[Vimeo.PARAMETER_VIDEO_ADD]).isNull()
+            assertThat(this[Vimeo.PARAMETER_VIDEO_DOWNLOAD]).isNull()
+            assertThat(this).isEmpty()
         }
     }
 

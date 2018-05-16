@@ -1,9 +1,7 @@
 package com.vimeo.networking.utils;
 
 import com.vimeo.networking.Vimeo;
-import com.vimeo.networking.model.Privacy.CommentValue;
-import com.vimeo.networking.model.Privacy.EmbedValue;
-import com.vimeo.networking.model.Privacy.ViewValue;
+import com.vimeo.networking.model.Privacy;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,11 +20,11 @@ public final class PrivacySettingsParams {
     /**
      * Set privacy setting for commenting on a video.
      *
-     * @param commentValue a value of {@link CommentValue}.
+     * @param commentValue a value of {@link Privacy.CommentValue}.
      *
      * @return An instance of {@link PrivacySettingsParams}.
      */
-    public PrivacySettingsParams comments(@NotNull final CommentValue commentValue) {
+    public PrivacySettingsParams comments(@NotNull final Privacy.CommentValue commentValue) {
         params.put(Vimeo.PARAMETER_VIDEO_COMMENTS, commentValue);
         return this;
     }
@@ -58,11 +56,11 @@ public final class PrivacySettingsParams {
     /**
      * Set privacy setting to embed a video.
      *
-     * @param privacyEmbedType a value of {@link EmbedValue}.
+     * @param privacyEmbedType a value of {@link Privacy.EmbedValue}.
      *
      * @return An instance of {@link PrivacySettingsParams}.
      */
-    public PrivacySettingsParams embed(@NotNull final EmbedValue privacyEmbedType) {
+    public PrivacySettingsParams embed(@NotNull final Privacy.EmbedValue privacyEmbedType) {
         params.put(Vimeo.PARAMETER_VIDEO_EMBED, privacyEmbedType);
         return this;
     }
@@ -70,11 +68,11 @@ public final class PrivacySettingsParams {
     /**
      * Set privacy setting to view a video.
      *
-     * @param privacyViewType a value of {@link ViewValue}.
+     * @param privacyViewType a value of {@link Privacy.ViewValue}.
      *
      * @return An instance of {@link PrivacySettingsParams}.
      */
-    public PrivacySettingsParams view(@NotNull final ViewValue privacyViewType) {
+    public PrivacySettingsParams view(@NotNull final Privacy.ViewValue privacyViewType) {
         params.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyViewType);
         return this;
     }
