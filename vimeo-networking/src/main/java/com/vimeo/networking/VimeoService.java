@@ -110,7 +110,8 @@ public interface VimeoService {
     @FormUrlEncoded
     @POST("oauth/authorize/facebook")
     Call<VimeoAccount> logInWithFacebook(@Header("Authorization") String authHeader,
-                                         @Field("grant_type") String grantType, @Field("token") String token,
+                                         @Field("grant_type") String grantType,
+                                         @Field("token") String token,
                                          @Field("scope") String scope);
 
     @FormUrlEncoded
