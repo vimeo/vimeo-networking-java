@@ -38,4 +38,6 @@ public class Picture implements Serializable {
     public int height;
     @GsonAdapterKey("link")
     public String link;
+    @GsonAdapterKey("link_with_play_button")
+    public String linkWithPlayButton;
 }
