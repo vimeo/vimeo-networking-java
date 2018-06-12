@@ -34,7 +34,7 @@ import java.io.Serializable;
 @UseStag
 public class Picture implements Serializable {
 
-    private static final long serialVersionUID = -2933756384207338583L;
+    private static final long serialVersionUID = 5278427992827202066L;
 
     @SerializedName("width")
     protected int mWidth;
@@ -44,6 +44,9 @@ public class Picture implements Serializable {
 
     @SerializedName("link")
     protected String mLink;
+
+    @SerializedName("link_with_play_button")
+    protected String mLinkWithPlayButton;
 
     public int getWidth() {
         return mWidth;
@@ -56,4 +59,9 @@ public class Picture implements Serializable {
     public String getLink() {
         return mLink;
     }
+
+    public String getLinkWithPlayButton() {
+        return mLinkWithPlayButton;
+    }
+
 }
