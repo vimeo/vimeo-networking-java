@@ -27,6 +27,7 @@ import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.IgnoreResponseVimeoCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
+import com.vimeo.networking.interceptors.LanguageHeaderInterceptor;
 import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
@@ -58,11 +59,13 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -105,6 +108,9 @@ public class VimeoClient {
     @NotNull
     private final BaseUrlInterceptor mBaseUrlInterceptor = new BaseUrlInterceptor();
 
+    @NotNull
+    private final LanguageHeaderInterceptor mLanguageHeaderInterceptor = new LanguageHeaderInterceptor(getLocaleCodes());
+
     /**
      * Currently authenticated account
      */
@@ -144,6 +150,7 @@ public class VimeoClient {
     private VimeoClient(@NotNull Configuration configuration) {
         mConfiguration = configuration;
         mConfiguration.mInterceptors.add(mBaseUrlInterceptor);
+        mConfiguration.mInterceptors.add(mLanguageHeaderInterceptor);
         mCache = mConfiguration.getCache();
         final RetrofitSetup retrofitSetup = new RetrofitSetup(mConfiguration, mCache);
         mRetrofit = retrofitSetup.createRetrofit();
@@ -429,6 +436,31 @@ public class VimeoClient {
                 mVimeoService.ssoTokenExchange(getBasicAuthHeader(), token, mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
+    }
+
+    /**
+     * Localization header
+     *
+     * blah blah
+     */
+    public String getLocaleCodes() {
+
+        List<Locale> localeList = mConfiguration.getLocales();
+        StringBuilder codeBuilder = new StringBuilder();
+
+        for (int i = 0; i < localeList.size(); i++) {
+            if (i > 0) {
+                codeBuilder.append(",");
+            }
+            codeBuilder.append(localeList.get(i).getLanguage());
+        }
+
+        return codeBuilder.toString();
+
+//        List<String> codeList = localeList.stream()
+//                .map(Locale::getLanguage)
+//                .collect(Collectors.toList());
+//        return String.join(",", codeList);
     }
 
     /**
@@ -1383,7 +1415,7 @@ public class VimeoClient {
      * @return {@link Call} that can be used to cancel network requests.
      */
     public Call<Product> getProduct(String uri, VimeoCallback<Product> callback) {
-        return getContent(uri, CacheControl.FORCE_NETWORK, GetRequestCaller.PRODUCT, null, null, null, callback);
+        return getContent(uri, CacheControl.FORCE_NETWORK, GetRequestCaller.PRODUCT, null,null, null, callback);
     }
 
     /**
@@ -1402,7 +1434,8 @@ public class VimeoClient {
      * @param callback the callback to be invoked when the request finishes
      */
     public void getCurrentUser(@Nullable String filter, @NotNull VimeoCallback<User> callback) {
-        getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, GetRequestCaller.USER, null, null, filter, callback);
+        getContent(Vimeo.ENDPOINT_ME, CacheControl.FORCE_NETWORK, GetRequestCaller.USER, null,
+                null, filter, callback);
     }
 
     /**

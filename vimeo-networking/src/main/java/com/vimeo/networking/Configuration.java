@@ -32,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -58,6 +59,9 @@ public class Configuration {
     protected String mClientID;
     protected String mClientSecret;
     protected String mScope;
+
+    @NotNull
+    protected List<Locale> mLocales;
 
     protected String mAccessToken;
 
@@ -98,6 +102,10 @@ public class Configuration {
 
     public String getScope() {
         return mScope;
+    }
+
+    public List<Locale> getLocales() {
+        return mLocales;
     }
 
     public String getAccessToken() {
@@ -215,6 +223,7 @@ public class Configuration {
         this.mClientID = builder.mClientID;
         this.mClientSecret = builder.mClientSecret;
         this.mScope = builder.mScope;
+        this.mLocales = builder.mLocales;
 
         this.mAccessToken = builder.mAccessToken;
 
@@ -259,6 +268,11 @@ public class Configuration {
         private String mClientID;
         private String mClientSecret;
         private String mScope;
+
+        @NotNull
+        private List<Locale> mLocales = new ArrayList<Locale>(){{
+            add(Locale.ENGLISH);
+        }};
 
         private String mAccessToken;
 
@@ -392,6 +406,17 @@ public class Configuration {
 
         public Builder setLogLevel(LogLevel level) {
             this.mLogLevel = level;
+            return this;
+        }
+
+        public Builder setLocales(List<Locale> locales) {
+            this.mLocales = locales;
+            return this;
+        }
+
+        public Builder setLocale(Locale locale) {
+            this.mLocales = new ArrayList<>();
+            this.mLocales.add(locale);
             return this;
         }
 
