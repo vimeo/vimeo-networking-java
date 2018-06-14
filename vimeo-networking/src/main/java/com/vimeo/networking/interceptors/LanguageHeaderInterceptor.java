@@ -3,9 +3,6 @@ package com.vimeo.networking.interceptors;
 import com.vimeo.networking.Vimeo;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.Response;
@@ -33,6 +30,6 @@ public class LanguageHeaderInterceptor implements Interceptor {
     }
 
     private String getAcceptLanguageHeader() {
-         return validLocales;
+        return validLocales;
     }
 }

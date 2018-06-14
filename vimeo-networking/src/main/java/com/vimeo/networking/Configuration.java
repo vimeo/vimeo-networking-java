@@ -255,7 +255,7 @@ public class Configuration {
                 this.mClientSecret != null &&
                 !this.mClientSecret.trim().isEmpty() &&
                 this.mScope != null && !this.mScope.trim().isEmpty()) ||
-               (this.mAccessToken != null && !this.mAccessToken.trim().isEmpty());
+                (this.mAccessToken != null && !this.mAccessToken.trim().isEmpty());
     }
 
     /**
@@ -270,7 +270,7 @@ public class Configuration {
         private String mScope;
 
         @NotNull
-        private List<Locale> mLocales = new ArrayList<Locale>(){{
+        private List<Locale> mLocales = new ArrayList<Locale>() {{
             add(Locale.ENGLISH);
         }};
 
@@ -337,7 +337,9 @@ public class Configuration {
             this.mAccountStore = accountStore;
         }
 
-        /** If you used the basic Builder access token constructor but have the intent of */
+        /**
+         * If you used the basic Builder access token constructor but have the intent of
+         */
         public Builder setClientIdAndSecret(String clientId, String clientSecret) {
             this.mClientID = clientId;
             this.mClientSecret = clientSecret;
