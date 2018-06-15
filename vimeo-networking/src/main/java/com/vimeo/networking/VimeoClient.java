@@ -456,11 +456,6 @@ public class VimeoClient {
         }
 
         return codeBuilder.toString();
-
-//        List<String> codeList = localeList.stream()
-//                .map(Locale::getLanguage)
-//                .collect(Collectors.toList());
-//        return String.join(",", codeList);
     }
 
     /**
