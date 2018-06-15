@@ -108,7 +108,7 @@ public class VimeoClient {
     private final BaseUrlInterceptor mBaseUrlInterceptor = new BaseUrlInterceptor();
 
     @NotNull
-    private final LanguageHeaderInterceptor mLanguageHeaderInterceptor = new LanguageHeaderInterceptor(getLocaleCodes());
+    private final LanguageHeaderInterceptor mLanguageHeaderInterceptor;
 
     /**
      * Currently authenticated account
@@ -148,6 +148,7 @@ public class VimeoClient {
 
     private VimeoClient(@NotNull Configuration configuration) {
         mConfiguration = configuration;
+        this.mLanguageHeaderInterceptor = new LanguageHeaderInterceptor(getLocaleCodes(mConfiguration));
         mConfiguration.mInterceptors.add(mBaseUrlInterceptor);
         mConfiguration.mInterceptors.add(mLanguageHeaderInterceptor);
         mCache = mConfiguration.getCache();
@@ -442,9 +443,9 @@ public class VimeoClient {
      *
      * blah blah
      */
-    public String getLocaleCodes() {
+    public String getLocaleCodes(Configuration configuration) {
 
-        List<Locale> localeList = mConfiguration.getLocales();
+        List<Locale> localeList = configuration.getLocales();
         StringBuilder codeBuilder = new StringBuilder();
 
         for (int i = 0; i < localeList.size(); i++) {
