@@ -439,9 +439,12 @@ public class VimeoClient {
     }
 
     /**
-     * Localization header
+     * Creates a String of locales from the current configuration.
+     * In the format "xx,xx,xx" which is supported by the Vimeo API.
      *
-     * blah blah
+     * @param configuration             The Configuration of this session
+     *
+     * @return String of locales
      */
     public String getLocaleCodes(Configuration configuration) {
 
