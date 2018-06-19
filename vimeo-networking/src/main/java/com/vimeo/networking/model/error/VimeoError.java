@@ -24,6 +24,7 @@ package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -60,7 +61,7 @@ public class VimeoError extends RuntimeException {
     protected String mDeveloperMessage;
 
     @SerializedName("error_code")
-    protected ErrorCode mErrorCode;
+    protected String mRawErrorCode;
 
     @SerializedName("invalid_parameters")
     protected List<InvalidParameter> mInvalidParameters;
@@ -117,13 +118,18 @@ public class VimeoError extends RuntimeException {
         return this.mDeveloperMessage;
     }
 
-    public void setErrorCode(ErrorCode errorCode) {
-        this.mErrorCode = errorCode;
+    public String getRawErrorCode() {
+        return mRawErrorCode;
+    }
+
+    public void setErrorCode(@NotNull ErrorCode errorCode) {
+        final String json = VimeoNetworkUtil.getGson().toJson(errorCode);
+        mRawErrorCode = json.replaceAll("^\"|\"$", "");
     }
 
     @NotNull
     public ErrorCode getErrorCode() {
-        return mErrorCode == null ? ErrorCode.DEFAULT : this.mErrorCode;
+        return VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
     }
 
     public void setInvalidParameters(List<InvalidParameter> invalidParameters) {
