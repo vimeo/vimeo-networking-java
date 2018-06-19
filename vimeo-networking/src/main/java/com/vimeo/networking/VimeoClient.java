@@ -854,7 +854,7 @@ public class VimeoClient {
                     mTimer.cancel();
                     if (authCallback != null && now >= mExpiresInNano) {
                         final VimeoError error = new VimeoError("Pin code expired.");
-                        error.setErrorCode(ErrorCode.UNABLE_TO_LOGIN_PINCODE_EXPIRED);
+                        error.setErrorCode(ErrorCode.INVALID_TOKEN);
                         authCallback.failure(error);
                     }
                 }
