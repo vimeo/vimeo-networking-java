@@ -68,7 +68,8 @@ public class InvalidParameter {
 
     @NotNull
     public ErrorCode getErrorCode() {
-        return VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
+        final ErrorCode errorCode = VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
+        return errorCode != null ? errorCode : ErrorCode.DEFAULT;
     }
 
     public String getRawErrorCode() {

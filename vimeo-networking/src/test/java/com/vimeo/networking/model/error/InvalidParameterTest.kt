@@ -2,8 +2,7 @@ package com.vimeo.networking.model.error
 
 import com.vimeo.networking.Utils
 import com.vimeo.networking.utils.VimeoNetworkUtil
-import org.assertj.core.api.Assertions
-
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 /**
@@ -22,16 +21,26 @@ class InvalidParameterTest {
     fun `error code is properly set`() {
         ErrorCode.values().forEach {
             val invalidParameter = InvalidParameter("", it, "")
-            Assertions.assertThat(invalidParameter.errorCode).isEqualTo(it)
+            assertThat(invalidParameter.errorCode).isEqualTo(it)
+        }
+    }
+
+    @Test
+    fun `error code defaults to DEFAULT`() {
+        with(InvalidParameter()) {
+            assertThat(errorCode).isEqualTo(ErrorCode.DEFAULT)
+            assertThat(rawErrorCode).isNull()
         }
     }
 
     @Test
     fun `raw error code is properly set`() {
-        ErrorCode.values().forEach {
-            val invalidParameter = InvalidParameter("", it, "")
-            val errorCode = VimeoNetworkUtil.getGson().fromJson(invalidParameter.rawErrorCode, ErrorCode::class.java)
-            Assertions.assertThat(errorCode).isEqualTo(it)
-        }
+        ErrorCode.values()
+                .union(listOf(null))
+                .forEach {
+                    val invalidParameter = InvalidParameter("", it, "")
+                    val errorCode = VimeoNetworkUtil.getGson().fromJson(invalidParameter.rawErrorCode, ErrorCode::class.java)
+                    assertThat(errorCode).isEqualTo(it)
+                }
     }
 }

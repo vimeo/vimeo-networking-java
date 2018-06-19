@@ -28,6 +28,14 @@ class VimeoErrorTest {
     }
 
     @Test
+    fun `error code defaults to DEFAULT`() {
+        with(VimeoError()) {
+            assertThat(errorCode).isEqualTo(ErrorCode.DEFAULT)
+            assertThat(rawErrorCode).isNull()
+        }
+    }
+
+    @Test
     fun `raw error code is properly set`() {
         ErrorCode.values().forEach {
             val vimeoError = VimeoError()
