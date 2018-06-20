@@ -148,7 +148,7 @@ public class VimeoClient {
 
     private VimeoClient(@NotNull Configuration configuration) {
         mConfiguration = configuration;
-        this.mLanguageHeaderInterceptor = new LanguageHeaderInterceptor(getLocaleCodes(mConfiguration));
+        mLanguageHeaderInterceptor = new LanguageHeaderInterceptor(mConfiguration.mLocales);
         mConfiguration.mInterceptors.add(mBaseUrlInterceptor);
         mConfiguration.mInterceptors.add(mLanguageHeaderInterceptor);
         mCache = mConfiguration.getCache();
@@ -436,29 +436,6 @@ public class VimeoClient {
                 mVimeoService.ssoTokenExchange(getBasicAuthHeader(), token, mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
-    }
-
-    /**
-     * Creates a String of locales from the current configuration.
-     * In the format "xx,xx,xx" which is supported by the Vimeo API.
-     *
-     * @param configuration             The Configuration of this session
-     *
-     * @return String of locales
-     */
-    public String getLocaleCodes(Configuration configuration) {
-
-        List<Locale> localeList = configuration.getLocales();
-        StringBuilder codeBuilder = new StringBuilder();
-
-        for (int i = 0; i < localeList.size(); i++) {
-            if (i > 0) {
-                codeBuilder.append(",");
-            }
-            codeBuilder.append(localeList.get(i).getLanguage());
-        }
-
-        return codeBuilder.toString();
     }
 
     /**
@@ -1413,7 +1390,7 @@ public class VimeoClient {
      * @return {@link Call} that can be used to cancel network requests.
      */
     public Call<Product> getProduct(String uri, VimeoCallback<Product> callback) {
-        return getContent(uri, CacheControl.FORCE_NETWORK, GetRequestCaller.PRODUCT, null,null, null, callback);
+        return getContent(uri, CacheControl.FORCE_NETWORK, GetRequestCaller.PRODUCT, null, null, null, callback);
     }
 
     /**

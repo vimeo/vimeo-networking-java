@@ -232,6 +232,9 @@ public class Configuration {
         if (!this.isValid()) {
             throw new AssertionError("Built invalid VimeoClientConfiguration");
         }
+        if (!this.isLocaleValid()) {
+            throw new AssertionError("Built invalid Configuration. Locale list is empty or contains null values");
+        }
 
         this.mCodeGrantRedirectURI = builder.mCodeGrantRedirectUri;
 
@@ -256,6 +259,10 @@ public class Configuration {
                 !this.mClientSecret.trim().isEmpty() &&
                 this.mScope != null && !this.mScope.trim().isEmpty()) ||
                 (this.mAccessToken != null && !this.mAccessToken.trim().isEmpty());
+    }
+
+    private boolean isLocaleValid() {
+        return !this.mLocales.isEmpty() && !this.mLocales.contains(null);
     }
 
     /**
