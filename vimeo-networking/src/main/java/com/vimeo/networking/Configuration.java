@@ -421,7 +421,7 @@ public class Configuration {
          *
          * @return             An instance of the current Builder
          */
-        public Builder setLocales(List<Locale> locales) {
+        public Builder setLocales(@NotNull List<Locale> locales) {
             mLocales = locales;
             return this;
         }
@@ -433,7 +433,7 @@ public class Configuration {
          *
          * @return             An instance of the current Builder
          */
-        public Builder setLocale(Locale locale) {
+        public Builder setLocale(@NotNull Locale locale) {
             mLocales = new ArrayList<>();
             mLocales.add(locale);
             return this;

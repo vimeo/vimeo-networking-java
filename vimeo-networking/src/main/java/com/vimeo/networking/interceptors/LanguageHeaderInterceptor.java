@@ -18,6 +18,8 @@ import okhttp3.Response;
  */
 public class LanguageHeaderInterceptor implements Interceptor {
     private static final String HEADER_SEPARATOR = ",";
+
+    @NotNull
     private String mValidLocales;
 
     public LanguageHeaderInterceptor(@NotNull List<Locale> locales) {
@@ -34,7 +36,8 @@ public class LanguageHeaderInterceptor implements Interceptor {
         );
     }
 
-    private String parseLocales(List<Locale> locales) {
+    @NotNull
+    private String parseLocales(@NotNull List<Locale> locales) {
         final StringBuilder codeBuilder = new StringBuilder();
 
         for (int i = 0; i < locales.size(); i++) {
