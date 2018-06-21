@@ -61,7 +61,10 @@ public class VimeoError extends RuntimeException {
     protected String mDeveloperMessage;
 
     @SerializedName("error_code")
-    protected String mRawErrorCode;
+    private String mRawErrorCode;
+
+    @NotNull
+    private ErrorCode mErrorCode = ErrorCode.DEFAULT;
 
     @SerializedName("invalid_parameters")
     protected List<InvalidParameter> mInvalidParameters;
@@ -122,15 +125,33 @@ public class VimeoError extends RuntimeException {
         return mRawErrorCode;
     }
 
+    /**
+     * Sets the raw error code as well as the enumerated error code if the raw error code can be mapped to one of the
+     * enum values.
+     *
+     * @param rawErrorCode the numerical error code causing this error.
+     */
+    protected void setRawErrorCode(String rawErrorCode) {
+        mRawErrorCode = rawErrorCode;
+
+        final ErrorCode errorCode = VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
+        mErrorCode = errorCode != null ? errorCode : ErrorCode.DEFAULT;
+    }
+
+    /**
+     * Sets the enumerated error code and sets the raw error code based on the serialized value of the enum.
+     *
+     * @param errorCode the error code causing the error.
+     */
     public void setErrorCode(@NotNull ErrorCode errorCode) {
+        mErrorCode = errorCode;
         final String json = VimeoNetworkUtil.getGson().toJson(errorCode);
         mRawErrorCode = json.replaceAll("^\"|\"$", "");
     }
 
     @NotNull
     public ErrorCode getErrorCode() {
-        final ErrorCode errorCode = VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
-        return errorCode != null ? errorCode : ErrorCode.DEFAULT;
+        return mErrorCode;
     }
 
     public void setInvalidParameters(List<InvalidParameter> invalidParameters) {

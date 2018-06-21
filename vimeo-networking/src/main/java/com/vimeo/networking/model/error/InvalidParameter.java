@@ -25,8 +25,11 @@ package com.vimeo.networking.model.error;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
 
 /**
  * Similar to {@link VimeoError} object, this holds error codes/error messages relevant to a specific invalid field.
@@ -38,14 +41,19 @@ import org.jetbrains.annotations.NotNull;
  * Created by kylevenn on 7/15/15.
  */
 @SuppressWarnings("unused")
-@UseStag
-public class InvalidParameter {
+@UseStag(FieldOption.SERIALIZED_NAME)
+public class InvalidParameter implements Serializable {
+
+    private static final long serialVersionUID = -2231104595208701561L;
 
     @SerializedName("field")
     protected String mField;
 
     @SerializedName("error_code")
-    protected String mRawErrorCode;
+    private String mRawErrorCode;
+
+    @NotNull
+    private ErrorCode mErrorCode = ErrorCode.DEFAULT;
 
     @SerializedName("user_message")
     protected String mUserMessage;
@@ -61,15 +69,21 @@ public class InvalidParameter {
         this.mDeveloperMessage = developerMessage;
     }
 
+    protected void setRawErrorCode(String rawErrorCode) {
+        mRawErrorCode = rawErrorCode;
+        final ErrorCode errorCode = VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
+        mErrorCode = errorCode != null ? errorCode : ErrorCode.DEFAULT;
+    }
+
     private void setErrorCode(@NotNull ErrorCode errorCode) {
+        mErrorCode = errorCode;
         final String json = VimeoNetworkUtil.getGson().toJson(errorCode);
         mRawErrorCode = json.replaceAll("^\"|\"$", "");
     }
 
     @NotNull
     public ErrorCode getErrorCode() {
-        final ErrorCode errorCode = VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
-        return errorCode != null ? errorCode : ErrorCode.DEFAULT;
+        return mErrorCode;
     }
 
     public String getRawErrorCode() {
