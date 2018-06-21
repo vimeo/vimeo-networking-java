@@ -426,7 +426,6 @@ public class Configuration {
             return this;
         }
 
-
         /**
          * Takes a single locale and creates a single element list to add to Builder
          *
