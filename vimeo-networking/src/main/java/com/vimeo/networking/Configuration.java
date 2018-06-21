@@ -104,10 +104,6 @@ public class Configuration {
         return mScope;
     }
 
-    public List<Locale> getLocales() {
-        return mLocales;
-    }
-
     public String getAccessToken() {
         return mAccessToken;
     }
@@ -418,14 +414,29 @@ public class Configuration {
             return this;
         }
 
+        /**
+         * Sets a list of locales in the Builder
+         *
+         * @param locales      The list of locales from the user
+         *
+         * @return             An instance of the current Builder
+         */
         public Builder setLocales(List<Locale> locales) {
-            this.mLocales = locales;
+            mLocales = locales;
             return this;
         }
 
+
+        /**
+         * Takes a single locale and creates a single element list to add to Builder
+         *
+         * @param locale       A single locale
+         *
+         * @return             An instance of the current Builder
+         */
         public Builder setLocale(Locale locale) {
-            this.mLocales = new ArrayList<>();
-            this.mLocales.add(locale);
+            mLocales = new ArrayList<>();
+            mLocales.add(locale);
             return this;
         }
 
