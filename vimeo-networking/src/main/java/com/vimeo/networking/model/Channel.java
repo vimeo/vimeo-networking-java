@@ -35,7 +35,7 @@ import java.util.Date;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class Channel implements Serializable, Followable {
+public class Channel implements Serializable, Followable, Entity {
 
     private static final long serialVersionUID = 3190410523525111858L;
 
@@ -71,6 +71,19 @@ public class Channel implements Serializable, Followable {
 
     @SerializedName("metadata")
     protected Metadata mMetadata;
+
+    @Nullable
+    @SerializedName("resource_key")
+    private String mResourceKey;
+
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
+    public void setResourceKey(@Nullable String resourceKey) {
+        mResourceKey = resourceKey;
+    }
 
     public void setUri(String uri) {
         mUri = uri;
@@ -191,5 +204,11 @@ public class Channel implements Serializable, Followable {
     @Override
     public int hashCode() {
         return this.mUri != null ? this.mUri.hashCode() : 0;
+    }
+
+    @Nullable
+    @Override
+    public String identifier() {
+        return mResourceKey;
     }
 }
