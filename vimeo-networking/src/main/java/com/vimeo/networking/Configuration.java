@@ -61,7 +61,7 @@ public class Configuration {
     protected String mScope;
 
     @NotNull
-    protected List<Locale> mLocales;
+    protected final List<Locale> mLocales;
 
     protected String mAccessToken;
 
@@ -341,8 +341,10 @@ public class Configuration {
         }
 
         /**
-         * If you used the basic Builder access token constructor but have the intent of
+         * This method is deprecated. Please use {@code Builder(String, String, String, AccountStore)}
+         * and provide the client id and secret there instead.
          */
+        @Deprecated
         public Builder setClientIdAndSecret(String clientId, String clientSecret) {
             this.mClientID = clientId;
             this.mClientSecret = clientSecret;
@@ -415,11 +417,11 @@ public class Configuration {
         }
 
         /**
-         * Sets a list of locales in the Builder
+         * Sets a list of locales in the Builder. Default language is English if nothing is set.
+         * Will replace any existing locales set in the Builder.
          *
-         * @param locales      The list of locales from the user
-         *
-         * @return             An instance of the current Builder
+         * @param locales The list of locales from the user
+         * @return An instance of the current Builder
          */
         public Builder setLocales(@NotNull List<Locale> locales) {
             mLocales = locales;
@@ -427,11 +429,11 @@ public class Configuration {
         }
 
         /**
-         * Takes a single locale and creates a single element list to add to Builder
+         * Takes a single locale and creates a single element list to add to Builder. Default
+         * language is English if nothing is set. Will replace any existing locales set in the Builder.
          *
-         * @param locale       A single locale
-         *
-         * @return             An instance of the current Builder
+         * @param locale A single locale
+         * @return An instance of the current Builder
          */
         public Builder setLocale(@NotNull Locale locale) {
             mLocales = new ArrayList<>();

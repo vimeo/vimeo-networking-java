@@ -1,6 +1,5 @@
 package com.vimeo.networking.interceptors;
 
-import com.vimeo.networking.Configuration;
 import com.vimeo.networking.Vimeo;
 
 import org.jetbrains.annotations.NotNull;
