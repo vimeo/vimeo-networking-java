@@ -26,6 +26,8 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -34,7 +36,7 @@ import java.util.Date;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class Comment implements Serializable {
+public class Comment implements Serializable, Entity {
 
     private static final long serialVersionUID = -7716027694845877155L;
 
@@ -62,6 +64,19 @@ public class Comment implements Serializable {
 
     @SerializedName("metadata")
     protected Metadata mMetadata;
+
+    @Nullable
+    @SerializedName("resource_key")
+    private String mResourceKey;
+
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
+    protected void setResourceKey(@Nullable String resourceKey) {
+        mResourceKey = resourceKey;
+    }
 
     public String getUri() {
         return mUri;
@@ -125,4 +140,9 @@ public class Comment implements Serializable {
         return this.mUri != null ? this.mUri.hashCode() : 0;
     }
 
+    @Nullable
+    @Override
+    public String identifier() {
+        return mResourceKey;
+    }
 }
