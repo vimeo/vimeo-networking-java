@@ -46,6 +46,7 @@ public class UserBadge implements Serializable {
 
     private static final String BADGE_ALUM = "alum";
     private static final String BADGE_BUSINESS = "business";
+    private static final String BADGE_PRODUCER = "producer";
     private static final String BADGE_CURATION = "curation";
     private static final String BADGE_PLUS = "plus";
     private static final String BADGE_POTUS = "potus";
@@ -62,6 +63,7 @@ public class UserBadge implements Serializable {
         POTUS,
         PRO,
         STAFF,
+        PRODUCER,
         SUPPORT
     }
 
@@ -111,6 +113,8 @@ public class UserBadge implements Serializable {
                 return UserBadgeType.STAFF;
             case BADGE_SUPPORT:
                 return UserBadgeType.SUPPORT;
+            case BADGE_PRODUCER:
+                return UserBadgeType.PRODUCER;
             default:
                 return UserBadgeType.NONE;
 
