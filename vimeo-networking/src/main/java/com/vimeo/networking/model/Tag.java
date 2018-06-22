@@ -25,6 +25,8 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -32,7 +34,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class Tag implements Serializable {
+public class Tag implements Serializable, Entity {
 
     private static final long serialVersionUID = 3388947522077930006L;
 
@@ -50,6 +52,19 @@ public class Tag implements Serializable {
 
     @SerializedName("metadata")
     protected Metadata mMetadata;
+
+    @Nullable
+    @SerializedName("resource_key")
+    private String mResourceKey;
+
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
+    protected void setResourceKey(@Nullable String resourceKey) {
+        mResourceKey = resourceKey;
+    }
 
     public String getUri() {
         return mUri;
@@ -69,5 +84,11 @@ public class Tag implements Serializable {
 
     public Metadata getMetadata() {
         return mMetadata;
+    }
+
+    @Nullable
+    @Override
+    public String identifier() {
+        return mResourceKey;
     }
 }
