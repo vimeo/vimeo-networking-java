@@ -66,6 +66,9 @@ public class VimeoError extends RuntimeException {
     @NotNull
     private ErrorCode mErrorCode = ErrorCode.DEFAULT;
 
+    @NotNull
+    private LocalErrorCode mLocalErrorCode = LocalErrorCode.DEFAULT;
+
     @SerializedName("invalid_parameters")
     protected List<InvalidParameter> mInvalidParameters;
 
@@ -152,6 +155,15 @@ public class VimeoError extends RuntimeException {
     @NotNull
     public ErrorCode getErrorCode() {
         return mErrorCode;
+    }
+
+    @NotNull
+    public LocalErrorCode getLocalErrorCode() {
+        return mLocalErrorCode;
+    }
+
+    public void setLocalErrorCode(@NotNull LocalErrorCode localErrorCode) {
+        mLocalErrorCode = localErrorCode;
     }
 
     public void setInvalidParameters(List<InvalidParameter> invalidParameters) {

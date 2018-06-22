@@ -39,6 +39,7 @@ import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
+import com.vimeo.networking.model.error.LocalErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.iap.Product;
 import com.vimeo.networking.model.iap.Products;
@@ -435,19 +436,18 @@ public class VimeoClient {
      * This method is used to create an account on Vimeo with the credentials {@code email} and
      * {@code password}. It is used to join with an email and password.
      *
-     * @param displayName                The display name for the account.
-     * @param email                      Account's email.
-     * @param password                   Account's password.
-     * @param marketingOptIn             Flag to opt in or out of email marketing emails.
-     * @param callback                   Callback to inform you of the result of login.
-     *
+     * @param displayName    The display name for the account.
+     * @param email          Account's email.
+     * @param password       Account's password.
+     * @param marketingOptIn Flag to opt in or out of email marketing emails.
+     * @param callback       Callback to inform you of the result of login.
      * @return A Call object.
      */
     @Nullable
     public Call<VimeoAccount> join(@Nullable final String displayName,
                                    @Nullable final String email,
                                    @Nullable final String password,
-                                             final boolean marketingOptIn,
+                                   final boolean marketingOptIn,
                                    @Nullable final AuthCallback callback) {
         if (callback == null) {
             throw new AssertionError("Callback cannot be null");
@@ -490,17 +490,16 @@ public class VimeoClient {
     /**
      * This method is used to create an account on Vimeo with Facebook.
      *
-     * @param facebookToken              Facebook token.
-     * @param email                      Account's email.
-     * @param marketingOptIn             Flag to opt in or out of email marketing emails.
-     * @param callback                   Callback to inform you of the result of login.
-     *
+     * @param facebookToken  Facebook token.
+     * @param email          Account's email.
+     * @param marketingOptIn Flag to opt in or out of email marketing emails.
+     * @param callback       Callback to inform you of the result of login.
      * @return A Call object.
      */
     @Nullable
     public Call<VimeoAccount> joinWithFacebookToken(@NotNull final String facebookToken,
                                                     @NotNull final String email,
-                                                             final boolean marketingOptIn,
+                                                    final boolean marketingOptIn,
                                                     @NotNull final AuthCallback callback) {
         if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
@@ -523,16 +522,16 @@ public class VimeoClient {
     /**
      * Register the user using a Google authentication token.
      *
-     * @param googleToken               {@code id_token} value received by Google after authenticating.
-     * @param email                     User email address.
-     * @param marketingOptIn            Flag to opt in or out of marketing emails.
-     * @param callback                  This callback will be executed after the request succeeds or fails.
+     * @param googleToken    {@code id_token} value received by Google after authenticating.
+     * @param email          User email address.
+     * @param marketingOptIn Flag to opt in or out of marketing emails.
+     * @param callback       This callback will be executed after the request succeeds or fails.
      * @return a retrofit {@link Call} object, which <b>has already been enqueued</b>.
      */
     @Nullable
     public Call<VimeoAccount> joinWithGoogleToken(@NotNull final String googleToken,
                                                   @NotNull final String email,
-                                                           final boolean marketingOptIn,
+                                                  final boolean marketingOptIn,
                                                   @NotNull final AuthCallback callback) {
         if (googleToken.isEmpty()) {
             final VimeoError error = new VimeoError("Google authentication error.");
@@ -846,15 +845,17 @@ public class VimeoClient {
             final AuthCallback authCallback = mAuthCallbackWeakReference.get();
             final VimeoClient vimeoClient = mVimeoClient.get();
             final long now = System.nanoTime();
-            if (!VimeoClient.sContinuePinCodeAuthorizationRefreshCycle || now >= mExpiresInNano ||
-                authCallback == null || vimeoClient == null) {
+            if (!VimeoClient.sContinuePinCodeAuthorizationRefreshCycle
+                || now >= mExpiresInNano
+                || authCallback == null
+                || vimeoClient == null) {
                 if (VimeoClient.sContinuePinCodeAuthorizationRefreshCycle) {
                     //noinspection AssignmentToStaticFieldFromInstanceMethod
                     VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
                     mTimer.cancel();
                     if (authCallback != null && now >= mExpiresInNano) {
                         final VimeoError error = new VimeoError("Pin code expired.");
-                        error.setErrorCode(ErrorCode.INVALID_TOKEN);
+                        error.setLocalErrorCode(LocalErrorCode.UNABLE_TO_LOGIN_PINCODE_EXPIRED);
                         authCallback.failure(error);
                     }
                 }
