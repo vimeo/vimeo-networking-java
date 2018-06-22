@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class Recommendation implements Serializable {
+public class Recommendation implements Serializable, Entity {
 
     private static final long serialVersionUID = -1451431453348153582L;
 
@@ -122,6 +122,12 @@ public class Recommendation implements Serializable {
         } else {
             return RecommendationType.NONE;
         }
+    }
+
+    @Nullable
+    @Override
+    public String identifier() {
+        return mResourceKey;
     }
     // </editor-fold>
 
