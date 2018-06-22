@@ -81,7 +81,7 @@ public class Channel implements Serializable, Followable, Entity {
         return mResourceKey;
     }
 
-    public void setResourceKey(@Nullable String resourceKey) {
+    protected void setResourceKey(@Nullable String resourceKey) {
         mResourceKey = resourceKey;
     }
 
