@@ -1,5 +1,3 @@
-*/build
-build/
 *.iml
 *.apk
 bin/
@@ -8,11 +6,18 @@ gen/
 *.dex
 .gradle
 /local.properties
-.idea/
-/.idea/workspace.xml
-/.idea/libraries
+/.idea/*
 .DS_Store
-values.xml
+/build
+*/build
+
+# Keep these idea folders/files. They should remain shared for this project.
+!/.idea/copyright
+!/.idea/scopes
+!/.idea/codeStyles
+!/.idea/codeStyleSettings.xml
+!/.idea/inspectionProfiles
+!/.idea/dictionaries/global.xml
 
 # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
 fastlane/report.xml
