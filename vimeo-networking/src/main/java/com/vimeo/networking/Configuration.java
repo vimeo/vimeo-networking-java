@@ -32,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -58,6 +59,9 @@ public class Configuration {
     protected String mClientID;
     protected String mClientSecret;
     protected String mScope;
+
+    @NotNull
+    protected final List<Locale> mLocales;
 
     protected String mAccessToken;
 
@@ -215,6 +219,7 @@ public class Configuration {
         this.mClientID = builder.mClientID;
         this.mClientSecret = builder.mClientSecret;
         this.mScope = builder.mScope;
+        this.mLocales = builder.mLocales;
 
         this.mAccessToken = builder.mAccessToken;
 
@@ -222,6 +227,9 @@ public class Configuration {
 
         if (!this.isValid()) {
             throw new AssertionError("Built invalid VimeoClientConfiguration");
+        }
+        if (!this.isLocaleValid()) {
+            throw new AssertionError("Built invalid Configuration. Locale list is empty or contains null values");
         }
 
         this.mCodeGrantRedirectURI = builder.mCodeGrantRedirectUri;
@@ -246,7 +254,11 @@ public class Configuration {
                 this.mClientSecret != null &&
                 !this.mClientSecret.trim().isEmpty() &&
                 this.mScope != null && !this.mScope.trim().isEmpty()) ||
-               (this.mAccessToken != null && !this.mAccessToken.trim().isEmpty());
+                (this.mAccessToken != null && !this.mAccessToken.trim().isEmpty());
+    }
+
+    private boolean isLocaleValid() {
+        return !this.mLocales.isEmpty() && !this.mLocales.contains(null);
     }
 
     /**
@@ -259,6 +271,11 @@ public class Configuration {
         private String mClientID;
         private String mClientSecret;
         private String mScope;
+
+        @NotNull
+        private List<Locale> mLocales = new ArrayList<Locale>() {{
+            add(Locale.ENGLISH);
+        }};
 
         private String mAccessToken;
 
@@ -323,7 +340,11 @@ public class Configuration {
             this.mAccountStore = accountStore;
         }
 
-        /** If you used the basic Builder access token constructor but have the intent of */
+        /**
+         * This method is deprecated. Please use {@code Builder(String, String, String, AccountStore)}
+         * and provide the client id and secret there instead.
+         */
+        @Deprecated
         public Builder setClientIdAndSecret(String clientId, String clientSecret) {
             this.mClientID = clientId;
             this.mClientSecret = clientSecret;
@@ -392,6 +413,31 @@ public class Configuration {
 
         public Builder setLogLevel(LogLevel level) {
             this.mLogLevel = level;
+            return this;
+        }
+
+        /**
+         * Sets a list of locales in the Builder. Default language is English if nothing is set.
+         * Will replace any existing locales set in the Builder.
+         *
+         * @param locales The list of locales from the user
+         * @return An instance of the current Builder
+         */
+        public Builder setLocales(@NotNull List<Locale> locales) {
+            mLocales = locales;
+            return this;
+        }
+
+        /**
+         * Takes a single locale and creates a single element list to add to Builder. Default
+         * language is English if nothing is set. Will replace any existing locales set in the Builder.
+         *
+         * @param locale A single locale
+         * @return An instance of the current Builder
+         */
+        public Builder setLocale(@NotNull Locale locale) {
+            mLocales = new ArrayList<>();
+            mLocales.add(locale);
             return this;
         }
 
