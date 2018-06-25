@@ -549,7 +549,7 @@ public class User implements Serializable, Followable, Entity {
 
     @Nullable
     @Override
-    public String identifier() {
+    public String getIdentifier() {
         return mResourceKey;
     }
 }

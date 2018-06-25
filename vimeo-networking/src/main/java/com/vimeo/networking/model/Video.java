@@ -1029,7 +1029,7 @@ public class Video implements Serializable, Entity {
 
     @Nullable
     @Override
-    public String identifier() {
+    public String getIdentifier() {
         return mResourceKey;
     }
     // </editor-fold>
