@@ -124,6 +124,11 @@ public class VimeoError extends RuntimeException {
         return this.mDeveloperMessage;
     }
 
+    /**
+     * Return the raw error code string.
+     *
+     * @return the raw error code..
+     */
     public String getRawErrorCode() {
         return mRawErrorCode;
     }
@@ -172,6 +177,11 @@ public class VimeoError extends RuntimeException {
         return mLocalErrorCode;
     }
 
+    /**
+     * Set the local error code enum.
+     *
+     * @param localErrorCode the local error code to use.
+     */
     public void setLocalErrorCode(@NotNull LocalErrorCode localErrorCode) {
         mLocalErrorCode = localErrorCode;
     }
