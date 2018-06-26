@@ -153,7 +153,7 @@ public class VimeoError extends RuntimeException {
     }
 
     /**
-     * Returns the error code, if no value was set, defaults to {@link ErrorCode#DEFAULT}.
+     * Returns the error code. If no value was set, defaults to {@link ErrorCode#DEFAULT}.
      *
      * @return the error code.
      */
@@ -162,6 +162,11 @@ public class VimeoError extends RuntimeException {
         return mErrorCode;
     }
 
+    /**
+     * Returns the local error code. If no value was set, defaults to {@link LocalErrorCode#DEFAULT}.
+     *
+     * @return the local error code.
+     */
     @NotNull
     public LocalErrorCode getLocalErrorCode() {
         return mLocalErrorCode;

@@ -82,7 +82,7 @@ public class InvalidParameter implements Serializable {
     }
 
     /**
-     * Returns the error code, if no value was set, defaults to {@link ErrorCode#DEFAULT}.
+     * Returns the error code. If no value was set, defaults to {@link ErrorCode#DEFAULT}.
      *
      * @return the error code.
      */
