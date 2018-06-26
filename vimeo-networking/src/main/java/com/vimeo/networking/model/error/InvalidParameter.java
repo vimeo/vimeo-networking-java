@@ -28,6 +28,7 @@ import com.vimeo.stag.UseStag;
 import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -69,12 +70,22 @@ public class InvalidParameter implements Serializable {
         this.mDeveloperMessage = developerMessage;
     }
 
-    protected void setRawErrorCode(String rawErrorCode) {
+    /**
+     * Set the raw error code, also sets the error code enum as a side effect.
+     *
+     * @param rawErrorCode the raw error code to set.
+     */
+    protected void setRawErrorCode(@Nullable String rawErrorCode) {
         mRawErrorCode = rawErrorCode;
         final ErrorCode errorCode = VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
         mErrorCode = errorCode != null ? errorCode : ErrorCode.DEFAULT;
     }
 
+    /**
+     * Set the error code enum, also sets the raw error code string as a side effect.
+     *
+     * @param errorCode the error code enum to set.
+     */
     private void setErrorCode(@NotNull ErrorCode errorCode) {
         mErrorCode = errorCode;
         final String json = VimeoNetworkUtil.getGson().toJson(errorCode);
@@ -91,6 +102,12 @@ public class InvalidParameter implements Serializable {
         return mErrorCode;
     }
 
+    /**
+     * Returns the raw error code, may be null.
+     *
+     * @return the raw error code as a nullable string.
+     */
+    @Nullable
     public String getRawErrorCode() {
         return mRawErrorCode;
     }
