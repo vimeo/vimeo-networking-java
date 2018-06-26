@@ -152,6 +152,11 @@ public class VimeoError extends RuntimeException {
         mRawErrorCode = json.replaceAll("^\"|\"$", "");
     }
 
+    /**
+     * Returns the error code, if no value was set, defaults to {@link ErrorCode#DEFAULT}.
+     *
+     * @return the error code.
+     */
     @NotNull
     public ErrorCode getErrorCode() {
         return mErrorCode;
