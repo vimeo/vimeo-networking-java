@@ -40,6 +40,7 @@ import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
+import com.vimeo.networking.model.error.LocalErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.model.iap.Product;
 import com.vimeo.networking.model.iap.Products;
@@ -851,15 +852,17 @@ public class VimeoClient {
             final AuthCallback authCallback = mAuthCallbackWeakReference.get();
             final VimeoClient vimeoClient = mVimeoClient.get();
             final long now = System.nanoTime();
-            if (!VimeoClient.sContinuePinCodeAuthorizationRefreshCycle || now >= mExpiresInNano ||
-                    authCallback == null || vimeoClient == null) {
+            if (!VimeoClient.sContinuePinCodeAuthorizationRefreshCycle
+                || now >= mExpiresInNano
+                || authCallback == null
+                || vimeoClient == null) {
                 if (VimeoClient.sContinuePinCodeAuthorizationRefreshCycle) {
                     //noinspection AssignmentToStaticFieldFromInstanceMethod
                     VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
                     mTimer.cancel();
                     if (authCallback != null && now >= mExpiresInNano) {
                         final VimeoError error = new VimeoError("Pin code expired.");
-                        error.setErrorCode(ErrorCode.UNABLE_TO_LOGIN_PINCODE_EXPIRED);
+                        error.setLocalErrorCode(LocalErrorCode.UNABLE_TO_LOGIN_PINCODE_EXPIRED);
                         authCallback.failure(error);
                     }
                 }

@@ -24,6 +24,7 @@ package com.vimeo.networking.model.error;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.utils.VimeoNetworkUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -60,7 +61,13 @@ public class VimeoError extends RuntimeException {
     protected String mDeveloperMessage;
 
     @SerializedName("error_code")
-    protected ErrorCode mErrorCode;
+    private String mRawErrorCode;
+
+    @NotNull
+    private ErrorCode mErrorCode = ErrorCode.DEFAULT;
+
+    @NotNull
+    private LocalErrorCode mLocalErrorCode = LocalErrorCode.DEFAULT;
 
     @SerializedName("invalid_parameters")
     protected List<InvalidParameter> mInvalidParameters;
@@ -117,13 +124,66 @@ public class VimeoError extends RuntimeException {
         return this.mDeveloperMessage;
     }
 
-    public void setErrorCode(ErrorCode errorCode) {
-        this.mErrorCode = errorCode;
+    /**
+     * Return the raw error code string.
+     *
+     * @return the raw error code..
+     */
+    public String getRawErrorCode() {
+        return mRawErrorCode;
     }
 
+    /**
+     * Sets the raw error code as well as the enumerated error code if the raw error code can be mapped to one of the
+     * enum values.
+     *
+     * @param rawErrorCode the numerical error code causing this error.
+     */
+    protected void setRawErrorCode(String rawErrorCode) {
+        mRawErrorCode = rawErrorCode;
+
+        final ErrorCode errorCode = VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
+        mErrorCode = errorCode != null ? errorCode : ErrorCode.DEFAULT;
+    }
+
+    /**
+     * Sets the enumerated error code and sets the raw error code based on the serialized value of the enum.
+     *
+     * @param errorCode the error code causing the error.
+     */
+    public void setErrorCode(@NotNull ErrorCode errorCode) {
+        mErrorCode = errorCode;
+        final String json = VimeoNetworkUtil.getGson().toJson(errorCode);
+        mRawErrorCode = json.replaceAll("^\"|\"$", "");
+    }
+
+    /**
+     * Returns the error code. If no value was set, defaults to {@link ErrorCode#DEFAULT}.
+     *
+     * @return the error code.
+     */
     @NotNull
     public ErrorCode getErrorCode() {
-        return mErrorCode == null ? ErrorCode.DEFAULT : this.mErrorCode;
+        return mErrorCode;
+    }
+
+    /**
+     * Returns the local error code. If no value was set, defaults to {@link LocalErrorCode#DEFAULT}.
+     *
+     * @return the local error code.
+     */
+    @NotNull
+    public LocalErrorCode getLocalErrorCode() {
+        return mLocalErrorCode;
+    }
+
+    /**
+     * Set the local error code enum.
+     *
+     * @param localErrorCode the local error code to use.
+     */
+    public void setLocalErrorCode(@NotNull LocalErrorCode localErrorCode) {
+        mLocalErrorCode = localErrorCode;
     }
 
     public void setInvalidParameters(List<InvalidParameter> invalidParameters) {
