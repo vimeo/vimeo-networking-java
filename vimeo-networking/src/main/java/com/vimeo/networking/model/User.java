@@ -45,7 +45,7 @@ import java.util.Date;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class User implements Serializable, Followable {
+public class User implements Serializable, Followable, Entity {
 
     private static final long serialVersionUID = 4317573825273169510L;
     private static final String ACCOUNT_BASIC = "basic";
@@ -136,6 +136,10 @@ public class User implements Serializable, Followable {
     private Boolean mIsVideoCreator;
 
     @Nullable
+    @SerializedName("resource_key")
+    private String mResourceKey;
+
+    @Nullable
     public UserBadge getBadge() {
         return mBadge;
     }
@@ -182,6 +186,15 @@ public class User implements Serializable, Followable {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Accessors/Helpers">
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
+    protected void setResourceKey(@Nullable String resourceKey) {
+        mResourceKey = resourceKey;
+    }
+
     public void setUri(String uri) {
         mUri = uri;
     }
@@ -532,5 +545,11 @@ public class User implements Serializable, Followable {
                ", mBadge=" + mBadge +
                ", mLiveQuota=" + mLiveQuota +
                '}';
+    }
+
+    @Nullable
+    @Override
+    public String getIdentifier() {
+        return mResourceKey;
     }
 }
