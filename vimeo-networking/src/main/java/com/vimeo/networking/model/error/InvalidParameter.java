@@ -112,14 +112,29 @@ public class InvalidParameter implements Serializable {
         return mRawErrorCode;
     }
 
+    /**
+     * Returns the field.
+     *
+     * @return the field as a string.
+     */
     public String getField() {
         return mField;
     }
 
+    /**
+     * Returns the user message.
+     *
+     * @return the user message as a string.
+     */
     public String getUserMessage() {
         return mUserMessage;
     }
 
+    /**
+     * Returns the developer message.
+     *
+     * @return the developer message as a string.
+     */
     public String getDeveloperMessage() {
         return mDeveloperMessage;
     }
