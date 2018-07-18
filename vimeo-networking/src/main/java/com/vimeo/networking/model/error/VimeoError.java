@@ -25,6 +25,8 @@ package com.vimeo.networking.model.error;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -41,7 +43,7 @@ import retrofit2.Response;
  * Created by zetterstromk on 5/27/15.
  */
 @SuppressWarnings("unused")
-//@UseStag(FieldOption.SERIALIZED_NAME)
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class VimeoError extends RuntimeException {
 
     private static final long serialVersionUID = -5252307626841557962L;
@@ -144,17 +146,6 @@ public class VimeoError extends RuntimeException {
 
         final ErrorCode errorCode = VimeoNetworkUtil.getGson().fromJson(mRawErrorCode, ErrorCode.class);
         mErrorCode = errorCode != null ? errorCode : ErrorCode.DEFAULT;
-    }
-
-    /**
-     * Sets the enumerated error code and sets the raw error code based on the serialized value of the enum.
-     *
-     * @param errorCode the error code causing the error.
-     */
-    public void setErrorCode(@NotNull ErrorCode errorCode) {
-        mErrorCode = errorCode;
-        final String json = VimeoNetworkUtil.getGson().toJson(errorCode);
-        mRawErrorCode = json.replaceAll("^\"|\"$", "");
     }
 
     /**
