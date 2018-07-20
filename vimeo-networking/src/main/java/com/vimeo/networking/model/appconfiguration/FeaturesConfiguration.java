@@ -45,6 +45,9 @@ public class FeaturesConfiguration implements Serializable {
     @SerializedName("play_tracking")
     private String mPlayTracking;
 
+    @SerializedName("gdpr_enabled")
+    private boolean mGDPREnabled;
+
     /**
      * @return whether play tracking logs should be enabled on the client
      */
@@ -55,6 +58,10 @@ public class FeaturesConfiguration implements Serializable {
 
     void setPlayTracking(@Nullable String playTracking) {
         mPlayTracking = playTracking;
+    }
+
+    public boolean isGDPREnabled() {
+        return mGDPREnabled;
     }
 
     @Override
