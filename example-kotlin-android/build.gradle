@@ -33,9 +33,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation "com.android.support:design:$supportLibraryVersion"
 
-    implementation(project(':vimeo-networking')) {
-        exclude group: 'com.intellij', module: 'annotations'
-    }
+    implementation(project(':vimeo-networking'))
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
