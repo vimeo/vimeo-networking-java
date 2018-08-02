@@ -47,9 +47,7 @@ dependencies {
     compile ("com.vimeo.stag:stag-library:$stagVersion"){
         exclude group: 'com.intellij', module: 'annotations'
     }
-    apt ("com.vimeo.stag:stag-library-compiler:$stagVersion"){
-        exclude group: 'com.intellij', module: 'annotations'
-    }
+    apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
 }
 
 group = 'com.vimeo.networking'
