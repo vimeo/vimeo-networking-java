@@ -49,9 +49,7 @@ For a more in depth look at the usage, refer to the [example Android app](exampl
 ### Gradle
 Specify the dependency in your `build.gradle` file (make sure `jcenter()` is included as a repository)
 ```groovy
-implementation("com.vimeo.networking:vimeo-networking:1.1.2", {
-    exclude group: "com.intellij", module: "annotations"
-})
+implementation "com.vimeo.networking:vimeo-networking:1.1.8"
 ```
 
 ### JitPack
