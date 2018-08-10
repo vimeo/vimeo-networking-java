@@ -300,7 +300,8 @@ VimeoClient.getInstance().fetchNetworkContent(uri, new ModelCallback<VideoList>(
 ```
 
 ### How do I play a video?
-Once you have a ```Video``` object you have two choices - embed or play natively. All consumers of this library will be able to access the embed data, however, in order to play videos natively (for example, in a VideoView or using ExoPlayer on Android) you must have access to the ```VideoFile``` links - this is restricted to users with Vimeo PRO accounts accessing their own videos.
+Once you have a ```Video``` object you have two choices - embed or play natively. All consumers of this library will be able to access the embed data; however, in order to play videos natively (for example, in a VideoView or using ExoPlayer on Android) you must have access to the ```VideoFile``` links and there are some restrictions to this (see Native playback section below). 
+
 #### Embed
 All consumers of this library will have access to a video's embed html. Once you request a video you can get access to this as such:
 ```java
@@ -314,7 +315,15 @@ if(html != null) {
 }
 ```
 #### Native playback
-If you are a Vimeo PRO member, you will get access to your own videos' links; during [initialization](#initialization) of this library, you must provide the ```video_files``` scope. With these, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array. 
+The basic requirements for native playback are:
+
+1. User must be logged in.
+2. User must be the owner of the video.
+3. User must be PRO or higher (or the app must have the "can access owner's video files" capability).
+4. Token must have the ```video_files``` scope.
+5. User must be the owner of the API app making the request.
+
+If you satisfy all of the requirements, you can choose to stream the videos in any manner you wish. You can get access to HLS and progressive streaming video files through a video's ```files``` array. 
 ```java
 Video video = ...; // obtain a video you own as described above
 ArrayList<VideoFile> videoFiles = video.files;
