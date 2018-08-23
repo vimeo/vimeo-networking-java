@@ -186,6 +186,10 @@ public class Privacy implements Serializable {
     public CommentValue mComments;
 
     @Nullable
+    @SerializedName("_bypass_token")
+    public String mBypassToken;
+
+    @Nullable
     public ViewValue getView() {
         return mView;
     }
@@ -206,5 +210,9 @@ public class Privacy implements Serializable {
     @Nullable
     public CommentValue getComments() {
         return mComments;
+    }
+
+    public String getBypassToken() {
+        return mBypassToken;
     }
 }
