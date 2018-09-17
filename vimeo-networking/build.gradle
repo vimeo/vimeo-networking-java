@@ -36,14 +36,17 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     testCompile "org.assertj:assertj-core:3.10.0"
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.intellij:annotations:12.0@jar'
 
     def retrofitVersion = '2.1.0'
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
+    compile 'org.jetbrains:annotations:16.0.2@jar'
+
     def stagVersion = '2.5.1'
-    compile "com.vimeo.stag:stag-library:$stagVersion"
+    compile ("com.vimeo.stag:stag-library:$stagVersion"){
+        exclude group: 'com.intellij', module: 'annotations'
+    }
     apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
 }
 
