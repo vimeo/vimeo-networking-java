@@ -21,9 +21,7 @@ class TestAccountStore(context: Context?) : AccountStore {
     // @RequiresPermission(Manifest.permission.GET_ACCOUNTS)
     // val mAccountManager: AccountManager? = AccountManager.get(context!!)
 
-    override fun loadAccount(): VimeoAccount? {
-        return AccountPreferenceManager.clientAccount
-    }
+    override fun loadAccount() = AccountPreferenceManager.clientAccount
 
     override fun saveAccount(vimeoAccount: VimeoAccount, email: String) {
         AccountPreferenceManager.clientAccount = vimeoAccount
