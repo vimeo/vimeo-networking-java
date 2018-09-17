@@ -48,7 +48,38 @@ public class Recommendation implements Serializable, Entity {
     public enum RecommendationType {
         NONE,
         CHANNEL,
-        USER
+        USER;
+
+        /**
+         * @return the {@link RecommendationType} as its {@link String} representation.
+         */
+        @NotNull
+        public String asString() {
+            switch (this) {
+                case CHANNEL:
+                    return TYPE_CHANNEL;
+                case USER:
+                    return TYPE_USER;
+                case NONE:
+                default:
+                    return "";
+            }
+        }
+
+        /**
+         * @return the associated {@link RecommendationType} for the provide {@link String}. If {@code null} is
+         * provided, {@link RecommendationType#NONE} will be returned.
+         */
+        @NotNull
+        public static RecommendationType fromString(@Nullable String string) {
+            if (TYPE_CHANNEL.equals(string)) {
+                return RecommendationType.CHANNEL;
+            } else if (TYPE_USER.equals(string)) {
+                return RecommendationType.USER;
+            } else {
+                return RecommendationType.NONE;
+            }
+        }
     }
 
     // Needed for @UseStag
@@ -61,19 +92,7 @@ public class Recommendation implements Serializable, Entity {
                           @Nullable String description,
                           @Nullable String resourceKey) {
         mCategory = category;
-        if (recommendationType != null) {
-            switch (recommendationType) {
-                case NONE:
-                    mRecommendationType = "";
-                    break;
-                case CHANNEL:
-                    mRecommendationType = TYPE_CHANNEL;
-                    break;
-                case USER:
-                    mRecommendationType = TYPE_USER;
-                    break;
-            }
-        }
+        mRecommendationType = recommendationType != null ? recommendationType.asString() : null;
         mUser = user;
         mChannel = channel;
         mDescription = description;
@@ -144,13 +163,7 @@ public class Recommendation implements Serializable, Entity {
 
     @NotNull
     public RecommendationType getRecommendationType() {
-        if (TYPE_CHANNEL.equals(mRecommendationType)) {
-            return RecommendationType.CHANNEL;
-        } else if (TYPE_USER.equals(mRecommendationType)) {
-            return RecommendationType.USER;
-        } else {
-            return RecommendationType.NONE;
-        }
+        return RecommendationType.fromString(mRecommendationType);
     }
 
     @Nullable
