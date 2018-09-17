@@ -55,13 +55,25 @@ public class Recommendation implements Serializable, Entity {
     Recommendation() { }
 
     public Recommendation(@Nullable Category category,
-                          @Nullable String recommendationType,
+                          @Nullable RecommendationType recommendationType,
                           @Nullable User user,
                           @Nullable Channel channel,
                           @Nullable String description,
                           @Nullable String resourceKey) {
         mCategory = category;
-        mRecommendationType = recommendationType;
+        if (recommendationType != null) {
+            switch (recommendationType) {
+                case NONE:
+                    mRecommendationType = "";
+                    break;
+                case CHANNEL:
+                    mRecommendationType = TYPE_CHANNEL;
+                    break;
+                case USER:
+                    mRecommendationType = TYPE_USER;
+                    break;
+            }
+        }
         mUser = user;
         mChannel = channel;
         mDescription = description;
