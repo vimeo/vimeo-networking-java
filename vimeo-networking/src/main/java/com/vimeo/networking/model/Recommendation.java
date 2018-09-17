@@ -51,6 +51,23 @@ public class Recommendation implements Serializable, Entity {
         USER
     }
 
+    // Needed for @UseStag
+    Recommendation() { }
+
+    public Recommendation(@Nullable Category category,
+                          @Nullable String recommendationType,
+                          @Nullable User user,
+                          @Nullable Channel channel,
+                          @Nullable String description,
+                          @Nullable String resourceKey) {
+        mCategory = category;
+        mRecommendationType = recommendationType;
+        mUser = user;
+        mChannel = channel;
+        mDescription = description;
+        mResourceKey = resourceKey;
+    }
+
     /**
      * Null if not recommended by a category
      */
