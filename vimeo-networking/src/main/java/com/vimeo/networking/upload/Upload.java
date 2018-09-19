@@ -38,6 +38,10 @@ public class Upload implements Serializable {
     private String mCompleteUri;
 
     @Nullable
+    @SerializedName("gcs")
+    private Gcs mGcs;
+
+    @Nullable
     @SerializedName("form")
     private String mForm;
 
@@ -131,5 +135,13 @@ public class Upload implements Serializable {
 
     void setUploadLink(@Nullable String uploadLink) {
         mUploadLink = uploadLink;
+    }
+
+    /**
+     * @return The Gcs object used for uploading if available
+     */
+    @Nullable
+    public Gcs getGcs() {
+        return mGcs;
     }
 }
