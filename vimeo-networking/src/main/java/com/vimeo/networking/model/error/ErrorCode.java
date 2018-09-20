@@ -105,6 +105,8 @@ public enum ErrorCode {
     INVALID_INPUT_NON_JSON_CONTENT_TYPE,
     @SerializedName("2507")
     PRODUCT_NOT_FOUND,
+    @SerializedName("3113")
+    INVALID_INPUT_GOOGLE_RECEIPT_VALIDATION_FAILED,
     @SerializedName("3115")
     INVALID_INPUT_RECEIPT_VALIDATION_UNSUCCESSFUL,
     @SerializedName("4000")
