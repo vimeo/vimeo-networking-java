@@ -49,4 +49,48 @@ public class Gcs implements Serializable{
     @Nullable
     @SerializedName("upload_link")
     private String mUploadLink;
+
+
+    /**
+     * @return The starting byte used for uploading if available
+     */
+    @Nullable
+    public Long getStartingByte() {
+        return mStartingByte;
+    }
+
+    /**
+     * Set the starting byte used for uploading
+     */
+    public void setStartingByte(@Nullable Long startingByte) {
+        mStartingByte = startingByte;
+    }
+    /**
+     * @return The ending byte used for uploading if available
+     */
+    @Nullable
+    public Long getEndingByte() {
+        return mEndingByte;
+    }
+
+    /**
+     * Set the ending byte used for uploading
+     */
+    public void setEndingByte(@Nullable Long endingByte) {
+        mEndingByte = endingByte;
+    }
+    /**
+     * @return The upload link used for uploading if available
+     */
+    @Nullable
+    public String getUploadLink() {
+        return mUploadLink;
+    }
+
+    /**
+     * Set the upload link used for uploading
+     */
+    public void setUploadLink(@Nullable String uploadLink) {
+        mUploadLink = uploadLink;
+    }
 }

@@ -145,7 +145,10 @@ public class Upload implements Serializable {
         return mGcs;
     }
 
-    void setGcs(@Nullable Gcs gcs) {
+    /**
+     * Set the Gcs object
+     */
+    public void setGcs(@Nullable Gcs gcs) {
         mGcs = gcs;
     }
 }
