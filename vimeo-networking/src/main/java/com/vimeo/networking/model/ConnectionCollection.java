@@ -380,4 +380,8 @@ public class ConnectionCollection implements Serializable {
     void setLiveStats(@Nullable Interaction liveStats) {
         mLiveStats = liveStats;
     }
+
+    void setUploadAttempt(@Nullable Connection uploadAttempt) {
+        mUploadAttempt = uploadAttempt;
+    }
 }
