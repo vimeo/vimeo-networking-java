@@ -1,6 +1,8 @@
 package com.vimeo.networking2
 
-data class Picture(
+import com.vimeo.networking2.enums.PictureType
+
+data class PictureCollection(
 
         /**
          * Whether this picture is the active picture for its parent resource.
@@ -18,7 +20,19 @@ data class Picture(
          */
         val resourceKey: String? = null,
 
-        
+        /**
+         * An array containing reference information about all available image files
+         */
+        val picture: List<Picture>? = null,
 
+        /**
+         * The type of the picture.
+         */
+        val type: PictureType? = null,
+
+        /**
+         * The picture's URI.
+         */
+        val uri: String? = null
 
 )
