@@ -23,17 +23,20 @@
 package com.vimeo.networking.upload;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.Metadata;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The data representation of the Gcs object that is used for uploading files.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-@UseStag
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class Gcs implements Serializable{
 
     private static final long serialVersionUID = -4272338075095674506L;
@@ -50,6 +53,19 @@ public class Gcs implements Serializable{
     @SerializedName("upload_link")
     private String mUploadLink;
 
+    @Nullable
+    @SerializedName("metadata")
+    public Metadata mMetadata;
+
+
+    @Nullable
+    public Metadata getMetadata() {
+        return mMetadata;
+    }
+
+    public void setMetadata(@Nullable final Metadata metadata) {
+        mMetadata = metadata;
+    }
 
     /**
      * @return The starting byte used for uploading if available
@@ -92,5 +108,31 @@ public class Gcs implements Serializable{
      */
     public void setUploadLink(@Nullable String uploadLink) {
         mUploadLink = uploadLink;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+        Gcs gcs = (Gcs) o;
+        return Objects.equals(mStartingByte, gcs.mStartingByte) &&
+               Objects.equals(mEndingByte, gcs.mEndingByte) &&
+               Objects.equals(mUploadLink, gcs.mUploadLink);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(mStartingByte, mEndingByte, mUploadLink);
+    }
+
+    @Override
+    public String toString() {
+        return "Gcs{" +
+               "mStartingByte=" + mStartingByte +
+               ", mEndingByte=" + mEndingByte +
+               ", mUploadLink='" + mUploadLink + '\'' +
+               ", mMetadata=" + mMetadata +
+               '}';
     }
 }
