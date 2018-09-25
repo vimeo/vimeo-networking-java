@@ -55,7 +55,7 @@ public class Gcs implements Serializable{
 
     @Nullable
     @SerializedName("metadata")
-    public Metadata mMetadata;
+    private Metadata mMetadata;
 
 
     @Nullable
