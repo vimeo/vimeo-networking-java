@@ -30,12 +30,11 @@ import com.vimeo.stag.UseStag.FieldOption;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * The data representation of the Gcs object that is used for uploading files.
  */
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings({"unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class Gcs implements Serializable{
 
@@ -111,28 +110,31 @@ public class Gcs implements Serializable{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-        Gcs gcs = (Gcs) o;
-        return Objects.equals(mStartingByte, gcs.mStartingByte) &&
-               Objects.equals(mEndingByte, gcs.mEndingByte) &&
-               Objects.equals(mUploadLink, gcs.mUploadLink);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(mStartingByte, mEndingByte, mUploadLink);
-    }
-
-    @Override
     public String toString() {
         return "Gcs{" +
                "mStartingByte=" + mStartingByte +
                ", mEndingByte=" + mEndingByte +
                ", mUploadLink='" + mUploadLink + '\'' +
-               ", mMetadata=" + mMetadata +
                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || !getClass().equals(o.getClass())) { return false; }
+
+        final Gcs gcs = (Gcs) o;
+
+        return (mStartingByte != null ? mStartingByte.equals(gcs.mStartingByte) : gcs.mStartingByte == null) &&
+               (mEndingByte != null ? mEndingByte.equals(gcs.mEndingByte) : gcs.mEndingByte == null) &&
+               (mUploadLink != null ? mUploadLink.equals(gcs.mUploadLink) : gcs.mUploadLink == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mStartingByte != null ? mStartingByte.hashCode() : 0;
+        result = 31 * result + (mEndingByte != null ? mEndingByte.hashCode() : 0);
+        result = 31 * result + (mUploadLink != null ? mUploadLink.hashCode() : 0);
+        return result;
     }
 }

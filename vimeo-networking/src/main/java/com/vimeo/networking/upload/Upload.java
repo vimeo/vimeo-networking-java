@@ -6,6 +6,7 @@ import com.vimeo.stag.UseStag;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * The representation of the upload object.
@@ -39,7 +40,7 @@ public class Upload implements Serializable {
 
     @Nullable
     @SerializedName("gcs")
-    private Gcs mGcs;
+    private ArrayList<Gcs> mGcs;
 
     @Nullable
     @SerializedName("form")
@@ -141,14 +142,14 @@ public class Upload implements Serializable {
      * @return The Gcs object used for uploading if available
      */
     @Nullable
-    public Gcs getGcs() {
-        return mGcs;
+    public ArrayList<Gcs> getGcs() {
+        return mGcs != null ? new ArrayList<>(mGcs) : null;
     }
 
     /**
      * Set the Gcs object
      */
-    public void setGcs(@Nullable Gcs gcs) {
-        mGcs = gcs;
+    public void setGcs(@Nullable ArrayList<Gcs> gcs) {
+        mGcs = (gcs != null) ? new ArrayList<>(gcs) : null;
     }
 }
