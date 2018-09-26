@@ -1,6 +1,8 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.enums.AlbumLayout
+import com.vimeo.networking2.enums.AlbumLayoutType
+import com.vimeo.networking2.enums.AlbumThemeType
+import com.vimeo.networking2.enums.SortType
 import java.util.*
 
 data class Album(
@@ -39,7 +41,7 @@ data class Album(
         /**
          * The album's layout preference.
          */
-        val layout: AlbumLayout?,
+        val layout: AlbumLayoutType?,
 
         /**
          * The URL to access the album.
@@ -80,12 +82,12 @@ data class Album(
         /**
          * Sort type of the album.
          */
-        val sort: SortOptions?,
+        val sort: SortType?,
 
         /**
          * The album's color theme preference.
          */
-        val theme: AlbumTheme?,
+        val theme: AlbumThemeType?,
 
         /**
          * The album's URI.

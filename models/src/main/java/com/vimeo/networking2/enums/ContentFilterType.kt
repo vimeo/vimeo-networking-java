@@ -1,6 +1,6 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.enums
 
-enum class ContentFilter {
+enum class ContentFilterType {
     DRUGS,
     LANGUAGE,
     NUDITY,

@@ -1,4 +1,4 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.enums
 
 enum class VideoSourceType {
     SOURCE,

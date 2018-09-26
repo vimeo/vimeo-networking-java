@@ -1,5 +1,6 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.enums
 
+import com.vimeo.networking2.VideoLog
 import java.util.*
 
 data class VideoSourceFile(

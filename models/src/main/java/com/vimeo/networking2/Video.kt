@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.enums.LicenseType
+import com.vimeo.networking2.enums.Transcode
+import com.vimeo.networking2.enums.VideoStatus
 import java.util.*
 
 data class Video(
@@ -62,7 +65,7 @@ data class Video(
         /**
          * The Creative Commons license used for the video.
          */
-        val license: License?,
+        val license: LicenseType?,
 
         /**
          * The link to the video.

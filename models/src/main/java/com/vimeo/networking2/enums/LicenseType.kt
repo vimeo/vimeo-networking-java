@@ -1,6 +1,6 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.enums
 
-enum class License {
+enum class LicenseType {
     BY,
     BY_NC,
     BY_NC_ND,

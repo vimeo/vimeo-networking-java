@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.AccountType
+import com.vimeo.networking2.enums.ContentFilterType
 import java.util.*
 import java.util.prefs.Preferences
 
@@ -24,7 +25,7 @@ data class User(
         /**
          * The user's content filters:
          */
-        val contentFilter: ContentFilter? = null,
+        val contentFilter: ContentFilterType? = null,
 
         /**
          * The time in ISO 8601 format when the user account was created.

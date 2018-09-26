@@ -1,11 +1,14 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.enums.ApproachType
+import com.vimeo.networking2.enums.UploadStatus
+
 data class Upload(
 
         /**
          * The approach for uploading the video.
          */
-        val approach: Approach?,
+        val approach: ApproachType?,
 
         /**
          * The URI for completing the upload.
