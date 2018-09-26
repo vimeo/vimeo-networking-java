@@ -1,8 +1,8 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.LicenseType
-import com.vimeo.networking2.enums.Transcode
-import com.vimeo.networking2.enums.VideoStatus
+import com.vimeo.networking2.enums.TranscodeType
+import com.vimeo.networking2.enums.VideoStatusType
 import java.util.*
 
 data class Video(
@@ -148,7 +148,7 @@ data class Video(
          * The status code for the availability of the video. This field is deprecated in favor
          * of upload and transcode.
          */
-        val status: VideoStatus?,
+        val status: VideoStatusType?,
 
         /**
          * An array of all tags assigned to this video.
@@ -158,7 +158,7 @@ data class Video(
         /**
          * The transcode information for a video upload.
          */
-        val transcode: Transcode?,
+        val transcode: TranscodeType?,
 
         /**
          * The upload information for this video.

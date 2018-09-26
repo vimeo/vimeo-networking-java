@@ -1,6 +1,6 @@
 package com.vimeo.networking2.enums
 
-enum class VideoQuality {
+enum class VideoQualityType {
     HD,
     HLS,
     MOBILE,

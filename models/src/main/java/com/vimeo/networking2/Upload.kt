@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.ApproachType
-import com.vimeo.networking2.enums.UploadStatus
+import com.vimeo.networking2.enums.UploadStatusType
 
 data class Upload(
 
@@ -43,7 +43,7 @@ data class Upload(
         /**
          * The status code for the availability of the uploaded video.
          */
-        val status: UploadStatus?,
+        val status: UploadStatusType?,
 
         /**
          * The link for sending video file data.

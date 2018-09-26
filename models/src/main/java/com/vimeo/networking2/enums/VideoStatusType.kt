@@ -1,6 +1,6 @@
 package com.vimeo.networking2.enums
 
-enum class VideoStatus {
+enum class VideoStatusType {
     AVAILABLE,
     QUOTA_EXCEEDED,
     TOTAL_CAP_EXCEEDED,

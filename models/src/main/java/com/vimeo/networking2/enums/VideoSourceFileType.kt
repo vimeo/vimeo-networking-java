@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 import com.vimeo.networking2.VideoLog
 import java.util.*
 
-data class VideoSourceFile(
+data class VideoSourceFileType(
 
         /**
          * The time in ISO 8601 format when the video file was created.
@@ -43,7 +43,7 @@ data class VideoSourceFile(
         /**
          * The video quality (as determined by height and width).
          */
-        val quality: VideoQuality?,
+        val quality: VideoQualityType?,
 
         /**
          * The file size of the video.

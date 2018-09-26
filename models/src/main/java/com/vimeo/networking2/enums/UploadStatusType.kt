@@ -1,6 +1,6 @@
 package com.vimeo.networking2.enums
 
-enum class UploadStatus {
+enum class UploadStatusType {
     COMPLETE,
     ERROR,
     IN_PROGRESS
