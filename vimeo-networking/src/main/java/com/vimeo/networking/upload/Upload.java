@@ -139,7 +139,8 @@ public class Upload implements Serializable {
     }
 
     /**
-     * @return The Gcs object used for uploading if available
+     * @return An array of Gcs objects used for uploading if available. The number of Gcs object will
+     * be equal to the number of parallel requests specified in the video upload creation step.
      */
     @Nullable
     public ArrayList<Gcs> getGcs() {
@@ -147,7 +148,7 @@ public class Upload implements Serializable {
     }
 
     /**
-     * Set the Gcs object
+     * Set the array of Gcs objects
      */
     public void setGcs(@Nullable ArrayList<Gcs> gcs) {
         mGcs = (gcs != null) ? new ArrayList<>(gcs) : null;
