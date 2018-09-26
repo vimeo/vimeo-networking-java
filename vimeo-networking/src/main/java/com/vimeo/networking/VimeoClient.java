@@ -1300,7 +1300,8 @@ public class VimeoClient {
      * {@link #getVideoSync(String, CacheControl, String)}
      *
      * @param uri         the uri of the video to fetch
-     * @param fieldFilter any field filters to apply for the video response, may be null
+     * The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize 
+     *                      the request query. May be null.
      * @return a Retrofit response object with the Video as the body
      */
     @Nullable
@@ -1313,7 +1314,8 @@ public class VimeoClient {
      *
      * @param uri          the uri of the video to fetch
      * @param cacheControl the cache control
-     * @param fieldFilter  any field filters to apply for the video response, may be null
+     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize 
+     *                      the request query. May be null.
      * @return a Retrofit response object with the Video as the body
      */
     @Nullable
@@ -1428,10 +1430,11 @@ public class VimeoClient {
      * @param caller        The {@link GetRequestCaller} for the expected response type
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
-     * @param fieldFilter   The string of fields to include in the response (highly recommended!)
      *                      {@link RequestRefinementBuilder}
+     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize 
+     *                      the request query. May be null. (highly recommended!)
      * @param callback      The callback for the specific model type of the resource
-     * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
+     * @see <a href="https://developer.vimeo.com/api/common-formats#json-filter">Vimeo API Field Filter Docs</a>
      */
     @Nullable
     public <DataType_T> Call<DataType_T> getContent(@NotNull String uri,
@@ -1464,8 +1467,9 @@ public class VimeoClient {
      * @param cacheControl  Cache control type (includes max age and other cache policy information)
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
-     * @param fieldFilter   The string of fields to include in the response (highly recommended!)
      *                      {@link RequestRefinementBuilder}
+     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize 
+     *                      the request query. May be null. (highly recommended!)
      * @param caller        The {@link GetRequestCaller} for the expected response type
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
      */
