@@ -22,17 +22,12 @@ data class Notification(
     /**
      * The clip credit associated with a credit notification.
      */
-    val credit: VideoCredit?,
+    val credit: Credit?,
 
     /**
      * Is the notification marked as new.
      */
     val new: Boolean?,
-
-    /**
-     * The On Demand page associated with a VOD notification.
-     */
-    val page: Page?,
 
     /**
      * Is the notification marked as seen.
