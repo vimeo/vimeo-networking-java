@@ -1,6 +1,6 @@
 package com.vimeo.networking2
 
-data class Embed(
+data class AlbumEmbed(
 
     /**
      * The responsive HTML code to embed the playlist on a website. This is present only

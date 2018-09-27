@@ -5,67 +5,72 @@ data class Channel(
     /**
      * The categories to which this channel belongs as specified by the channel moderators.
      */
-    val categories: List<Category>,
+    val categories: List<Category>?,
 
     /**
      * The time in ISO 8601 format when the channel was created.
      */
-    val createdTime: String,
+    val createdTime: String?,
 
     /**
      * A brief explanation of the channel's content.
      */
-    val description: String,
+    val description: String?,
 
     /**
      * The banner that appears by default at the top of the channel page.
      */
-    val header: PictureCollection,
+    val header: PictureCollection?,
 
     /**
      * The URL to access the channel in a browser.
      */
-    val link: String,
+    val link: String?,
 
     /**
      * Metadata about the channel.
      */
-    val metadata: Metadata,
+    val metadata: ChannelMetadata?,
 
     /**
      * The time in ISO 8601 format when the album was last modified.
      */
-    val modifiedTime: String,
+    val modifiedTime: String?,
 
     /**
      * The display name that identifies the channel.
      */
-    val name: String,
+    val name: String?,
 
     /**
      * The active image for the channel; defaults to the thumbnail of the last video
      * added to the channel.
      */
-    val pictures: PictureCollection,
+    val pictures: PictureCollection?,
 
     /**
      * The privacy settings of the channel.
      */
-    val privacy: Privacy,
+    val privacy: Privacy?,
 
     /**
      * The channel resource key.
      */
-    val resourceKey: String,
+    val resourceKey: String?,
 
     /**
      * An array of all tags assigned to this channel.
      */
-    val tags: List<Tag>? = null,
+    val tags: List<Tag>?,
 
     /**
      * The unique identifier to access the channel resource.
      */
-    val uri: String
+    val uri: String?,
+
+    /**
+     * The Vimeo user who owns the channel.
+     */
+    val user: User?
 
 )

@@ -8,9 +8,9 @@ data class Tag(
     val canonical: String,
 
     /**
-     * Metadata about the group.
+     * AlbumMetadata about the group.
      */
-    val metadata: Metadata,
+    val metadata: AlbumMetadata,
 
     /**
      * The tag value.

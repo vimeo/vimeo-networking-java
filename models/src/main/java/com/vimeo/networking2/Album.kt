@@ -29,9 +29,9 @@ data class Album(
     val duration: Int?,
 
     /**
-     * Embed data for the album.
+     * AlbumEmbed data for the album.
      */
-    val embed: Embed?,
+    val embed: AlbumEmbed?,
 
     /**
      * Whether to hide the Vimeo navigation when viewing the album.
@@ -49,9 +49,9 @@ data class Album(
     val link: String?,
 
     /**
-     * Metadata about the album.
+     * AlbumMetadata about the album.
      */
-    val metadata: Metadata?,
+    val metadata: AlbumMetadata?,
 
     /**
      * The time in ISO 8601 format when the album was last modified.
@@ -72,7 +72,7 @@ data class Album(
     /**
      * The privacy settings of the album.
      */
-    val privacy: Privacy?,
+    val privacy: AlbumPrivacy?,
 
     /**
      * Whether album videos should use the review mode URL.

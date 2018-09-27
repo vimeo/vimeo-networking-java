@@ -45,7 +45,7 @@ data class Video(
     /**
      * Information about embedding this video.
      */
-    val embed: Embed?,
+    val embed: AlbumEmbed?,
 
     /**
      * The video's height in pixels.
@@ -80,7 +80,7 @@ data class Video(
     /**
      * The video's metadata.
      */
-    val metadata: Metadata?,
+    val metadata: AlbumMetadata?,
 
     /**
      * The time in ISO 8601 format when the video metadata was last modified.

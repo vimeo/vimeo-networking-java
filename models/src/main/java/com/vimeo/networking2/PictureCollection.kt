@@ -23,7 +23,7 @@ data class PictureCollection(
     /**
      * An array containing reference information about all available image files
      */
-    val picture: List<Picture>?,
+    val sizes: List<Picture>?,
 
     /**
      * The type of the picture.

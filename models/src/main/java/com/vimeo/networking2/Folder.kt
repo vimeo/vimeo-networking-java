@@ -12,7 +12,7 @@ data class Folder(
     /**
      * The folder's metadata.
      */
-    val metadata: Metadata?,
+    val metadata: AlbumMetadata?,
 
     /**
      * The time in ISO 8601 format when the folder was last modified.
