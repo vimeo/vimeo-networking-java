@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 data class Tag(
+
     /**
      * The normalized canonical tag name.
      */

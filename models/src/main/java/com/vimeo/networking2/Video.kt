@@ -20,7 +20,7 @@ data class Video(
     /**
      * The content ratings of this video.
      */
-    val contentRating: String?,
+    val contentRating: List<String>?,
 
     /**
      * The context of the video's subscription, if this video is part of a subscription.

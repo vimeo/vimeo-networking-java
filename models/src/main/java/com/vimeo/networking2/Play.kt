@@ -23,7 +23,7 @@ data class Play(
     /**
      * Progressive files.
      */
-    val progressive: Progressive?,
+    val progressive: List<ProgressiveFileType>?,
 
     /**
      * The source file of the video.

@@ -3,108 +3,107 @@ package com.vimeo.networking2
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.ContentFilterType
 import java.util.*
-import java.util.prefs.Preferences
 
 data class User(
 
     /**
      * The user's account type
      */
-    val account: AccountType? = null,
+    val account: AccountType?,
 
     /**
      * Information about the user's badge.
      */
-    val badge: UserBadge? = null,
+    val badge: UserBadge?,
 
     /**
      * The user's bio.
      */
-    val bio: String? = null,
+    val bio: String?,
 
     /**
      * The user's content filters:
      */
-    val contentFilter: ContentFilterType? = null,
+    val contentFilter: List<ContentFilterType>?,
 
     /**
      * The time in ISO 8601 format when the user account was created.
      */
-    val createdTime: Date? = null,
+    val createdTime: Date?,
 
     /**
      * The user's email address.
      */
-    val email: String? = null,
+    val email: String?,
 
     /**
      * An array of alternate emails for the user.
      */
-    val emails: List<String>? = null,
+    val emails: List<String>?,
 
     /**
      * The absolute URL of this user's profile page.
      */
-    val link: String? = null,
+    val link: String?,
 
     /**
      * Information about the user's live streaming quota.
      */
-    val liveQuota: LiveQuota? = null,
+    val liveQuota: LiveQuota?,
 
     /**
      * The user's location.
      */
-    val location: String? = null,
+    val location: String?,
 
     /**
      * The user's metadata.
      */
-    val metadata: Metadata? = null,
+    val metadata: UserMetadata?,
 
     /**
      * The user's display name.
      */
-    val name: String? = null,
+    val name: String?,
 
     /**
      * The user's stored payment information.
      */
-    val payment: Payment? = null,
+    val payment: Payment?,
 
     /**
      * The active portrait of this user.
      */
-    val pictures: PictureCollection? = null,
+    val pictures: PictureCollection?,
 
     /**
      * User's preferences.
      */
-    val preferences: Preferences? = null,
+    val preferences: Preferences?,
 
     /**
      * The user's resource key string.
      */
-    val resourceKey: String? = null,
+    val resourceKey: String?,
 
     /**
      * Appears only when the user has upload access and is looking at their own user record.
      */
-    val uploadQuota: UploadQuota? = null,
+    val uploadQuota: UploadQuota?,
 
     /**
      * The user's canonical relative URI.
      */
-    val uri: String? = null,
+    val uri: String?,
 
     /**
      * The user's email verification status.
      */
-    val verified: Boolean? = null,
+    val verified: Boolean?,
 
     /**
      * The user's websites.
      */
-    val websites: List<Website>? = null
+    val websites: List<Website>?
 
 )
