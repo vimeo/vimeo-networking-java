@@ -13,6 +13,8 @@ data class User(
 
     /**
      * Information about the user's badge.
+     *
+     * Based on CAPABILITY_VIEW_USER_BADGE.
      */
     val badge: UserBadge?,
 
