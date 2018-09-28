@@ -1,4 +1,4 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.enums
 
 /**
  * The user's streaming access to this On Demand video.

@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.enums.SpatialProjectionType
+import com.vimeo.networking2.enums.StereoFormatType
+
 data class Spatial(
 
     val directorTimeline: List<DirectorTimeline>?,

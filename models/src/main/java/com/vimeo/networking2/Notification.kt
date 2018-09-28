@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.enums.NotificationType
 import java.util.*
 
 data class Notification(

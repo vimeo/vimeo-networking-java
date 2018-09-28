@@ -1,5 +1,7 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.enums.DownloadType
+import com.vimeo.networking2.enums.StreamType
 import java.util.*
 
 data class BuyInteraction(
