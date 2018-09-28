@@ -100,6 +100,8 @@ data class User(
 
     /**
      * The user's email verification status.
+     *
+     * Based on CAPABILITY_API_APP_MANAGEMENT.
      */
     val verified: Boolean?,
 
