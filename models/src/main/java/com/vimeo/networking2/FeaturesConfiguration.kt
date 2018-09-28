@@ -11,13 +11,18 @@ data class FeaturesConfiguration(
     val chromecastAppId: String?,
 
     /**
-     * Is Comscore enabled for iOS?
+     * Is Comscore enabled?
      */
     val comscore: Boolean?,
 
     /**
      * Does the user reside within a GDPR-compliant country?
      */
-    val gdprEnabled: Boolean?
+    val gdprEnabled: Boolean?,
+
+    /**
+     * Is play tracking enabled?
+     */
+    val playTracking: Boolean?
 
 )
