@@ -40,12 +40,12 @@ data class Video(
     /**
      * The video's duration in seconds.
      */
-    val duration: String?,
+    val duration: Int?,
 
     /**
      * Information about embedding this video.
      */
-    val embed: AlbumEmbed?,
+    val embed: VideoEmbed?,
 
     /**
      * The video's height in pixels.
@@ -80,7 +80,7 @@ data class Video(
     /**
      * The video's metadata.
      */
-    val metadata: AlbumMetadata?,
+    val metadata: VideoMetadata?,
 
     /**
      * The time in ISO 8601 format when the video metadata was last modified.
@@ -100,6 +100,8 @@ data class Video(
     /**
      * The privacy-enabled password to watch this video.
      * This data requires a bearer token with the private scope.
+     *
+     * Based on CAPABILITY_PROTECTED_VIDEOS.
      */
     val password: String?,
 
@@ -110,6 +112,8 @@ data class Video(
 
     /**
      * The Play representation.
+     *
+     * Based on CAPABILITY_PLAY_REPRESENTATION.
      */
     val play: Play?,
 
@@ -131,6 +135,8 @@ data class Video(
     /**
      * Information about the review page associated with this video. This data requires a
      * bearer token with the private scope.
+     *
+     * Based on CAPABILITY_VIDEO_REVIEW.
      */
     val reviewPage: ReviewPage?,
 

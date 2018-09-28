@@ -6,6 +6,8 @@ data class VideoBadge(
 
     /**
      * The festival that this badge represents.
+     *
+     * Based on CAPABILITY_VIEW_VIDEO_BADGE.
      */
     val festival: String?,
 
