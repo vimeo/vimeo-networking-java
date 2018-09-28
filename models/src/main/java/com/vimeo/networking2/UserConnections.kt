@@ -11,6 +11,7 @@ data class UserConnections(
      * Information about the appearances of this user in other videos.
      */
     val appearances: Connection?,
+
     /**
      * Information on the users that the current user has blocked. This data requires a
      * bearer token with the private scope.
@@ -65,7 +66,7 @@ data class UserConnections(
      * Information about this user's notifications. This data requires a bearer
      * token with the private scope.
      */
-    val notifications: Connection?,
+    val notifications: NotificationConnection?,
 
     /**
      * Information about this user's portraits.
