@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * Based on CAPABILITY_PLAY_REPRESENTATION.
+ */
 data class VideoFile(
 
     /**

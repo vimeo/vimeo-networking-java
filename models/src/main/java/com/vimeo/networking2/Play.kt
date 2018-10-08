@@ -18,7 +18,7 @@ data class Play(
     /**
      * The play progress in seconds.
      */
-    val progress: Int? = null,
+    val progress: PlayProgress? = null,
 
     /**
      * Progressive files.
