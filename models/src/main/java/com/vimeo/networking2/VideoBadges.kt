@@ -5,15 +5,15 @@ data class VideoBadges(
     /**
      * Whether the video has an HDR-compatible transcode.
      */
-    val hdr: Boolean?,
+    val hdr: Boolean? = null,
 
     /**
      * Live.
      */
-    val live: Live?,
+    val live: Live? = null,
 
     /**
      * Whether the video is a Vimeo Weekend Challenge.
      */
-    val weekendChallenge: Boolean?
+    val weekendChallenge: Boolean? = null
 )

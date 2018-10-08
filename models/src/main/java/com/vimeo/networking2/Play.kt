@@ -8,30 +8,30 @@ data class Play(
     /**
      * The DASH video file.
      */
-    val dash: VideoFile?,
+    val dash: VideoFile? = null,
 
     /**
      * HLS video files.
      */
-    val hls: VideoFile?,
+    val hls: VideoFile? = null,
 
     /**
      * The play progress in seconds.
      */
-    val progress: Int?,
+    val progress: Int? = null,
 
     /**
      * Progressive files.
      */
-    val progressive: List<ProgressiveFileType>?,
+    val progressive: List<ProgressiveFileType>? = null,
 
     /**
      * The source file of the video.
      */
-    val source: VideoSourceFileType?,
+    val source: VideoSourceFileType? = null,
 
     /**
      * The play status of the video.
      */
-    val status: VideoPlayStatus?
+    val status: VideoPlayStatus? = null
 )

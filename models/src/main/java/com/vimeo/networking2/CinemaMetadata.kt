@@ -5,6 +5,6 @@ data class CinemaMetadata(
     /**
      * Cinema connections.
      */
-    val connections: CinemaConnections?
+    val connections: CinemaConnections? = null
 
 )

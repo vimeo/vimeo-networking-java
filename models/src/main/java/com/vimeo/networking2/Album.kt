@@ -11,92 +11,92 @@ data class Album(
      * Hexadecimal color code for the decorative color.
      * For example, album videos use this color for player buttons.
      */
-    val brandColor: String?,
+    val brandColor: String? = null,
 
     /**
      * The time in ISO 8601 format that the album was created.
      */
-    val createdTime: Date?,
+    val createdTime: Date? = null,
 
     /**
      * A brief description of the album's content.
      */
-    val description: String?,
+    val description: String? = null,
 
     /**
      * The total duration in seconds of all the videos in the album.
      */
-    val duration: Int?,
+    val duration: Int? = null,
 
     /**
      * AlbumEmbed data for the album.
      */
-    val embed: AlbumEmbed?,
+    val embed: AlbumEmbed? = null,
 
     /**
      * Whether to hide the Vimeo navigation when viewing the album.
      */
-    val hideNav: Boolean?,
+    val hideNav: Boolean? = null,
 
     /**
      * The album's layout preference.
      */
-    val layout: AlbumLayoutType?,
+    val layout: AlbumLayoutType? = null,
 
     /**
      * The URL to access the album.
      */
-    val link: String?,
+    val link: String? = null,
 
     /**
      * AlbumMetadata about the album.
      */
-    val metadata: AlbumMetadata?,
+    val metadata: AlbumMetadata? = null,
 
     /**
      * The time in ISO 8601 format when the album was last modified.
      */
-    val modifiedTime: Date?,
+    val modifiedTime: Date? = null,
 
     /**
      * The album's display name.
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * The active image for the album; defaults to the thumbnail of the last
      * video added to the album.
      */
-    val pictures: PictureCollection?,
+    val pictures: PictureCollection? = null,
 
     /**
      * The privacy settings of the album.
      */
-    val privacy: AlbumPrivacy?,
+    val privacy: AlbumPrivacy? = null,
 
     /**
      * Whether album videos should use the review mode URL.
      */
-    val reviewMode: Boolean?,
+    val reviewMode: Boolean? = null,
 
     /**
      * Sort type of the album.
      */
-    val sort: SortType?,
+    val sort: SortType? = null,
 
     /**
      * The album's color theme preference.
      */
-    val theme: AlbumThemeType?,
+    val theme: AlbumThemeType? = null,
 
     /**
      * The album's URI.
      */
-    val uri: String?,
+    val uri: String? = null,
 
     /**
      * The owner of the album.
      */
-    val user: User?
+    val user: User? = null
 
 )

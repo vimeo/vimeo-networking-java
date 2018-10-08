@@ -7,22 +7,22 @@ data class Space(
     /**
      * The number of bytes remaining in your upload quota.
      */
-    val free: Long?,
+    val free: Long? = null,
 
     /**
      * The maximum number of bytes allotted to your upload quota.
      */
-    val max: Long?,
+    val max: Long? = null,
 
     /**
      * Whether the values of the upload_quota.space fields are for the lifetime quota or
      * the periodic quota.
      */
-    val showing: UploadSpaceType?,
+    val showing: UploadSpaceType? = null,
 
     /**
      * The number of bytes that you've already uploaded against your quota.
      */
-    val used: Long?
+    val used: Long? = null
 
 )

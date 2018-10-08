@@ -7,10 +7,10 @@ data class AlbumPrivacy(
     /**
      * The privacy-enabled password to see this album. Present only when privacy.view is password.
      */
-    val password: String?,
+    val password: String? = null,
 
     /**
      * Who can view the album.
      */
-    val view: AlbumPrivacyViewValue?
+    val view: AlbumPrivacyViewValue? = null
 )

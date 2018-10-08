@@ -10,92 +10,92 @@ data class Video(
     /**
      * Information for the video's badge.
      */
-    val badge: VideoBadge?,
+    val badge: VideoBadge? = null,
 
     /**
      * The categories to which this video belongs.
      */
-    val categories: List<Category>?,
+    val categories: List<Category>? = null,
 
     /**
      * The content ratings of this video.
      */
-    val contentRating: List<String>?,
+    val contentRating: List<String>? = null,
 
     /**
      * The context of the video's subscription, if this video is part of a subscription.
      */
-    val context: VideoContext?,
+    val context: VideoContext? = null,
 
     /**
      * The time in ISO 8601 format when the video was created.
      */
-    val createdTime: Date?,
+    val createdTime: Date? = null,
 
     /**
      * A brief explanation of the video's content.
      */
-    val description: String?,
+    val description: String? = null,
 
     /**
      * The video's duration in seconds.
      */
-    val duration: Int?,
+    val duration: Int? = null,
 
     /**
      * Information about embedding this video.
      */
-    val embed: VideoEmbed?,
+    val embed: VideoEmbed? = null,
 
     /**
      * The video's height in pixels.
      */
-    val height: Int?,
+    val height: Int = 0,
 
     /**
      * The video's primary language.
      */
-    val language: String?,
+    val language: String? = null,
 
     /**
      * The time in ISO 8601 format when the user last modified the video.
      */
-    val lastUserActionEventDate: Date?,
+    val lastUserActionEventDate: Date? = null,
 
     /**
      * The Creative Commons license used for the video.
      */
-    val license: LicenseType?,
+    val license: LicenseType? = null,
 
     /**
      * The link to the video.
      */
-    val link: String?,
+    val link: String? = null,
 
     /**
      * Live playback information.
      */
-    val live: Live?,
+    val live: Live? = null,
 
     /**
      * The video's metadata.
      */
-    val metadata: VideoMetadata?,
+    val metadata: VideoMetadata? = null,
 
     /**
      * The time in ISO 8601 format when the video metadata was last modified.
      */
-    val modifiedTime: Date?,
+    val modifiedTime: Date? = null,
 
     /**
      * The video's title.
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * Information about the folder that contains this video.
      */
-    val parentFolder: Folder?,
+    val parentFolder: Folder? = null,
 
     /**
      * The privacy-enabled password to watch this video.
@@ -103,34 +103,34 @@ data class Video(
      *
      * Based on CAPABILITY_PROTECTED_VIDEOS.
      */
-    val password: String?,
+    val password: String? = null,
 
     /**
      * The active picture for this video.
      */
-    val pictures: PictureCollection?,
+    val pictures: PictureCollection? = null,
 
     /**
      * The Play representation.
      *
      * Based on CAPABILITY_PLAY_REPRESENTATION.
      */
-    val play: Play?,
+    val play: Play? = null,
 
     /**
      * The video's privacy setting.
      */
-    val privacy: Privacy?,
+    val privacy: Privacy? = null,
 
     /**
      * The time in ISO 8601 format when the video was released.
      */
-    val releaseTime: Date?,
+    val releaseTime: Date? = null,
 
     /**
      * The resource key string of the video.
      */
-    val resourceKey: String?,
+    val resourceKey: String? = null,
 
     /**
      * Information about the review page associated with this video. This data requires a
@@ -138,52 +138,52 @@ data class Video(
      *
      * Based on CAPABILITY_VIDEO_REVIEW.
      */
-    val reviewPage: ReviewPage?,
+    val reviewPage: ReviewPage? = null,
 
     /**
      * 360 spatial data.
      */
-    val spatial: Spatial?,
+    val spatial: Spatial? = null,
 
     /**
      * A collection of stats associated with this video.
      */
-    val stats: VideoStats?,
+    val stats: VideoStats? = null,
 
     /**
      * The status code for the availability of the video. This field is deprecated in favor
      * of upload and transcode.
      */
-    val status: VideoStatusType?,
+    val status: VideoStatusType? = null,
 
     /**
      * An array of all tags assigned to this video.
      */
-    val tags: List<Tag>?,
+    val tags: List<Tag>? = null,
 
     /**
      * The transcode information for a video upload.
      */
-    val transcode: TranscodeType?,
+    val transcode: TranscodeType? = null,
 
     /**
      * The upload information for this video.
      */
-    val upload: Upload?,
+    val upload: Upload? = null,
 
     /**
      * The video's canonical relative URI.
      */
-    val uri: String?,
+    val uri: String? = null,
 
     /**
      * The video owner.
      */
-    val user: User?,
+    val user: User? = null,
 
     /**
      * The video's width in pixels.
      */
-    val width: Int?
+    val width: Int = 0
 
 )

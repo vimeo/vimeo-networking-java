@@ -7,11 +7,11 @@ data class VideoContext(
     /**
      * The contextual action.
      */
-    val action: VideoActionType?,
+    val action: VideoActionType? = null,
 
     /**
      * The contextual resource type.
      */
-    val resourceType: String?
+    val resourceType: String? = null
 
 )

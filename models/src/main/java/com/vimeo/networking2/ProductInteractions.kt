@@ -5,6 +5,6 @@ data class ProductInteractions(
     /**
      * Purchase product.
      */
-    val purchase: PurchaseInteraction?
+    val purchase: PurchaseInteraction? = null
 
 )

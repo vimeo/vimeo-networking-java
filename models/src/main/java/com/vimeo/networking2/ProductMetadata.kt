@@ -5,6 +5,6 @@ data class ProductMetadata(
     /**
      * Product related interactions.
      */
-    val interactions: ProductInteractions?
+    val interactions: ProductInteractions? = null
 
 )

@@ -5,11 +5,11 @@ data class AlbumMetadata(
     /**
      * A collection of information that is connected to this resource.
      */
-    val connections: AlbumConnections?,
+    val connections: AlbumConnections? = null,
 
     /**
      * A collection of interactions for this resource.
      */
-    val interactions: AlbumInteractions?
+    val interactions: AlbumInteractions? = null
 
 )

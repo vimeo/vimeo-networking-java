@@ -5,11 +5,11 @@ data class Quota(
     /**
      * Whether you can upload HD videos.
      */
-    val hd: Boolean?,
+    val hd: Boolean? = null,
 
     /**
      * Whether you can upload SD videos.
      */
-    val sd: Boolean?
+    val sd: Boolean? = null
 
 )

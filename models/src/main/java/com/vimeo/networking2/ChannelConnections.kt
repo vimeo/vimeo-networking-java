@@ -7,16 +7,16 @@ data class ChannelConnections(
      * permitted to access a private channel. This data requires a bearer token with the
      * private scope.
      */
-    val privacyUsers: Connection?,
+    val privacyUsers: Connection? = null,
 
     /**
      * Information about the users following or moderating this channel.
      */
-    val users: Connection?,
+    val users: Connection? = null,
 
     /**
      * Information about the videos that belong to this channel.
      */
-    val videos: Connection?
+    val videos: Connection? = null
 
 )

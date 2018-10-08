@@ -8,16 +8,16 @@ data class LiveChat(
     /**
      * The identification number of the live clip's chat room.
      */
-    val roomId: String?,
+    val roomId: String? = null,
 
     /**
      * The JSON Web Token to access the live clip's chat room.
      */
-    val token: String?,
+    val token: String? = null,
 
     /**
      * User.
      */
-    val user: User?
+    val user: User? = null
 
 )

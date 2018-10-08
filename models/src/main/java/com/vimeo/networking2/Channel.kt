@@ -5,72 +5,72 @@ data class Channel(
     /**
      * The categories to which this channel belongs as specified by the channel moderators.
      */
-    val categories: List<Category>?,
+    val categories: List<Category>? = null,
 
     /**
      * The time in ISO 8601 format when the channel was created.
      */
-    val createdTime: String?,
+    val createdTime: String? = null,
 
     /**
      * A brief explanation of the channel's content.
      */
-    val description: String?,
+    val description: String? = null,
 
     /**
      * The banner that appears by default at the top of the channel page.
      */
-    val header: PictureCollection?,
+    val header: PictureCollection? = null,
 
     /**
      * The URL to access the channel in a browser.
      */
-    val link: String?,
+    val link: String? = null,
 
     /**
      * Metadata about the channel.
      */
-    val metadata: ChannelMetadata?,
+    val metadata: ChannelMetadata? = null,
 
     /**
      * The time in ISO 8601 format when the album was last modified.
      */
-    val modifiedTime: String?,
+    val modifiedTime: String? = null,
 
     /**
      * The display name that identifies the channel.
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * The active image for the channel; defaults to the thumbnail of the last video
      * added to the channel.
      */
-    val pictures: PictureCollection?,
+    val pictures: PictureCollection? = null,
 
     /**
      * The privacy settings of the channel.
      */
-    val privacy: Privacy?,
+    val privacy: Privacy? = null,
 
     /**
      * The channel resource key.
      */
-    val resourceKey: String?,
+    val resourceKey: String? = null,
 
     /**
      * An array of all tags assigned to this channel.
      */
-    val tags: List<Tag>?,
+    val tags: List<Tag>? = null,
 
     /**
      * The unique identifier to access the channel resource.
      */
-    val uri: String?,
+    val uri: String? = null,
 
     /**
      * The Vimeo user who owns the channel.
      */
-    val user: User?
+    val user: User? = null
 
 )

@@ -29,14 +29,14 @@ data class NotificationConnection(
      *
      * Based on CAPABILITY_APP_NOTIFICATIONS.
      */
-    val typeCount: NotificationTypeCount?,
+    val typeCount: NotificationTypeCount? = null,
 
     /**
      * An array of notification types and the total number of unseen notifications.
      *
      * Based on CAPABILITY_APP_NOTIFICATIONS.
      */
-    val typeUnseenCount: NotificationTypeCount?,
+    val typeUnseenCount: NotificationTypeCount? = null,
 
     /**
      * The total number of unread notifications.
@@ -46,7 +46,7 @@ data class NotificationConnection(
     /**
      * The API URI that resolves to the connection data.
      */
-    val uri: String?
+    val uri: String? = null
 
 )
 

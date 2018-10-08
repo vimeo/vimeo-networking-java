@@ -9,27 +9,27 @@ data class CC(
      *
      * Based on CAPABILITY_MAKE_PURCHASES.
      */
-    val expirationDate: Date?,
+    val expirationDate: Date? = null,
 
     /**
      * The last four digits of the user's credit card.
      *
      * Based on CAPABILITY_MAKE_PURCHASES.
      */
-    val lastFour: Int?,
+    val lastFour: Int? = null,
 
     /**
      * The postal code of the billing address associated with the user's credit card.
      *
      * Based on CAPABILITY_MAKE_PURCHASES.
      */
-    val postalCode: Int?,
+    val postalCode: Int? = null,
 
     /**
      * The type of credit card.
      *
      * Based on CAPABILITY_MAKE_PURCHASES.
      */
-    val type: String?
+    val type: String? = null
 
 )

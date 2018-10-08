@@ -5,21 +5,21 @@ import com.vimeo.networking2.enums.StereoFormatType
 
 data class Spatial(
 
-    val directorTimeline: List<DirectorTimeline>?,
+    val directorTimeline: List<DirectorTimeline>? = null,
 
     /**
      * The 360 field of view, from 30 (minimum) to 90 (maximum). The default is 50.
      */
-    val fieldOfView: Int?,
+    val fieldOfView: Int? = null,
 
     /**
      * The 360 spatial projection.
      */
-    val projection: SpatialProjectionType?,
+    val projection: SpatialProjectionType? = null,
 
     /**
      * The 360 stereo format.
      */
-    val stereo_format: StereoFormatType?
+    val stereo_format: StereoFormatType? = null
 
 )

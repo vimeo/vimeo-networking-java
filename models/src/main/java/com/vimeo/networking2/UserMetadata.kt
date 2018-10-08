@@ -8,11 +8,11 @@ data class UserMetadata(
     /**
      * The list of resource URIs related to the user.
      */
-    val connections: UserConnections?,
+    val connections: UserConnections? = null,
 
     /**
      * The list of interaction URIs related to the user.
      */
-    val interactions: UserInteractions?
+    val interactions: UserInteractions? = null
 
 )

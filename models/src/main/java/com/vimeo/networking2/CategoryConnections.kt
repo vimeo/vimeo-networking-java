@@ -5,21 +5,21 @@ data class CategoryConnections(
     /**
      * Information about the channels related to this category.
      */
-    val channels: Connection?,
+    val channels: Connection? = null,
 
     /**
      * Information about the groups related to this category.
      */
-    val groups: Connection?,
+    val groups: Connection? = null,
 
     /**
      * Information about the users related to this category.
      */
-    val users: Connection?,
+    val users: Connection? = null,
 
     /**
      * Information about the videos related to this category.
      */
-    val videos: Connection?
+    val videos: Connection? = null
 
 )

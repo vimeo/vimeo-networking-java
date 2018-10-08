@@ -5,16 +5,16 @@ data class EmbedTitle(
     /**
      * How the embeddable player handles the video title.
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * How the embeddable player handles the video owner's information.
      */
-    val owner: String?,
+    val owner: String? = null,
 
     /**
      * How the embeddable player handles the video owner's portrait.
      */
-    val portrait: String?
+    val portrait: String? = null
 
 )

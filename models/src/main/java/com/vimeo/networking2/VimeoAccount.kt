@@ -7,26 +7,26 @@ data class VimeoAccount(
     /**
      * The access token string.
      */
-    val accessToken: String?,
+    val accessToken: String? = null,
 
     /**
      * The date and time that the token expires.
      */
-    val expiresOn: Date?,
+    val expiresOn: Date? = null,
 
     /**
      * The refresh token string.
      */
-    val refreshToken: String?,
+    val refreshToken: String? = null,
 
     /**
      * The scope or scopes that the token supports.
      */
-    val scope: String?,
+    val scope: String? = null,
 
     /**
      * The token type.
      */
-    val tokenType: String?
+    val tokenType: String? = null
 
 )

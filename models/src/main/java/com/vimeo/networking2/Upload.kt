@@ -8,46 +8,46 @@ data class Upload(
     /**
      * The approach for uploading the video.
      */
-    val approach: ApproachType?,
+    val approach: ApproachType? = null,
 
     /**
      * The URI for completing the upload.
      */
-    val completeUri: String?,
+    val completeUri: String? = null,
 
     /**
      * The HTML form for uploading a video through the post approach.
      */
-    val form: String?,
+    val form: String? = null,
 
     /**
      * GCS information to perform an upload.
      */
-    val gcs: Gcs?,
+    val gcs: Gcs? = null,
 
     /**
      * The link of the video to capture through the pull approach.
      */
-    val link: String?,
+    val link: String? = null,
 
     /**
      * The redirect URL for the upload app.
      */
-    val redirectUrl: String?,
+    val redirectUrl: String? = null,
 
     /**
      * The file size in bytes of the uploaded video.
      */
-    val size: Long?,
+    val size: Long? = null,
 
     /**
      * The status code for the availability of the uploaded video.
      */
-    val status: UploadStatusType?,
+    val status: UploadStatusType? = null,
 
     /**
      * The link for sending video file data.
      */
-    val uploadLink: String?
+    val uploadLink: String? = null
 
 )

@@ -5,6 +5,6 @@ data class CommentMetadata(
     /**
      * Comment related connections.
      */
-    val connections: CommentConnections?
+    val connections: CommentConnections? = null
 
 )

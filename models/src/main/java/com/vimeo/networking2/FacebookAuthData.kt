@@ -8,11 +8,11 @@ data class FacebookAuthData(
     /**
      * The client ID for the Facebook API.
      */
-    val clientId: String?,
+    val clientId: String? = null,
 
     /**
      * The client secret for the Facebook API.
      */
-    val clientSecret: String?
+    val clientSecret: String? = null
 
 )

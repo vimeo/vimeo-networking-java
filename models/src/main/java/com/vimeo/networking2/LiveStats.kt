@@ -5,16 +5,16 @@ data class LiveStats(
     /**
      * The current total amount of plays this video has received.
      */
-    val plays: Long?,
+    val plays: Long? = null,
 
     /**
      * The total amount of time spent watching this video by all viewers.
      */
-    val totalViewTime: Long?,
+    val totalViewTime: Long? = null,
 
     /**
      * Information about the number of people watching the stream.
      */
-    val viewers: LiveStatsViewers?
+    val viewers: LiveStatsViewers? = null
 
 )

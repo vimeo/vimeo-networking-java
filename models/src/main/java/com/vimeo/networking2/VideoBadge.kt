@@ -9,26 +9,26 @@ data class VideoBadge(
      *
      * Based on CAPABILITY_VIEW_VIDEO_BADGE.
      */
-    val festival: String?,
+    val festival: String? = null,
 
     /**
      * The link for the badge
      */
-    val link: String,
+    val link: String? = null,
 
     /**
      * The badge image.
      */
-    val pictures: PictureCollection,
+    val pictures: PictureCollection? = null,
 
     /**
      * The name of the badge.
      */
-    val text: String,
+    val text: String? = null,
 
     /**
      * The type of the badge.
      */
-    val type: VideoBadgeType
+    val type: VideoBadgeType? = null
 
 )

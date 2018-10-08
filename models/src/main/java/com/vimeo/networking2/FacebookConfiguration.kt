@@ -8,11 +8,11 @@ data class FacebookConfiguration(
     /**
      * Facebook client id and client secret.
      */
-   val auth: FacebookAuthData?,
+   val auth: FacebookAuthData? = null,
 
    /**
     * An array of required scopes for connecting users to Facebook.
     */
-   val requiredScopes: List<String>?
+   val requiredScopes: List<String>? = null
 
 )

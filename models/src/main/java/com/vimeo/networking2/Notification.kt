@@ -8,46 +8,46 @@ data class Notification(
     /**
      * The clip associated with a clip like notification.
      */
-    val clip: Video?,
+    val clip: Video? = null,
 
     /**
      * The clip comment associated with a comment notification.
      */
-    val comment: Comment?,
+    val comment: Comment? = null,
 
     /**
      * The ISODate time a notification was created.
      */
-    val createdTime: Date?,
+    val createdTime: Date? = null,
 
     /**
      * The clip credit associated with a credit notification.
      */
-    val credit: Credit?,
+    val credit: Credit? = null,
 
     /**
      * Is the notification marked as new.
      */
-    val new: Boolean?,
+    val new: Boolean? = null,
 
     /**
      * Is the notification marked as seen.
      */
-    val seen: Boolean?,
+    val seen: Boolean? = null,
 
     /**
      * The type of notification.
      */
-    val type: NotificationType?,
+    val type: NotificationType? = null,
 
     /**
      * The notification's canonical relative URI.
      */
-    val uri: String?,
+    val uri: String? = null,
 
     /**
      * The user associated with a user follow notification.
      */
-    val user: User?
+    val user: User? = null
 
 )

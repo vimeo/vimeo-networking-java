@@ -2,12 +2,12 @@ package com.vimeo.networking2
 
 data class UploadQuota(
 
-    val lifetime: Lifetime?,
+    val lifetime: Lifetime? = null,
 
-    val periodic: Periodic?,
+    val periodic: Periodic? = null,
 
-    val quota: Quota?,
+    val quota: Quota? = null,
 
-    val space: Space?
+    val space: Space? = null
 
 )

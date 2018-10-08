@@ -1,40 +1,42 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.enums.CinemaType
+
 data class Cinema(
 
     /**
      * The category associated with this programmed cinema item.
      */
-    val category: Category?,
+    val category: Category? = null,
 
     /**
      * The channel associated with this programmed cinema item.
      */
-    val channel: Channel?,
+    val channel: Channel? = null,
 
     /**
      * Content for the programmed cinema item.
      */
-    val content: List<Video>?,
+    val content: List<Video>? = null,
 
     /**
      * Cinema metadata.
      */
-    val metadata: CinemaMetadata?,
+    val metadata: CinemaMetadata? = null,
 
     /**
      * The name of the programmed cinema item.
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * The type of programmed cinema item.
      */
-    val type: CinemaType?,
+    val type: CinemaType? = null,
 
     /**
      * The programmed cinema items' canonical relative URI.
      */
-    val uri: String?
+    val uri: String? = null
 
 )

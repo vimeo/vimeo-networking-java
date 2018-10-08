@@ -10,7 +10,7 @@ data class LiveHeartbeatConfiguration(
      * heartbeat log, play.{hls|dash}.live.heartbeat, so we can track the amount of concurrent
      * users viewing a stream.
      */
-    val enabled: Boolean,
+    val enabled: Boolean? = null,
 
     /**
      * The interval, in seconds, at which a live heartbeat should be sent.

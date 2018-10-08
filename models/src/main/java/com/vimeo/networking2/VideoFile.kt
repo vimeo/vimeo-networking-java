@@ -7,15 +7,15 @@ data class VideoFile(
     /**
      * The direct link to the video file.
      */
-    val link: String?,
+    val link: String? = null,
 
     /**
      * The time in ISO 8601 format when the link to the video file expires.
      */
-    val linkExpirationTime: Date?,
+    val linkExpirationTime: Date? = null,
 
     /**
      * The URL for logging events.
      */
-    val log: String?
+    val log: String? = null
 )

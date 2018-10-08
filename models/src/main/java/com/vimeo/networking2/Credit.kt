@@ -5,26 +5,26 @@ data class Credit(
     /**
      * The name of the person credited.
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * The character that this person portrayed, or the job that this person performed.
      */
-    val role: String?,
+    val role: String? = null,
 
     /**
      * The unique identifier to access the credits resource.
      */
-    val uri: String?,
+    val uri: String? = null,
 
     /**
      * The Vimeo user associated with this credit.
      */
-    val user: User?,
+    val user: User? = null,
 
     /**
      * The video associated with this credit.
      */
-    val video: Video?
+    val video: Video? = null
 
 )

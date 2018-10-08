@@ -5,6 +5,6 @@ data class CommentConnections(
     /**
      * Information about this comment's replies.
      */
-    val replies: Connection?
+    val replies: Connection? = null
 
 )

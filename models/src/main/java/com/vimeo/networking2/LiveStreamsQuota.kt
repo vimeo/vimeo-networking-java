@@ -7,14 +7,14 @@ data class LiveStreamsQuota(
      *
      * Based on CAPABILITY_LIVE_EVENT.
      */
-    val maximum: Int?,
+    val maximum: Int? = null,
 
     /**
      * The amount of remaining live streams that the user can create this month.
      *
      * Based on CAPABILITY_LIVE_EVENT.
      */
-    val remaining: Int?
+    val remaining: Int? = null
 
 
 )

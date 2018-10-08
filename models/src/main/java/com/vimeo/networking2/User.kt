@@ -9,105 +9,105 @@ data class User(
     /**
      * The user's account type
      */
-    val account: AccountType?,
+    val account: AccountType? = null,
 
     /**
      * Information about the user's badge.
      *
      * Based on CAPABILITY_VIEW_USER_BADGE.
      */
-    val badge: UserBadge?,
+    val badge: UserBadge? = null,
 
     /**
      * The user's bio.
      */
-    val bio: String?,
+    val bio: String? = null,
 
     /**
      * The user's content filters:
      */
-    val contentFilter: List<ContentFilterType>?,
+    val contentFilter: List<ContentFilterType>? = null,
 
     /**
      * The time in ISO 8601 format when the user account was created.
      */
-    val createdTime: Date?,
+    val createdTime: Date? = null,
 
     /**
      * The user's email address.
      */
-    val email: String?,
+    val email: String? = null,
 
     /**
      * An array of alternate emails for the user.
      */
-    val emails: List<String>?,
+    val emails: List<String>? = null,
 
     /**
      * The absolute URL of this user's profile page.
      */
-    val link: String?,
+    val link: String? = null,
 
     /**
      * Information about the user's live streaming quota.
      */
-    val liveQuota: LiveQuota?,
+    val liveQuota: LiveQuota? = null,
 
     /**
      * The user's location.
      */
-    val location: String?,
+    val location: String? = null,
 
     /**
      * The user's metadata.
      */
-    val metadata: UserMetadata?,
+    val metadata: UserMetadata? = null,
 
     /**
      * The user's display name.
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * The user's stored payment information.
      */
-    val payment: Payment?,
+    val payment: Payment? = null,
 
     /**
      * The active portrait of this user.
      */
-    val pictures: PictureCollection?,
+    val pictures: PictureCollection? = null,
 
     /**
      * User's preferences.
      */
-    val preferences: Preferences?,
+    val preferences: Preferences? = null,
 
     /**
      * The user's resource key string.
      */
-    val resourceKey: String?,
+    val resourceKey: String? = null,
 
     /**
      * Appears only when the user has upload access and is looking at their own user record.
      */
-    val uploadQuota: UploadQuota?,
+    val uploadQuota: UploadQuota? = null,
 
     /**
      * The user's canonical relative URI.
      */
-    val uri: String?,
+    val uri: String? = null,
 
     /**
      * The user's email verification status.
      *
      * Based on CAPABILITY_API_APP_MANAGEMENT.
      */
-    val verified: Boolean?,
+    val verified: Boolean? = null,
 
     /**
      * The user's websites.
      */
-    val websites: List<Website>?
+    val websites: List<Website>? = null
 
 )

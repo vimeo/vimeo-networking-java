@@ -7,35 +7,35 @@ data class Folder(
     /**
      * The time in ISO 8601 format when the folder was created.
      */
-    val createdTime: String?,
+    val createdTime: String? = null,
 
     /**
      * The folder's metadata.
      */
-    val metadata: AlbumMetadata?,
+    val metadata: AlbumMetadata? = null,
 
     /**
      * The time in ISO 8601 format when the folder was last modified.
      */
-    val modifiedTime: Date?,
+    val modifiedTime: Date? = null,
 
     /**
      * The name of the folder.
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * The resource key string of the folder.
      */
-    val resourceKey: String?,
+    val resourceKey: String? = null,
 
     /**
      * The URI of the folder.
      */
-    val uri: String?,
+    val uri: String? = null,
 
     /**
      * The owner of the folder.
      */
-    val user: User?
+    val user: User? = null
 )

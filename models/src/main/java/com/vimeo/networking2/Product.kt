@@ -7,31 +7,31 @@ data class Product(
     /**
      * Distinguish between monthly and yearly products.
      */
-    val billingPeriod: BillingPeriodType?,
+    val billingPeriod: BillingPeriodType? = null,
 
     /**
      * Product description.
      */
-    val description: String?,
+    val description: String? = null,
 
     /**
      * Metadata about the product.
      */
-    val metadata: ProductMetadata?,
+    val metadata: ProductMetadata? = null,
 
     /**
      * Product name
      */
-    val name: String?,
+    val name: String? = null,
 
     /**
      * Product ID.
      */
-    val productId: String?,
+    val productId: String? = null,
 
     /**
      * The unique identifier you can use to access the product.
      */
-    val uri: String?
+    val uri: String? = null
 
 )

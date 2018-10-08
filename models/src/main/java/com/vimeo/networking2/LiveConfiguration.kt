@@ -8,12 +8,12 @@ data class LiveConfiguration(
     /**
      * Live chat configuration data.
      */
-    val chat: LiveChatConfiguration,
+    val chat: LiveChatConfiguration? = null,
 
     /**
      * Live heart beat configuration data.
      */
-    val heartbeat: LiveHeartbeatConfiguration
+    val heartbeat: LiveHeartbeatConfiguration? = null
 
 
 )

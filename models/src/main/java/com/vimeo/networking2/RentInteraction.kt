@@ -8,22 +8,22 @@ data class RentInteraction(
     /**
      * The currency code for the current user's region.
      */
-    val currency: String?,
+    val currency: String? = null,
 
     /**
      * Formatted price to display to rent an On Demand video.
      */
-    val displayPrice: Long?,
+    val displayPrice: Long? = null,
 
     /**
      * Whether the video has DRM.
      */
-    val drm: Boolean?,
+    val drm: Boolean? = null,
 
     /**
      * The time in ISO 8601 format when the rental period for the video expires.
      */
-    val expiresTime: Date?,
+    val expiresTime: Date? = null,
 
     /**
      * The URL to rent the On Demand video on Vimeo.
@@ -33,21 +33,21 @@ data class RentInteraction(
     /**
      * The numeric value of the price for buying the On Demand video.
      */
-    val price: Double?,
+    val price: Double? = null,
 
     /**
      * The time in ISO 8601 format when the On Demand video was rented.
      */
-    val purchaseTime: Date?,
+    val purchaseTime: Date? = null,
 
     /**
      * The user's streaming access to this On Demand video:
      */
-    val stream: StreamType?,
+    val stream: StreamType? = null,
 
     /**
      * The product URI to rent the On Demand video.
      */
-    val uri: String?
+    val uri: String? = null
 
 )

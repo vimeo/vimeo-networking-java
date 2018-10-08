@@ -10,21 +10,21 @@ data class UserBadge(
     /**
      * The badge's alternate text.
      */
-    val altText: String?,
+    val altText: String? = null,
 
     /**
      * The text of the badge.
      */
-    val text: String?,
+    val text: String? = null,
 
     /**
      * The type of the badge.
      */
-    val type: UseBadgeType?,
+    val type: UseBadgeType? = null,
 
     /**
      * The URL that loads when the user clicks the badge.
      */
-    val url: String?
+    val url: String? = null
 
 )

@@ -5,114 +5,114 @@ data class UserConnections(
     /**
      * Information about the albums created by this user.
      */
-    val albums: Connection?,
+    val albums: Connection? = null,
 
     /**
      * Information about the appearances of this user in other videos.
      */
-    val appearances: Connection?,
+    val appearances: Connection? = null,
 
     /**
      * Information on the users that the current user has blocked. This data requires a
      * bearer token with the private scope.
      */
-    val block: Connection?,
+    val block: Connection? = null,
 
     /**
      * Information about this user's followed categories.
      */
-    val categories: Connection?,
+    val categories: Connection? = null,
 
     /**
      * Information about this user's subscribed channels.
      */
-    val channels: Connection?,
+    val channels: Connection? = null,
 
     /**
      * Information about this user's feed.
      */
-    val feed: Connection?,
+    val feed: Connection? = null,
 
     /**
      * Information about this user's folders.
      */
-    val folders: Connection?,
+    val folders: Connection? = null,
     /**
      * Information about the user's followers.
      */
-    val followers: Connection?,
+    val followers: Connection? = null,
 
     /**
      * Information about the users that the current user is following.
      */
-    val following: Connection?,
+    val following: Connection? = null,
 
     /**
      * Information about the groups created by this user.
      */
-    val groups: Connection?,
+    val groups: Connection? = null,
 
     /**
      * Information about the videos that this user has liked.
      */
-    val likes: Connection?,
+    val likes: Connection? = null,
 
     /**
      * Information about the channels that this user moderates.
      */
-    val moderatedChannels: Connection?,
+    val moderatedChannels: Connection? = null,
 
     /**
      * Information about this user's notifications. This data requires a bearer
      * token with the private scope.
      */
-    val notifications: NotificationConnection?,
+    val notifications: NotificationConnection? = null,
 
     /**
      * Information about this user's portraits.
      */
-    val pictures: Connection?,
+    val pictures: Connection? = null,
 
     /**
      * Information about this user's portfolios.
      */
-    val portfolios: Connection?,
+    val portfolios: Connection? = null,
 
     /**
      * A collection of recommended channels for the current user to follow. This data requires a
      * bearer token with the private scope.
      */
-    val recommendedChannels: Connection?,
+    val recommendedChannels: Connection? = null,
 
     /**
      * A Collection of recommended users for the current user to follow. This data requires a
      * bearer token with the private scope.
      */
-    val recommendedUsers: Connection?,
+    val recommendedUsers: Connection? = null,
 
     /**
      * Information about the videos that have been shared with this user.
      */
-    val shared: Connection?,
+    val shared: Connection? = null,
 
     /**
      * Information about the user's team.
      */
-    val teamMembers: Connection?,
+    val teamMembers: Connection? = null,
 
     /**
      * Information about the videos uploaded by this user.
      */
-    val videos: Connection?,
+    val videos: Connection? = null,
 
     /**
      * Information about this user's violations.
      */
-    val violations: Connection?,
+    val violations: Connection? = null,
 
     /**
      * Information about the videos that this user wants to watch later.
      */
-    val watchlater: Connection?
+    val watchlater: Connection? = null
 
 )

@@ -11,52 +11,52 @@ data class Live(
     /**
      * The time in ISO 8601 format when the live stream began.
      */
-    val activeTime: Date?,
+    val activeTime: Date? = null,
 
     /**
      * The time in ISO 8601 format when the live stream was archived.
      */
-    val archivedTime: Date?,
+    val archivedTime: Date? = null,
 
     /**
      * Information about the live clip's chat.
      */
-    val chat: LiveChat?,
+    val chat: LiveChat? = null,
 
     /**
      * The time in ISO 8601 format when the live stream ended.
      */
-    val endedTime: Date?,
+    val endedTime: Date? = null,
 
     /**
      * The streaming key string, which is used in conjunction with the RTMP link.
      */
-    val key: String?,
+    val key: String? = null,
 
     /**
      * The upstream RTMP link. Send your live content to this link.
      */
-    val link: String?,
+    val link: String? = null,
 
     /**
      * The time in ISO 8601 format when the live stream was scheduled to start.
      */
-    val scheduledStartTime: Date?,
+    val scheduledStartTime: Date? = null,
 
     /**
      * The number of seconds before the termination of the live stream.
      */
-    val secondsRemaining: Date?,
+    val secondsRemaining: Date? = null,
 
     /**
      * The status of the RTMP link.
      */
-    val status: LiveStatus?,
+    val status: LiveStatus? = null,
 
     /**
      * If live.status is streaming_error, this is the reason for that error.
      */
-    val streamingError: StreamingError?
+    val streamingError: StreamingError? = null
 
 
 )

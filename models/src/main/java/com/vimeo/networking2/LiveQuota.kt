@@ -10,16 +10,16 @@ data class LiveQuota(
     /**
      * The status code for the user's ability to live stream.
      */
-    val status: LiveQuotaStatus?,
+    val status: LiveQuotaStatus? = null,
 
     /**
      * Live streams quota data.
      */
-    val streams: LiveStreamsQuota?,
+    val streams: LiveStreamsQuota? = null,
 
     /**
      * Live time data.
      */
-    val time: LiveTime?
+    val time: LiveTime? = null
 
 )

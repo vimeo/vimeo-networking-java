@@ -7,11 +7,11 @@ data class PurchaseInteraction(
     /**
      * Purchase status.
      */
-    val status: PurchaseStatusType?,
+    val status: PurchaseStatusType? = null,
 
     /**
      * URI for creating a purchase.
      */
-    val uri: String?
+    val uri: String? = null
 
 )

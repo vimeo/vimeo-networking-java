@@ -5,6 +5,6 @@ data class ApiConfiguration(
     /**
      * URL to access the API.
      */
-    val host: String?
+    val host: String? = null
 
 )
