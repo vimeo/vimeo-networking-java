@@ -105,6 +105,8 @@ public enum ErrorCode {
     INVALID_INPUT_NON_JSON_CONTENT_TYPE,
     @SerializedName("2507")
     PRODUCT_NOT_FOUND,
+    @SerializedName("3113")
+    INVALID_INPUT_GOOGLE_RECEIPT_VALIDATION_FAILED,
     @SerializedName("3115")
     INVALID_INPUT_RECEIPT_VALIDATION_UNSUCCESSFUL,
     @SerializedName("4000")
@@ -175,8 +177,6 @@ public enum ErrorCode {
     UNABLE_TO_LOGIN_TOKEN_CAN_NOT_DECRYPT,
     @SerializedName("2314")
     UNABLE_TO_LOGIN_TOKEN_TOO_LONG,
-    @SerializedName("2315")
-    UNABLE_TO_LOGIN_PINCODE_EXPIRED,
     // Google Auth Errors
     @SerializedName("2325")
     UNABLE_TO_CREATE_USER_MISSING_EMAIL_GOOGLE,
@@ -281,8 +281,6 @@ public enum ErrorCode {
     UNABLE_TO_UPLOAD_VIDEO_MISSING_USER_ID_FOR_AUTHENTICATION_TOKEN,
     @SerializedName("3400")
     USER_NOT_ALLOWED_TO_UPLOAD_VIDEO_UNVERIFIED_EMAIL,
-    @SerializedName("2403")
-    INVALID_INPUT_EMPTY_USER_URI,
     @SerializedName("4003")
     UPLOAD_TICKET_CREATION_ERROR,
     @SerializedName("3428")

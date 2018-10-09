@@ -45,7 +45,7 @@ import java.util.Date;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class User implements Serializable, Followable {
+public class User implements Serializable, Followable, Entity {
 
     private static final long serialVersionUID = 4317573825273169510L;
     private static final String ACCOUNT_BASIC = "basic";
@@ -57,6 +57,7 @@ public class User implements Serializable, Followable {
     private static final String ACCOUNT_LIVE_PRO = "live_pro";
     private static final String ACCOUNT_PRO_UNLIMITED = "pro_unlimited";
     private static final String ACCOUNT_LIVE_PREMIUM = "live_premium";
+    private static final String ACCOUNT_PRODUCER = "producer";
 
     public enum AccountType {
         BASIC,
@@ -67,7 +68,8 @@ public class User implements Serializable, Followable {
         LIVE_BUSINESS,
         LIVE_PRO,
         LIVE_PREMIUM,
-        PRO_UNLIMITED
+        PRO_UNLIMITED,
+        PRODUCER
     }
 
     @SerializedName("uri")
@@ -134,6 +136,10 @@ public class User implements Serializable, Followable {
     private Boolean mIsVideoCreator;
 
     @Nullable
+    @SerializedName("resource_key")
+    private String mResourceKey;
+
+    @Nullable
     public UserBadge getBadge() {
         return mBadge;
     }
@@ -162,6 +168,8 @@ public class User implements Serializable, Followable {
                 return AccountType.PRO_UNLIMITED;
             case ACCOUNT_LIVE_PREMIUM:
                 return AccountType.LIVE_PREMIUM;
+            case ACCOUNT_PRODUCER:
+                return AccountType.PRODUCER;
             case ACCOUNT_BASIC:
             default:
                 return AccountType.BASIC;
@@ -178,6 +186,15 @@ public class User implements Serializable, Followable {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Accessors/Helpers">
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
+    protected void setResourceKey(@Nullable String resourceKey) {
+        mResourceKey = resourceKey;
+    }
+
     public void setUri(String uri) {
         mUri = uri;
     }
@@ -528,5 +545,11 @@ public class User implements Serializable, Followable {
                ", mBadge=" + mBadge +
                ", mLiveQuota=" + mLiveQuota +
                '}';
+    }
+
+    @Nullable
+    @Override
+    public String getIdentifier() {
+        return mResourceKey;
     }
 }

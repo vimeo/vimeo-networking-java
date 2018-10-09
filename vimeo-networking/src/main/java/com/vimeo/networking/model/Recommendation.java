@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class Recommendation implements Serializable {
+public class Recommendation implements Serializable, Entity {
 
     private static final long serialVersionUID = -1451431453348153582L;
 
@@ -48,7 +48,55 @@ public class Recommendation implements Serializable {
     public enum RecommendationType {
         NONE,
         CHANNEL,
-        USER
+        USER;
+
+        /**
+         * @return the {@link RecommendationType} as its {@link String} representation.
+         */
+        @NotNull
+        public String asString() {
+            switch (this) {
+                case CHANNEL:
+                    return TYPE_CHANNEL;
+                case USER:
+                    return TYPE_USER;
+                case NONE:
+                default:
+                    return "";
+            }
+        }
+
+        /**
+         * @return the associated {@link RecommendationType} for the provide {@link String}. If {@code null} is
+         * provided, {@link RecommendationType#NONE} will be returned.
+         */
+        @NotNull
+        public static RecommendationType fromString(@Nullable String string) {
+            if (TYPE_CHANNEL.equals(string)) {
+                return RecommendationType.CHANNEL;
+            } else if (TYPE_USER.equals(string)) {
+                return RecommendationType.USER;
+            } else {
+                return RecommendationType.NONE;
+            }
+        }
+    }
+
+    // Needed for @UseStag
+    Recommendation() { }
+
+    public Recommendation(@Nullable Category category,
+                          @Nullable RecommendationType recommendationType,
+                          @Nullable User user,
+                          @Nullable Channel channel,
+                          @Nullable String description,
+                          @Nullable String resourceKey) {
+        mCategory = category;
+        mRecommendationType = recommendationType != null ? recommendationType.asString() : null;
+        mUser = user;
+        mChannel = channel;
+        mDescription = description;
+        mResourceKey = resourceKey;
     }
 
     /**
@@ -115,13 +163,13 @@ public class Recommendation implements Serializable {
 
     @NotNull
     public RecommendationType getRecommendationType() {
-        if (TYPE_CHANNEL.equals(mRecommendationType)) {
-            return RecommendationType.CHANNEL;
-        } else if (TYPE_USER.equals(mRecommendationType)) {
-            return RecommendationType.USER;
-        } else {
-            return RecommendationType.NONE;
-        }
+        return RecommendationType.fromString(mRecommendationType);
+    }
+
+    @Nullable
+    @Override
+    public String getIdentifier() {
+        return mResourceKey;
     }
     // </editor-fold>
 

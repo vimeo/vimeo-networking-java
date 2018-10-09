@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class Category implements Serializable, Followable {
+public class Category implements Serializable, Followable, Entity {
 
     private static final long serialVersionUID = 441419347585215353L;
 
@@ -73,6 +73,19 @@ public class Category implements Serializable, Followable {
     @Nullable
     @SerializedName("metadata")
     protected Metadata mMetadata;
+
+    @Nullable
+    @SerializedName("resource_key")
+    private String mResourceKey;
+
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
+    protected void setResourceKey(@Nullable String resourceKey) {
+        mResourceKey = resourceKey;
+    }
 
     @Nullable
     public String getUri() {
@@ -192,5 +205,11 @@ public class Category implements Serializable, Followable {
     @Override
     public int hashCode() {
         return this.mUri != null ? this.mUri.hashCode() : 0;
+    }
+
+    @Nullable
+    @Override
+    public String getIdentifier() {
+        return mResourceKey;
     }
 }

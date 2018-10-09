@@ -90,6 +90,7 @@ public final class Vimeo {
     public static final String HEADER_CACHE_CONTROL = "Cache-Control";
     public static final String HEADER_USER_AGENT = "User-Agent";
     public static final String HEADER_ACCEPT = "Accept";
+    public static final String HEADER_ACCEPT_LANGUAGE = "Accept-Language";
 
     // Header Values
     public static final String HEADER_CACHE_PUBLIC = "public";
@@ -133,6 +134,13 @@ public final class Vimeo {
     public static final String SORT_FOLLOWERS = "followers";
     public static final String SORT_ALPHABETICAL = "alphabetical";
     public static final String SORT_MANUAL = "manual";
+    public static final String SORT_DURATION = "duration";
+    public static final String SORT_LAST_USER_ACTION_EVENT_DATE = "last_user_action_event_date";
+    public static final String SORT_PLAYS = "plays";
+    public static final String SORT_LIKES = "likes";
+    public static final String SORT_MODIFIED_TIME = "modified_time";
+    public static final String SORT_COMMENTS = "comments";
+
     // Sort Direction Values
     public static final String SORT_DIRECTION_ASCENDING = "asc";
     public static final String SORT_DIRECTION_DESCENDING = "desc";

@@ -25,6 +25,8 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -32,7 +34,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unused")
 @UseStag
-public class Picture implements Serializable {
+public class Picture implements Serializable, Entity {
 
     private static final long serialVersionUID = 5278427992827202066L;
 
@@ -47,6 +49,19 @@ public class Picture implements Serializable {
 
     @SerializedName("link_with_play_button")
     protected String mLinkWithPlayButton;
+
+    @Nullable
+    @SerializedName("resource_key")
+    private String mResourceKey;
+
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
+    protected void setResourceKey(@Nullable String resourceKey) {
+        mResourceKey = resourceKey;
+    }
 
     public int getWidth() {
         return mWidth;
@@ -64,4 +79,9 @@ public class Picture implements Serializable {
         return mLinkWithPlayButton;
     }
 
+    @Nullable
+    @Override
+    public String getIdentifier() {
+        return mResourceKey;
+    }
 }
