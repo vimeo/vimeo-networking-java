@@ -3,6 +3,9 @@ package com.vimeo.networking2
 import com.vimeo.networking2.enums.StreamType
 import java.util.*
 
+/**
+ * The Rent interaction for an On Demand video.
+ */
 data class RentInteraction(
 
     /**
@@ -23,7 +26,7 @@ data class RentInteraction(
     /**
      * The time in ISO 8601 format when the rental period for the video expires.
      */
-    val expiresTime: Date? = null,
+    val expirationDate: Date? = null,
 
     /**
      * The URL to rent the On Demand video on Vimeo.

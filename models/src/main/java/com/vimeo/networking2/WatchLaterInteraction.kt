@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * All actions for watch later.
+ */
 data class WatchLaterInteraction(
 
     /**

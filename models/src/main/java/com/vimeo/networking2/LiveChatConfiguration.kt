@@ -1,7 +1,9 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_PLATFORM_CONFIGS_OTA_LIVE.
+ * Live chat configuration data.
+ *
+ * Requires [CapabilitiesType.CAPABILITY_PLATFORM_CONFIGS_OTA_LIVE].
  */
 data class LiveChatConfiguration(
 

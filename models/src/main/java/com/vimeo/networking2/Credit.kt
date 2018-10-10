@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Video credit data.
+ */
 data class Credit(
 
     /**

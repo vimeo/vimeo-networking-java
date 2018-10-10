@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * A collection of stats associated with this video.
+ */
 data class VideoStats(
 
     /**

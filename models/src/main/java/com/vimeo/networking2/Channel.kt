@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Channel information.
+ */
 data class Channel(
 
     /**
@@ -30,7 +33,7 @@ data class Channel(
     /**
      * Metadata about the channel.
      */
-    val metadata: ChannelMetadata? = null,
+    val metadata: Metadata<ChannelConnections, ChannelInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the album was last modified.

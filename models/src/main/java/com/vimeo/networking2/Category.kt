@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * Category information.
+ */
 data class Category(
 
     /**
@@ -22,7 +25,7 @@ data class Category(
     /**
      * Metadata about the category.
      */
-    val metadata: CategoryMetadata? = null,
+    val metadata: Metadata<CategoryConnections, CategoryInteractions>? = null,
 
     /**
      * The display name that identifies the category.

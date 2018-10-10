@@ -3,7 +3,7 @@ package com.vimeo.networking2
 import com.vimeo.networking2.enums.LiveQuotaStatus
 
 /**
- * Based on CAPABILITY_LIVE_EVENT.
+ * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
  */
 data class LiveQuota(
 

@@ -4,6 +4,9 @@ import com.vimeo.networking2.enums.DownloadType
 import com.vimeo.networking2.enums.StreamType
 import java.util.*
 
+/**
+ * The buy interaction for a On Demand video.
+ */
 data class BuyInteraction(
 
     /**

@@ -12,7 +12,7 @@ data class Payment(
     /**
      * Credit card information.
      */
-    val cc: CC? = null,
+    val creditCard: CreditCard? = null,
 
     /**
      * The type of stored payment method

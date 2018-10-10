@@ -1,7 +1,9 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_VIDEO_VERSIONS.
+ * Connection to get information about a video's versions.
+ *
+ * Requires [CapabilitiesType.CAPABILITY_VIDEO_VERSIONS].
  */
 data class VideoVersionsConnection(
 

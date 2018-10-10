@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 import com.vimeo.networking2.VideoLog
 import java.util.*
 
-data class VideoSourceFileType(
+data class VideoSourceFile(
 
     /**
      * The time in ISO 8601 format when the video file was created.
@@ -31,7 +31,7 @@ data class VideoSourceFileType(
     val link: String? = null,
 
     /**
-     * Video log.
+     * Video logging information.
      */
     val log: VideoLog? = null,
 

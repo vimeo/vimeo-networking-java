@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Director timeline data.
+ */
 data class DirectorTimeline(
 
     /**

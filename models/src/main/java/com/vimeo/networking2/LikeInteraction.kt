@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * Information on liking a video.
+ */
 data class LikeInteraction(
 
     /**

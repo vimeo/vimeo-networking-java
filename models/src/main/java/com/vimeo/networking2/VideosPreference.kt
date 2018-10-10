@@ -1,3 +1,13 @@
 package com.vimeo.networking2
 
-data class VideosPreference(val privacy: Privacy? = null)
+/**
+ * Default preferences that a user has for their videos.
+ */
+data class VideosPreference(
+
+    /**
+     * Privacy values for videos.
+     */
+    val privacy: Privacy? = null
+
+)

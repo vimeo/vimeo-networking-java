@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * User's website information.
+ */
 data class Website(
 
     /**

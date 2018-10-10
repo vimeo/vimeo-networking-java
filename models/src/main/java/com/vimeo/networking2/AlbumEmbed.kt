@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Embed data for a album.
+ */
 data class AlbumEmbed(
 
     /**

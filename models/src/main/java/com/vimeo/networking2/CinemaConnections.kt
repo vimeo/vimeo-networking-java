@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * All connections for a cinema.
+ */
 data class CinemaConnections(
 
     /**

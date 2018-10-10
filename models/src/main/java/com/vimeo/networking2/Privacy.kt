@@ -27,7 +27,7 @@ data class Privacy(
     val embed: EmbedValue? = null,
 
     /**
-     * The password for viewing the user's videos. Based on CAPABILITY_PROTECTED_VIDEOS.
+     * The password for viewing the user's videos. Requires [CapabilitiesType.CAPABILITY_PROTECTED_VIDEOS].
      */
     val password: String? = null,
 

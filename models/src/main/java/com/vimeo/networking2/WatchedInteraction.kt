@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * All actions for the watched list for a user.
+ */
 data class WatchedInteraction(
 
     /**

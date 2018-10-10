@@ -5,6 +5,9 @@ import com.vimeo.networking2.enums.TranscodeType
 import com.vimeo.networking2.enums.VideoStatusType
 import java.util.*
 
+/**
+ * Video data.
+ */
 data class Video(
 
     /**
@@ -80,7 +83,7 @@ data class Video(
     /**
      * The video's metadata.
      */
-    val metadata: VideoMetadata? = null,
+    val metadata: Metadata<VideoConnections, VideoInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the video metadata was last modified.
@@ -101,7 +104,7 @@ data class Video(
      * The privacy-enabled password to watch this video.
      * This data requires a bearer token with the private scope.
      *
-     * Based on CAPABILITY_PROTECTED_VIDEOS.
+     * Requires [CapabilitiesType.CAPABILITY_PROTECTED_VIDEOS].
      */
     val password: String? = null,
 
@@ -113,7 +116,7 @@ data class Video(
     /**
      * The Play representation.
      *
-     * Based on CAPABILITY_PLAY_REPRESENTATION.
+     * Requires [CapabilitiesType.CAPABILITY_PLAY_REPRESENTATION].
      */
     val play: Play? = null,
 
@@ -136,7 +139,7 @@ data class Video(
      * Information about the review page associated with this video. This data requires a
      * bearer token with the private scope.
      *
-     * Based on CAPABILITY_VIDEO_REVIEW.
+     * Requires [CapabilitiesType.CAPABILITY_VIDEO_REVIEW].
      */
     val reviewPage: ReviewPage? = null,
 

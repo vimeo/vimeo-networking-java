@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * API Configuration data.
+ */
 data class ApiConfiguration(
 
     /**

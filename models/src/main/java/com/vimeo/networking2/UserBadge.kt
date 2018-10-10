@@ -3,7 +3,9 @@ package com.vimeo.networking2
 import com.vimeo.networking2.enums.UseBadgeType
 
 /**
- * Based on CAPABILITY_VIEW_USER_BADGE.
+ * User's badge information.
+ *
+ * Requires [CapabilitiesType.CAPABILITY_VIEW_USER_BADGE].
  */
 data class UserBadge(
 

@@ -3,6 +3,9 @@ package com.vimeo.networking2
 import com.vimeo.networking2.enums.CommentType
 import java.util.*
 
+/**
+ * Comment data.
+ */
 data class Comment(
 
     /**
@@ -13,7 +16,7 @@ data class Comment(
     /**
      * Metadata for comments.
      */
-    val metadata: CommentMetadata? = null,
+    val metadata: MetadataConnections<CommentConnections>? = null,
 
     /**
      * The resource key string for the comment.

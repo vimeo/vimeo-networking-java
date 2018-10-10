@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Connection data.
+ */
 data class Connection(
 
     /**

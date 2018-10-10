@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Document data.
+ */
 data class Document(
 
     /**

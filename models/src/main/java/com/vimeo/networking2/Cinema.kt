@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.CinemaType
 
+/**
+ * Cinema data.
+ */
 data class Cinema(
 
     /**
@@ -22,7 +25,7 @@ data class Cinema(
     /**
      * Cinema metadata.
      */
-    val metadata: CinemaMetadata? = null,
+    val metadata: MetadataConnections<CinemaConnections>? = null,
 
     /**
      * The name of the programmed cinema item.

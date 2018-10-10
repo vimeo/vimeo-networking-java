@@ -4,7 +4,9 @@ import com.vimeo.networking2.enums.LiveStatus
 import java.util.*
 
 /**
- * Based on CAPABILITY_LIVE_EVENT.
+ * Live video information.
+ *
+ * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
  */
 data class Live(
 

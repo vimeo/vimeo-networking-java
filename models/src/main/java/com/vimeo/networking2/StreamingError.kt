@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_LIVE_EVENT.
+ * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
  */
 data class StreamingError(
 

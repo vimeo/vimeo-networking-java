@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * Folder data.
+ */
 data class Folder(
 
     /**
@@ -12,7 +15,7 @@ data class Folder(
     /**
      * The folder's metadata.
      */
-    val metadata: AlbumMetadata? = null,
+    val metadata: Metadata<AlbumConnections, AlbumInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the folder was last modified.

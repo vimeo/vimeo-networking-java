@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.VideoPlayStatus
-import com.vimeo.networking2.enums.VideoSourceFileType
+import com.vimeo.networking2.enums.VideoSourceFile
 
 data class Play(
 
@@ -27,8 +27,10 @@ data class Play(
 
     /**
      * The source file of the video.
+     *
+     * Requires [CapabilitiesType.CAPABILITY_ORIGINAL_SOURCE].
      */
-    val source: VideoSourceFileType? = null,
+    val source: List<VideoSourceFile>? = null,
 
     /**
      * The play status of the video.

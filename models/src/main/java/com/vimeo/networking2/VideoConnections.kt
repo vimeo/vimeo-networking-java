@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * All connections for a video.
+ */
 data class VideoConnections(
 
     /**
@@ -20,14 +23,14 @@ data class VideoConnections(
     /**
      * Information about this video's live stream stats.
      *
-     * Based on CAPABILITY_LIVE_EVENT.
+     * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
      */
     val liveStats: Connection? = null,
 
     /**
      * The video's review notes.
      *
-     * Based on CAPABILITY_VIDEO_REVIEW.
+     * Requires [CapabilitiesType.CAPABILITY_VIDEO_REVIEW].
      */
     val notes: VideoReviewConnection? = null,
 
@@ -74,7 +77,7 @@ data class VideoConnections(
     /**
      * Information about the versions of this video.
      *
-     * Based on CAPABILITY_VIDEO_VERSIONS.
+     * Requires [CapabilitiesType.CAPABILITY_VIDEO_VERSIONS].
      */
     val versions: VideoVersionsConnection? = null
 

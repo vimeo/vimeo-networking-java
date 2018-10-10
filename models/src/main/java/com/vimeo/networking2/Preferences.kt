@@ -1,3 +1,13 @@
 package com.vimeo.networking2
 
-data class Preferences(val videos: VideosPreference? = null)
+/**
+ * Preferences that may have been set by a user.
+ */
+data class Preferences(
+
+    /**
+     * Video preferences set by the a user.
+     */
+    val videos: VideosPreference? = null
+
+)

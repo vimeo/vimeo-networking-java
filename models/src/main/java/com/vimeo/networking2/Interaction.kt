@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Information on taking an action on an entity.
+ */
 data class Interaction(
 
     /**

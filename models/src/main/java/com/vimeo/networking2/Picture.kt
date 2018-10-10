@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Pictures information such as dimensions, link to image, etc...
+ */
 data class Picture(
 
     /**

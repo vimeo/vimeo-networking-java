@@ -1,5 +1,9 @@
 package com.vimeo.networking2
 
+/**
+ * An object returned from the configs endpoint. This is a way for the
+ * api to specify configuration for our application.
+ */
 data class AppConfiguration(
 
     /**
@@ -10,21 +14,21 @@ data class AppConfiguration(
     /**
      * Facebook API configuration data.
      *
-     * Based on CAPABILITY_PLATFORM_CONFIGS_OTA_FACEBOOK.
+     * Requires [CapabilitiesType.CAPABILITY_PLATFORM_CONFIGS_OTA_FACEBOOK].
      */
     val facebook: FacebookConfiguration? = null,
 
     /**
      * Various feature configuration data.
      *
-     * Based on CAPABILITY_PLATFORM_CONFIGS_OTA_FEATURES.
+     * Requires [CapabilitiesType.CAPABILITY_PLATFORM_CONFIGS_OTA_FEATURES].
      */
     val features: FeaturesConfiguration? = null,
 
     /**
      * Various livestreaming configuration data.
      *
-     * Based on CAPABILITY_PLATFORM_CONFIGS_OTA_LIVE.
+     * Requires [CapabilitiesType.CAPABILITY_PLATFORM_CONFIGS_OTA_LIVE].
      */
     val live: LiveConfiguration? = null
 

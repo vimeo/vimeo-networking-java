@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Live stats viewers data.
+ */
 data class LiveStatsViewers(
 
     /**

@@ -3,6 +3,9 @@ package com.vimeo.networking2
 import com.vimeo.networking2.enums.TextTrackType
 import java.util.*
 
+/**
+ * Information on a text text.
+ */
 data class TextTrack(
 
     /**

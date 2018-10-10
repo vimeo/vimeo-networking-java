@@ -10,7 +10,7 @@ data class Tag(
     /**
      * AlbumMetadata about the group.
      */
-    val metadata: AlbumMetadata? = null,
+    val metadata: Metadata<AlbumConnections, AlbumInteractions>? = null,
 
     /**
      * The tag value.

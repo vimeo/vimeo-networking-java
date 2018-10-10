@@ -5,6 +5,9 @@ import com.vimeo.networking2.enums.StereoFormatType
 
 data class Spatial(
 
+    /**
+     * 360 director timeline.
+     */
     val directorTimeline: List<DirectorTimeline>? = null,
 
     /**
@@ -20,6 +23,6 @@ data class Spatial(
     /**
      * The 360 stereo format.
      */
-    val stereo_format: StereoFormatType? = null
+    val stereoFormat: StereoFormatType? = null
 
 )

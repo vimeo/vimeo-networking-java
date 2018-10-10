@@ -2,6 +2,10 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * This class represents an authenticated account with Vimeo. It can be through client credentials
+ * or a truly authenticated [User].
+ */
 data class VimeoAccount(
 
     /**

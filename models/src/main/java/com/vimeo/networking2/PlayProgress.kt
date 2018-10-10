@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_PLAY_PROGRESS.
+ * Requires [CapabilitiesType.CAPABILITY_PLAY_PROGRESS].
  */
 data class PlayProgress(
 

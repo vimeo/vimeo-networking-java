@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Information about the review page associated with a video.
+ */
 data class VideoReview(
 
     /**
@@ -14,14 +17,16 @@ data class VideoReview(
 
     /**
      * Setting to check if notes are enabled or disabled on the review page.
-     * CAPABILITY_VIDEO_REVIEW.
+     *
+     * Requires [CapabilitiesType.CAPABILITY_VIDEO_REVIEW].
      */
     val notes: Boolean? = null,
 
     /**
      * Setting to check if the vimeo logo should be displayed on the review page.
-     * CAPABILITY_VIDEO_REVIEW.
+     *
+     * Requires [CapabilitiesType.CAPABILITY_VIDEO_REVIEW].
      */
-    val vimeo_logo: Boolean? = null
+    val vimeoLogo: Boolean? = null
 
 )

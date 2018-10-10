@@ -1,7 +1,9 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_PLATFORM_CONFIGS_OTA_LIVE.
+ * Live Streaming configuration data.
+ *
+ * Requires [CapabilitiesType.CAPABILITY_PLATFORM_CONFIGS_OTA_LIVE].
  */
 data class LiveConfiguration(
 

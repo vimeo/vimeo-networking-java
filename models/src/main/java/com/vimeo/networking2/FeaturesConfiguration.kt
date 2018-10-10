@@ -1,7 +1,9 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_PLATFORM_CONFIGS_OTA_FEATURES.
+ * Various feature configuration data.
+ *
+ * Requires [CapabilitiesType.CAPABILITY_PLATFORM_CONFIGS_OTA_FEATURES].
  */
 data class FeaturesConfiguration(
 

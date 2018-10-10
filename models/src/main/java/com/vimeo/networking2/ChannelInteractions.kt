@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * All action that can be taken on a channel.
+ */
 data class ChannelInteractions(
 
     /**

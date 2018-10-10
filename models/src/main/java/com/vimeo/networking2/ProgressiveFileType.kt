@@ -32,7 +32,7 @@ data class ProgressiveFileType(
     val linkExpirationTime: String? = null,
 
     /**
-     * Video log.
+     * Video logging information.
      */
     val log: VideoLog? = null,
 
@@ -49,7 +49,7 @@ data class ProgressiveFileType(
     /**
      * The file size of the video.
      */
-    val siz: Int? = null,
+    val size: Int? = null,
 
     /**
      * The source link for the video file.

@@ -3,7 +3,7 @@ package com.vimeo.networking2
 /**
  * This data requires a bearer token with the private scope.
  *
- * Based on CAPABILITY_APP_NOTIFICATIONS.
+ * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
  */
 data class NotificationTypeCount(
 

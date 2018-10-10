@@ -4,6 +4,9 @@ import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.ContentFilterType
 import java.util.*
 
+/**
+ * User information.
+ */
 data class User(
 
     /**
@@ -14,7 +17,7 @@ data class User(
     /**
      * Information about the user's badge.
      *
-     * Based on CAPABILITY_VIEW_USER_BADGE.
+     * Requires [CapabilitiesType.CAPABILITY_VIEW_USER_BADGE].
      */
     val badge: UserBadge? = null,
 
@@ -61,7 +64,7 @@ data class User(
     /**
      * The user's metadata.
      */
-    val metadata: UserMetadata? = null,
+    val metadata: Metadata<UserConnections, UserInteractions>? = null,
 
     /**
      * The user's display name.
@@ -101,7 +104,7 @@ data class User(
     /**
      * The user's email verification status.
      *
-     * Based on CAPABILITY_API_APP_MANAGEMENT.
+     * Requires [CapabilitiesType.CAPABILITY_API_APP_MANAGEMENT].
      */
     val verified: Boolean? = null,
 

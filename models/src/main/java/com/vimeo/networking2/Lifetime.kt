@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Lifetime data.
+ */
 data class Lifetime(
 
     /**

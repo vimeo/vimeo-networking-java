@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.AlbumPrivacyViewValue
 
+/**
+ * The privacy set for an album.
+ */
 data class AlbumPrivacy(
 
     /**

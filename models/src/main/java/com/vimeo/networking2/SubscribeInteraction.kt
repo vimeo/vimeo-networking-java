@@ -3,6 +3,9 @@ package com.vimeo.networking2
 import com.vimeo.networking2.enums.StreamType
 import java.util.*
 
+/**
+ * Information on the subscribe a video action.
+ */
 data class SubscribeInteraction(
 
     /**

@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Video badges data.
+ */
 data class VideoBadges(
 
     /**
@@ -8,7 +11,7 @@ data class VideoBadges(
     val hdr: Boolean? = null,
 
     /**
-     * Live.
+     * Live data.
      */
     val live: Live? = null,
 

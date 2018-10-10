@@ -1,9 +1,12 @@
 package com.vimeo.networking2
 
+/**
+ * All action that can be taken on a video.
+ */
 data class VideoInteractions(
 
     /**
-     * The Buy interaction for a On Demand video.
+     * The buy interaction for a On Demand video.
      */
     val buy: BuyInteraction? = null,
 

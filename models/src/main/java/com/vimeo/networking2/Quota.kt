@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Quota data.
+ */
 data class Quota(
 
     /**

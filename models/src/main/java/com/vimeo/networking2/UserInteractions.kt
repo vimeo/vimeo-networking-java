@@ -1,7 +1,13 @@
 package com.vimeo.networking2
 
+/**
+ * All actions that can be taken on a user.
+ */
 data class UserInteractions(
 
+    /**
+     * Disallow a user from viewing a private channel.
+     */
     val addPrivacyUser: Interaction? = null,
 
     /**

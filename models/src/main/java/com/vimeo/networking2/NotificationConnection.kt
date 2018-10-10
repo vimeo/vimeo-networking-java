@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_APP_NOTIFICATIONS.
+ * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
  */
 data class NotificationConnection(
 
@@ -27,14 +27,14 @@ data class NotificationConnection(
      * Information about this user's notifications. This data requires a bearer token
      * with the private scope.
      *
-     * Based on CAPABILITY_APP_NOTIFICATIONS.
+     * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
      */
     val typeCount: NotificationTypeCount? = null,
 
     /**
      * An array of notification types and the total number of unseen notifications.
      *
-     * Based on CAPABILITY_APP_NOTIFICATIONS.
+     * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
      */
     val typeUnseenCount: NotificationTypeCount? = null,
 

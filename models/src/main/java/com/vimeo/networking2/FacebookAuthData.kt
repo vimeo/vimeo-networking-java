@@ -1,7 +1,9 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_PLATFORM_CONFIGS_OTA_FACEBOOK.
+ * Facebook client credentials.
+ *
+ * Requires [CapabilitiesType.CAPABILITY_PLATFORM_CONFIGS_OTA_FACEBOOK].
  */
 data class FacebookAuthData(
 

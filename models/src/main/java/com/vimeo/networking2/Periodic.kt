@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * Periodic upload quota information.
+ */
 data class Periodic(
 
     /**

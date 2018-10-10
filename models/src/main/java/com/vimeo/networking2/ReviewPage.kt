@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 /**
- * Based on CAPABILITY_VIDEO_REVIEW.
+ * Requires [CapabilitiesType.CAPABILITY_VIDEO_REVIEW].
  */
 data class ReviewPage(
 

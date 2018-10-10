@@ -5,6 +5,9 @@ import com.vimeo.networking2.enums.AlbumThemeType
 import com.vimeo.networking2.enums.SortType
 import java.util.*
 
+/**
+ * Group of videos to share publicly or privately.
+ */
 data class Album(
 
     /**
@@ -29,7 +32,7 @@ data class Album(
     val duration: Int? = null,
 
     /**
-     * AlbumEmbed data for the album.
+     * Embed data for the album.
      */
     val embed: AlbumEmbed? = null,
 
@@ -49,9 +52,9 @@ data class Album(
     val link: String? = null,
 
     /**
-     * AlbumMetadata about the album.
+     * Metadata about the album.
      */
-    val metadata: AlbumMetadata? = null,
+    val metadata: Metadata<AlbumConnections, AlbumInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the album was last modified.

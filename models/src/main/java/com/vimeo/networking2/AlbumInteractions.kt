@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * All actions that can be taken on albums.
+ */
 data class AlbumInteractions(
 
     /**

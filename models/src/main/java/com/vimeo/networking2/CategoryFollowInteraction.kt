@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import java.util.*
 
+/**
+ * Follow action information for a category.
+ */
 data class CategoryFollowInteraction(
 
     /**

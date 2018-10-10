@@ -2,6 +2,9 @@ package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.UploadSpaceType
 
+/**
+ * Upload quota space data.
+ */
 data class Space(
 
     /**

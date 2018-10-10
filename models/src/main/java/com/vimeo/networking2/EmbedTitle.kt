@@ -1,5 +1,8 @@
 package com.vimeo.networking2
 
+/**
+ * Embed data.
+ */
 data class EmbedTitle(
 
     /**
