@@ -6,7 +6,7 @@ import java.util.*
 /**
  * Information on the subscribe a video action.
  */
-data class SubscribeInteraction(
+data class SubscriptionInteraction(
 
     /**
      * Whether the video has DRM.
