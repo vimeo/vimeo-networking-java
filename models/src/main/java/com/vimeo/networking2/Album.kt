@@ -74,6 +74,15 @@ data class Album(
     /**
      * The active image for the album; defaults to the thumbnail of the last
      * video added to the album.
+     *
+     * This data is given only by versions above 3.4.1.
+     */
+    val albumPicture: PictureCollection,
+
+    /**
+     * List of the first three thumbnails of videos in the album.
+     *
+     * This data is given only by version 3.4.1 of the API.
      */
     val pictures: List<PictureCollection>? = null,
 
