@@ -22,6 +22,11 @@ data class Album(
     val createdTime: Date? = null,
 
     /**
+     * Custom logo.
+     */
+    val customLogo: PictureCollection? = null,
+
+    /**
      * A brief description of the album's content.
      */
     val description: String? = null,
