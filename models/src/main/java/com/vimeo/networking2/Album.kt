@@ -75,7 +75,7 @@ data class Album(
      * The active image for the album; defaults to the thumbnail of the last
      * video added to the album.
      */
-    val pictures: PictureCollection? = null,
+    val pictures: List<PictureCollection>? = null,
 
     /**
      * The privacy settings of the album.
