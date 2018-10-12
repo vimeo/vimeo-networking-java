@@ -1,8 +1,10 @@
 package com.vimeo.networking2.enums
 
+import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.VideoLog
 import java.util.*
 
+@JsonClass(generateAdapter = true)
 data class VideoSourceFile(
 
     /**

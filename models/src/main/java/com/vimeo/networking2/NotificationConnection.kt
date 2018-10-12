@@ -1,26 +1,32 @@
 package com.vimeo.networking2
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
  */
+@JsonClass(generateAdapter = true)
 data class NotificationConnection(
 
     /**
      * The total number of new notifications. This data requires a bearer token
      * with the private scope.
      */
+    @Json(name = "new_total")
     val newTotal: Int = 0,
 
     /**
      * The total number of notifications. This data requires a bearer token with
      * the private scope.
      */
+    @Json(name = "total")
     val total: Int = 0,
 
     /**
      * The total number of new notifications. This data requires a bearer
      * token with the private scope.
      */
+    @Json(name = "total_new")
     val totalNew: Int = 0,
 
     /**
@@ -29,6 +35,7 @@ data class NotificationConnection(
      *
      * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
      */
+    @Json(name = "type_count")
     val typeCount: NotificationTypeCount? = null,
 
     /**
@@ -36,16 +43,19 @@ data class NotificationConnection(
      *
      * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
      */
+    @Json(name = "type_unseen_count")
     val typeUnseenCount: NotificationTypeCount? = null,
 
     /**
      * The total number of unread notifications.
      */
+    @Json(name = "unread_total")
     val unreadTotal: Int = 0,
 
     /**
      * The API URI that resolves to the connection data.
      */
+    @Json(name = "uri")
     val uri: String? = null
 
 )

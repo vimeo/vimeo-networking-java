@@ -1,5 +1,8 @@
 package com.vimeo.networking2
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class LiveStreamsQuota(
 
     /**
@@ -7,6 +10,7 @@ data class LiveStreamsQuota(
      *
      * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
      */
+    @Json(name = "maximum")
     val maximum: Int? = null,
 
     /**
@@ -14,6 +18,7 @@ data class LiveStreamsQuota(
      *
      * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
      */
+    @Json(name = "remaining")
     val remaining: Int? = null
 
 
