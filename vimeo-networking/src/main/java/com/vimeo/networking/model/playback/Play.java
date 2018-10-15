@@ -61,7 +61,10 @@ public class Play implements Serializable {
         PURCHASE_REQUIRED("purchase_required"),
         // your region can not play or purchase this
         @SerializedName("restricted")
-        RESTRICTED("restricted");
+        RESTRICTED("restricted"),
+        // will require a re-request for the video, supply the password in the request
+        @SerializedName("password")
+        PASSWORD("password");
 
         @NotNull
         private final String string;
