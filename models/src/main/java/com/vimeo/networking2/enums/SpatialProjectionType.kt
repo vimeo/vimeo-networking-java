@@ -25,5 +25,10 @@ enum class SpatialProjectionType {
     /**
      * The spatial projection is pyramid-shaped.
      */
-    PYRAMID
+    PYRAMID,
+
+    /**
+     * Unknown type of spatial projection.
+     */
+    UNKNOWN
 }

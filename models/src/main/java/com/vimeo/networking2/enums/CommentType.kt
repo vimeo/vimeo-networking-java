@@ -8,6 +8,11 @@ enum class CommentType {
     /**
      * The comment is about a video.
      */
-    VIDEO
+    VIDEO,
+
+    /**
+     * Unknown comment type.
+     */
+    UNKNOWN
 
 }

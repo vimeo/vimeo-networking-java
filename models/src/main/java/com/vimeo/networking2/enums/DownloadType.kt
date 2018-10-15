@@ -23,6 +23,11 @@ enum class DownloadType {
     /**
      * The video isn't available for download.
      */
-    UNAVAILABLE
+    UNAVAILABLE,
+
+    /**
+     * Unknown download type.
+     */
+    UNKNOWN
 
 }

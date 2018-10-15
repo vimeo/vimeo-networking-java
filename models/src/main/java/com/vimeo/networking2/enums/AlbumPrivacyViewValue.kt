@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Privacy settings for albums.
+ */
 enum class AlbumPrivacyViewValue {
 
     /**
@@ -15,5 +18,10 @@ enum class AlbumPrivacyViewValue {
     /**
      * Only those with the password can view the album.
      */
-    PASSWORD
+    PASSWORD,
+
+    /**
+     * Unknown privacy setting.
+     */
+    UNKNOWN
 }

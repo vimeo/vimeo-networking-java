@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Different types of user badges.
+ */
 enum class UseBadgeType {
 
     /**
@@ -65,6 +68,11 @@ enum class UseBadgeType {
     /**
      * The user is on the Vimeo support team.
      */
-    SUPPORT
+    SUPPORT,
+
+    /**
+     * Unknown type of badge.
+     */
+    UNKNOWN
 
 }

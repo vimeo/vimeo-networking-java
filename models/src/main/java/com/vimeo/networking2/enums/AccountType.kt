@@ -1,6 +1,10 @@
 package com.vimeo.networking2.enums
 
+/**
+ * User account type.
+ */
 enum class AccountType {
+
     /**
      * The user has a Vimeo Basic subscription.
      */
@@ -44,6 +48,11 @@ enum class AccountType {
     /**
      * The user has a Vimeo Producer subscription.
      */
-    PRODUCER
+    PRODUCER,
+
+    /**
+     * Unknown account type.
+     */
+    UNKNOWN
 
 }

@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Live statuses.
+ */
 enum class LiveStatus {
 
     /**
@@ -40,5 +43,10 @@ enum class LiveStatus {
     /**
      * The RTMP link is visible, but it can't yet receive the stream.
      */
-    UNAVAILABLE
+    UNAVAILABLE,
+
+    /**
+     * Unknown live status.
+     */
+    UNKNOWN
 }
