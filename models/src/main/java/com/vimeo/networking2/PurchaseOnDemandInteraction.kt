@@ -3,7 +3,7 @@ package com.vimeo.networking2
 /**
  * Purchase season interaction.
  */
-data class PurchaseSeasonInteraction(
+data class PurchaseOnDemandInteraction(
 
     /**
      * Whether the On Demand video for purchase has DRM.
@@ -11,7 +11,7 @@ data class PurchaseSeasonInteraction(
     val buy: BuyInteraction? = null,
 
     /**
-     * Subscribe to season.
+     * Subscribe to on demand video.
      */
     val subscriptionInteraction: SubscriptionInteraction? = null
 
