@@ -5,9 +5,9 @@ import com.vimeo.networking2.enums.StreamType.UNKNOWN
 import java.util.*
 
 /**
- * Information on the subscribe a video action.
+ * Information on the subscription a video action.
  */
-data class Subscription(
+data class SubscriptionInteraction(
 
     /**
      * Whether the video has DRM.

@@ -34,7 +34,7 @@ data class VideoInteractions(
     /**
      * Subscription information for an On Demand video.
      */
-    val subscribe: Subscription? = null,
+    val subscription: SubscriptionInteraction? = null,
 
     /**
      * Information about removing this video from the user's list of watched videos.
