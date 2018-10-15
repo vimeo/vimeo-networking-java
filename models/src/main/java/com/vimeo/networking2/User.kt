@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.AccountType
+import com.vimeo.networking2.enums.AccountType.UNKNOWN
 import com.vimeo.networking2.enums.ContentFilterType
 import java.util.*
 
@@ -12,7 +13,7 @@ data class User(
     /**
      * The user's account type
      */
-    val account: AccountType? = null,
+    val account: AccountType = UNKNOWN,
 
     /**
      * Information about the user's badge.

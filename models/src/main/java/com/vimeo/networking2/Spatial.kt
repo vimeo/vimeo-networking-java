@@ -18,11 +18,11 @@ data class Spatial(
     /**
      * The 360 spatial projection.
      */
-    val projection: SpatialProjectionType? = null,
+    val projection: SpatialProjectionType = SpatialProjectionType.UNKNOWN,
 
     /**
      * The 360 stereo format.
      */
-    val stereoFormat: StereoFormatType? = null
+    val stereoFormat: StereoFormatType = StereoFormatType.UNKNOWN
 
 )

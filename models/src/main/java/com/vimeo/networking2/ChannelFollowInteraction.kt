@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.FollowType
+import com.vimeo.networking2.enums.FollowType.UNKNOWN
 import java.util.*
 
 /**
@@ -25,7 +26,7 @@ data class ChannelFollowInteraction(
      * Whether the authenticated user is a moderator or subscriber. This data requires a
      * bearer token with the private scope.
      */
-    val type: FollowType? = null,
+    val type: FollowType = UNKNOWN,
 
     /**
      * The URI for following or unfollowing this channel. PUT to this URI to follow the channel,

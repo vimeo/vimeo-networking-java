@@ -8,6 +8,6 @@ data class VideoStats(
     /**
      * The current total number of times that the video has been played.
      */
-    val plays: Int = 0
+    val plays: Int? = null
 
 )

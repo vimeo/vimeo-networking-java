@@ -53,7 +53,7 @@ data class Live(
     /**
      * The status of the RTMP link.
      */
-    val status: LiveStatus? = null,
+    val status: LiveStatus = LiveStatus.UNKNOWN,
 
     /**
      * If live.status is streaming_error, this is the reason for that error.

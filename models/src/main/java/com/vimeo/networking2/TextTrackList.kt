@@ -8,7 +8,7 @@ data class TextTrackList(
     /**
      * Total number of text tracks.
      */
-    val total: Int = 0,
+    val total: Int? = null,
 
     /**
      * List of all the text tracks for a video.

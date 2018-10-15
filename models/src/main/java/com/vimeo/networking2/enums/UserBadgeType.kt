@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * Different types of user badges.
  */
-enum class UseBadgeType {
+enum class UserBadgeType {
 
     /**
      * The user is a Vimeo alumni.

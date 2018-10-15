@@ -8,7 +8,7 @@ data class Picture(
     /**
      * The height of the image.
      */
-    val height: Int = 0,
+    val height: Int? = null,
 
     /**
      * The direct link to the image.
@@ -23,6 +23,6 @@ data class Picture(
     /**
      * The width of the image.
      */
-    val width: Int = 0
+    val width: Int? = null
 
 )

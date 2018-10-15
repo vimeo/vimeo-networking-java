@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.CommentType
+import com.vimeo.networking2.enums.CommentType.UNKNOWN
 import java.util.*
 
 /**
@@ -31,7 +32,7 @@ data class Comment(
     /**
      * The Vimeo content to which the comment relates.
      */
-    val type: CommentType? = null,
+    val type: CommentType = UNKNOWN,
 
     /**
      * The user who posted the comment.

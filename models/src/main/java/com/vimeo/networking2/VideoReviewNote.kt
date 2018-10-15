@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.VideoReviewTaskStatusType
+import com.vimeo.networking2.enums.VideoReviewTaskStatusType.UNKNOWN
 import java.util.*
 
 /**
@@ -36,7 +37,7 @@ data class VideoReviewNote(
     /**
      * Whether the task described in this note has been completed or not.
      */
-    val status: VideoReviewTaskStatusType? = null,
+    val status: VideoReviewTaskStatusType = UNKNOWN,
 
     /**
      * The content of the note.

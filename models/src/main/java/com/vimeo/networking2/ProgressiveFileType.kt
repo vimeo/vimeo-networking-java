@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.VideoQualityType
+import com.vimeo.networking2.enums.VideoQualityType.UNKNOWN
 import com.vimeo.networking2.enums.VideoSourceType
 import java.util.*
 
@@ -19,7 +20,7 @@ data class ProgressiveFileType(
     /**
      * The height of the video in pixels.
      */
-    val height: Int = 0,
+    val height: Int? = null,
 
     /**
      * The direct link to this video file.
@@ -44,7 +45,7 @@ data class ProgressiveFileType(
     /**
      * The video quality (as determined by height and width).
      */
-    val quality: VideoQualityType? = null,
+    val quality: VideoQualityType = UNKNOWN,
 
     /**
      * The file size of the video.
@@ -59,11 +60,11 @@ data class ProgressiveFileType(
     /**
      * The type of the video file.
      */
-    val type: VideoSourceType? = null,
+    val type: VideoSourceType = VideoSourceType.UNKNOWN,
 
     /**
      * The width of the video in pixels.
      */
-    val width: Int = 0
+    val width: Int? = null
 
 )

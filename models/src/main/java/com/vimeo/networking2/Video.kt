@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.LicenseType
+import com.vimeo.networking2.enums.LicenseType.UNKNOWN
 import com.vimeo.networking2.enums.TranscodeType
 import com.vimeo.networking2.enums.VideoStatusType
 import java.util.*
@@ -53,7 +54,7 @@ data class Video(
     /**
      * The video's height in pixels.
      */
-    val height: Int = 0,
+    val height: Int? = null,
 
     /**
      * The video's primary language.
@@ -68,7 +69,7 @@ data class Video(
     /**
      * The Creative Commons license used for the video.
      */
-    val license: LicenseType? = null,
+    val license: LicenseType = UNKNOWN,
 
     /**
      * The link to the video.
@@ -157,7 +158,7 @@ data class Video(
      * The status code for the availability of the video. This field is deprecated in favor
      * of upload and transcode.
      */
-    val status: VideoStatusType? = null,
+    val status: VideoStatusType? = VideoStatusType.UNKNOWN,
 
     /**
      * An array of all tags assigned to this video.
@@ -167,7 +168,7 @@ data class Video(
     /**
      * The transcode information for a video upload.
      */
-    val transcode: TranscodeType? = null,
+    val transcode: TranscodeType? = TranscodeType.UNKNOWN,
 
     /**
      * The upload information for this video.
@@ -187,6 +188,6 @@ data class Video(
     /**
      * The video's width in pixels.
      */
-    val width: Int = 0
+    val width: Int? = null
 
 )

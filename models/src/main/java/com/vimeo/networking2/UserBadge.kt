@@ -1,6 +1,6 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.enums.UseBadgeType
+import com.vimeo.networking2.enums.UserBadgeType
 
 /**
  * User's badge information.
@@ -22,7 +22,7 @@ data class UserBadge(
     /**
      * The type of the badge.
      */
-    val type: UseBadgeType? = null,
+    val type: UserBadgeType = UserBadgeType.UNKNOWN,
 
     /**
      * The URL that loads when the user clicks the badge.

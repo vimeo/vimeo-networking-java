@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.BillingPeriodType
+import com.vimeo.networking2.enums.BillingPeriodType.UNKNOWN
 
 /**
  * Product data.
@@ -10,7 +11,7 @@ data class Product(
     /**
      * Distinguish between monthly and yearly products.
      */
-    val billingPeriod: BillingPeriodType? = null,
+    val billingPeriod: BillingPeriodType = UNKNOWN,
 
     /**
      * Product description.
