@@ -8,11 +8,26 @@ data class TextTrackList(
     /**
      * Total number of text tracks.
      */
-    val total: Int = 0,
+    override val total: Int? = null,
 
     /**
-     * List of all the text tracks for a video.
+     * The current page number of paging list.
      */
-    val textTracks: List<TextTrack>? = null
+    override val page: Int? = null,
 
-)
+    /**
+     * The number of text tracks to return per page.
+     */
+    override val perPage: Int? = null,
+
+    /**
+     * Urls to the first, last page, next and previous pages.
+     */
+    override val paging: Paging? = null,
+
+    /**
+     * List of text tracks.
+     */
+    override val data: List<TextTrack>?
+
+) : Pageable<TextTrack>

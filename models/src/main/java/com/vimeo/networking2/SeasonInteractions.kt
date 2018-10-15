@@ -10,6 +10,6 @@ data class SeasonInteractions(
      *
      * Requires [CapabilitiesType.CAPABILITY_MAKE_PURCHASES]
      */
-    val purchase: PurchaseInteraction? = null
+    val purchase: PurchaseSeasonInteraction? = null
 
 )
