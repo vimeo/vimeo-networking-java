@@ -8,5 +8,5 @@ data class TextTrackList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<TextTrack>?
+    override val data: List<TextTrack>? = null
 ) : Pageable<TextTrack>

@@ -8,5 +8,5 @@ data class VideoList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<Video>?
+    override val data: List<Video>? = null
 ) : Pageable<Video>

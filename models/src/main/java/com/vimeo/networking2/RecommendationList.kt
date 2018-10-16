@@ -8,5 +8,5 @@ data class RecommendationList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<Recommendation>?
+    override val data: List<Recommendation>? = null
 ) : Pageable<Recommendation>

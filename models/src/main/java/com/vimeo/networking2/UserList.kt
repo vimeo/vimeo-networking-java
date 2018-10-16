@@ -8,5 +8,5 @@ data class UserList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<User>?
+    override val data: List<User>? = null
 ) : Pageable<User>

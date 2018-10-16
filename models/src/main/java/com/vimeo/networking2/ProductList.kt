@@ -8,5 +8,5 @@ data class ProductList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<Product>?
+    override val data: List<Product>? = null
 ) : Pageable<Product>

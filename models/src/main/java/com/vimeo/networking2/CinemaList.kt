@@ -8,5 +8,5 @@ data class CinemaList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<Cinema>?
+    override val data: List<Cinema>? = null
 ) : Pageable<Cinema>

@@ -8,5 +8,5 @@ data class TVoidItemList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<TVodItem>?
+    override val data: List<TVodItem>? = null
 ) : Pageable<TVodItem>

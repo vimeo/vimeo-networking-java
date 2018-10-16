@@ -8,5 +8,5 @@ data class NotificationList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<Notification>?
+    override val data: List<Notification>? = null
 ) : Pageable<Notification>

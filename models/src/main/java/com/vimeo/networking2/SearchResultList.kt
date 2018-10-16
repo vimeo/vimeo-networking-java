@@ -8,5 +8,5 @@ data class SearchResultList(
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<SearchResult>?
+    override val data: List<SearchResult>? = null
 ) : Pageable<SearchResult>
