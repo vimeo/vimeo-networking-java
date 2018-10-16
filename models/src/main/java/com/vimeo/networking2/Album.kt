@@ -77,7 +77,7 @@ data class Album(
      *
      * This data is given only by versions above 3.4.1.
      */
-    val albumPicture: PictureCollection,
+    val albumPicture: PictureCollection? = null,
 
     /**
      * List of the first three thumbnails of videos in the album.

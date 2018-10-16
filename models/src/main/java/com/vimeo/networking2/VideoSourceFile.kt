@@ -65,6 +65,6 @@ data class VideoSourceFile(
     /**
      * The width of the video in pixels.
      */
-    val width: Int?
+    val width: Int? = null
 
 )

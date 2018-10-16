@@ -10,7 +10,7 @@ data class Privacy(
     /**
      * Whether other users can add the user's videos.
      */
-    val add: Boolean,
+    val add: Boolean? = null,
 
     /**
      * The user's privacy preference for comments.

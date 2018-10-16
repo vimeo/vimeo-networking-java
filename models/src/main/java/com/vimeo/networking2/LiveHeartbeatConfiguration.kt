@@ -17,6 +17,6 @@ data class LiveHeartbeatConfiguration(
     /**
      * The interval, in seconds, at which a live heartbeat should be sent.
      */
-    val interval: Int?
+    val interval: Int? = null
 
 )

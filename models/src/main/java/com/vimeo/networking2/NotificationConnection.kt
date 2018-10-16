@@ -18,12 +18,6 @@ data class NotificationConnection(
     val total: Int? = null,
 
     /**
-     * The total number of new notifications. This data requires a bearer
-     * token with the private scope.
-     */
-    val totalNew: Int? = null,
-
-    /**
      * Information about this user's notifications. This data requires a bearer token
      * with the private scope.
      *

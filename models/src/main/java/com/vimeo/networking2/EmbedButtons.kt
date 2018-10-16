@@ -38,6 +38,6 @@ data class EmbedButtons(
     /**
      * Whether the Watch Later button appears in the embeddable player for this video.
      */
-    val watchlater: Boolean? = null
+    val watchLater: Boolean? = null
 
 )

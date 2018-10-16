@@ -32,7 +32,7 @@ data class RentInteraction(
     /**
      * The URL to rent the On Demand video on Vimeo.
      */
-    val link: String,
+    val link: String? = null,
 
     /**
      * The numeric value of the price for buying the On Demand video.
