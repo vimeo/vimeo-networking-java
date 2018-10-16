@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Live Quota Status.
+ */
 enum class LiveQuotaStatus {
 
     /**
@@ -23,5 +26,10 @@ enum class LiveQuotaStatus {
      * The user has reached their monthly or per-event limit on the amount of time that
      * they can live stream.
      */
-    TIME_LIMIT
+    TIME_LIMIT,
+
+    /**
+     * Unknown live quota status.
+     */
+    UNKNOWN
 }

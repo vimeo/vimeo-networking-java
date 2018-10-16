@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * All type of actions that can be taken by the user.
+ */
 enum class UserActivityType {
     ADD_COMMENT,
     ADD_COMMENT_BLOG,
@@ -23,5 +26,6 @@ enum class UserActivityType {
     ONDEMAND_PUBLISH,
     PORTFOLIO_CLIP,
     TIP_CLIP,
-    UPLOAD
+    UPLOAD,
+    UNKNOWN
 }

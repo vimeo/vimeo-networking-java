@@ -18,6 +18,6 @@ data class Connection(
     /**
      * The total number of albums on this connection.
      */
-    val total: Int = 0
+    val total: Int? = null
 
 )

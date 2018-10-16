@@ -17,6 +17,6 @@ data class Payment(
     /**
      * The type of stored payment method
      */
-    val type: PaymentType? = null
+    val type: PaymentType = PaymentType.UNKNOWN
 
 )

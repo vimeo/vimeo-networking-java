@@ -53,6 +53,6 @@ data class TextTrack(
     /**
      *The type of the text track.
      */
-    val type: TextTrackType? = null
+    val type: TextTrackType = TextTrackType.UNKNOWN
 
 )

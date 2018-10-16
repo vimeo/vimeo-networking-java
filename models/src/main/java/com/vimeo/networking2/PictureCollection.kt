@@ -31,7 +31,7 @@ data class PictureCollection(
     /**
      * The type of the picture.
      */
-    val type: PictureType? = null,
+    val type: PictureType = PictureType.UNKNOWN,
 
     /**
      * The picture's URI.

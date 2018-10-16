@@ -8,5 +8,7 @@ enum class SortType {
     COMMENTS,
     LIKES,
     NEWEST,
-    OLDEST, PLAYS
+    OLDEST,
+    PLAYS,
+    UNKNOWN
 }

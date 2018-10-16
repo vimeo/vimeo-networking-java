@@ -1,6 +1,8 @@
-package com.vimeo.networking2.enums
+package com.vimeo.networking2
 
-import com.vimeo.networking2.VideoLog
+import com.vimeo.networking2.enums.VideoQualityType
+import com.vimeo.networking2.enums.VideoQualityType.UNKNOWN
+import com.vimeo.networking2.enums.VideoSourceType
 import java.util.*
 
 data class VideoSourceFile(
@@ -43,7 +45,7 @@ data class VideoSourceFile(
     /**
      * The video quality (as determined by height and width).
      */
-    val quality: VideoQualityType? = null,
+    val quality: VideoQualityType = UNKNOWN,
 
     /**
      * The file size of the video.
@@ -58,11 +60,11 @@ data class VideoSourceFile(
     /**
      * The type of the video file.
      */
-    val type: VideoSourceType? = null,
+    val type: VideoSourceType = VideoSourceType.UNKNOWN,
 
     /**
      * The width of the video in pixels.
      */
-    val width: Int?
+    val width: Int? = null
 
 )

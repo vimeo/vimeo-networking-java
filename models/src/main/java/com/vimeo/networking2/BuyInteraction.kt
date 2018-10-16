@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.DownloadType
+import com.vimeo.networking2.enums.DownloadType.UNKNOWN
 import com.vimeo.networking2.enums.StreamType
 import java.util.*
 
@@ -22,7 +23,7 @@ data class BuyInteraction(
     /**
      * The user's download access to this On Demand video
      */
-    val download: DownloadType? = null,
+    val download: DownloadType = UNKNOWN,
 
     /**
      * Whether the video has DRM.
@@ -47,7 +48,7 @@ data class BuyInteraction(
     /**
      * The user's streaming access to this On Demand video.
      */
-    val streamType: StreamType? = null,
+    val streamType: StreamType = StreamType.UNKNOWN,
 
     /**
      * The product URI to purchase the On Demand video.

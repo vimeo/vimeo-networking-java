@@ -62,7 +62,7 @@ data class VideoConnections(
     /**
      * Information about this video's text tracks.
      */
-    val texttracks: Connection? = null,
+    val textTracks: Connection? = null,
 
     /**
      * Information about this video's VOD trailer.

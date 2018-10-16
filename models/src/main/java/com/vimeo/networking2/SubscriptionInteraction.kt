@@ -1,10 +1,11 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.StreamType
+import com.vimeo.networking2.enums.StreamType.UNKNOWN
 import java.util.*
 
 /**
- * Information on the subscribe a video action.
+ * Information on the subscription a video action.
  */
 data class SubscriptionInteraction(
 
@@ -26,6 +27,6 @@ data class SubscriptionInteraction(
     /**
      * The stream type.
      */
-    val streamType: StreamType? = null
+    val streamType: StreamType = UNKNOWN
 
 )

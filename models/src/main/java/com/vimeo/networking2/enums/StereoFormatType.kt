@@ -15,5 +15,10 @@ enum class StereoFormatType {
     /**
      * The stereo format is top-bottom.
      */
-    TOP_BOTTOM
+    TOP_BOTTOM,
+
+    /**
+     * Unknown stereo format type.
+     */
+    UNKNOWN
 }

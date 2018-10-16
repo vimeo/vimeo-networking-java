@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.VideoPlayStatus
-import com.vimeo.networking2.enums.VideoSourceFile
+import com.vimeo.networking2.enums.VideoPlayStatus.UNKNOWN
 
 data class Play(
 
@@ -35,5 +35,5 @@ data class Play(
     /**
      * The play status of the video.
      */
-    val status: VideoPlayStatus? = null
+    val status: VideoPlayStatus = UNKNOWN
 )

@@ -40,6 +40,7 @@ data class UserConnections(
      * Information about this user's folders.
      */
     val folders: Connection? = null,
+
     /**
      * Information about the user's followers.
      */
@@ -116,6 +117,6 @@ data class UserConnections(
     /**
      * Information about the videos that this user wants to watch later.
      */
-    val watchlater: Connection? = null
+    val watchLater: Connection? = null
 
 )

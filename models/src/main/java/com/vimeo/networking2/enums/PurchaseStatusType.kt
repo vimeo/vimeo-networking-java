@@ -4,5 +4,6 @@ enum class PurchaseStatusType {
     APP_MISMATCH,
     AVAILABLE,
     PURCHASED,
-    UNAVAILABLE
+    UNAVAILABLE,
+    UNKNOWN
 }

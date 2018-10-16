@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Different types of licenses.
+ */
 enum class LicenseType {
     BY,
     BY_NC,
@@ -7,5 +10,6 @@ enum class LicenseType {
     BY_NC_SA,
     BY_ND,
     BY_SA,
-    CC0
+    CC0,
+    UNKNOWN
 }

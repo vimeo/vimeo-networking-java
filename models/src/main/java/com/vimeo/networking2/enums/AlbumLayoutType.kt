@@ -1,9 +1,22 @@
 package com.vimeo.networking2.enums
 
 /**
- * The album's layout preference.
+ * Different layouts an album could be shown.
  */
 enum class AlbumLayoutType {
+
+    /**
+     * Grid layout.
+     */
     GRID,
-    PLAYER
+
+    /**
+     * Player layout.
+     */
+    PLAYER,
+
+    /**
+     * Unknown layout.
+     */
+    UNKNOWN
 }

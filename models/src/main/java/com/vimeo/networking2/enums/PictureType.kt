@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Picture types.
+ */
 enum class PictureType {
 
     /**
@@ -15,5 +18,10 @@ enum class PictureType {
     /**
      * The default image for the video.
      */
-    DEFAULT
+    DEFAULT,
+
+    /**
+     * Unknown picture type.
+     */
+    UNKNOWN
 }

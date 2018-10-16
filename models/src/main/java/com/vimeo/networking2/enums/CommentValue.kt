@@ -15,5 +15,10 @@ enum class CommentValue {
     /**
      * No one can comment on the user's videos.
      */
-    NOBODY
+    NOBODY,
+
+    /**
+     * Unknown comment type.
+     */
+    UNKNOWN
 }

@@ -49,7 +49,7 @@ data class Album(
     /**
      * The album's layout preference.
      */
-    val layout: AlbumLayoutType? = null,
+    val layout: AlbumLayoutType = AlbumLayoutType.UNKNOWN,
 
     /**
      * The URL to access the album.
@@ -77,7 +77,7 @@ data class Album(
      *
      * This data is given only by versions above 3.4.1.
      */
-    val albumPicture: PictureCollection,
+    val albumPicture: PictureCollection? = null,
 
     /**
      * List of the first three thumbnails of videos in the album.
@@ -99,12 +99,12 @@ data class Album(
     /**
      * Sort type of the album.
      */
-    val sort: SortType? = null,
+    val sort: SortType = SortType.UNKNOWN,
 
     /**
      * The album's color theme preference.
      */
-    val theme: AlbumThemeType? = null,
+    val theme: AlbumThemeType = AlbumThemeType.UNKNOWN,
 
     /**
      * The album's URI.

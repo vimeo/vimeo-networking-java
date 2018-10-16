@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Video settings privacy view values.
+ */
 enum class ViewValue {
 
     /**
@@ -35,5 +38,10 @@ enum class ViewValue {
     /**
      * Only other Vimeo members can view the user's videos.
      */
-    USERS
+    USERS,
+
+    /**
+     * Unknown view privacy value.
+     */
+    UNKNOWN
 }

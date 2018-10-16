@@ -10,7 +10,7 @@ data class PurchaseInteraction(
     /**
      * Purchase status.
      */
-    val status: PurchaseStatusType? = null,
+    val status: PurchaseStatusType = PurchaseStatusType.UNKNOWN,
 
     /**
      * URI for creating a purchase.
