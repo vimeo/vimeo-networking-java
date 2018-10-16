@@ -189,6 +189,8 @@ data class Video(
     /**
      * The video's width in pixels.
      */
-    val width: Int? = null
+    val width: Int? = null,
 
-)
+    override val identifier: String? = resourceKey
+
+): Entity

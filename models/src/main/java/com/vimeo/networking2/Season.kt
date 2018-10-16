@@ -45,6 +45,8 @@ data class Season(
     /**
      * The creator of this On Demand page.
      */
-    val user: User? = null
+    val user: User? = null,
 
-)
+    override val identifier: String? = resourceKey
+
+): Entity

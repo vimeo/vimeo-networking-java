@@ -74,6 +74,8 @@ data class Channel(
     /**
      * The Vimeo user who owns the channel.
      */
-    val user: User? = null
+    val user: User? = null,
 
-)
+    override val identifier: String? = resourceKey
+
+) : Entity

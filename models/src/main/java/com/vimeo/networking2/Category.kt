@@ -62,6 +62,8 @@ data class Category(
     /**
      * The unique identifier to access the category resource.
      */
-    val uri: String? = null
+    val uri: String? = null,
 
-)
+    override val identifier: String? = resourceKey
+
+): Entity

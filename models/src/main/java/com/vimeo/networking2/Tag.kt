@@ -25,6 +25,8 @@ data class Tag(
     /**
      * The canonical relative URI of the tag.
      */
-    val uri: String? = null
+    val uri: String? = null,
 
-)
+    override val identifier: String? = resourceKey
+
+): Entity
