@@ -4,7 +4,7 @@ package com.vimeo.networking2
  * All lists that can be paged should implement this interface to provide
  * paging urls, total number of items returns for each page and the data for each page.
  */
-interface Pageable<DATA_T> {
+interface Pageable<Data_T> {
 
     /**
      * Total number of items returned.
@@ -29,5 +29,5 @@ interface Pageable<DATA_T> {
     /**
      * The data return for each page.
      */
-    val data: List<DATA_T>?
+    val data: List<Data_T>?
 }
