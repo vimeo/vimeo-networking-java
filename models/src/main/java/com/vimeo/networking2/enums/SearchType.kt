@@ -9,5 +9,6 @@ enum class SearchType {
     VIDEO,
     GROUP,
     ONDEMAND,
-    PEOPLE
+    PEOPLE,
+    UNKNOWN
 }

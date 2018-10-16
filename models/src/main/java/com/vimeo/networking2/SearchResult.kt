@@ -50,6 +50,6 @@ data class SearchResult(
     /**
      * The type of object that this search result is representing.
      */
-    val type: SearchType? = null
+    val type: SearchType = SearchType.UNKNOWN
 
 )

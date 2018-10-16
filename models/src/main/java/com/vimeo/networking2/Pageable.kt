@@ -27,7 +27,7 @@ interface Pageable<Data_T> {
     val paging: Paging?
 
     /**
-     * The data return for each page.
+     * The data returned for each page.
      */
     val data: List<Data_T>?
 }

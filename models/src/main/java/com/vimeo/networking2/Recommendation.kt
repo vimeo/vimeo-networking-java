@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.RecommendationType
+import com.vimeo.networking2.enums.RecommendationType.UNKNOWN
 
 /**
  * Recommendation DTO.
@@ -25,7 +26,7 @@ data class Recommendation(
     /**
      * Type of recommendation.
      */
-    val type: RecommendationType? = null,
+    val type: RecommendationType = UNKNOWN,
 
     /**
      * The user that is being recommended.

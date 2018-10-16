@@ -43,7 +43,7 @@ data class TVodItem(
     /**
      * Whether this [TVodItem] is for a film or a series.
      */
-    val type: TVodType? = null,
+    val type: TVodType = TVodType.UNKNOWN,
 
     /**
      * The trailer for this [TVodItem].
