@@ -1,12 +1,12 @@
 package com.vimeo.networking2
 
 /**
- * List of text tracks for a video.
+ * List of notifications that could be paged.
  */
-data class TextTrackList(
+data class NotificationList(
     override val total: Int? = null,
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<TextTrack>? = null
-) : Pageable<TextTrack>
+    override val data: List<Notification>? = null
+) : Pageable<Notification>

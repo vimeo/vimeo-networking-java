@@ -1,12 +1,12 @@
 package com.vimeo.networking2
 
 /**
- * List of text tracks for a video.
+ * List of search result that could be paged.
  */
-data class TextTrackList(
+data class SearchResultList(
     override val total: Int? = null,
     override val page: Int? = null,
     override val perPage: Int? = null,
     override val paging: Paging? = null,
-    override val data: List<TextTrack>? = null
-) : Pageable<TextTrack>
+    override val data: List<SearchResult>? = null
+) : Pageable<SearchResult>
