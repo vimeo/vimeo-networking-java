@@ -8,6 +8,11 @@ enum class GroupForumsPrivacyValue {
     /**
      * Only moderators can comment on the group.
      */
-    MODS
+    MODS,
+
+    /**
+     * Unknown group forms privacy.
+     */
+    UNKNOWN
 
 }
