@@ -64,4 +64,8 @@ data class Category(
      */
     val uri: String? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

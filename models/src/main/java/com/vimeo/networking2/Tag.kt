@@ -27,4 +27,8 @@ data class Tag(
      */
     val uri: String? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

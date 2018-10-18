@@ -21,8 +21,17 @@ data class Picture(
     val linkWithPlayButton: String? = null,
 
     /**
+     * The picture resource key.
+     */
+    val resourceKey: String? = null,
+
+    /**
      * The width of the image.
      */
     val width: Int? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

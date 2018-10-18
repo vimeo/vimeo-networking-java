@@ -47,4 +47,8 @@ data class Season(
      */
     val user: User? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

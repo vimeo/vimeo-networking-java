@@ -114,4 +114,8 @@ data class User(
      */
     val websites: List<Website>? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

@@ -62,4 +62,8 @@ data class Group(
      */
     val user: User? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

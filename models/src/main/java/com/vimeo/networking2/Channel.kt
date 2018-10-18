@@ -76,4 +76,8 @@ data class Channel(
      */
     val user: User? = null
 
-)
+) : Entity {
+
+    override val identifier: String? = resourceKey
+
+}
