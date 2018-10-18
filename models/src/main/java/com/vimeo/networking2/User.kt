@@ -112,8 +112,10 @@ data class User(
     /**
      * The user's websites.
      */
-    val websites: List<Website>? = null,
+    val websites: List<Website>? = null
+
+): Entity {
 
     override val identifier: String? = resourceKey
 
-): Entity
+}

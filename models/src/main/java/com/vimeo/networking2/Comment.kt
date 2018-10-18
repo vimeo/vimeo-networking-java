@@ -37,8 +37,10 @@ data class Comment(
     /**
      * The user who posted the comment.
      */
-    val user: User?,
+    val user: User? = null
+
+): Entity {
 
     override val identifier: String? = resourceKey
 
-): Entity
+}

@@ -31,8 +31,10 @@ data class Recommendation(
     /**
      * The user that is being recommended.
      */
-    val user: User? = null,
+    val user: User? = null
+
+): Entity {
 
     override val identifier: String? = resourceKey
 
-): Entity
+}

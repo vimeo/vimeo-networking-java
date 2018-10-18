@@ -28,8 +28,10 @@ data class Picture(
     /**
      * The width of the image.
      */
-    val width: Int? = null,
+    val width: Int? = null
+
+): Entity {
 
     override val identifier: String? = resourceKey
 
-): Entity
+}

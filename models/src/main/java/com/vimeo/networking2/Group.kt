@@ -60,8 +60,10 @@ data class Group(
     /**
      * The owner of the group.
      */
-    val user: User? = null,
+    val user: User? = null
+
+): Entity {
 
     override val identifier: String? = resourceKey
 
-): Entity
+}
