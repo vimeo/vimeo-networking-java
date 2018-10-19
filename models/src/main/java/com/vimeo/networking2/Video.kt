@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Reportable
 import com.vimeo.networking2.enums.LicenseType
 import com.vimeo.networking2.enums.LicenseType.UNKNOWN
 import com.vimeo.networking2.enums.TranscodeType
@@ -84,7 +85,7 @@ data class Video(
     /**
      * The video's metadata.
      */
-    val metadata: Metadata<VideoConnections, VideoInteractions>? = null,
+    override val metadata: Metadata<VideoConnections, VideoInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the video metadata was last modified.
@@ -191,4 +192,4 @@ data class Video(
      */
     val width: Int? = null
 
-)
+): Reportable
