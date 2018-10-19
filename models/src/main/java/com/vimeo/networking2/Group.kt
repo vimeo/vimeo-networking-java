@@ -25,7 +25,7 @@ data class Group(
     /**
      * Metadata about the group.
      */
-    val metadata: Metadata<GroupConnections, GroupInteractions>? = null,
+    override val metadata: Metadata<GroupConnections, GroupInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the group was last modified.
@@ -62,4 +62,4 @@ data class Group(
      */
     val user: User? = null
 
-)
+): Followable

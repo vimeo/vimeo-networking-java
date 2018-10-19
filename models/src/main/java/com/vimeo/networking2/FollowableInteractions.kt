@@ -8,4 +8,3 @@ interface FollowableInteractions<T: UpdatableInteraction?> {
     val follow: T?
 
 }
-

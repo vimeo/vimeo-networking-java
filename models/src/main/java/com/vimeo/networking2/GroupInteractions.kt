@@ -8,6 +8,6 @@ data class GroupInteractions(
     /**
      * An action indicating that someone has joined the group.
      */
-    val join: GroupFollowInteraction? = null
+    override val follow: GroupFollowInteraction? = null
 
-)
+): FollowableInteractions<UpdatableInteraction>
