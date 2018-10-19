@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 /**
- * Follow interactions.
+ * Followable interactions.
  */
 interface FollowableInteractions<T: UpdatableInteraction?> {
 
