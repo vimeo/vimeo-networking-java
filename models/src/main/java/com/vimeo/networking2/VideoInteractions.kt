@@ -1,7 +1,5 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.common.Interaction
-
 /**
  * All action that can be taken on a video.
  */
@@ -16,7 +14,7 @@ data class VideoInteractions(
      * When a video is referenced by a channel URI, if the user is a moderator of the
      * channel, include information about removing the video from the channel.
      */
-    val channel: Interaction? = null,
+    val channel: BasicInteraction? = null,
 
     /**
      * Information about whether the authenticated user has liked this video.
@@ -31,7 +29,7 @@ data class VideoInteractions(
     /**
      * Information about where and how to report a video.
      */
-    val report: Interaction? = null,
+    val report: BasicInteraction? = null,
 
     /**
      * Subscription information for an On Demand video.

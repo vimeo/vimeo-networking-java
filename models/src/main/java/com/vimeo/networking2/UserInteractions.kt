@@ -1,7 +1,6 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.common.FollowableInteractions
-import com.vimeo.networking2.common.Interaction
 import com.vimeo.networking2.common.UpdatableInteraction
 
 /**
@@ -12,12 +11,12 @@ data class UserInteractions(
     /**
      * Disallow a user from viewing a private channel.
      */
-    val addPrivacyUser: Interaction? = null,
+    val addPrivacyUser: BasicInteraction? = null,
 
     /**
      * Information related to the block status of this user.
      */
-    val block: Interaction? = null,
+    val block: BasicInteraction? = null,
 
     /**
      * Information related to the followed status of this user.
@@ -27,6 +26,6 @@ data class UserInteractions(
     /**
      * Information regarding where and how to report a user.
      */
-    val report: Interaction? = null
+    val report: BasicInteraction? = null
 
 ): FollowableInteractions<UpdatableInteraction>
