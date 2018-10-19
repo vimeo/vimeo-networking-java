@@ -1,7 +1,5 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.common.ReportableInteractions
-
 /**
  * All action that can be taken on a video.
  */
@@ -31,7 +29,7 @@ data class VideoInteractions(
     /**
      * Information about where and how to report a video.
      */
-    override val report: BasicInteraction? = null,
+    val report: BasicInteraction? = null,
 
     /**
      * Subscription information for an On Demand video.
@@ -48,4 +46,4 @@ data class VideoInteractions(
      */
     val watchLater: WatchLaterInteraction? = null
 
-): ReportableInteractions
+)
