@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.AccountType.UNKNOWN
 import com.vimeo.networking2.enums.ContentFilterType

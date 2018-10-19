@@ -1,4 +1,7 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.common
+
+import com.vimeo.networking2.FollowableInteractions
+import com.vimeo.networking2.Metadata
 
 /**
  * All DTOs that can be followed should conform this interface.
