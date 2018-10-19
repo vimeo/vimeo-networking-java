@@ -1,4 +1,6 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.common
+
+import com.vimeo.networking2.UpdatableInteraction
 
 /**
  * Followable interactions.
