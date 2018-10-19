@@ -33,7 +33,7 @@ data class Channel(
     /**
      * Metadata about the channel.
      */
-    val metadata: Metadata<ChannelConnections, ChannelInteractions>? = null,
+    override val metadata: Metadata<ChannelConnections, ChannelInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the album was last modified.
@@ -76,4 +76,4 @@ data class Channel(
      */
     val user: User? = null
 
-)
+): Followable

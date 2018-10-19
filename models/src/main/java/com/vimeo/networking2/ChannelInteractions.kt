@@ -23,7 +23,7 @@ data class ChannelInteractions(
      * An action indicating if the authenticated user has followed this channel.
      * This data requires a bearer token with the private scope.
      */
-    val follow: ChannelFollowInteraction? = null,
+    override val follow: ChannelFollowInteraction? = null,
 
     /**
      * An action indicating that the authenticated user is a moderator of the channel and may
@@ -32,4 +32,4 @@ data class ChannelInteractions(
      */
     val moderateVideos: Interaction? = null
 
-)
+): FollowableInteractions<UpdatableInteraction>
