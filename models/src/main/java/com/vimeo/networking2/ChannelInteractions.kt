@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.common.FollowableInteractions
+import com.vimeo.networking2.common.UpdatableInteraction
 
 /**
  * All action that can be taken on a channel.
