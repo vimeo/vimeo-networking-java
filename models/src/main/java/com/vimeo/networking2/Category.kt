@@ -25,7 +25,7 @@ data class Category(
     /**
      * Metadata about the category.
      */
-    val metadata: Metadata<CategoryConnections, CategoryInteractions>? = null,
+    override val metadata: Metadata<CategoryConnections, CategoryInteractions>? = null,
 
     /**
      * The display name that identifies the category.
@@ -64,4 +64,4 @@ data class Category(
      */
     val uri: String? = null
 
-)
+): Followable
