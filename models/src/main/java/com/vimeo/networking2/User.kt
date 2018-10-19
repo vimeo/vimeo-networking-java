@@ -65,7 +65,7 @@ data class User(
     /**
      * The user's metadata.
      */
-    val metadata: Metadata<UserConnections, UserInteractions>? = null,
+    override val metadata: Metadata<UserConnections, UserInteractions>? = null,
 
     /**
      * The user's display name.
@@ -114,4 +114,4 @@ data class User(
      */
     val websites: List<Website>? = null
 
-)
+): Followable

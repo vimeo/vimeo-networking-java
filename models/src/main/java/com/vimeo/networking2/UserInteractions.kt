@@ -18,11 +18,11 @@ data class UserInteractions(
     /**
      * Information related to the followed status of this user.
      */
-    val follow: Interaction? = null,
+    override val follow: FollowInteraction? = null,
 
     /**
      * Information regarding where and how to report a user.
      */
     val report: Interaction? = null
 
-)
+): FollowableInteractions<UpdatableInteraction>
