@@ -1,4 +1,4 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.common
 
 /**
  * Information on taking an action on an entity.

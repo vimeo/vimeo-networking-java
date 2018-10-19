@@ -1,5 +1,7 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Interaction
+
 /**
  * All action that can be taken on a video.
  */
