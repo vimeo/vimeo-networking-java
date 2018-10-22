@@ -18,6 +18,9 @@ data class ChannelFollowInteraction(
 
     override val uri: String? = null,
 
+    /**
+     * Whether the authenticated user is a moderator or subscriber.
+     */
     val type: FollowType = FollowType.UNKNOWN
 
 ): UpdatableInteraction

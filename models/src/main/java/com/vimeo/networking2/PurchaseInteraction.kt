@@ -13,6 +13,9 @@ data class PurchaseInteraction(
 
     override val uri: String? = null,
 
+    /**
+     * Purchase status.
+     */
     val status: PurchaseStatusType = PurchaseStatusType.UNKNOWN
 
 ): Interaction
