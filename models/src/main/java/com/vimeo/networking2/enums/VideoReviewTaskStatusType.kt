@@ -13,5 +13,10 @@ enum class VideoReviewTaskStatusType {
     /**
      * The task is open.
      */
-    OPEN
+    OPEN,
+
+    /**
+     * Unknown status for the video review task.
+     */
+    UNKNOWN
 }

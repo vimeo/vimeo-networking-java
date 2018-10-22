@@ -2,6 +2,9 @@ package com.vimeo.networking2.enums
 
 import com.squareup.moshi.Json
 
+/**
+ * User account type.
+ */
 enum class AccountType {
 
     /**
@@ -56,6 +59,11 @@ enum class AccountType {
      * The user has a Vimeo Producer subscription.
      */
     @Json(name = "producer")
-    PRODUCER
+    PRODUCER,
+
+    /**
+     * Unknown account type.
+     */
+    UNKNOWN
 
 }

@@ -4,5 +4,6 @@ enum class VideoSourceType {
     SOURCE,
     VIDEO_MP4,
     VIDEO_WEBM,
-    VP6_X_VIDEO
+    VP6_X_VIDEO,
+    UNKNOWN
 }

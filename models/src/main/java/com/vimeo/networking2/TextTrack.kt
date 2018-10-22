@@ -52,6 +52,6 @@ data class TextTrack(
      *The type of the text track.
      */
     @Json(name = "type")
-    val type: TextTrackType? = null
+    val type: TextTrackType = TextTrackType.UNKNOWN
 
 )

@@ -54,7 +54,7 @@ data class Album(
      * The album's layout preference.
      */
     @Json(name = "layout")
-    val layout: AlbumLayoutType? = null,
+    val layout: AlbumLayoutType = AlbumLayoutType.UNKNOWN,
 
     /**
      * The URL to access the album.
@@ -85,7 +85,15 @@ data class Album(
      * video added to the album.
      */
     @Json(name = "pictures")
-    val pictures: PictureCollection? = null,
+    val albumPicture: PictureCollection? = null,
+
+    /**
+     * List of the first three thumbnails of videos in the album.
+     *
+     * This data is given only by version 3.4.1 of the API.
+     */
+    @Json(name = "pictures")
+    val pictures: List<PictureCollection>? = null,
 
     /**
      * The privacy settings of the album.
@@ -103,13 +111,13 @@ data class Album(
      * Sort type of the album.
      */
     @Json(name = "sort")
-    val sort: SortType? = null,
+    val sort: SortType = SortType.UNKNOWN,
 
     /**
      * The album's color theme preference.
      */
     @Json(name = "theme")
-    val theme: AlbumThemeType? = null,
+    val theme: AlbumThemeType = AlbumThemeType.UNKNOWN,
 
     /**
      * The album's URI.

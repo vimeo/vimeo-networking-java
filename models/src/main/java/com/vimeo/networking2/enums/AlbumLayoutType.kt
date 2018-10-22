@@ -3,13 +3,24 @@ package com.vimeo.networking2.enums
 import com.squareup.moshi.Json
 
 /**
- * The album's layout preference.
+ * Different layouts an album could be shown in.
  */
 enum class AlbumLayoutType {
 
+    /**
+     * Grid layout.
+     */
     @Json(name = "grid")
     GRID,
 
+    /**
+     * Player layout.
+     */
     @Json(name = "player")
-    PLAYER
+    PLAYER,
+
+    /**
+     * Unknown layout.
+     */
+    UNKNOWN
 }

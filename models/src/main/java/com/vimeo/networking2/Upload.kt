@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.ApproachType
+import com.vimeo.networking2.enums.ApproachType.UNKNOWN
 import com.vimeo.networking2.enums.UploadStatusType
 
 /**
@@ -15,7 +16,7 @@ data class Upload(
      * The approach for uploading the video.
      */
     @Json(name = "approach")
-    val approach: ApproachType? = null,
+    val approach: ApproachType = UNKNOWN,
 
     /**
      * The URI for completing the upload.
@@ -57,7 +58,7 @@ data class Upload(
      * The status code for the availability of the uploaded video.
      */
     @Json(name = "status")
-    val status: UploadStatusType? = null,
+    val status: UploadStatusType = UploadStatusType.UNKNOWN,
 
     /**
      * The link for sending video file data.

@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.VideoBadgeType
+import com.vimeo.networking2.enums.VideoBadgeType.UNKNOWN
 
 /**
  * Video badge data.
@@ -40,6 +41,6 @@ data class VideoBadge(
      * The type of the badge.
      */
     @Json(name = "type")
-    val type: VideoBadgeType? = null
+    val type: VideoBadgeType = UNKNOWN
 
 )

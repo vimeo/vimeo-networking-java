@@ -13,21 +13,14 @@ data class NotificationConnection(
      * with the private scope.
      */
     @Json(name = "new_total")
-    val newTotal: Int = 0,
+    val newTotal: Int? = null,
 
     /**
      * The total number of notifications. This data requires a bearer token with
      * the private scope.
      */
     @Json(name = "total")
-    val total: Int = 0,
-
-    /**
-     * The total number of new notifications. This data requires a bearer
-     * token with the private scope.
-     */
-    @Json(name = "total_new")
-    val totalNew: Int = 0,
+    val total: Int? = null,
 
     /**
      * Information about this user's notifications. This data requires a bearer token
@@ -50,7 +43,7 @@ data class NotificationConnection(
      * The total number of unread notifications.
      */
     @Json(name = "unread_total")
-    val unreadTotal: Int = 0,
+    val unreadTotal: Int? = null,
 
     /**
      * The API URI that resolves to the connection data.
@@ -59,4 +52,3 @@ data class NotificationConnection(
     val uri: String? = null
 
 )
-

@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.NotificationType.UNKNOWN
 import java.util.*
 
 /**
@@ -51,7 +52,7 @@ data class Notification(
      * The type of notification.
      */
     @Json(name = "type")
-    val type: NotificationType? = null,
+    val type: NotificationType = UNKNOWN,
 
     /**
      * The notification's canonical relative URI.

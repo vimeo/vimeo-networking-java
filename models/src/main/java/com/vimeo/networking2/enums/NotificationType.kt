@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Different types of notifications.
+ */
 enum class NotificationType {
 
     /**
@@ -55,5 +58,10 @@ enum class NotificationType {
     /**
      * New upload transcode complete (new video is posted).
      */
-    VIDEO_AVAILABLE
+    VIDEO_AVAILABLE,
+
+    /**
+     * Unknown notification type.
+     */
+    UNKNOWN
 }

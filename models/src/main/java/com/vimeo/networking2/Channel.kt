@@ -93,4 +93,8 @@ data class Channel(
     @Json(name = "user")
     val user: User? = null
 
-)
+) : Entity {
+
+    override val identifier: String? = resourceKey
+
+}

@@ -6,8 +6,11 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.7.0'
     implementation 'com.squareup.moshi:moshi:1.7.0'
+
 }

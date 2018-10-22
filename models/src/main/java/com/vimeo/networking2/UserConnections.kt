@@ -143,6 +143,6 @@ data class UserConnections(
      * Information about the videos that this user wants to watch later.
      */
     @Json(name = "watchlater")
-    val watchlater: Connection? = null
+    val watchLater: Connection? = null
 
 )

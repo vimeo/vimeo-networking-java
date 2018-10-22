@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.LicenseType
+import com.vimeo.networking2.enums.LicenseType.UNKNOWN
 import com.vimeo.networking2.enums.TranscodeType
 import com.vimeo.networking2.enums.VideoStatusType
 import java.util.*
@@ -65,7 +66,7 @@ data class Video(
      * The video's height in pixels.
      */
     @Json(name = "height")
-    val height: Int = 0,
+    val height: Int? = null,
 
     /**
      * The video's primary language.
@@ -83,7 +84,7 @@ data class Video(
      * The Creative Commons license used for the video.
      */
     @Json(name = "license")
-    val license: LicenseType? = null,
+    val license: LicenseType = UNKNOWN,
 
     /**
      * The link to the video.
@@ -185,10 +186,11 @@ data class Video(
 
     /**
      * The status code for the availability of the video. This field is deprecated in favor
-     * of upload and transcode.
+     * of [upload] and [transcode].
      */
     @Json(name = "status")
-    val status: VideoStatusType? = null,
+    @Deprecated("This field is deprecated in favor of upload and transcode.")
+    val status: VideoStatusType? = VideoStatusType.UNKNOWN,
 
     /**
      * An array of all tags assigned to this video.
@@ -200,7 +202,7 @@ data class Video(
      * The transcode information for a video upload.
      */
     @Json(name = "transcode")
-    val transcode: TranscodeType? = null,
+    val transcode: TranscodeType? = TranscodeType.UNKNOWN,
 
     /**
      * The upload information for this video.
@@ -224,6 +226,10 @@ data class Video(
      * The video's width in pixels.
      */
     @Json(name = "width")
-    val width: Int = 0
+    val width: Int? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

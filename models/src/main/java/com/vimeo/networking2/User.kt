@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AccountType
+import com.vimeo.networking2.enums.AccountType.UNKNOWN
 import com.vimeo.networking2.enums.ContentFilterType
 import java.util.*
 
@@ -16,7 +17,7 @@ data class User(
      * The user's account type
      */
     @Json(name = "account")
-    val account: AccountType? = null,
+    val account: AccountType = UNKNOWN,
 
     /**
      * Information about the user's badge.
@@ -136,4 +137,8 @@ data class User(
     @Json(name = "websites")
     val websites: List<Website>? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

@@ -12,6 +12,6 @@ data class VideoStats(
      * The current total number of times that the video has been played.
      */
     @Json(name = "plays")
-    val plays: Int = 0
+    val plays: Int? = null
 
 )

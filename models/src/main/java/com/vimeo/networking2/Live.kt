@@ -38,7 +38,7 @@ data class Live(
     val endedTime: Date? = null,
 
     /**
-     * The streaming key string, which is used in conjunction with the RTMP link.
+     * The streaming key string, which is used in conjunction with the RTMP [link].
      */
     @Json(name = "key")
     val key: String? = null,
@@ -62,13 +62,13 @@ data class Live(
     val secondsRemaining: Date? = null,
 
     /**
-     * The status of the RTMP link.
+     * The status of the RTMP [link].
      */
     @Json(name = "status")
-    val status: LiveStatus? = null,
+    val status: LiveStatus = LiveStatus.UNKNOWN,
 
     /**
-     * If live.status is streaming_error, this is the reason for that error.
+     * If [status] is [LiveStatus.STREAMING_ERROR], this is the reason for that error.
      */
     @Json(name = "streaming_error")
     val streamingError: StreamingError? = null

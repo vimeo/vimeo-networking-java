@@ -48,6 +48,6 @@ data class EmbedButtons(
      * Whether the Watch Later button appears in the embeddable player for this video.
      */
     @Json(name = "watchlater")
-    val watchlater: Boolean? = null
+    val watchLater: Boolean? = null
 
 )

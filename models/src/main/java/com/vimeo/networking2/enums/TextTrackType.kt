@@ -14,5 +14,10 @@ enum class TextTrackType {
      * The text track is for subtitles.
      */
     @Json(name = "subtitles")
-    SUBTITLES
+    SUBTITLES,
+
+    /**
+     * Unknown text track type.
+     */
+    UNKNOWN
 }

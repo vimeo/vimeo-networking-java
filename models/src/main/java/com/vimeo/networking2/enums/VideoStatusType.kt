@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Video statuses.
+ */
 enum class VideoStatusType {
     AVAILABLE,
     QUOTA_EXCEEDED,
@@ -9,5 +12,6 @@ enum class VideoStatusType {
     TRANSCODING_ERROR,
     UNAVAILABLE,
     UPLOADING,
-    UPLOADING_ERROR
+    UPLOADING_ERROR,
+    UNKNOWN
 }

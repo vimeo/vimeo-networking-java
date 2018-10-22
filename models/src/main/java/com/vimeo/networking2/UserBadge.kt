@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.enums.UserBadgeType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.UseBadgeType
@@ -28,7 +29,7 @@ data class UserBadge(
      * The type of the badge.
      */
     @Json(name = "type")
-    val type: UseBadgeType? = null,
+    val type: UserBadgeType = UserBadgeType.UNKNOWN,
 
     /**
      * The URL that loads when the user clicks the badge.

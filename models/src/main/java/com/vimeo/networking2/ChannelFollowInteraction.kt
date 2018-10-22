@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.FollowType
+import com.vimeo.networking2.enums.FollowType.UNKNOWN
 import java.util.*
 
 /**
@@ -31,7 +32,7 @@ data class ChannelFollowInteraction(
      * bearer token with the private scope.
      */
     @Json(name = "type")
-    val type: FollowType? = null,
+    val type: FollowType = UNKNOWN,
 
     /**
      * The URI for following or unfollowing this channel. PUT to this URI to follow the channel,

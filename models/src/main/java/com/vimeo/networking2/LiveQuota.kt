@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.LiveQuotaStatus
+import com.vimeo.networking2.enums.LiveQuotaStatus.UNKNOWN
 
 /**
  * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
@@ -14,7 +15,7 @@ data class LiveQuota(
      * The status code for the user's ability to live stream.
      */
     @Json(name = "status")
-    val status: LiveQuotaStatus? = null,
+    val status: LiveQuotaStatus = UNKNOWN,
 
     /**
      * Live streams quota data.

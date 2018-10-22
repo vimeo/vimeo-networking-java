@@ -29,5 +29,7 @@ enum class SortType {
     OLDEST,
 
     @Json(name = "plays")
-    PLAYS
+    PLAYS,
+
+    UNKNOWN
 }

@@ -2,6 +2,9 @@ package com.vimeo.networking2.enums
 
 import com.squareup.moshi.Json
 
+/**
+ * Picture types.
+ */
 enum class PictureType {
 
     /**
@@ -20,5 +23,10 @@ enum class PictureType {
      * The default image for the video.
      */
     @Json(name = "default")
-    DEFAULT
+    DEFAULT,
+
+    /**
+     * Unknown picture type.
+     */
+    UNKNOWN
 }

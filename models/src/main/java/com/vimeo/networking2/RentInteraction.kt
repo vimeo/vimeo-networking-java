@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.StreamType
+import com.vimeo.networking2.enums.StreamType.UNKNOWN
 import java.util.*
 
 /**
@@ -39,7 +40,7 @@ data class RentInteraction(
      * The URL to rent the On Demand video on Vimeo.
      */
     @Json(name = "link")
-    val link: String,
+    val link: String? = null,
 
     /**
      * The numeric value of the price for buying the On Demand video.
@@ -57,7 +58,7 @@ data class RentInteraction(
      * The user's streaming access to this On Demand video:
      */
     @Json(name = "stream")
-    val stream: StreamType? = null,
+    val stream: StreamType = UNKNOWN,
 
     /**
      * The product URI to rent the On Demand video.

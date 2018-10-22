@@ -23,5 +23,10 @@ enum class StreamType {
     /**
      * The video isn't available for streaming
      */
-    UNAVAILABLE
+    UNAVAILABLE,
+
+    /**
+     * Unknown stream type.
+     */
+    UNKNOWN
 }

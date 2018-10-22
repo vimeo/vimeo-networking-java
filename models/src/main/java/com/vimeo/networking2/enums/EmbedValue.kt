@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * Embed privacy settings.
+ */
 enum class EmbedValue {
 
     /**
@@ -15,5 +18,10 @@ enum class EmbedValue {
     /**
      * Only those on the whitelist can embed the user's videos.
      */
-    WHITELIST
+    WHITELIST,
+
+    /**
+     * Unknown privacy value.
+     */
+    UNKNOWN
 }

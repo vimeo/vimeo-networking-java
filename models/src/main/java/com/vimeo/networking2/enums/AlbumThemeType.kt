@@ -7,9 +7,20 @@ import com.squareup.moshi.Json
  */
 enum class AlbumThemeType {
 
+    /**
+     * Dark theme.
+     */
     @Json(name = "dark")
     DARK,
 
+    /**
+     * Standard theme.
+     */
     @Json(name = "standard")
-    STANDARD
+    STANDARD,
+
+    /**
+     * Unknown theme.
+     */
+    UNKNOWN
 }

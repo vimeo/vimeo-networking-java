@@ -78,4 +78,8 @@ data class Category(
     @Json(name = "uri")
     val uri: String? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

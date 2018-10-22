@@ -12,7 +12,7 @@ data class Picture(
      * The height of the image.
      */
     @Json(name = "height")
-    val height: Int = 0,
+    val height: Int? = null,
 
     /**
      * The direct link to the image.
@@ -27,9 +27,18 @@ data class Picture(
     val linkWithPlayButton: String? = null,
 
     /**
+     * The picture resource key.
+     */
+    val resourceKey: String? = null,
+
+    /**
      * The width of the image.
      */
     @Json(name = "width")
-    val width: Int = 0
+    val width: Int? = null
 
-)
+): Entity {
+
+    override val identifier: String? = resourceKey
+
+}

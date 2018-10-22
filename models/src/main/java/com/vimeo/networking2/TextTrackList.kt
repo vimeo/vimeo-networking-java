@@ -9,16 +9,19 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class TextTrackList(
 
-    /**
-     * Total number of text tracks.
-     */
     @Json(name = "total")
-    val total: Int? = null,
+    override val total: Int? = null,
 
-    /**
-     * List of all the text tracks for a video.
-     */
+    @Json(name = "page")
+    override val page: Int? = null,
+
+    @Json(name = "per_page")
+    override val perPage: Int? = null,
+
+    @Json(name = "paging")
+    override val paging: Paging? = null,
+
     @Json(name = "data")
-    val textTracks: List<TextTrack>? = null
+    override val data: List<TextTrack>? = null
 
-)
+) : Pageable<TextTrack>

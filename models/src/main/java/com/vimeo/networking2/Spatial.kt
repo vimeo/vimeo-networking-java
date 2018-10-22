@@ -24,12 +24,12 @@ data class Spatial(
      * The 360 spatial projection.
      */
     @Json(name = "projection")
-    val projection: SpatialProjectionType? = null,
+    val projection: SpatialProjectionType = SpatialProjectionType.UNKNOWN,
 
     /**
      * The 360 stereo format.
      */
     @Json(name = "stereo_format")
-    val stereoFormat: StereoFormatType? = null
+    val stereoFormat: StereoFormatType = StereoFormatType.UNKNOWN
 
 )

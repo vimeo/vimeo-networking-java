@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.BillingPeriodType
+import com.vimeo.networking2.enums.BillingPeriodType.UNKNOWN
 
 /**
  * Product data.
@@ -14,7 +15,7 @@ data class Product(
      * Distinguish between monthly and yearly products.
      */
     @Json(name = "billing_period")
-    val billingPeriod: BillingPeriodType? = null,
+    val billingPeriod: BillingPeriodType = UNKNOWN,
 
     /**
      * Product description.

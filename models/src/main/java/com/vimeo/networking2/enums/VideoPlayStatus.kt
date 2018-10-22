@@ -4,5 +4,6 @@ enum class VideoPlayStatus {
     PLAYABLE,
     PURCHASE_REQUIRED,
     RESTRICTED,
-    UNAVAILABLE
+    UNAVAILABLE,
+    UNKNOWN
 }
