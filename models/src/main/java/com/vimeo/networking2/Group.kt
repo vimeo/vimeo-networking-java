@@ -63,4 +63,8 @@ data class Group(
      */
     val user: User? = null
 
-): Followable
+): Followable, Entity {
+
+    override val identifier: String? = resourceKey
+
+}

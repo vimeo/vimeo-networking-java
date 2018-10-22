@@ -78,4 +78,8 @@ data class Channel(
      */
     val user: User? = null
 
-): Followable
+) : Followable, Entity {
+
+    override val identifier: String? = resourceKey
+
+}

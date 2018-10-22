@@ -115,4 +115,8 @@ data class User(
      */
     val websites: List<Website>? = null
 
-): Followable
+): Followable, Entity {
+
+    override val identifier: String? = resourceKey
+
+}
