@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Interaction
 import com.vimeo.networking2.enums.DownloadType
 import com.vimeo.networking2.enums.DownloadType.UNKNOWN
 import com.vimeo.networking2.enums.StreamType
@@ -50,9 +51,8 @@ data class BuyInteraction(
      */
     val streamType: StreamType = StreamType.UNKNOWN,
 
-    /**
-     * The product URI to purchase the On Demand video.
-     */
-    val uri: String? = null
+    override val options: List<String>? = null,
 
-)
+    override val uri: String? = null
+
+): Interaction
