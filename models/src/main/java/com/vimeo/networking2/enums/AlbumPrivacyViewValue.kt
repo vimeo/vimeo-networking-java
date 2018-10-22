@@ -1,5 +1,7 @@
 package com.vimeo.networking2.enums
 
+import com.squareup.moshi.Json
+
 /**
  * Privacy settings for albums.
  */

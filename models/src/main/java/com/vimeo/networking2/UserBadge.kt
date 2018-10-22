@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.vimeo.networking2.enums.UserBadgeType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.enums.UseBadgeType
 
 /**
  * User's badge information.
