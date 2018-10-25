@@ -18,7 +18,7 @@ data class ApiError(
     /**
      * User friendly error message.
      */
-    @Json(name ="error")
+    @Json(name = "error")
     val errorMessage: String? = null,
 
     /**

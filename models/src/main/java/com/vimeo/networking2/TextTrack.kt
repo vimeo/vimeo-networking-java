@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.TextTrackType
+import java.util.*
 
 /**
  * Information on a text text.
@@ -21,6 +22,11 @@ data class TextTrack(
      */
     @Json(name = "hsl_link")
     val hlsLink: String? = null,
+
+    /**
+     * The time in ISO 8601 format when the read-only HLS playback text track file expires.
+     */
+    val hlsLinkExpiresTime: Date? = null,
 
     /**
      * The language code for this text track. To see a full list, request

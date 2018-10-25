@@ -6,11 +6,11 @@ import com.squareup.moshi.Json
  * All the error codes that can come back from the Vimeo Api.
  */
 enum class ErrorCode {
-    
-    @Json(name ="1000")
+
+    @Json(name = "1000")
     BAD_REQUEST,
 
-    @Json(name  ="1001")
+    @Json(name = "1001")
     UNAUTHORIZED,
 
     @Json(name = "1002")
@@ -117,7 +117,7 @@ enum class ErrorCode {
 
     @Json(name = "5001")
     ACCESS_TOKEN_NOT_GENERATED,
-    
+
     @Json(name = "6000")
     METHOD_NOT_IMPLEMENTED,
 
@@ -460,5 +460,5 @@ enum class ErrorCode {
      * enumerated below.
      */
     DEFAULT
-    
+
 }

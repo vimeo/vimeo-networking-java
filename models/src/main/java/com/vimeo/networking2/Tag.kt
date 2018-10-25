@@ -36,7 +36,7 @@ data class Tag(
     @Json(name = "uri")
     val uri: String? = null
 
-): Entity {
+) : Entity {
 
     override val identifier: String? = resourceKey
 

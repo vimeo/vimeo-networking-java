@@ -136,7 +136,7 @@ data class User(
     @Json(name = "websites")
     val websites: List<Website>? = null
 
-): Entity {
+) : Entity {
 
     override val identifier: String? = resourceKey
 

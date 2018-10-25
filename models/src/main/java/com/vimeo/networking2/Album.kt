@@ -27,6 +27,12 @@ data class Album(
     val createdTime: Date? = null,
 
     /**
+     * Custom logo for the album.
+     */
+    @Json(name = "custom_logo")
+    val customLogo: PictureCollection? = null,
+
+    /**
      * A brief description of the album's content.
      */
     @Json(name = "description")

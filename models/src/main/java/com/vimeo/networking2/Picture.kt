@@ -1,4 +1,5 @@
 package com.vimeo.networking2
+
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -37,7 +38,7 @@ data class Picture(
     @Json(name = "width")
     val width: Int? = null
 
-): Entity {
+) : Entity {
 
     override val identifier: String? = resourceKey
 

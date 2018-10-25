@@ -22,7 +22,7 @@ enum class NotificationType {
     /**
      * You are added to the credits of a video.
      */
-    @Json (name = "credit")
+    @Json(name = "credit")
     CREDIT,
 
     /**

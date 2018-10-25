@@ -25,7 +25,7 @@ data class Season(
     /**
      * The position of the season relative to other seasons in the series.
      */
-    val position: Int?= null,
+    val position: Int? = null,
 
     /**
      * The unique identifier for this On Demand season.
@@ -47,7 +47,7 @@ data class Season(
      */
     val user: User? = null
 
-): Entity {
+) : Entity {
 
     override val identifier: String? = resourceKey
 
