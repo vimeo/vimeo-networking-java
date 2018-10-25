@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AccountType
-import com.vimeo.networking2.enums.AccountType.UNKNOWN
 import com.vimeo.networking2.enums.ContentFilterType
 import java.util.*
 
@@ -17,7 +16,7 @@ data class User(
      * The user's account type
      */
     @Json(name = "account")
-    val account: AccountType = UNKNOWN,
+    val account: AccountType? = null,
 
     /**
      * Information about the user's badge.
@@ -55,7 +54,7 @@ data class User(
      * An array of alternate emails for the user.
      */
     @Json(name = "emails")
-    val emails: List<String>? = null,
+    val emails: List<Email>? = null,
 
     /**
      * The absolute URL of this user's profile page.

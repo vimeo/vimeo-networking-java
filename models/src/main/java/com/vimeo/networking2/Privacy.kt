@@ -4,7 +4,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.CommentValue
 import com.vimeo.networking2.enums.EmbedValue
-import com.vimeo.networking2.enums.EmbedValue.UNKNOWN
 import com.vimeo.networking2.enums.ViewValue
 
 @JsonClass(generateAdapter = true)
@@ -19,8 +18,8 @@ data class Privacy(
     /**
      * The user's privacy preference for comments.
      */
-    @Json(name = "comment")
-    val comment: CommentValue = CommentValue.UNKNOWN,
+    @Json(name = "comments")
+    val comment: CommentValue? = null,
 
     /**
      * Whether other users can download the user's videos.
@@ -32,7 +31,7 @@ data class Privacy(
      * The user's privacy preference for embeds.
      */
     @Json(name = "embed")
-    val embed: EmbedValue = UNKNOWN,
+    val embed: EmbedValue? = null,
 
     /**
      * The password for viewing the user's videos. Requires [CapabilitiesType.CAPABILITY_PROTECTED_VIDEOS].
@@ -44,5 +43,5 @@ data class Privacy(
      * The privacy settings of the channel.
      */
     @Json(name = "view")
-    val view: ViewValue = ViewValue.UNKNOWN
+    val view: ViewValue? = null
 )

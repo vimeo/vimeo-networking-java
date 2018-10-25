@@ -14,7 +14,7 @@ data class PurchaseInteraction(
      * Purchase status.
      */
     @Json(name = "status")
-    val status: PurchaseStatusType = PurchaseStatusType.UNKNOWN,
+    val status: PurchaseStatusType? = null,
 
     /**
      * URI for creating a purchase.

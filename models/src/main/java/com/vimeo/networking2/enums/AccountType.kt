@@ -22,19 +22,19 @@ enum class AccountType {
     /**
      * The user has a Live Business subscription.
      */
-    @Json(name = "live business")
+    @Json(name = "live_business")
     LIVE_BUSINESS,
 
     /**
      * The user has a Live Premium subscription.
      */
-    @Json(name = "live premium")
+    @Json(name = "live_premium")
     LIVE_PREMIUM,
 
     /**
      * The user has a Live PRO subscription
      */
-    @Json(name = "live pro")
+    @Json(name = "live_pro")
     LIVE_PRO,
 
     /**
@@ -52,7 +52,7 @@ enum class AccountType {
     /**
      * The user has a Vimeo PRO Unlimited subscription.
      */
-    @Json(name = "pro unlimited")
+    @Json(name = "pro_unlimited")
     PRO_UNLIMITED,
 
     /**

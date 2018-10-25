@@ -65,12 +65,14 @@ data class Live(
      * The status of the RTMP [link].
      */
     @Json(name = "status")
-    val status: LiveStatus = LiveStatus.UNKNOWN,
+    val status: LiveStatus? = null,
 
     /**
      * If [status] is [LiveStatus.STREAMING_ERROR], this is the reason for that error.
+     *
+     * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
      */
     @Json(name = "streaming_error")
-    val streamingError: StreamingError? = null
+    val streamingError: ApiError? = null
 
 )

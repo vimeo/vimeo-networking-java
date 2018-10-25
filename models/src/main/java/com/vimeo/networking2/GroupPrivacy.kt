@@ -11,31 +11,31 @@ data class GroupPrivacy(
     /**
      * Who can comment on the group.
      */
-    val comment: GroupPrivacyValue = GroupPrivacyValue.UNKNOWN,
+    val comment: GroupPrivacyValue? = null,
 
     /**
      * Who is allowed to use forums related to the group.
      */
-    val forums: GroupForumsPrivacyValue = GroupForumsPrivacyValue.UNKNOWN,
+    val forums: GroupForumsPrivacyValue? = null,
 
     /**
      * Who can invite new members to the group.
      */
-    val invite: GroupPrivacyValue = GroupPrivacyValue.UNKNOWN,
+    val invite: GroupPrivacyValue? = null,
 
     /**
      * Who can join the group.
      */
-    val join: GroupPrivacyValue = GroupPrivacyValue.UNKNOWN,
+    val join: GroupPrivacyValue? = null,
 
     /**
      * Who can add videos to the group.
      */
-    val videos: GroupPrivacyValue = GroupPrivacyValue.UNKNOWN,
+    val videos: GroupPrivacyValue? = null,
 
     /**
      * Who can view the group.
      */
-    val view: GroupPrivacyValue = GroupPrivacyValue.UNKNOWN
+    val view: GroupPrivacyValue? = null
 
 )

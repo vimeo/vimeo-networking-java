@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.CinemaType
-import com.vimeo.networking2.enums.CinemaType.UNKNOWN
 
 /**
  * Cinema data.
@@ -45,7 +44,7 @@ data class Cinema(
      * The type of programmed cinema item.
      */
     @Json(name = "type")
-    val type: CinemaType = UNKNOWN,
+    val type: CinemaType? = null,
 
     /**
      * The programmed cinema items' canonical relative URI.

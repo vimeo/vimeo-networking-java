@@ -23,6 +23,6 @@ data class Payment(
      * The type of stored payment method
      */
     @Json(name = "type")
-    val type: PaymentType = PaymentType.UNKNOWN
+    val type: PaymentType? = null
 
 )

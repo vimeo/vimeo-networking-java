@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.VideoQualityType
-import com.vimeo.networking2.enums.VideoQualityType.UNKNOWN
 import com.vimeo.networking2.enums.VideoSourceType
 import java.util.*
 
@@ -20,7 +19,7 @@ data class ProgressiveFileType(
      * The FPS of the video.
      */
     @Json(name = "fps")
-    val fps: Int? = null,
+    val fps: Double? = null,
 
     /**
      * The height of the video in pixels.
@@ -44,7 +43,7 @@ data class ProgressiveFileType(
      * Video logging information.
      */
     @Json(name = "log")
-    val log: VideoLog? = null,
+    val log: String? = null,
 
     /**
      * The MD5 hash of the video file.
@@ -56,7 +55,7 @@ data class ProgressiveFileType(
      * The video quality (as determined by height and width).
      */
     @Json(name = "quality")
-    val quality: VideoQualityType = UNKNOWN,
+    val quality: VideoQualityType? = null,
 
     /**
      * The file size of the video.
@@ -74,7 +73,7 @@ data class ProgressiveFileType(
      * The type of the video file.
      */
     @Json(name = "type")
-    val type: VideoSourceType = VideoSourceType.UNKNOWN,
+    val type: VideoSourceType? = null,
 
     /**
      * The width of the video in pixels.

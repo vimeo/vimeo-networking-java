@@ -14,7 +14,7 @@ enum class AlbumPrivacyViewValue {
     ANYBODY,
 
     /**
-     * Only owner can see album, can be embedded off-site
+     * Only owner can see album, can be embedded off-site.
      */
     @Json(name = "embed_only")
     EMBED_ONLY,

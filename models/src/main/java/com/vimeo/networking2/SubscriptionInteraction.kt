@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.StreamType
-import com.vimeo.networking2.enums.StreamType.UNKNOWN
 import java.util.*
 
 /**
@@ -34,6 +33,6 @@ data class SubscriptionInteraction(
      * The stream type.
      */
     @Json(name = "stream")
-    val streamType: StreamType = UNKNOWN
+    val streamType: StreamType? = null
 
 )

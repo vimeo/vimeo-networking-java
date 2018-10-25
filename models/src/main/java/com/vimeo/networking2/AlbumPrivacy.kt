@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AlbumPrivacyViewValue
-import com.vimeo.networking2.enums.AlbumPrivacyViewValue.UNKNOWN
 
 /**
  * The privacy set for an album.
@@ -21,5 +20,5 @@ data class AlbumPrivacy(
      * Who can view the album.
      */
     @Json(name = "view")
-    val view: AlbumPrivacyViewValue = UNKNOWN
+    val view: AlbumPrivacyViewValue? = null
 )

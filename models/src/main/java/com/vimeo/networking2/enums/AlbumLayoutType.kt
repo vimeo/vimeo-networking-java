@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 import com.squareup.moshi.Json
 
 /**
- * Different layouts an album could be shown in.
+ * Different type of layouts an album could be shown in.
  */
 enum class AlbumLayoutType {
 

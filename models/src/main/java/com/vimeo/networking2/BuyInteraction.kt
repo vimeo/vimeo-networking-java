@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.DownloadType
-import com.vimeo.networking2.enums.DownloadType.UNKNOWN
 import com.vimeo.networking2.enums.StreamType
 import java.util.*
 
@@ -29,7 +28,7 @@ data class BuyInteraction(
      * The user's download access to this On Demand video
      */
     @Json(name = "download")
-    val download: DownloadType = UNKNOWN,
+    val download: DownloadType? = null,
 
     /**
      * Whether the video has DRM.
@@ -59,7 +58,7 @@ data class BuyInteraction(
      * The user's streaming access to this On Demand video.
      */
     @Json(name = "stream")
-    val streamType: StreamType? = StreamType.UNKNOWN,
+    val streamType: StreamType? = null,
 
     /**
      * The product URI to purchase the On Demand video.

@@ -3,8 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.LicenseType
-import com.vimeo.networking2.enums.LicenseType.UNKNOWN
-import com.vimeo.networking2.enums.TranscodeType
 import com.vimeo.networking2.enums.VideoStatusType
 import java.util.*
 
@@ -84,7 +82,7 @@ data class Video(
      * The Creative Commons license used for the video.
      */
     @Json(name = "license")
-    val license: LicenseType = UNKNOWN,
+    val license: LicenseType? = null,
 
     /**
      * The link to the video.
@@ -190,19 +188,13 @@ data class Video(
      */
     @Json(name = "status")
     @Deprecated("This field is deprecated in favor of upload and transcode.")
-    val status: VideoStatusType? = VideoStatusType.UNKNOWN,
+    val status: VideoStatusType? = null,
 
     /**
      * An array of all tags assigned to this video.
      */
     @Json(name = "tags")
     val tags: List<Tag>? = null,
-
-    /**
-     * The transcode information for a video upload.
-     */
-    @Json(name = "transcode")
-    val transcode: TranscodeType? = TranscodeType.UNKNOWN,
 
     /**
      * The upload information for this video.

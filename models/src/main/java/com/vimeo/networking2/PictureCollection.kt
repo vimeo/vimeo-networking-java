@@ -39,7 +39,7 @@ data class PictureCollection(
      * The type of the picture.
      */
     @Json(name = "type")
-    val type: PictureType = PictureType.UNKNOWN,
+    val type: PictureType? = null,
 
     /**
      * The picture's URI.
