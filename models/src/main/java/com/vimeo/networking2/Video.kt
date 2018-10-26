@@ -197,6 +197,12 @@ data class Video(
     val tags: List<Tag>? = null,
 
     /**
+     * The transcode information for a video upload.
+     */
+    @Json(name = "transcode")
+    val transcode: Transcode? = null,
+
+    /**
      * The upload information for this video.
      */
     @Json(name = "upload")

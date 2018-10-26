@@ -87,11 +87,10 @@ data class Album(
     val name: String? = null,
 
     /**
-     * The active image for the album; defaults to the thumbnail of the last
-     * video added to the album.
+     * A list of 3 most recently added videos to the album.
      */
     @Json(name = "pictures")
-    val albumPicture: PictureCollection? = null,
+    val pictures: List<PictureCollection>? = null,
 
     /**
      * The privacy settings of the album.
