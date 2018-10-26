@@ -226,7 +226,7 @@ data class Video(
     @Json(name = "width")
     val width: Int? = null
 
-) : Entity {
+): Entity {
 
     override val identifier: String? = resourceKey
 
