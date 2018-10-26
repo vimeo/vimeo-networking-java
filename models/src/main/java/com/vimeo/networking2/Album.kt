@@ -99,6 +99,12 @@ data class Album(
     val privacy: AlbumPrivacy? = null,
 
     /**
+     * The album resource key.
+     */
+    @Json(name = "resource_key")
+    val resourceKey: String? = null,
+
+    /**
      * Whether album videos should use the review mode URL.
      */
     @Json(name = "review_mode")
