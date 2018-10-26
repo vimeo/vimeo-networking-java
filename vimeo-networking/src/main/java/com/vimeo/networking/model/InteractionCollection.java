@@ -84,6 +84,14 @@ public class InteractionCollection implements Serializable {
     private Interaction mModerateVideos;
 
     @Nullable
+    @SerializedName("add_logos")
+    private Interaction mAddLogos;
+
+    @Nullable
+    @SerializedName("add_videos")
+    private Interaction mAddVideos;
+
+    @Nullable
     public Interaction getWatchLater() {
         return mWatchLater;
     }
@@ -146,6 +154,24 @@ public class InteractionCollection implements Serializable {
 
     void setAddModerators(@Nullable Interaction addModerators) {
         mAddModerators = addModerators;
+    }
+
+    @Nullable
+    public Interaction getAddVideos() {
+        return mAddVideos;
+    }
+
+    void setAddVideos(@Nullable Interaction addVideos) {
+        mAddVideos = addVideos;
+    }
+
+    @Nullable
+    public Interaction getAddLogos() {
+        return mAddLogos;
+    }
+
+    void setAddLogos(@Nullable Interaction addLogos) {
+        mAddLogos = addLogos;
     }
 
     @Nullable
