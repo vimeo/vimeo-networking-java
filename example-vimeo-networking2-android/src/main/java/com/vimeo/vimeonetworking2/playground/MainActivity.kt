@@ -10,8 +10,6 @@ import com.vimeo.networking2.CategoryList
 import com.vimeo.networking2.Video
 import com.vimeo.networking2.VideoList
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -50,15 +48,6 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val vimeoService = retrofit.create(VimeoService::class.java)
-
-        val observable = vimeoService.getVideo("284157964")
-
-        val disposable = observable
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                println(it.upload?.approach)
-            }
 
     }
 
