@@ -1,10 +1,15 @@
 package com.vimeo.networking2.common
 
 /**
- * Followable interactions.
+ * Defines a collection of interactions that contains a [follow] interaction of
+ * type [UpdatableInteraction].
  */
-interface FollowableInteractions<T: UpdatableInteraction?> {
+interface FollowableInteractions {
 
-    val follow: T?
+    /**
+     * An [UpdatableInteraction] that contains information on how
+     * to follow an entity.
+     */
+    val follow: UpdatableInteraction?
 
 }

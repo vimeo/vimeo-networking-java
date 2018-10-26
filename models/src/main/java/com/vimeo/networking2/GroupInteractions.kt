@@ -1,7 +1,6 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.common.FollowableInteractions
-import com.vimeo.networking2.common.UpdatableInteraction
 
 /**
  * All actions that can be taken on groups.
@@ -13,4 +12,4 @@ data class GroupInteractions(
      */
     override val follow: GroupFollowInteraction? = null
 
-): FollowableInteractions<UpdatableInteraction>
+): FollowableInteractions
