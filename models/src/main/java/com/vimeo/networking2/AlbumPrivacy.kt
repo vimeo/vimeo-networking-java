@@ -20,5 +20,5 @@ data class AlbumPrivacy(
      * Who can view the album.
      */
     @Json(name = "view")
-    val view: AlbumPrivacyViewValue? = null
+    val viewingPermissions: AlbumPrivacyViewValue? = null
 )

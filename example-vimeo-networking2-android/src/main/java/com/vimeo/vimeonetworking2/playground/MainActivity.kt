@@ -1,14 +1,17 @@
-package com.vimeo.moshiexampleandroid
+package com.vimeo.vimeonetworking2.playground
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.vimeo.moshiexampleandroid.R
 import com.vimeo.networking2.AppConfiguration
 import com.vimeo.networking2.CategoryList
 import com.vimeo.networking2.Video
 import com.vimeo.networking2.VideoList
-import com.vimeo.networking2.adapters.CustomDateAdapter
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val moshi = Moshi.Builder()
-            .add(Date::class.java, CustomDateAdapter())
+            .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
             .build()
 
         val interceptor = HttpLoggingInterceptor()
@@ -47,6 +50,16 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val vimeoService = retrofit.create(VimeoService::class.java)
+
+        val observable = vimeoService.getVideo("284157964")
+
+        val disposable = observable
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                println(it.upload?.approach)
+            }
+
     }
 
     interface VimeoService {
