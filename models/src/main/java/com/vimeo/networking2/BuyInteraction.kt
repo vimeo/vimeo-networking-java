@@ -1,9 +1,9 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.common.Interaction
-import com.vimeo.networking2.enums.ApiOptionsType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Interaction
+import com.vimeo.networking2.enums.ApiOptionsType
 import com.vimeo.networking2.enums.DownloadType
 import com.vimeo.networking2.enums.StreamType
 import java.util.*
@@ -62,7 +62,7 @@ data class BuyInteraction(
     @Json(name = "stream")
     val streamType: StreamType? = null,
 
-    @Json(name = "uri")
+    @Json(name = "options")
     override val options: List<ApiOptionsType>? = null,
 
     @Json(name = "uri")

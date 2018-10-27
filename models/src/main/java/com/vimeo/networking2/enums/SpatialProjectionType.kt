@@ -25,7 +25,7 @@ enum class SpatialProjectionType {
     /**
      * The spatial projection is equirectangular.
      */
-    @Json(name = "equirectangul")
+    @Json(name = "equirectangular")
     EQUIRECTANGULAR,
 
     /**
