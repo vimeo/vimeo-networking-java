@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Followable
 import java.util.*
 
 /**
@@ -25,7 +26,7 @@ data class Category(
     /**
      * Metadata about the category.
      */
-    val metadata: Metadata<CategoryConnections, CategoryInteractions>? = null,
+    override val metadata: Metadata<CategoryConnections, CategoryInteractions>? = null,
 
     /**
      * The display name that identifies the category.
@@ -64,7 +65,7 @@ data class Category(
      */
     val uri: String? = null
 
-): Entity {
+): Followable, Entity {
 
     override val identifier: String? = resourceKey
 

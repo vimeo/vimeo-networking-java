@@ -1,5 +1,7 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Interaction
+import com.vimeo.networking2.enums.ApiOptionsType
 import com.vimeo.networking2.enums.PurchaseStatusType
 
 /**
@@ -7,14 +9,13 @@ import com.vimeo.networking2.enums.PurchaseStatusType
  */
 data class PurchaseInteraction(
 
+    override val options: List<ApiOptionsType>? = null,
+
+    override val uri: String? = null,
+
     /**
      * Purchase status.
      */
-    val status: PurchaseStatusType = PurchaseStatusType.UNKNOWN,
+    val status: PurchaseStatusType = PurchaseStatusType.UNKNOWN
 
-    /**
-     * URI for creating a purchase.
-     */
-    val uri: String? = null
-
-)
+): Interaction

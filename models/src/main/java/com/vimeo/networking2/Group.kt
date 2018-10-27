@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Followable
 import java.util.*
 
 /**
@@ -25,7 +26,7 @@ data class Group(
     /**
      * Metadata about the group.
      */
-    val metadata: Metadata<GroupConnections, GroupInteractions>? = null,
+    override val metadata: Metadata<GroupConnections, GroupInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the group was last modified.
@@ -62,7 +63,7 @@ data class Group(
      */
     val user: User? = null
 
-): Entity {
+): Followable, Entity {
 
     override val identifier: String? = resourceKey
 

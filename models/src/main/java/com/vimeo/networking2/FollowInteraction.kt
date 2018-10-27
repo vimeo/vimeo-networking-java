@@ -5,9 +5,9 @@ import com.vimeo.networking2.enums.ApiOptionsType
 import java.util.*
 
 /**
- * Information on liking a video.
+ * Follow a object.
  */
-data class LikeInteraction(
+data class FollowInteraction(
 
     override val added: Boolean? = null,
 
@@ -17,4 +17,4 @@ data class LikeInteraction(
 
     override val uri: String? = null
 
-) : UpdatableInteraction
+): UpdatableInteraction

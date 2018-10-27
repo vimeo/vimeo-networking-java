@@ -5,7 +5,7 @@ import com.vimeo.networking2.enums.StreamType.UNKNOWN
 import java.util.*
 
 /**
- * Information on the subscription a video action.
+ * Information on the subscription video action.
  */
 data class SubscriptionInteraction(
 

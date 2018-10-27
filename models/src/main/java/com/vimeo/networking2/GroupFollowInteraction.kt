@@ -1,5 +1,7 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.UpdatableInteraction
+import com.vimeo.networking2.enums.ApiOptionsType
 import com.vimeo.networking2.enums.FollowType
 import java.util.*
 
@@ -8,15 +10,13 @@ import java.util.*
  */
 data class GroupFollowInteraction(
 
-    /**
-     * Whether the authenticated user has followed this group.
-     */
-    val added: Boolean? = null,
+    override val added: Boolean? = null,
 
-    /**
-     * The time in ISO 8601 format when the user joined this group.
-     */
-    val addedTime: Date? = null,
+    override val addedTime: Date? = null,
+
+    override val options: List<ApiOptionsType>? = null,
+
+    override val uri: String? = null,
 
     /**
      * The user's title, or the null value if not applicable.
@@ -24,13 +24,8 @@ data class GroupFollowInteraction(
     val title: String? = null,
 
     /**
-     * WWhether the authenticated user is a moderator or subscriber.
+     * Whether the authenticated user is a moderator or subscriber.
      */
-    val type: FollowType? = null,
+    val type: FollowType? = null
 
-    /**
-     * The URI for following. PUT to this URI to follow, or DELETE to this URI to unfollow.
-     */
-    val uri: String? = null
-
-)
+): UpdatableInteraction
