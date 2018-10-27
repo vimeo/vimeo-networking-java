@@ -1,7 +1,6 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.RecommendationType
-import com.vimeo.networking2.enums.RecommendationType.UNKNOWN
 
 /**
  * Recommendation DTO.
@@ -26,14 +25,14 @@ data class Recommendation(
     /**
      * Type of recommendation.
      */
-    val type: RecommendationType = UNKNOWN,
+    val type: RecommendationType? = null,
 
     /**
      * The user that is being recommended.
      */
     val user: User? = null
 
-): Entity {
+) : Entity {
 
     override val identifier: String? = resourceKey
 

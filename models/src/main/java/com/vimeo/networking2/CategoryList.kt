@@ -11,4 +11,4 @@ data class CategoryList(
     override val perPage: Int? = null,
     override val paging: Paging? = null,
     override val data: List<Category>? = null
-): Pageable<Category>
+) : Pageable<Category>

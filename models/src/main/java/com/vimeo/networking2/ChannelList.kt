@@ -11,4 +11,4 @@ data class ChannelList(
     override val perPage: Int? = null,
     override val paging: Paging? = null,
     override val data: List<Channel>? = null
-): Pageable<Channel>
+) : Pageable<Channel>

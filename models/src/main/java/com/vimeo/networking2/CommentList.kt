@@ -11,4 +11,4 @@ data class CommentList(
     override val perPage: Int? = null,
     override val paging: Paging? = null,
     override val data: List<Comment>? = null
-): Pageable<Comment>
+) : Pageable<Comment>

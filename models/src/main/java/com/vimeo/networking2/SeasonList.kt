@@ -11,4 +11,4 @@ data class SeasonList(
     override val perPage: Int? = null,
     override val paging: Paging? = null,
     override val data: List<Season>? = null
-): Pageable<Season>
+) : Pageable<Season>
