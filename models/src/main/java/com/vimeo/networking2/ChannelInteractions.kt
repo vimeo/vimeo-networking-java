@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.FollowableInteractions
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -15,7 +16,7 @@ data class ChannelInteractions(
      * the private scope.
      */
     @Json(name = "add_moderators")
-    val addModerators: Interaction? = null,
+    val addModerators: BasicInteraction? = null,
 
     /**
      * When a channel appears in the context of adding or removing a video from it
@@ -23,14 +24,14 @@ data class ChannelInteractions(
      * the video. This data requires a bearer token with the private scope.
      */
     @Json(name = "add_to")
-    val addTo: Interaction? = null,
+    val addTo: BasicInteraction? = null,
 
     /**
      * An action indicating if the authenticated user has followed this channel.
      * This data requires a bearer token with the private scope.
      */
     @Json(name = "follow")
-    val follow: ChannelFollowInteraction? = null,
+    override val follow: ChannelFollowInteraction? = null,
 
     /**
      * An action indicating that the authenticated user is a moderator of the channel and may
@@ -38,6 +39,6 @@ data class ChannelInteractions(
      * the private scope.
      */
     @Json(name = "moderate_videos")
-    val moderateVideos: Interaction? = null
+    val moderateVideos: BasicInteraction? = null
 
-)
+): FollowableInteractions

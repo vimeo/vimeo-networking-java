@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.FollowableInteractions
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -9,10 +10,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CategoryInteractions(
 
-    /**
-     * An action indicating if the authenticated user has followed this category.
-     */
     @Json(name = "follow")
-    val follow: CategoryFollowInteraction? = null
+    override val follow: FollowInteraction? = null
 
-)
+): FollowableInteractions

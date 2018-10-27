@@ -1,4 +1,4 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.enums
 
 /**
  * All the capabilities defined by the API. Certain data is only accessible if you

@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.FollowableInteractions
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -13,24 +14,24 @@ data class UserInteractions(
      * Disallow a user from viewing a private channel.
      */
     @Json(name = "add_privacy_user")
-    val addPrivacyUser: Interaction? = null,
+    val addPrivacyUser: BasicInteraction? = null,
 
     /**
      * Information related to the block status of this user.
      */
     @Json(name = "block")
-    val block: Interaction? = null,
+    val block: BasicInteraction? = null,
 
     /**
      * Information related to the followed status of this user.
      */
     @Json(name = "follow")
-    val follow: Interaction? = null,
+    override val follow: FollowInteraction? = null,
 
     /**
      * Information regarding where and how to report a user.
      */
     @Json(name = "report")
-    val report: Interaction? = null
+    val report: BasicInteraction? = null
 
-)
+): FollowableInteractions

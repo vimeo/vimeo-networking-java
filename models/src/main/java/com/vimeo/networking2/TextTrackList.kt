@@ -1,5 +1,7 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Pageable
+
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

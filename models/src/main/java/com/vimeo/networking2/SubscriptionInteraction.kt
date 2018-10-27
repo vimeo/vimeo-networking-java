@@ -6,7 +6,7 @@ import com.vimeo.networking2.enums.StreamType
 import java.util.*
 
 /**
- * Information on the subscription a video action.
+ * Information on the subscription video action.
  */
 @JsonClass(generateAdapter = true)
 data class SubscriptionInteraction(

@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Followable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -43,7 +44,7 @@ data class Channel(
      * Metadata about the channel.
      */
     @Json(name = "metadata")
-    val metadata: Metadata<ChannelConnections, ChannelInteractions>? = null,
+    override val metadata: Metadata<ChannelConnections, ChannelInteractions>? = null,
 
     /**
      * The time in ISO 8601 format when the album was last modified.
@@ -94,7 +95,7 @@ data class Channel(
     @Json(name = "user")
     val user: User? = null
 
-) : Entity {
+) : Followable, Entity {
 
     override val identifier: String? = resourceKey
 

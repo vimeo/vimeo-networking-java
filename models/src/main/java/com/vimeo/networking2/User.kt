@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.ContentFilterType
 import java.util.*
@@ -78,7 +79,7 @@ data class User(
      * The user's metadata.
      */
     @Json(name = "metadata")
-    val metadata: Metadata<UserConnections, UserInteractions>? = null,
+    override val metadata: Metadata<UserConnections, UserInteractions>? = null,
 
     /**
      * The user's display name.
@@ -136,7 +137,7 @@ data class User(
     @Json(name = "websites")
     val websites: List<Website>? = null
 
-) : Entity {
+): Followable, Entity {
 
     override val identifier: String? = resourceKey
 

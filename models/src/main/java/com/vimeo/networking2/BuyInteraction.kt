@@ -1,5 +1,7 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Interaction
+import com.vimeo.networking2.enums.ApiOptionsType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.DownloadType
@@ -60,10 +62,10 @@ data class BuyInteraction(
     @Json(name = "stream")
     val streamType: StreamType? = null,
 
-    /**
-     * The product URI to purchase the On Demand video.
-     */
     @Json(name = "uri")
-    val uri: String? = null
+    override val options: List<ApiOptionsType>? = null,
 
-)
+    @Json(name = "uri")
+    override val uri: String? = null
+
+): Interaction

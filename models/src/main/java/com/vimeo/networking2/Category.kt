@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Followable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.*
@@ -32,7 +33,7 @@ data class Category(
      * Metadata about the category.
      */
     @Json(name = "metadata")
-    val metadata: Metadata<CategoryConnections, CategoryInteractions>? = null,
+    override val metadata: Metadata<CategoryConnections, CategoryInteractions>? = null,
 
     /**
      * The display name that identifies the category.
@@ -78,7 +79,7 @@ data class Category(
     @Json(name = "uri")
     val uri: String? = null
 
-) : Entity {
+): Followable, Entity {
 
     override val identifier: String? = resourceKey
 

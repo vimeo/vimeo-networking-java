@@ -20,7 +20,7 @@ data class VideoInteractions(
      * channel, include information about removing the video from the channel.
      */
     @Json(name = "channel")
-    val channel: Interaction? = null,
+    val channel: BasicInteraction? = null,
 
     /**
      * Information about whether the authenticated user has liked this video.
@@ -38,7 +38,7 @@ data class VideoInteractions(
      * Information about where and how to report a video.
      */
     @Json(name = "report")
-    val report: Interaction? = null,
+    val report: BasicInteraction? = null,
 
     /**
      * Subscription information for an On Demand video.
@@ -57,4 +57,5 @@ data class VideoInteractions(
      */
     @Json(name = "watchlater")
     val watchLater: WatchLaterInteraction? = null
+
 )
