@@ -17,7 +17,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.11'
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.16'
         classpath 'gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8'
     }
 }
