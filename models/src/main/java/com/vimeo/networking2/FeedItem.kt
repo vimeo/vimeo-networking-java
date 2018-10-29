@@ -1,12 +1,14 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AttributionType
 import java.util.*
 
 /**
  * An item in the user's feed.
  */
+@JsonClass(generateAdapter = true)
 data class FeedItem(
 
     /**
