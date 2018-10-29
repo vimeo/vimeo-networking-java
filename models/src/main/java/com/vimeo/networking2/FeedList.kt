@@ -5,10 +5,10 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
 
 /**
- * List of albums that could be paged.
+ * List of [FeedItem]s to show in a user's feed.
  */
 @JsonClass(generateAdapter = true)
-data class AlbumList(
+data class FeedList(
 
     @Json(name = "total")
     override val total: Int?,
@@ -23,6 +23,6 @@ data class AlbumList(
     override val paging: Paging?,
 
     @Json(name = "data")
-    override val data: List<Album>?
+    override val data: List<FeedItem>?
 
-) : Pageable<Album>
+) : Pageable<FeedItem>
