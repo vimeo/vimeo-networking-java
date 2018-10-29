@@ -11,18 +11,18 @@ import com.vimeo.networking2.common.Pageable
 data class CinemaList(
 
     @Json(name = "total")
-    override val total: Int?,
+    override val total: Int? = null,
 
     @Json(name = "page")
-    override val page: Int?,
+    override val page: Int? = null,
 
     @Json(name = "per_page")
-    override val perPage: Int?,
+    override val perPage: Int? = null,
 
     @Json(name = "paging")
-    override val paging: Paging?,
+    override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<Cinema>?
+    override val data: List<Cinema>? = null
 
 ) : Pageable<Cinema>
