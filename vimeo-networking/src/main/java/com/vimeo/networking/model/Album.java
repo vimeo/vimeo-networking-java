@@ -190,6 +190,10 @@ public class Album implements Serializable {
     @SerializedName("user")
     private User mUser;
 
+    @Nullable
+    @SerializedName("resource_key")
+    public String mResourceKey;
+
     /**
      * Get the hexadecimal color code for the decorative color.
      * For example, album videos use this color for player buttons.
@@ -475,6 +479,22 @@ public class Album implements Serializable {
         mUser = user;
     }
 
+    /**
+     * Get the unique identifier for an Album object. It may be used for object comparison.
+     * This shouldn't be null but it is theoretically possible that it could be due to server error.
+     */
+    @Nullable
+    public String getResourceKey() {
+        return mResourceKey;
+    }
+
+    /**
+     * Set the unique identifier for an Album object.
+     */
+    public void setResourceKey(@Nullable final String resourceKey) {
+        mResourceKey = resourceKey;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) { return true; }
@@ -482,54 +502,16 @@ public class Album implements Serializable {
 
         final Album album = (Album) o;
 
-        if (mHideNav != album.mHideNav) { return false; }
-        if (mIsReviewMode != album.mIsReviewMode) { return false; }
-        if (mBrandColor != null ? !mBrandColor.equals(album.mBrandColor) : album.mBrandColor != null) { return false; }
-        if (mCreatedTime != null ? !mCreatedTime.equals(album.mCreatedTime) : album.mCreatedTime != null) {
-            return false;
-        }
-        if (mCustomLogo != null ? !mCustomLogo.equals(album.mCustomLogo) : album.mCustomLogo != null) { return false; }
-        if (mDescription != null ? !mDescription.equals(album.mDescription) : album.mDescription != null) {
-            return false;
-        }
-        if (mDuration != null ? !mDuration.equals(album.mDuration) : album.mDuration != null) { return false; }
-        if (mEmbed != null ? !mEmbed.equals(album.mEmbed) : album.mEmbed != null) { return false; }
-        if (mLayout != album.mLayout) { return false; }
         if (mLink != null ? !mLink.equals(album.mLink) : album.mLink != null) { return false; }
-        if (mMetadata != null ? !mMetadata.equals(album.mMetadata) : album.mMetadata != null) { return false; }
-        if (mModifiedTime != null ? !mModifiedTime.equals(album.mModifiedTime) : album.mModifiedTime != null) {
-            return false;
-        }
-        if (mName != null ? !mName.equals(album.mName) : album.mName != null) { return false; }
-        if (mPictures != null ? !mPictures.equals(album.mPictures) : album.mPictures != null) { return false; }
-        if (mPrivacy != null ? !mPrivacy.equals(album.mPrivacy) : album.mPrivacy != null) { return false; }
-        if (mSort != album.mSort) { return false; }
-        if (mTheme != album.mTheme) { return false; }
         if (mUri != null ? !mUri.equals(album.mUri) : album.mUri != null) { return false; }
-        return mUser != null ? mUser.equals(album.mUser) : album.mUser == null;
+        return mResourceKey != null ? mResourceKey.equals(album.mResourceKey) : album.mResourceKey == null;
     }
 
     @Override
     public int hashCode() {
-        int result = mBrandColor != null ? mBrandColor.hashCode() : 0;
-        result = 31 * result + (mCreatedTime != null ? mCreatedTime.hashCode() : 0);
-        result = 31 * result + (mCustomLogo != null ? mCustomLogo.hashCode() : 0);
-        result = 31 * result + (mDescription != null ? mDescription.hashCode() : 0);
-        result = 31 * result + (mDuration != null ? mDuration.hashCode() : 0);
-        result = 31 * result + (mEmbed != null ? mEmbed.hashCode() : 0);
-        result = 31 * result + (mHideNav ? 1 : 0);
-        result = 31 * result + (mLayout != null ? mLayout.hashCode() : 0);
-        result = 31 * result + (mLink != null ? mLink.hashCode() : 0);
-        result = 31 * result + (mMetadata != null ? mMetadata.hashCode() : 0);
-        result = 31 * result + (mModifiedTime != null ? mModifiedTime.hashCode() : 0);
-        result = 31 * result + (mName != null ? mName.hashCode() : 0);
-        result = 31 * result + (mPictures != null ? mPictures.hashCode() : 0);
-        result = 31 * result + (mPrivacy != null ? mPrivacy.hashCode() : 0);
-        result = 31 * result + (mIsReviewMode ? 1 : 0);
-        result = 31 * result + (mSort != null ? mSort.hashCode() : 0);
-        result = 31 * result + (mTheme != null ? mTheme.hashCode() : 0);
+        int result = mLink != null ? mLink.hashCode() : 0;
         result = 31 * result + (mUri != null ? mUri.hashCode() : 0);
-        result = 31 * result + (mUser != null ? mUser.hashCode() : 0);
+        result = 31 * result + (mResourceKey != null ? mResourceKey.hashCode() : 0);
         return result;
     }
 }
