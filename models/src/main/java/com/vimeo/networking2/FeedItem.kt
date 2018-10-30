@@ -15,7 +15,7 @@ data class FeedItem(
      * The category that this event occurred for. This will be present for only
      * [AttributionType.CATEGORY] feed item type.
      */
-    @Json(name ="category")
+    @Json(name = "category")
     val category: Category? = null,
 
     /**
