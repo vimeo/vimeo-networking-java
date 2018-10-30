@@ -23,11 +23,16 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.VimeoClient;
+import com.vimeo.networking.callbacks.IgnoreResponseVimeoCallback;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import okhttp3.CacheControl;
 
 /**
  * A collection of Interaction objects.
@@ -82,6 +87,14 @@ public class InteractionCollection implements Serializable {
     @Nullable
     @SerializedName("moderate_videos")
     private Interaction mModerateVideos;
+
+    @Nullable
+    @SerializedName("add_logos")
+    private Interaction mAddLogos;
+
+    @Nullable
+    @SerializedName("add_videos")
+    private Interaction mAddVideos;
 
     @Nullable
     public Interaction getWatchLater() {
@@ -146,6 +159,31 @@ public class InteractionCollection implements Serializable {
 
     void setAddModerators(@Nullable Interaction addModerators) {
         mAddModerators = addModerators;
+    }
+
+    /**
+     * @return An {@link Interaction} that can be used to add videos to the related object (e.g. {@link Album}).
+     * The {@link Interaction#getUri()} will provide the uri needed to pass to
+     * {@link VimeoClient#postContent(String, CacheControl, ArrayList, IgnoreResponseVimeoCallback)}. However,
+     * you will need to manually append a separator "/" followed by the id of the video that you wish to add
+     * to the end of uri returned from {@link Interaction#getUri()} as follows: uri/video_id
+     */
+    @Nullable
+    public Interaction getAddVideos() {
+        return mAddVideos;
+    }
+
+    void setAddVideos(@Nullable Interaction addVideos) {
+        mAddVideos = addVideos;
+    }
+
+    @Nullable
+    public Interaction getAddLogos() {
+        return mAddLogos;
+    }
+
+    void setAddLogos(@Nullable Interaction addLogos) {
+        mAddLogos = addLogos;
     }
 
     @Nullable
