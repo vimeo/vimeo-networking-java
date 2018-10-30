@@ -5,10 +5,10 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
 
 /**
- * List of search result that could be paged.
+ * List of [FeedItem]s to show in a user's feed.
  */
 @JsonClass(generateAdapter = true)
-data class SearchResultList(
+data class FeedList(
 
     @Json(name = "total")
     override val total: Int? = null,
@@ -23,6 +23,6 @@ data class SearchResultList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<SearchResult>? = null
+    override val data: List<FeedItem>? = null
 
-) : Pageable<SearchResult>
+) : Pageable<FeedItem>
