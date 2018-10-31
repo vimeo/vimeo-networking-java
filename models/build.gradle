@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'maven-publish'
+apply plugin: 'maven'
 
 group = 'com.vimeo.networking'
 
