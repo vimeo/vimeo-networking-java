@@ -75,13 +75,13 @@ class RetrofitSetup {
      * Value appended to {@code User-Agent} header to identify which version of this library is used.
      */
     @NotNull
-    private final String mLibraryUserAgentComponent = "";
+    private final String mLibraryUserAgentComponent;
 
     RetrofitSetup(@NotNull Configuration configuration, @Nullable Cache cache) {
         mConfiguration = configuration;
         mCache = cache;
         mGson = VimeoNetworkUtil.getGson();
-        //mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION + " (Java)";
+        mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION + " (Java)";
     }
 
     /**
