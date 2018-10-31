@@ -36,7 +36,7 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     testCompile "org.assertj:assertj-core:3.10.0"
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':models')
+    api project(':models')
 
     def retrofitVersion = '2.1.0'
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
