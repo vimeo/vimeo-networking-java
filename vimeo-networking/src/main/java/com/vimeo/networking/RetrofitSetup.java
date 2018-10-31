@@ -25,6 +25,8 @@
 package com.vimeo.networking;
 
 import com.google.gson.Gson;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
 import com.vimeo.networking.interceptors.AcceptHeaderInterceptor;
 import com.vimeo.networking.interceptors.CacheControlInterceptor;
 import com.vimeo.networking.interceptors.UserAgentInterceptor;
@@ -35,6 +37,7 @@ import com.vimeo.networking.utils.VimeoNetworkUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -42,6 +45,7 @@ import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
 
 /**
  * Retrofit setup code.  Used to create an instance of {@link Retrofit} to make API requests.
@@ -89,7 +93,19 @@ class RetrofitSetup {
     public Retrofit createRetrofit() {
         return new Retrofit.Builder().baseUrl(mConfiguration.getBaseUrl())
                 .client(createOkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create(mGson))
+                .addConverterFactory(new AnnotatedConverterFactory.Builder()
+                                    .add(AnnotatedConverterFactory.Gson.class, GsonConverterFactory.create(mGson))
+                                    .add(AnnotatedConverterFactory.Moshi.class, MoshiConverterFactory.create(createMoshi()))
+                                    .build())
+                .build();
+    }
+
+    /**
+     * Create an instance of Moshi with a date adapter.
+     */
+    private Moshi createMoshi() {
+        return new Moshi.Builder()
+                .add(Date.class, new Rfc3339DateJsonAdapter().nullSafe())
                 .build();
     }
 
