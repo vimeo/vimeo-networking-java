@@ -93,10 +93,9 @@ class RetrofitSetup {
     public Retrofit createRetrofit() {
         return new Retrofit.Builder().baseUrl(mConfiguration.getBaseUrl())
                 .client(createOkHttpClient())
-                .addConverterFactory(new AnnotatedConverterFactory.Builder()
-                                    .add(AnnotatedConverterFactory.Gson.class, GsonConverterFactory.create(mGson))
-                                    .add(AnnotatedConverterFactory.Moshi.class, MoshiConverterFactory.create(createMoshi()))
-                                    .build())
+                .addConverterFactory(new AnnotatedConverterFactory(GsonConverterFactory.create(mGson),
+                                                                   MoshiConverterFactory.create(
+                                                                           createMoshi())))
                 .build();
     }
 
@@ -104,16 +103,13 @@ class RetrofitSetup {
      * Create an instance of Moshi with a date adapter.
      */
     private Moshi createMoshi() {
-        return new Moshi.Builder()
-                .add(Date.class, new Rfc3339DateJsonAdapter().nullSafe())
-                .build();
+        return new Moshi.Builder().add(Date.class, new Rfc3339DateJsonAdapter().nullSafe()).build();
     }
 
     /**
      * OkHttp setup.
      */
-    @NotNull
-    OkHttpClient createOkHttpClient() {
+    @NotNull OkHttpClient createOkHttpClient() {
         final RetrofitClientBuilder retrofitClientBuilder = new RetrofitClientBuilder();
         if (mCache != null) {
             retrofitClientBuilder.setCache(mCache);
@@ -147,11 +143,11 @@ class RetrofitSetup {
     /**
      * @return value used for {@code User-Agent} HTTP header value.
      */
-    @NotNull
-    String createUserAgent() {
+    @NotNull String createUserAgent() {
         final String userProvidedAgent = mConfiguration.getUserAgentString();
 
-        if (userProvidedAgent != null && !userProvidedAgent.isEmpty() && isValidUserAgent(userProvidedAgent)) {
+        if (userProvidedAgent != null && !userProvidedAgent.isEmpty() &&
+            isValidUserAgent(userProvidedAgent)) {
             return userProvidedAgent + ' ' + mLibraryUserAgentComponent;
         } else {
             return mLibraryUserAgentComponent;
