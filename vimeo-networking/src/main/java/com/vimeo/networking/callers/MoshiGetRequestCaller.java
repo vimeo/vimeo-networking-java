@@ -43,7 +43,7 @@ import retrofit2.Call;
  * This is a collection of classes that should be used for GET requests to
  * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
  * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
- *
+ * <p>
  * These classes are for specifically getting data using the new models.
  */
 public final class MoshiGetRequestCaller {
@@ -54,19 +54,16 @@ public final class MoshiGetRequestCaller {
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link FeedList} response from an API endpoint.
      */
-    public static final Caller<FeedList> FEED_LIST =
-            new Caller<FeedList>() {
+    public static final Caller<FeedList> FEED_LIST = new Caller<FeedList>() {
 
-                @NotNull
-                @Override
-                public Call<FeedList> call(@NotNull String authHeader,
-                                           @NotNull String uri,
-                                           @NotNull Map<String, String> queryMap,
-                                           @NotNull String cacheHeader,
-                                           @NotNull VimeoService vimeoService) {
-                    return vimeoService.getFeedListMoshi(authHeader, uri, queryMap, cacheHeader);
-                }
-            };
+        @NotNull
+        @Override
+        public Call<FeedList> call(@NotNull String authHeader, @NotNull String uri,
+                                   @NotNull Map<String, String> queryMap, @NotNull String cacheHeader,
+                                   @NotNull VimeoService vimeoService) {
+            return vimeoService.getFeedListMoshi(authHeader, uri, queryMap, cacheHeader);
+        }
+    };
 
     /**
      * Used in association with
@@ -74,19 +71,16 @@ public final class MoshiGetRequestCaller {
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link UserList} response from an API endpoint.
      */
-    public static final Caller<UserList> USER_LIST =
-            new Caller<UserList>() {
+    public static final Caller<UserList> USER_LIST = new Caller<UserList>() {
 
-                @NotNull
-                @Override
-                public Call<UserList> call(@NotNull String authHeader,
-                                           @NotNull String uri,
-                                           @NotNull Map<String, String> queryMap,
-                                           @NotNull String cacheHeader,
-                                           @NotNull VimeoService vimeoService) {
-                    return vimeoService.getUserListMoshi(authHeader, uri, queryMap, cacheHeader);
-                }
-            };
+        @NotNull
+        @Override
+        public Call<UserList> call(@NotNull String authHeader, @NotNull String uri,
+                                   @NotNull Map<String, String> queryMap, @NotNull String cacheHeader,
+                                   @NotNull VimeoService vimeoService) {
+            return vimeoService.getUserListMoshi(authHeader, uri, queryMap, cacheHeader);
+        }
+    };
 
     /**
      * Used in association with
@@ -100,14 +94,15 @@ public final class MoshiGetRequestCaller {
                 @NotNull
                 @Override
                 public Call<com.vimeo.networking2.VideoList> call(@NotNull String authHeader,
-                                            @NotNull String uri,
-                                            @NotNull Map<String, String> queryMap,
-                                            @NotNull String cacheHeader,
-                                            @NotNull VimeoService vimeoService) {
+                                                                  @NotNull String uri,
+                                                                  @NotNull Map<String, String> queryMap,
+                                                                  @NotNull String cacheHeader,
+                                                                  @NotNull VimeoService vimeoService) {
                     return vimeoService.getVideoListMoshi(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
-    private MoshiGetRequestCaller() {}
+    private MoshiGetRequestCaller() {
+    }
 
 }
