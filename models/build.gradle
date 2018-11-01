@@ -5,6 +5,8 @@ apply plugin: 'maven-publish'
 
 group = 'com.vimeo.networking'
 
+// Create the pom configuration
+// All the fields below are required by Maven Central
 def pomConfig = {
     licenses {
         license {
@@ -39,7 +41,7 @@ publishing {
             artifact sourcesJar
             artifact javadocJar
             groupId project.group
-            artifactId 'vimeo-networking'
+            artifactId 'models'
             version project.version
             pom.withXml {
                 def root = asNode()
