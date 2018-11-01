@@ -1,8 +1,0 @@
-apply from: 'settings.gradle'
-
-// for all modules in vimeo-networking-java, set the project directory. This enables us to
-// say :vimeo-networking, rather than :vimeo-networking-java:vimeo-networking
-rootProject.children.each { project ->
-    String relativeProjectPath = project.projectDir.path.replace(settingsDir.path, "")
-    project.projectDir = new File("vimeo-networking-java/$relativeProjectPath")
-}
