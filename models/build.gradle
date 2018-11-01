@@ -1,9 +1,31 @@
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 group = 'com.vimeo.networking'
+
+// Create the publication with the pom configuration:
+// Requires apply plugin: maven-publish
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            groupId project.group
+            artifactId 'vimeo-networking'
+            version project.version
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'vimeo-networking is a Java networking library used for interacting with the Vimeo API.')
+                root.appendNode('name', 'vimeo-networking')
+                root.appendNode('url', 'https://github.com/vimeo/vimeo-networking-java')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
