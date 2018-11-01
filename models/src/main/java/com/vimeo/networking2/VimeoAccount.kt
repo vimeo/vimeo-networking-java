@@ -37,6 +37,12 @@ data class VimeoAccount(
     val scope: String? = null,
 
     /**
+     * The authenticated user.
+     */
+    @Json(name = "user")
+    val user: User? = null,
+
+    /**
      * The token type.
      */
     @Json(name = "token_type")
