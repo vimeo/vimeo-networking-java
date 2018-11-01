@@ -25,6 +25,7 @@ public final class AnnotatedConverterFactory extends Converter.Factory {
     @Retention(RetentionPolicy.RUNTIME)
     @interface Serializer {
 
+        @NotNull
         ConverterType converter();
 
     }
@@ -62,8 +63,9 @@ public final class AnnotatedConverterFactory extends Converter.Factory {
     }
 
     @Override
-    public Converter<ResponseBody, ?> responseBodyConverter(final Type type, final Annotation[] annotations,
-                                                            final Retrofit retrofit) {
+    public Converter<ResponseBody, ?> responseBodyConverter(@NotNull final Type type,
+                                                            @NotNull final Annotation[] annotations,
+                                                            @NotNull final Retrofit retrofit) {
         Converter.Factory converterFactory = gsonFactory;
 
         for (final Annotation annotation : annotations) {
