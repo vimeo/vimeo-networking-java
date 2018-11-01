@@ -94,14 +94,14 @@ class RetrofitSetup {
         return new Retrofit.Builder().baseUrl(mConfiguration.getBaseUrl())
                 .client(createOkHttpClient())
                 .addConverterFactory(new AnnotatedConverterFactory(GsonConverterFactory.create(mGson),
-                                                                   MoshiConverterFactory.create(
-                                                                           createMoshi())))
+                                                                   MoshiConverterFactory.create(createMoshi())))
                 .build();
     }
 
     /**
      * Create an instance of Moshi with a date adapter.
      */
+    @NotNull
     private Moshi createMoshi() {
         return new Moshi.Builder().add(Date.class, new Rfc3339DateJsonAdapter().nullSafe()).build();
     }
@@ -146,8 +146,9 @@ class RetrofitSetup {
     @NotNull String createUserAgent() {
         final String userProvidedAgent = mConfiguration.getUserAgentString();
 
-        if (userProvidedAgent != null && !userProvidedAgent.isEmpty() &&
-            isValidUserAgent(userProvidedAgent)) {
+        if (userProvidedAgent != null
+            && !userProvidedAgent.isEmpty()
+            && isValidUserAgent(userProvidedAgent)) {
             return userProvidedAgent + ' ' + mLibraryUserAgentComponent;
         } else {
             return mLibraryUserAgentComponent;
