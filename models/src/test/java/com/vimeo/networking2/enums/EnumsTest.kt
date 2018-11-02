@@ -58,7 +58,11 @@ class EnumsTest {
     @Test
     fun `enum should have an UNKNOWN`() {
         models.forEach { kClass ->
-            assertTrue("Enum should contain UNKNOWN type.", kClass.fields.map { it.name }.contains("UNKNOWN"))
+            assertTrue("Enum should contain UNKNOWN type.", kClass.fields.map { it.name }.contains(UNKNOWN))
         }
+    }
+
+    companion object {
+        private const val UNKNOWN = "unknown"
     }
 }
