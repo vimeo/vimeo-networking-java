@@ -17,6 +17,8 @@ import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
+import com.vimeo.networking.callers.MoshiGetRequestCaller;
+import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
@@ -25,6 +27,8 @@ import com.vimeo.networking.model.error.VimeoError;
 import okhttp3.CacheControl;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
+
+    public static final String TAG = "Vimeo_Networking_Sample";
 
     public static final String STAFF_PICKS_VIDEO_URI = "/channels/927/videos"; // 927 == staffpicks
 
@@ -60,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         findViewById(R.id.fab).setOnClickListener(this);
         findViewById(R.id.code_grant_btn).setOnClickListener(this);
         findViewById(R.id.request_output_tv).setOnClickListener(this);
-        findViewById(R.id.staff_picks_btn).setOnClickListener(this);
+        findViewById(R.id.staff_picks_gson_btn).setOnClickListener(this);
+        findViewById(R.id.staff_picks_moshi_btn).setOnClickListener(this);
         findViewById(R.id.account_type_btn).setOnClickListener(this);
         findViewById(R.id.logout_btn).setOnClickListener(this);
     }
@@ -68,8 +73,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.staff_picks_btn:
-                fetchStaffPicks();
+            case R.id.staff_picks_gson_btn:
+                fetchStaffPicksWithGson();
+                break;
+            case R.id.staff_picks_moshi_btn:
+                fetchStaffPicksWithMoshi();
                 break;
             case R.id.account_type_btn:
                 fetchAccountType();
@@ -105,11 +113,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     // <editor-fold desc="Requests">
 
-    private void fetchStaffPicks() {
+    private void fetchStaffPicksWithGson() {
+        final long initialTime = System.currentTimeMillis();
         mProgressDialog.show();
         mApiClient.getContent(STAFF_PICKS_VIDEO_URI, CacheControl.FORCE_NETWORK, GetRequestCaller.VIDEO_LIST, null, null, null, new VimeoCallback<VideoList>() {
             @Override
             public void success(VideoList videoList) {
+                final long finalTime = System.currentTimeMillis();
+                final long totalLoadTime = finalTime - initialTime;
+
                 if (videoList != null && videoList.getData() != null) {
                     String videoTitlesString = "";
                     boolean addNewLine = false;
@@ -122,6 +134,42 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                     }
                     mRequestOutputTv.setText(videoTitlesString);
                 }
+                ClientLogger.d("Total data load time in milliseconds: " + totalLoadTime);
+                toast("Staff Picks Success ");
+                mProgressDialog.hide();
+            }
+
+            @Override
+            public void failure(VimeoError error) {
+                toast("Staff Picks Failure");
+                mRequestOutputTv.setText(error.getDeveloperMessage());
+                mProgressDialog.hide();
+            }
+        });
+    }
+
+    private void fetchStaffPicksWithMoshi() {
+        final long initialTime = System.currentTimeMillis();
+        mProgressDialog.show();
+        mApiClient.getContent(STAFF_PICKS_VIDEO_URI, CacheControl.FORCE_NETWORK, MoshiGetRequestCaller.VIDEO_LIST, null, null, null, new VimeoCallback<com.vimeo.networking2.VideoList>() {
+            @Override
+            public void success(com.vimeo.networking2.VideoList videoList) {
+                final long finalTime = System.currentTimeMillis();
+                final long totalLoadTime = finalTime - initialTime;
+
+                if (videoList != null && videoList.getData() != null) {
+                    String videoTitlesString = "";
+                    boolean addNewLine = false;
+                    for (com.vimeo.networking2.Video video : videoList.getData()) {
+                        if (addNewLine) {
+                            videoTitlesString += "\n";
+                        }
+                        addNewLine = true;
+                        videoTitlesString += video.getName();
+                    }
+                    mRequestOutputTv.setText(videoTitlesString);
+                }
+                ClientLogger.d("Total data load time in milliseconds: " + totalLoadTime);
                 toast("Staff Picks Success");
                 mProgressDialog.hide();
             }

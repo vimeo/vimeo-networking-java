@@ -19,10 +19,16 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <Button
-            android:id="@+id/staff_picks_btn"
+            android:id="@+id/staff_picks_gson_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Request Staff Picks First Page"/>
+            android:text="Request Staff Picks First Page with Gson"/>
+
+        <Button
+            android:id="@+id/staff_picks_moshi_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Request Staff Picks First Page with Moshi"/>
 
         <Button
             android:id="@+id/code_grant_btn"
