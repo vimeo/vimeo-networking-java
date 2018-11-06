@@ -117,7 +117,7 @@ data class Album(
      * Sort type of the album.
      */
     @Json(name = "sort")
-    val sort: SortType? = null,
+    val sort: String? = null,
 
     /**
      * The album's color theme preference.
@@ -154,3 +154,9 @@ val Album.albumLayoutType: AlbumLayoutType
  */
 val Album.themeType: AlbumThemeType
     get() = theme.asEnum(AlbumThemeType.UNKNOWN)
+
+/**
+ * @see Album.sort
+ */
+val Album.sortType: SortType
+    get() = sort.asEnum(SortType.UNKNOWN)

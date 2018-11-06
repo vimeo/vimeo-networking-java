@@ -8,6 +8,7 @@ import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.ContentFilterType
 import com.vimeo.networking2.enums.asEnum
+import com.vimeo.networking2.enums.asEnumList
 import java.util.*
 
 /**
@@ -40,7 +41,7 @@ data class User(
      * The user's content filters.
      */
     @Json(name = "content_filter")
-    val contentFilter: List<ContentFilterType>? = null,
+    val contentFilter: List<String>? = null,
 
     /**
      * The time in ISO 8601 format when the user account was created.
@@ -146,9 +147,14 @@ data class User(
 
 }
 
-
 /**
  * @see User.account
  */
 val User.accountType: AccountType
     get() = account.asEnum(AccountType.UNKNOWN)
+
+/**
+ * @see User.contentFilter
+ */
+val User.contentFilterTypes: List<ContentFilterType>
+    get() = contentFilter.asEnumList(ContentFilterType.UNKNOWN)

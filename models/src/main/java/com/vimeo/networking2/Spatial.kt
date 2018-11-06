@@ -1,9 +1,12 @@
+@file:JvmName("SpatialUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.SpatialProjectionType
 import com.vimeo.networking2.enums.StereoFormatType
+import com.vimeo.networking2.enums.asEnum
 
 @JsonClass(generateAdapter = true)
 data class Spatial(
@@ -24,12 +27,24 @@ data class Spatial(
      * The 360 spatial projection.
      */
     @Json(name = "projection")
-    val projection: SpatialProjectionType? = null,
+    val projection: String? = null,
 
     /**
      * The 360 stereo format.
      */
     @Json(name = "stereo_format")
-    val stereoFormat: StereoFormatType? = null
+    val stereoFormat: String? = null
 
 )
+
+/**
+ * @see Spatial.projection
+ */
+val Spatial.projectionType: SpatialProjectionType
+    get() = projection.asEnum(SpatialProjectionType.UNKNOWN)
+
+/**
+ * @see Spatial.stereoFormat
+ */
+val Spatial.stereoFormatType: StereoFormatType
+    get() = stereoFormat.asEnum(StereoFormatType.UNKNOWN)

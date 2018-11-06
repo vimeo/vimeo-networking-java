@@ -1,8 +1,11 @@
+@file:JvmName("CinemaUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.CinemaType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Cinema data.
@@ -44,7 +47,7 @@ data class Cinema(
      * The type of programmed cinema item.
      */
     @Json(name = "type")
-    val type: CinemaType? = null,
+    val type: String? = null,
 
     /**
      * The programmed cinema items' canonical relative URI.
@@ -53,3 +56,9 @@ data class Cinema(
     val uri: String? = null
 
 )
+
+/**
+ * @see Cinema.type
+ */
+val Cinema.cinemaType: CinemaType
+    get() = type.asEnum(CinemaType.UNKNOWN)

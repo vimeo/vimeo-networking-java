@@ -1,7 +1,10 @@
+@file:JvmName("ApiErrorUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.vimeo.networking2.enums.ErrorCode
+import com.vimeo.networking2.enums.asEnum
 
 /**
  *  This class represents an error response from the Vimeo API. It holds useful getters to
@@ -25,7 +28,7 @@ data class ApiError(
      * The error code.
      */
     @Json(name = "error_code")
-    val errorCode: ErrorCode? = null,
+    val errorCode: String? = null,
 
     /**
      * A link to more information about the error.
@@ -34,3 +37,9 @@ data class ApiError(
     val link: String
 
 )
+
+/**
+ * @see ApiError.errorCode
+ */
+val ApiError.errorCodeType: ErrorCode
+    get() = errorCode.asEnum(ErrorCode.DEFAULT)

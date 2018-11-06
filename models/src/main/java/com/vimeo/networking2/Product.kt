@@ -1,8 +1,11 @@
+@file:JvmName("ProductUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.BillingPeriodType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Product data.
@@ -14,7 +17,7 @@ data class Product(
      * Distinguish between monthly and yearly products.
      */
     @Json(name = "billing_period")
-    val billingPeriod: BillingPeriodType? = null,
+    val billingPeriod: String? = null,
 
     /**
      * Product description.
@@ -47,3 +50,9 @@ data class Product(
     val uri: String? = null
 
 )
+
+/**
+ * @see Product.billingPeriod
+ */
+val Product.billingPeriodType: BillingPeriodType
+    get() = billingPeriod.asEnum(BillingPeriodType.UNKNOWN)

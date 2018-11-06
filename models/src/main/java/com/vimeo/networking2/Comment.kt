@@ -1,8 +1,11 @@
+@file:JvmName("CommentUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.CommentType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -39,7 +42,7 @@ data class Comment(
      * The Vimeo content to which the comment relates.
      */
     @Json(name = "type")
-    val type: CommentType? = null,
+    val type: String? = null,
 
     /**
      * The user who posted the comment.
@@ -52,3 +55,9 @@ data class Comment(
     override val identifier: String? = resourceKey
 
 }
+
+/**
+ * @see Comment.type
+ */
+val Comment.commentType: CommentType
+    get() = type.asEnum(CommentType.UNKNOWN)

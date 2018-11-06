@@ -1,8 +1,11 @@
+@file:JvmName("FeedItem")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AttributionType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -55,7 +58,7 @@ data class FeedItem(
      * Feed item type.
      */
     @Json(name = "type")
-    val type: AttributionType? = null,
+    val type: String? = null,
 
     /**
      * Video associated with ths feed item.
@@ -77,3 +80,9 @@ data class FeedItem(
     val user: User
 
 )
+
+/**
+ * @see FeedItem.type
+ */
+val FeedItem.attributionType: AttributionType
+    get() = type.asEnum(AttributionType.UNKNOWN)

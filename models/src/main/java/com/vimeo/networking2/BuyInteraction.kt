@@ -1,3 +1,5 @@
+@file:JvmName("BuyInteractionUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
@@ -5,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Interaction
 import com.vimeo.networking2.enums.DownloadType
 import com.vimeo.networking2.enums.StreamType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -29,7 +32,7 @@ data class BuyInteraction(
      * The user's download access to this On Demand video
      */
     @Json(name = "download")
-    val download: DownloadType? = null,
+    val download: String? = null,
 
     /**
      * Whether the video has DRM.
@@ -67,4 +70,10 @@ data class BuyInteraction(
     @Json(name = "uri")
     override val uri: String? = null
 
-): Interaction
+) : Interaction
+
+/**
+ * @see BuyInteraction.download
+ */
+val BuyInteraction.downloadType: DownloadType
+    get() = download.asEnum(DownloadType.UNKNOWN)

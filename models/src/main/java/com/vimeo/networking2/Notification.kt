@@ -1,8 +1,11 @@
+@file:JvmName("NotificationUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -51,7 +54,7 @@ data class Notification(
      * The type of notification.
      */
     @Json(name = "type")
-    val type: NotificationType? = null,
+    val type: String? = null,
 
     /**
      * The notification's canonical relative URI.
@@ -66,3 +69,9 @@ data class Notification(
     val user: User? = null
 
 )
+
+/**
+ * @see Notification.type
+ */
+val Notification.notificationType: NotificationType
+    get() = type.asEnum(NotificationType.UNKNOWN)

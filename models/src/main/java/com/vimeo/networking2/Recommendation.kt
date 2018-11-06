@@ -1,6 +1,9 @@
+@file:JvmName("RecommendationUtils")
+
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.RecommendationType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Recommendation DTO.
@@ -25,7 +28,7 @@ data class Recommendation(
     /**
      * Type of recommendation.
      */
-    val type: RecommendationType? = null,
+    val type: String? = null,
 
     /**
      * The user that is being recommended.
@@ -37,3 +40,9 @@ data class Recommendation(
     override val identifier: String? = resourceKey
 
 }
+
+/**
+ * @see Recommendation.type
+ */
+val Recommendation.recommendationType: RecommendationType
+    get() = type.asEnum(RecommendationType.UNKNOWN)

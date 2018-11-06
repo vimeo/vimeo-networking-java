@@ -1,9 +1,12 @@
+@file:JvmName("ChannelFollowInteractionUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.UpdatableInteraction
 import com.vimeo.networking2.enums.FollowType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -28,6 +31,12 @@ data class ChannelFollowInteraction(
      * Whether the authenticated user is a moderator or subscriber.
      */
     @Json(name = "type")
-    val type: FollowType = FollowType.UNKNOWN
+    val type: String? = null
 
-): UpdatableInteraction
+) : UpdatableInteraction
+
+/**
+ * @see ChannelFollowInteraction.type
+ */
+val ChannelFollowInteraction.followType: FollowType
+    get() = type.asEnum(FollowType.UNKNOWN)

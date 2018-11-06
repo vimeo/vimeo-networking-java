@@ -1,9 +1,12 @@
+@file:JvmName("VideoUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.LicenseType
 import com.vimeo.networking2.enums.VideoStatusType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -82,7 +85,7 @@ data class Video(
      * The Creative Commons license used for the video.
      */
     @Json(name = "license")
-    val license: LicenseType? = null,
+    val license: String? = null,
 
     /**
      * The link to the video.
@@ -226,8 +229,14 @@ data class Video(
     @Json(name = "width")
     val width: Int? = null
 
-): Entity {
+) : Entity {
 
     override val identifier: String? = resourceKey
 
 }
+
+/**
+ * @see Video.license
+ */
+val Video.licenseType: LicenseType
+    get() = license.asEnum(LicenseType.UNKNOWN)

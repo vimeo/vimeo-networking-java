@@ -3,7 +3,7 @@
 package com.vimeo.networking2.common
 
 import com.vimeo.networking2.enums.ApiOptionsType
-import com.vimeo.networking2.enums.asEnum
+import com.vimeo.networking2.enums.asEnumList
 
 /**
  * Information on how to take action on an entity. Take an action on the
@@ -29,4 +29,4 @@ interface Interaction {
  * @see Interaction.options
  */
 val Interaction.optionsTypes: List<ApiOptionsType>
-    get() = options?.map { it.asEnum(ApiOptionsType.UNKNOWN) } ?: emptyList()
+    get() = options.asEnumList(ApiOptionsType.UNKNOWN)

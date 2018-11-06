@@ -1,8 +1,11 @@
+@file:JvmName("PaymentUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.PaymentType
+import com.vimeo.networking2.enums.asEnum
 
 @JsonClass(generateAdapter = true)
 data class Payment(
@@ -23,6 +26,12 @@ data class Payment(
      * The type of stored payment method
      */
     @Json(name = "type")
-    val type: PaymentType? = null
+    val type: String? = null
 
 )
+
+/**
+ * @see Payment.type
+ */
+val Payment.paymentType: PaymentType
+    get() = type.asEnum(PaymentType.UNKNOWN)

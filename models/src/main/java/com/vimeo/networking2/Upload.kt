@@ -1,9 +1,12 @@
+@file:JvmName("UploadUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.ApproachType
 import com.vimeo.networking2.enums.UploadStatusType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Upload data.
@@ -15,7 +18,7 @@ data class Upload(
      * The approach for uploading the video.
      */
     @Json(name = "approach")
-    val approach: ApproachType? = null,
+    val approach: String? = null,
 
     /**
      * The URI for completing the upload.
@@ -57,7 +60,7 @@ data class Upload(
      * The status code for the availability of the uploaded video.
      */
     @Json(name = "status")
-    val status: UploadStatusType? = null,
+    val status: String? = null,
 
     /**
      * The link for sending video file data.
@@ -66,3 +69,15 @@ data class Upload(
     val uploadLink: String? = null
 
 )
+
+/**
+ * @see Upload.approach
+ */
+val Upload.approachType: ApproachType
+    get() = approach.asEnum(ApproachType.UNKNOWN)
+
+/**
+ * @see Upload.status
+ */
+val Upload.statusType: UploadStatusType
+    get() = status.asEnum(UploadStatusType.UNKNOWN)

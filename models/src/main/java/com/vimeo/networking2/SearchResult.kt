@@ -1,6 +1,9 @@
+@file:JvmName("SearchResultUtils")
+
 package com.vimeo.networking2
 
 import com.vimeo.networking2.enums.SearchType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Search Result DTO.
@@ -50,6 +53,12 @@ data class SearchResult(
     /**
      * The type of object that this search result is representing.
      */
-    val type: SearchType? = null
+    val type: String? = null
 
 )
+
+/**
+ * @see SearchResult.type
+ */
+val SearchResult.searchType: SearchType
+    get() = type.asEnum(SearchType.UNKNOWN)

@@ -1,9 +1,12 @@
+@file:JvmName("PurchaseInteractionUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Interaction
 import com.vimeo.networking2.enums.PurchaseStatusType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Purchase a video action data.
@@ -21,6 +24,12 @@ data class PurchaseInteraction(
      * Purchase status.
      */
     @Json(name = "status")
-    val status: PurchaseStatusType = PurchaseStatusType.UNKNOWN
+    val status: String? = null
 
-): Interaction
+) : Interaction
+
+/**
+ * @see PurchaseInteraction.status
+ */
+val PurchaseInteraction.purchaseStatusType: PurchaseStatusType
+    get() = status.asEnum(PurchaseStatusType.UNKNOWN)
