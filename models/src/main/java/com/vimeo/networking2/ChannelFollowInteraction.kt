@@ -1,9 +1,8 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.common.UpdatableInteraction
-import com.vimeo.networking2.enums.ApiOptionsType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.UpdatableInteraction
 import com.vimeo.networking2.enums.FollowType
 import java.util.*
 
@@ -20,7 +19,7 @@ data class ChannelFollowInteraction(
     override val addedTime: Date? = null,
 
     @Json(name = "options")
-    override val options: List<ApiOptionsType>? = null,
+    override val options: List<String>? = null,
 
     @Json(name = "uri")
     override val uri: String? = null,

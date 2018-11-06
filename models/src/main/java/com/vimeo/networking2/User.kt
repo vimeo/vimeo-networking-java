@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.ContentFilterType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -17,7 +18,7 @@ data class User(
      * The user's account type
      */
     @Json(name = "account")
-    val account: AccountType? = null,
+    val account: String? = null,
 
     /**
      * Information about the user's badge.
@@ -137,8 +138,15 @@ data class User(
     @Json(name = "websites")
     val websites: List<Website>? = null
 
-): Followable, Entity {
+) : Followable, Entity {
 
     override val identifier: String? = resourceKey
 
 }
+
+
+/**
+ * @see User.account
+ */
+val User.accountType: AccountType
+    get() = account?.asEnum() ?: AccountType.UNKNOWN

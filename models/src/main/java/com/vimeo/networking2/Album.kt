@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AlbumLayoutType
 import com.vimeo.networking2.enums.AlbumThemeType
 import com.vimeo.networking2.enums.SortType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -60,7 +61,7 @@ data class Album(
      * The album's layout preference.
      */
     @Json(name = "layout")
-    val layout: AlbumLayoutType? = null,
+    val layout: String? = null,
 
     /**
      * The URL to access the album.
@@ -120,7 +121,7 @@ data class Album(
      * The album's color theme preference.
      */
     @Json(name = "theme")
-    val theme: AlbumThemeType? = null,
+    val theme: String? = null,
 
     /**
      * The album's URI.
@@ -139,3 +140,15 @@ data class Album(
     override val identifier: String? = resourceKey
 
 }
+
+/**
+ * @see Album.layout
+ */
+val Album.albumLayoutType: AlbumLayoutType
+    get() = layout?.asEnum() ?: AlbumLayoutType.UNKNOWN
+
+/**
+ * @see Album.theme
+ */
+val Album.themeType: AlbumThemeType
+    get() = theme?.asEnum() ?: AlbumThemeType.UNKNOWN

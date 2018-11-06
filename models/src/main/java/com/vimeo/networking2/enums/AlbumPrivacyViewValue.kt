@@ -1,32 +1,27 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Privacy settings for albums.
  */
-enum class AlbumPrivacyViewValue {
+enum class AlbumPrivacyViewValue(override val value: String?): StringValue {
 
     /**
      * Anyone can view the album.
      */
-    @Json(name = "anybody")
-    ANYBODY,
+    ANYBODY("anybody"),
 
     /**
      * Only owner can see album, can be embedded off-site.
      */
-    @Json(name = "embed_only")
-    EMBED_ONLY,
+    EMBED_ONLY("embed_only"),
 
     /**
      * Only those with the password can view the album.
      */
-    @Json(name = "password")
-    PASSWORD,
+    PASSWORD("password"),
 
     /**
      * Unknown privacy setting.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

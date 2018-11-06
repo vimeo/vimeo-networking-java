@@ -1,6 +1,7 @@
 package com.vimeo.networking2.common
 
 import com.vimeo.networking2.enums.ApiOptionsType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Information on how to take action on an entity. Take an action on the
@@ -13,7 +14,7 @@ interface Interaction {
     /**
      * An array of the HTTP methods permitted on this URI.
      */
-    val options: List<ApiOptionsType>?
+    val options: List<String>?
 
     /**
      * The API URI that resolves to the connection data.
@@ -21,3 +22,9 @@ interface Interaction {
     val uri: String?
 
 }
+
+/**
+ * @see Interaction.options
+ */
+val Interaction.optionsTypes
+    get() = options?.map { it.asEnum() ?: ApiOptionsType.UNKNOWN }
