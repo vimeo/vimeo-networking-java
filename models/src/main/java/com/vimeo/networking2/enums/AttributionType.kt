@@ -38,6 +38,8 @@ enum class AttributionType {
     TWITTER_TIMELINE,
 
     @Json(name = "upload")
-    UPLOAD
+    UPLOAD,
+
+    UNKNOWN
 
 }

@@ -459,6 +459,6 @@ enum class ErrorCode {
      * The default code that will be returned if the code returned from the server isn't
      * enumerated below.
      */
-    DEFAULT
+    UNKNOWN
 
 }

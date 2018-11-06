@@ -27,6 +27,7 @@ package com.vimeo.networking;
 import com.google.gson.Gson;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
+import com.vimeo.networking.adapters.ReflectiveFallbackEnumAdapterFactory;
 import com.vimeo.networking.interceptors.AcceptHeaderInterceptor;
 import com.vimeo.networking.interceptors.CacheControlInterceptor;
 import com.vimeo.networking.interceptors.UserAgentInterceptor;
@@ -103,7 +104,10 @@ class RetrofitSetup {
      */
     @NotNull
     private Moshi createMoshi() {
-        return new Moshi.Builder().add(Date.class, new Rfc3339DateJsonAdapter().nullSafe()).build();
+        return new Moshi.Builder()
+                .add(new ReflectiveFallbackEnumAdapterFactory())
+                .add(Date.class, new Rfc3339DateJsonAdapter().nullSafe())
+                .build();
     }
 
     /**
