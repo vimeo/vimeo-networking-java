@@ -24,6 +24,6 @@ public class ReflectiveFallbackEnumAdapterFactory implements JsonAdapter.Factory
 
         final Class<Enum> enumType = (Class<Enum>) rawType;
 
-        return new ReflectiveFallbackEnumAdapter<>(enumType).nullSafe();
+        return new ReflectiveFallbackEnumAdapter<>(enumType).lenient();
     }
 }

@@ -74,6 +74,7 @@ class ReflectiveFallbackEnumAdapterFactoryTest {
             val enumAdapter = moshi.adapter<Enum<*>>(enumClass)
             Assert.assertEquals(enumAdapter.toJson(unknownValue), "\"UNKNOWN\"")
             Assert.assertEquals(enumAdapter.fromJson("\"asdfasdf\""), unknownValue)
+            Assert.assertEquals(enumAdapter.fromJson("null"), unknownValue)
         }
     }
 }

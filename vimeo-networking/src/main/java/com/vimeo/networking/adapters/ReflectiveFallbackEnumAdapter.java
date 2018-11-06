@@ -12,8 +12,11 @@ import java.io.IOException;
 
 /**
  * A reflective {@link JsonAdapter} that extracts the default value from an {@link Enum} and then creates an
- * {@link EnumJsonAdapter} with an unknown fallback to which it delegates. An enum that is parsed with this adapter must
- * fill some important criteria.
+ * {@link EnumJsonAdapter} with an unknown fallback to which it delegates. This adapter is also distinguished from the
+ * {@link EnumJsonAdapter} in that it parses {@code null} values as the default value. This will result in asymmetric
+ * deserialization, as deserializing a null value and then serializing it will not result in the same JSON string.
+ * However, the usage of a fallback in other cases is itself asymmetric so this is acceptable. An enum that is parsed
+ * with this adapter must fill some important criteria.
  * <ul>
  * <li>The enum must have a default value available.</li>
  * <li>The default value must not have a {@link Json} annotation on it.</li>
@@ -23,6 +26,9 @@ class ReflectiveFallbackEnumAdapter<T extends Enum<T>> extends JsonAdapter<T> {
 
     @NotNull
     private final JsonAdapter<T> delegate;
+
+    @NotNull
+    private final T fallbackValue;
 
     ReflectiveFallbackEnumAdapter(@NotNull Class<T> enumType) {
         final T[] enumValues = enumType.getEnumConstants();
@@ -41,11 +47,15 @@ class ReflectiveFallbackEnumAdapter<T extends Enum<T>> extends JsonAdapter<T> {
         if (defaultValue == null) {
             throw new AssertionError("Missing UNKNOWN field in " + enumType.getName());
         }
+        fallbackValue = defaultValue;
         delegate = EnumJsonAdapter.create(enumType).withUnknownFallback(defaultValue);
     }
 
     @Override
     public T fromJson(JsonReader reader) throws IOException {
+        if (reader.peek() == JsonReader.Token.NULL) {
+            return fallbackValue;
+        }
         return delegate.fromJson(reader);
     }
 
