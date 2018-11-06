@@ -1,20 +1,15 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Group privacy values.
  */
-enum class GroupPrivacyValue {
+enum class GroupPrivacyValue(override val value: String?) : StringValue {
 
-    @Json(name = "all")
-    ALL,
+    ALL("all"),
 
-    @Json(name = "anybody")
-    ANYBODY,
+    ANYBODY("anybody"),
 
-    @Json(name = "members")
-    MEMBERS,
+    MEMBERS("members"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }

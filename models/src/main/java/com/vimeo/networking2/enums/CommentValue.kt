@@ -1,32 +1,27 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Privacy values that can be set for commenting on videos.
  */
-enum class CommentValue {
+enum class CommentValue(override val value: String?) : StringValue {
 
     /**
      * Anyone can comment on the user's videos.
      */
-    @Json(name = "anybody")
-    ANYBODY,
+    ANYBODY("anybody"),
 
     /**
      * Only contacts can comment on the user's videos.
      */
-    @Json(name = "contacts")
-    CONTACTS,
+    CONTACTS("contacts"),
 
     /**
      * No one can comment on the user's videos.
      */
-    @Json(name = "nobody")
-    NOBODY,
+    NOBODY("nobody"),
 
     /**
      * Unknown comment privacy value.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

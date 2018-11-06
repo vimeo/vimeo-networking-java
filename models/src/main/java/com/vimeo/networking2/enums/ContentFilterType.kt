@@ -1,29 +1,21 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Different types of content filters for videos.
  */
-enum class ContentFilterType {
+enum class ContentFilterType(override val value: String?) : StringValue {
 
-    @Json(name = "drugs")
-    DRUGS,
+    DRUGS("drugs"),
 
-    @Json(name = "language")
-    LANGUAGE,
+    LANGUAGE("language"),
 
-    @Json(name = "nudity")
-    NUDITY,
+    NUDITY("nudity"),
 
-    @Json(name = "safe")
-    SAFE,
+    SAFE("safe"),
 
-    @Json(name = "unrated")
-    UNRATED,
+    UNRATED("unrated"),
 
-    @Json(name = "violence")
-    VIOLENCE,
+    VIOLENCE("violence"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }

@@ -1,20 +1,17 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Different types of payments.
  */
-enum class PaymentType {
+enum class PaymentType(override val value: String?) : StringValue {
 
     /**
      * The stored payment method is a credit card.
      */
-    @Json(name = "cc")
-    CC,
+    CC("cc"),
 
     /**
      * Unknown payment type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

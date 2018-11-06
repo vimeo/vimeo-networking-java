@@ -1,17 +1,12 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
+enum class TranscodeType(override val value: String?) : StringValue {
 
-enum class TranscodeType {
+    COMPLETE("complete"),
 
-    @Json(name = "complete")
-    COMPLETE,
+    ERROR("error"),
 
-    @Json(name = "error")
-    ERROR,
+    IN_PROGRESS("in_progress"),
 
-    @Json(name = "in_progress")
-    IN_PROGRESS,
-
-    UNKNOWN
+    UNKNOWN(null)
 }

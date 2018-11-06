@@ -1,80 +1,55 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * All type of actions that can be taken by the user.
  */
-enum class UserActivityType {
+enum class UserActivityType(override val value: String?) : StringValue {
 
-    @Json(name = "add_comment")
-    ADD_COMMENT,
+    ADD_COMMENT("add_comment"),
 
-    @Json(name = "add_comment_blog")
-    ADD_COMMENT_BLOG,
+    ADD_COMMENT_BLOG("add_comment_blog"),
 
-    @Json(name = "add_comment_client")
-    ADD_COMMENT_CLIENT,
+    ADD_COMMENT_CLIENT("add_comment_client"),
 
-    @Json(name = "add_comment_forum")
-    ADD_COMMENT_FORUM,
+    ADD_COMMENT_FORUM("add_comment_forum"),
 
-    @Json(name = "add_comment_ondemand")
-    ADD_COMMENT_ONDEMAND,
+    ADD_COMMENT_ONDEMAND("add_comment_ondemand"),
 
-    @Json(name = "add_help_comment_forum")
-    ADD_HELP_COMMENT_FORUM,
+    ADD_HELP_COMMENT_FORUM("add_help_comment_forum"),
 
-    @Json(name = "add_portfolio")
-    ADD_PORTFOLIO,
+    ADD_PORTFOLIO("add_portfolio"),
 
-    @Json(name = "add_tags")
-    ADD_TAGS,
+    ADD_TAGS("add_tags"),
 
-    @Json(name = "album_clip")
-    ALBUM_CLIP,
+    ALBUM_CLIP("album_clip"),
 
-    @Json(name = "album_create")
-    ALBUM_CREATE,
+    ALBUM_CREATE("album_create"),
 
-    @Json(name = "channel_clip")
-    CHANNEL_CLIP,
+    CHANNEL_CLIP("channel_clip"),
 
-    @Json(name = "channel_create")
-    CHANNEL_CREATE,
+    CHANNEL_CREATE("channel_create"),
 
-    @Json(name = "channel_subscribe")
-    CHANNEL_SUBSCRIBE,
+    CHANNEL_SUBSCRIBE("channel_subscribe"),
 
-    @Json(name = "follow_user")
-    FOLLOW_USER,
+    FOLLOW_USER("follow_user"),
 
-    @Json(name = "group_clip")
-    GROUP_CLIP,
+    GROUP_CLIP("group_clip"),
 
-    @Json(name = "group_clip_comment")
-    GROUP_CLIP_COMMENT,
+    GROUP_CLIP_COMMENT("group_clip_comment"),
 
-    @Json(name = "group_create")
-    GROUP_CREATE,
+    GROUP_CREATE("group_create"),
 
-    @Json(name = "group_join")
-    GROUP_JOIN,
+    GROUP_JOIN("group_join"),
 
-    @Json(name = "like")
-    LIKE,
+    LIKE("like"),
 
-    @Json(name = "ondemand_publish")
-    ONDEMAND_PUBLISH,
+    ONDEMAND_PUBLISH("ondemand_publish"),
 
-    @Json(name = "portfolio_clip")
-    PORTFOLIO_CLIP,
+    PORTFOLIO_CLIP("portfolio_clip"),
 
-    @Json(name = "tip_clip")
-    TIP_CLIP,
+    TIP_CLIP("tip_clip"),
 
-    @Json(name = "upload")
-    UPLOAD,
+    UPLOAD("upload"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }

@@ -1,18 +1,15 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Different types of approach for uploading a video.
  */
-enum class ApproachType {
+enum class ApproachType(override val value: String?) : StringValue {
 
     /**
      * Form-based upload approach. With this approach, your end user uploads
      * the video to Vimeo through an HTML form, which you deploy in your app or through a link.
      */
-    @Json(name = "post")
-    POST,
+    POST("post"),
 
     /**
      * With the pull approach, you point us toward a video file that already exists on the internet.
@@ -20,15 +17,13 @@ enum class ApproachType {
      * upload. We even handle any connectivity issues that might come up. All we need is the
      * absolute path to the video file.
      */
-    @Json(name = "pull")
-    PULL,
+    PULL("pull"),
 
     /**
      * Streaming based approach for uploading videos. We recommend that you use the tus approach
      * for uploading videos. This approach will work on API versions 3.4.
      */
-    @Json(name = "streaming")
-    STREAMING,
+    STREAMING("streaming"),
 
     /**
      * Use the tus protocol to upload videos. With the tus approach, you can poll the progress of
@@ -36,11 +31,10 @@ enum class ApproachType {
      * that's because of a lost internet connection or because you've programmed pause functionality
      * into your app.
      */
-    @Json(name = "tus")
-    TUS,
+    TUS("tus"),
 
     /**
      * Unknown upload approach.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

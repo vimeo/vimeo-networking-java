@@ -1,62 +1,52 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Live statuses.
  */
-enum class LiveStatus {
+enum class LiveStatus(override val value: String?) : StringValue {
 
     /**
      * There was a problem archiving the stream.
      */
-    @Json(name = "archive_error")
-    ARCHIVE_ERROR,
+    ARCHIVE_ERROR("archive_error"),
 
     /**
      * The stream has ended, and it is currently being archived.
      */
-    @Json(name = "archiving")
-    ARCHIVING,
+    ARCHIVING("archiving"),
 
     /**
      * The user intentionally ended the stream.
      */
-    @Json(name = "done")
-    DONE,
+    DONE("done"),
 
     /**
      * Vimeo is working on setting up the connection.
      */
-    @Json(name = "pending")
-    PENDING,
+    PENDING("pending"),
 
     /**
      * The RTMP URL is ready to receive video content.
      */
-    @Json(name = "read")
-    READY,
+    READY("read"),
 
     /**
      * The stream is open and receiving content.
      */
-    @Json(name = "streaming")
-    STREAMING,
+    STREAMING("streaming"),
 
     /**
      * The stream has been terminated by Vimeo.
      */
-    @Json(name = "streaming_error")
-    STREAMING_ERROR,
+    STREAMING_ERROR("streaming_error"),
 
     /**
      * The RTMP link is visible, but it can't yet receive the stream.
      */
-    @Json(name = "unavailable")
-    UNAVAILABLE,
+    UNAVAILABLE("unavailable"),
 
     /**
      * Unknown live status.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

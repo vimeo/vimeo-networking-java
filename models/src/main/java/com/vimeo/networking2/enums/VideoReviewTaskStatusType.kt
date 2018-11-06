@@ -1,26 +1,22 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * The task status described in a video's note.
  */
-enum class VideoReviewTaskStatusType {
+enum class VideoReviewTaskStatusType(override val value: String?) : StringValue {
 
     /**
      * The task is closed.
      */
-    @Json(name = "closed")
-    CLOSED,
+    CLOSED("closed"),
 
     /**
      * The task is open.
      */
-    @Json(name = "open")
-    OPEN,
+    OPEN("open"),
 
     /**
      * Unknown status for the video review task.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

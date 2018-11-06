@@ -1,41 +1,34 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
-enum class SpatialProjectionType {
+enum class SpatialProjectionType(override val value: String?) : StringValue {
 
     /**
      * The spatial projection is cubical.
      */
-    @Json(name = "cubical")
-    CUBICAL,
+    CUBICAL("cubical"),
 
     /**
      * The spatial projection is cylindrical.
      */
-    @Json(name = "cylindrical")
-    CYLINDRICAL,
+    CYLINDRICAL("cylindrical"),
 
     /**
      * The spatial projection is dome-shaped.
      */
-    @Json(name = "dome")
-    DOME,
+    DOME("dome"),
 
     /**
      * The spatial projection is equirectangular.
      */
-    @Json(name = "equirectangular")
-    EQUIRECTANGULAR,
+    EQUIRECTANGULAR("equirectangular"),
 
     /**
      * The spatial projection is pyramid-shaped.
      */
-    @Json(name = "pyramid")
-    PYRAMID,
+    PYRAMID("pyramid"),
 
     /**
      * Unknown type of spatial projection.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

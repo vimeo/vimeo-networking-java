@@ -1,20 +1,14 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
+enum class VideoPlayStatus(override val value: String?) : StringValue {
 
-enum class VideoPlayStatus {
+    PLAYABLE("playable"),
 
-    @Json(name = "playable")
-    PLAYABLE,
+    PURCHASE_REQUIRED("purchase_required"),
 
-    @Json(name = "purchase_required")
-    PURCHASE_REQUIRED,
+    RESTRICTED("restricted"),
 
-    @Json(name = "restricted")
-    RESTRICTED,
+    UNAVAILABLE("unavailable"),
 
-    @Json(name = "unavailable")
-    UNAVAILABLE,
-
-    UNKNOWN
+    UNKNOWN(null)
 }
