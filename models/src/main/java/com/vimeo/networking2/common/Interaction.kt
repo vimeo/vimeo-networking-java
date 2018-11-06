@@ -1,3 +1,5 @@
+@file:JvmName("InteractionUtils")
+
 package com.vimeo.networking2.common
 
 import com.vimeo.networking2.enums.ApiOptionsType

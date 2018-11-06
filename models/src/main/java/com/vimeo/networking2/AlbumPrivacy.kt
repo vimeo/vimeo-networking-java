@@ -1,3 +1,5 @@
+@file:JvmName("AlbumPrivacyUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
