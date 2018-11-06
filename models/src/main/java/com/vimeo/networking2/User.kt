@@ -151,4 +151,4 @@ data class User(
  * @see User.account
  */
 val User.accountType: AccountType
-    get() = account?.asEnum() ?: AccountType.UNKNOWN
+    get() = account.asEnum(AccountType.UNKNOWN)

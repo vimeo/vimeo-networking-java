@@ -147,10 +147,10 @@ data class Album(
  * @see Album.layout
  */
 val Album.albumLayoutType: AlbumLayoutType
-    get() = layout?.asEnum() ?: AlbumLayoutType.UNKNOWN
+    get() = layout.asEnum(AlbumLayoutType.UNKNOWN)
 
 /**
  * @see Album.theme
  */
 val Album.themeType: AlbumThemeType
-    get() = theme?.asEnum() ?: AlbumThemeType.UNKNOWN
+    get() = theme.asEnum(AlbumThemeType.UNKNOWN)

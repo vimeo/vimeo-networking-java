@@ -28,5 +28,5 @@ interface Interaction {
 /**
  * @see Interaction.options
  */
-val Interaction.optionsTypes
-    get() = options?.map { it.asEnum() ?: ApiOptionsType.UNKNOWN }
+val Interaction.optionsTypes: List<ApiOptionsType>
+    get() = options?.map { it.asEnum(ApiOptionsType.UNKNOWN) } ?: emptyList()

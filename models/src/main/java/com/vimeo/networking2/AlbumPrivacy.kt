@@ -30,4 +30,4 @@ data class AlbumPrivacy(
  * @see AlbumPrivacy.viewingPermissions
  */
 val AlbumPrivacy.viewingPermissionsType: AlbumPrivacyViewValue
-    get() = viewingPermissions?.asEnum() ?: AlbumPrivacyViewValue.UNKNOWN
+    get() = viewingPermissions.asEnum(AlbumPrivacyViewValue.UNKNOWN)
