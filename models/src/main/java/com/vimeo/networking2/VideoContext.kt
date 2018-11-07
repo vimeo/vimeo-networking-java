@@ -23,7 +23,7 @@ data class VideoContext(
     /**
      * The contextual resource type.
      */
-    @Json(name = "resource_key")
+    @Json(name = "resource_type")
     val resourceType: String? = null
 
 )
