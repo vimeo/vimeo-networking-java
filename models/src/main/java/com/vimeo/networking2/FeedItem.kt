@@ -1,4 +1,4 @@
-@file:JvmName("FeedItem")
+@file:JvmName("FeedItemUtils")
 
 package com.vimeo.networking2
 
