@@ -44,6 +44,7 @@ data class Play(
 
     /**
      * The play status of the video.
+     * @see Play.statusType
      */
     @Json(name = "status")
     val status: String? = null
@@ -51,6 +52,7 @@ data class Play(
 
 /**
  * @see Play.status
+ * @see VideoPlayStatus
  */
 val Play.statusType: VideoPlayStatus
     get() = status.asEnum(VideoPlayStatus.UNKNOWN)

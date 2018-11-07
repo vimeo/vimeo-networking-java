@@ -15,6 +15,7 @@ data class Product(
 
     /**
      * Distinguish between monthly and yearly products.
+     * @see Product.billingPeriodType
      */
     @Json(name = "billing_period")
     val billingPeriod: String? = null,
@@ -53,6 +54,7 @@ data class Product(
 
 /**
  * @see Product.billingPeriod
+ * @see BillingPeriodType
  */
 val Product.billingPeriodType: BillingPeriodType
     get() = billingPeriod.asEnum(BillingPeriodType.UNKNOWN)

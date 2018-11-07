@@ -27,6 +27,7 @@ data class Recommendation(
 
     /**
      * Type of recommendation.
+     * @see Recommendation.recommendationType
      */
     val type: String? = null,
 
@@ -43,6 +44,7 @@ data class Recommendation(
 
 /**
  * @see Recommendation.type
+ * @see RecommendationType
  */
 val Recommendation.recommendationType: RecommendationType
     get() = type.asEnum(RecommendationType.UNKNOWN)

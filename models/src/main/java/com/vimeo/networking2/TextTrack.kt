@@ -59,6 +59,7 @@ data class TextTrack(
 
     /**
      *The type of the text track.
+     * @see TextTrack.textTrackType
      */
     @Json(name = "type")
     val type: String? = null
@@ -67,6 +68,7 @@ data class TextTrack(
 
 /**
  * @see TextTrack.type
+ * @see TextTrackType
  */
 val TextTrack.textTrackType: TextTrackType
     get() = type.asEnum(TextTrackType.UNKNOWN)

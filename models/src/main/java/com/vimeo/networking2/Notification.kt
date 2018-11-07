@@ -52,6 +52,7 @@ data class Notification(
 
     /**
      * The type of notification.
+     * @see Notification.notificationType
      */
     @Json(name = "type")
     val type: String? = null,
@@ -72,6 +73,7 @@ data class Notification(
 
 /**
  * @see Notification.type
+ * @see NotificationType
  */
 val Notification.notificationType: NotificationType
     get() = type.asEnum(NotificationType.UNKNOWN)

@@ -28,6 +28,7 @@ data class Space(
     /**
      * Whether the values of the upload_quota.space fields are for the lifetime quota or
      * the periodic quota.
+     * @see Space.showingType
      */
     @Json(name = "showing")
     val showing: String? = null,
@@ -42,6 +43,7 @@ data class Space(
 
 /**
  * @see Space.showing
+ * @see UploadSpaceType
  */
 val Space.showingType: UploadSpaceType
     get() = showing.asEnum(UploadSpaceType.UNKNOWN)

@@ -56,6 +56,7 @@ data class FeedItem(
 
     /**
      * Feed item type.
+     * @see FeedItem.attributionType
      */
     @Json(name = "type")
     val type: String? = null,
@@ -83,6 +84,7 @@ data class FeedItem(
 
 /**
  * @see FeedItem.type
+ * @see AttributionType
  */
 val FeedItem.attributionType: AttributionType
     get() = type.asEnum(AttributionType.UNKNOWN)

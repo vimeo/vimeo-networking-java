@@ -15,6 +15,7 @@ interface Interaction {
 
     /**
      * An array of the HTTP methods permitted on this URI.
+     * @see Interaction.optionsTypes
      */
     val options: List<String>?
 
@@ -27,6 +28,7 @@ interface Interaction {
 
 /**
  * @see Interaction.options
+ * @see ApiOptionsType
  */
 val Interaction.optionsTypes: List<ApiOptionsType>
     get() = options.asEnumList(ApiOptionsType.UNKNOWN)

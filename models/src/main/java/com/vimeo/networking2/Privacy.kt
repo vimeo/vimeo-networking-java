@@ -20,6 +20,7 @@ data class Privacy(
 
     /**
      * The user's privacy preference for comments.
+     * @see Comment.commentType
      */
     @Json(name = "comments")
     val comment: String? = null,
@@ -32,6 +33,7 @@ data class Privacy(
 
     /**
      * The user's privacy preference for embeds.
+     * @see Privacy.embedValue
      */
     @Json(name = "embed")
     val embed: String? = null,
@@ -44,6 +46,7 @@ data class Privacy(
 
     /**
      * The privacy settings of the channel.
+     * @see Privacy.viewValue
      */
     @Json(name = "view")
     val view: String? = null
@@ -51,18 +54,21 @@ data class Privacy(
 
 /**
  * @see Privacy.comment
+ * @see CommentValue
  */
 val Privacy.commentValue: CommentValue
     get() = comment.asEnum(CommentValue.UNKNOWN)
 
 /**
  * @see Privacy.embed
+ * @see EmbedValue
  */
 val Privacy.embedValue: EmbedValue
     get() = embed.asEnum(EmbedValue.UNKNOWN)
 
 /**
  * @see Privacy.view
+ * @see ViewValue
  */
 val Privacy.viewValue: ViewValue
     get() = view.asEnum(ViewValue.UNKNOWN)

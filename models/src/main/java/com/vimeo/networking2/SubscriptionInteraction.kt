@@ -34,6 +34,7 @@ data class SubscriptionInteraction(
 
     /**
      * The stream type.
+     * @see SubscriptionInteraction.streamType
      */
     @Json(name = "stream")
     val stream: String? = null
@@ -42,6 +43,7 @@ data class SubscriptionInteraction(
 
 /**
  * @see SubscriptionInteraction.stream
+ * @see StreamType
  */
 val SubscriptionInteraction.streamType: StreamType
     get() = stream.asEnum(StreamType.UNKNOWN)

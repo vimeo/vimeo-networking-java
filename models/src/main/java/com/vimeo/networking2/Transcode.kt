@@ -15,6 +15,7 @@ data class Transcode(
 
     /**
      * Status code for clip availability.
+     * @see Transcode.statusType
      */
     @Json(name = "status")
     val status: String? = null
@@ -23,6 +24,7 @@ data class Transcode(
 
 /**
  * @see Transcode.status
+ * @see TranscodeType
  */
 val Transcode.statusType: TranscodeType
     get() = status.asEnum(TranscodeType.UNKNOWN)

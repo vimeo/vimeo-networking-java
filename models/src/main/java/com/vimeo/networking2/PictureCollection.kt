@@ -40,6 +40,7 @@ data class PictureCollection(
 
     /**
      * The type of the picture.
+     * @see PictureCollection.pictureType
      */
     @Json(name = "type")
     val type: String? = null,
@@ -58,6 +59,7 @@ data class PictureCollection(
 
 /**
  * @see PictureCollection.type
+ * @see PictureType
  */
 val PictureCollection.pictureType: PictureType
     get() = type.asEnum(PictureType.UNKNOWN)

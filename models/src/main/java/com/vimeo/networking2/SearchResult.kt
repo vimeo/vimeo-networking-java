@@ -52,6 +52,7 @@ data class SearchResult(
 
     /**
      * The type of object that this search result is representing.
+     * @see SearchResult.searchType
      */
     val type: String? = null
 
@@ -59,6 +60,7 @@ data class SearchResult(
 
 /**
  * @see SearchResult.type
+ * @see SearchType
  */
 val SearchResult.searchType: SearchType
     get() = type.asEnum(SearchType.UNKNOWN)

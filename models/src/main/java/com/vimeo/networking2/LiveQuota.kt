@@ -15,6 +15,7 @@ data class LiveQuota(
 
     /**
      * The status code for the user's ability to live stream.
+     * @see LiveQuota.liveQuotaStatus
      */
     @Json(name = "status")
     val status: String? = null,
@@ -35,6 +36,7 @@ data class LiveQuota(
 
 /**
  * @see LiveQuota.status
+ * @see LiveQuotaStatus
  */
 val LiveQuota.liveQuotaStatus: LiveQuotaStatus
     get() = status.asEnum(LiveQuotaStatus.UNKNOWN)

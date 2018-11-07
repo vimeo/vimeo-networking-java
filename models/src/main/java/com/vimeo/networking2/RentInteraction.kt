@@ -57,7 +57,8 @@ data class RentInteraction(
     val purchaseTime: Date? = null,
 
     /**
-     * The user's streaming access to this On Demand video:
+     * The user's streaming access to this On Demand video.
+     * @see RentInteraction.streamType
      */
     @Json(name = "stream")
     val stream: String? = null,
@@ -72,6 +73,7 @@ data class RentInteraction(
 
 /**
  * @see RentInteraction.stream
+ * @see StreamType
  */
 val RentInteraction.streamType: StreamType
     get() = stream.asEnum(StreamType.UNKNOWN)

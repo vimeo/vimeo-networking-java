@@ -15,6 +15,7 @@ data class VideoContext(
 
     /**
      * The contextual action.
+     * @see VideoContext.actionType
      */
     @Json(name = "action")
     val action: String? = null,
@@ -29,6 +30,7 @@ data class VideoContext(
 
 /**
  * @see VideoContext.action
+ * @see VideoActionType
  */
 val VideoContext.actionType: VideoActionType
     get() = action.asEnum(VideoActionType.UNKNOWN)

@@ -22,6 +22,7 @@ data class PurchaseInteraction(
 
     /**
      * Purchase status.
+     * @see PurchaseInteraction.purchaseStatusType
      */
     @Json(name = "status")
     val status: String? = null
@@ -30,6 +31,7 @@ data class PurchaseInteraction(
 
 /**
  * @see PurchaseInteraction.status
+ * @see PurchaseStatusType
  */
 val PurchaseInteraction.purchaseStatusType: PurchaseStatusType
     get() = status.asEnum(PurchaseStatusType.UNKNOWN)

@@ -46,6 +46,7 @@ data class VideoReviewNote(
 
     /**
      * Whether the task described in this note has been completed or not.
+     * @see VideoReviewNote.statusType
      */
     @Json(name = "status")
     val status: String? = null,
@@ -88,6 +89,7 @@ data class VideoReviewNote(
 
 /**
  * @see VideoReviewNote.status
+ * @see VideoReviewTaskStatusType
  */
 val VideoReviewNote.statusType: VideoReviewTaskStatusType
     get() = status.asEnum(VideoReviewTaskStatusType.UNKNOWN)

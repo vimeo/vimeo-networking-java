@@ -40,6 +40,7 @@ data class Comment(
 
     /**
      * The Vimeo content to which the comment relates.
+     * @see Comment.commentType
      */
     @Json(name = "type")
     val type: String? = null,
@@ -58,6 +59,7 @@ data class Comment(
 
 /**
  * @see Comment.type
+ * @see CommentType
  */
 val Comment.commentType: CommentType
     get() = type.asEnum(CommentType.UNKNOWN)

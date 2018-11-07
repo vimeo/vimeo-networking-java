@@ -45,6 +45,7 @@ data class Cinema(
 
     /**
      * The type of programmed cinema item.
+     * @see Cinema.cinemaType
      */
     @Json(name = "type")
     val type: String? = null,
@@ -59,6 +60,7 @@ data class Cinema(
 
 /**
  * @see Cinema.type
+ * @see CinemaType
  */
 val Cinema.cinemaType: CinemaType
     get() = type.asEnum(CinemaType.UNKNOWN)

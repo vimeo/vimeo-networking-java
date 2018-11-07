@@ -24,6 +24,7 @@ data class Payment(
 
     /**
      * The type of stored payment method
+     * @see Payment.paymentType
      */
     @Json(name = "type")
     val type: String? = null
@@ -32,6 +33,7 @@ data class Payment(
 
 /**
  * @see Payment.type
+ * @see PaymentType
  */
 val Payment.paymentType: PaymentType
     get() = type.asEnum(PaymentType.UNKNOWN)

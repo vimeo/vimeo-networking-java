@@ -26,6 +26,7 @@ data class ApiError(
 
     /**
      * The error code.
+     * @see ApiError.errorCodeType
      */
     @Json(name = "error_code")
     val errorCode: String? = null,
@@ -40,6 +41,7 @@ data class ApiError(
 
 /**
  * @see ApiError.errorCode
+ * @see ErrorCode
  */
 val ApiError.errorCodeType: ErrorCode
     get() = errorCode.asEnum(ErrorCode.DEFAULT)

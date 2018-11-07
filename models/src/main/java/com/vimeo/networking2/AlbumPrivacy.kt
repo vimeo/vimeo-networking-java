@@ -21,6 +21,7 @@ data class AlbumPrivacy(
 
     /**
      * Who can view the album.
+     * @see AlbumPrivacy.viewingPermissionsType
      */
     @Json(name = "view")
     val viewingPermissions: String? = null
@@ -28,6 +29,7 @@ data class AlbumPrivacy(
 
 /**
  * @see AlbumPrivacy.viewingPermissions
+ * @see AlbumPrivacyViewValue
  */
 val AlbumPrivacy.viewingPermissionsType: AlbumPrivacyViewValue
     get() = viewingPermissions.asEnum(AlbumPrivacyViewValue.UNKNOWN)

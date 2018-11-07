@@ -66,6 +66,7 @@ data class Live(
 
     /**
      * The status of the RTMP [link].
+     * @see Live.liveStatus
      */
     @Json(name = "status")
     val status: String? = null,
@@ -82,6 +83,7 @@ data class Live(
 
 /**
  * @see Live.status
+ * @see LiveStatus
  */
 val Live.liveStatus: LiveStatus
     get() = status.asEnum(LiveStatus.UNKNOWN)

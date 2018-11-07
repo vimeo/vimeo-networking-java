@@ -61,6 +61,7 @@ data class Album(
 
     /**
      * The album's layout preference.
+     * @see Album.albumLayoutType
      */
     @Json(name = "layout")
     val layout: String? = null,
@@ -115,12 +116,14 @@ data class Album(
 
     /**
      * Sort type of the album.
+     * @see Album.sortType
      */
     @Json(name = "sort")
     val sort: String? = null,
 
     /**
      * The album's color theme preference.
+     * @see Album.themeType
      */
     @Json(name = "theme")
     val theme: String? = null,
@@ -145,18 +148,21 @@ data class Album(
 
 /**
  * @see Album.layout
+ * @see AlbumLayoutType
  */
 val Album.albumLayoutType: AlbumLayoutType
     get() = layout.asEnum(AlbumLayoutType.UNKNOWN)
 
 /**
  * @see Album.theme
+ * @see AlbumThemeType
  */
 val Album.themeType: AlbumThemeType
     get() = theme.asEnum(AlbumThemeType.UNKNOWN)
 
 /**
  * @see Album.sort
+ * @see SortType
  */
 val Album.sortType: SortType
     get() = sort.asEnum(SortType.UNKNOWN)

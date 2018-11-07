@@ -19,6 +19,7 @@ data class User(
 
     /**
      * The user's account type
+     * @see User.accountType
      */
     @Json(name = "account")
     val account: String? = null,
@@ -39,6 +40,7 @@ data class User(
 
     /**
      * The user's content filters.
+     * @see User.contentFilterTypes
      */
     @Json(name = "content_filter")
     val contentFilter: List<String>? = null,
@@ -149,12 +151,14 @@ data class User(
 
 /**
  * @see User.account
+ * @see AccountType
  */
 val User.accountType: AccountType
     get() = account.asEnum(AccountType.UNKNOWN)
 
 /**
  * @see User.contentFilter
+ * @see ContentFilterType
  */
 val User.contentFilterTypes: List<ContentFilterType>
     get() = contentFilter.asEnumList(ContentFilterType.UNKNOWN)

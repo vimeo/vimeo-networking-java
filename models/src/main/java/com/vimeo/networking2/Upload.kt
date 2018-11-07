@@ -16,6 +16,7 @@ data class Upload(
 
     /**
      * The approach for uploading the video.
+     * @see Upload.approachType
      */
     @Json(name = "approach")
     val approach: String? = null,
@@ -58,6 +59,7 @@ data class Upload(
 
     /**
      * The status code for the availability of the uploaded video.
+     * @see Upload.statusType
      */
     @Json(name = "status")
     val status: String? = null,
@@ -72,12 +74,14 @@ data class Upload(
 
 /**
  * @see Upload.approach
+ * @see ApproachType
  */
 val Upload.approachType: ApproachType
     get() = approach.asEnum(ApproachType.UNKNOWN)
 
 /**
  * @see Upload.status
+ * @see UploadStatusType
  */
 val Upload.statusType: UploadStatusType
     get() = status.asEnum(UploadStatusType.UNKNOWN)
