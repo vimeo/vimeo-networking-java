@@ -190,8 +190,8 @@ data class Video(
      * of [upload] and [transcode].
      */
     @Json(name = "status")
-    @Deprecated("This field is deprecated in favor of upload and transcode.")
-    val status: VideoStatusType? = null,
+    @Deprecated("This property is deprecated in favor of upload and transcode.")
+    val status: String? = null,
 
     /**
      * An array of all tags assigned to this video.
@@ -240,3 +240,10 @@ data class Video(
  */
 val Video.licenseType: LicenseType
     get() = license.asEnum(LicenseType.UNKNOWN)
+
+/**
+ * @see Video.status
+ */
+@Deprecated(message = "This property is deprecated in favor of upload and transcode.")
+val Video.statusType: VideoStatusType
+    get() = status.asEnum(VideoStatusType.UNKNOWN)

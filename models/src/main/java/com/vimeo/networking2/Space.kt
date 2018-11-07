@@ -1,8 +1,11 @@
+@file:JvmName("SpaceUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.UploadSpaceType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Upload quota space data.
@@ -27,7 +30,7 @@ data class Space(
      * the periodic quota.
      */
     @Json(name = "showing")
-    val showing: UploadSpaceType? = null,
+    val showing: String? = null,
 
     /**
      * The number of bytes that you've already uploaded against your quota.
@@ -36,3 +39,9 @@ data class Space(
     val used: Long? = null
 
 )
+
+/**
+ * @see Space.showing
+ */
+val Space.showingType: UploadSpaceType
+    get() = showing.asEnum(UploadSpaceType.UNKNOWN)

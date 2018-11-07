@@ -1,8 +1,11 @@
+@file:JvmName("TextTrackUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.TextTrackType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -58,6 +61,12 @@ data class TextTrack(
      *The type of the text track.
      */
     @Json(name = "type")
-    val type: TextTrackType? = null
+    val type: String? = null
 
 )
+
+/**
+ * @see TextTrack.type
+ */
+val TextTrack.textTrackType: TextTrackType
+    get() = type.asEnum(TextTrackType.UNKNOWN)

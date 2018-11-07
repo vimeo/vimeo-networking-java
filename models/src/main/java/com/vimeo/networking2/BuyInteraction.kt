@@ -62,7 +62,7 @@ data class BuyInteraction(
      * The user's streaming access to this On Demand video.
      */
     @Json(name = "stream")
-    val streamType: StreamType? = null,
+    val stream: String? = null,
 
     @Json(name = "options")
     override val options: List<String>? = null,
@@ -77,3 +77,9 @@ data class BuyInteraction(
  */
 val BuyInteraction.downloadType: DownloadType
     get() = download.asEnum(DownloadType.UNKNOWN)
+
+/**
+ * @see BuyInteraction.stream
+ */
+val BuyInteraction.streamType: StreamType
+    get() = stream.asEnum(StreamType.UNKNOWN)

@@ -1,8 +1,11 @@
+@file:JvmName("VideoSourceFileUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.VideoQualityType
 import com.vimeo.networking2.enums.VideoSourceType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 @JsonClass(generateAdapter = true)
@@ -46,7 +49,7 @@ data class VideoSourceFile(
     /**
      * The video quality (as determined by height and width).
      */
-    val quality: VideoQualityType? = null,
+    val quality: String? = null,
 
     /**
      * The file size of the video.
@@ -61,7 +64,7 @@ data class VideoSourceFile(
     /**
      * The type of the video file.
      */
-    val type: VideoSourceType? = null,
+    val type: String? = null,
 
     /**
      * The width of the video in pixels.
@@ -69,3 +72,15 @@ data class VideoSourceFile(
     val width: Int? = null
 
 )
+
+/**
+ * @see ProgressiveFileType.quality
+ */
+val VideoSourceFile.qualityType: VideoQualityType
+    get() = quality.asEnum(VideoQualityType.UNKNOWN)
+
+/**
+ * @see ProgressiveFileType.type
+ */
+val VideoSourceFile.sourceType: VideoSourceType
+    get() = type.asEnum(VideoSourceType.UNKNOWN)
