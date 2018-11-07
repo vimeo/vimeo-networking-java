@@ -32,7 +32,7 @@ data class Play(
      * Progressive files.
      */
     @Json(name = "progressive")
-    val progressive: List<ProgressiveFileType>? = null,
+    val progressive: List<ProgressiveVideoFile>? = null,
 
     /**
      * The source file of the video.

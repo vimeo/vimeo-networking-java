@@ -89,14 +89,14 @@ data class VideoSourceFile(
 )
 
 /**
- * @see ProgressiveFileType.quality
+ * @see ProgressiveVideoFile.quality
  * @see VideoQualityType
  */
 val VideoSourceFile.qualityType: VideoQualityType
     get() = quality.asEnum(VideoQualityType.UNKNOWN)
 
 /**
- * @see ProgressiveFileType.type
+ * @see ProgressiveVideoFile.type
  * @see VideoSourceType
  */
 val VideoSourceFile.sourceType: VideoSourceType
