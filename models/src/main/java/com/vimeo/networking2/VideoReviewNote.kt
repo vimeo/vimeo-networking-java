@@ -80,7 +80,11 @@ data class VideoReviewNote(
     @Json(name = "user_name")
     val userName: String? = null
 
-)
+) : Entity {
+
+    override val identifier: String? = resourceKey
+
+}
 
 /**
  * @see VideoReviewNote.status

@@ -50,7 +50,11 @@ data class PictureCollection(
     @Json(name = "uri")
     val uri: String? = null
 
-)
+) : Entity {
+
+    override val identifier: String? = resourceKey
+
+}
 
 /**
  * @see PictureCollection.type
