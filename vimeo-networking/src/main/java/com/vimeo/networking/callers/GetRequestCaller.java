@@ -90,6 +90,27 @@ public final class GetRequestCaller {
      * Used in association with
      * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get an {@link com.vimeo.networking2.AppConfiguration} response from an API endpoint. This caller will call
+     * through to
+     * {@link VimeoService#getAppConfigurationMoshi(String, String, Map, String)} (String, String, Map, String)}
+     */
+    public static final Caller<com.vimeo.networking2.AppConfiguration> APP_CONFIGURATION_MOSHI =
+            new Caller<com.vimeo.networking2.AppConfiguration>() {
+                @NotNull
+                @Override
+                public Call<com.vimeo.networking2.AppConfiguration> call(@NotNull String authHeader,
+                                                                         @NotNull String uri,
+                                                                         @NotNull Map<String, String> queryMap,
+                                                                         @NotNull String cacheHeader,
+                                                                         @NotNull VimeoService vimeoService) {
+                    return vimeoService.getAppConfigurationMoshi(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get an {@link Category} response from an API endpoint. This caller will call through to
      * {@link VimeoService#getCategory(String, String, Map, String)}
      */

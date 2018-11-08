@@ -34,7 +34,8 @@ public final class AnnotatedConverterFactory extends Converter.Factory {
      * Different types of converter that can be specified in the serializer annotation.
      */
     enum ConverterType {
-        GSON, MOSHI;
+        GSON,
+        MOSHI
     }
 
     /**
