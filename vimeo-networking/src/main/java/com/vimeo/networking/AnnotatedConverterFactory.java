@@ -1,6 +1,7 @@
 package com.vimeo.networking;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
@@ -13,9 +14,9 @@ import retrofit2.Retrofit;
 
 /**
  * This is a converter factory that allows you to specify different converters to use for each request.
- * This was taken from https://stackoverflow.com/questions/40824122/android-retrofit-2-multiple-converters-gson-simplexml-error.
- * It provides two annotations - Gson and Moshi that should be used on a Retrofit request service to specify which
- * serialization framework to use. If a annotation is not specified, Gson will be used.
+ * This was taken from
+ * https://stackoverflow.com/questions/40824122/android-retrofit-2-multiple-converters-gson-simplexml-error. It provides
+ * framework to use. If a annotation is not specified, Gson will be used.
  */
 public final class AnnotatedConverterFactory extends Converter.Factory {
 
@@ -67,18 +68,38 @@ public final class AnnotatedConverterFactory extends Converter.Factory {
     public Converter<ResponseBody, ?> responseBodyConverter(@NotNull final Type type,
                                                             @NotNull final Annotation[] annotations,
                                                             @NotNull final Retrofit retrofit) {
-        Converter.Factory converterFactory = gsonFactory;
+        return chooseFactoryForSerializer(annotations).responseBodyConverter(type, annotations, retrofit);
+    }
 
+    /**
+     * Choose the {@link Converter.Factory} that will be used based on the {@link Serializer} annotation.
+     *
+     * @param annotations The annotations array that may contain the {@link Serializer} annotation.
+     */
+    @NotNull
+    private Converter.Factory chooseFactoryForSerializer(@NotNull final Annotation[] annotations) {
+        final Serializer serializer = findSerializerInArray(annotations);
+        if (serializer != null && serializer.converter() == ConverterType.MOSHI) {
+            return moshiFactory;
+        } else {
+            return gsonFactory;
+        }
+    }
+
+    /**
+     * Return the {@link Serializer} annotation instance found in the array of {@link Annotation} or null if it was not
+     * found.
+     *
+     * @param annotations The annotations array to search for the {@link Serializer} annotation.
+     */
+    @Nullable
+    private static Serializer findSerializerInArray(@NotNull final Annotation[] annotations) {
         for (final Annotation annotation : annotations) {
             if (annotation instanceof Serializer) {
-                final ConverterType converterType = ((Serializer) annotation).converter();
-                if (converterType == ConverterType.MOSHI) {
-                    converterFactory = moshiFactory;
-                    break;
-                }
+                return (Serializer) annotation;
             }
         }
-        return converterFactory.responseBodyConverter(type, annotations, retrofit);
+        return null;
     }
 
 }
