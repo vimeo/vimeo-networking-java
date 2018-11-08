@@ -16,6 +16,7 @@ import retrofit2.Retrofit;
  * This is a converter factory that allows you to specify different converters to use for each request.
  * This was taken from
  * https://stackoverflow.com/questions/40824122/android-retrofit-2-multiple-converters-gson-simplexml-error. It provides
+ * two annotations - Gson and Moshi that should be used on a Retrofit request service to specify which serialization
  * framework to use. If a annotation is not specified, Gson will be used.
  */
 public final class AnnotatedConverterFactory extends Converter.Factory {
