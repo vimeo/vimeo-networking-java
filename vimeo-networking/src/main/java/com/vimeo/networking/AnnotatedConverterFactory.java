@@ -8,6 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Type;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -70,6 +71,15 @@ public final class AnnotatedConverterFactory extends Converter.Factory {
                                                             @NotNull final Annotation[] annotations,
                                                             @NotNull final Retrofit retrofit) {
         return chooseFactoryForSerializer(annotations).responseBodyConverter(type, annotations, retrofit);
+    }
+
+    @Override
+    public Converter<?, RequestBody> requestBodyConverter(@NotNull Type type,
+                                                          @NotNull Annotation[] parameterAnnotations,
+                                                          @NotNull Annotation[] methodAnnotations,
+                                                          @NotNull Retrofit retrofit) {
+        return chooseFactoryForSerializer(parameterAnnotations)
+                .requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit);
     }
 
     /**
