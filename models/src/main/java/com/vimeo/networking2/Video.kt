@@ -115,12 +115,6 @@ data class Video(
     val name: String? = null,
 
     /**
-     * Information about the folder that contains this video.
-     */
-    @Json(name = "parent_folder")
-    val parentFolder: Folder? = null,
-
-    /**
      * The privacy-enabled password to watch this video.
      * This data requires a bearer token with the private scope.
      *
@@ -195,12 +189,6 @@ data class Video(
      */
     @Json(name = "tags")
     val tags: List<Tag>? = null,
-
-    /**
-     * The transcode information for a video upload.
-     */
-    @Json(name = "transcode")
-    val transcode: Transcode? = null,
 
     /**
      * The upload information for this video.

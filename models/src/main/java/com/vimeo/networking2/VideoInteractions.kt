@@ -47,12 +47,6 @@ data class VideoInteractions(
     val subscription: SubscriptionInteraction? = null,
 
     /**
-     * Information about removing this video from the user's list of watched videos.
-     */
-    @Json(name = "watched")
-    val watched: WatchedInteraction? = null,
-
-    /**
      * Information about whether this video appears on the authenticated user's Watch Later list.
      */
     @Json(name = "watchlater")

@@ -8,7 +8,7 @@ import com.vimeo.networking2.common.Pageable
  * List of cinema that could be paged.
  */
 @JsonClass(generateAdapter = true)
-data class CinemaList(
+data class ProgrammedContentItemList(
 
     @Json(name = "total")
     override val total: Int? = null,
@@ -23,6 +23,6 @@ data class CinemaList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<Cinema>? = null
+    override val data: List<ProgrammedContentItem>? = null
 
-) : Pageable<Cinema>
+) : Pageable<ProgrammedContentItem>

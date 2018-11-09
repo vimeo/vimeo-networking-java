@@ -10,6 +10,12 @@ import com.vimeo.networking2.common.Pageable
 @JsonClass(generateAdapter = true)
 data class SearchResultList(
 
+    @Json(name = "facets")
+    val facetCollection: SearchFacetCollection? = null,
+
+    @Json(name = "mature_hidden_count")
+    val matureHiddenCount: Int? = null,
+
     @Json(name = "total")
     override val total: Int? = null,
 

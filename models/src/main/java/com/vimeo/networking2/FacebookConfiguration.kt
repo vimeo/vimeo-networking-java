@@ -12,12 +12,6 @@ import com.squareup.moshi.JsonClass
 data class FacebookConfiguration(
 
     /**
-     * Facebook client id and client secret.
-     */
-    @Json(name = "auth")
-    val auth: FacebookAuthData? = null,
-
-    /**
      * An array of required scopes for connecting users to Facebook.
      */
     @Json(name = "required_scopes")

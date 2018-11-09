@@ -12,24 +12,6 @@ import com.squareup.moshi.JsonClass
 data class FeaturesConfiguration(
 
     /**
-     * The Chromecast receiver app ID.
-     */
-    @Json(name = "chromecast_app_id")
-    val chromecastAppId: String? = null,
-
-    /**
-     * Is Comscore enabled?
-     */
-    @Json(name = "comscore")
-    val comscore: Boolean? = null,
-
-    /**
-     * Does the user reside within a GDPR-compliant country?
-     */
-    @Json(name = "gdpr_enabled")
-    val gdprEnabled: Boolean? = null,
-
-    /**
      * Is play tracking enabled?
      */
     @Json(name = "play_tracking")

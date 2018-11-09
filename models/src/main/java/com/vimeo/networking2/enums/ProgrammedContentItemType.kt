@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 /**
  * The type of programmed cinema item.
  */
-enum class CinemaType {
+enum class ProgrammedContentItemType {
 
     /**
      * Category.
