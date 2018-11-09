@@ -176,10 +176,10 @@ data class Video(
 
     /**
      * The status code for the availability of the video. This field is deprecated in favor
-     * of [upload] and [transcode].
+     * of [upload].
      */
     @Json(name = "status")
-    @Deprecated("This field is deprecated in favor of upload and transcode.")
+    @Deprecated("This field is deprecated in favor of upload.")
     val status: VideoStatusType? = null,
 
     /**

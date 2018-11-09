@@ -70,6 +70,7 @@ data class Live(
     /**
      * If [status] is [LiveStatus.STREAMING_ERROR], this is the reason for that error.
      */
+    @Internal
     @Json(name = "streaming_error")
     val streamingError: ApiError? = null
 

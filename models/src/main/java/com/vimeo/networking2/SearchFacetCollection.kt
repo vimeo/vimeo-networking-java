@@ -1,10 +1,12 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  * A grouping of all facets.
  */
+@JsonClass(generateAdapter = true)
 data class SearchFacetCollection(
 
     /**
