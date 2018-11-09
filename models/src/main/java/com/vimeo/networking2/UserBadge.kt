@@ -2,13 +2,13 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.UserBadgeType
 
 /**
  * User's badge information.
- *
- * Requires [CapabilitiesType.CAPABILITY_VIEW_USER_BADGE].
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class UserBadge(
 

@@ -2,12 +2,12 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
  * Live heart beat configuration.
- *
- * Requires [CapabilitiesType.CAPABILITY_PLATFORM_CONFIGS_OTA_LIVE].
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class LiveHeartbeatConfiguration(
 

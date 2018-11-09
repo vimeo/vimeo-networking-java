@@ -2,12 +2,12 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
  * This data requires a bearer token with the private scope.
- *
- * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class NotificationTypeCount(
 

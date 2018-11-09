@@ -2,10 +2,12 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
- * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
+ * All actions that can be taken on notifications.
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class NotificationConnection(
 
@@ -26,16 +28,12 @@ data class NotificationConnection(
     /**
      * Information about this user's notifications. This data requires a bearer token
      * with the private scope.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
      */
     @Json(name = "type_count")
     val typeCount: NotificationTypeCount? = null,
 
     /**
      * An array of notification types and the total number of unseen notifications.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_APP_NOTIFICATIONS].
      */
     @Json(name = "type_unseen_count")
     val typeUnseenCount: NotificationTypeCount? = null,

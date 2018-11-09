@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
  * All action that can be taken on a video.
@@ -31,6 +32,7 @@ data class VideoInteractions(
     /**
      * The Rent interaction for an On Demand video.
      */
+    @Internal
     @Json(name = "rent")
     val rent: RentInteraction? = null,
 
@@ -43,6 +45,7 @@ data class VideoInteractions(
     /**
      * Subscription information for an On Demand video.
      */
+    @Internal
     @Json(name = "subscribe")
     val subscription: SubscriptionInteraction? = null,
 

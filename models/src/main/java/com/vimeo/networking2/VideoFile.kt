@@ -2,12 +2,11 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 import java.util.*
 
 /**
  * Video file data.
- *
- * Requires [CapabilitiesType.CAPABILITY_PLAY_REPRESENTATION].
  */
 @JsonClass(generateAdapter = true)
 data class VideoFile(
@@ -27,6 +26,7 @@ data class VideoFile(
     /**
      * The URL for logging events.
      */
+    @Internal
     @Json(name = "log")
     val log: String? = null
 )

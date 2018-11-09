@@ -2,10 +2,12 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
- * Requires [CapabilitiesType.CAPABILITY_VIDEO_REVIEW].
+ * Review page information.
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class ReviewPage(
 

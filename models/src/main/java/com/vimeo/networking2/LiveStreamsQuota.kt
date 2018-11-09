@@ -2,12 +2,12 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
  * Live Stream Quota dto.
- *
- * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class LiveStreamsQuota(
 

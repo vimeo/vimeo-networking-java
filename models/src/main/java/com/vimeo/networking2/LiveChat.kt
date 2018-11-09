@@ -2,10 +2,13 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
- * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT_CHAT].
+ * A model representing the specific data needed for the live chat feature when a live video is playing.
+ * Additional data can be found in the [LiveChatConfiguration] class available in the [AppConfiguration].
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class LiveChat(
 
