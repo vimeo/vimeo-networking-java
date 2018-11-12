@@ -28,6 +28,7 @@ import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.VimeoClient.Caller;
 import com.vimeo.networking.VimeoService;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking2.AppConfiguration;
 import com.vimeo.networking2.FeedList;
 import com.vimeo.networking2.UserList;
 import com.vimeo.networking2.VideoList;
@@ -99,6 +100,26 @@ public final class MoshiGetRequestCaller {
                                                                   @NotNull String cacheHeader,
                                                                   @NotNull VimeoService vimeoService) {
                     return vimeoService.getVideoListMoshi(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get an {@link AppConfiguration} response from an API endpoint. This caller will call through to
+     * {@link VimeoService#getAppConfigurationMoshi(String, String, Map, String)} (String, String, Map, String)}
+     */
+    public static final Caller<AppConfiguration> APP_CONFIGURATION_MOSHI =
+            new Caller<AppConfiguration>() {
+                @NotNull
+                @Override
+                public Call<AppConfiguration> call(@NotNull String authHeader,
+                                                   @NotNull String uri,
+                                                   @NotNull Map<String, String> queryMap,
+                                                   @NotNull String cacheHeader,
+                                                   @NotNull VimeoService vimeoService) {
+                    return vimeoService.getAppConfigurationMoshi(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
