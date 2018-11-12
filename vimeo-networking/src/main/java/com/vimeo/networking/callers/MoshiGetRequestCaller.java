@@ -110,7 +110,7 @@ public final class MoshiGetRequestCaller {
      * to get an {@link AppConfiguration} response from an API endpoint. This caller will call through to
      * {@link VimeoService#getAppConfigurationMoshi(String, String, Map, String)} (String, String, Map, String)}
      */
-    public static final Caller<AppConfiguration> APP_CONFIGURATION_MOSHI =
+    public static final Caller<AppConfiguration> APP_CONFIGURATION =
             new Caller<AppConfiguration>() {
                 @NotNull
                 @Override
