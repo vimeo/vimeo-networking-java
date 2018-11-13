@@ -10,6 +10,6 @@ data class Transcode(
     /**
      * Status code for clip availability.
      */
-    val status: TranscodeType
+    val status: TranscodeType? = null
 
 )

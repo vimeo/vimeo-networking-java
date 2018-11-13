@@ -1,5 +1,7 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Entity
+
 /**
  * This model represents a "season" of content. Seasons are logical groupings
  * of videos set up by creators. All TVODs will have a Season, even if it is

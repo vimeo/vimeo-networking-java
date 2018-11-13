@@ -74,6 +74,6 @@ data class FeedItem(
      * [AttributionType.APPEARANCE], and [AttributionType.SHARE] activity types.
      */
     @Json(name = "user")
-    val user: User
+    val user: User? = null
 
 )
