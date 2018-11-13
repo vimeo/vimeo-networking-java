@@ -8,6 +8,7 @@ import java.util.*
 /**
  * Video file data.
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class VideoFile(
 
@@ -26,7 +27,6 @@ data class VideoFile(
     /**
      * The URL for logging events.
      */
-    @Internal
     @Json(name = "log")
     val log: String? = null
 )
