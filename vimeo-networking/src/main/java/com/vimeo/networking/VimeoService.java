@@ -226,6 +226,13 @@ public interface VimeoService {
                                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.AppConfiguration> getAppConfigurationMoshi(@Header("Authorization") String authHeader,
+                                                                          @Url String uri,
+                                                                          @QueryMap Map<String, String> options,
+                                                                          @Header("Cache-Control") String cacheHeader);
+
+    @GET
     Call<Category> getCategory(@Header("Authorization") String authHeader,
                                @Url String uri,
                                @QueryMap Map<String, String> options,
@@ -315,7 +322,7 @@ public interface VimeoService {
                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    @Serializer(converter =  ConverterType.MOSHI)
+    @Serializer(converter = ConverterType.MOSHI)
     Call<com.vimeo.networking2.FeedList> getFeedListMoshi(@Header("Authorization") String authHeader,
                                                           @Url String uri,
                                                           @QueryMap Map<String, String> options,
@@ -364,7 +371,7 @@ public interface VimeoService {
                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    @Serializer(converter =  ConverterType.MOSHI)
+    @Serializer(converter = ConverterType.MOSHI)
     Call<com.vimeo.networking2.UserList> getUserListMoshi(@Header("Authorization") String authHeader,
                                                           @Url String uri,
                                                           @QueryMap Map<String, String> options,
@@ -377,7 +384,7 @@ public interface VimeoService {
                                  @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    @Serializer(converter =  ConverterType.MOSHI)
+    @Serializer(converter = ConverterType.MOSHI)
     Call<com.vimeo.networking2.VideoList> getVideoListMoshi(@Header("Authorization") String authHeader,
                                                             @Url String uri,
                                                             @QueryMap Map<String, String> options,

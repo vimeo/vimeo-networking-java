@@ -1,4 +1,4 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.common
 
 /**
  * Represents data that can be uniquely identified by an [Entity.identifier].
