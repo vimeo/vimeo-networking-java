@@ -4,9 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * A model that holds the type of push subscriptions a user has. This class
- * has both getters and setters since a user can update their subscriptions
- * using a Patch.
+ * A model that holds the type of push subscriptions a user has.
  */
 @JsonClass(generateAdapter = true)
 data class Subscriptions(
