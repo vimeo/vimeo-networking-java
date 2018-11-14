@@ -15,18 +15,21 @@ data class LiveChat(
     /**
      * The identification number of the live clip's chat room.
      */
+    @Internal
     @Json(name = "room_id")
     val roomId: String? = null,
 
     /**
      * The JSON Web Token to access the live clip's chat room.
      */
+    @Internal
     @Json(name = "token")
     val token: String? = null,
 
     /**
      * User.
      */
+    @Internal
     @Json(name = "user")
     val user: User? = null
 

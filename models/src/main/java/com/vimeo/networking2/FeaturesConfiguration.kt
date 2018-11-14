@@ -14,6 +14,7 @@ data class FeaturesConfiguration(
     /**
      * Is play tracking enabled?
      */
+    @Internal
     @Json(name = "play_tracking")
     val playTracking: Boolean? = null
 

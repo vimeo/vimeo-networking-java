@@ -13,6 +13,7 @@ data class VideoInteractions(
     /**
      * The buy interaction for a On Demand video.
      */
+    @Internal
     @Json(name = "buy")
     val buy: BuyInteraction? = null,
 
@@ -20,6 +21,7 @@ data class VideoInteractions(
      * When a video is referenced by a channel URI, if the user is a moderator of the
      * channel, include information about removing the video from the channel.
      */
+    @Internal
     @Json(name = "channel")
     val channel: BasicInteraction? = null,
 

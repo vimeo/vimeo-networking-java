@@ -10,9 +10,15 @@ import com.vimeo.networking2.common.Pageable
 @JsonClass(generateAdapter = true)
 data class SearchResultList(
 
+    /**
+     * The search facets.
+     */
     @Json(name = "facets")
     val facetCollection: SearchFacetCollection? = null,
 
+    /**
+     * The number of videos that were hidden from the results due to mature content.
+     */
     @Json(name = "mature_hidden_count")
     val matureHiddenCount: Int? = null,
 

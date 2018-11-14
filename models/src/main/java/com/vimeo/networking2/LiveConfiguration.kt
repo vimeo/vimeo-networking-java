@@ -14,12 +14,14 @@ data class LiveConfiguration(
     /**
      * Live chat configuration data.
      */
+    @Internal
     @Json(name = "chat")
     val chat: LiveChatConfiguration? = null,
 
     /**
      * Live heart beat configuration data.
      */
+    @Internal
     @Json(name = "heartbeat")
     val heartbeat: LiveHeartbeatConfiguration? = null
 

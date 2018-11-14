@@ -14,6 +14,7 @@ data class PlayProgress(
     /**
      * The play progress in seconds.
      */
+    @Internal
     @Json(name = "seconds")
     val seconds: Int? = null
 

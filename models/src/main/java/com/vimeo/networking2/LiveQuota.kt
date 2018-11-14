@@ -14,12 +14,14 @@ data class LiveQuota(
     /**
      * Live streams quota data.
      */
+    @Internal
     @Json(name = "streams")
     val streams: LiveStreamsQuota? = null,
 
     /**
      * Live time data.
      */
+    @Internal
     @Json(name = "time")
     val time: LiveTime? = null
 

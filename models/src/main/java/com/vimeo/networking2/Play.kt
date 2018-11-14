@@ -8,6 +8,7 @@ import com.vimeo.networking2.enums.VideoPlayStatus
 /**
  * Play information.
  */
+@Internal
 @JsonClass(generateAdapter = true)
 data class Play(
 
@@ -35,6 +36,7 @@ data class Play(
     /**
      * Progressive files.
      */
+    @Internal
     @Json(name = "progressive")
     val progressive: List<ProgressiveFileType>? = null,
 
@@ -48,6 +50,7 @@ data class Play(
     /**
      * The play status of the video.
      */
+    @Internal
     @Json(name = "status")
     val status: VideoPlayStatus? = null
 )
