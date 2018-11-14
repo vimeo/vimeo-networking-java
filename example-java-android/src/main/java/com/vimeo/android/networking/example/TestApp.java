@@ -21,7 +21,7 @@ public class TestApp extends Application {
 
     private static final boolean IS_DEBUG_BUILD = false;
     // Switch to true to see how access token auth works.
-    private static final boolean ACCESS_TOKEN_PROVIDED = false;
+    private static final boolean ACCESS_TOKEN_PROVIDED = true;
 
     private static Context sContext;
 
@@ -55,14 +55,14 @@ public class TestApp extends Application {
 
     public Configuration.Builder getAccessTokenBuilder() {
         // The values file is left out of git, so you'll have to provide your own access token
-        String accessToken = "PROVIDE AN ACCESS TOKEN";
+        String accessToken = "";
         return new Configuration.Builder(accessToken);
     }
 
     public Configuration.Builder getClientIdAndClientSecretBuilder() {
         // The values file is left out of git, so you'll have to provide your own id and secret
-        String clientId = "PROVIDE A CLIENT ID";
-        String clientSecret = "PROVIDE A CLIENT SECRET";
+        String clientId = "";
+        String clientSecret = "";
         String codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" +
                                       getString(R.string.deeplink_redirect_host);
         TestAccountStore testAccountStore = new TestAccountStore(this.getApplicationContext());

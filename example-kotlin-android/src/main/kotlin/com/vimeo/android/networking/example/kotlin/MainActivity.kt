@@ -12,12 +12,19 @@ import com.vimeo.networking.VimeoClient
 import com.vimeo.networking.callbacks.AuthCallback
 import com.vimeo.networking.callbacks.VimeoCallback
 import com.vimeo.networking.callers.GetRequestCaller
+import com.vimeo.networking.callers.MoshiGetRequestCaller
+import com.vimeo.networking.logging.ClientLogger
 import com.vimeo.networking.model.User
 import com.vimeo.networking.model.VideoList
 import com.vimeo.networking.model.error.VimeoError
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.CacheControl
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+import kotlin.system.measureTimeMillis
 
 /**
  * The main activity.
@@ -28,6 +35,70 @@ class MainActivity : AppCompatActivity() {
 
     private val apiClient = VimeoClient.getInstance()
     private val progressDialog by lazy { ProgressDialog(this) }
+
+    suspend fun <DataType_T> getContent(
+        uri: String,
+        cacheControl: CacheControl,
+        caller: VimeoClient.Caller<DataType_T>,
+        query: String?,
+        refinementMap: Map<String, String>?,
+        fieldFilter: String?
+    ): DataType_T? = suspendCoroutine { cont ->
+        apiClient.getContent(
+            uri,
+            cacheControl,
+            caller,
+            query,
+            refinementMap,
+            fieldFilter,
+            object : VimeoCallback<DataType_T>() {
+                override fun success(t: DataType_T) {
+                    cont.resume(t)
+                }
+
+                override fun failure(error: VimeoError?) {
+                    cont.resume(null)
+                }
+
+            })
+    }
+
+    val repeatTimes = 10
+
+    fun timeMoshiStaffPicksRequest() {
+        GlobalScope.launch {
+            val moshiTime = measureTimeMillis {
+                repeat(repeatTimes) {
+                    fetchStaffPicky(MoshiGetRequestCaller.VIDEO_LIST)
+                }
+            }
+            ClientLogger.d("Time - Moshi: $moshiTime")
+        }
+    }
+
+    fun timeGsonStaffPicksRequest() {
+        GlobalScope.launch {
+            val gsonTime = measureTimeMillis {
+                repeat(repeatTimes) {
+                    fetchStaffPicky(GetRequestCaller.VIDEO_LIST)
+                }
+            }
+            ClientLogger.d("Time - Gson: $gsonTime")
+        }
+    }
+
+    suspend fun <DataType_T> fetchStaffPicky(
+        caller: VimeoClient.Caller<DataType_T>
+    ) {
+        getContent(
+            uri = STAFF_PICKS_VIDEO_URI,
+            cacheControl = CacheControl.FORCE_NETWORK,
+            caller = caller,
+            query = null,
+            refinementMap = null,
+            fieldFilter = null
+        )
+    }
 
     // <editor-fold desc="Life Cycle">
 
@@ -57,6 +128,9 @@ class MainActivity : AppCompatActivity() {
         code_grant_btn.setOnClickListener { codeGrantClick() }
 
         staff_picks_btn.setOnClickListener { fetchStaffPicks() }
+        staff_picks_gson_btn.setOnClickListener { timeGsonStaffPicksRequest() }
+        staff_picks_moshi_btn.setOnClickListener { timeMoshiStaffPicksRequest() }
+
         account_type_btn.setOnClickListener { fetchAccountType() }
         logout_btn.setOnClickListener { logout() }
     }
@@ -68,7 +142,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
-            item.itemId == R.id.action_settings || super.onOptionsItemSelected(item)
+        item.itemId == R.id.action_settings || super.onOptionsItemSelected(item)
 
     // </editor-fold>
 
@@ -77,78 +151,78 @@ class MainActivity : AppCompatActivity() {
     private fun fetchStaffPicks() {
         progressDialog.show()
         apiClient.getContent(
-                STAFF_PICKS_VIDEO_URI,
-                CacheControl.FORCE_NETWORK,
-                GetRequestCaller.VIDEO_LIST,
-                null, null, null,
-                object : VimeoCallback<VideoList>() {
-                    override fun success(videoList: VideoList?) {
-                        if (videoList?.data != null) {
-                            val videoTitles = StringBuilder()
-                            var addNewLine = false
+            STAFF_PICKS_VIDEO_URI,
+            CacheControl.FORCE_NETWORK,
+            GetRequestCaller.VIDEO_LIST,
+            null, null, null,
+            object : VimeoCallback<VideoList>() {
+                override fun success(videoList: VideoList?) {
+                    if (videoList?.data != null) {
+                        val videoTitles = StringBuilder()
+                        var addNewLine = false
 
-                            videoList.data.forEach { video ->
-                                if (addNewLine) videoTitles.append("\n")
-                                addNewLine = true
-                                videoTitles.append(video.name)
-                            }
-
-                            request_output_tv.text = videoTitles.toString()
+                        videoList.data.forEach { video ->
+                            if (addNewLine) videoTitles.append("\n")
+                            addNewLine = true
+                            videoTitles.append(video.name)
                         }
-                        toast("Staff Picks Success")
-                        progressDialog.hide()
-                    }
 
-                    override fun failure(error: VimeoError?) {
-                        toast("Staff Picks Failure")
-                        request_output_tv.text = error?.developerMessage
-                        progressDialog.hide()
+                        request_output_tv.text = videoTitles.toString()
                     }
-
+                    toast("Staff Picks Success")
+                    progressDialog.hide()
                 }
+
+                override fun failure(error: VimeoError?) {
+                    toast("Staff Picks Failure")
+                    request_output_tv.text = error?.developerMessage
+                    progressDialog.hide()
+                }
+
+            }
         )
     }
 
     private fun fetchAccountType() {
         progressDialog.show()
         apiClient.getCurrentUser(
-                object : VimeoCallback<User>() {
-                    override fun success(user: User?) {
-                        if (user != null) {
-                            request_output_tv.text = "Current account type: ${user.account}"
-                            toast("Account Check Success")
-                        } else {
-                            toast("Account Check Failure")
-                        }
-                        progressDialog.hide()
-                    }
-
-                    override fun failure(error: VimeoError) {
+            object : VimeoCallback<User>() {
+                override fun success(user: User?) {
+                    if (user != null) {
+                        request_output_tv.text = "Current account type: ${user.account}"
+                        toast("Account Check Success")
+                    } else {
                         toast("Account Check Failure")
-                        request_output_tv.text = error.developerMessage
-                        progressDialog.hide()
                     }
+                    progressDialog.hide()
                 }
+
+                override fun failure(error: VimeoError) {
+                    toast("Account Check Failure")
+                    request_output_tv.text = error.developerMessage
+                    progressDialog.hide()
+                }
+            }
         )
     }
 
     private fun logout() {
         progressDialog.show()
         apiClient.logOut(
-                object : VimeoCallback<Any>() {
-                    override fun success(o: Any) {
-                        AccountPreferenceManager.removeClientAccount()
-                        toast("Logout Success")
-                        progressDialog.hide()
-                    }
-
-                    override fun failure(error: VimeoError) {
-                        AccountPreferenceManager.removeClientAccount()
-                        toast("Logout Failure")
-                        request_output_tv.text = error.developerMessage
-                        progressDialog.hide()
-                    }
+            object : VimeoCallback<Any>() {
+                override fun success(o: Any) {
+                    AccountPreferenceManager.removeClientAccount()
+                    toast("Logout Success")
+                    progressDialog.hide()
                 }
+
+                override fun failure(error: VimeoError) {
+                    AccountPreferenceManager.removeClientAccount()
+                    toast("Logout Failure")
+                    request_output_tv.text = error.developerMessage
+                    progressDialog.hide()
+                }
+            }
         )
     }
 
@@ -157,18 +231,18 @@ class MainActivity : AppCompatActivity() {
     private fun authenticateWithClientCredentials() {
         progressDialog.show()
         apiClient.authorizeWithClientCredentialsGrant(
-                object : AuthCallback {
-                    override fun success() {
-                        toast("Client Credentials Authorization Success")
-                        progressDialog.hide()
-                    }
-
-                    override fun failure(error: VimeoError) {
-                        toast("Client Credentials Authorization Failure")
-                        request_output_tv.text = error.developerMessage
-                        progressDialog.hide()
-                    }
+            object : AuthCallback {
+                override fun success() {
+                    toast("Client Credentials Authorization Success")
+                    progressDialog.hide()
                 }
+
+                override fun failure(error: VimeoError) {
+                    toast("Client Credentials Authorization Failure")
+                    request_output_tv.text = error.developerMessage
+                    progressDialog.hide()
+                }
+            }
         )
     }
 

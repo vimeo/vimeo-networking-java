@@ -44,7 +44,7 @@ class TestApp : Application() {
     // The values file is left out of git, so you'll have to provide your own access token
     private val accessTokenBuilder: Configuration.Builder
         get() {
-            val accessToken = "PROVIDE AN ACCESS TOKEN"
+            val accessToken = ""
             return Configuration.Builder(accessToken)
         }
 
@@ -66,7 +66,7 @@ class TestApp : Application() {
         private const val SCOPE = "private public create edit delete interact"
 
         // Switch to true to see how access token auth works.
-        private const val ACCESS_TOKEN_PROVIDED = false
+        private const val ACCESS_TOKEN_PROVIDED = true
 
         fun getUserAgentString(context: Context): String {
             val packageName = context.packageName
