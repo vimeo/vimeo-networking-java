@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
+import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.ContentFilterType
@@ -22,9 +23,8 @@ data class User(
 
     /**
      * Information about the user's badge.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_VIEW_USER_BADGE].
      */
+    @Internal
     @Json(name = "badge")
     val badge: UserBadge? = null,
 
@@ -55,6 +55,7 @@ data class User(
     /**
      * An array of alternate emails for the user.
      */
+    @Internal
     @Json(name = "emails")
     val emails: List<Email>? = null,
 
@@ -89,12 +90,6 @@ data class User(
     val name: String? = null,
 
     /**
-     * The user's stored payment information.
-     */
-    @Json(name = "payment")
-    val payment: Payment? = null,
-
-    /**
      * The active portrait of this user.
      */
     @Json(name = "pictures")
@@ -123,14 +118,6 @@ data class User(
      */
     @Json(name = "uri")
     val uri: String? = null,
-
-    /**
-     * The user's email verification status.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_API_APP_MANAGEMENT].
-     */
-    @Json(name = "verified")
-    val verified: Boolean? = null,
 
     /**
      * The user's websites.

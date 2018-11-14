@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
  * All connections for a user.
@@ -86,6 +87,7 @@ data class UserConnections(
      * Information about this user's notifications. This data requires a bearer
      * token with the private scope.
      */
+    @Internal
     @Json(name = "notifications")
     val notifications: NotificationConnection? = null,
 
@@ -132,12 +134,6 @@ data class UserConnections(
      */
     @Json(name = "videos")
     val videos: Connection? = null,
-
-    /**
-     * Information about this user's violations.
-     */
-    @Json(name = "violations")
-    val violations: Connection? = null,
 
     /**
      * Information about the videos that this user wants to watch later.

@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.VideoBadgeType
 
 /**
@@ -12,9 +13,8 @@ data class VideoBadge(
 
     /**
      * The festival that this badge represents.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_VIEW_VIDEO_BADGE].
      */
+    @Internal
     @Json(name = "festival")
     val festival: String? = null,
 

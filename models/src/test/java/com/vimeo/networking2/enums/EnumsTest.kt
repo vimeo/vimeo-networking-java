@@ -14,23 +14,19 @@ class EnumsTest {
         ApproachType::class.java,
         AttributionType::class.java,
         BillingPeriodType::class.java,
-        CapabilitiesType::class.java,
-        CinemaType::class.java,
         CommentType::class.java,
         CommentValue::class.java,
         ContentFilterType::class.java,
         DownloadType::class.java,
         EmbedValue::class.java,
-        ErrorCode::class.java,
         FollowType::class.java,
         GroupForumsPrivacyValue::class.java,
         GroupPrivacyValue::class.java,
         LicenseType::class.java,
-        LiveQuotaStatus::class.java,
         LiveStatus::class.java,
         NotificationType::class.java,
-        PaymentType::class.java,
         PictureType::class.java,
+        ProgrammedContentItemType::class.java,
         PurchaseStatusType::class.java,
         RecommendationType::class.java,
         SearchType::class.java,
@@ -43,13 +39,11 @@ class EnumsTest {
         TVodType::class.java,
         UploadSpaceType::class.java,
         UploadStatusType::class.java,
-        UserActivityType::class.java,
         UserBadgeType::class.java,
         VideoActionType::class.java,
         VideoBadgeType::class.java,
         VideoPlayStatus::class.java,
         VideoQualityType::class.java,
-        VideoReviewTaskStatusType::class.java,
         VideoSourceType::class.java,
         VideoStatusType::class.java,
         ViewValue::class.java
@@ -58,11 +52,11 @@ class EnumsTest {
     @Test
     fun `enum should have an UNKNOWN`() {
         models.forEach { kClass ->
-            assertTrue("Enum should contain UNKNOWN type.", kClass.fields.map { it.name }.contains(UNKNOWN))
+            assertTrue("${kClass.name} Enum should contain UNKNOWN type.", kClass.fields.map { it.name }.contains(UNKNOWN))
         }
     }
 
     companion object {
-        private const val UNKNOWN = "unknown"
+        private const val UNKNOWN = "UNKNOWN"
     }
 }

@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
  * All action that can be taken on a video.
@@ -12,6 +13,7 @@ data class VideoInteractions(
     /**
      * The buy interaction for a On Demand video.
      */
+    @Internal
     @Json(name = "buy")
     val buy: BuyInteraction? = null,
 
@@ -19,6 +21,7 @@ data class VideoInteractions(
      * When a video is referenced by a channel URI, if the user is a moderator of the
      * channel, include information about removing the video from the channel.
      */
+    @Internal
     @Json(name = "channel")
     val channel: BasicInteraction? = null,
 
@@ -31,6 +34,7 @@ data class VideoInteractions(
     /**
      * The Rent interaction for an On Demand video.
      */
+    @Internal
     @Json(name = "rent")
     val rent: RentInteraction? = null,
 
@@ -43,14 +47,9 @@ data class VideoInteractions(
     /**
      * Subscription information for an On Demand video.
      */
+    @Internal
     @Json(name = "subscribe")
     val subscription: SubscriptionInteraction? = null,
-
-    /**
-     * Information about removing this video from the user's list of watched videos.
-     */
-    @Json(name = "watched")
-    val watched: WatchedInteraction? = null,
 
     /**
      * Information about whether this video appears on the authenticated user's Watch Later list.
