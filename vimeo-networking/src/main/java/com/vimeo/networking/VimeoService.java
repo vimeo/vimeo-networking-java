@@ -22,6 +22,8 @@
 
 package com.vimeo.networking;
 
+import com.vimeo.networking.model.Album;
+import com.vimeo.networking.model.AlbumList;
 import com.vimeo.networking.AnnotatedConverterFactory.ConverterType;
 import com.vimeo.networking.AnnotatedConverterFactory.Serializer;
 import com.vimeo.networking.model.Category;
@@ -289,6 +291,12 @@ public interface VimeoService {
                              @QueryMap Map<String, String> options,
                              @Header("Cache-Control") String cacheHeaderValue);
 
+    @GET
+    Call<Album> getAlbum(@Header("Authorization") String authHeader,
+                           @Url String uri,
+                           @QueryMap Map<String, String> options,
+                           @Header("Cache-Control") String cacheHeaderValue);
+
     // </editor-fold>
 
 
@@ -390,6 +398,11 @@ public interface VimeoService {
                                                             @QueryMap Map<String, String> options,
                                                             @Header("Cache-Control") String cacheHeaderValue);
 
+    @GET
+    Call<AlbumList> getAlbumList(@Header("Authorization") String authHeader,
+                                 @Url String uri,
+                                 @QueryMap Map<String, String> options,
+                                 @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<TextTrackList> getTextTrackList(@Header("Authorization") String authHeader, @Url String uri);
