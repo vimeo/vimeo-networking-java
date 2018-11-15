@@ -17,12 +17,6 @@ data class Payment(
     val active: Boolean? = null,
 
     /**
-     * Credit card information.
-     */
-    @Json(name = "cc")
-    val creditCard: CreditCard? = null,
-
-    /**
      * The type of stored payment method
      * @see Payment.paymentType
      */

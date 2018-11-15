@@ -6,6 +6,7 @@ import com.vimeo.stag.UseStag;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * The representation of the upload object.
@@ -36,6 +37,10 @@ public class Upload implements Serializable {
     @Nullable
     @SerializedName("complete_uri")
     private String mCompleteUri;
+
+    @Nullable
+    @SerializedName("gcs")
+    private ArrayList<Gcs> mGcs;
 
     @Nullable
     @SerializedName("form")
@@ -131,5 +136,21 @@ public class Upload implements Serializable {
 
     void setUploadLink(@Nullable String uploadLink) {
         mUploadLink = uploadLink;
+    }
+
+    /**
+     * @return An array of Gcs objects used for uploading if available. The number of Gcs object will
+     * be equal to the number of parallel requests specified in the video upload creation step.
+     */
+    @Nullable
+    public ArrayList<Gcs> getGcs() {
+        return mGcs != null ? new ArrayList<>(mGcs) : null;
+    }
+
+    /**
+     * Set the array of Gcs objects
+     */
+    public void setGcs(@Nullable ArrayList<Gcs> gcs) {
+        mGcs = (gcs != null) ? new ArrayList<>(gcs) : null;
     }
 }

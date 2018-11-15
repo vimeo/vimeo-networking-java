@@ -35,7 +35,7 @@ data class ApiError(
      * A link to more information about the error.
      */
     @Json(name = "link")
-    val link: String
+    val link: String? = null
 
 )
 

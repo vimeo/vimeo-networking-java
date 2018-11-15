@@ -39,12 +39,6 @@ data class Privacy(
     val embed: String? = null,
 
     /**
-     * The password for viewing the user's videos. Requires [CapabilitiesType.CAPABILITY_PROTECTED_VIDEOS].
-     */
-    @Json(name = "password")
-    val password: String? = null,
-
-    /**
      * The privacy settings of the channel.
      * @see Privacy.viewValue
      */

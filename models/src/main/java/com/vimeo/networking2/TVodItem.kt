@@ -1,5 +1,7 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.enums.TVodType
+
 /**
  * This class represents the model for a Video On Demand (VOD) container.
  */
@@ -43,7 +45,7 @@ data class TVodItem(
     /**
      * Whether this [TVodItem] is for a film or a series.
      */
-    val type: TVodType = TVodType.UNKNOWN,
+    val type: TVodType? = null,
 
     /**
      * The trailer for this [TVodItem].

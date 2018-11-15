@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
  * All connections for a video.
@@ -29,19 +30,10 @@ data class VideoConnections(
 
     /**
      * Information about this video's live stream stats.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_LIVE_EVENT].
      */
+    @Internal
     @Json(name = "live_stats")
     val liveStats: Connection? = null,
-
-    /**
-     * The video's review notes.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_VIDEO_REVIEW].
-     */
-    @Json(name = "notes")
-    val notes: VideoReviewConnection? = null,
 
     /**
      * Information about this video's thumbnails.
@@ -89,14 +81,6 @@ data class VideoConnections(
      * Information about the user privacy of this video, if the video privacy is users.
      */
     @Json(name = "users_with_access")
-    val usersWithAccess: Connection? = null,
-
-    /**
-     * Information about the versions of this video.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_VIDEO_VERSIONS].
-     */
-    @Json(name = "versions")
-    val versions: VideoVersionsConnection? = null
+    val usersWithAccess: Connection? = null
 
 )

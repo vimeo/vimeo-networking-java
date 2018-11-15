@@ -2,6 +2,7 @@
 
 package com.vimeo.networking2
 
+import com.squareup.moshi.Json
 import com.vimeo.networking2.enums.GroupForumsPrivacyValue
 import com.vimeo.networking2.enums.GroupPrivacyValue
 import com.vimeo.networking2.enums.asEnum
@@ -15,36 +16,42 @@ data class GroupPrivacy(
      * Who can comment on the group.
      * @see GroupPrivacy.commentType
      */
+    @Json(name = "comment")
     val comment: String? = null,
 
     /**
      * Who is allowed to use forums related to the group.
      * @see GroupPrivacy.forumsType
      */
+    @Json(name = "forums")
     val forums: String? = null,
 
     /**
      * Who can invite new members to the group.
      * @see GroupPrivacy.inviteType
      */
+    @Json(name = "invite")
     val invite: String? = null,
 
     /**
      * Who can join the group.
      * @see GroupPrivacy.joinType
      */
+    @Json(name = "join")
     val join: String? = null,
 
     /**
      * Who can add videos to the group.
      * @see GroupPrivacy.videosType
      */
+    @Json(name = "videos")
     val videos: String? = null,
 
     /**
      * Who can view the group.
      * @see GroupPrivacy.viewType
      */
+    @Json(name = "videos")
     val view: String? = null
 
 )

@@ -4,14 +4,14 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.enums.CinemaType
+import com.vimeo.networking2.enums.ProgrammedContentItemType
 import com.vimeo.networking2.enums.asEnum
 
 /**
  * Cinema data.
  */
 @JsonClass(generateAdapter = true)
-data class Cinema(
+data class ProgrammedContentItem(
 
     /**
      * The category associated with this programmed cinema item.
@@ -29,10 +29,10 @@ data class Cinema(
      * Content for the programmed cinema item.
      */
     @Json(name = "content")
-    val content: List<Video>? = null,
+    val videoList: List<Video>? = null,
 
     /**
-     * Cinema metadata.
+     * ProgrammedContentItem metadata.
      */
     @Json(name = "metadata")
     val metadata: MetadataConnections<CinemaConnections>? = null,
@@ -45,7 +45,7 @@ data class Cinema(
 
     /**
      * The type of programmed cinema item.
-     * @see Cinema.cinemaType
+     * @see ProgrammedContentItem.cinemaType
      */
     @Json(name = "type")
     val type: String? = null,
@@ -59,8 +59,8 @@ data class Cinema(
 )
 
 /**
- * @see Cinema.type
- * @see CinemaType
+ * @see ProgrammedContentItem.type
+ * @see ProgrammedContentItem
  */
-val Cinema.cinemaType: CinemaType
-    get() = type.asEnum(CinemaType.UNKNOWN)
+val ProgrammedContentItem.cinemaType: ProgrammedContentItemType
+    get() = type.asEnum(ProgrammedContentItemType.UNKNOWN)

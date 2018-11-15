@@ -4,6 +4,8 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
+import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.LicenseType
 import com.vimeo.networking2.enums.VideoStatusType
 import com.vimeo.networking2.enums.asEnum
@@ -119,17 +121,10 @@ data class Video(
     val name: String? = null,
 
     /**
-     * Information about the folder that contains this video.
-     */
-    @Json(name = "parent_folder")
-    val parentFolder: Folder? = null,
-
-    /**
      * The privacy-enabled password to watch this video.
      * This data requires a bearer token with the private scope.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_PROTECTED_VIDEOS].
      */
+    @Internal
     @Json(name = "password")
     val password: String? = null,
 
@@ -141,9 +136,8 @@ data class Video(
 
     /**
      * The Play representation.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_PLAY_REPRESENTATION].
      */
+    @Internal
     @Json(name = "play")
     val play: Play? = null,
 
@@ -168,9 +162,8 @@ data class Video(
     /**
      * Information about the review page associated with this video. This data requires a
      * bearer token with the private scope.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_VIDEO_REVIEW].
      */
+    @Internal
     @Json(name = "review_page")
     val reviewPage: ReviewPage? = null,
 

@@ -1,8 +1,11 @@
 package com.vimeo.networking2.enums
 
+import com.vimeo.networking2.annotations.Internal
+
 /**
  * The user's download access to this On Demand video.
  */
+@Internal
 enum class DownloadType(override val value: String?) : StringValue {
 
     /**

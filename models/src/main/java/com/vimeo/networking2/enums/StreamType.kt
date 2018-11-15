@@ -1,8 +1,11 @@
 package com.vimeo.networking2.enums
 
+import com.vimeo.networking2.annotations.Internal
+
 /**
  * The user's streaming access to this On Demand video.
  */
+@Internal
 enum class StreamType(override val value: String?) : StringValue {
 
     /**

@@ -4,6 +4,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.ApproachType
 import com.vimeo.networking2.enums.UploadStatusType
 import com.vimeo.networking2.enums.asEnum
@@ -36,6 +37,7 @@ data class Upload(
     /**
      * GCS information to perform an upload.
      */
+    @Internal
     @Json(name = "gcs")
     val gcs: Gcs? = null,
 
