@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * Embed privacy settings.
  */
-enum class EmbedValue(override val value: String?) : StringValue {
+enum class EmbedPrivacyType(override val value: String?) : StringValue {
 
     /**
      * Only the user can embed their own videos.

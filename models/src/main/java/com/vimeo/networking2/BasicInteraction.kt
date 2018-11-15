@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.common.Interaction
 
@@ -8,6 +9,7 @@ import com.vimeo.networking2.common.Interaction
  * Interaction with options and uri information.
  */
 @Internal
+@JsonClass(generateAdapter = true)
 data class BasicInteraction(
 
     @Internal

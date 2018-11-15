@@ -3,13 +3,15 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
-import com.vimeo.networking2.enums.ErrorCode
+import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.enums.ErrorCodeType
 import com.vimeo.networking2.enums.asEnum
 
 /**
  *  This class represents an error response from the Vimeo API. It holds useful getters to
  *  understand why your request might have failed.
  */
+@JsonClass(generateAdapter = true)
 data class ApiError(
 
     /**
@@ -41,7 +43,7 @@ data class ApiError(
 
 /**
  * @see ApiError.errorCode
- * @see ErrorCode
+ * @see ErrorCodeType
  */
-val ApiError.errorCodeType: ErrorCode
-    get() = errorCode.asEnum(ErrorCode.DEFAULT)
+val ApiError.errorCodeType: ErrorCodeType
+    get() = errorCode.asEnum(ErrorCodeType.DEFAULT)

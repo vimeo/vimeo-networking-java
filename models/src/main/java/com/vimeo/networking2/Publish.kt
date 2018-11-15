@@ -1,19 +1,24 @@
 package com.vimeo.networking2
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.*
 
 /**
- * [TVodItem] publish information.
+ * [TvodItem] publish information.
  */
+@JsonClass(generateAdapter = true)
 data class Publish(
 
     /**
-     * Whether the [TVodItem] has been published
+     * Whether the [TvodItem] has been published
      */
+    @Json(name = "enabled")
     val enabled: Boolean? = null,
 
     /**
-     * The time in IS 8601 format when this [TVodItem] was published.
+     * The time in IS 8601 format when this [TvodItem] was published.
      */
+    @Json(name = "time")
     val time: Date? = null
 )

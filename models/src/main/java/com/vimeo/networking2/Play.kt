@@ -5,7 +5,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import com.vimeo.networking2.enums.VideoPlayStatus
+import com.vimeo.networking2.enums.VideoPlayStatusType
 import com.vimeo.networking2.enums.asEnum
 
 /**
@@ -52,16 +52,16 @@ data class Play(
 
     /**
      * The play status of the video.
-     * @see Play.statusType
+     * @see Play.videoPlayStatusType
      */
     @Internal
     @Json(name = "status")
-    val status: String? = null
+    val videoPlayStatus: String? = null
 )
 
 /**
- * @see Play.status
- * @see VideoPlayStatus
+ * @see Play.videoPlayStatus
+ * @see VideoPlayStatusType
  */
-val Play.statusType: VideoPlayStatus
-    get() = status.asEnum(VideoPlayStatus.UNKNOWN)
+val Play.videoPlayStatusType: VideoPlayStatusType
+    get() = videoPlayStatus.asEnum(VideoPlayStatusType.UNKNOWN)

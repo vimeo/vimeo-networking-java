@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * Privacy settings for albums.
  */
-enum class AlbumPrivacyViewValue(override val value: String?): StringValue {
+enum class AlbumViewPrivacyType(override val value: String?): StringValue {
 
     /**
      * Anyone can view the album.

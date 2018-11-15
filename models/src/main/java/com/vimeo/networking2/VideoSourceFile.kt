@@ -56,10 +56,10 @@ data class VideoSourceFile(
 
     /**
      * The video quality (as determined by height and width).
-     * @see VideoSourceFile.qualityType
+     * @see VideoSourceFile.videoQualityType
      */
     @Json(name = "quality")
-    val quality: String? = null,
+    val videoQuality: String? = null,
 
     /**
      * The file size of the video.
@@ -75,10 +75,10 @@ data class VideoSourceFile(
 
     /**
      * The type of the video file.
-     * @see VideoSourceFile.sourceType
+     * @see VideoSourceFile.type
      */
     @Json(name = "type")
-    val type: String? = null,
+    val rawType: String? = null,
 
     /**
      * The width of the video in pixels.
@@ -89,15 +89,15 @@ data class VideoSourceFile(
 )
 
 /**
- * @see ProgressiveVideoFile.quality
+ * @see ProgressiveVideoFile.videoQuality
  * @see VideoQualityType
  */
-val VideoSourceFile.qualityType: VideoQualityType
-    get() = quality.asEnum(VideoQualityType.UNKNOWN)
+val VideoSourceFile.videoQualityType: VideoQualityType
+    get() = videoQuality.asEnum(VideoQualityType.UNKNOWN)
 
 /**
- * @see ProgressiveVideoFile.type
+ * @see ProgressiveVideoFile.rawType
  * @see VideoSourceType
  */
-val VideoSourceFile.sourceType: VideoSourceType
-    get() = type.asEnum(VideoSourceType.UNKNOWN)
+val VideoSourceFile.type: VideoSourceType
+    get() = rawType.asEnum(VideoSourceType.UNKNOWN)

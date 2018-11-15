@@ -31,10 +31,11 @@ data class UserBadge(
 
     /**
      * The type of the badge.
+     * @see UserBadge.type
      */
     @Internal
     @Json(name = "type")
-    val type: String? = null,
+    val rawType: String? = null,
 
     /**
      * The URL that loads when the user clicks the badge.
@@ -46,7 +47,7 @@ data class UserBadge(
 )
 
 /**
- * @see UserBadge.type
+ * @see UserBadge.rawType
  */
-val UserBadge.badgeType: UserBadgeType
-    get() = type.asEnum(UserBadgeType.UNKNOWN)
+val UserBadge.type: UserBadgeType
+    get() = rawType.asEnum(UserBadgeType.UNKNOWN)

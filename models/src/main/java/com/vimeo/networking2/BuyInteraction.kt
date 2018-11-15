@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.common.Interaction
 import com.vimeo.networking2.enums.DownloadType
-import com.vimeo.networking2.enums.StreamType
+import com.vimeo.networking2.enums.StreamAccessType
 import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
@@ -95,7 +95,7 @@ val BuyInteraction.downloadType: DownloadType
 
 /**
  * @see BuyInteraction.stream
- * @see StreamType
+ * @see StreamAccessType
  */
-val BuyInteraction.streamType: StreamType
-    get() = stream.asEnum(StreamType.UNKNOWN)
+val BuyInteraction.streamType: StreamAccessType
+    get() = stream.asEnum(StreamAccessType.UNKNOWN)

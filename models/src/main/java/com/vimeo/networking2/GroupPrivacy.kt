@@ -3,97 +3,99 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
-import com.vimeo.networking2.enums.GroupForumsPrivacyValue
-import com.vimeo.networking2.enums.GroupPrivacyValue
+import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.enums.GroupForumsPrivacyType
+import com.vimeo.networking2.enums.GroupPrivacyType
 import com.vimeo.networking2.enums.asEnum
 
 /**
  * Group's privacy settings.
  */
+@JsonClass(generateAdapter = true)
 data class GroupPrivacy(
 
     /**
      * Who can comment on the group.
-     * @see GroupPrivacy.commentType
+     * @see GroupPrivacy.commentPrivacyType
      */
     @Json(name = "comment")
-    val comment: String? = null,
+    val commentPrivacy: String? = null,
 
     /**
      * Who is allowed to use forums related to the group.
-     * @see GroupPrivacy.forumsType
+     * @see GroupPrivacy.forumsPrivacyType
      */
     @Json(name = "forums")
-    val forums: String? = null,
+    val forumsPrivacy: String? = null,
 
     /**
      * Who can invite new members to the group.
-     * @see GroupPrivacy.inviteType
+     * @see GroupPrivacy.invitePrivacyType
      */
     @Json(name = "invite")
-    val invite: String? = null,
+    val invitePrivacy: String? = null,
 
     /**
      * Who can join the group.
-     * @see GroupPrivacy.joinType
+     * @see GroupPrivacy.joinPrivacyType
      */
     @Json(name = "join")
-    val join: String? = null,
+    val joinPrivacy: String? = null,
 
     /**
      * Who can add videos to the group.
-     * @see GroupPrivacy.videosType
+     * @see GroupPrivacy.videosPrivacyType
      */
     @Json(name = "videos")
-    val videos: String? = null,
+    val videosPrivacy: String? = null,
 
     /**
      * Who can view the group.
-     * @see GroupPrivacy.viewType
+     * @see GroupPrivacy.viewPrivacyType
      */
     @Json(name = "videos")
-    val view: String? = null
+    val viewPrivacy: String? = null
 
 )
 
 /**
- * @see GroupPrivacy.comment
- * @see GroupPrivacyValue
+ * @see GroupPrivacy.commentPrivacy
+ * @see GroupPrivacyType
  */
-val GroupPrivacy.commentType: GroupPrivacyValue
-    get() = comment.asEnum(GroupPrivacyValue.UNKNOWN)
+val GroupPrivacy.commentPrivacyType: GroupPrivacyType
+    get() = commentPrivacy.asEnum(GroupPrivacyType.UNKNOWN)
 
 /**
- * @see GroupPrivacy.forums
- * @see GroupForumsPrivacyValue
+ * @see GroupPrivacy.forumsPrivacy
+ * @see GroupForumsPrivacyType
  */
-val GroupPrivacy.forumsType: GroupForumsPrivacyValue
-    get() = forums.asEnum(GroupForumsPrivacyValue.UNKNOWN)
+val GroupPrivacy.forumsPrivacyType: GroupForumsPrivacyType
+    get() = forumsPrivacy.asEnum(GroupForumsPrivacyType.UNKNOWN)
 
 /**
- * @see GroupPrivacy.invite
- * @see GroupPrivacyValue
+ * @see GroupPrivacy.invitePrivacy
+ * @see GroupPrivacyType
  */
-val GroupPrivacy.inviteType: GroupPrivacyValue
-    get() = invite.asEnum(GroupPrivacyValue.UNKNOWN)
+val GroupPrivacy.invitePrivacyType: GroupPrivacyType
+    get() = invitePrivacy.asEnum(GroupPrivacyType.UNKNOWN)
 
 /**
- * @see GroupPrivacy.join
- * @see GroupPrivacyValue
+ * @see GroupPrivacy.joinPrivacy
+ * @see GroupPrivacyType
  */
-val GroupPrivacy.joinType: GroupPrivacyValue
-    get() = join.asEnum(GroupPrivacyValue.UNKNOWN)
+val GroupPrivacy.joinPrivacyType: GroupPrivacyType
+    get() = joinPrivacy.asEnum(GroupPrivacyType.UNKNOWN)
 
 /**
- * @see GroupPrivacy.videos
- * @see GroupPrivacyValue
+ * @see GroupPrivacy.videosPrivacy
+ * @see GroupPrivacyType
  */
-val GroupPrivacy.videosType: GroupPrivacyValue
-    get() = videos.asEnum(GroupPrivacyValue.UNKNOWN)
+val GroupPrivacy.videosPrivacyType: GroupPrivacyType
+    get() = videosPrivacy.asEnum(GroupPrivacyType.UNKNOWN)
 
 /**
- * @see GroupPrivacy.view
- * @see GroupPrivacyValue
+ * @see GroupPrivacy.viewPrivacy
+ * @see GroupPrivacyType
  */
-val GroupPrivacy.viewType: GroupPrivacyValue
-    get() = view.asEnum(GroupPrivacyValue.UNKNOWN)
+val GroupPrivacy.viewPrivacyType: GroupPrivacyType
+    get() = viewPrivacy.asEnum(GroupPrivacyType.UNKNOWN)

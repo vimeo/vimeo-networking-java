@@ -6,7 +6,7 @@ import com.vimeo.networking2.annotations.Internal
  * The user's streaming access to this On Demand video.
  */
 @Internal
-enum class StreamType(override val value: String?) : StringValue {
+enum class StreamAccessType(override val value: String?) : StringValue {
 
     /**
      * The video is available for streaming.

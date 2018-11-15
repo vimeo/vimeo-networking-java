@@ -15,10 +15,10 @@ data class VideoContext(
 
     /**
      * The contextual action.
-     * @see VideoContext.actionType
+     * @see VideoContext.videoActionType
      */
     @Json(name = "action")
-    val action: String? = null,
+    val videoAction: String? = null,
 
     /**
      * The contextual resource type.
@@ -29,8 +29,8 @@ data class VideoContext(
 )
 
 /**
- * @see VideoContext.action
+ * @see VideoContext.videoAction
  * @see VideoActionType
  */
-val VideoContext.actionType: VideoActionType
-    get() = action.asEnum(VideoActionType.UNKNOWN)
+val VideoContext.videoActionType: VideoActionType
+    get() = videoAction.asEnum(VideoActionType.UNKNOWN)

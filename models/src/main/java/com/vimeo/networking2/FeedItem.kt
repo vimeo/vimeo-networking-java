@@ -56,10 +56,10 @@ data class FeedItem(
 
     /**
      * Feed item type.
-     * @see FeedItem.attributionType
+     * @see FeedItem.type
      */
     @Json(name = "type")
-    val type: String? = null,
+    val rawType: String? = null,
 
     /**
      * Video associated with ths feed item.
@@ -83,8 +83,8 @@ data class FeedItem(
 )
 
 /**
- * @see FeedItem.type
+ * @see FeedItem.rawType
  * @see AttributionType
  */
-val FeedItem.attributionType: AttributionType
-    get() = type.asEnum(AttributionType.UNKNOWN)
+val FeedItem.type: AttributionType
+    get() = rawType.asEnum(AttributionType.UNKNOWN)

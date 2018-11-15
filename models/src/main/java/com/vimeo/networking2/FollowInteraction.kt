@@ -1,12 +1,14 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.UpdatableInteraction
 import java.util.*
 
 /**
  * Follow a object.
  */
+@JsonClass(generateAdapter = true)
 data class FollowInteraction(
 
     @Json(name = "added")

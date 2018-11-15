@@ -4,8 +4,8 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.annotations.Internal
+import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.ContentFilterType
@@ -44,7 +44,7 @@ data class User(
      * @see User.contentFilterTypes
      */
     @Json(name = "content_filter")
-    val contentFilter: List<String>? = null,
+    val contentFilters: List<String>? = null,
 
     /**
      * The time in ISO 8601 format when the user account was created.
@@ -145,8 +145,8 @@ val User.accountType: AccountType
     get() = account.asEnum(AccountType.UNKNOWN)
 
 /**
- * @see User.contentFilter
+ * @see User.contentFilters
  * @see ContentFilterType
  */
 val User.contentFilterTypes: List<ContentFilterType>
-    get() = contentFilter.asEnumList(ContentFilterType.UNKNOWN)
+    get() = contentFilters.asEnumList(ContentFilterType.UNKNOWN)

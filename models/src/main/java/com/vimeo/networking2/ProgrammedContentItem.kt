@@ -45,10 +45,10 @@ data class ProgrammedContentItem(
 
     /**
      * The type of programmed cinema item.
-     * @see ProgrammedContentItem.cinemaType
+     * @see ProgrammedContentItem.type
      */
     @Json(name = "type")
-    val type: String? = null,
+    val rawType: String? = null,
 
     /**
      * The programmed cinema items' canonical relative URI.
@@ -59,8 +59,8 @@ data class ProgrammedContentItem(
 )
 
 /**
- * @see ProgrammedContentItem.type
+ * @see ProgrammedContentItem.rawType
  * @see ProgrammedContentItem
  */
-val ProgrammedContentItem.cinemaType: ProgrammedContentItemType
-    get() = type.asEnum(ProgrammedContentItemType.UNKNOWN)
+val ProgrammedContentItem.type: ProgrammedContentItemType
+    get() = rawType.asEnum(ProgrammedContentItemType.UNKNOWN)

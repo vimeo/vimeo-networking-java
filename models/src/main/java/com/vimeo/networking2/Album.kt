@@ -62,7 +62,7 @@ data class Album(
 
     /**
      * The album's layout preference.
-     * @see Album.albumLayoutType
+     * @see Album.layoutType
      */
     @Json(name = "layout")
     val layout: String? = null,
@@ -151,7 +151,7 @@ data class Album(
  * @see Album.layout
  * @see AlbumLayoutType
  */
-val Album.albumLayoutType: AlbumLayoutType
+val Album.layoutType: AlbumLayoutType
     get() = layout.asEnum(AlbumLayoutType.UNKNOWN)
 
 /**

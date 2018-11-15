@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * Live statuses.
  */
-enum class LiveStatus(override val value: String?) : StringValue {
+enum class LiveStatusType(override val value: String?) : StringValue {
 
     /**
      * There was a problem archiving the stream.

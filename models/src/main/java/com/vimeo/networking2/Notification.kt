@@ -52,10 +52,10 @@ data class Notification(
 
     /**
      * The type of notification.
-     * @see Notification.notificationType
+     * @see Notification.type
      */
     @Json(name = "type")
-    val type: String? = null,
+    val rawType: String? = null,
 
     /**
      * The notification's canonical relative URI.
@@ -72,8 +72,8 @@ data class Notification(
 )
 
 /**
- * @see Notification.type
+ * @see Notification.rawType
  * @see NotificationType
  */
-val Notification.notificationType: NotificationType
-    get() = type.asEnum(NotificationType.UNKNOWN)
+val Notification.type: NotificationType
+    get() = rawType.asEnum(NotificationType.UNKNOWN)

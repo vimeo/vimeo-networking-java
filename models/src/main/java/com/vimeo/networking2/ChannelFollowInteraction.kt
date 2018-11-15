@@ -29,16 +29,16 @@ data class ChannelFollowInteraction(
 
     /**
      * Whether the authenticated user is a moderator or subscriber.
-     * @see ChannelFollowInteraction.type
+     * @see ChannelFollowInteraction.rawType
      */
     @Json(name = "type")
-    val type: String? = null
+    val rawType: String? = null
 
 ) : UpdatableInteraction
 
 /**
- * @see ChannelFollowInteraction.type
+ * @see ChannelFollowInteraction.rawType
  * @see FollowType
  */
-val ChannelFollowInteraction.followType: FollowType
-    get() = type.asEnum(FollowType.UNKNOWN)
+val ChannelFollowInteraction.type: FollowType
+    get() = rawType.asEnum(FollowType.UNKNOWN)

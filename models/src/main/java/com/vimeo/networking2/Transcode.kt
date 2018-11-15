@@ -4,7 +4,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.enums.TranscodeType
+import com.vimeo.networking2.enums.TranscodeStatusType
 import com.vimeo.networking2.enums.asEnum
 
 /**
@@ -24,7 +24,7 @@ data class Transcode(
 
 /**
  * @see Transcode.status
- * @see TranscodeType
+ * @see TranscodeStatusType
  */
-val Transcode.statusType: TranscodeType
-    get() = status.asEnum(TranscodeType.UNKNOWN)
+val Transcode.statusType: TranscodeStatusType
+    get() = status.asEnum(TranscodeStatusType.UNKNOWN)

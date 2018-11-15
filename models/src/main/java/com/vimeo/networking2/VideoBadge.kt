@@ -41,16 +41,16 @@ data class VideoBadge(
 
     /**
      * The type of the badge.
-     * @see VideoBadge.badgeType
+     * @see VideoBadge.type
      */
     @Json(name = "type")
-    val type: String? = null
+    val rawType: String? = null
 
 )
 
 /**
- * @see VideoBadge.type
+ * @see VideoBadge.rawType
  * @see VideoBadgeType
  */
-val VideoBadge.badgeType: VideoBadgeType
-    get() = type.asEnum(VideoBadgeType.UNKNOWN)
+val VideoBadge.type: VideoBadgeType
+    get() = rawType.asEnum(VideoBadgeType.UNKNOWN)

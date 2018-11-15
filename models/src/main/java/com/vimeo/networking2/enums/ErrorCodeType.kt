@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * All the error codes that can come back from the Vimeo Api.
  */
-enum class ErrorCode(override val value: String?) : StringValue {
+enum class ErrorCodeType(override val value: String?) : StringValue {
 
     BAD_REQUEST("1000"),
 

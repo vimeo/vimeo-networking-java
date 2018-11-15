@@ -13,10 +13,10 @@ data class Spatial(
 
     /**
      * The 360 spatial projection.
-     * @see Spatial.projectionType
+     * @see Spatial.spatialProjectionType
      */
     @Json(name = "projection")
-    val projection: String? = null,
+    val spatialProjection: String? = null,
 
     /**
      * The 360 stereo format.
@@ -28,11 +28,11 @@ data class Spatial(
 )
 
 /**
- * @see Spatial.projection
+ * @see Spatial.spatialProjection
  * @see SpatialProjectionType
  */
-val Spatial.projectionType: SpatialProjectionType
-    get() = projection.asEnum(SpatialProjectionType.UNKNOWN)
+val Spatial.spatialProjectionType: SpatialProjectionType
+    get() = spatialProjection.asEnum(SpatialProjectionType.UNKNOWN)
 
 /**
  * @see Spatial.stereoFormat

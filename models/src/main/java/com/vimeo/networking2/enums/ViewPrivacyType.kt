@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * Privacy values that can be set for viewing a video.
  */
-enum class ViewValue(override val value: String?) : StringValue {
+enum class ViewPrivacyType(override val value: String?) : StringValue {
 
     /**
      * Anyone can view the user's videos.

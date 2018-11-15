@@ -5,7 +5,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import com.vimeo.networking2.enums.StreamType
+import com.vimeo.networking2.enums.StreamAccessType
 import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
@@ -39,19 +39,19 @@ data class SubscriptionInteraction(
 
     /**
      * The stream type.
-     * @see SubscriptionInteraction.streamType
+     * @see SubscriptionInteraction.streamAccessType
      */
     @Internal
     @Json(name = "stream")
-    val stream: String? = null
+    val streamAccess: String? = null
 
 )
 
 /**
- * @see SubscriptionInteraction.stream
- * @see StreamType
+ * @see SubscriptionInteraction.streamAccess
+ * @see StreamAccessType
  */
-val SubscriptionInteraction.streamType: StreamType
-    get() = stream.asEnum(StreamType.UNKNOWN)
+val SubscriptionInteraction.streamAccessType: StreamAccessType
+    get() = streamAccess.asEnum(StreamAccessType.UNKNOWN)
 
 

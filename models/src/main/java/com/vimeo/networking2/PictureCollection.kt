@@ -41,10 +41,10 @@ data class PictureCollection(
 
     /**
      * The type of the picture.
-     * @see PictureCollection.pictureType
+     * @see PictureCollection.type
      */
     @Json(name = "type")
-    val type: String? = null,
+    val rawType: String? = null,
 
     /**
      * The picture's URI.
@@ -59,8 +59,8 @@ data class PictureCollection(
 }
 
 /**
- * @see PictureCollection.type
+ * @see PictureCollection.rawType
  * @see PictureType
  */
-val PictureCollection.pictureType: PictureType
-    get() = type.asEnum(PictureType.UNKNOWN)
+val PictureCollection.type: PictureType
+    get() = rawType.asEnum(PictureType.UNKNOWN)

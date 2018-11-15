@@ -4,9 +4,9 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.enums.CommentValue
-import com.vimeo.networking2.enums.EmbedValue
-import com.vimeo.networking2.enums.ViewValue
+import com.vimeo.networking2.enums.CommentPrivacyType
+import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.enums.asEnum
 
 @JsonClass(generateAdapter = true)
@@ -20,10 +20,10 @@ data class Privacy(
 
     /**
      * The user's privacy preference for comments.
-     * @see Comment.commentType
+     * @see Comment.type
      */
     @Json(name = "comments")
-    val comment: String? = null,
+    val commentPrivacy: String? = null,
 
     /**
      * Whether other users can download the user's videos.
@@ -33,36 +33,36 @@ data class Privacy(
 
     /**
      * The user's privacy preference for embeds.
-     * @see Privacy.embedValue
+     * @see Privacy.embedPrivacyType
      */
     @Json(name = "embed")
-    val embed: String? = null,
+    val embedPrivacy: String? = null,
 
     /**
      * The privacy settings of the channel.
-     * @see Privacy.viewValue
+     * @see Privacy.viewPrivacyType
      */
     @Json(name = "view")
-    val view: String? = null
+    val viewPrivacy: String? = null
 )
 
 /**
- * @see Privacy.comment
- * @see CommentValue
+ * @see Privacy.commentPrivacy
+ * @see CommentPrivacyType
  */
-val Privacy.commentValue: CommentValue
-    get() = comment.asEnum(CommentValue.UNKNOWN)
+val Privacy.commentPrivacyType: CommentPrivacyType
+    get() = commentPrivacy.asEnum(CommentPrivacyType.UNKNOWN)
 
 /**
- * @see Privacy.embed
- * @see EmbedValue
+ * @see Privacy.embedPrivacy
+ * @see EmbedPrivacyType
  */
-val Privacy.embedValue: EmbedValue
-    get() = embed.asEnum(EmbedValue.UNKNOWN)
+val Privacy.embedPrivacyType: EmbedPrivacyType
+    get() = embedPrivacy.asEnum(EmbedPrivacyType.UNKNOWN)
 
 /**
- * @see Privacy.view
- * @see ViewValue
+ * @see Privacy.viewPrivacy
+ * @see ViewPrivacyType
  */
-val Privacy.viewValue: ViewValue
-    get() = view.asEnum(ViewValue.UNKNOWN)
+val Privacy.viewPrivacyType: ViewPrivacyType
+    get() = viewPrivacy.asEnum(ViewPrivacyType.UNKNOWN)
