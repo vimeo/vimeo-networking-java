@@ -20,7 +20,7 @@ data class Privacy(
 
     /**
      * The user's privacy preference for comments.
-     * @see Comment.type
+     * @see Privacy.commentPrivacyType
      */
     @Json(name = "comments")
     val commentPrivacy: String? = null,
