@@ -1,13 +1,16 @@
+@file:JvmName("ProgressiveVideoFileUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.VideoQualityType
 import com.vimeo.networking2.enums.VideoSourceType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 @JsonClass(generateAdapter = true)
-data class ProgressiveFileType(
+data class ProgressiveVideoFile(
 
     /**
      * The time in ISO 8601 format when the video file was created.
@@ -53,9 +56,10 @@ data class ProgressiveFileType(
 
     /**
      * The video quality (as determined by height and width).
+     * @see ProgressiveVideoFile.videoQualityType
      */
     @Json(name = "quality")
-    val quality: VideoQualityType? = null,
+    val videoQuality: String? = null,
 
     /**
      * The file size of the video.
@@ -71,9 +75,10 @@ data class ProgressiveFileType(
 
     /**
      * The type of the video file.
+     * @see ProgressiveVideoFile.type
      */
     @Json(name = "type")
-    val type: VideoSourceType? = null,
+    val rawType: String? = null,
 
     /**
      * The width of the video in pixels.
@@ -82,3 +87,17 @@ data class ProgressiveFileType(
     val width: Int? = null
 
 )
+
+/**
+ * @see ProgressiveVideoFile.videoQuality
+ * @see VideoQualityType
+ */
+val ProgressiveVideoFile.videoQualityType: VideoQualityType
+    get() = videoQuality.asEnum(VideoQualityType.UNKNOWN)
+
+/**
+ * @see ProgressiveVideoFile.rawType
+ * @see VideoSourceType
+ */
+val ProgressiveVideoFile.type: VideoSourceType
+    get() = rawType.asEnum(VideoSourceType.UNKNOWN)

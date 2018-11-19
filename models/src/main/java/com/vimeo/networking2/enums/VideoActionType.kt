@@ -1,23 +1,17 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * All actions that can be taken on a video.
  */
-enum class VideoActionType {
+enum class VideoActionType(override val value: String?) : StringValue {
 
-    @Json(name = "Added to")
-    ADDED_TO,
+    ADDED_TO("Added to"),
 
-    @Json(name = "Appearance by")
-    APPEARANCE_BY,
+    APPEARANCE_BY("Appearance by"),
 
-    @Json(name = "Liked by")
-    LIKED_BY,
+    LIKED_BY("Liked by"),
 
-    @Json(name = "Uploaded by")
-    UPLOADED_BY,
+    UPLOADED_BY("Uploaded by"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }

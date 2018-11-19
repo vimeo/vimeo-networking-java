@@ -1,56 +1,47 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Privacy values that can be set for viewing a video.
  */
-enum class ViewValue {
+enum class ViewPrivacyType(override val value: String?) : StringValue {
 
     /**
      * Anyone can view the user's videos.
      */
-    @Json(name = "anybody")
-    ANYBODY,
+    ANYBODY("anybody"),
 
     /**
      * Only contacts can view the user's videos.
      */
-    @Json(name = "contacts")
-    CONTACTS,
+    CONTACTS("contacts"),
 
     /**
      * Views are disabled for the user's videos.
      */
-    @Json(name = "disable")
-    DISABLE,
+    DISABLE("disable"),
 
     /**
      * No one except the user can view the user's videos.
      */
-    @Json(name = "nobody")
-    NOBODY,
+    NOBODY("nobody"),
 
     /**
      * Only those with the password can view the user's videos.
      */
-    @Json(name = "password")
-    PASSWORD,
+    PASSWORD("password"),
 
     /**
      * Anybody can view the user's videos if they have a link.
      */
-    @Json(name = "unlisted")
-    UNLISTED,
+    UNLISTED("unlisted"),
 
     /**
      * Only other Vimeo members can view the user's videos.
      */
-    @Json(name = "users")
-    USERS,
+    USERS("users"),
 
     /**
      * Unknown privacy value.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

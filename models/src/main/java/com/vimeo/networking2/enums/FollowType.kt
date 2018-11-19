@@ -1,27 +1,23 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Follow types.
  */
-enum class FollowType {
+enum class FollowType(override val value: String?) : StringValue {
 
     /**
      * The authenticated user.
      */
-    @Json(name = "moderator")
-    MODERATOR,
+    MODERATOR("moderator"),
 
     /**
      * The authenticated user is a subscriber.
      */
-    @Json(name = "subscriber")
-    SUBSCRIBER,
+    SUBSCRIBER("subscriber"),
 
     /**
      * Unknown follow type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 
 }

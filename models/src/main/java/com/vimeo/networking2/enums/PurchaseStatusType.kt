@@ -1,20 +1,14 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
+enum class PurchaseStatusType(override val value: String?) : StringValue {
 
-enum class PurchaseStatusType {
+    APP_MISMATCH("app_mismatch"),
 
-    @Json(name = "app_mismatch")
-    APP_MISMATCH,
+    AVAILABLE("available"),
 
-    @Json(name = "available")
-    AVAILABLE,
+    PURCHASED("purchased"),
 
-    @Json(name = "purchased")
-    PURCHASED,
+    UNAVAILABLE("unavailable"),
 
-    @Json(name = "unavailable")
-    UNAVAILABLE,
-
-    UNKNOWN
+    UNKNOWN(null)
 }

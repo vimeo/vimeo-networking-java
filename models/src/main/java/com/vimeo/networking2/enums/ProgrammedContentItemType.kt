@@ -1,26 +1,22 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * The type of programmed cinema item.
  */
-enum class ProgrammedContentItemType {
+enum class ProgrammedContentItemType(override val value: String?) : StringValue {
 
     /**
      * Category.
      */
-    @Json(name = "category")
-    CATEGORY,
+    CATEGORY("category"),
 
     /**
      * Channel.
      */
-    @Json(name = "channel")
-    CHANNEL,
+    CHANNEL("channel"),
 
     /**
      * Unknown cinema item type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

@@ -1,45 +1,32 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Type of activity in the feed.
  */
-enum class AttributionType {
+enum class AttributionType(override val value: String?) : StringValue {
 
-    @Json(name = "appearance")
-    APPEARANCE,
+    APPEARANCE("appearance"),
 
-    @Json(name = "category")
-    CATEGORY,
+    CATEGORY("category"),
 
-    @Json(name = "channel")
-    CHANNEL,
+    CHANNEL("channel"),
 
-    @Json(name = "facebook_feed")
-    FACEBOOK_FEED,
+    FACEBOOK_FEED("facebook_feed"),
 
-    @Json(name = "group")
-    GROUP,
+    GROUP("group"),
 
-    @Json(name = "like")
-    LIKE,
+    LIKE("like"),
 
-    @Json(name = "ondemand")
-    ONDEMAND,
+    ONDEMAND("ondemand"),
 
-    @Json(name = "share")
-    SHARE,
+    SHARE("share"),
 
-    @Json(name = "tag")
-    TAG,
+    TAG("tag"),
 
-    @Json(name = "twitter_timeline")
-    TWITTER_TIMELINE,
+    TWITTER_TIMELINE("twitter_timeline"),
 
-    @Json(name = "upload")
-    UPLOAD,
+    UPLOAD("upload"),
 
-    UNKNOWN
+    UNKNOWN(null)
 
 }

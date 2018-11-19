@@ -1,23 +1,17 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Video qualities.
  */
-enum class VideoQualityType {
+enum class VideoQualityType(override val value: String?) : StringValue {
 
-    @Json(name = "hd")
-    HD,
+    HD("hd"),
 
-    @Json(name = "hls")
-    HLS,
+    HLS("hls"),
 
-    @Json(name = "mobile")
-    MOBILE,
+    MOBILE("mobile"),
 
-    @Json(name = "sd")
-    SD,
+    SD("sd"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }

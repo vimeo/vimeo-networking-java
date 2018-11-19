@@ -1,8 +1,12 @@
+@file:JvmName("PictureCollectionUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.PictureType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Collection of pictures.
@@ -37,9 +41,10 @@ data class PictureCollection(
 
     /**
      * The type of the picture.
+     * @see PictureCollection.type
      */
     @Json(name = "type")
-    val type: PictureType? = null,
+    val rawType: String? = null,
 
     /**
      * The picture's URI.
@@ -47,4 +52,15 @@ data class PictureCollection(
     @Json(name = "uri")
     val uri: String? = null
 
-)
+) : Entity {
+
+    override val identifier: String? = resourceKey
+
+}
+
+/**
+ * @see PictureCollection.rawType
+ * @see PictureType
+ */
+val PictureCollection.type: PictureType
+    get() = rawType.asEnum(PictureType.UNKNOWN)

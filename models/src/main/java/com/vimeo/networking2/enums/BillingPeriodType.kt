@@ -1,26 +1,22 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Billing periods for PRO, Plus, PRO Unlimited plans.
  */
-enum class BillingPeriodType {
+enum class BillingPeriodType(override val value: String?) : StringValue {
 
     /**
      * User will be charged monthly.
      */
-    @Json(name = "monthly")
-    MONTHLY,
+    MONTHLY("monthly"),
 
     /**
      * User will be charged yearly.
      */
-    @Json(name = "yearly")
-    YEARLY,
+    YEARLY("yearly"),
 
     /**
      * Unknown billing period.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

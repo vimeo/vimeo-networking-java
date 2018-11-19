@@ -1,9 +1,12 @@
+@file:JvmName("PlayUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import com.vimeo.networking2.enums.VideoPlayStatus
+import com.vimeo.networking2.enums.VideoPlayStatusType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Play information.
@@ -38,7 +41,7 @@ data class Play(
      */
     @Internal
     @Json(name = "progressive")
-    val progressive: List<ProgressiveFileType>? = null,
+    val progressive: List<ProgressiveVideoFile>? = null,
 
     /**
      * The source file of the video.
@@ -49,8 +52,16 @@ data class Play(
 
     /**
      * The play status of the video.
+     * @see Play.videoPlayStatusType
      */
     @Internal
     @Json(name = "status")
-    val status: VideoPlayStatus? = null
+    val videoPlayStatus: String? = null
 )
+
+/**
+ * @see Play.videoPlayStatus
+ * @see VideoPlayStatusType
+ */
+val Play.videoPlayStatusType: VideoPlayStatusType
+    get() = videoPlayStatus.asEnum(VideoPlayStatusType.UNKNOWN)

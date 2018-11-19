@@ -1,6 +1,9 @@
 package com.vimeo.networking2.enums
 
-enum class UploadStatusType(override val value: String?) : StringValue {
+/**
+ * Status code for video availability.
+ */
+enum class TranscodeStatusType(override val value: String?) : StringValue {
 
     COMPLETE("complete"),
 

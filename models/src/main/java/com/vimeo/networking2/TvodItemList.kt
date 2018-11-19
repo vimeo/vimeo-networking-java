@@ -5,10 +5,10 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
 
 /**
- * List of [TVodItem] that could be paged.
+ * List of [TvodItem] that could be paged.
  */
 @JsonClass(generateAdapter = true)
-data class TVoidItemList(
+data class TvodItemList(
 
     @Json(name = "total")
     override val total: Int? = null,
@@ -23,6 +23,6 @@ data class TVoidItemList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<TVodItem>? = null
+    override val data: List<TvodItem>? = null
 
-) : Pageable<TVodItem>
+) : Pageable<TvodItem>

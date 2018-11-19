@@ -1,29 +1,21 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Different types of badges for videos.
  */
-enum class VideoBadgeType {
+enum class VideoBadgeType(override val value: String?) : StringValue {
 
-    @Json(name = "cameo")
-    CAMEO,
+    CAMEO("cameo"),
 
-    @Json(name = "staffpick")
-    STAFFPICK,
+    STAFFPICK("staffpick"),
 
-    @Json(name = "staffpick-best-of-the-month")
-    STAFFPICK_BEST_OF_THE_MONTH,
+    STAFFPICK_BEST_OF_THE_MONTH("staffpick-best-of-the-month"),
 
-    @Json(name = "staffpick-best-of-the-year")
-    STAFFPICK_BEST_OF_THE_YEAR,
+    STAFFPICK_BEST_OF_THE_YEAR("staffpick-best-of-the-year"),
 
-    @Json(name = "staffpick-premiere")
-    STAFFPICK_PREMIERE,
+    STAFFPICK_PREMIERE("staffpick-premiere"),
 
-    @Json(name = "weekendchallenge")
-    WEEKENDCHALLENGE,
+    WEEKENDCHALLENGE("weekendchallenge"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }

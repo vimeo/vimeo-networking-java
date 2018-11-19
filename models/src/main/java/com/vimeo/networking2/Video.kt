@@ -1,3 +1,5 @@
+@file:JvmName("VideoUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
@@ -6,6 +8,7 @@ import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.LicenseType
 import com.vimeo.networking2.enums.VideoStatusType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -82,9 +85,10 @@ data class Video(
 
     /**
      * The Creative Commons license used for the video.
+     * @see Video.licenseType
      */
     @Json(name = "license")
-    val license: LicenseType? = null,
+    val license: String? = null,
 
     /**
      * The link to the video.
@@ -177,11 +181,12 @@ data class Video(
 
     /**
      * The status code for the availability of the video. This field is deprecated in favor
-     * of [upload].
+     * of [upload] and [transcode].
+     * @see Video.statusType
      */
     @Json(name = "status")
-    @Deprecated("This field is deprecated in favor of upload.")
-    val status: VideoStatusType? = null,
+    @Deprecated("This property is deprecated in favor of upload and transcode.")
+    val status: String? = null,
 
     /**
      * An array of all tags assigned to this video.
@@ -219,8 +224,23 @@ data class Video(
     @Json(name = "width")
     val width: Int? = null
 
-): Entity {
+) : Entity {
 
     override val identifier: String? = resourceKey
 
 }
+
+/**
+ * @see Video.license
+ * @see LicenseType
+ */
+val Video.licenseType: LicenseType
+    get() = license.asEnum(LicenseType.UNKNOWN)
+
+/**
+ * @see Video.status
+ * @see VideoStatusType
+ */
+@Deprecated(message = "This property is deprecated in favor of upload and transcode.")
+val Video.statusType: VideoStatusType
+    get() = status.asEnum(VideoStatusType.UNKNOWN)

@@ -1,9 +1,12 @@
+@file:JvmName("LiveUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import com.vimeo.networking2.enums.LiveStatus
+import com.vimeo.networking2.enums.LiveStatusType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -71,16 +74,24 @@ data class Live(
 
     /**
      * The status of the RTMP [link].
+     * @see Live.liveStatusType
      */
     @Internal
     @Json(name = "status")
-    val status: LiveStatus? = null,
+    val liveStatus: String? = null,
 
     /**
-     * If [status] is [LiveStatus.STREAMING_ERROR], this is the reason for that error.
+     * If [liveStatusType] is [LiveStatusType.STREAMING_ERROR], this is the reason for that error.
      */
     @Internal
     @Json(name = "streaming_error")
     val streamingError: ApiError? = null
 
 )
+
+/**
+ * @see Live.liveStatus
+ * @see LiveStatusType
+ */
+val Live.liveStatusType: LiveStatusType
+    get() = liveStatus.asEnum(LiveStatusType.UNKNOWN)

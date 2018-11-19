@@ -1,9 +1,12 @@
+@file:JvmName("RentInteractionUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import com.vimeo.networking2.enums.StreamType
+import com.vimeo.networking2.enums.StreamAccessType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -64,10 +67,11 @@ data class RentInteraction(
 
     /**
      * The user's streaming access to this On Demand video.
+     * @see RentInteraction.streamAccessType
      */
     @Internal
     @Json(name = "stream")
-    val stream: StreamType? = null,
+    val streamAccess: String? = null,
 
     /**
      * The product URI to rent the On Demand video.
@@ -77,3 +81,10 @@ data class RentInteraction(
     val uri: String? = null
 
 )
+
+/**
+ * @see RentInteraction.streamAccess
+ * @see StreamAccessType
+ */
+val RentInteraction.streamAccessType: StreamAccessType
+    get() = streamAccess.asEnum(StreamAccessType.UNKNOWN)

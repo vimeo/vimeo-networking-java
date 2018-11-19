@@ -1,14 +1,10 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
+enum class UploadSpaceType(override val value: String?) : StringValue {
 
-enum class UploadSpaceType {
+    LIFETIME("lifetime"),
 
-    @Json(name = "lifetime")
-    LIFETIME,
+    PERIODIC("periodic"),
 
-    @Json(name = "periodic")
-    PERIODIC,
-
-    UNKNOWN
+    UNKNOWN(null)
 }

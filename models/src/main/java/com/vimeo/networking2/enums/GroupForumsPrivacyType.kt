@@ -1,21 +1,18 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Type of group forums.
  */
-enum class GroupForumsPrivacyValue {
+enum class GroupForumsPrivacyType(override val value: String?) : StringValue {
 
     /**
      * Only moderators can comment on the group.
      */
-    @Json(name = "mods")
-    MODS,
+    MODS("mods"),
 
     /**
      * Unknown group forms privacy.
      */
-    UNKNOWN
+    UNKNOWN(null)
 
 }

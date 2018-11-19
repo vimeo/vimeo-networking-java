@@ -1,12 +1,14 @@
+@file:JvmName("BuyInteractionUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.common.Interaction
-import com.vimeo.networking2.enums.ApiOptionsType
 import com.vimeo.networking2.enums.DownloadType
-import com.vimeo.networking2.enums.StreamType
+import com.vimeo.networking2.enums.StreamAccessType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -32,10 +34,11 @@ data class BuyInteraction(
 
     /**
      * The user's download access to this On Demand video
+     * @see BuyInteraction.downloadType
      */
     @Internal
     @Json(name = "download")
-    val download: DownloadType? = null,
+    val download: String? = null,
 
     /**
      * Whether the video has DRM.
@@ -67,17 +70,32 @@ data class BuyInteraction(
 
     /**
      * The user's streaming access to this On Demand video.
+     * @see BuyInteraction.streamType
      */
     @Internal
     @Json(name = "stream")
-    val streamType: StreamType? = null,
+    val stream: String? = null,
 
     @Internal
     @Json(name = "options")
-    override val options: List<ApiOptionsType>? = null,
+    override val options: List<String>? = null,
 
     @Internal
     @Json(name = "uri")
     override val uri: String? = null
 
-): Interaction
+) : Interaction
+
+/**
+ * @see BuyInteraction.download
+ * @see DownloadType
+ */
+val BuyInteraction.downloadType: DownloadType
+    get() = download.asEnum(DownloadType.UNKNOWN)
+
+/**
+ * @see BuyInteraction.stream
+ * @see StreamAccessType
+ */
+val BuyInteraction.streamType: StreamAccessType
+    get() = stream.asEnum(StreamAccessType.UNKNOWN)

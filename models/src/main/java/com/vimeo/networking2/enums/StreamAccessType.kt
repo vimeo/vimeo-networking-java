@@ -1,40 +1,35 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
 import com.vimeo.networking2.annotations.Internal
 
 /**
  * The user's streaming access to this On Demand video.
  */
 @Internal
-enum class StreamType {
+enum class StreamAccessType(override val value: String?) : StringValue {
 
     /**
      * The video is available for streaming.
      */
-    @Json(name = "available")
-    AVAILABLE,
+    AVAILABLE("available"),
 
     /**
      * The user has purchased the video.
      */
-    @Json(name = "purchased")
-    PURCHASED,
+    PURCHASED("purchased"),
 
     /**
      * The user isn't permitted to stream the video.
      */
-    @Json(name = "restricted")
-    RESTRICTED,
+    RESTRICTED("restricted"),
 
     /**
      * The video isn't available for streaming
      */
-    @Json(name = "unavailable")
-    UNAVAILABLE,
+    UNAVAILABLE("unavailable"),
 
     /**
      * Unknown stream type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

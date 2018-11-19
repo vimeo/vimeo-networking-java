@@ -1,29 +1,21 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Search type.
  */
-enum class SearchType {
+enum class SearchType(override val value: String?) : StringValue {
 
-    @Json(name = "blog")
-    BLOG,
+    BLOG("blog"),
 
-    @Json(name = "channel")
-    CHANNEL,
+    CHANNEL("channel"),
 
-    @Json(name = "video")
-    VIDEO,
+    VIDEO("video"),
 
-    @Json(name = "group")
-    GROUP,
+    GROUP("group"),
 
-    @Json(name = "ondemand")
-    ONDEMAND,
+    ONDEMAND("ondemand"),
 
-    @Json(name = "people")
-    PEOPLE,
+    PEOPLE("people"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }
