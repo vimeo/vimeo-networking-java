@@ -18,7 +18,6 @@ import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
 import com.vimeo.networking.callers.MoshiGetRequestCaller;
-import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
@@ -32,10 +31,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     public static final String STAFF_PICKS_VIDEO_URI = "/channels/927/videos"; // 927 == staffpicks
 
-    private VimeoClient mApiClient = VimeoClient.getInstance();
+    private final VimeoClient mApiClient = VimeoClient.getInstance();
     private ProgressDialog mProgressDialog;
 
     private TextView mRequestOutputTv;
+
+    private TextView mStaffPicksRequestTime;
 
     // <editor-fold desc="Life Cycle">
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         setContentView(R.layout.activity_main);
 
         // ---- Initial UI Setup ----
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("All of your API are belong to us...");
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }
 
         // ---- View Binding ----
-        mRequestOutputTv = (TextView) findViewById(R.id.request_output_tv);
+        mRequestOutputTv = findViewById(R.id.request_output_tv);
+        mStaffPicksRequestTime = findViewById(R.id.staff_picks_request_time);
         findViewById(R.id.fab).setOnClickListener(this);
         findViewById(R.id.code_grant_btn).setOnClickListener(this);
         findViewById(R.id.request_output_tv).setOnClickListener(this);
@@ -134,7 +136,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                     }
                     mRequestOutputTv.setText(videoTitlesString);
                 }
-                ClientLogger.d("Total data load time in milliseconds: " + totalLoadTime);
+                mStaffPicksRequestTime.setText(getString(R.string.request_time, "Gson", totalLoadTime));
+
                 toast("Staff Picks Success ");
                 mProgressDialog.hide();
             }
@@ -169,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                     }
                     mRequestOutputTv.setText(videoTitlesString);
                 }
-                ClientLogger.d("Total data load time in milliseconds: " + totalLoadTime);
+                mStaffPicksRequestTime.setText(getString(R.string.request_time, "Moshi", totalLoadTime));
                 toast("Staff Picks Success");
                 mProgressDialog.hide();
             }

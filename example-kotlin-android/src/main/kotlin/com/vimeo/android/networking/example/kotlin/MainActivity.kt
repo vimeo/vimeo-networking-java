@@ -5,22 +5,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import com.vimeo.networking.VimeoClient
 import com.vimeo.networking.callbacks.AuthCallback
 import com.vimeo.networking.callbacks.VimeoCallback
 import com.vimeo.networking.callers.GetRequestCaller
 import com.vimeo.networking.callers.MoshiGetRequestCaller
-import com.vimeo.networking.logging.ClientLogger
 import com.vimeo.networking.model.User
 import com.vimeo.networking.model.VideoList
 import com.vimeo.networking.model.error.VimeoError
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import okhttp3.CacheControl
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -28,79 +24,18 @@ import kotlin.system.measureTimeMillis
 
 /**
  * The main activity.
- *
- * Created by anthonyr on 5/8/17.
  **/
 class MainActivity : AppCompatActivity() {
 
+    private val job = Job()
+
+    private val uiScope = CoroutineScope(Dispatchers.Main + job)
+
     private val apiClient = VimeoClient.getInstance()
-    private val progressDialog by lazy { ProgressDialog(this) }
 
-    suspend fun <DataType_T> getContent(
-        uri: String,
-        cacheControl: CacheControl,
-        caller: VimeoClient.Caller<DataType_T>,
-        query: String?,
-        refinementMap: Map<String, String>?,
-        fieldFilter: String?
-    ): DataType_T? = suspendCoroutine { cont ->
-        apiClient.getContent(
-            uri,
-            cacheControl,
-            caller,
-            query,
-            refinementMap,
-            fieldFilter,
-            object : VimeoCallback<DataType_T>() {
-                override fun success(t: DataType_T) {
-                    cont.resume(t)
-                }
-
-                override fun failure(error: VimeoError?) {
-                    cont.resume(null)
-                }
-
-            })
+    private val progressDialog by lazy {
+        ProgressDialog(this).also { it.setCancelable(false) }
     }
-
-    val repeatTimes = 10
-
-    fun timeMoshiStaffPicksRequest() {
-        GlobalScope.launch {
-            val moshiTime = measureTimeMillis {
-                repeat(repeatTimes) {
-                    fetchStaffPicky(MoshiGetRequestCaller.VIDEO_LIST)
-                }
-            }
-            ClientLogger.d("Time - Moshi: $moshiTime")
-        }
-    }
-
-    fun timeGsonStaffPicksRequest() {
-        GlobalScope.launch {
-            val gsonTime = measureTimeMillis {
-                repeat(repeatTimes) {
-                    fetchStaffPicky(GetRequestCaller.VIDEO_LIST)
-                }
-            }
-            ClientLogger.d("Time - Gson: $gsonTime")
-        }
-    }
-
-    suspend fun <DataType_T> fetchStaffPicky(
-        caller: VimeoClient.Caller<DataType_T>
-    ) {
-        getContent(
-            uri = STAFF_PICKS_VIDEO_URI,
-            cacheControl = CacheControl.FORCE_NETWORK,
-            caller = caller,
-            query = null,
-            refinementMap = null,
-            fieldFilter = null
-        )
-    }
-
-    // <editor-fold desc="Life Cycle">
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,18 +70,83 @@ class MainActivity : AppCompatActivity() {
         logout_btn.setOnClickListener { logout() }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+    override fun onDestroy() {
+        super.onDestroy()
+        progressDialog.dismiss()
+        job.cancel()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) =
-        item.itemId == R.id.action_settings || super.onOptionsItemSelected(item)
+    private fun timeMoshiStaffPicksRequest() {
+        uiScope.launch {
+            progressDialog.show()
+            val moshiTime = async(Dispatchers.IO) {
+                measureTimeMillis {
+                    repeat(repeatTimes) {
+                        fetchStaffPicky(MoshiGetRequestCaller.VIDEO_LIST)
+                    }
+                }
+            }.await()
 
-    // </editor-fold>
+            progressDialog.dismiss()
+            staff_picks_request_time.text = getString(R.string.request_time, "Moshi", moshiTime)
+        }
+    }
 
-    // <editor-fold desc="Requests">
+    private fun timeGsonStaffPicksRequest() {
+        uiScope.launch {
+            progressDialog.show()
+            val gsonTime = async(Dispatchers.IO) {
+                measureTimeMillis {
+                    repeat(repeatTimes) {
+                        fetchStaffPicky(GetRequestCaller.VIDEO_LIST)
+                    }
+                }
+            }.await()
+
+            progressDialog.dismiss()
+            staff_picks_request_time.text = getString(R.string.request_time, "Gson", gsonTime)
+        }
+    }
+
+    private suspend fun <DataType_T> fetchStaffPicky(
+        caller: VimeoClient.Caller<DataType_T>
+    ) {
+        getContent(
+            uri = STAFF_PICKS_VIDEO_URI,
+            cacheControl = CacheControl.FORCE_NETWORK,
+            caller = caller,
+            query = null,
+            refinementMap = null,
+            fieldFilter = null
+        )
+    }
+
+    private suspend fun <DataType_T> getContent(
+        uri: String,
+        cacheControl: CacheControl,
+        caller: VimeoClient.Caller<DataType_T>,
+        query: String?,
+        refinementMap: Map<String, String>?,
+        fieldFilter: String?
+    ): DataType_T? = suspendCoroutine { cont ->
+        apiClient.getContent(
+            uri,
+            cacheControl,
+            caller,
+            query,
+            refinementMap,
+            fieldFilter,
+            object : VimeoCallback<DataType_T>() {
+                override fun success(t: DataType_T) {
+                    cont.resume(t)
+                }
+
+                override fun failure(error: VimeoError?) {
+                    cont.resume(null)
+                }
+
+            })
+    }
 
     private fun fetchStaffPicks() {
         progressDialog.show()
@@ -266,10 +266,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // </editor-fold>
-
-    // <editor-fold desc="Code Grant">
-
     // We deep link to this activity as specified in the AndroidManifest.
     private fun handleCodeGrantIfNecessary() {
         if (intent != null) {
@@ -287,43 +283,15 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
     }
 
-    // </editor-fold>
-
-    // <editor-fold desc="Helpers">
-
     private fun toast(string: String) {
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
 
-        const val STAFF_PICKS_VIDEO_URI = "/channels/927/videos" // 927 == staffpicks
+        private const val STAFF_PICKS_VIDEO_URI = "/channels/927/videos" // 927 == staffpicks
+
+        private const val repeatTimes = 10
     }
 
-    /*
-    // Can only fetch quota if you have the upload privilege
-    private fun fetchAccountTypes() {
-        mProgressDialog!!.show()
-        mApiClient.fetchCurrentUser(object : ModelCallback<User>(User::class.java) {
-            override fun success(user: User) {
-                val fileSizeBytes = user.freeUploadSpace
-                if (user.freeUploadSpace.compareTo(Vimeo.NOT_FOUND) != 0) {
-                    val formattedFileSize = Formatter.formatShortFileSize(TestApp.appContext, fileSizeBytes)
-                    mRequestOutputTv!!.text = "Available Space: " + formattedFileSize
-                    toast("Quote Check Success")
-                } else {
-                    toast("Quote Check Failure")
-                }
-                mProgressDialog!!.hide()
-            }
-
-            override fun failure(error: VimeoError) {
-                mRequestOutputTv!!.text = error.developerMessage
-                mProgressDialog!!.hide()
-            }
-        })
-    }
-    */
-
-    // </editor-fold>
 }
