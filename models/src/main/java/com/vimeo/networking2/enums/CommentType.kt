@@ -1,21 +1,18 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Type of comment.
  */
-enum class CommentType {
+enum class CommentType(override val value: String?) : StringValue {
 
     /**
      * The comment is on a video.
      */
-    @Json(name = "video")
-    VIDEO,
+    VIDEO("video"),
 
     /**
      * Unknown comment type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 
 }

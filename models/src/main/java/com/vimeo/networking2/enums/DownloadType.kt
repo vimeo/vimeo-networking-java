@@ -1,39 +1,36 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
+import com.vimeo.networking2.annotations.Internal
 
 /**
  * The user's download access to this On Demand video.
  */
-enum class DownloadType {
+@Internal
+enum class DownloadType(override val value: String?) : StringValue {
 
     /**
      * The video is available for download.
      */
-    @Json(name = "available")
-    AVAILABLE,
+    AVAILABLE("available"),
 
     /**
      * The user has purchased the video.
      */
-    @Json(name = "purchased")
-    PURCHASED,
+    PURCHASED("purchased"),
 
     /**
      * The user isn't permitted to download the video.
      */
-    @Json(name = "restricted")
-    RESTRICTED,
+    RESTRICTED("restricted"),
 
     /**
      * The video isn't available for download.
      */
-    @Json(name = "unavailable")
-    UNAVAILABLE,
+    UNAVAILABLE("unavailable"),
 
     /**
      * Unknown download type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 
 }

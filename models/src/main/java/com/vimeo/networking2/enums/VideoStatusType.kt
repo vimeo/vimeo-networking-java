@@ -1,38 +1,27 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Video statuses.
  */
-enum class VideoStatusType {
+enum class VideoStatusType(override val value: String?) : StringValue {
 
-    @Json(name = "available")
-    AVAILABLE,
+    AVAILABLE("available"),
 
-    @Json(name = "quota_exceeded")
-    QUOTA_EXCEEDED,
+    QUOTA_EXCEEDED("quota_exceeded"),
 
-    @Json(name = "total_cap_exceeded")
-    TOTAL_CAP_EXCEEDED,
+    TOTAL_CAP_EXCEEDED("total_cap_exceeded"),
 
-    @Json(name = "transcode_starting")
-    TRANSCODE_STARTING,
+    TRANSCODE_STARTING("transcode_starting"),
 
-    @Json(name = "transcoding")
-    TRANSCODING,
+    TRANSCODING("transcoding"),
 
-    @Json(name = "transcoding_error")
-    TRANSCODING_ERROR,
+    TRANSCODING_ERROR("transcoding_error"),
 
-    @Json(name = "unavailable")
-    UNAVAILABLE,
+    UNAVAILABLE("unavailable"),
 
-    @Json(name = "uploading")
-    UPLOADING,
+    UPLOADING("uploading"),
 
-    @Json(name = "uploading_error")
-    UPLOADING_ERROR,
+    UPLOADING_ERROR("uploading_error"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }

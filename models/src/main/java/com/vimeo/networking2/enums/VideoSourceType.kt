@@ -1,20 +1,14 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
+enum class VideoSourceType(override val value: String?) : StringValue {
 
-enum class VideoSourceType {
+    SOURCE("source"),
 
-    @Json(name = "source")
-    SOURCE,
+    VIDEO_MP4("video/mp4"),
 
-    @Json(name = "video/mp4")
-    VIDEO_MP4,
+    VIDEO_WEBM("video/webm"),
 
-    @Json(name = "video/webm")
-    VIDEO_WEBM,
+    VP6_X_VIDEO("vp6/x-video"),
 
-    @Json(name = "vp6/x-video")
-    VP6_X_VIDEO,
-
-    UNKNOWN
+    UNKNOWN(null)
 }

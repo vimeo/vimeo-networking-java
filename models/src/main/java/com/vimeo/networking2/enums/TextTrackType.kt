@@ -1,23 +1,19 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
-enum class TextTrackType {
+enum class TextTrackType(override val value: String?) : StringValue {
 
     /**
      * The type of the text track.
      */
-    @Json(name = "captions")
-    CAPTIONS,
+    CAPTIONS("captions"),
 
     /**
      * The text track is for subtitles.
      */
-    @Json(name = "subtitles")
-    SUBTITLES,
+    SUBTITLES("subtitles"),
 
     /**
      * Unknown text track type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

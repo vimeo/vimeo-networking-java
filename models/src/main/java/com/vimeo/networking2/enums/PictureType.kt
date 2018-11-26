@@ -1,32 +1,27 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Picture types.
  */
-enum class PictureType {
+enum class PictureType(override val value: String?) : StringValue {
 
     /**
      * An image that is appropriate for all ages.
      */
-    @Json(name = "caution")
-    CAUTION,
+    CAUTION("caution"),
 
     /**
      * A custom image for the video.
      */
-    @Json(name = "custom")
-    CUSTOM,
+    CUSTOM("custom"),
 
     /**
      * The default image for the video.
      */
-    @Json(name = "default")
-    DEFAULT,
+    DEFAULT("default"),
 
     /**
      * Unknown picture type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

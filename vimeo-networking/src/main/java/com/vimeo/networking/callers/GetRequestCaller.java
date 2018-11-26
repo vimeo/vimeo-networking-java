@@ -28,6 +28,8 @@ import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.VimeoClient.Caller;
 import com.vimeo.networking.VimeoService;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.model.Album;
+import com.vimeo.networking.model.AlbumList;
 import com.vimeo.networking.model.Category;
 import com.vimeo.networking.model.CategoryList;
 import com.vimeo.networking.model.Channel;
@@ -63,6 +65,7 @@ import retrofit2.Call;
  * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
  * Created by rigbergh on 7/9/17.
  */
+@SuppressWarnings("unused")
 public final class GetRequestCaller {
 
     /**
@@ -433,6 +436,26 @@ public final class GetRequestCaller {
      * Used in association with
      * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link Album} response from an API endpoint.
+     */
+    public static final Caller<Album> ALBUM =
+            new Caller<Album>() {
+
+                @NotNull
+                @Override
+                public Call<Album> call(@NotNull String authHeader,
+                                        @NotNull String uri,
+                                        @NotNull Map<String, String> queryMap,
+                                        @NotNull String cacheHeader,
+                                        @NotNull VimeoService vimeoService) {
+                    return vimeoService.getAlbum(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link Void} response from an API endpoint.
      */
     public static final Caller<Void> VOID =
@@ -486,6 +509,26 @@ public final class GetRequestCaller {
                                             @NotNull String cacheHeader,
                                             @NotNull VimeoService vimeoService) {
                     return vimeoService.getVideoList(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link AlbumList} response from an API endpoint.
+     */
+    public static final Caller<AlbumList> ALBUM_LIST =
+            new Caller<AlbumList>() {
+
+                @NotNull
+                @Override
+                public Call<AlbumList> call(@NotNull String authHeader,
+                                            @NotNull String uri,
+                                            @NotNull Map<String, String> queryMap,
+                                            @NotNull String cacheHeader,
+                                            @NotNull VimeoService vimeoService) {
+                    return vimeoService.getAlbumList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 

@@ -1,10 +1,14 @@
+@file:JvmName("AlbumUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.AlbumLayoutType
 import com.vimeo.networking2.enums.AlbumThemeType
 import com.vimeo.networking2.enums.SortType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -58,9 +62,10 @@ data class Album(
 
     /**
      * The album's layout preference.
+     * @see Album.layoutType
      */
     @Json(name = "layout")
-    val layout: AlbumLayoutType? = null,
+    val layout: String? = null,
 
     /**
      * The URL to access the album.
@@ -112,15 +117,17 @@ data class Album(
 
     /**
      * Sort type of the album.
+     * @see Album.sortType
      */
     @Json(name = "sort")
-    val sort: SortType? = null,
+    val sort: String? = null,
 
     /**
      * The album's color theme preference.
+     * @see Album.themeType
      */
     @Json(name = "theme")
-    val theme: AlbumThemeType? = null,
+    val theme: String? = null,
 
     /**
      * The album's URI.
@@ -139,3 +146,24 @@ data class Album(
     override val identifier: String? = resourceKey
 
 }
+
+/**
+ * @see Album.layout
+ * @see AlbumLayoutType
+ */
+val Album.layoutType: AlbumLayoutType
+    get() = layout.asEnum(AlbumLayoutType.UNKNOWN)
+
+/**
+ * @see Album.theme
+ * @see AlbumThemeType
+ */
+val Album.themeType: AlbumThemeType
+    get() = theme.asEnum(AlbumThemeType.UNKNOWN)
+
+/**
+ * @see Album.sort
+ * @see SortType
+ */
+val Album.sortType: SortType
+    get() = sort.asEnum(SortType.UNKNOWN)

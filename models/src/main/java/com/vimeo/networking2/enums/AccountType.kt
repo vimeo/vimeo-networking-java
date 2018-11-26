@@ -1,69 +1,58 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * User account type.
  */
-enum class AccountType {
+enum class AccountType(override val value: String?) : StringValue {
 
     /**
      * The user has a Vimeo Basic subscription.
      */
-    @Json(name = "basic")
-    BASIC,
+    BASIC("basic"),
 
     /**
      * The user has a Vimeo Business subscription.
      */
-    @Json(name = "business")
-    BUSINESS,
+    BUSINESS("business"),
 
     /**
      * The user has a Live Business subscription.
      */
-    @Json(name = "live_business")
-    LIVE_BUSINESS,
+    LIVE_BUSINESS("live_business"),
 
     /**
      * The user has a Live Premium subscription.
      */
-    @Json(name = "live_premium")
-    LIVE_PREMIUM,
+    LIVE_PREMIUM("live_premium"),
 
     /**
      * The user has a Live PRO subscription
      */
-    @Json(name = "live_pro")
-    LIVE_PRO,
+    LIVE_PRO("live_pro"),
 
     /**
      * The user has a Vimeo Plus subscription.
      */
-    @Json(name = "plus")
-    PLUS,
+    PLUS("plus"),
 
     /**
      * The user has a Vimeo PRO subscription.
      */
-    @Json(name = "pro")
-    PRO,
+    PRO("pro"),
 
     /**
      * The user has a Vimeo PRO Unlimited subscription.
      */
-    @Json(name = "pro_unlimited")
-    PRO_UNLIMITED,
+    PRO_UNLIMITED("pro_unlimited"),
 
     /**
      * The user has a Vimeo Producer subscription.
      */
-    @Json(name = "producer")
-    PRODUCER,
+    PRODUCER("producer"),
 
     /**
      * Unknown account type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 
 }

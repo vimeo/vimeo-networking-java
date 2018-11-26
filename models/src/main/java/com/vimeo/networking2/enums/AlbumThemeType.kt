@@ -1,26 +1,22 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Album themes.
  */
-enum class AlbumThemeType {
+enum class AlbumThemeType(override val value: String?) : StringValue {
 
     /**
      * Dark theme.
      */
-    @Json(name = "dark")
-    DARK,
+    DARK("dark"),
 
     /**
      * Standard theme.
      */
-    @Json(name = "standard")
-    STANDARD,
+    STANDARD("standard"),
 
     /**
      * Unknown theme.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

@@ -1,35 +1,24 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
+enum class SortType(override val value: String?) : StringValue {
 
-enum class SortType {
+    ADDED_FIRST("added first"),
 
-    @Json(name = "added first")
-    ADDED_FIRST,
+    ADDED_LAST("added last"),
 
-    @Json(name = "added last")
-    ADDED_LAST,
+    ALPHABETICAL("alphabetical"),
 
-    @Json(name = "alphabetical")
-    ALPHABETICAL,
+    ARRANGED("arranged"),
 
-    @Json(name = "arranged")
-    ARRANGED,
+    COMMENTS("comments"),
 
-    @Json(name = "comments")
-    COMMENTS,
+    LIKES("likes"),
 
-    @Json(name = "likes")
-    LIKES,
+    NEWEST("newest"),
 
-    @Json(name = "newest")
-    NEWEST,
+    OLDEST("oldest"),
 
-    @Json(name = "oldest")
-    OLDEST,
+    PLAYS("plays"),
 
-    @Json(name = "plays")
-    PLAYS,
-
-    UNKNOWN
+    UNKNOWN(null)
 }

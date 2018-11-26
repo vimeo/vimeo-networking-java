@@ -1,10 +1,16 @@
+@file:JvmName("UserUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
+import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.ContentFilterType
+import com.vimeo.networking2.enums.asEnum
+import com.vimeo.networking2.enums.asEnumList
 import java.util.*
 
 /**
@@ -15,15 +21,15 @@ data class User(
 
     /**
      * The user's account type
+     * @see User.accountType
      */
     @Json(name = "account")
-    val account: AccountType? = null,
+    val account: String? = null,
 
     /**
      * Information about the user's badge.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_VIEW_USER_BADGE].
      */
+    @Internal
     @Json(name = "badge")
     val badge: UserBadge? = null,
 
@@ -35,9 +41,10 @@ data class User(
 
     /**
      * The user's content filters.
+     * @see User.contentFilterTypes
      */
     @Json(name = "content_filter")
-    val contentFilter: List<ContentFilterType>? = null,
+    val contentFilters: List<String>? = null,
 
     /**
      * The time in ISO 8601 format when the user account was created.
@@ -54,6 +61,7 @@ data class User(
     /**
      * An array of alternate emails for the user.
      */
+    @Internal
     @Json(name = "emails")
     val emails: List<Email>? = null,
 
@@ -88,12 +96,6 @@ data class User(
     val name: String? = null,
 
     /**
-     * The user's stored payment information.
-     */
-    @Json(name = "payment")
-    val payment: Payment? = null,
-
-    /**
      * The active portrait of this user.
      */
     @Json(name = "pictures")
@@ -124,21 +126,27 @@ data class User(
     val uri: String? = null,
 
     /**
-     * The user's email verification status.
-     *
-     * Requires [CapabilitiesType.CAPABILITY_API_APP_MANAGEMENT].
-     */
-    @Json(name = "verified")
-    val verified: Boolean? = null,
-
-    /**
      * The user's websites.
      */
     @Json(name = "websites")
     val websites: List<Website>? = null
 
-): Followable, Entity {
+) : Followable, Entity {
 
     override val identifier: String? = resourceKey
 
 }
+
+/**
+ * @see User.account
+ * @see AccountType
+ */
+val User.accountType: AccountType
+    get() = account.asEnum(AccountType.UNKNOWN)
+
+/**
+ * @see User.contentFilters
+ * @see ContentFilterType
+ */
+val User.contentFilterTypes: List<ContentFilterType>
+    get() = contentFilters.asEnumList(ContentFilterType.UNKNOWN)

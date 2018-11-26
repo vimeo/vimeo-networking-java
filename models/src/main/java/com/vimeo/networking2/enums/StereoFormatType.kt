@@ -1,29 +1,24 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
-enum class StereoFormatType {
+enum class StereoFormatType(override val value: String?) : StringValue {
 
     /**
      * The stereo format is left-right.
      */
-    @Json(name = "left-right")
-    LEFT_RIGHT,
+    LEFT_RIGHT("left-right"),
 
     /**
      * The audio is monaural. top-bottom - The stereo
      */
-    @Json(name = "mono")
-    MONO,
+    MONO("mono"),
 
     /**
      * The stereo format is top-bottom.
      */
-    @Json(name = "top-bottom")
-    TOP_BOTTOM,
+    TOP_BOTTOM("top-bottom"),
 
     /**
      * Unknown stereo format type.
      */
-    UNKNOWN
+    UNKNOWN(null)
 }

@@ -1,10 +1,13 @@
+@file:JvmName("PrivacyUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.enums.CommentValue
-import com.vimeo.networking2.enums.EmbedValue
-import com.vimeo.networking2.enums.ViewValue
+import com.vimeo.networking2.enums.CommentPrivacyType
+import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.ViewPrivacyType
+import com.vimeo.networking2.enums.asEnum
 
 @JsonClass(generateAdapter = true)
 data class Privacy(
@@ -17,9 +20,10 @@ data class Privacy(
 
     /**
      * The user's privacy preference for comments.
+     * @see Privacy.commentPrivacyType
      */
     @Json(name = "comments")
-    val comment: CommentValue? = null,
+    val commentPrivacy: String? = null,
 
     /**
      * Whether other users can download the user's videos.
@@ -29,19 +33,36 @@ data class Privacy(
 
     /**
      * The user's privacy preference for embeds.
+     * @see Privacy.embedPrivacyType
      */
     @Json(name = "embed")
-    val embed: EmbedValue? = null,
-
-    /**
-     * The password for viewing the user's videos. Requires [CapabilitiesType.CAPABILITY_PROTECTED_VIDEOS].
-     */
-    @Json(name = "password")
-    val password: String? = null,
+    val embedPrivacy: String? = null,
 
     /**
      * The privacy settings of the channel.
+     * @see Privacy.viewPrivacyType
      */
     @Json(name = "view")
-    val view: ViewValue? = null
+    val viewPrivacy: String? = null
 )
+
+/**
+ * @see Privacy.commentPrivacy
+ * @see CommentPrivacyType
+ */
+val Privacy.commentPrivacyType: CommentPrivacyType
+    get() = commentPrivacy.asEnum(CommentPrivacyType.UNKNOWN)
+
+/**
+ * @see Privacy.embedPrivacy
+ * @see EmbedPrivacyType
+ */
+val Privacy.embedPrivacyType: EmbedPrivacyType
+    get() = embedPrivacy.asEnum(EmbedPrivacyType.UNKNOWN)
+
+/**
+ * @see Privacy.viewPrivacy
+ * @see ViewPrivacyType
+ */
+val Privacy.viewPrivacyType: ViewPrivacyType
+    get() = viewPrivacy.asEnum(ViewPrivacyType.UNKNOWN)

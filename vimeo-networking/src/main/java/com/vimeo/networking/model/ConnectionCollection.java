@@ -158,6 +158,10 @@ public class ConnectionCollection implements Serializable {
     protected Connection mRecommendedUsers;
 
     @Nullable
+    @SerializedName("upload_attempt")
+    private Connection mUploadAttempt;
+
+    @Nullable
     @SerializedName("watched_videos")
     protected Connection mWatchedVideos;
 
@@ -182,7 +186,8 @@ public class ConnectionCollection implements Serializable {
     private Interaction mLiveStats;
 
     /**
-     * @return the {@link Interaction} for getting the {@link com.vimeo.networking.model.live.LiveStats} for a live {@link Video}
+     * @return the {@link Interaction} for getting the {@link com.vimeo.networking.model.live.LiveStats}
+     * for a live {@link Video}
      */
     @Nullable
     public Interaction getLiveStats() {
@@ -355,6 +360,11 @@ public class ConnectionCollection implements Serializable {
     }
 
     @Nullable
+    public Connection getUploadAttempt() {
+        return mUploadAttempt;
+    }
+
+    @Nullable
     public Connection getUsersWithAccess() {
         return mUsersWithAccess;
     }
@@ -369,5 +379,9 @@ public class ConnectionCollection implements Serializable {
 
     void setLiveStats(@Nullable Interaction liveStats) {
         mLiveStats = liveStats;
+    }
+
+    void setUploadAttempt(@Nullable Connection uploadAttempt) {
+        mUploadAttempt = uploadAttempt;
     }
 }

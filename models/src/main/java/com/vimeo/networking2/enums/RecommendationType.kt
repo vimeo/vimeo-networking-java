@@ -1,17 +1,13 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Type of recommendation.
  */
-enum class RecommendationType {
+enum class RecommendationType(override val value: String?) : StringValue {
 
-    @Json(name = "channel")
-    CHANNEL,
+    CHANNEL("channel"),
 
-    @Json(name = "user")
-    USER,
+    USER("user"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }

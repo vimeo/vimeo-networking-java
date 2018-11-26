@@ -1,32 +1,23 @@
 package com.vimeo.networking2.enums
 
-import com.squareup.moshi.Json
-
 /**
  * Different types of licenses.
  */
-enum class LicenseType {
+enum class LicenseType(override val value: String?) : StringValue {
 
-    @Json(name = "by")
-    BY,
+    BY("by"),
 
-    @Json(name = "by-nc")
-    BY_NC,
+    BY_NC("by-nc"),
 
-    @Json(name = "by-nc-nd")
-    BY_NC_ND,
+    BY_NC_ND("by-nc-nd"),
 
-    @Json(name = "by-nc-sa")
-    BY_NC_SA,
+    BY_NC_SA("by-nc-sa"),
 
-    @Json(name = "by-nd")
-    BY_ND,
+    BY_ND("by-nd"),
 
-    @Json(name = "by-sa")
-    BY_SA,
+    BY_SA("by-sa"),
 
-    @Json(name = "by-cc0")
-    CC0,
+    CC0("by-cc0"),
 
-    UNKNOWN
+    UNKNOWN(null)
 }
