@@ -10,6 +10,6 @@
     <string name="check_current_user_account_type">Check Current User Account Type</string>
     <string name="logout">Logout</string>
     <string name="this_is_where_request_output_will_go">This is where request output will go.</string>
-    <string name="request_time">Time - %s : %2d</string>
+    <string name="request_time" formatted="false">Time - %s : %2d</string>
     <string name="gson_or_moshi_request_time_will_show_here_once_complete">Gson or Moshi request time will show here once complete.</string>
 </resources>

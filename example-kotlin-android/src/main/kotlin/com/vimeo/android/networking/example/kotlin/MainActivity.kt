@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
 
             progressDialog.dismiss()
             staff_picks_request_time.text = getString(R.string.request_time, "Gson", gsonTime)
+
         }
     }
 
