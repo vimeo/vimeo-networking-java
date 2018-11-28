@@ -55,14 +55,14 @@ public class TestApp extends Application {
 
     public Configuration.Builder getAccessTokenBuilder() {
         // The values file is left out of git, so you'll have to provide your own access token
-        String accessToken = "";
+        String accessToken = "PROVIDE AN ACCESS TOKEN";
         return new Configuration.Builder(accessToken);
     }
 
     public Configuration.Builder getClientIdAndClientSecretBuilder() {
         // The values file is left out of git, so you'll have to provide your own id and secret
-        String clientId = "";
-        String clientSecret = "";
+        String clientId = "PROVIDE A CLIENT ID";
+        String clientSecret = "PROVIDE A CLIENT SECRET";
         String codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" +
                                       getString(R.string.deeplink_redirect_host);
         TestAccountStore testAccountStore = new TestAccountStore(this.getApplicationContext());

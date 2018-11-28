@@ -42,7 +42,7 @@ class TestApp : Application() {
     // The values file is left out of git, so you'll have to provide your own access token
     private val accessTokenBuilder: Configuration.Builder
         get() {
-            val accessToken = ""
+            val accessToken = "PROVIDE AN ACCESS TOKEN"
             return Configuration.Builder(accessToken)
         }
 
