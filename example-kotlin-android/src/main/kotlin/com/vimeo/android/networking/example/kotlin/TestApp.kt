@@ -11,8 +11,6 @@ import com.vimeo.networking.VimeoClient
 
 /**
  * The application class.
- *
- * Created by anthonyr on 5/8/17.
  */
 @Suppress("ConstantConditionIf")
 class TestApp : Application() {
@@ -66,7 +64,7 @@ class TestApp : Application() {
         private const val SCOPE = "private public create edit delete interact"
 
         // Switch to true to see how access token auth works.
-        private const val ACCESS_TOKEN_PROVIDED = false
+        private const val ACCESS_TOKEN_PROVIDED = true
 
         fun getUserAgentString(context: Context): String {
             val packageName = context.packageName

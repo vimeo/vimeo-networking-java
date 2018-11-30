@@ -6,7 +6,6 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.vimeo.android.networking.example.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
@@ -19,34 +18,54 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <Button
+            android:id="@+id/staff_picks_gson_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_staff_picks_first_page_with_gson_and_log"/>
+
+        <Button
+            android:id="@+id/staff_picks_moshi_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_staff_picks_first_page_with_moshi_and_log"/>
+
+        <TextView
+            android:id="@+id/staff_picks_request_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/gson_or_moshi_request_time_will_show_here_once_complete"/>
+
+        <Button
             android:id="@+id/staff_picks_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Request Staff Picks First Page"/>
+            android:text="@string/request_staff_picks_first_page"/>
 
         <Button
             android:id="@+id/code_grant_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login With Code Grant (Through Web)"/>
+            android:text="@string/login_with_code_grant_through_web"/>
 
         <Button
             android:id="@+id/account_type_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check Current User Account Type"/>
+            android:text="@string/check_current_user_account_type"/>
 
         <Button
             android:id="@+id/logout_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"/>
+            android:text="@string/logout"/>
 
         <TextView
             android:id="@+id/request_output_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="This is where request output will go."/>
+            android:text="@string/this_is_where_request_output_will_go"/>
     </LinearLayout>
 </ScrollView>

@@ -21,7 +21,7 @@ public class TestApp extends Application {
 
     private static final boolean IS_DEBUG_BUILD = false;
     // Switch to true to see how access token auth works.
-    private static final boolean ACCESS_TOKEN_PROVIDED = false;
+    private static final boolean ACCESS_TOKEN_PROVIDED = true;
 
     private static Context sContext;
 
