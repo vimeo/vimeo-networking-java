@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 
 import com.vimeo.android.networking.example.vimeonetworking.AndroidGsonDeserializer;
 import com.vimeo.android.networking.example.vimeonetworking.NetworkingLogger;
@@ -24,17 +25,14 @@ public class TestApp extends Application {
     // Switch to true to see how access token auth works.
     private static final boolean ACCESS_TOKEN_PROVIDED = false;
 
-    private static Context mContext;
-
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mContext = this;
-        AccountPreferenceManager.initializeInstance(mContext);
+        AccountPreferenceManager.initializeInstance(this);
 
         // <editor-fold desc="Vimeo API Library Initialization">
-        Configuration.Builder configBuilder;
+        final Configuration.Builder configBuilder;
         // This check is just as for the example. In practice, you'd use one technique or the other.
         if (ACCESS_TOKEN_PROVIDED) {
             configBuilder = getAccessTokenBuilder();
@@ -50,20 +48,20 @@ public class TestApp extends Application {
         // </editor-fold>
     }
 
-    public Configuration.Builder getAccessTokenBuilder() {
+    public static Configuration.Builder getAccessTokenBuilder() {
         // The values file is left out of git, so you'll have to provide your own access token
-        String accessToken = getString(R.string.access_token);
+        final String accessToken = "PROVIDE AN ACCESS TOKEN";
         return new Configuration.Builder(accessToken);
     }
 
     public Configuration.Builder getClientIdAndClientSecretBuilder() {
         // The values file is left out of git, so you'll have to provide your own id and secret
-        String clientId = getString(R.string.client_id);
-        String clientSecret = getString(R.string.client_secret);
-        String codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" +
-                                      getString(R.string.deeplink_redirect_host);
-        TestAccountStore testAccountStore = new TestAccountStore(this.getApplicationContext());
-        Configuration.Builder configBuilder =
+        final String clientId = "PROVIDE A CLIENT ID";
+        final String clientSecret = "PROVIDE A CLIENT SECRET";
+        final String codeGrantRedirectUri = getString(R.string.deeplink_redirect_scheme) + "://" +
+                                            getString(R.string.deeplink_redirect_host);
+        final TestAccountStore testAccountStore = new TestAccountStore(this.getApplicationContext());
+        final Configuration.Builder configBuilder =
                 new Configuration.Builder(clientId, clientSecret, SCOPE, testAccountStore,
                                           new AndroidGsonDeserializer());
         configBuilder.setCacheDirectory(this.getCacheDir())
@@ -74,27 +72,23 @@ public class TestApp extends Application {
         return configBuilder;
     }
 
-    public static Context getAppContext() {
-        return mContext;
-    }
-
     public static String getUserAgentString(Context context) {
-        String packageName = context.getPackageName();
+        final String packageName = context.getPackageName();
 
         String version = "unknown";
         try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(packageName, 0);
+            final PackageInfo pInfo = context.getPackageManager().getPackageInfo(packageName, 0);
             version = pInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            System.out.println("Unable to get packageInfo: " + e.getMessage());
+        } catch (final PackageManager.NameNotFoundException e) {
+            Log.e("TestApp","Unable to get packageInfo: " + e.getMessage());
         }
 
-        String deviceManufacturer = Build.MANUFACTURER;
-        String deviceModel = Build.MODEL;
-        String deviceBrand = Build.BRAND;
+        final String deviceManufacturer = Build.MANUFACTURER;
+        final String deviceModel = Build.MODEL;
+        final String deviceBrand = Build.BRAND;
 
-        String versionString = Build.VERSION.RELEASE;
-        String versionSDKString = String.valueOf(Build.VERSION.SDK_INT);
+        final String versionString = Build.VERSION.RELEASE;
+        final String versionSDKString = String.valueOf(Build.VERSION.SDK_INT);
 
         return packageName + " (" + deviceManufacturer + ", " + deviceModel + ", " + deviceBrand +
                ", " + "Android " + versionString + "/" + versionSDKString + " Version " + version +
