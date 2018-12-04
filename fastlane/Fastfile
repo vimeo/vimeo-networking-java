@@ -89,7 +89,7 @@ platform :android do
       task: "vimeo-networking:assemble"
     )
     
-    pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+    pretty_junit(file_pattern: "vimeo-networking/build/test-results/test/TEST-*")
 
   end
   
