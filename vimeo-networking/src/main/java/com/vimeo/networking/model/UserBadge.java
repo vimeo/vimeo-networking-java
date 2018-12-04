@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -67,15 +68,19 @@ public class UserBadge implements Serializable {
         SUPPORT
     }
 
+    @Nullable
     @SerializedName(value = "type", alternate = "m_badge_type")
     protected String mBadgeType;
 
+    @Nullable
     @SerializedName(value = "text", alternate = "m_text")
     protected String mText;
 
+    @Nullable
     @SerializedName(value = "alt_text", alternate = "m_alternate_text")
     protected String mAlternateText;
 
+    @Nullable
     @SerializedName(value = "url", alternate = "m_url")
     protected String mUrl;
 
