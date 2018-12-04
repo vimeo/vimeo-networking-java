@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.asEnum
 
@@ -19,13 +20,15 @@ data class Membership(
 
     /**
      * The user's account type.
+     * @see [Membership.type]
      */
     @Json(name = "type")
-    val type: String,
+    val rawType: String,
 
     /**
      * Information about the user's badge.
      */
+    @Internal
     @Json(name = "badge")
     val badge: UserBadge? = null,
 
@@ -37,7 +40,8 @@ data class Membership(
 )
 
 /**
+ * @see [Membership.rawType]
  * @see AccountType
  */
-val Membership.accountType: AccountType
-    get() = type.asEnum(AccountType.UNKNOWN)
+val Membership.type: AccountType
+    get() = rawType.asEnum(AccountType.UNKNOWN)

@@ -2,7 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.enums.TrialType
+import com.vimeo.networking2.enums.TrialStatusType
 import com.vimeo.networking2.enums.asEnum
 
 /**
@@ -16,9 +16,13 @@ data class SubscriptionTrial(
      * If the value is "free_trial" the user is currently in a free trial.
      */
     @Json(name = "status")
-    var status: String
+    var rawStatus: String
 
 )
 
-val SubscriptionTrial.trialStatus: TrialType
-    get() = status.asEnum(TrialType.UNKNOWN)
+/**
+ * @see [SubscriptionTrial.rawStatus]
+ * @see TrialStatusType
+ */
+val SubscriptionTrial.status: TrialStatusType
+    get() = rawStatus.asEnum(TrialStatusType.UNKNOWN)

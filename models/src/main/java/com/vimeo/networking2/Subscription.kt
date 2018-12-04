@@ -9,9 +9,15 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Subscription(
 
+    /**
+     * Information about the user's next renewal.
+     */
     @Json(name = "renewal")
     val renewal: SubscriptionRenewal,
 
+    /**
+     * Information about the user's trial period.
+     */
     @Json(name = "trial")
     val trial: SubscriptionTrial? = null
 )

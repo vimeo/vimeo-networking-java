@@ -16,9 +16,15 @@ public class Subscription implements Serializable {
 
     private static final long serialVersionUID = -4419561580922152031L;
 
+    /**
+     * Information about the user's next renewal.
+     */
     @SerializedName("renewal")
     private SubscriptionRenewal mRenewal;
 
+    /**
+     * Information about the user's trial period.
+     */
     @SerializedName("trial")
     private SubscriptionTrial mTrial;
 
