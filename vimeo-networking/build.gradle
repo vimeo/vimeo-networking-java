@@ -23,7 +23,7 @@ repositories {
     jcenter()
 }
 
-/* tasks.withType(Javadoc).all { enabled = true } */
+tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
     testImplementation 'junit:junit:4.12'
