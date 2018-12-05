@@ -13,7 +13,7 @@ data class Subscription(
      * Information about the user's next renewal.
      */
     @Json(name = "renewal")
-    val renewal: SubscriptionRenewal,
+    val renewal: SubscriptionRenewal? = null,
 
     /**
      * Information about the user's trial period.

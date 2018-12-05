@@ -14,6 +14,6 @@ data class SubscriptionRenewal(
      * disabled autorenew). For display only.
      */
     @Json(name = "display_date")
-    val displayDate: String
+    val displayDate: String? = null
 
 )

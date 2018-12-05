@@ -16,14 +16,14 @@ data class Membership(
      * The user's membership level
      */
     @Json(name = "display")
-    val display: String,
+    val display: String? = null,
 
     /**
      * The user's account type.
      * @see [Membership.type]
      */
     @Json(name = "type")
-    val rawType: String,
+    val rawType: String? = null,
 
     /**
      * Information about the user's badge.

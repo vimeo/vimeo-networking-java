@@ -16,7 +16,7 @@ data class SubscriptionTrial(
      * If the value is "free_trial" the user is currently in a free trial.
      */
     @Json(name = "status")
-    var rawStatus: String
+    var rawStatus: String? = null
 
 )
 

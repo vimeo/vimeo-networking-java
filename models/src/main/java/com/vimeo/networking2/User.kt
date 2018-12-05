@@ -119,7 +119,7 @@ data class User(
      * The user's membership.
      */
     @Json(name = "membership")
-    val membership: Membership
+    val membership: Membership? = null
 
 ) : Followable, Entity {
 
