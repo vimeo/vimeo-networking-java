@@ -37,6 +37,7 @@ class EnumsTest {
         StreamAccessType::class.java,
         TextTrackType::class.java,
         TranscodeStatusType::class.java,
+        TrialStatusType::class.java,
         TvodItemType::class.java,
         UploadSpaceType::class.java,
         UploadStatusType::class.java,

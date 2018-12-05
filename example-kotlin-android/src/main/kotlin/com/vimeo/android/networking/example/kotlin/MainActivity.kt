@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
             object : VimeoCallback<User>() {
                 override fun success(user: User?) {
                     if (user != null) {
-                        request_output_tv.text = "Current account type: ${user.account}"
+                        request_output_tv.text = "Current account type: ${user.membership?.display}"
                         toast("Account Check Success")
                     } else {
                         toast("Account Check Failure")
