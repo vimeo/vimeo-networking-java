@@ -82,14 +82,14 @@ platform :android do
         task: "vimeo-networking:test"
       )
     rescue => error
-      pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+      pretty_junit(file_pattern: "vimeo-networking/build/test-results/test/TEST-*")
     end
     
     gradle(
       task: "vimeo-networking:assemble"
     )
     
-    pretty_junit(file_pattern: "vimeo-networking/build/test-results/TEST-*")
+    pretty_junit(file_pattern: "vimeo-networking/build/test-results/test/TEST-*")
 
   end
   

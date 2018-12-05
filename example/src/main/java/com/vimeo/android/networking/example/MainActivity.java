@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     public static final String STAFF_PICKS_VIDEO_URI = "/channels/927/videos"; // 927 == staffpicks
 
-    private VimeoClient mApiClient = VimeoClient.getInstance();
+    private final VimeoClient mApiClient = VimeoClient.getInstance();
     private ProgressDialog mProgressDialog;
 
     private TextView mRequestOutputTv;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         setContentView(R.layout.activity_main);
 
         // ---- Initial UI Setup ----
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("All of your API are belong to us...");
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }
 
         // ---- View Binding ----
-        mRequestOutputTv = (TextView) findViewById(R.id.request_output_tv);
+        mRequestOutputTv = findViewById(R.id.request_output_tv);
         findViewById(R.id.fab).setOnClickListener(this);
         findViewById(R.id.code_grant_btn).setOnClickListener(this);
         findViewById(R.id.request_output_tv).setOnClickListener(this);
@@ -109,16 +109,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             @Override
             public void success(VideoList videoList) {
                 if (videoList != null && videoList.data != null) {
-                    String videoTitlesString = "";
+                    final StringBuilder videoTitlesString = new StringBuilder();
                     boolean addNewLine = false;
-                    for (Video video : videoList.data) {
+                    for (final Video video : videoList.data) {
                         if (addNewLine) {
-                            videoTitlesString += "\n";
+                            videoTitlesString.append("\n");
                         }
                         addNewLine = true;
-                        videoTitlesString += video.name;
+                        videoTitlesString.append(video.name);
                     }
-                    mRequestOutputTv.setText(videoTitlesString);
+                    mRequestOutputTv.setText(videoTitlesString.toString());
                 }
                 toast("Staff Picks Success");
                 mProgressDialog.hide();
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             @Override
             public void success(User user) {
                 if (user != null) {
-                    mRequestOutputTv.setText("Current account type: " + user.account);
+                    mRequestOutputTv.setText(getString(R.string.account_type, user.account));
                     toast("Account Check Success");
                 } else {
                     toast("Account Check Failure");
@@ -225,8 +225,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     // We deep link to this activity as specified in the AndroidManifest.
     private void handleCodeGrantIfNecessary() {
         if (getIntent() != null) {
-            String action = getIntent().getAction();
-            Uri uri = getIntent().getData();
+            final String action = getIntent().getAction();
+            final Uri uri = getIntent().getData();
             if (Intent.ACTION_VIEW.equals(action) && uri != null) {
                 // This is coming from a deep link
                 authenticateWithCodeGrant(uri);
@@ -235,8 +235,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
 
     private void goToWebForCodeGrantAuth() {
-        String uri = mApiClient.getCodeGrantAuthorizationURI();
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        final String uri = mApiClient.getCodeGrantAuthorizationURI();
+        final Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(browserIntent);
     }
 
