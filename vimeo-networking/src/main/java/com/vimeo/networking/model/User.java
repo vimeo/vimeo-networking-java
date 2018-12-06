@@ -24,7 +24,6 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
-import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.networking.model.live.LiveQuota;
 import com.vimeo.networking.model.notifications.NotificationConnection;
 import com.vimeo.networking.model.uploadquota.UploadQuota;
@@ -47,16 +46,17 @@ import java.util.Date;
 @UseStag(FieldOption.SERIALIZED_NAME)
 public class User implements Serializable, Followable, Entity {
 
-    private static final long serialVersionUID = 4317573825273169510L;
+    private static final long serialVersionUID = 8185353945955189902L;
+
     private static final String ACCOUNT_BASIC = "basic";
     private static final String ACCOUNT_BUSINESS = "business";
-    private static final String ACCOUNT_PLUS = "plus";
     private static final String ACCOUNT_PRO = "pro";
+    private static final String ACCOUNT_PLUS = "plus";
     private static final String ACCOUNT_STAFF = "staff";
     private static final String ACCOUNT_LIVE_BUSINESS = "live_business";
     private static final String ACCOUNT_LIVE_PRO = "live_pro";
-    private static final String ACCOUNT_PRO_UNLIMITED = "pro_unlimited";
     private static final String ACCOUNT_LIVE_PREMIUM = "live_premium";
+    private static final String ACCOUNT_PRO_UNLIMITED = "pro_unlimited";
     private static final String ACCOUNT_PRODUCER = "producer";
 
     public enum AccountType {
@@ -90,9 +90,6 @@ public class User implements Serializable, Followable, Entity {
     @SerializedName("created_time")
     public Date mCreatedTime;
 
-    @SerializedName("account")
-    public String mAccount;
-
     @SerializedName("pictures")
     public PictureCollection mPictures;
 
@@ -111,10 +108,6 @@ public class User implements Serializable, Followable, Entity {
     @Nullable
     @SerializedName("preferences")
     public Preferences mPreferences;
-
-    @Nullable
-    @SerializedName("badge")
-    public UserBadge mBadge;
 
     /**
      * Live streaming quota information
@@ -140,18 +133,17 @@ public class User implements Serializable, Followable, Entity {
     private String mResourceKey;
 
     @Nullable
-    public UserBadge getBadge() {
-        return mBadge;
-    }
+    @SerializedName("membership")
+    private Membership mMembership;
 
     public AccountType getAccountType() {
-        if (this.mAccount == null) {
-            //We should assume the account object could be null; also, a User object could be created with
-            // just a uri, then updated when fetched from the server, so account would be null until then.
-            // Scenario: deeplinking. [KZ] 9/29/15
+        if (this.mMembership == null || this.mMembership.getType() == null) {
+            //We should assume the account object could be null; also, a User object could
+            // be created with just a uri, then updated when fetched from the server, so
+            // account would be null until then. Scenario: deeplinking. [KZ] 9/29/15
             return AccountType.BASIC;
         }
-        switch (this.mAccount) {
+        switch (this.mMembership.getType()) {
             case ACCOUNT_BUSINESS:
                 return AccountType.BUSINESS;
             case ACCOUNT_PLUS:
@@ -176,8 +168,8 @@ public class User implements Serializable, Followable, Entity {
         }
     }
 
-    public UserBadgeType getUserBadgeType() {
-        return mBadge == null ? UserBadgeType.NONE : mBadge.getBadgeType();
+    public UserBadge.UserBadgeType getUserBadgeType() {
+        return mMembership == null ? UserBadge.UserBadgeType.NONE : mMembership.getUserBadgeType();
     }
 
     /**
@@ -348,18 +340,15 @@ public class User implements Serializable, Followable, Entity {
     }
 
     public boolean isPlusOrPro() {
-        boolean plusOrPro = false;
-        if (((getAccountType() == AccountType.PLUS) || (getAccountType() == AccountType.PRO))) {
-            plusOrPro = true;
-        }
-        return plusOrPro;
+        return ((getAccountType() == AccountType.PLUS) ||
+                (getAccountType() == AccountType.PRO));
     }
 
     @Nullable
     public Privacy.ViewValue getPreferredVideoPrivacyValue() {
         Privacy.ViewValue privacyValue = null;
         if (mPreferences != null && mPreferences.getVideos() != null &&
-            mPreferences.getVideos().getPrivacy() != null) {
+                mPreferences.getVideos().getPrivacy() != null) {
             privacyValue = mPreferences.getVideos().getPrivacy().getView();
         }
         return privacyValue;
@@ -367,10 +356,10 @@ public class User implements Serializable, Followable, Entity {
 
     public boolean canUploadPicture() {
         return mMetadata != null &&
-               mMetadata.mConnections != null &&
-               mMetadata.mConnections.mPictures != null &&
-               mMetadata.mConnections.mPictures.mOptions != null &&
-               mMetadata.mConnections.mPictures.mOptions.contains(Vimeo.OPTIONS_POST);
+                mMetadata.mConnections != null &&
+                mMetadata.mConnections.mPictures != null &&
+                mMetadata.mConnections.mPictures.mOptions != null &&
+                mMetadata.mConnections.mPictures.mOptions.contains(Vimeo.OPTIONS_POST);
     }
 
     public UploadQuota getUploadQuota() {
@@ -413,10 +402,6 @@ public class User implements Serializable, Followable, Entity {
 
     public Date getCreatedTime() {
         return mCreatedTime;
-    }
-
-    public String getAccount() {
-        return mAccount;
     }
 
     public ArrayList<Email> getVerifiedEmails() {
@@ -466,6 +451,16 @@ public class User implements Serializable, Followable, Entity {
         return mIsVideoCreator;
     }
 
+    @Nullable
+    public UserBadge getBadge() {
+        return mMembership == null ? null : mMembership.getBadge();
+    }
+
+    @Nullable
+    public Membership getMembership() {
+        return mMembership;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -505,6 +500,10 @@ public class User implements Serializable, Followable, Entity {
         mIsStaff = staff;
     }
 
+    void setMembership(@Nullable Membership membership) {
+        mMembership = membership;
+    }
+
     // </editor-fold>
 
     @Override
@@ -529,22 +528,21 @@ public class User implements Serializable, Followable, Entity {
     @Override
     public String toString() {
         return "User{" +
-               "mUri='" + mUri + '\'' +
-               ", mName='" + mName + '\'' +
-               ", mLink='" + mLink + '\'' +
-               ", mLocation='" + mLocation + '\'' +
-               ", mBio='" + mBio + '\'' +
-               ", mCreatedTime=" + mCreatedTime +
-               ", mAccount='" + mAccount + '\'' +
-               ", mPictures=" + mPictures +
-               ", mEmails=" + mEmails +
-               ", mWebsites=" + mWebsites +
-               ", mMetadata=" + mMetadata +
-               ", mUploadQuota=" + mUploadQuota +
-               ", mPreferences=" + mPreferences +
-               ", mBadge=" + mBadge +
-               ", mLiveQuota=" + mLiveQuota +
-               '}';
+                "mUri='" + mUri + '\'' +
+                ", mName='" + mName + '\'' +
+                ", mLink='" + mLink + '\'' +
+                ", mLocation='" + mLocation + '\'' +
+                ", mBio='" + mBio + '\'' +
+                ", mCreatedTime=" + mCreatedTime +
+                ", mPictures=" + mPictures +
+                ", mEmails=" + mEmails +
+                ", mWebsites=" + mWebsites +
+                ", mMetadata=" + mMetadata +
+                ", mUploadQuota=" + mUploadQuota +
+                ", mPreferences=" + mPreferences +
+                ", mLiveQuota=" + mLiveQuota +
+                ", mMembership='" + mMembership +
+                '}';
     }
 
     @Nullable

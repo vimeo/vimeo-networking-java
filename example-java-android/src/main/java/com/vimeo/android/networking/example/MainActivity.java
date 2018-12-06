@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             @Override
             public void success(User user) {
                 if (user != null) {
-                    mRequestOutputTv.setText("Current account type: " + user.mAccount);
+                    mRequestOutputTv.setText("Current account type: " + user.getMembership().getDisplay());
                     toast("Account Check Success");
                 } else {
                     toast("Account Check Failure");
