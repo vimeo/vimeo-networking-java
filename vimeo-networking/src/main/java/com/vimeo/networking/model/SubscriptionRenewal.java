@@ -22,6 +22,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +34,7 @@ import java.io.Serializable;
  * Created by brentwatson on 12/3/18.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
+@UseStag
 public class SubscriptionRenewal implements Serializable {
 
     private static final long serialVersionUID = -8336460441455505994L;

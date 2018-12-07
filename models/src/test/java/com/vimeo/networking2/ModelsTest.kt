@@ -111,6 +111,7 @@ class ModelsTest {
         TextTrack::class,
         TextTrackList::class,
         Transcode::class,
+        TrialEligibility::class,
         TvodItem::class,
         TvodItemConnections::class,
         TvodItemList::class,
