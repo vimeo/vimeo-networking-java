@@ -73,8 +73,12 @@ repositories {
 }
 
 dependencies {
+    implementation project(':models')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
 
 }
