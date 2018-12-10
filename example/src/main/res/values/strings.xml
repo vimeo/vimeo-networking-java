@@ -5,4 +5,8 @@
     <string name="deeplink_redirect_scheme">testlib</string>
     <string name="deeplink_redirect_host">vimeonetworktestlib.com</string>
     <string name="account_type">Current account type: %s</string>
+
+    <string name="access_token">SECRET</string>
+    <string name="client_id">SECRET</string>
+    <string name="client_secret">SECRET</string>
 </resources>
