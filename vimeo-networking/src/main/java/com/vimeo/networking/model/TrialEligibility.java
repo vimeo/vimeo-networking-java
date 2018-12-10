@@ -19,45 +19,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.io.Serializable;
 
 /**
- * Information about the user's next renewal.
- * <p>
  * Created by brentwatson on 12/3/18.
  */
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings("unused")
 @UseStag
-public class SubscriptionRenewal implements Serializable {
+public class TrialEligibility implements Serializable {
 
-    private static final long serialVersionUID = -8336460441455505994L;
+    private static final long serialVersionUID = 4413860493598674517L;
 
-    /**
-     * The date in YYYY-MM-DD format when the user's membership renews (or expires,
-     * if they have disabled autorenew). For display only.
-     */
-    @SerializedName("display_date")
-    private String mDisplayDate;
+    @SerializedName("eligible")
+    private Boolean mEligible;
 
-    public String getDisplayDate() {
-        return mDisplayDate;
+    public Boolean getEligible() {
+        return mEligible;
     }
 
-    void setDisplayDate(@Nullable String displayDate) {
-        mDisplayDate = displayDate;
-    }
-
-    @Override
-    public String toString() {
-        return "SubscriptionRenewal{" +
-                "mDisplayDate='" + mDisplayDate + '\'' +
-                '}';
+    void setEligible(Boolean mEligible) {
+        this.mEligible = mEligible;
     }
 }
