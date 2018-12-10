@@ -1,5 +1,5 @@
-include ':vimeo-networking', ':models'
+include ':vimeo-networking', ':models', ':auth'
 
-if (!System.env.JITPACK) {
+if (true) {
     include ':example-java-android', ':example-kotlin-android', ':example-vimeo-networking2-android'
 }
