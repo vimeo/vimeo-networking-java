@@ -41,7 +41,7 @@ publishing {
             artifact sourcesJar
             artifact javadocJar
             groupId project.group
-            artifactId 'auth'
+            artifactId 'api'
             version project.version
             pom.withXml {
                 def root = asNode()
