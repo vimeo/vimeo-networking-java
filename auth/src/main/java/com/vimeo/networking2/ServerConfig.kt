@@ -15,7 +15,7 @@ import okhttp3.Interceptor
  * @param interceptors          Interceptors to add to for requests.
  */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class Config @JvmOverloads constructor(
+class ServerConfig @JvmOverloads constructor(
     val clientId: String,
     val clientSecret: String,
     val baseUrl: String = "https://api.vimeo.com",
