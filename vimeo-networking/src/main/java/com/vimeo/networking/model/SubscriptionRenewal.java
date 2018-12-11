@@ -27,6 +27,7 @@ import com.vimeo.stag.UseStag;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Information about the user's next renewal.
@@ -37,7 +38,7 @@ import java.io.Serializable;
 @UseStag
 public class SubscriptionRenewal implements Serializable {
 
-    private static final long serialVersionUID = -8336460441455505994L;
+    private static final long serialVersionUID = 5392446701403620244L;
 
     /**
      * The date in YYYY-MM-DD format when the user's membership renews (or expires,
@@ -45,6 +46,12 @@ public class SubscriptionRenewal implements Serializable {
      */
     @SerializedName("display_date")
     private String mDisplayDate;
+
+    /**
+     * The date the user's membership renews (or expires, if they have disabled autorenew).
+     */
+    @SerializedName("renewal_date")
+    private Date mRenewalDate;
 
     public String getDisplayDate() {
         return mDisplayDate;
@@ -54,10 +61,19 @@ public class SubscriptionRenewal implements Serializable {
         mDisplayDate = displayDate;
     }
 
+    public Date getRenewalDate() {
+        return mRenewalDate;
+    }
+
+    void setRenewalDate(Date renewalDate) {
+        mRenewalDate = renewalDate;
+    }
+
     @Override
     public String toString() {
         return "SubscriptionRenewal{" +
                 "mDisplayDate='" + mDisplayDate + '\'' +
+                ", mRenewalDate=" + mRenewalDate +
                 '}';
     }
 }
