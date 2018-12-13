@@ -22,7 +22,7 @@ data class LiveChatConfiguration(
      * The live chat Firebase app ID.
      */
     @Internal
-    @Json(name = "api_id")
+    @Json(name = "app_id")
     val appId: String? = null,
 
     /**
