@@ -5,6 +5,14 @@ apply plugin: 'maven-publish'
 
 group = 'com.vimeo.networking'
 
+compileJava {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
 // Create the pom configuration
 // All the fields below are required by Maven Central
 def pomConfig = {

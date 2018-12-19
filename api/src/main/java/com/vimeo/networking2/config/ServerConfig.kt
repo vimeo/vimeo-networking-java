@@ -1,4 +1,4 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.config
 
 import com.vimeo.networking2.enums.ScopeType
 import okhttp3.Interceptor
