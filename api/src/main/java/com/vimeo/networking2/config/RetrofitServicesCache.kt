@@ -2,6 +2,9 @@ package com.vimeo.networking2.config
 
 import retrofit2.Retrofit
 
+/**
+ * As Retrofit services are created, they are cached in this class.
+ */
 class RetrofitServicesCache(var retrofit: Retrofit) {
 
     /**
@@ -24,13 +27,7 @@ class RetrofitServicesCache(var retrofit: Retrofit) {
      * Empty service endpoint cache.
      */
     fun clear() {
-        println("RetrofitServicesCache.clear")
         cache.clear()
-    }
-
-     fun logCache() {
-         println("RetrofitServicesCache.logCache")
-         println(cache)
     }
 
 }
