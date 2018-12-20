@@ -10,8 +10,8 @@ import okhttp3.Interceptor
  * @param clientSecret          Your client secret for authentication provided from https://developer.vimeo.com/apps/.
  * @param baseUrl               The base url for all requests to the Vimeo API. This is can be overridden to test against a staging sever.
  * @param scopes                A list of your scopes. See https://developer.vimeo.com/api/authentication#scopes.
- * @param certPinningEnabled    Enable certificate pining. It is disabled by default.
- * @param timeout               Read and the connection timeout for a request. The default time is in seconds with a value of 60.
+ * @param certPinningEnabled    Enable certificate pining. It is enabled by default.
+ * @param timeout               Read and the connection timeout in seconds. The default is 60sec.
  * @param interceptors          Custom [Interceptor]s that can be added for each request.
  */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
