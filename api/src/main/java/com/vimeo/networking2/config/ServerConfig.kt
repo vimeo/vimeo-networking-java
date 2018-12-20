@@ -1,5 +1,6 @@
 package com.vimeo.networking2.config
 
+import com.vimeo.networking2.ApiConstants
 import com.vimeo.networking2.enums.ScopeType
 import okhttp3.Interceptor
 
@@ -19,9 +20,9 @@ import okhttp3.Interceptor
 class ServerConfig @JvmOverloads constructor(
     val clientId: String,
     val clientSecret: String,
-    val baseUrl: String = "https://api.vimeo.com",
+    val baseUrl: String = ApiConstants.BASE_URL,
     val scopes: List<ScopeType> = listOf(ScopeType.PUBLIC),
     val certPinningEnabled: Boolean = false,
-    val timeout: Long = 60,
+    val timeout: Long = ApiConstants.READ_CONNECTION_TIMEOUT_SECONDS,
     val networkInterceptors: List<Interceptor>? = null,
     val customInterceptors: List<Interceptor>? = null)

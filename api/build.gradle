@@ -1,72 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'maven-publish'
-
-group = 'com.vimeo.networking'
-
-// Create the pom configuration
-// All the fields below are required by Maven Central
-def pomConfig = {
-    licenses {
-        license {
-            name "MIT License"
-            url "http://www.opensource.org/licenses/mit-license.php"
-            distribution "repo"
-        }
-    }
-    developers {
-        developer {
-            id "vimeo"
-            name "Vimeo Mobile"
-            email "mobileops@vimeo.com"
-            organisation "Vimeo"
-            organisationUrl "https://github.com/vimeo"
-        }
-    }
-
-    scm {
-        connection "scm:git:git://github.com/vimeo/vimeo-networking-java.git"
-        developerConnection "scm:git:ssh://github.com:vimeo/vimeo-networking-java.git"
-        url "https://github.com/vimeo/vimeo-networking-java"
-    }
-}
-
-// Create the publication with the pom configuration:
-// Requires apply plugin: maven-publish
-publishing {
-    publications {
-        MyPublication(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            groupId project.group
-            artifactId 'api'
-            version project.version
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', 'vimeo-networking is a Java networking library used for interacting with the Vimeo API.')
-                root.appendNode('name', 'vimeo-networking')
-                root.appendNode('url', 'https://github.com/vimeo/vimeo-networking-java')
-                root.children().last() + pomConfig
-            }
-        }
-    }
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar, javadocJar
-}
+apply from: '../publish.gradle'
 
 repositories {
     jcenter()
