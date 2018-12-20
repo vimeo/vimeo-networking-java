@@ -2,6 +2,7 @@ package com.vimeo.networking2.config
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.vimeo.networking2.ApiConstants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -16,7 +17,7 @@ internal object RetrofitSetupModule {
 
     private const val USER_AGENT_HEADER = "User-Agent"
     private const val AUTHORIZATION_HEADER = "Authorization"
-    private const val USER_AGENT_HEADER_VALUE: String = "vimeo-networking-java-sdk-2.0"
+    private const val USER_AGENT_HEADER_VALUE = "vimeo-networking-java-sdk-${ApiConstants.API_VERSION}"
 
     /**
      * Create [Retrofit] with OkHttpClient and Moshi.
@@ -37,16 +38,16 @@ internal object RetrofitSetupModule {
             .build()
 
     /**
-     * Create [OkHttpClient] with interceptors and timeout configurations.
+     * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
      */
     fun providesOkHttpClient(serverConfig: ServerConfig, customInterceptors: List<Interceptor>?): OkHttpClient =
         OkHttpClient.Builder().apply {
             serverConfig.networkInterceptors?.forEach { addNetworkInterceptor(it) }
             serverConfig.customInterceptors?.forEach { addInterceptor(it) }
 
-            connectTimeout(serverConfig.timeout, TimeUnit.SECONDS)
-            readTimeout(serverConfig.timeout, TimeUnit.SECONDS)
-            writeTimeout(serverConfig.timeout, TimeUnit.SECONDS)
+            connectTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
+            readTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
+            writeTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
             retryOnConnectionFailure(false)
 
             if (!customInterceptors.isNullOrEmpty()) {

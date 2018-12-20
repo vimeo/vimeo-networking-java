@@ -9,4 +9,6 @@ object ApiConstants {
 
     const val READ_CONNECTION_TIMEOUT_SECONDS = 60L
 
+    const val API_VERSION = 2.0
+
 }

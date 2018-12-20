@@ -44,15 +44,16 @@ class Authenticator(private val serverConfig: ServerConfig) {
         val apiService = retrofitServicesCache.getService(AuthService::class.java)
 
         val call = apiService.authorizeWithClientCredentialsGrant(
-            RetrofitSetupComponent.getAuthHeaders(serverConfig.clientId, serverConfig.clientSecret),
-            GrantType.CLIENT_CREDENTIALS.toString(),
-            ScopeType.PUBLIC.toString())
+            RetrofitSetupComponent.authHeaders(serverConfig.clientId, serverConfig.clientSecret),
+            GrantType.CLIENT_CREDENTIALS.value,
+            ScopeType.PUBLIC.value)
 
         call.enqueue(object : Callback<VimeoAccount> {
 
             override fun onResponse(call: Call<VimeoAccount>, response: Response<VimeoAccount>) {
                 response.body()?.accessToken?.let { setAccessToken(it) }
             }
+
             override fun onFailure(call: Call<VimeoAccount>, t: Throwable) {}
         })
     }
@@ -65,7 +66,7 @@ class Authenticator(private val serverConfig: ServerConfig) {
     private fun setAccessToken(accessToken: String) {
         if (accessToken.isNotBlank()) {
             retrofit = RetrofitSetupComponent.retrofit(serverConfig, accessToken)
-            retrofitServicesCache.retrofit = retrofit
+            retrofitServicesCache = RetrofitSetupComponent.retrofitCache(retrofit)
         }
     }
 

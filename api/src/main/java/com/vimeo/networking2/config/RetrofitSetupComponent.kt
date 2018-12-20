@@ -38,7 +38,7 @@ object RetrofitSetupComponent {
     /**
      * Get authentication headers.
      */
-    fun getAuthHeaders(clientId: String, clientSecret: String) =
+    fun authHeaders(clientId: String, clientSecret: String): String =
         Credentials.basic(clientId, clientSecret)
 
 }
