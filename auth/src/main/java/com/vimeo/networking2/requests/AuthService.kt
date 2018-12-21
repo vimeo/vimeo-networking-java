@@ -25,9 +25,10 @@ interface AuthService {
      */
     @FormUrlEncoded
     @POST("oauth/authorize/client")
-    fun authorizeWithClientCredentialsGrant(@Header("Authorization") authHeader: String,
-                                            @Field("grant_type") grantType: String,
-                                            @Field("scope") scope: String
+    fun authorizeWithClientCredentialsGrant(
+        @Header("Authorization") authHeader: String,
+        @Field("grant_type") grantType: String,
+        @Field("scope") scope: String
     ): Call<VimeoAccount>
 
 }
