@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 /**
  * As Retrofit services are created, they are cached in this class.
  */
-class RetrofitServicesCache(val retrofit: Retrofit) {
+class RetrofitServicesCache(private val retrofit: Retrofit) {
 
     /**
      * Cache of Retrofit API Services.  Objects created by calling getService().
