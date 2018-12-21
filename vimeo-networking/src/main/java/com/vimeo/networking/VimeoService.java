@@ -22,10 +22,10 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.model.Album;
-import com.vimeo.networking.model.AlbumList;
 import com.vimeo.networking.AnnotatedConverterFactory.ConverterType;
 import com.vimeo.networking.AnnotatedConverterFactory.Serializer;
+import com.vimeo.networking.model.Album;
+import com.vimeo.networking.model.AlbumList;
 import com.vimeo.networking.model.Category;
 import com.vimeo.networking.model.CategoryList;
 import com.vimeo.networking.model.Channel;

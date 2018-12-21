@@ -42,7 +42,7 @@ publishing {
             version project.version
             pom.withXml {
                 def root = asNode()
-                root.appendNode('description', 'vimeo-networking is a Java networking library used for interacting with the Vimeo API.')
+                root.appendNode('description', 'vimeo-networking is a networking library used for interacting with the Vimeo API. It is Java and Kotlin friendly.')
                 root.appendNode('name', 'vimeo-networking')
                 root.appendNode('url', 'https://github.com/vimeo/vimeo-networking-java')
                 root.children().last() + pomConfig
