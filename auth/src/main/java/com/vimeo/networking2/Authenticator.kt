@@ -3,12 +3,10 @@ package com.vimeo.networking2
 import com.vimeo.networking2.config.RetrofitServicesCache
 import com.vimeo.networking2.config.RetrofitSetupComponent
 import com.vimeo.networking2.config.ServerConfig
-import com.vimeo.networking2.enums.GrantType
-import com.vimeo.networking2.enums.ScopeType
+import com.vimeo.networking2.utils.ApiResponseErrorConverter
 import com.vimeo.networking2.requests.AuthService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsAuthenticator
+import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsInteractor
 import retrofit2.Retrofit
 
 /**
@@ -31,31 +29,23 @@ class Authenticator(private val serverConfig: ServerConfig) {
      */
     private var retrofitServicesCache: RetrofitServicesCache
 
+    private var apiErrorResponseErrorConverter: ApiResponseErrorConverter
+
     init {
         retrofit = RetrofitSetupComponent.retrofit(serverConfig)
         retrofitServicesCache = RetrofitSetupComponent.retrofitCache(retrofit)
+        apiErrorResponseErrorConverter = RetrofitSetupComponent.apiResponseErrorConverter(retrofit)
     }
 
-    /**
-     * This is a temporary request that is added in to show how the access token will be set.
-     * This will be removed in the next PR which is to design and implement all the auth requests.
-     */
-    fun authenticateWithClientCredentials() {
-        val apiService = retrofitServicesCache.getService(AuthService::class.java)
-
-        val call = apiService.authorizeWithClientCredentialsGrant(
+    fun clientCredentials(): ClientCredentialsAuthenticator {
+        return ClientCredentialsInteractor(
+            apiErrorResponseErrorConverter,
+            retrofitServicesCache.getService(AuthService::class.java),
             RetrofitSetupComponent.authHeaders(serverConfig.clientId, serverConfig.clientSecret),
-            GrantType.CLIENT_CREDENTIALS.value,
-            ScopeType.PUBLIC.value)
-
-        call.enqueue(object : Callback<VimeoAccount> {
-
-            override fun onResponse(call: Call<VimeoAccount>, response: Response<VimeoAccount>) {
-                response.body()?.accessToken?.let { setAccessToken(it) }
-            }
-
-            override fun onFailure(call: Call<VimeoAccount>, t: Throwable) {}
-        })
+            serverConfig.scopes.joinToString { it.value }
+        ) {
+            setAccessToken(it)
+        }
     }
 
     /**

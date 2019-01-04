@@ -1,5 +1,6 @@
 package com.vimeo.networking2.config
 
+import com.vimeo.networking2.utils.ApiResponseErrorConverter
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import retrofit2.Retrofit
@@ -34,6 +35,11 @@ object RetrofitSetupComponent {
      * Creates a cache for storing Retrofit services.
      */
     fun retrofitCache(retrofit: Retrofit) = RetrofitServicesCache(retrofit)
+
+    /**
+     * Create a converter for parsing the error response.
+     */
+    fun apiResponseErrorConverter(retrofit: Retrofit) = ApiResponseErrorConverter(retrofit)
 
     /**
      * Get authentication headers.
