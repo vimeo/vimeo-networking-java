@@ -30,8 +30,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
 import okhttp3.Connection;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor.Chain;
@@ -48,21 +50,25 @@ public class BaseUrlInterceptorTest {
     private BaseUrlInterceptor mBaseUrlInterceptor;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mBaseUrlInterceptor = new BaseUrlInterceptor();
     }
 
     @NotNull
     private static Chain createVerificationChain(@NotNull final HttpUrl originalUrl, @NotNull final HttpUrl proceedUrl) {
         return new Chain() {
+
+            @NotNull
             @Override
             public Request request() {
                 return new Request.Builder().url(originalUrl).build();
             }
 
+            @NotNull
             @Override
-            public Response proceed(Request request) throws IOException {
+            public Response proceed(@NotNull Request request) {
                 Assert.assertEquals(proceedUrl.host(), request.url().host());
+                //noinspection ConstantConditions
                 return null;
             }
 
@@ -70,72 +76,118 @@ public class BaseUrlInterceptorTest {
             public Connection connection() {
                 return null;
             }
+
+            @NotNull
+            @Override
+            public Call call() {
+                //noinspection ConstantConditions
+                return null;
+            }
+
+            @Override
+            public int connectTimeoutMillis() {
+                return 0;
+            }
+
+            @NotNull
+            @Override
+            public Chain withConnectTimeout(int timeout, @NotNull TimeUnit unit) {
+                return this;
+            }
+
+            @Override
+            public int readTimeoutMillis() {
+                return 0;
+            }
+
+            @NotNull
+            @Override
+            public Chain withReadTimeout(int timeout, @NotNull TimeUnit unit) {
+                return this;
+            }
+
+            @Override
+            public int writeTimeoutMillis() {
+                return 0;
+            }
+
+            @NotNull
+            @Override
+            public Chain withWriteTimeout(int timeout, @NotNull TimeUnit unit) {
+                return this;
+            }
         };
     }
 
     @NotNull
     private static HttpUrl createTestUrlForPath(@Nullable String path) {
-        StringBuilder url = new StringBuilder("http://test.vimeo.com");
+        final StringBuilder url = new StringBuilder("http://test.vimeo.com");
         if (path != null) {
             url.append(path);
         }
-        return HttpUrl.parse(url.toString());
+        return Objects.requireNonNull(HttpUrl.parse(url.toString()));
     }
 
     @Test
     public void test_includePathsForBaseUrl_PreSanitizedPaths_SuccessfullyIntercepts() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.includePathsForBaseUrl(httpUrl, "/me", "/you");
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.includePathsForBaseUrl(Objects.requireNonNull(httpUrl), "/me", "/you");
 
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), httpUrl));
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), httpUrl));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"),
+                                                              createTestUrlForPath(null)));
     }
 
     @Test
     public void test_includePathsForBaseUrl_UnsanitizedPaths_SuccessfullyIntercepts() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.includePathsForBaseUrl(httpUrl, "me", "you");
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.includePathsForBaseUrl(Objects.requireNonNull(httpUrl), "me", "you");
 
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), httpUrl));
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), httpUrl));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"),
+                                                              createTestUrlForPath(null)));
     }
 
     @Test
     public void test_includePathsForBaseUrl_EmptyPaths_UnsuccessfullyIntercepts() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.includePathsForBaseUrl(httpUrl);
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.includePathsForBaseUrl(Objects.requireNonNull(httpUrl));
 
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"),
+                                                              createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"),
+                                                              createTestUrlForPath(null)));
     }
 
     @Test
     public void test_excludePathsForBaseUrl_PreSanitizedPaths_SuccessfullyIntercepts() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.excludePathsForBaseUrl(httpUrl, "/me", "/you");
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.excludePathsForBaseUrl(Objects.requireNonNull(httpUrl), "/me", "/you");
 
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"),
+                                                              createTestUrlForPath(null)));
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), httpUrl));
     }
 
     @Test
     public void test_excludePathsForBaseUrl_UnsanitizedPaths_SuccessfullyIntercepts() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.excludePathsForBaseUrl(httpUrl, "me", "you");
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.excludePathsForBaseUrl(Objects.requireNonNull(httpUrl), "me", "you");
 
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"),
+                                                              createTestUrlForPath(null)));
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), httpUrl));
     }
 
     @Test
     public void test_excludePathsForBaseUrl_EmptyPaths_UnsuccessfullyIntercepts() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.excludePathsForBaseUrl(httpUrl);
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.excludePathsForBaseUrl(Objects.requireNonNull(httpUrl));
 
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), httpUrl));
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), httpUrl));
@@ -143,58 +195,65 @@ public class BaseUrlInterceptorTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void test_excludeThenIncludePathsForBaseUrl_NoReset_ThrowsException() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.excludePathsForBaseUrl(httpUrl);
+    public void test_excludeThenIncludePathsForBaseUrl_NoReset_ThrowsException() {
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.excludePathsForBaseUrl(Objects.requireNonNull(httpUrl));
         mBaseUrlInterceptor.includePathsForBaseUrl(httpUrl);
     }
 
     @Test(expected = RuntimeException.class)
-    public void test_includeThenExcludePathsForBaseUrl_NoReset_ThrowsException() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.excludePathsForBaseUrl(httpUrl);
+    public void test_includeThenExcludePathsForBaseUrl_NoReset_ThrowsException() {
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.excludePathsForBaseUrl(Objects.requireNonNull(httpUrl));
         mBaseUrlInterceptor.includePathsForBaseUrl(httpUrl);
     }
 
     @Test
     public void test_excludeThenIncludePathsForBaseUrl_Reset_Includes() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.excludePathsForBaseUrl(httpUrl, "/me", "/you");
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.excludePathsForBaseUrl(Objects.requireNonNull(httpUrl), "/me", "/you");
         mBaseUrlInterceptor.resetBaseUrl();
         mBaseUrlInterceptor.includePathsForBaseUrl(httpUrl, "/me", "/you");
 
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), httpUrl));
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), httpUrl));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"),
+                                                              createTestUrlForPath(null)));
     }
 
     @Test
     public void test_includeThenExcludePathsForBaseUrl_Reset_Exclues() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.includePathsForBaseUrl(httpUrl, "/me", "/you");
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.includePathsForBaseUrl(Objects.requireNonNull(httpUrl), "/me", "/you");
         mBaseUrlInterceptor.resetBaseUrl();
         mBaseUrlInterceptor.excludePathsForBaseUrl(httpUrl, "/me", "/you");
 
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"),
+                                                              createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"),
+                                                              createTestUrlForPath(null)));
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), httpUrl));
     }
 
     @Test
     public void test_NoIncludeOrExclude_NoIntercept() throws Exception {
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"),
+                                                              createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"),
+                                                              createTestUrlForPath(null)));
     }
 
     @Test
     public void test_resetBaseUrl_AfterInclude_NoIntercept() throws Exception {
-        HttpUrl httpUrl = HttpUrl.parse("http://localhost");
-        mBaseUrlInterceptor.includePathsForBaseUrl(httpUrl, "/me", "/you");
+        final HttpUrl httpUrl = HttpUrl.parse("http://localhost");
+        mBaseUrlInterceptor.includePathsForBaseUrl(Objects.requireNonNull(httpUrl), "/me", "/you");
         mBaseUrlInterceptor.resetBaseUrl();
 
         mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/me"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"), createTestUrlForPath(null)));
-        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"), createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/you"),
+                                                              createTestUrlForPath(null)));
+        mBaseUrlInterceptor.intercept(createVerificationChain(createTestUrlForPath("/them"),
+                                                              createTestUrlForPath(null)));
     }
 }
