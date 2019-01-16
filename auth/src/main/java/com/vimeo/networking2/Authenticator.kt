@@ -1,12 +1,11 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.config.RetrofitServicesCache
-import com.vimeo.networking2.config.RetrofitSetupComponent
+import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.config.ServerConfig
-import com.vimeo.networking2.utils.ApiResponseErrorConverter
-import com.vimeo.networking2.requests.AuthService
 import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsAuthenticator
 import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsInteractor
+import com.vimeo.networking2.utils.AuthModule
+import com.vimeo.networking2.utils.AuthModule.authCoroutineScope
 import retrofit2.Retrofit
 
 /**
@@ -22,31 +21,30 @@ class Authenticator(private val serverConfig: ServerConfig) {
     /**
      * Used to create authentication service.
      */
-    private var retrofit: Retrofit
+    private var retrofit = RetrofitSetupModule.retrofit(serverConfig)
 
     /**
      * Used to store created retrofit services.
      */
-    private var retrofitServicesCache: RetrofitServicesCache
+    private var retrofitServicesCache = RetrofitSetupModule.retrofitCache(retrofit)
 
-    private var apiErrorResponseErrorConverter: ApiResponseErrorConverter
+    /**
+     * Used to convert response to [ApiError]. It is cached here so we don't have to create it every time
+     * a request is made.
+     */
+    private val errorResponseConverter = RetrofitSetupModule.errorResponseConverter(retrofit)
 
-    init {
-        retrofit = RetrofitSetupComponent.retrofit(serverConfig)
-        retrofitServicesCache = RetrofitSetupComponent.retrofitCache(retrofit)
-        apiErrorResponseErrorConverter = RetrofitSetupComponent.apiResponseErrorConverter(retrofit)
-    }
-
-    fun clientCredentials(): ClientCredentialsAuthenticator {
-        return ClientCredentialsInteractor(
-            apiErrorResponseErrorConverter,
-            retrofitServicesCache.getService(AuthService::class.java),
-            RetrofitSetupComponent.authHeaders(serverConfig.clientId, serverConfig.clientSecret),
-            serverConfig.scopes.joinToString { it.value }
-        ) {
-            setAccessToken(it)
-        }
-    }
+    /**
+     * Authenticate with a client id and client secret.
+     */
+    fun clientCredentials(): ClientCredentialsAuthenticator = ClientCredentialsInteractor(
+            errorResponseConverter = errorResponseConverter,
+            authService = AuthModule.authService(retrofitServicesCache),
+            authHeaders = RetrofitSetupModule.authHeaders(serverConfig.clientId, serverConfig.clientSecret),
+            apiScopes = serverConfig.scopes,
+            coroutineScope = authCoroutineScope,
+            authTokenCallback = this::setAccessToken
+        )
 
     /**
      * After a successful authentication, an access token will be given. The [retrofit] object will
@@ -55,8 +53,8 @@ class Authenticator(private val serverConfig: ServerConfig) {
      */
     private fun setAccessToken(accessToken: String) {
         if (accessToken.isNotBlank()) {
-            retrofit = RetrofitSetupComponent.retrofit(serverConfig, accessToken)
-            retrofitServicesCache = RetrofitSetupComponent.retrofitCache(retrofit)
+            retrofit = RetrofitSetupModule.retrofit(serverConfig, accessToken)
+            retrofitServicesCache = RetrofitSetupModule.retrofitCache(retrofit)
         }
     }
 

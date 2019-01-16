@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.vimeo.vimeonetworking2.playground.MainActivity">
+
+        </activity>
+        <activity android:name="com.vimeo.vimeonetworking2.playground.Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
