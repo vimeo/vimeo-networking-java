@@ -30,8 +30,8 @@ sealed class ApiResponse<out T> {
         data class Http(val code: Int) : Failure()
 
         /**
-         * An unsuccessful Http response that contains additional information about the failure in the form of a
-         * [ApiError].
+         * An unsuccessful Http response that contains additional information about the failure
+         * in the form of a [ApiError].
          *
          * @param reason The reason given by the API for the failure.
          */

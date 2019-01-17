@@ -14,12 +14,20 @@ interface AuthCallback {
     fun onSuccess(accessToken: ApiResponse.Success<String>)
 
     /**
-     * There was an error in the authentication request.
+     * A generic unsuccessful response. It contains the http code and message
+     * indicating the problem which occurred. The generic failure maybe due to
+     * parsing the response.
      *
-     * @param error Information on the type of error that occurred.
+     * @param genericError Information on the type of error that occurred.
      */
-    fun onHttpError(error: ApiResponse.Failure.Http)
+    fun onHttpError(genericError: ApiResponse.Failure.Http)
 
-    fun onVimeoError(error: ApiResponse.Failure.Vimeo)
+    /**
+     * A specific API failure return from the Vimeo API. The response contains
+     * a Vimeo specific error code and message.
+     *
+     * @param apiError Information on the type of error that occurred.
+     */
+    fun onVimeoError(apiError: ApiResponse.Failure.Vimeo)
 
 }
