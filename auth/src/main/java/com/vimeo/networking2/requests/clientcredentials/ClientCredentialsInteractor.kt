@@ -39,7 +39,7 @@ class ClientCredentialsInteractor(
             val authResponse = performAuthRequest()
             when (authResponse) {
                 is ApiResponse.Success -> {
-                    authTokenCallback(authResponse.data)
+                    authTokenCallback(authResponse.accessToken)
                     authCallback.onSuccess(authResponse)
                 }
                 is ApiResponse.Failure.Http -> {

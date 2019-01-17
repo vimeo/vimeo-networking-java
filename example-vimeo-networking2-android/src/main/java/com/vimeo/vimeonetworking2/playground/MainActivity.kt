@@ -21,15 +21,15 @@ class MainActivity : AppCompatActivity() {
 
             authenticator.clientCredentials().authenticate(object : AuthCallback {
 
-                override fun onSuccess(sucess: ApiResponse.Success<String>) {
-                    println(sucess.data)
+                override fun onSuccess(authResponse: ApiResponse.Success<String>) {
+                    println(authResponse.accessToken)
                 }
 
-                override fun onHttpError(httError: ApiResponse.Failure.Http) {
+                override fun onHttpError(genericError: ApiResponse.Failure.Http) {
 
                 }
 
-                override fun onVimeoError(vimeoError: ApiResponse.Failure.Vimeo) {
+                override fun onVimeoError(apiError: ApiResponse.Failure.Vimeo) {
 
                 }
             })

@@ -5,7 +5,7 @@ import com.vimeo.networking2.requests.ApiResponse.Failure
 import com.vimeo.networking2.requests.ApiResponse.Success
 
 /**
- * Result of the API response. [Success] contains the data while the
+ * Result of the API response. [Success] contains the accessToken while the
  * [Failure] class will inform you of an api error.
  */
 sealed class ApiResponse<out T> {
@@ -13,9 +13,9 @@ sealed class ApiResponse<out T> {
     /**
      * A successful response.
      *
-     * @param data The data parsed by this successful response.
+     * @param accessToken The accessToken parsed by this successful response.
      */
-    data class Success<out T>(val data: T) : ApiResponse<T>()
+    data class Success<out T>(val accessToken: T) : ApiResponse<T>()
 
     /**
      * An unsuccessful response.

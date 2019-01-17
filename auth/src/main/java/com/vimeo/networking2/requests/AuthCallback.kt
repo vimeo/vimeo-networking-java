@@ -9,9 +9,9 @@ interface AuthCallback {
     /**
      * The authentication was successful and the access token can be used to make API requests.
      *
-     * @param accessToken Authenticated access token.
+     * @param authResponse Authenticated access token.
      */
-    fun onSuccess(accessToken: ApiResponse.Success<String>)
+    fun onSuccess(authResponse: ApiResponse.Success<String>)
 
     /**
      * A generic unsuccessful response. It contains the http code and message
