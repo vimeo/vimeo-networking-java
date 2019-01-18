@@ -16,7 +16,7 @@ object AuthModule {
      *
      * @return Coroutine scope for doing authentication.
      */
-    val authCoroutineScope = CoroutineScope(Job() + Dispatchers.IO)
+    val authCoroutineScope = CoroutineScope(Job() + Dispatchers.Unconfined)
 
     /**
      * Get the Retrofit service for authentication endpoints.

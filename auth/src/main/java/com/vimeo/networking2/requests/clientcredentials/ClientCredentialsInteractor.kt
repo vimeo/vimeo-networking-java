@@ -12,6 +12,7 @@ import com.vimeo.networking2.utils.awaitResponse
 import com.vimeo.networking2.utils.createApiErrorForCustomMessage
 import kotlinx.coroutines.*
 import retrofit2.Response
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Interactor which performs auth request with client credentials.
@@ -33,9 +34,12 @@ class ClientCredentialsInteractor(
 ) : ClientCredentialsAuthenticator {
 
     override fun authenticate(authCallback: AuthCallback) {
+        val customDispatcher = CustomDispatcher(Thread.currentThread())
+
         coroutineScope.launch {
             val authResponse = performAuthRequest()
-            withContext(Dispatchers.Main) {
+
+            withContext(customDispatcher) {
                 when (authResponse) {
                     is ApiResponse.Success -> {
                         authTokenCallback(authResponse.accessToken)
@@ -48,6 +52,14 @@ class ClientCredentialsInteractor(
                         authCallback.onVimeoError(authResponse)
                     }
                 }
+            }
+        }
+    }
+
+    class CustomDispatcher(val thread: Thread) : CoroutineDispatcher() {
+        override fun dispatch(context: CoroutineContext, block: Runnable) {
+            thread.run {
+                block.run()
             }
         }
     }
