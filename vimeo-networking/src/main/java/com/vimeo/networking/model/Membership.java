@@ -1,8 +1,8 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -13,6 +13,7 @@ import java.io.Serializable;
  * Created by brentwatson on 12/3/18.
  */
 @SuppressWarnings("unused")
+@UseStag
 public class Membership implements Serializable {
 
     private static final long serialVersionUID = 2005778103318600521L;
