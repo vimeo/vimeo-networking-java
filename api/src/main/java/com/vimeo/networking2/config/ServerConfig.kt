@@ -5,11 +5,11 @@ import com.vimeo.networking2.enums.ScopeType
 import okhttp3.Interceptor
 
 /**
- * Configuration for authentication and making requests to the ApiFailure API.
+ * Configuration for authentication and making requests to the Vimeo API.
  *
  * @param clientId                    Your client id provided from https://developer.vimeo.com/apps/.
  * @param clientSecret                Your client secret for authentication provided from https://developer.vimeo.com/apps/.
- * @param baseUrl                     The base url for all requests to the ApiFailure API. This is can be overridden to test against a staging server.
+ * @param baseUrl                     The base url for all requests to the Vimeo API. This is can be overridden to test against a staging server.
  * @param scopes                      A list of your scopes. See https://developer.vimeo.com/api/authentication#scopes.
  * @param certPinningEnabled          Enable certificate pining. It is disabled by default.
  * @param timeoutSeconds              Read and connection timeout for a request. The default time is 60 seconds.

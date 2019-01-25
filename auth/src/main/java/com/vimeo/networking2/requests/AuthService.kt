@@ -18,7 +18,7 @@ interface AuthService {
      *
      * @param authHeader It is created from the client id and client secret.
      * @param grantType  Determines whether you have access to public or private accessToken.
-     * @param scope      Determines what you want to access to in the ApiFailure API.
+     * @param scope      Determines what you want to access to in the Vimeo API.
      *
      * @return A [VimeoAccount] that has an access token.
      *
