@@ -1,27 +1,45 @@
 package com.vimeo.networking2.utils
 
-import com.vimeo.networking2.config.RetrofitServicesCache
+import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.requests.AuthService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import okhttp3.Credentials
+import retrofit2.Retrofit
 
 /**
- * Provides all authenticated dependencies.
+ * Provides all dependencies for authentication.
  */
-object AuthModule {
+class AuthModule(private val retrofitSetupModule: RetrofitSetupModule) {
 
     /**
-     * Authentication coroutine scope.
-     *
-     * @return Coroutine scope for doing authentication.
+     * Get authentication headers.
      */
-    val authCoroutineScope = CoroutineScope(Job() + Dispatchers.Unconfined)
+    val authHeaders: String =
+        Credentials.basic(
+            retrofitSetupModule.serverConfig.clientId,
+            retrofitSetupModule.serverConfig.clientSecret
+        )
 
     /**
      * Get the Retrofit service for authentication endpoints.
      */
-    fun authService(retrofitServicesCache: RetrofitServicesCache): AuthService =
-        retrofitServicesCache.getService(AuthService::class.java)
+    val authService = retrofitSetupModule
+        .retrofitServicesCache
+        .getService(AuthService::class.java)
+
+    /**
+     * Get specified scopes from the server config object.
+     */
+    val scopes = retrofitSetupModule.serverConfig.scopes
+
+    /**
+     * After a successful authentication, an access token will be given. The [retrofit] object will
+     * be updated to send the access token in every request. The dependency graph for setting up
+     * [Retrofit] will re-created.
+     */
+    fun setAccessToken(accessToken: String) {
+        if (accessToken.isNotBlank()) {
+            retrofitSetupModule.resetRetrofit(accessToken)
+        }
+    }
 
 }

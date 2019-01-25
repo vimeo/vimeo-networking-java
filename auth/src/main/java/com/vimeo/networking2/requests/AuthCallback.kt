@@ -1,7 +1,7 @@
 package com.vimeo.networking2.requests
 
 /**
- * Inform you of the result of an authentication request. The access token is provided upon
+ * Informs you of the result of an authentication request. The access token is provided upon
  * success and errors are propagated to you through the callback.
  */
 interface AuthCallback {
@@ -14,20 +14,26 @@ interface AuthCallback {
     fun onSuccess(authResponse: ApiResponse.Success<String>)
 
     /**
-     * A generic unsuccessful response. It contains the http code and message
-     * indicating the problem which occurred. The generic failure maybe due to
-     * parsing the response.
+     * A generic unsuccessful response. It contains the http code of the request.
+     * The generic failure maybe due to parsing the response. The callback
+     * indicates the error did not occur from the API rather it was a generic
+     * failure.
      *
-     * @param genericError Information on the type of error that occurred.
+     * @param genericFailure Information on the generic error that occurred.
      */
-    fun onHttpError(genericError: ApiResponse.Failure.Http)
+    fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure)
 
     /**
-     * A specific API failure return from the Vimeo API. The response contains
-     * a Vimeo specific error code and message.
+     * An failure response was returned from the API. The response contains
+     * the specific code and message of the error.
      *
-     * @param apiError Information on the type of error that occurred.
+     * @param apiFailure Information on the type of API failure that occurred.
      */
-    fun onVimeoError(apiError: ApiResponse.Failure.Vimeo)
+    fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure)
+
+    /**
+     * An exception occurred during
+     */
+    fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure)
 
 }

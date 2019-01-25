@@ -9,12 +9,12 @@ provided in this project shows the implementation in the context of an Android a
 
 | Latest Version |
 |----------------|
-| [![Download](https://api.bintray.com/packages/vimeo/maven/vimeo-networking/images/download.svg)](https://bintray.com/vimeo/maven/vimeo-networking/_latestVersion) |
+| [![Download](https://apiFailure.bintray.com/packages/vimeo/maven/vimeo-networking/images/download.svg)](https://bintray.com/vimeo/maven/vimeo-networking/_latestVersion) |
 | [![JitPack](https://jitpack.io/v/vimeo/vimeo-networking-java.svg)](https://jitpack.io/#vimeo/vimeo-networking-java) |
 
 ## Contents
 * [Prerequisites](#prerequisites)
-     * [API Registration](#api-registration)
+     * [API Registration](#apiFailure-registration)
 * [Getting Started](#getting-started)
      * [Gradle](#gradle)
      * [JitPack](#jitpack)
@@ -40,7 +40,7 @@ In order to use this library and the Vimeo API, you will need an application reg
 
 After you have an application registered, you will have access to a few critical pieces of information required for [initialization](#initialization) - the client identifier and client secret. These will both be located in the Authentication tab once you select your app from the [list here](https://developer.vimeo.com/apps).
 
-More information about this and other API questions can be found on the [API homepage](https://developer.vimeo.com/api).
+More information about this and other API questions can be found on the [API homepage](https://developer.vimeo.com/apiFailure).
 
 
 ## Getting Started
@@ -88,7 +88,7 @@ If you choose to pass in an `AccountStore`, the authenticated account will autom
   /**
     * @param clientId      The client id provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
     * @param clientSecret  The client secret provided to you from <a href="https://developer.vimeo.com/apps/">the developer console</a>
-    * @param scope         Space separated list of <a href="https://developer.vimeo.com/api/authentication#scopes">scopes</a>
+    * @param scope         Space separated list of <a href="https://developer.vimeo.com/apiFailure/authentication#scopes">scopes</a>
     *                      <p/>
     *                      Example: "private public create"
     * @param accountStore  (Optional, Recommended) An implementation that can be used to interface with Androids <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">Account Manager</a>
@@ -122,15 +122,15 @@ After providing the access token, if you'd like to have access to the associated
 If this seems like restricting functionality, please log an issue to the [issue tracker](https://github.com/vimeo/vimeo-networking-java/issues).
 
 ### Authentication
-All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/api/authentication). This means that before making requests to the API you must authenticate and obtain an access token. Two authentication methods are provided:
+All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/apiFailure/authentication). This means that before making requests to the API you must authenticate and obtain an access token. Two authentication methods are provided:
 
-1. [Client credentials grant](https://developer.vimeo.com/api/authentication#generate-unauthenticated-tokens): This mechanism allows your application to access publicly accessible content on Vimeo.
+1. [Client credentials grant](https://developer.vimeo.com/apiFailure/authentication#generate-unauthenticated-tokens): This mechanism allows your application to access publicly accessible content on Vimeo.
 
-2. [OAuth authorization code grant](https://developer.vimeo.com/api/authentication#generate-authenticated-tokens): This mechanism allows a Vimeo user to grant permission to your app so that it can access private, user-specific content on their behalf.
+2. [OAuth authorization code grant](https://developer.vimeo.com/apiFailure/authentication#generate-authenticated-tokens): This mechanism allows a Vimeo user to grant permission to your app so that it can access private, user-specific content on their behalf.
 
 #### Client Credentials Grant
 ```java
-// You can't make any requests to the api without an access token. This will get you a basic
+// You can't make any requests to the apiFailure without an access token. This will get you a basic
 // "Client Credentials" grant which will allow you to make requests. This requires a client id and client secret.
 private void authenticateWithClientCredentials() {
     VimeoClient.getInstance().authorizeWithClientCredentialsGrant(new AuthCallback() {

@@ -2,101 +2,62 @@ package com.vimeo.networking2.requests.clientcredentials
 
 import com.vimeo.networking2.ApiError
 import com.vimeo.networking2.VimeoAccount
+import com.vimeo.networking2.adapters.VimeoCallback
 import com.vimeo.networking2.enums.GrantType
 import com.vimeo.networking2.enums.ScopeType
 import com.vimeo.networking2.requests.ApiResponse
 import com.vimeo.networking2.requests.AuthCallback
-import com.vimeo.networking2.requests.AuthService
-import com.vimeo.networking2.utils.ErrorResponseConverter
-import com.vimeo.networking2.utils.awaitResponse
-import com.vimeo.networking2.utils.createApiErrorForCustomMessage
-import kotlinx.coroutines.*
+import com.vimeo.networking2.requests.VimeoRequest
+import com.vimeo.networking2.utils.AuthModule
 import retrofit2.Response
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Interactor which performs auth request with client credentials.
  *
- * @param errorResponseConverter    Used to convert error response to [ApiError].
  * @param authService               Retrofit service for all auth requests.
  * @param authHeaders               Auth Header generated from the client id and client secret.
- * @param apiScopes                 List of [ScopeType]s.
+ * @param scopes                    List of [ScopeType]s.
  * @param authTokenCallback         Callback to inform you that the authentication was successful
  *                                  and the access token can be set for every request.
  */
 class ClientCredentialsInteractor(
-    private val errorResponseConverter: ErrorResponseConverter,
-    private val authService: AuthService,
-    private val authHeaders: String,
-    private val apiScopes: List<ScopeType>,
-    private val coroutineScope: CoroutineScope,
-    private val authTokenCallback: (String) -> Unit
+    private val authModule: AuthModule
 ) : ClientCredentialsAuthenticator {
 
-    override fun authenticate(authCallback: AuthCallback) {
-        val customDispatcher = CustomDispatcher(Thread.currentThread())
+    override fun authenticate(authCallback: AuthCallback): VimeoRequest {
+        val call = authModule.authService.authorizeWithClientCredentialsGrant(
+            authModule.authHeaders,
+            GrantType.CLIENT_CREDENTIALS.value,
+            authModule.scopes.joinToString())
 
-        coroutineScope.launch {
-            val authResponse = performAuthRequest()
+        val apiResponseCallback = object : VimeoCallback<VimeoAccount> {
 
-            withContext(customDispatcher) {
-                when (authResponse) {
-                    is ApiResponse.Success -> {
-                        authTokenCallback(authResponse.accessToken)
-                        authCallback.onSuccess(authResponse)
-                    }
-                    is ApiResponse.Failure.Http -> {
-                        authCallback.onHttpError(authResponse)
-                    }
-                    is ApiResponse.Failure.Vimeo -> {
-                        authCallback.onVimeoError(authResponse)
-                    }
+            override fun onSuccess(response: Response<VimeoAccount>) {
+                response.body()?.accessToken?.let {
+                    authModule.setAccessToken(it)
+                    authCallback.onSuccess(ApiResponse.Success(it))
                 }
             }
-        }
-    }
 
-    class CustomDispatcher(val thread: Thread) : CoroutineDispatcher() {
-        override fun dispatch(context: CoroutineContext, block: Runnable) {
-            thread.run {
-                block.run()
+            override fun onApiError(apiError: ApiError) {
+                authCallback.onApiError(ApiResponse.Failure.ApiFailure(apiError))
+            }
+
+            override fun onGenericError(requestCode: Int) {
+                authCallback.onGenericError(ApiResponse.Failure.GenericFailure(requestCode))
+            }
+
+            override fun onExceptionError(t: Throwable) {
+                authCallback.onExceptionError(ApiResponse.Failure.ExceptionFailure(t))
             }
         }
-    }
+        call.enqueue(apiResponseCallback)
 
-    /**
-     * Make a request to authenticate and return the results using a sealed class
-     * [ApiResponse].
-     */
-    private suspend fun performAuthRequest(): ApiResponse<String> =
-        try {
-            val call = authService.authorizeWithClientCredentialsGrant(
-                authHeaders,
-                GrantType.CLIENT_CREDENTIALS.value,
-                apiScopes.joinToString())
-
-            val response = call.awaitResponse()
-            parseApiResponse(response)
-
-        } catch (e: Exception) {
-            ApiResponse.Failure.Vimeo(createApiErrorForCustomMessage(errorMessage = e.message))
+        return object: VimeoRequest {
+            override fun cancel() {
+                call.cancel()
+            }
         }
-
-    /**
-     * Parse the return response from the API. Check whether it was successful or failed.
-     *
-     * @return the result of the API request.
-     */
-    private fun parseApiResponse(response: Response<VimeoAccount>) =
-        if (response.isSuccessful) {
-            response.body()?.accessToken?.let { ApiResponse.Success(it) }
-                ?: ApiResponse.Failure.Http(response.code())
-        } else {
-            ApiResponse.Failure.Vimeo(errorResponseConverter.getErrorFromResponse(response))
-        }
-
-    override fun cancel() {
-        coroutineScope.coroutineContext[Job]?.cancel()
     }
 
 }

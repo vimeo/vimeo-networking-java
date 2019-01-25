@@ -25,11 +25,15 @@ class MainActivity : AppCompatActivity() {
                     println(authResponse.accessToken)
                 }
 
-                override fun onHttpError(genericError: ApiResponse.Failure.Http) {
+                override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {
 
                 }
 
-                override fun onVimeoError(apiError: ApiResponse.Failure.Vimeo) {
+                override fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure) {
+
+                }
+
+                override fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure) {
 
                 }
             })

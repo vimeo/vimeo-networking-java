@@ -1,9 +1,9 @@
 package com.vimeo.networking2.requests
 
 /**
- * Common actions such cancel that all API requests should have.
+ * Common actions such as canceling all API requests.
  */
-interface ApiRequest {
+interface VimeoRequest {
 
     /**
      * Cancels the API request for you.
