@@ -2,6 +2,7 @@ package com.vimeo.networking2.requests
 
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.adapters.VimeoCall
+import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
@@ -16,8 +17,8 @@ interface AuthService {
      * Get an access token by providing the client id and client secret along with grant
      * and scope types.
      *
-     * @param authHeader It is created from the client id and client secret.
-     * @param grantType  Determines whether you have access to public or private accessToken.
+     * @param authHeader Created from the client id and client secret.
+     * @param grantType  Determines your access level.
      * @param scope      Determines what you want to access to in the Vimeo API.
      *
      * @return A [VimeoAccount] that has an access token.
@@ -30,5 +31,19 @@ interface AuthService {
         @Field("grant_type") grantType: String,
         @Field("scope") scope: String
     ): VimeoCall<VimeoAccount>
+
+    /**
+     * Login with with Google. An access token will be returned after a successful login.
+     *
+     * @param  authHeader   Created from the client id and client secret.
+     * @param  grantType    The grant type. Must be set to `google`.
+     * @param  idToken      The Google ID token
+     */
+    @FormUrlEncoded
+    @POST("oauth/authorize/google")
+    fun logInWithGoogle(@Header("Authorization") authHeader: String,
+                        @Field("grant_type") grantType: String,
+                        @Field("id_token") idToken: String
+    ): Call<VimeoAccount>
 
 }
