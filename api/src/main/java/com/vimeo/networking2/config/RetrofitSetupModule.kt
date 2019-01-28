@@ -24,6 +24,20 @@ class RetrofitSetupModule(val serverConfig: ServerConfig) {
         .build()
 
     /**
+     * Create interceptor for adding a user agent.
+     */
+    private val userAgentInterceptor =
+        Interceptor { chain ->
+            val request = chain.request()
+            val builder = request.newBuilder()
+
+            if (request.header(USER_AGENT_HEADER).isNullOrBlank()) {
+                builder.addHeader(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
+            }
+            chain.proceed(builder.build())
+        }
+
+    /**
      * Cached retrofit object.
      */
     var retrofit = retrofit(serverConfig)
@@ -97,20 +111,6 @@ class RetrofitSetupModule(val serverConfig: ServerConfig) {
 
             if (request.header(AUTHORIZATION_HEADER).isNullOrBlank()) {
                 builder.addHeader(AUTHORIZATION_HEADER, "Bearer $accessToken")
-            }
-            chain.proceed(builder.build())
-        }
-
-    /**
-     * Create interceptor for adding a user agent.
-     */
-    private val userAgentInterceptor =
-        Interceptor { chain ->
-            val request = chain.request()
-            val builder = request.newBuilder()
-
-            if (request.header(USER_AGENT_HEADER).isNullOrBlank()) {
-                builder.addHeader(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
             }
             chain.proceed(builder.build())
         }
