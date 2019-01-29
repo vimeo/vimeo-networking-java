@@ -5,9 +5,9 @@ import com.vimeo.networking2.config.ServerConfig
 import com.vimeo.networking2.requests.AuthService
 import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsAuthenticator
 import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsInteractor
+import okhttp3.Credentials
 import com.vimeo.networking2.requests.signin.SignInAuthInteractor
 import com.vimeo.networking2.requests.signin.SignInAuthenticator
-import okhttp3.Credentials
 
 /**
  * Authentication with email, google, facebook or pincode.

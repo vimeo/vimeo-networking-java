@@ -13,8 +13,8 @@ interface AuthService {
      * Get an access token by providing the client id and client secret along with grant
      * and scope types.
      *
-     * @param authHeader Created from the client id and client secret.
-     * @param grantType  Determines your access level.
+     * @param authHeader It is created from the client id and client secret.
+     * @param grantType  Determines whether you have access to public or private data.
      * @param scope      Determines what you want to access to in the Vimeo API.
      *
      * @return A [VimeoAccount] that has an access token.
@@ -29,7 +29,7 @@ interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Used to either join or login to Vimeo by using either Google or Facebook.
+     * Used to either join or login to Vimeo by either using Google or Facebook.
      *
      * @param authHeader  Created from the client id and client secret.
      * @param params      Google or Facebook Authentication token and email configuration.

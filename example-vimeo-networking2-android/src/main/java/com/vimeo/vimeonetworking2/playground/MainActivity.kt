@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             authenticator.clientCredentials().authenticate(object : AuthCallback {
 
                 override fun onSuccess(authResponse: ApiResponse.Success<String>) {
-                    println("authResponse = [${authResponse}]")
+                    println(authResponse.data)
                 }
 
                 override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {

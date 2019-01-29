@@ -12,12 +12,12 @@ import java.util.concurrent.Executor
  * Custom call adapter to handle errors.
  *
  * @param responseType              Type of the response.
- * @param callbackExecutor          The executor upon which the request is made.
- * @param responseBodyConverter     Response body convert the error response from the API.
+ * @param callbackExecutor          The executor upon which the caller is notified.
+ * @param responseBodyConverter     Converter to parse the error response into a [ApiError].
  */
-class ErrorHandlingCallAdapter<T>(
+internal class ErrorHandlingCallAdapter<T>(
     private val responseType: Type,
-    private val callbackExecutor: Executor,
+    private val callbackExecutor: Executor?,
     private val responseBodyConverter: Converter<ResponseBody, ApiError>
 ) : CallAdapter<T, VimeoCall<T>> {
 
@@ -27,7 +27,7 @@ class ErrorHandlingCallAdapter<T>(
     override fun responseType() = responseType
 
     /**
-     * Create an call adapter for the specific call used in the request.
+     * Create a call adapter for the specific call used in the request.
      */
     override fun adapt(call: Call<T>) = VimeoCallAdapter(call, callbackExecutor, responseBodyConverter)
 }
