@@ -42,6 +42,6 @@ sealed class ApiResponse<out T> {
         /**
          * An exception occurred in the API request.
          */
-        data class ExceptionFailure(val throwable: Throwable): Failure()
+        data class ExceptionFailure(val throwable: Throwable) : Failure()
     }
 }
