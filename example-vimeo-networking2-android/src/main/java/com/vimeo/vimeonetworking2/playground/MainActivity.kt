@@ -26,15 +26,15 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {
-
+                    println("genericFailure = [${genericFailure}]")
                 }
 
                 override fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure) {
-
+                    println("apiFailure = [${apiFailure}]")
                 }
 
                 override fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure) {
-
+                    println("exceptionFailure = [${exceptionFailure}]")
                 }
             })
 

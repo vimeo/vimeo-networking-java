@@ -14,7 +14,11 @@ import java.util.concurrent.TimeUnit
 /**
  * Module which provides all the dependencies needed for setting up [Retrofit].
  */
-class RetrofitSetupModule(val serverConfig: ServerConfig) {
+object RetrofitSetupModule {
+
+    private const val USER_AGENT_HEADER = "User-Agent"
+    private const val AUTHORIZATION_HEADER = "Authorization"
+    private const val USER_AGENT_HEADER_VALUE = "vimeo-networking-java-sdk-${ApiConstants.API_VERSION}"
 
     /**
      * Create [Moshi] object for serialization and deserialization.
@@ -38,16 +42,6 @@ class RetrofitSetupModule(val serverConfig: ServerConfig) {
         }
 
     /**
-     * Cached retrofit object.
-     */
-    var retrofit = retrofit(serverConfig)
-
-    /**
-     * Used to store created retrofit services.
-     */
-    var retrofitServicesCache = retrofitCache(retrofit)
-
-    /**
      * Creates the object graph for the setup dependencies. After the graph is created, the method
      * return an instance of [Retrofit] which is root of the graph.
      */
@@ -62,24 +56,24 @@ class RetrofitSetupModule(val serverConfig: ServerConfig) {
             interceptors.addAll(serverConfig.customInterceptors)
         }
         val okHttpClient = okHttpClient(serverConfig, interceptors)
-        return retrofit(serverConfig, okHttpClient)
+        return createRetrofit(serverConfig, okHttpClient)
     }
-
-    /**
-     * Creates a cache for storing Retrofit services.
-     */
-    private fun retrofitCache(retrofit: Retrofit) = RetrofitServicesCache(retrofit)
 
     /**
      * Create [Retrofit] with OkHttpClient and Moshi.
      */
-    private fun retrofit(serverConfig: ServerConfig, okHttpClient: OkHttpClient): Retrofit =
+    private fun createRetrofit(serverConfig: ServerConfig, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(serverConfig.baseUrl)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(ErrorHandlingCallAdapterFactory())
             .build()
+
+    /**
+     * Creates a cache for storing Retrofit services.
+     */
+    fun retrofitCache(retrofit: Retrofit) = RetrofitServicesCache(retrofit)
 
     /**
      * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
@@ -114,23 +108,5 @@ class RetrofitSetupModule(val serverConfig: ServerConfig) {
             }
             chain.proceed(builder.build())
         }
-
-    /**
-     * After a successful authentication, an access token will be given. The [retrofit] object will
-     * be updated to send the access token in every request. The dependency graph for setting up
-     * [Retrofit] will re-created.
-     */
-     fun resetRetrofit(accessToken: String) {
-        if (accessToken.isNotBlank()) {
-            retrofit = retrofit(serverConfig, accessToken)
-            retrofitServicesCache = retrofitCache(retrofit)
-        }
-    }
-
-    companion object {
-        private const val USER_AGENT_HEADER = "User-Agent"
-        private const val AUTHORIZATION_HEADER = "Authorization"
-        private const val USER_AGENT_HEADER_VALUE = "vimeo-networking-java-sdk-${ApiConstants.API_VERSION}"
-    }
 
 }
