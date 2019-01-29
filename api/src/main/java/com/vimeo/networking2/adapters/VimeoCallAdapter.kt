@@ -13,8 +13,8 @@ import java.util.concurrent.Executor
  * in a background thread and return the result in the calling thread.
  *
  * @param call                  Retrofit call object.
- * @param callbackExecutor      Callback executor set by Retrofit to return the result. Retrofit itself sets it to the main thread
- *                              on Android.
+ * @param callbackExecutor      Callback executor set by Retrofit to return the result.
+ *                              Retrofit itself sets it to the main thread on Android.
  * @param responseBodyConverter Converter to convert the error response to [ApiError].
  */
 class VimeoCallAdapter<T>(

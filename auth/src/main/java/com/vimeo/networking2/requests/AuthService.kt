@@ -2,11 +2,7 @@ package com.vimeo.networking2.requests
 
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.adapters.VimeoCall
-import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 /**
  * All the authentication endpoints.
@@ -33,17 +29,15 @@ interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Login with with Google. An access token will be returned after a successful login.
+     * Used to either join or login to Vimeo by using either Google or Facebook.
      *
-     * @param  authHeader   Created from the client id and client secret.
-     * @param  grantType    The grant type. Must be set to `google`.
-     * @param  idToken      The Google ID token
+     * @param authHeader  Created from the client id and client secret.
+     * @param params      Google or Facebook Authentication token and email configuration.
      */
-    @FormUrlEncoded
-    @POST("oauth/authorize/google")
-    fun logInWithGoogle(@Header("Authorization") authHeader: String,
-                        @Field("grant_type") grantType: String,
-                        @Field("id_token") idToken: String
-    ): Call<VimeoAccount>
+    @POST("users")
+    fun join(
+        @Header("Authorization") authHeader: String,
+        @Body params: Map<String, String>
+    ): VimeoCall<VimeoAccount>
 
 }

@@ -2,9 +2,12 @@ package com.vimeo.networking2
 
 import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.config.ServerConfig
+import com.vimeo.networking2.requests.AuthService
 import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsAuthenticator
 import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsInteractor
-import com.vimeo.networking2.utils.AuthModule
+import com.vimeo.networking2.requests.signin.SignInAuthInteractor
+import com.vimeo.networking2.requests.signin.SignInAuthenticator
+import okhttp3.Credentials
 
 /**
  * Authentication with email, google, facebook or pincode.
@@ -16,13 +19,35 @@ import com.vimeo.networking2.utils.AuthModule
 class Authenticator(private val serverConfig: ServerConfig) {
 
     /**
-     * Auth module provides authenticated related dependencies.
+     * Get the Retrofit service for authentication endpoints.
      */
-    private val authModule = AuthModule(RetrofitSetupModule(serverConfig))
+    private val authService by lazy {
+        val retrofit = RetrofitSetupModule.retrofit(serverConfig)
+        retrofit.create(AuthService::class.java)
+    }
+
+    /**
+     * Client id and client secret headers.
+     */
+    private val authHeaders: String =
+        Credentials.basic(
+            serverConfig.clientId,
+            serverConfig.clientSecret
+        )
 
     /**
      * Authenticate with a client id and client secret.
      */
-    fun clientCredentials(): ClientCredentialsAuthenticator = ClientCredentialsInteractor(authModule)
+    fun clientCredentials(): ClientCredentialsAuthenticator =
+        ClientCredentialsInteractor(
+            authService,
+            authHeaders,
+            serverConfig.scopes
+        )
+
+    /**
+     * Authenticate by supplying a Facebook or Google token.
+     */
+    fun signIn(): SignInAuthenticator = SignInAuthInteractor(authService, authHeaders)
 
 }
