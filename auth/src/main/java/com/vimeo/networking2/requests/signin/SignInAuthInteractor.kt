@@ -6,7 +6,10 @@ import com.vimeo.networking2.requests.VimeoRequest
 import com.vimeo.networking2.utils.enqueueAuthRequest
 
 /**
- * Interactor that handles logging into Vimeo with Google or Facebook authentication.
+ * Interactor that handles logging into Vimeo with Google or Facebook.
+ *
+ * @param authService   Retrofit service for the sign in request.
+ * @param authHeaders   Client id and client secret headers.
  */
 internal class SignInAuthInteractor(
     private val authService: AuthService,
