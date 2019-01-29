@@ -32,7 +32,7 @@ interface AuthCallback {
     fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure)
 
     /**
-     * An exception occurred during
+     * An exception occurred when making the API request.
      */
     fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure)
 
