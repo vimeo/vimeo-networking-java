@@ -29,8 +29,8 @@ internal fun VimeoCall<VimeoAccount>.enqueueAuthRequest(authCallback: AuthCallba
             authCallback.onApiError(ApiResponse.Failure.ApiFailure(apiError))
         }
 
-        override fun onGenericError(requestCode: Int) {
-            authCallback.onGenericError(ApiResponse.Failure.GenericFailure(requestCode))
+        override fun onGenericError(responseCode: Int) {
+            authCallback.onGenericError(ApiResponse.Failure.GenericFailure(responseCode))
         }
 
         override fun onExceptionError(throwable: Throwable) {

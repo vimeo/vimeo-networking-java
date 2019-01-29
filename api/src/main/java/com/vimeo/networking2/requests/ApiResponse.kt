@@ -13,9 +13,9 @@ sealed class ApiResponse<out T> {
     /**
      * A successful response.
      *
-     * @param accessToken The accessToken parsed by this successful response.
+     * @param data The accessToken parsed by this successful response.
      */
-    data class Success<out T>(val accessToken: T) : ApiResponse<T>()
+    data class Success<out T>(val data: T) : ApiResponse<T>()
 
     /**
      * An unsuccessful response.

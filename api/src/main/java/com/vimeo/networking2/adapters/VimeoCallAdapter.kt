@@ -13,13 +13,15 @@ import java.util.concurrent.Executor
  * in a background thread and return the result in the calling thread.
  *
  * @param call                  Retrofit call object.
- * @param callbackExecutor      Callback executor set by Retrofit to return the result. Retrofit itself sets it to the main thread
- *                              on Android.
+ * @param callbackExecutor      Callback executor set by Retrofit to return the result. Retrofit
+ *                              itself sets it to the main thread on Android. If the executor is
+ *                              null, then the callback will be executed on the thread provided by
+ *                              OkHttp's dispatcher.
  * @param responseBodyConverter Converter to convert the error response to [ApiError].
  */
-class VimeoCallAdapter<T>(
+internal class VimeoCallAdapter<T>(
     private val call: Call<T>,
-    private val callbackExecutor: Executor,
+    private val callbackExecutor: Executor?,
     private val responseBodyConverter: Converter<ResponseBody, ApiError>
 ) : VimeoCall<T> {
 
@@ -46,21 +48,26 @@ class VimeoCallAdapter<T>(
     }
 
     /**
-     * Send response on [callbackExecutor].
+     * Send response on [callbackExecutor] if it is not null. Otherwise, send
+     * the response synchronously on the background thread.
      */
-    fun sendResponse(action: () -> Unit) {
-        callbackExecutor.execute { action() }
+    private fun sendResponse(action: () -> Unit) {
+        if (callbackExecutor != null) {
+            callbackExecutor.execute(action)
+        } else {
+            action()
+        }
     }
 
     /**
      * Determine is the response has a body.
      */
-    fun Response<T>.hasBody() = isSuccessful && body() != null
+    private fun Response<T>.hasBody() = isSuccessful && body() != null
 
     /**
      * Parse the error body into a [ApiError] object.
      */
-    fun Response<T>.parseApiError() = errorBody()?.let { responseBodyConverter.convert(it) }
+    private fun Response<T>.parseApiError() = errorBody()?.let { responseBodyConverter.convert(it) }
 
     /**
      * Cancel API request.

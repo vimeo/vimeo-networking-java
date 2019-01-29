@@ -9,14 +9,15 @@ import java.lang.reflect.Type
 /**
  * Factory for creating a custom [ErrorHandlingCallAdapter].
  */
-class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
+internal class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
 
     /**
      * Creates and returns a [ErrorHandlingCallAdapter].
      */
-    override fun get(returnType: Type,
-                     annotations: Array<Annotation>,
-                     retrofit: Retrofit
+    override fun get(
+        returnType: Type,
+        annotations: Array<Annotation>,
+        retrofit: Retrofit
     ): CallAdapter<*, *>? {
         if (CallAdapter.Factory.getRawType(returnType) != VimeoCall::class.java) {
             return null
@@ -31,6 +32,6 @@ class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
             ApiError::class.java,
             emptyArray()
         )
-        return ErrorHandlingCallAdapter<Any>(responseType, callbackExecutor!!, errorResponseConverter)
+        return ErrorHandlingCallAdapter<Any>(responseType, callbackExecutor, errorResponseConverter)
     }
 }

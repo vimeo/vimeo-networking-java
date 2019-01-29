@@ -14,13 +14,6 @@ import okhttp3.Credentials
  *                     read timeouts, base url etc...) that can be set for authentication and
  *                     making requests.
  */
-/**
- * Authentication with email, google, facebook or pincode.
- *
- * @param serverConfig All the server configuration (client id and secret, custom interceptors,
- *                     read timeouts, base url etc...) that can be set for authentication and
- *                     making requests.
- */
 class Authenticator(private val serverConfig: ServerConfig) {
 
     /**
