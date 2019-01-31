@@ -1,4 +1,4 @@
-package com.vimeo.networking2.enums
+package com.vimeo.networking2
 
 /**
  * All scopes that can be passed to the API. They determine what information you

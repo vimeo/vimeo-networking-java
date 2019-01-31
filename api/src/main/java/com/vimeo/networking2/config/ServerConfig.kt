@@ -1,7 +1,7 @@
 package com.vimeo.networking2.config
 
 import com.vimeo.networking2.ApiConstants
-import com.vimeo.networking2.enums.ScopeType
+import com.vimeo.networking2.ScopeType
 import okhttp3.Interceptor
 
 /**

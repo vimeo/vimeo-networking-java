@@ -2,11 +2,11 @@ package com.vimeo.networking2.utils
 
 import com.vimeo.networking2.ApiError
 import com.vimeo.networking2.VimeoAccount
-import com.vimeo.networking2.adapters.VimeoCall
-import com.vimeo.networking2.adapters.VimeoCallback
-import com.vimeo.networking2.requests.ApiResponse
+import com.vimeo.networking2.internal.VimeoCall
+import com.vimeo.networking2.VimeoCallback
+import com.vimeo.networking2.ApiResponse
 import com.vimeo.networking2.requests.AuthCallback
-import com.vimeo.networking2.requests.VimeoRequest
+import com.vimeo.networking2.VimeoRequest
 import retrofit2.Response
 
 /**

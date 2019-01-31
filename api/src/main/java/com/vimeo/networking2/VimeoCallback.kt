@@ -1,6 +1,5 @@
-package com.vimeo.networking2.adapters
+package com.vimeo.networking2
 
-import com.vimeo.networking2.ApiError
 import retrofit2.Response
 
 /**

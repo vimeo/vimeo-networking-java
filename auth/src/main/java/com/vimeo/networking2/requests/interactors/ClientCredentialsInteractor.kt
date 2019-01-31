@@ -1,10 +1,10 @@
 package com.vimeo.networking2.requests.interactors
 
-import com.vimeo.networking2.enums.GrantType
-import com.vimeo.networking2.enums.ScopeType
+import com.vimeo.networking2.GrantType
+import com.vimeo.networking2.ScopeType
+import com.vimeo.networking2.VimeoRequest
 import com.vimeo.networking2.requests.AuthCallback
 import com.vimeo.networking2.requests.AuthService
-import com.vimeo.networking2.requests.VimeoRequest
 import com.vimeo.networking2.utils.enqueueAuthRequest
 
 /**

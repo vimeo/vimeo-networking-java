@@ -1,5 +1,7 @@
 package com.vimeo.networking2.requests
 
+import com.vimeo.networking2.ApiResponse
+
 /**
  * Informs you of the result of an authentication request. The access token is provided upon
  * success and errors are propagated to you through the callback.

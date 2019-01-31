@@ -4,7 +4,6 @@ import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.config.ServerConfig
 import com.vimeo.networking2.requests.AuthCallback
 import com.vimeo.networking2.requests.AuthService
-import com.vimeo.networking2.requests.VimeoRequest
 import com.vimeo.networking2.requests.interactors.ClientCredentialsInteractor
 import okhttp3.Credentials
 

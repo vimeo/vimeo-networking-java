@@ -1,6 +1,7 @@
-package com.vimeo.networking2.adapters
+package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.ApiError
+import com.vimeo.networking2.VimeoCallback
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

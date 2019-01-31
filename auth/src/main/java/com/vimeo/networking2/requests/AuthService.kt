@@ -1,7 +1,7 @@
 package com.vimeo.networking2.requests
 
 import com.vimeo.networking2.VimeoAccount
-import com.vimeo.networking2.adapters.VimeoCall
+import com.vimeo.networking2.internal.VimeoCall
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header

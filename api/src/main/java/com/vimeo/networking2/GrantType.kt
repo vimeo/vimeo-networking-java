@@ -1,4 +1,4 @@
-package com.vimeo.networking2.enums
+package com.vimeo.networking2
 
 /**
  * Grant types.
