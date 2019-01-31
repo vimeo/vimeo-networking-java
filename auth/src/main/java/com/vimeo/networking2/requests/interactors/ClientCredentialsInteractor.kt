@@ -1,4 +1,4 @@
-package com.vimeo.networking2.requests.clientcredentials
+package com.vimeo.networking2.requests.interactors
 
 import com.vimeo.networking2.enums.GrantType
 import com.vimeo.networking2.enums.ScopeType
@@ -18,9 +18,9 @@ internal class ClientCredentialsInteractor(
     private val authService: AuthService,
     private val authHeaders: String,
     private val scopes: List<ScopeType>
-) : ClientCredentialsAuthenticator {
+) {
 
-    override fun authenticate(authCallback: AuthCallback): VimeoRequest {
+    fun authenticate(authCallback: AuthCallback): VimeoRequest {
 
         val call = authService.authorizeWithClientCredentialsGrant(
             authHeaders,

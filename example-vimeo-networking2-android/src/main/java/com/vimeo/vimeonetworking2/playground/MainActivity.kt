@@ -17,12 +17,12 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET)
-            val authenticator = Authenticator(serverConfig)
+            val authenticator = Authenticator.create(serverConfig)
 
-            authenticator.clientCredentials().authenticate(object : AuthCallback {
+            authenticator.clientCredentials(object : AuthCallback {
 
                 override fun onSuccess(authResponse: ApiResponse.Success<String>) {
-                    println(authResponse.data)
+                    println("authResponse = [${authResponse}]")
                 }
 
                 override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {

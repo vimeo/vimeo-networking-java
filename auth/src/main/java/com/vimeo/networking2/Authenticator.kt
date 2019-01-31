@@ -1,45 +1,68 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.config.ServerConfig
-import com.vimeo.networking2.requests.AuthService
-import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsAuthenticator
-import com.vimeo.networking2.requests.clientcredentials.ClientCredentialsInteractor
-import okhttp3.Credentials
+import com.vimeo.networking2.requests.AuthCallback
+import com.vimeo.networking2.requests.VimeoRequest
 
 /**
- * Authentication with email, google, facebook or pincode.
+ * API that allow you to make the following authentication requests:
  *
- * @param serverConfig All the server configuration (client id and secret, custom interceptors,
- *                     read timeouts, base url etc...) that can be set for authentication and
- *                     making requests.
+ * - Client credentials.
+ * - Google
+ * - Facebook
+ * - Email login
+ * - Email join
+ * - Logout
+ *
+ * Create an instance of the Authenticator by using its factory and make requests as follows.
+ *
+ * Ex:
+ *
+ * val authenticator = Authenticator.create(serverConfig)
+ * authenticator.clientCredentials(object: AuthCallback() {
+ *
+ *      override fun onSuccess(authResponse: ApiResponse.Success<String>) {
+ *
+ *       }
+ *
+ *       override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {
+ *
+ *       }
+ *
+ *       override fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure) {
+ *
+ *       }
+ *
+ *       override fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure) {
+ *
+ *       }
+ * })
+ *
  */
-class Authenticator(private val serverConfig: ServerConfig) {
+interface Authenticator {
 
     /**
-     * Get the Retrofit service for authentication endpoints.
+     * Authenticate client id and client secret.
+     *
+     * @param authCallback informs you of the result of the response.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
-    private val authService by lazy {
-        val retrofit = RetrofitSetupModule.retrofit(serverConfig)
-        retrofit.create(AuthService::class.java)
+    fun clientCredentials(authCallback: AuthCallback): VimeoRequest
+
+    /**
+     * Factory to create an instance of [Authenticator].
+     */
+    companion object Factory {
+
+        /**
+         * Create an instance of Authenticator to make authentication
+         * requests.
+         *
+         * @param serverConfig Server configuration.
+         */
+        fun create(serverConfig: ServerConfig): Authenticator = AuthenticatorImpl(serverConfig)
+
     }
 
-    /**
-     * Client id and client secret headers.
-     */
-    private val authHeaders: String =
-        Credentials.basic(
-            serverConfig.clientId,
-            serverConfig.clientSecret
-        )
-
-    /**
-     * Authenticate with a client id and client secret.
-     */
-    fun clientCredentials(): ClientCredentialsAuthenticator =
-        ClientCredentialsInteractor(
-            authService,
-            authHeaders,
-            serverConfig.scopes
-        )
 }
