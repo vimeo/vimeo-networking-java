@@ -7,7 +7,7 @@ import retrofit2.http.*
 /**
  * All the authentication endpoints.
  */
-interface AuthService {
+internal interface AuthService {
 
     /**
      * Get an access token by providing the client id and client secret along with grant
