@@ -2,7 +2,8 @@ package com.vimeo.networking2.config
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import com.vimeo.networking2.ApiConstants
+import com.vimeo.networking2.ApiConstants.API_VERSION
+import com.vimeo.networking2.ApiConstants.SDK_VERSION
 import com.vimeo.networking2.adapters.ErrorHandlingCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -18,7 +19,9 @@ object RetrofitSetupModule {
 
     private const val USER_AGENT_HEADER = "User-Agent"
     private const val AUTHORIZATION_HEADER = "Authorization"
-    private const val USER_AGENT_HEADER_VALUE = "vimeo-networking-java-sdk-${ApiConstants.API_VERSION}"
+    private const val HEADER_ACCEPT = "Accept"
+    private const val HEADER_ACCEPT_VALUE = "application/vnd.vimeo.*+json; version=$API_VERSION"
+    private const val USER_AGENT_HEADER_VALUE = "vimeo-networking-java-sdk-$SDK_VERSION"
 
     /**
      * Create [Moshi] object for serialization and deserialization.
@@ -42,6 +45,34 @@ object RetrofitSetupModule {
         }
 
     /**
+     * Interceptor for adding an access token.
+     */
+    private fun accessTokenInterceptor(accessToken: String) =
+        Interceptor { chain ->
+            val request = chain.request()
+            val builder = request.newBuilder()
+
+            if (request.header(AUTHORIZATION_HEADER).isNullOrBlank()) {
+                builder.addHeader(AUTHORIZATION_HEADER, "Bearer $accessToken")
+            }
+            chain.proceed(builder.build())
+        }
+
+    /**
+     * Header for specifying which API version to use.
+     */
+    private val acceptHeaderInterceptor =
+        Interceptor { chain ->
+            chain.proceed(
+                chain
+                    .request()
+                    .newBuilder()
+                    .header(HEADER_ACCEPT, HEADER_ACCEPT_VALUE)
+                    .build()
+            )
+        }
+
+    /**
      * Creates the object graph for the setup dependencies. After the graph is created, the method
      * return an instance of [Retrofit] which is root of the graph.
      */
@@ -51,6 +82,7 @@ object RetrofitSetupModule {
             interceptors.add(accessTokenInterceptor(accessToken))
         }
         interceptors.add(userAgentInterceptor)
+        interceptors.add(acceptHeaderInterceptor)
 
         if (serverConfig.customInterceptors?.isNotEmpty() == true) {
             interceptors.addAll(serverConfig.customInterceptors)
@@ -94,19 +126,5 @@ object RetrofitSetupModule {
             }
 
         }.build()
-
-    /**
-     * Create interceptor for adding an access token.
-     */
-    private fun accessTokenInterceptor(accessToken: String) =
-        Interceptor { chain ->
-            val request = chain.request()
-            val builder = request.newBuilder()
-
-            if (request.header(AUTHORIZATION_HEADER).isNullOrBlank()) {
-                builder.addHeader(AUTHORIZATION_HEADER, "Bearer $accessToken")
-            }
-            chain.proceed(builder.build())
-        }
 
 }

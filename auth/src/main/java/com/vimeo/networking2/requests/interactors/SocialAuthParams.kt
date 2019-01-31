@@ -26,9 +26,11 @@ fun SocialAuthParams.toMap() =
  */
 internal fun SocialAuthParams.validate(): List<AuthParam> {
     val invalidAuthParams = mutableListOf<AuthParam>()
-    when {
-        idToken.isEmpty() -> invalidAuthParams.add(AuthParam.FIELD_TOKEN)
-        email.isEmpty() -> invalidAuthParams.add(AuthParam.FIELD_EMAIL)
+    if (idToken.isEmpty()) {
+        invalidAuthParams.add(AuthParam.FIELD_TOKEN)
+    }
+    if (email.isEmpty()) {
+        invalidAuthParams.add(AuthParam.FIELD_EMAIL)
     }
     return invalidAuthParams
 }
