@@ -1,73 +1,87 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.config.RetrofitServicesCache
-import com.vimeo.networking2.config.RetrofitSetupComponent
+import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.config.ServerConfig
-import com.vimeo.networking2.enums.GrantType
-import com.vimeo.networking2.enums.ScopeType
-import com.vimeo.networking2.requests.AuthService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import com.vimeo.networking2.internal.AuthService
+import com.vimeo.networking2.internal.AuthenticatorImpl
+import okhttp3.Credentials
 
 /**
- * Authentication with email, google, facebook or pincode.
- * This is a temporary class that will be updated as requests are added.
+ * API that allow you to make the following authentication requests:
  *
- * @param serverConfig All the server configuration (client id and secret, custom interceptors,
- *                     read timeouts, base url etc...) that can be set for authentication and
- *                     making requests.
+ * - Client credentials.
+ * - Google
+ * - Facebook
+ * - Email login
+ * - Email join
+ * - Logout
+ *
+ * Create an instance of the Authenticator by using its factory and make requests as follows.
+ *
+ * Ex:
+ *
+ * ```
+ * val authenticator = Authenticator.create(serverConfig)
+ * authenticator.clientCredentials(object: AuthCallback() {
+ *
+ *      override fun onSuccess(authResponse: ApiResponse.Success<String>) {
+ *
+ *       }
+ *
+ *       override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {
+ *
+ *       }
+ *
+ *       override fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure) {
+ *
+ *       }
+ *
+ *       override fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure) {
+ *
+ *       }
+ * })
+ * ```
+ *
  */
-class Authenticator(private val serverConfig: ServerConfig) {
+interface Authenticator {
 
     /**
-     * Used to create authentication service.
+     * Authenticate client id and client secret.
+     *
+     * @param authCallback informs you of the result of the response.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
-    private var retrofit: Retrofit
+    fun clientCredentials(authCallback: AuthCallback): VimeoRequest
 
     /**
-     * Used to store created retrofit services.
+     * Factory to create an instance of [Authenticator].
      */
-    private var retrofitServicesCache: RetrofitServicesCache
+    companion object Factory {
 
-    init {
-        retrofit = RetrofitSetupComponent.retrofit(serverConfig)
-        retrofitServicesCache = RetrofitSetupComponent.retrofitCache(retrofit)
-    }
+        /**
+         * Create an instance of Authenticator to make authentication
+         * requests.
+         *
+         * @param serverConfig All the server configuration (client id and secret, custom interceptors,
+         *                     read timeouts, base url etc...) that can be set for authentication and
+         *                     making requests.
+         */
+        fun create(serverConfig: ServerConfig): Authenticator {
 
-    /**
-     * This is a temporary request that is added in to show how the access token will be set.
-     * This will be removed in the next PR which is to design and implement all the auth requests.
-     */
-    fun authenticateWithClientCredentials() {
-        val apiService = retrofitServicesCache.getService(AuthService::class.java)
+            val authService = RetrofitSetupModule
+                .retrofit(serverConfig)
+                .create(AuthService::class.java)
 
-        val call = apiService.authorizeWithClientCredentialsGrant(
-            RetrofitSetupComponent.authHeaders(serverConfig.clientId, serverConfig.clientSecret),
-            GrantType.CLIENT_CREDENTIALS.value,
-            ScopeType.PUBLIC.value)
+            val authHeaders: String =
+                Credentials.basic(
+                    serverConfig.clientId,
+                    serverConfig.clientSecret
+                )
 
-        call.enqueue(object : Callback<VimeoAccount> {
-
-            override fun onResponse(call: Call<VimeoAccount>, response: Response<VimeoAccount>) {
-                response.body()?.accessToken?.let { setAccessToken(it) }
-            }
-
-            override fun onFailure(call: Call<VimeoAccount>, t: Throwable) {}
-        })
-    }
-
-    /**
-     * After a successful authentication, an access token will be given. The [retrofit] object will
-     * be updated to send the access token in every request. The dependency graph for setting up
-     * [Retrofit] will re-created.
-     */
-    private fun setAccessToken(accessToken: String) {
-        if (accessToken.isNotBlank()) {
-            retrofit = RetrofitSetupComponent.retrofit(serverConfig, accessToken)
-            retrofitServicesCache = RetrofitSetupComponent.retrofitCache(retrofit)
+            return AuthenticatorImpl(authService, authHeaders, serverConfig.scopes.joinToString())
         }
+
     }
 
 }
