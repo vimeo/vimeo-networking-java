@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.internal.VimeoCall
+import retrofit2.Call
 
 /**
  * Common actions such as canceling all API requests.
@@ -29,10 +30,8 @@ class NoOpVimeoRequest: VimeoRequest {
  *
  * @param call  A [VimeoCall] object for the API request.
  */
-class CancellableVimeoRequest<T>(private val call: VimeoCall<T>): VimeoRequest {
-
+class CancellableVimeoRequest<T>(private val call: Call<T>): VimeoRequest {
     override fun cancel() {
         call.cancel()
     }
-
 }

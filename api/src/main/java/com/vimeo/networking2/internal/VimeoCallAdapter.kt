@@ -1,7 +1,6 @@
 package com.vimeo.networking2.internal
 
-import com.vimeo.networking2.ApiError
-import com.vimeo.networking2.VimeoCallback
+import com.vimeo.networking2.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,38 +25,40 @@ internal class VimeoCallAdapter<T>(
     private val responseBodyConverter: Converter<ResponseBody, ApiError>
 ) : VimeoCall<T> {
 
-    override fun enqueue(callback: VimeoCallback<T>) {
+    override fun enqueue(callback: VimeoCallback<T>): VimeoRequest {
         call.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
 
                 if (response.hasBody()) {
-                    sendResponse { callback.onSuccess(response) }
+                    callbackExecutor.sendResponse { callback.onSuccess(response) }
                 } else {
                     val apiError = response.parseApiError()
                     if (apiError != null) {
-                        sendResponse { callback.onApiError(apiError) }
+                        callbackExecutor.sendResponse { callback.onApiError(apiError) }
                     } else {
-                        sendResponse { callback.onGenericError(response.code()) }
+                        callbackExecutor.sendResponse { callback.onGenericError(response.code()) }
                     }
                 }
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
-                sendResponse { callback.onExceptionError(t) }
+                callbackExecutor.sendResponse { callback.onExceptionError(t) }
             }
         })
+        return CancellableVimeoRequest(call)
+    }
+
+    override fun enqueueError(apiError: ApiError, callback: ApiErrorVimeoCallback): VimeoRequest {
+        callbackExecutor.sendResponse { callback.onApiError(apiError) }
+        return NoOpVimeoRequest()
     }
 
     /**
      * Send response on [callbackExecutor] if it is not null. Otherwise, send
      * the response synchronously on the background thread.
      */
-    private fun sendResponse(action: () -> Unit) {
-        if (callbackExecutor != null) {
-            callbackExecutor.execute(action)
-        } else {
-            action()
-        }
+    private fun Executor?.sendResponse(action: () -> Unit) {
+        this?.let { execute(action) } ?: action()
     }
 
     /**

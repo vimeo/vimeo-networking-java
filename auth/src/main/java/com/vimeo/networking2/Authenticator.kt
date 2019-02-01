@@ -57,18 +57,32 @@ interface Authenticator {
     /**
      * Authenticate via Google.
      *
-     * @param params            Provide Google auth token, email and GDPR option for authentication.
+     * @param token             Google authentication token.
+     * @param email             Email addressed used to sign in to Google.
+     * @param marketingOptIn    Opt in or out on GDPR.
      * @param authCallback      Callback to be notified of the result of the request.
      */
-    fun google(params: SocialAuthParams, authCallback: AuthCallback): VimeoRequest
+    fun google(
+        token: String,
+        email: String,
+        marketingOptIn: Boolean,
+        authCallback: AuthCallback
+    ): VimeoRequest
 
     /**
      * Authenticate via Facebook.
      *
-     * @param params            Provide Facebook auth token, email and GDPR option for authentication.
+     * @param token             Google authentication token.
+     * @param email             Email addressed used to sign in to Google.
+     * @param marketingOptIn    Opt in or out on GDPR.
      * @param authCallback      Callback to be notified of the result of the request.
      */
-    fun facebook(params: SocialAuthParams, authCallback: AuthCallback): VimeoRequest
+    fun facebook(
+        token: String,
+        email: String,
+        marketingOptIn: Boolean,
+        authCallback: AuthCallback
+    ): VimeoRequest
 
     /**
      * Factory to create an instance of [Authenticator].

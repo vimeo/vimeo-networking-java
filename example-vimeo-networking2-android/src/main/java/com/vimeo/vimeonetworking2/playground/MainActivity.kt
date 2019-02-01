@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.vimeo.moshiexampleandroid.R
 import com.vimeo.networking2.ApiResponse
+import com.vimeo.networking2.AuthCallback
 import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.config.ServerConfig
-import com.vimeo.networking2.AuthCallback
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,19 +25,19 @@ class MainActivity : AppCompatActivity() {
                     println("authResponse = [${authResponse}]")
                 }
 
-                override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {
-                    println("genericFailure = [${genericFailure}]")
-                }
+                    override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {
+                        println("genericFailure = [${genericFailure}]")
+                    }
 
-                override fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure) {
-                    println("apiFailure = [${apiFailure}]")
-                }
+                    override fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure) {
+                        println("apiFailure = [${apiFailure}]")
+                    }
 
-                override fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure) {
-                    println("exceptionFailure = [${exceptionFailure}]")
-                }
+                    override fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure) {
+                        println("exceptionFailure = [${exceptionFailure}]")
+                    }
 
-            })
+                })
 
         }
     }

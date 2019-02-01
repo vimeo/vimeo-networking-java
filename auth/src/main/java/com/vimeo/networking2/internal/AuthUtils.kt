@@ -31,8 +31,26 @@ internal fun VimeoCall<VimeoAccount>.enqueueAuthRequest(authCallback: AuthCallba
             authCallback.onExceptionError(ApiResponse.Failure.ExceptionFailure(throwable))
         }
     }
-    enqueue(apiResponseCallback)
-    return CancellableVimeoRequest(this)
+    return enqueue(apiResponseCallback)
+}
+
+/**
+ * Send an authentication error message back to the client.
+ *
+ * @param apiError          Error information.
+ * @param authCallback      Callback to inform the client of the error.
+ */
+internal fun VimeoCall<VimeoAccount>.enqueueAuthError(
+    apiError: ApiError,
+    authCallback: AuthCallback
+): VimeoRequest {
+
+    val apiResponseCallback = object : ApiErrorVimeoCallback() {
+        override fun onApiError(apiError: ApiError) {
+            authCallback.onApiError(ApiResponse.Failure.ApiFailure(apiError))
+        }
+    }
+    return enqueueError(apiError, apiResponseCallback)
 }
 
 /**
@@ -42,9 +60,31 @@ internal fun VimeoCall<VimeoAccount>.enqueueAuthRequest(authCallback: AuthCallba
 internal fun createApiErrorForInvalidParams(
     developerMessage: String,
     authParams: List<AuthParam>
-): ApiResponse.Failure.ApiFailure {
+): ApiError {
+
     val invalidParameters = authParams.map {
-        InvalidParameter(it.paramName, it.errorCode.value, it.developerMessage)
+        InvalidParameter(it.value, it.errorCode?.value, it.developerMessage)
     }.toList()
-    return ApiResponse.Failure.ApiFailure(ApiError(developerMessage, invalidParameters = invalidParameters))
+    return ApiError(developerMessage, invalidParameters = invalidParameters)
 }
+
+/**
+ * Create a map of param name and value for sending it to the API.
+ */
+internal fun Map<AuthParam, String>.convertToKeyValueMap(): Map<String, String> {
+    val keyValueMap = mutableMapOf<String, String>()
+    for (entry in this) {
+        keyValueMap[entry.key.value] = entry.value
+    }
+    return keyValueMap
+}
+
+/**
+ * Validates any authentication params given by the client.
+ *
+ * @return a list of empty params given by the user.
+ */
+internal fun Map<AuthParam, String>.validate(): List<AuthParam> =
+        filter { it.value.isEmpty() }
+        .map { it.key }
+        .toList()
