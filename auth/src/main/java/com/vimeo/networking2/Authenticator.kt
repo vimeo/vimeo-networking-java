@@ -1,7 +1,10 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.config.ServerConfig
+import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
+import okhttp3.Credentials
 
 /**
  * API that allow you to make the following authentication requests:
@@ -60,9 +63,24 @@ interface Authenticator {
          * Create an instance of Authenticator to make authentication
          * requests.
          *
-         * @param serverConfig Server configuration.
+         * @param serverConfig All the server configuration (client id and secret, custom interceptors,
+         *                     read timeouts, base url etc...) that can be set for authentication and
+         *                     making requests.
          */
-        fun create(serverConfig: ServerConfig): Authenticator = AuthenticatorImpl(serverConfig)
+        fun create(serverConfig: ServerConfig): Authenticator {
+
+            val authService = RetrofitSetupModule
+                .retrofit(serverConfig)
+                .create(AuthService::class.java)
+
+            val authHeaders: String =
+                Credentials.basic(
+                    serverConfig.clientId,
+                    serverConfig.clientSecret
+                )
+
+            return AuthenticatorImpl(authService, authHeaders, serverConfig.scopes.joinToString())
+        }
 
     }
 
