@@ -1,6 +1,6 @@
-package com.vimeo.networking2.requests
+package com.vimeo.networking2
 
-import com.vimeo.networking2.adapters.VimeoCall
+import com.vimeo.networking2.internal.VimeoCall
 
 /**
  * Common actions such as canceling all API requests.

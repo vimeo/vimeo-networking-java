@@ -1,4 +1,6 @@
-package com.vimeo.networking2.adapters
+package com.vimeo.networking2.internal
+
+import com.vimeo.networking2.VimeoCallback
 
 /**
  * Custom Retrofit call that allows you to enqueue a custom callback.

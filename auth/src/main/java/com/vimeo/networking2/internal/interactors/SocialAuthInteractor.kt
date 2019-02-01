@@ -1,11 +1,11 @@
-package com.vimeo.networking2.requests.interactors
+package com.vimeo.networking2.internal.interactors
 
-import com.vimeo.networking2.requests.AuthCallback
-import com.vimeo.networking2.requests.AuthService
-import com.vimeo.networking2.requests.NoOpVimeoRequest
-import com.vimeo.networking2.requests.VimeoRequest
-import com.vimeo.networking2.utils.createApiErrorForInvalidParams
-import com.vimeo.networking2.utils.enqueueAuthRequest
+import com.vimeo.networking2.AuthCallback
+import com.vimeo.networking2.NoOpVimeoRequest
+import com.vimeo.networking2.VimeoRequest
+import com.vimeo.networking2.internal.AuthService
+import com.vimeo.networking2.internal.createApiErrorForInvalidParams
+import com.vimeo.networking2.internal.enqueueAuthRequest
 
 /**
  * Interactor that handles logging into Vimeo with Google or Facebook.

@@ -4,7 +4,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.vimeo.networking2.ApiConstants.API_VERSION
 import com.vimeo.networking2.ApiConstants.SDK_VERSION
-import com.vimeo.networking2.adapters.ErrorHandlingCallAdapterFactory
+import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -1,11 +1,6 @@
-package com.vimeo.networking2.utils
+package com.vimeo.networking2.internal
 
-import com.vimeo.networking2.ApiError
-import com.vimeo.networking2.InvalidParameter
-import com.vimeo.networking2.VimeoAccount
-import com.vimeo.networking2.adapters.VimeoCall
-import com.vimeo.networking2.adapters.VimeoCallback
-import com.vimeo.networking2.requests.*
+import com.vimeo.networking2.*
 import retrofit2.Response
 
 /**
@@ -44,11 +39,12 @@ internal fun VimeoCall<VimeoAccount>.enqueueAuthRequest(authCallback: AuthCallba
  * Utility method to create a [ApiError] for an authentication request where invalid parameters
  * were given such as an empty string for an email or password.
  */
-internal fun createApiErrorForInvalidParams(developerMessage: String,
-                                            authParams: List<AuthParam>
+internal fun createApiErrorForInvalidParams(
+    developerMessage: String,
+    authParams: List<AuthParam>
 ): ApiResponse.Failure.ApiFailure {
     val invalidParameters = authParams.map {
         InvalidParameter(it.paramName, it.errorCode.value, it.developerMessage)
     }.toList()
-    return ApiResponse.Failure.ApiFailure(ApiError(developerMessage, invalidParameters =  invalidParameters))
+    return ApiResponse.Failure.ApiFailure(ApiError(developerMessage, invalidParameters = invalidParameters))
 }

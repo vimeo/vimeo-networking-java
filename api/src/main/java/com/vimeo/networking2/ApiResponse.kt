@@ -1,8 +1,7 @@
-package com.vimeo.networking2.requests
+package com.vimeo.networking2
 
-import com.vimeo.networking2.ApiError
-import com.vimeo.networking2.requests.ApiResponse.Failure
-import com.vimeo.networking2.requests.ApiResponse.Success
+import com.vimeo.networking2.ApiResponse.Failure
+import com.vimeo.networking2.ApiResponse.Success
 
 /**
  * Result of the API response. [Success] contains the data while the [Failure] class will

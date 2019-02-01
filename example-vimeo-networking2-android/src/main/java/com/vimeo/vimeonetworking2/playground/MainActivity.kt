@@ -3,10 +3,10 @@ package com.vimeo.vimeonetworking2.playground
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.vimeo.moshiexampleandroid.R
+import com.vimeo.networking2.ApiResponse
 import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.config.ServerConfig
-import com.vimeo.networking2.requests.ApiResponse
-import com.vimeo.networking2.requests.AuthCallback
+import com.vimeo.networking2.AuthCallback
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

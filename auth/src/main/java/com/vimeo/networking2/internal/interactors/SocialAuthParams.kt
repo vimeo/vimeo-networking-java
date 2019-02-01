@@ -1,6 +1,6 @@
-package com.vimeo.networking2.requests.interactors
+package com.vimeo.networking2.internal.interactors
 
-import com.vimeo.networking2.requests.AuthParam
+import com.vimeo.networking2.internal.AuthParam
 
 /**
  * Authentication params for signing in or joining with Google or Facebook.
