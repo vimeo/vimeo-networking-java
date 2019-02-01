@@ -1,4 +1,4 @@
-package com.vimeo.networking2.requests
+package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.internal.VimeoCall

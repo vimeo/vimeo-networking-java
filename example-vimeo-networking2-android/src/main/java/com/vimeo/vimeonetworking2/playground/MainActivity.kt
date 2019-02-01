@@ -6,7 +6,7 @@ import com.vimeo.moshiexampleandroid.R
 import com.vimeo.networking2.ApiResponse
 import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.config.ServerConfig
-import com.vimeo.networking2.requests.AuthCallback
+import com.vimeo.networking2.AuthCallback
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

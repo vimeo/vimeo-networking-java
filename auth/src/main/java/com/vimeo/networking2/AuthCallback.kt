@@ -1,4 +1,4 @@
-package com.vimeo.networking2.requests
+package com.vimeo.networking2
 
 import com.vimeo.networking2.ApiResponse
 

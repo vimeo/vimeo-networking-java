@@ -1,11 +1,9 @@
-package com.vimeo.networking2.requests.interactors
+package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.ScopeType
 import com.vimeo.networking2.VimeoRequest
-import com.vimeo.networking2.requests.AuthCallback
-import com.vimeo.networking2.requests.AuthService
-import com.vimeo.networking2.utils.enqueueAuthRequest
+import com.vimeo.networking2.AuthCallback
 
 /**
  * Interactor which performs auth request with client credentials.

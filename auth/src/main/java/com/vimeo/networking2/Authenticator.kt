@@ -1,7 +1,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.config.ServerConfig
-import com.vimeo.networking2.requests.AuthCallback
+import com.vimeo.networking2.internal.AuthenticatorImpl
 
 /**
  * API that allow you to make the following authentication requests:
