@@ -1,9 +1,7 @@
 package com.vimeo.networking2.internal
 
-import com.vimeo.networking2.AuthCallback
-import com.vimeo.networking2.Authenticator
-import com.vimeo.networking2.GrantType
-import com.vimeo.networking2.VimeoRequest
+import com.vimeo.networking2.*
+import com.vimeo.networking2.enums.AuthParam
 
 /**
  * Authentication with email, google, facebook or pincode.
@@ -50,14 +48,14 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_EMAIL to email,
             AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString()
         )
-        val call = authService.join(authHeaders, params.convertToKeyValueMap())
+        val call = authService.join(authHeaders, params)
 
         val invalidAuthParams = params.validate()
 
         return if (invalidAuthParams.isNotEmpty()) {
-            val apiError = createApiErrorForInvalidParams(
+            val apiError = ApiError(
                 "Google authentication error.",
-                invalidAuthParams
+                invalidParameters = invalidAuthParams
             )
             call.enqueueAuthError(apiError, authCallback)
         } else {

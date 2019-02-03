@@ -1,6 +1,7 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
+import com.vimeo.networking2.enums.AuthParam
 import retrofit2.Response
 
 /**
@@ -54,37 +55,11 @@ internal fun VimeoCall<VimeoAccount>.enqueueAuthError(
 }
 
 /**
- * Utility method to create a [ApiError] for an authentication request where invalid parameters
- * were given such as an empty string for an email or password.
- */
-internal fun createApiErrorForInvalidParams(
-    developerMessage: String,
-    authParams: List<AuthParam>
-): ApiError {
-
-    val invalidParameters = authParams.map {
-        InvalidParameter(it.value, it.errorCode?.value, it.developerMessage)
-    }.toList()
-    return ApiError(developerMessage, invalidParameters = invalidParameters)
-}
-
-/**
- * Create a map of param name and value for sending it to the API.
- */
-internal fun Map<AuthParam, String>.convertToKeyValueMap(): Map<String, String> {
-    val keyValueMap = mutableMapOf<String, String>()
-    for (entry in this) {
-        keyValueMap[entry.key.value] = entry.value
-    }
-    return keyValueMap
-}
-
-/**
  * Validates any authentication params given by the client.
  *
- * @return a list of empty params given by the user.
+ * @return a list of invalid parameters.
  */
-internal fun Map<AuthParam, String>.validate(): List<AuthParam> =
+internal fun Map<AuthParam, String>.validate(): List<InvalidParameter> =
         filter { it.value.isEmpty() }
-        .map { it.key }
+        .map { InvalidParameter(it.key.name, it.key.errorCode?.value, it.key.developerMessage) }
         .toList()

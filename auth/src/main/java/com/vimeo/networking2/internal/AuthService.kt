@@ -1,6 +1,7 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.VimeoAccount
+import com.vimeo.networking2.enums.AuthParam
 import retrofit2.http.*
 
 /**
@@ -36,7 +37,7 @@ internal interface AuthService {
     @POST("users")
     fun join(
         @Header("Authorization") authHeader: String,
-        @Body params: Map<String, String>
+        @Body params: Map<AuthParam, String>
     ): VimeoCall<VimeoAccount>
 
 }
