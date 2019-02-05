@@ -19,7 +19,7 @@ interface VimeoRequest {
  * No-op API request. Used when an invalid param was given by the client. In this case,
  * the actual API request is not made. So, there is nothing to cancel.
  */
-class NoOpVimeoRequest: VimeoRequest {
+object NoOpVimeoRequest: VimeoRequest {
 
     override fun cancel() {}
 

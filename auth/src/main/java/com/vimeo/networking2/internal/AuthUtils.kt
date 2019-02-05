@@ -62,4 +62,3 @@ internal fun VimeoCall<VimeoAccount>.enqueueAuthError(
 internal fun Map<AuthParam, String>.validate(): List<InvalidParameter> =
         filter { it.value.isEmpty() }
         .map { InvalidParameter(it.key.name, it.key.errorCode?.value, it.key.developerMessage) }
-        .toList()

@@ -26,10 +26,10 @@ internal class AuthenticatorImpl(
     }
 
     override fun google(token: String, email: String, marketingOptIn: Boolean, authCallback: AuthCallback) =
-        socialAuthenticate(token, email, marketingOptIn, authCallback)
+        socialAuthenticate(token, email, marketingOptIn, "Google authentication error.", authCallback)
 
     override fun facebook(token: String, email: String, marketingOptIn: Boolean, authCallback: AuthCallback) =
-        socialAuthenticate(token, email, marketingOptIn, authCallback)
+        socialAuthenticate(token, email, marketingOptIn, "Facebook authentication error.", authCallback)
 
     /**
      * Performs a Google or Facebook auth request. It will first validate the auth params given the
@@ -40,6 +40,7 @@ internal class AuthenticatorImpl(
         token: String,
         email: String,
         marketingOptIn: Boolean,
+        authenticationErrorMessage: String,
         authCallback: AuthCallback
     ): VimeoRequest {
 
@@ -54,7 +55,7 @@ internal class AuthenticatorImpl(
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
-                "Google authentication error.",
+                authenticationErrorMessage,
                 invalidParameters = invalidAuthParams
             )
             call.enqueueAuthError(apiError, authCallback)
