@@ -1,11 +1,7 @@
 package com.vimeo.networking2.internal
 
-import com.vimeo.networking2.ApiError
-import com.vimeo.networking2.VimeoAccount
-import com.vimeo.networking2.VimeoCallback
-import com.vimeo.networking2.ApiResponse
-import com.vimeo.networking2.AuthCallback
-import com.vimeo.networking2.VimeoRequest
+import com.vimeo.networking2.*
+import com.vimeo.networking2.enums.AuthParam
 import retrofit2.Response
 
 /**
@@ -36,11 +32,33 @@ internal fun VimeoCall<VimeoAccount>.enqueueAuthRequest(authCallback: AuthCallba
             authCallback.onExceptionError(ApiResponse.Failure.ExceptionFailure(throwable))
         }
     }
-    enqueue(apiResponseCallback)
+    return enqueue(apiResponseCallback)
+}
 
-    return object: VimeoRequest {
-        override fun cancel() {
-            cancel()
+/**
+ * Send an authentication error message back to the client.
+ *
+ * @param apiError          Error information.
+ * @param authCallback      Callback to inform the client of the error.
+ */
+internal fun VimeoCall<VimeoAccount>.enqueueAuthError(
+    apiError: ApiError,
+    authCallback: AuthCallback
+): VimeoRequest {
+
+    val apiResponseCallback = object : ApiErrorVimeoCallback() {
+        override fun onApiError(apiError: ApiError) {
+            authCallback.onApiError(ApiResponse.Failure.ApiFailure(apiError))
         }
     }
+    return enqueueError(apiError, apiResponseCallback)
 }
+
+/**
+ * Validates any authentication params given by the client.
+ *
+ * @return a list of invalid parameters.
+ */
+internal fun Map<AuthParam, String>.validate(): List<InvalidParameter> =
+        filter { it.value.isEmpty() }
+        .map { InvalidParameter(it.key.name, it.key.errorCode?.value, it.key.developerMessage) }

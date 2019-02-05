@@ -1,11 +1,8 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.VimeoAccount
-import com.vimeo.networking2.internal.VimeoCall
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Header
-import retrofit2.http.POST
+import com.vimeo.networking2.enums.AuthParam
+import retrofit2.http.*
 
 /**
  * All the authentication endpoints.
@@ -29,6 +26,18 @@ internal interface AuthService {
         @Header("Authorization") authHeader: String,
         @Field("grant_type") grantType: String,
         @Field("scope") scope: String
+    ): VimeoCall<VimeoAccount>
+
+    /**
+     * Used to either join or login to Vimeo by either using Google or Facebook.
+     *
+     * @param authHeader  Created from the client id and client secret.
+     * @param params      Google or Facebook Authentication token and email configuration.
+     */
+    @POST("users")
+    fun join(
+        @Header("Authorization") authHeader: String,
+        @Body params: Map<AuthParam, String>
     ): VimeoCall<VimeoAccount>
 
 }

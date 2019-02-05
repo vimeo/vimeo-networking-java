@@ -34,6 +34,12 @@ data class ApiError(
     val errorCode: String? = null,
 
     /**
+     * Information on invalid parameters send in the request.
+     */
+    @Json(name = "invalid_parameters")
+    val invalidParameters: List<InvalidParameter>? = null,
+
+    /**
      * A link to more information about the error.
      */
     @Json(name = "link")
