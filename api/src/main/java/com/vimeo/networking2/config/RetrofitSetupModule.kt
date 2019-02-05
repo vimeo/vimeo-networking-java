@@ -17,46 +17,18 @@ import java.util.concurrent.TimeUnit
  */
 object RetrofitSetupModule {
 
-    private const val USER_AGENT_HEADER = "User-Agent"
     private const val AUTHORIZATION_HEADER = "Authorization"
+    private const val USER_AGENT_HEADER = "User-Agent"
+    private const val USER_AGENT_HEADER_VALUE = "Kotlin VimeoNetworking/$SDK_VERSION"
     private const val HEADER_ACCEPT = "Accept"
     private const val HEADER_ACCEPT_VALUE = "application/vnd.vimeo.*+json; version=$API_VERSION"
-    private const val USER_AGENT_HEADER_VALUE = "vimeo-networking-java-sdk-$SDK_VERSION"
 
     /**
-     * Create [Moshi] object for serialization and deserialization.
+     * Create Moshi object for serialization and deserialization.
      */
     private val moshi = Moshi.Builder()
         .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
         .build()
-
-    /**
-     * Create interceptor for adding a user agent.
-     */
-    private val userAgentInterceptor =
-        Interceptor { chain ->
-            val request = chain.request()
-            val builder = request.newBuilder()
-
-            if (request.header(USER_AGENT_HEADER).isNullOrBlank()) {
-                builder.addHeader(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
-            }
-            chain.proceed(builder.build())
-        }
-
-    /**
-     * Interceptor for adding an access token.
-     */
-    private fun accessTokenInterceptor(accessToken: String) =
-        Interceptor { chain ->
-            val request = chain.request()
-            val builder = request.newBuilder()
-
-            if (request.header(AUTHORIZATION_HEADER).isNullOrBlank()) {
-                builder.addHeader(AUTHORIZATION_HEADER, "Bearer $accessToken")
-            }
-            chain.proceed(builder.build())
-        }
 
     /**
      * Header for specifying which API version to use.
@@ -76,36 +48,54 @@ object RetrofitSetupModule {
      * Creates the object graph for the setup dependencies. After the graph is created, the method
      * return an instance of [Retrofit] which is root of the graph.
      */
-    fun retrofit(serverConfig: ServerConfig, accessToken: String? = null): Retrofit {
+    fun retrofit(serverConfig: ServerConfig, userAgent: String? = null, accessToken: String? = null): Retrofit {
         val interceptors = mutableListOf<Interceptor>()
         if (accessToken?.isNotBlank() == true) {
             interceptors.add(accessTokenInterceptor(accessToken))
         }
-        interceptors.add(userAgentInterceptor)
+        interceptors.add(userAgentInterceptor(userAgent))
         interceptors.add(acceptHeaderInterceptor)
 
         if (serverConfig.customInterceptors?.isNotEmpty() == true) {
             interceptors.addAll(serverConfig.customInterceptors)
         }
+
         val okHttpClient = okHttpClient(serverConfig, interceptors)
         return createRetrofit(serverConfig, okHttpClient)
     }
 
     /**
-     * Create [Retrofit] with OkHttpClient and Moshi.
+     * Interceptor for adding an access token.
      */
-    private fun createRetrofit(serverConfig: ServerConfig, okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(serverConfig.baseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory())
-            .build()
+    private fun accessTokenInterceptor(accessToken: String) =
+        Interceptor { chain ->
+            val request = chain.request()
+            val builder = request.newBuilder()
+
+            if (request.header(AUTHORIZATION_HEADER).isNullOrBlank()) {
+                builder.addHeader(AUTHORIZATION_HEADER, "Bearer $accessToken")
+            }
+            chain.proceed(builder.build())
+        }
 
     /**
-     * Creates a cache for storing Retrofit services.
+     * Create interceptor for adding a user agent.
      */
-    fun retrofitCache(retrofit: Retrofit) = RetrofitServicesCache(retrofit)
+    private fun userAgentInterceptor(userAgent: String?) =
+        Interceptor { chain ->
+            val request = chain.request()
+            val builder = request.newBuilder()
+
+            if (request.header(USER_AGENT_HEADER).isNullOrBlank()) {
+
+                val customUserAgent = userAgent?.let {
+                    "$it $USER_AGENT_HEADER_VALUE"
+                } ?: USER_AGENT_HEADER_VALUE
+
+                builder.addHeader(USER_AGENT_HEADER, customUserAgent)
+            }
+            chain.proceed(builder.build())
+        }
 
     /**
      * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
@@ -126,5 +116,21 @@ object RetrofitSetupModule {
             }
 
         }.build()
+
+    /**
+     * Create [Retrofit] with OkHttpClient and Moshi.
+     */
+    private fun createRetrofit(serverConfig: ServerConfig, okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(serverConfig.baseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory())
+            .build()
+
+    /**
+     * Creates a cache for storing Retrofit services.
+     */
+    fun retrofitCache(retrofit: Retrofit) = RetrofitServicesCache(retrofit)
 
 }

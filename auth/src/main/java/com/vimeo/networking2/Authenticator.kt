@@ -61,6 +61,8 @@ interface Authenticator {
      * @param email             Email addressed used to sign in to Google.
      * @param marketingOptIn    Opt in or out on GDPR.
      * @param authCallback      Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun google(
         token: String,
@@ -76,11 +78,46 @@ interface Authenticator {
      * @param email             Email addressed used to sign in to Google.
      * @param marketingOptIn    Opt in or out on GDPR.
      * @param authCallback      Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun facebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
+        authCallback: AuthCallback
+    ): VimeoRequest
+
+    /**
+     * Join Vimeo by email.
+     *
+     * @param displayName       User name to set for your Vimeo account.
+     * @param email             Email to use to login to your Vimeo account.
+     * @param password          Password for your Vimeo account.
+     * @param marketingOptIn    Opt in or out on GDPR.
+     * @param authCallback      Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun emailJoin(
+        displayName: String,
+        email: String,
+        password: String,
+        marketingOptIn: Boolean,
+        authCallback: AuthCallback
+    ): VimeoRequest
+
+    /**
+     * Login via email.
+     *
+     * @param email         Email address associated with your Vimeo account.
+     * @param password      Password for your Vimeo account.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun emailLogin(
+        email: String,
+        password: String,
         authCallback: AuthCallback
     ): VimeoRequest
 
@@ -93,9 +130,9 @@ interface Authenticator {
          * Create an instance of Authenticator to make authentication
          * requests.
          *
-         * @param serverConfig All the server configuration (client id and secret, custom interceptors,
-         *                     read timeouts, base url etc...) that can be set for authentication and
-         *                     making requests.
+         * @param serverConfig All the server configuration (client id and secret, custom
+         *                     interceptors, read timeouts, base url etc...) that can be set for
+         *                     authentication and making requests.
          */
         fun create(serverConfig: ServerConfig): Authenticator {
 
@@ -109,7 +146,10 @@ interface Authenticator {
                     serverConfig.clientSecret
                 )
 
-            return AuthenticatorImpl(authService, authHeaders, serverConfig.scopes.joinToString())
+            val scopes = serverConfig.scopes
+                .joinToString(separator = " ", transform = { it.name.toLowerCase() })
+
+            return AuthenticatorImpl(authService, authHeaders, scopes)
         }
 
     }

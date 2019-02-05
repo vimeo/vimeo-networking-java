@@ -30,26 +30,26 @@ internal class VimeoCallAdapter<T>(
             override fun onResponse(call: Call<T>, response: Response<T>) {
 
                 if (response.hasBody()) {
-                    callbackExecutor.sendResponse { callback.onSuccess(response) }
+                    callbackExecutor.sendResponse { callback.onSuccess(ApiResponse.Success(response.body()!!)) }
                 } else {
                     val apiError = response.parseApiError()
                     if (apiError != null) {
-                        callbackExecutor.sendResponse { callback.onApiError(apiError) }
+                        callbackExecutor.sendResponse { callback.onApiError(ApiResponse.Failure.ApiFailure(apiError)) }
                     } else {
-                        callbackExecutor.sendResponse { callback.onGenericError(response.code()) }
+                        callbackExecutor.sendResponse { callback.onGenericError(ApiResponse.Failure.GenericFailure(response.code())) }
                     }
                 }
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
-                callbackExecutor.sendResponse { callback.onExceptionError(t) }
+                callbackExecutor.sendResponse { callback.onExceptionError(ApiResponse.Failure.ExceptionFailure(t)) }
             }
         })
         return CancellableVimeoRequest(call)
     }
 
     override fun enqueueError(apiError: ApiError, callback: ApiErrorVimeoCallback): VimeoRequest {
-        callbackExecutor.sendResponse { callback.onApiError(apiError) }
+        callbackExecutor.sendResponse { callback.onApiError(ApiResponse.Failure.ApiFailure(apiError)) }
         return NoOpVimeoRequest()
     }
 
