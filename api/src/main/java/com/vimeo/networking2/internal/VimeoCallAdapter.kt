@@ -50,7 +50,7 @@ internal class VimeoCallAdapter<T>(
 
     override fun enqueueError(apiError: ApiError, callback: ApiErrorVimeoCallback): VimeoRequest {
         callbackExecutor.sendResponse { callback.onApiError(ApiResponse.Failure.ApiFailure(apiError)) }
-        return NoOpVimeoRequest()
+        return NoOpVimeoRequest
     }
 
     /**
@@ -58,7 +58,7 @@ internal class VimeoCallAdapter<T>(
      * the response synchronously on the background thread.
      */
     private fun Executor?.sendResponse(action: () -> Unit) {
-        this?.let { execute(action) } ?: action()
+        this?.execute(action) ?: action()
     }
 
     /**
