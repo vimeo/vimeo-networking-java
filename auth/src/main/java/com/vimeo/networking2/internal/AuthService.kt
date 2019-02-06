@@ -1,8 +1,9 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.VimeoAccount
-import com.vimeo.networking2.enums.AuthParam
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.Header
+import retrofit2.http.POST
 
 /**
  * All the authentication endpoints.
@@ -20,12 +21,10 @@ internal interface AuthService {
      * @return A [VimeoAccount] that has an access token.
      *
      */
-    @FormUrlEncoded
     @POST("oauth/authorize/client")
     fun authorizeWithClientCredentialsGrant(
         @Header("Authorization") authHeader: String,
-        @Field("grant_type") grantType: String,
-        @Field("scope") scope: String
+        @Body params: Map<AuthParam, String>
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -36,6 +35,18 @@ internal interface AuthService {
      */
     @POST("users")
     fun join(
+        @Header("Authorization") authHeader: String,
+        @Body params: Map<AuthParam, String>
+    ): VimeoCall<VimeoAccount>
+
+    /**
+     * Login with email and password.
+     *
+     * @param authHeader    Created from the client id and client secret.
+     * @param params        Email address, password and GDPR option.
+     */
+    @POST("oauth/authorize/password")
+    fun logIn(
         @Header("Authorization") authHeader: String,
         @Body params: Map<AuthParam, String>
     ): VimeoCall<VimeoAccount>

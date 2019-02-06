@@ -1,7 +1,6 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
-import com.vimeo.networking2.enums.AuthParam
 
 /**
  * Authentication with email, google, facebook or pincode.
@@ -17,19 +16,38 @@ internal class AuthenticatorImpl(
 ) : Authenticator {
 
     override fun clientCredentials(authCallback: AuthCallback): VimeoRequest {
-        val call = authService.authorizeWithClientCredentialsGrant(
-            authHeaders,
-            GrantType.CLIENT_CREDENTIALS.value,
-            scopes)
+        val params = mapOf(
+            AuthParam.FIELD_GRANT_TYPE to GrantType.CLIENT_CREDENTIALS.value,
+            AuthParam.FIELD_SCOPES to scopes
+        )
+        val call = authService.authorizeWithClientCredentialsGrant(authHeaders, params)
 
-        return call.enqueueAuthRequest(authCallback)
+        val invalidAuthParams = params.validate()
+
+        return if (invalidAuthParams.isNotEmpty()) {
+            val apiError = ApiError(
+                "Client credentials authentication error.",
+                invalidParameters = invalidAuthParams
+            )
+            call.enqueueAuthError(apiError, authCallback)
+        } else {
+            call.enqueueAuthRequest(authCallback)
+        }
     }
 
-    override fun google(token: String, email: String, marketingOptIn: Boolean, authCallback: AuthCallback) =
-        socialAuthenticate(token, email, marketingOptIn, "Google authentication error.", authCallback)
+    override fun google(
+        token: String,
+        email: String,
+        marketingOptIn: Boolean,
+        authCallback: AuthCallback
+    ) = socialAuthenticate(token, email, marketingOptIn, "Google authentication error.", authCallback)
 
-    override fun facebook(token: String, email: String, marketingOptIn: Boolean, authCallback: AuthCallback) =
-        socialAuthenticate(token, email, marketingOptIn, "Facebook authentication error.", authCallback)
+    override fun facebook(
+        token: String,
+        email: String,
+        marketingOptIn: Boolean,
+        authCallback: AuthCallback
+    ) = socialAuthenticate(token, email, marketingOptIn, "Facebook authentication error.", authCallback)
 
     /**
      * Performs a Google or Facebook auth request. It will first validate the auth params given the
@@ -56,6 +74,64 @@ internal class AuthenticatorImpl(
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
                 authenticationErrorMessage,
+                invalidParameters = invalidAuthParams
+            )
+            call.enqueueAuthError(apiError, authCallback)
+        } else {
+            call.enqueueAuthRequest(authCallback)
+        }
+    }
+
+
+    override fun emailJoin(
+        displayName: String,
+        email: String,
+        password: String,
+        marketingOptIn: Boolean,
+        authCallback: AuthCallback
+    ): VimeoRequest {
+
+        val params = mapOf(
+            AuthParam.FIELD_NAME to displayName,
+            AuthParam.FIELD_EMAIL to email,
+            AuthParam.FIELD_PASSWORD to password,
+            AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
+            AuthParam.FIELD_SCOPES to scopes
+        )
+        val call = authService.join(authHeaders, params)
+
+        val invalidAuthParams = params.validate()
+
+        return if (invalidAuthParams.isNotEmpty()) {
+            val apiError = ApiError(
+                "Email join error.",
+                invalidParameters = invalidAuthParams
+            )
+            call.enqueueAuthError(apiError, authCallback)
+        } else {
+            call.enqueueAuthRequest(authCallback)
+        }
+    }
+
+    override fun emailLogin(
+        email: String,
+        password: String,
+        authCallback: AuthCallback
+    ): VimeoRequest {
+
+        val params = mapOf(
+            AuthParam.FIELD_USERNAME to email,
+            AuthParam.FIELD_PASSWORD to password,
+            AuthParam.FIELD_GRANT_TYPE to GrantType.PASSWORD.value,
+            AuthParam.FIELD_SCOPES to scopes
+        )
+        val call = authService.logIn(authHeaders, params)
+
+        val invalidAuthParams = params.validate()
+
+        return if (invalidAuthParams.isNotEmpty()) {
+            val apiError = ApiError(
+                "Email login error.",
                 invalidParameters = invalidAuthParams
             )
             call.enqueueAuthError(apiError, authCallback)

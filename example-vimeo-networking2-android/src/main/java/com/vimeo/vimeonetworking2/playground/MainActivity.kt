@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        button.setOnClickListener {
+        login.setOnClickListener {
             val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET)
             val authenticator = Authenticator.create(serverConfig)
 

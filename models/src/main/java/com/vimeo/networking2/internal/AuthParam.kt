@@ -1,6 +1,7 @@
-package com.vimeo.networking2.enums
+package com.vimeo.networking2.internal
 
 import com.squareup.moshi.Json
+import com.vimeo.networking2.enums.ErrorCodeType
 
 /**
  * All the params that can be sent for any type of authentication. This enum contains the name
@@ -15,10 +16,13 @@ enum class AuthParam(
 ) {
 
     @Json(name = "name")
-    FIELD_NAME(ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN, "An empty or null name was provided."),
+    FIELD_NAME(ErrorCodeType.INVALID_INPUT_NO_NAME, "An empty name was provided."),
 
     @Json(name = "email")
     FIELD_EMAIL(ErrorCodeType.INVALID_INPUT_NO_EMAIL, "An empty email was provided."),
+
+    @Json(name = "username")
+    FIELD_USERNAME(ErrorCodeType.INVALID_INPUT_EMPTY_USER_NAME, "An empty username was provided."),
 
     @Json(name = "password")
     FIELD_PASSWORD(ErrorCodeType.INVALID_INPUT_NO_PASSWORD, "An empty password was provided."),
@@ -26,9 +30,12 @@ enum class AuthParam(
     @Json(name = "id_token")
     FIELD_TOKEN(ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN, "An empty access token was provided."),
 
-    @Json(name = "username")
-    FIELD_USERNAME(ErrorCodeType.INVALID_INPUT_NO_EMAIL, "An empty or null email was provided."),
+    @Json(name = "grant_type")
+    FIELD_GRANT_TYPE(ErrorCodeType.INVALID_INPUT_GRANT_TYPE, "Grant type not provided."),
 
     @Json(name = "marketing_opt_in")
-    FIELD_MARKETING_OPT_IN();
+    FIELD_MARKETING_OPT_IN(developerMessage = "Marketing opt in option not provided."),
+
+    @Json(name = "scope")
+    FIELD_SCOPES(developerMessage = "Scopes were not provided.");
 }
