@@ -50,6 +50,7 @@ public class Privacy implements Serializable {
     private static final String PRIVACY_DISABLE = "disable";
     private static final String PRIVACY_UNLISTED = "unlisted";
     private static final String PRIVACY_WHITE_LIST = "white_list";
+    private static final String PRIVACY_STOCK = "stock";
 
     @UseStag
     public enum CommentValue {
@@ -117,6 +118,9 @@ public class Privacy implements Serializable {
 
     @UseStag
     public enum ViewValue {
+
+        @SerializedName(PRIVACY_STOCK)
+        STOCK(PRIVACY_STOCK),
 
         @SerializedName(PRIVACY_ANYBODY)
         ANYBODY(PRIVACY_ANYBODY),

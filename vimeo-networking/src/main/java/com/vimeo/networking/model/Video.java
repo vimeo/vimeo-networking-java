@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
+import com.vimeo.networking.model.Privacy.ViewValue;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.live.Live;
 import com.vimeo.networking.model.live.Live.LiveStatus;
@@ -930,6 +931,10 @@ public class Video implements Serializable, Entity {
      */
     public boolean isTvod() {
         return mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mTvod != null;
+    }
+
+    public boolean isStock() {
+        return mPrivacy != null && mPrivacy.getView() == ViewValue.STOCK;
     }
 
     /**
