@@ -2,7 +2,6 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.AuthenticatedAccessToken
 import com.vimeo.networking2.BasicAccessToken
-import com.vimeo.networking2.VimeoAccount
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -19,7 +18,8 @@ internal interface AuthService {
      * @param authHeader It is created from the client id and client secret.
      * @param params     Client id, client secret and scopes.
      *
-     * @return A [VimeoAccount] that has an access token.
+     * @return A [VimeoCall] that provides a [BasicAccessToken] that can be used for unauthenticated
+     *         request.
      *
      */
     @POST("oauth/authorize/client")
@@ -33,6 +33,10 @@ internal interface AuthService {
      *
      * @param authHeader  Created from the client id and client secret.
      * @param params      Google or Facebook Authentication token and email configuration.
+     *
+     * @return A [VimeoCall] that provides a [AuthenticatedAccessToken] that can be used for
+     *         authenticated request and also contains a user object.
+     *
      */
     @POST("users")
     fun join(
@@ -45,6 +49,9 @@ internal interface AuthService {
      *
      * @param authHeader    Created from the client id and client secret.
      * @param params        Email address, password and GDPR option.
+     *
+     * @return A [VimeoCall] that provides a [AuthenticatedAccessToken] that can be used for
+     *         authenticated request and also contains a user object.
      */
     @POST("oauth/authorize/password")
     fun logIn(
