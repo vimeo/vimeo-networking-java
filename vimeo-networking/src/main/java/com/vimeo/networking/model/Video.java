@@ -522,6 +522,7 @@ public class Video implements Serializable, Entity {
     public Interaction getLikeInteraction() {
         // API hasn't restricted the interaction, but we don't want to allow viewers to like/unlike stock clips
         // so we explicitly exclude it on the client level by checking isStock()
+        // TODO: remove when https://vimean.atlassian.net/browse/SWR-1276 is fixed
         if (mMetadata != null &&
             mMetadata.mInteractions != null &&
             mMetadata.mInteractions.mLike != null &&
@@ -541,7 +542,13 @@ public class Video implements Serializable, Entity {
 
     @Nullable
     public Connection getLikesConnection() {
-        if ((mMetadata != null) && (mMetadata.mConnections != null) && (mMetadata.mConnections.mLikes != null)) {
+        // API hasn't restricted the interaction, but we don't want to allow viewers to like/unlike stock clips
+        // so we explicitly exclude it on the client level by checking isStock()
+        // TODO: remove when https://vimean.atlassian.net/browse/SWR-1276 is fixed
+        if ((mMetadata != null) &&
+            (mMetadata.mConnections != null) &&
+            (mMetadata.mConnections.mLikes != null) &&
+            !isStock()) {
             return mMetadata.mConnections.mLikes;
         }
         return null;
