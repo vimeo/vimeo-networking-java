@@ -15,7 +15,7 @@ internal class AuthenticatorImpl(
     private val scopes: String
 ) : Authenticator {
 
-    override fun clientCredentials(authCallback: AuthCallback): VimeoRequest {
+    override fun clientCredentials(authCallback: VimeoCallback<BasicAccessToken>): VimeoRequest {
         val params = mapOf(
             AuthParam.FIELD_GRANT_TYPE to GrantType.CLIENT_CREDENTIALS.value,
             AuthParam.FIELD_SCOPES to scopes
@@ -29,9 +29,9 @@ internal class AuthenticatorImpl(
                 "Client credentials authentication error.",
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueAuthError(apiError, authCallback)
+            call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueueAuthRequest(authCallback)
+            call.enqueue(authCallback)
         }
     }
 
@@ -39,14 +39,14 @@ internal class AuthenticatorImpl(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ) = socialAuthenticate(token, email, marketingOptIn, SocialAuthType.GOOGLE, authCallback)
 
     override fun facebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ) = socialAuthenticate(token, email, marketingOptIn, SocialAuthType.FACEBOOK, authCallback)
 
     /**
@@ -59,7 +59,7 @@ internal class AuthenticatorImpl(
         email: String,
         marketingOptIn: Boolean,
         socialAuthType: SocialAuthType,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ): VimeoRequest {
 
         val tokenField = when(socialAuthType) {
@@ -86,19 +86,18 @@ internal class AuthenticatorImpl(
                 errorMessage,
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueAuthError(apiError, authCallback)
+            call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueueAuthRequest(authCallback)
+            call.enqueue(authCallback)
         }
     }
-
 
     override fun emailJoin(
         displayName: String,
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ): VimeoRequest {
 
         val params = mapOf(
@@ -117,16 +116,16 @@ internal class AuthenticatorImpl(
                 "Email join error.",
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueAuthError(apiError, authCallback)
+            call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueueAuthRequest(authCallback)
+            call.enqueue(authCallback)
         }
     }
 
     override fun emailLogin(
         email: String,
         password: String,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ): VimeoRequest {
 
         val params = mapOf(
@@ -144,9 +143,9 @@ internal class AuthenticatorImpl(
                 "Email login error.",
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueAuthError(apiError, authCallback)
+            call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueueAuthRequest(authCallback)
+            call.enqueue(authCallback)
         }
     }
 

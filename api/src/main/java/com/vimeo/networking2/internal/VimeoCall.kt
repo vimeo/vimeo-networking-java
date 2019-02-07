@@ -1,7 +1,6 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.ApiError
-import com.vimeo.networking2.ApiErrorVimeoCallback
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
 
@@ -23,7 +22,7 @@ interface VimeoCall<T> {
      * @param apiError  Information on the error.
      * @param callback  A callback to inform you of the error.
      */
-    fun enqueueError(apiError: ApiError, callback: ApiErrorVimeoCallback): VimeoRequest
+    fun enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest
 
     /**
      * Cancel API request.

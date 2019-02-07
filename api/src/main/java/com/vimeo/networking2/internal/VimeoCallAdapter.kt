@@ -48,7 +48,7 @@ internal class VimeoCallAdapter<T>(
         return CancellableVimeoRequest(call)
     }
 
-    override fun enqueueError(apiError: ApiError, callback: ApiErrorVimeoCallback): VimeoRequest {
+    override fun enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest {
         callbackExecutor.sendResponse { callback.onApiError(ApiResponse.Failure.ApiFailure(apiError)) }
         return NoOpVimeoRequest
     }

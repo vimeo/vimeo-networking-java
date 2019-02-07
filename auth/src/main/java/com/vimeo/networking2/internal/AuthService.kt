@@ -1,5 +1,7 @@
 package com.vimeo.networking2.internal
 
+import com.vimeo.networking2.AuthenticatedAccessToken
+import com.vimeo.networking2.BasicAccessToken
 import com.vimeo.networking2.VimeoAccount
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -15,8 +17,7 @@ internal interface AuthService {
      * and scope types.
      *
      * @param authHeader It is created from the client id and client secret.
-     * @param grantType  Determines whether you have access to public or private data.
-     * @param scope      Determines what you want to access to in the Vimeo API.
+     * @param params     Client id, client secret and scopes.
      *
      * @return A [VimeoAccount] that has an access token.
      *
@@ -25,7 +26,7 @@ internal interface AuthService {
     fun authorizeWithClientCredentialsGrant(
         @Header("Authorization") authHeader: String,
         @Body params: Map<AuthParam, String>
-    ): VimeoCall<VimeoAccount>
+    ): VimeoCall<BasicAccessToken>
 
     /**
      * Used to either join or login to Vimeo by either using Google or Facebook.
@@ -37,7 +38,7 @@ internal interface AuthService {
     fun join(
         @Header("Authorization") authHeader: String,
         @Body params: Map<AuthParam, String>
-    ): VimeoCall<VimeoAccount>
+    ): VimeoCall<AuthenticatedAccessToken>
 
     /**
      * Login with email and password.
@@ -49,6 +50,6 @@ internal interface AuthService {
     fun logIn(
         @Header("Authorization") authHeader: String,
         @Body params: Map<AuthParam, String>
-    ): VimeoCall<VimeoAccount>
+    ): VimeoCall<AuthenticatedAccessToken>
 
 }

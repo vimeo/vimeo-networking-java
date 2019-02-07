@@ -22,9 +22,9 @@ import okhttp3.Credentials
  *
  * ```
  * val authenticator = Authenticator.create(serverConfig)
- * authenticator.clientCredentials(object: AuthCallback() {
+ * authenticator.clientCredentials(object: VimeoCallback<BasicAuthToken>() {
  *
- *      override fun onSuccess(authResponse: ApiResponse.Success<String>) {
+ *      override fun onSuccess(authResponse: ApiResponse.Success<BasicAuthToken>) {
  *
  *       }
  *
@@ -52,7 +52,7 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun clientCredentials(authCallback: AuthCallback): VimeoRequest
+    fun clientCredentials(authCallback: VimeoCallback<BasicAccessToken>): VimeoRequest
 
     /**
      * Authenticate via Google.
@@ -68,7 +68,7 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ): VimeoRequest
 
     /**
@@ -85,7 +85,7 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ): VimeoRequest
 
     /**
@@ -104,7 +104,7 @@ interface Authenticator {
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ): VimeoRequest
 
     /**
@@ -118,7 +118,7 @@ interface Authenticator {
     fun emailLogin(
         email: String,
         password: String,
-        authCallback: AuthCallback
+        authCallback: VimeoCallback<AuthenticatedAccessToken>
     ): VimeoRequest
 
     /**
