@@ -10,9 +10,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class BasicAccessToken(
 
-    /**
-     * Basic access token returned by a client credentials request.
-     */
     @Json(name = "access_token")
     override val accessToken: String
 
