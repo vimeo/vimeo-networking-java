@@ -520,7 +520,12 @@ public class Video implements Serializable, Entity {
     // <editor-fold desc="Like">
     @Nullable
     public Interaction getLikeInteraction() {
-        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mLike != null) {
+        // API hasn't restricted the interaction, but we don't want to allow viewers to like/unlike stock clips
+        // so we explicitly exclude it on the client level by checking isStock()
+        if (mMetadata != null &&
+            mMetadata.mInteractions != null &&
+            mMetadata.mInteractions.mLike != null &&
+            !isStock()) {
             return mMetadata.mInteractions.mLike;
         }
         return null;
