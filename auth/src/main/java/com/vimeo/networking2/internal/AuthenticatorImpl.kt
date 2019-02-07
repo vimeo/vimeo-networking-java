@@ -40,14 +40,14 @@ internal class AuthenticatorImpl(
         email: String,
         marketingOptIn: Boolean,
         authCallback: AuthCallback
-    ) = socialAuthenticate(token, email, marketingOptIn, "Google authentication error.", authCallback)
+    ) = socialAuthenticate(token, email, marketingOptIn, SocialAuthType.GOOGLE, authCallback)
 
     override fun facebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
         authCallback: AuthCallback
-    ) = socialAuthenticate(token, email, marketingOptIn, "Facebook authentication error.", authCallback)
+    ) = socialAuthenticate(token, email, marketingOptIn, SocialAuthType.FACEBOOK, authCallback)
 
     /**
      * Performs a Google or Facebook auth request. It will first validate the auth params given the
@@ -58,12 +58,22 @@ internal class AuthenticatorImpl(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authenticationErrorMessage: String,
+        socialAuthType: SocialAuthType,
         authCallback: AuthCallback
     ): VimeoRequest {
 
+        val tokenField = when(socialAuthType) {
+            SocialAuthType.GOOGLE -> AuthParam.FIELD_ID_TOKEN
+            else -> AuthParam.FIELD_TOKEN
+        }
+
+        val errorMessage = when(socialAuthType) {
+            SocialAuthType.GOOGLE -> "Google authentication error."
+            else -> "Facebook authentication error."
+        }
+
         val params = mapOf(
-            AuthParam.FIELD_TOKEN to token,
+            tokenField to token,
             AuthParam.FIELD_EMAIL to email,
             AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString()
         )
@@ -73,7 +83,7 @@ internal class AuthenticatorImpl(
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
-                authenticationErrorMessage,
+                errorMessage,
                 invalidParameters = invalidAuthParams
             )
             call.enqueueAuthError(apiError, authCallback)
@@ -139,5 +149,14 @@ internal class AuthenticatorImpl(
             call.enqueueAuthRequest(authCallback)
         }
     }
+
+    /**
+     * Google or Facebook authentication.
+     */
+    private enum class SocialAuthType {
+        FACEBOOK,
+        GOOGLE
+    }
+
 
 }
