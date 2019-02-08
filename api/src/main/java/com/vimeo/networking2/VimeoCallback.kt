@@ -36,14 +36,3 @@ interface VimeoCallback<ResponseType_T> {
 
 }
 
-/**
- * Callback for only notify the client of an error.
- */
-abstract class ApiErrorVimeoCallback: VimeoCallback<Nothing> {
-
-    override fun onSuccess(response: ApiResponse.Success<Nothing>) {}
-
-    override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {}
-
-    override fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure) {}
-}
