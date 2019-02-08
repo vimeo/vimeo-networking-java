@@ -40,14 +40,32 @@ internal class AuthenticatorImpl(
         email: String,
         marketingOptIn: Boolean,
         authCallback: VimeoCallback<AuthenticatedAccessToken>
-    ) = socialAuthenticate(token, email, marketingOptIn, SocialAuthType.GOOGLE, authCallback)
+    ): VimeoRequest {
+        return socialAuthenticate(
+            token,
+            email,
+            marketingOptIn,
+            AuthParam.FIELD_ID_TOKEN,
+            "Google authentication error.",
+            authCallback
+        )
+    }
 
     override fun facebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
         authCallback: VimeoCallback<AuthenticatedAccessToken>
-    ) = socialAuthenticate(token, email, marketingOptIn, SocialAuthType.FACEBOOK, authCallback)
+    ): VimeoRequest {
+        return socialAuthenticate(
+            token,
+            email,
+            marketingOptIn,
+            AuthParam.FIELD_TOKEN,
+            "Facebook authentication error.",
+            authCallback
+        )
+    }
 
     /**
      * Performs a Google or Facebook auth request. It will first validate the auth params given the
@@ -58,19 +76,10 @@ internal class AuthenticatorImpl(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        socialAuthType: SocialAuthType,
+        tokenField: AuthParam,
+        errorMessage: String,
         authCallback: VimeoCallback<AuthenticatedAccessToken>
     ): VimeoRequest {
-
-        val tokenField = when(socialAuthType) {
-            SocialAuthType.GOOGLE -> AuthParam.FIELD_ID_TOKEN
-            else -> AuthParam.FIELD_TOKEN
-        }
-
-        val errorMessage = when(socialAuthType) {
-            SocialAuthType.GOOGLE -> "Google authentication error."
-            else -> "Facebook authentication error."
-        }
 
         val params = mapOf(
             tokenField to token,
@@ -148,14 +157,5 @@ internal class AuthenticatorImpl(
             call.enqueue(authCallback)
         }
     }
-
-    /**
-     * Google or Facebook authentication.
-     */
-    private enum class SocialAuthType {
-        FACEBOOK,
-        GOOGLE
-    }
-
 
 }
