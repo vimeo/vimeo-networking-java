@@ -211,6 +211,10 @@ public class Video implements Serializable, Entity {
     private ReviewPage mReviewPage;
 
     @Nullable
+    @SerializedName("file_transfer")
+    private FileTransferPage mFileTransferPage;
+
+    @Nullable
     @SerializedName("play")
     public Play mPlay;
 
@@ -341,12 +345,21 @@ public class Video implements Serializable, Entity {
         return mUpload;
     }
 
+    @Nullable
+    public FileTransferPage getFileTransferPage() {
+        return mFileTransferPage;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
     // Setters
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Setters">
+
+    public void setFileTransferPage(@Nullable FileTransferPage fileTransferPage) {
+        mFileTransferPage = fileTransferPage;
+    }
 
     public void setDescription(String description) {
         mDescription = description;
