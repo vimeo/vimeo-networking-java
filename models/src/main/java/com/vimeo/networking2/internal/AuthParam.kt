@@ -28,7 +28,10 @@ enum class AuthParam(
     FIELD_PASSWORD(ErrorCodeType.INVALID_INPUT_NO_PASSWORD, "An empty password was provided."),
 
     @Json(name = "id_token")
-    FIELD_TOKEN(ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN, "An empty access token was provided."),
+    FIELD_ID_TOKEN(ErrorCodeType.INVALID_TOKEN, "An empty id token provided"),
+
+    @Json(name = "token")
+    FIELD_TOKEN(ErrorCodeType.INVALID_TOKEN, "An empty access token was provided."),
 
     @Json(name = "grant_type")
     FIELD_GRANT_TYPE(ErrorCodeType.INVALID_INPUT_GRANT_TYPE, "Grant type not provided."),
