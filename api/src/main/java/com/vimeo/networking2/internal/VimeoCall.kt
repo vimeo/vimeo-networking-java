@@ -35,5 +35,3 @@ interface VimeoCall<T> {
     fun clone(): VimeoCall<T>
 
 }
-
-
