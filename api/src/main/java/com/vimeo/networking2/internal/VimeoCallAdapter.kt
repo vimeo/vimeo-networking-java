@@ -42,7 +42,7 @@ internal class VimeoCallAdapter<T>(
                         }
                     } else {
                         callbackExecutor.sendResponse {
-                            callback.onError(VimeoResponse.Error.Parsing(response.raw().toString()))
+                            callback.onError(VimeoResponse.Error.Generic(response.raw().toString()))
                         }
                     }
                 }

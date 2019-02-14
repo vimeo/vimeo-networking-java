@@ -29,7 +29,7 @@ sealed class VimeoResponse<out T> {
          *
          * @param reason Info on the error.
          */
-        data class Api(val reason: ApiError): Error("API error")
+        data class Api(val reason: ApiError): Error("API error: ${reason.errorCode ?: "unknown"}")
 
         /**
          * Exception was thrown when making the request. This maybe due to no internet.
@@ -39,12 +39,13 @@ sealed class VimeoResponse<out T> {
         data class Exception(val throwable: Throwable): Error("Exception thrown")
 
         /**
-         * Parsing error occurred. The request was successful, but the response could not be
-         * parsed by the SDK.
+         * Generic error occurred. The request was successful, but the response could not be
+         * parsed by the SDK. This maybe because it is not formatted correctly. The raw response
+         * will allows you to see the info about the request.
          *
          * @param rawResponse Raw response from the API.
          */
-        data class Parsing(val rawResponse: String): Error("Parsing error")
+        data class Generic(val rawResponse: String): Error("Generic error")
 
     }
 
