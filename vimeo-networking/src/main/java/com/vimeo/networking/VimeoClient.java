@@ -29,6 +29,8 @@ import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
 import com.vimeo.networking.interceptors.LanguageHeaderInterceptor;
 import com.vimeo.networking.logging.ClientLogger;
+import com.vimeo.networking.model.Album;
+import com.vimeo.networking.model.AlbumPrivacy;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.PictureCollection;
@@ -321,7 +323,7 @@ public class VimeoClient {
         final String state = queryMap.get(Vimeo.CODE_GRANT_STATE);
 
         if (code == null || code.isEmpty() || state == null || state.isEmpty() ||
-                !state.equals(mCurrentCodeGrantState)) {
+            !state.equals(mCurrentCodeGrantState)) {
             mCurrentCodeGrantState = null;
 
             callback.failure(new VimeoError("Code grant code/state is null or state has changed"));
@@ -335,7 +337,7 @@ public class VimeoClient {
 
         final Call<VimeoAccount> call =
                 mVimeoService.authenticateWithCodeGrant(getBasicAuthHeader(), redirectURI, code,
-                        Vimeo.CODE_GRANT_TYPE);
+                                                        Vimeo.CODE_GRANT_TYPE);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -355,8 +357,8 @@ public class VimeoClient {
 
         final Call<VimeoAccount> call =
                 mVimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
-                        Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
-                        mConfiguration.mScope);
+                                                                  Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
+                                                                  mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -375,8 +377,8 @@ public class VimeoClient {
 
         final Call<VimeoAccount> call =
                 mVimeoService.authorizeWithClientCredentialsGrant(getBasicAuthHeader(),
-                        Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
-                        mConfiguration.mScope);
+                                                                  Vimeo.CLIENT_CREDENTIALS_GRANT_TYPE,
+                                                                  mConfiguration.mScope);
 
         VimeoAccount vimeoAccount = null;
         try {
@@ -406,10 +408,10 @@ public class VimeoClient {
         }
 
         final Call<VimeoAccount> call = mVimeoService.exchangeOAuthOneToken(getBasicAuthHeader(),
-                Vimeo.OAUTH_ONE_GRANT_TYPE,
-                token,
-                tokenSecret,
-                mConfiguration.mScope);
+                                                                            Vimeo.OAUTH_ONE_GRANT_TYPE,
+                                                                            token,
+                                                                            tokenSecret,
+                                                                            mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, callback));
         return call;
     }
@@ -460,21 +462,21 @@ public class VimeoClient {
         }
 
         if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() ||
-                password == null || password.isEmpty()) {
+            password == null || password.isEmpty()) {
 
             final VimeoError error = new VimeoError("Name, email, and password must be set.");
 
             if (displayName == null || displayName.isEmpty()) {
                 error.addInvalidParameter(Vimeo.FIELD_NAME, ErrorCode.INVALID_INPUT_NO_NAME,
-                        "An empty or null name was provided.");
+                                          "An empty or null name was provided.");
             }
             if (email == null || email.isEmpty()) {
                 error.addInvalidParameter(Vimeo.FIELD_EMAIL, ErrorCode.INVALID_INPUT_NO_EMAIL,
-                        "An empty or null email was provided.");
+                                          "An empty or null email was provided.");
             }
             if (password == null || password.isEmpty()) {
                 error.addInvalidParameter(Vimeo.FIELD_PASSWORD, ErrorCode.INVALID_INPUT_NO_PASSWORD,
-                        "An empty or null password was provided.");
+                                          "An empty or null password was provided.");
             }
             callback.failure(error);
 
@@ -510,7 +512,7 @@ public class VimeoClient {
         if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
             error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                    "An empty or null Facebook access token was provided.");
+                                      "An empty or null Facebook access token was provided.");
             callback.failure(error);
             return null;
         }
@@ -542,7 +544,7 @@ public class VimeoClient {
         if (googleToken.isEmpty()) {
             final VimeoError error = new VimeoError("Google authentication error.");
             error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                    "An empty or null Google access token was provided.");
+                                      "An empty or null Google access token was provided.");
             callback.failure(error);
             return null;
         }
@@ -568,13 +570,13 @@ public class VimeoClient {
 
             if (email == null || email.isEmpty()) {
                 error.addInvalidParameter(Vimeo.FIELD_USERNAME,
-                        ErrorCode.INVALID_INPUT_NO_EMAIL,
-                        "An empty or null email was provided.");
+                                          ErrorCode.INVALID_INPUT_NO_EMAIL,
+                                          "An empty or null email was provided.");
             }
             if (password == null || password.isEmpty()) {
                 error.addInvalidParameter(Vimeo.FIELD_PASSWORD,
-                        ErrorCode.INVALID_INPUT_NO_PASSWORD,
-                        "An empty or null password was provided.");
+                                          ErrorCode.INVALID_INPUT_NO_PASSWORD,
+                                          "An empty or null password was provided.");
             }
             callback.failure(error);
 
@@ -582,10 +584,10 @@ public class VimeoClient {
         }
 
         final Call<VimeoAccount> call = mVimeoService.logIn(getBasicAuthHeader(),
-                email,
-                password,
-                Vimeo.PASSWORD_GRANT_TYPE,
-                mConfiguration.mScope);
+                                                            email,
+                                                            password,
+                                                            Vimeo.PASSWORD_GRANT_TYPE,
+                                                            mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
@@ -606,10 +608,10 @@ public class VimeoClient {
 
         final Call<VimeoAccount> call =
                 mVimeoService.logIn(getBasicAuthHeader(),
-                        email,
-                        password,
-                        Vimeo.PASSWORD_GRANT_TYPE,
-                        mConfiguration.mScope);
+                                    email,
+                                    password,
+                                    Vimeo.PASSWORD_GRANT_TYPE,
+                                    mConfiguration.mScope);
 
         VimeoAccount vimeoAccount = null;
         try {
@@ -633,15 +635,15 @@ public class VimeoClient {
         if (facebookToken.isEmpty()) {
             final VimeoError error = new VimeoError("Facebook authentication error.");
             error.addInvalidParameter(Vimeo.FIELD_TOKEN,
-                    ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                    "An empty or null Facebook access token was provided.");
+                                      ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                      "An empty or null Facebook access token was provided.");
             return null;
         }
 
         final Call<VimeoAccount> call = mVimeoService.logInWithFacebook(getBasicAuthHeader(),
-                Vimeo.FACEBOOK_GRANT_TYPE,
-                facebookToken,
-                mConfiguration.mScope);
+                                                                        Vimeo.FACEBOOK_GRANT_TYPE,
+                                                                        facebookToken,
+                                                                        mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
@@ -661,16 +663,16 @@ public class VimeoClient {
         if (googleToken.isEmpty()) {
             final VimeoError error = new VimeoError("Google authentication error.");
             error.addInvalidParameter(Vimeo.FIELD_TOKEN,
-                    ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                    "An empty or null Google access token was provided.");
+                                      ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
+                                      "An empty or null Google access token was provided.");
             callback.failure(error);
             return null;
         }
 
         final Call<VimeoAccount> call = mVimeoService.logInWithGoogle(getBasicAuthHeader(),
-                Vimeo.GOOGLE_GRANT_TYPE,
-                googleToken,
-                mConfiguration.mScope);
+                                                                      Vimeo.GOOGLE_GRANT_TYPE,
+                                                                      googleToken,
+                                                                      mConfiguration.mScope);
         call.enqueue(new AccountCallback(this, email, callback));
         return call;
     }
@@ -685,11 +687,11 @@ public class VimeoClient {
         // If you've provided an access token to the configuration builder, we're assuming that you wouldn't
         // want to be able to log out of it, because this would invalidate the constant you've provided us.
         if (mConfiguration.mAccessToken != null && mVimeoAccount != null &&
-                mConfiguration.mAccessToken.equals(mVimeoAccount.getAccessToken())) {
+            mConfiguration.mAccessToken.equals(mVimeoAccount.getAccessToken())) {
             if (callback != null) {
                 callback.failure(new VimeoError(
                         "Don't log out of the account provided through the configuration builder. Need to ensure " +
-                                "that the access token generated in the dev console isn't accidentally invalidated."));
+                        "that the access token generated in the dev console isn't accidentally invalidated."));
             }
             return null;
         }
@@ -869,10 +871,10 @@ public class VimeoClient {
             } else {
                 final Call<VimeoAccount> call =
                         vimeoClient.mVimeoService.logInWithPinCode(vimeoClient.getBasicAuthHeader(),
-                                Vimeo.DEVICE_GRANT_TYPE,
-                                mPinCodeInfo.getUserCode(),
-                                mPinCodeInfo.getDeviceCode(),
-                                mScope);
+                                                                   Vimeo.DEVICE_GRANT_TYPE,
+                                                                   mPinCodeInfo.getUserCode(),
+                                                                   mPinCodeInfo.getDeviceCode(),
+                                                                   mScope);
                 call.enqueue(new PinCodeAccountCallback(vimeoClient, authCallback, mTimer));
             }
         }
@@ -908,17 +910,17 @@ public class VimeoClient {
 
         final String SCOPE = mConfiguration.mScope;
         final Call<PinCodeInfo> call = mVimeoService.getPinCodeInfo(getBasicAuthHeader(),
-                Vimeo.DEVICE_GRANT_TYPE,
-                SCOPE);
+                                                                    Vimeo.DEVICE_GRANT_TYPE,
+                                                                    SCOPE);
 
         call.enqueue(new VimeoCallback<PinCodeInfo>() {
             @Override
             public void success(PinCodeInfo pinCodeInfo) {
                 if (pinCodeInfo.getUserCode() == null ||
-                        pinCodeInfo.getDeviceCode() == null ||
-                        pinCodeInfo.getActivateLink() == null ||
-                        pinCodeInfo.getExpiresIn() <= 0 ||
-                        pinCodeInfo.getInterval() <= 0) {
+                    pinCodeInfo.getDeviceCode() == null ||
+                    pinCodeInfo.getActivateLink() == null ||
+                    pinCodeInfo.getExpiresIn() <= 0 ||
+                    pinCodeInfo.getInterval() <= 0) {
                     pinCodeCallback.failure(new VimeoError("Invalid data returned from server for pin code"));
                     return;
                 }
@@ -928,9 +930,9 @@ public class VimeoClient {
                 //noinspection AssignmentToStaticFieldFromInstanceMethod
                 VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = true;
                 final TimerTask task = new PinCodePollingTimerTask(pinCodeInfo,
-                        mPinCodeAuthorizationTimer,
-                        pinCodeInfo.getExpiresIn(),
-                        SCOPE, sSharedInstance, authCallback
+                                                                   mPinCodeAuthorizationTimer,
+                                                                   pinCodeInfo.getExpiresIn(),
+                                                                   SCOPE, sSharedInstance, authCallback
                 );
                 final long period = SECONDS_TO_MILLISECONDS * pinCodeInfo.getInterval();
                 mPinCodeAuthorizationTimer.scheduleAtFixedRate(task, 0, period);
@@ -946,9 +948,144 @@ public class VimeoClient {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
-    // Editing (Video, User)
+    // Editing (Video, User, Album)
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Editing (Video, User)">
+
+    /**
+     * Call this method to create a new album.
+     *
+     * @param name         A non-blank string that will be the new name of the album.
+     * @param albumPrivacy A representation of the viewing privacy for the album. The expectation is that if the
+     *                     album is password protected that this object will also contain the required password.
+     * @param description  A nullable description for the album.
+     * @param parameters   Additional less common parameters that modify the album.
+     * @param callback     A callback that will receive the results of the network request.
+     * @return A Call object or null if a client-side initialization error has occurred. In the event of an error,
+     * the callback will still be notified.
+     */
+    @Nullable
+    public Call<Album> createAlbum(@NotNull final String name,
+                                   @NotNull final AlbumPrivacy albumPrivacy,
+                                   @Nullable final String description,
+                                   @Nullable final Map<String, Object> parameters,
+                                   @NotNull final VimeoCallback<Album> callback) {
+        if (VimeoNetworkUtil.validateString(name, "Name can't be empty in createAlbum.", callback)) {
+            final Map<String, Object> validParameters =
+                    VimeoNetworkUtil.prepareAlbumEditParameters(name, albumPrivacy, description, parameters, callback);
+            if (validParameters != null) {
+                final Call<Album> call = mVimeoService.createAlbum(getAuthHeader(), validParameters);
+                call.enqueue(callback);
+                return call;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Call this method to edit an existing album.
+     *
+     * @param album        An album object that has already been created using the Vimeo API.
+     * @param name         A non-blank string that will be the new name of the album.
+     * @param albumPrivacy A representation of the viewing privacy for the album. The expectation is that if the
+     *                     album is password protected that this object will also contain the required password.
+     * @param description  A nullable description for the album.
+     * @param parameters   Additional less common parameters that modify the album.
+     * @param callback     A callback that will receive the results of the network request.
+     * @return A Call object or null if a client-side initialization error has occurred. In the event of an error,
+     * the callback will still be notified.
+     */
+    @Nullable
+    public Call<Album> editAlbum(@NotNull final Album album,
+                                 @NotNull final String name,
+                                 @NotNull final AlbumPrivacy albumPrivacy,
+                                 @Nullable final String description,
+                                 @Nullable final Map<String, Object> parameters,
+                                 @NotNull final VimeoCallback<Album> callback) {
+        if (VimeoNetworkUtil.validateString(album.getUri(), "Album uri can't be empty in editAlbum.", callback)) {
+            final Map<String, Object> validParameters =
+                    VimeoNetworkUtil.prepareAlbumEditParameters(name, albumPrivacy, description, parameters, callback);
+            if (validParameters != null) {
+                final Call<Album> call = mVimeoService.editAlbum(getAuthHeader(), album.getUri(), validParameters);
+                call.enqueue(callback);
+                return call;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Call this method to delete an existing album.
+     *
+     * @param album    The album to be deleted.
+     * @param callback A callback to be notified when the album is deleted.
+     * @return A Call object or null if a client-side initialization error has occurred. In the event of an error,
+     * the callback will still be notified.
+     */
+    @Nullable
+    public Call<Object> deleteAlbum(@NotNull final Album album, @NotNull final IgnoreResponseVimeoCallback callback) {
+        if (VimeoNetworkUtil.validateString(album.getUri(), "Album uri cannot be empty in deleteAlbum.", callback)) {
+            final Call<Object> call = mVimeoService.deleteAlbum(getAuthHeader(), album.getUri());
+            call.enqueue(callback);
+            return call;
+        }
+        return null;
+    }
+
+    /**
+     * Call this method to an a video to an album.
+     *
+     * @param album    The album to add a video to.
+     * @param video    The video to be added to the album.
+     * @param callback A callback to be notified when the video is added to the album.
+     * @return A Call object or null if a client-side initialization error has occurred. In the event of an error,
+     * the callback will still be notified.
+     */
+    @Nullable
+    public Call<Object> addToAlbum(@NotNull final Album album,
+                                   @NotNull final Video video,
+                                   @NotNull final IgnoreResponseVimeoCallback callback) {
+        String addUri = null;
+        if (album.getMetadata() != null
+            && album.getMetadata().getInteractions() != null
+            && album.getMetadata().getInteractions().getAddVideos() != null
+            && album.getMetadata().getInteractions().getAddVideos().getUri() != null) {
+            addUri = album.getMetadata().getInteractions().getAddVideos().getUri();
+        }
+        if (!VimeoNetworkUtil.validateString(addUri,
+                                             "Add videos interaction uri cannot be empty in addToAlbum.",
+                                             callback)
+            || !VimeoNetworkUtil.validateString(video.getUri(), "Video uri cannot be empty in addToAlbum.", callback)) {
+            return null;
+        }
+        final Call<Object> call = mVimeoService.addToAlbum(getAuthHeader(), addUri, video.getUri());
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * Call this method to remove a video from an album.
+     *
+     * @param album    The album to remove a video from.
+     * @param video    The video to be removed from the album.
+     * @param callback A callback to be notified when the video is removed from the album.
+     * @return A Call object or null if a client-side initialization error has occurred. In the event of an error,
+     * the callback will still be notified.
+     */
+    @Nullable
+    public Call removeFromAlbum(@NotNull final Album album,
+                                @NotNull final Video video,
+                                @NotNull final IgnoreResponseVimeoCallback callback) {
+        if (!VimeoNetworkUtil.validateString(album.getUri(),
+                                             "Add videos interaction cannot be empty in addToAlbum",
+                                             callback)
+            || !VimeoNetworkUtil.validateString(video.getUri(), "Video uri cannot be empty in addToAlbum", callback)) {
+            return null;
+        }
+        final Call<Object> call = mVimeoService.removeFromAlbum(getAuthHeader(), album.getUri(), video.getUri());
+        call.enqueue(callback);
+        return call;
+    }
 
     @Nullable
     public Call<Video> editVideo(@Nullable String uri,
@@ -1298,9 +1435,9 @@ public class VimeoClient {
      * This will fetch a video synchronously by-passing the cache. To fetch from cache, use
      * {@link #getVideoSync(String, CacheControl, String)}
      *
-     * @param uri         the uri of the video to fetch
-     * The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize 
-     *                      the request query. May be null.
+     * @param uri the uri of the video to fetch
+     *            The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize
+     *            the request query. May be null.
      * @return a Retrofit response object with the Video as the body
      */
     @Nullable
@@ -1313,8 +1450,8 @@ public class VimeoClient {
      *
      * @param uri          the uri of the video to fetch
      * @param cacheControl the cache control
-     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize 
-     *                      the request query. May be null.
+     * @param fieldFilter  The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize
+     *                     the request query. May be null.
      * @return a Retrofit response object with the Video as the body
      */
     @Nullable
@@ -1413,12 +1550,12 @@ public class VimeoClient {
     @SuppressWarnings("WeakerAccess")
     public void getCurrentUser(@Nullable String filter, @NotNull VimeoCallback<User> callback) {
         getContent(Vimeo.ENDPOINT_ME,
-                CacheControl.FORCE_NETWORK,
-                GetRequestCaller.USER,
-                null,
-                null,
-                filter,
-                callback);
+                   CacheControl.FORCE_NETWORK,
+                   GetRequestCaller.USER,
+                   null,
+                   null,
+                   filter,
+                   callback);
     }
 
     /**
@@ -1430,7 +1567,7 @@ public class VimeoClient {
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      *                      {@link RequestRefinementBuilder}
-     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize 
+     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize
      *                      the request query. May be null. (highly recommended!)
      * @param callback      The callback for the specific model type of the resource
      * @see <a href="https://developer.vimeo.com/api/common-formats#json-filter">Vimeo API Field Filter Docs</a>
@@ -1451,10 +1588,10 @@ public class VimeoClient {
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         final Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
         final Call<DataType_T> call = caller.call(getAuthHeader(),
-                uri,
-                queryMap,
-                cacheHeaderValue,
-                mVimeoService);
+                                                  uri,
+                                                  queryMap,
+                                                  cacheHeaderValue,
+                                                  mVimeoService);
         call.enqueue(callback);
         return call;
     }
@@ -1467,7 +1604,7 @@ public class VimeoClient {
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      *                      {@link RequestRefinementBuilder}
-     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize 
+     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a> to optimize
      *                      the request query. May be null. (highly recommended!)
      * @param caller        The {@link GetRequestCaller} for the expected response type
      * @see <a href="https://developer.vimeo.com/api/spec#common-parameters">Vimeo API Field Filter Docs</a>
@@ -1488,10 +1625,10 @@ public class VimeoClient {
         final String cacheHeaderValue = createCacheControlString(cacheControl);
         final Map<String, String> queryMap = createQueryMap(query, refinementMap, fieldFilter);
         final Call<DataType_T> call = caller.call(getAuthHeader(),
-                uri,
-                queryMap,
-                cacheHeaderValue,
-                mVimeoService);
+                                                  uri,
+                                                  queryMap,
+                                                  cacheHeaderValue,
+                                                  mVimeoService);
         try {
             return call.execute();
         } catch (final IOException ioe) {

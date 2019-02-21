@@ -72,6 +72,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
@@ -158,6 +159,34 @@ public interface VimeoService {
                                         @Field("device_code") String deviceCode,
                                         @Field("scope") String scope);
 
+    // </editor-fold>
+
+    /**
+     * ----------------------------------------------------------------------------------------------------
+     * Album Modifications
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Album Modifications">
+    @POST("me/albums")
+    Call<Album> createAlbum(@Header("Authorization") String authHeader, @Body Map<String, Object> parameters);
+
+    @PATCH
+    Call<Album> editAlbum(@Header("Authorization") String authHeader,
+                          @Url String uri,
+                          @Body Map<String, Object> parameters);
+
+    @DELETE
+    Call<Object> deleteAlbum(@Header("Authorization") String authHeader, @Url String uri);
+
+    @PUT("{ADD_TO_ALBUM_URI}/{VIDEO_URI}")
+    Call<Object> addToAlbum(@Header("Authorization") String authHeader,
+                            @Path("ADD_TO_ALBUM_URI") String albumInteractionUri,
+                            @Path("VIDEO_URI") String videoUri);
+
+    @DELETE("{ALBUM_URI}/{VIDEO_URI}")
+    Call<Object> removeFromAlbum(@Header("Authorization") String authHeader,
+                                 @Path("ALBUM_URI") String albumUri,
+                                 @Path("VIDEO_URI") String videoUri);
     // </editor-fold>
 
     /**
@@ -293,9 +322,9 @@ public interface VimeoService {
 
     @GET
     Call<Album> getAlbum(@Header("Authorization") String authHeader,
-                           @Url String uri,
-                           @QueryMap Map<String, String> options,
-                           @Header("Cache-Control") String cacheHeaderValue);
+                         @Url String uri,
+                         @QueryMap Map<String, String> options,
+                         @Header("Cache-Control") String cacheHeaderValue);
 
     // </editor-fold>
 
