@@ -40,12 +40,13 @@ sealed class VimeoResponse<out T> {
 
         /**
          * Generic error occurred. The request was successful, but the response could not be
-         * parsed by the SDK. This maybe because it is not formatted correctly. The raw response
-         * will allows you to see the info about the request.
+         * parsed by the SDK. This is maybe because it is not formatted correctly. The raw response
+         * will allow you to see info about the request.
          *
-         * @param rawResponse Raw response from the API.
+         * @param httpStatusCode    HTTP status code.
+         * @param rawResponse       Raw response from the API.
          */
-        data class Generic(val rawResponse: String): Error("Generic error")
+        data class Generic(val httpStatusCode: Int, val rawResponse: String): Error("Generic error")
 
     }
 
