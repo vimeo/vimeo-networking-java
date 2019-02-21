@@ -26,30 +26,42 @@ internal class VimeoCallAdapter<T>(
 ) : VimeoCall<T> {
 
     override fun enqueue(callback: VimeoCallback<T>): VimeoRequest {
+
         call.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
 
                 if (response.hasBody()) {
-                    callbackExecutor.sendResponse { callback.onSuccess(ApiResponse.Success(response.body()!!)) }
+                    callbackExecutor.sendResponse {
+                        callback.onSuccess(VimeoResponse.Success(response.body()!!))
+                    }
                 } else {
                     val apiError = response.parseApiError()
                     if (apiError != null) {
-                        callbackExecutor.sendResponse { callback.onApiError(ApiResponse.Failure.ApiFailure(apiError)) }
+                        callbackExecutor.sendResponse {
+                            callback.onError(VimeoResponse.Error.Api(apiError))
+                        }
                     } else {
-                        callbackExecutor.sendResponse { callback.onGenericError(ApiResponse.Failure.GenericFailure(response.code())) }
+                        callbackExecutor.sendResponse {
+                            callback.onError(
+                                VimeoResponse.Error.Generic(
+                                    response.code(),
+                                    response.raw().toString()
+                                )
+                            )
+                        }
                     }
                 }
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
-                callbackExecutor.sendResponse { callback.onExceptionError(ApiResponse.Failure.ExceptionFailure(t)) }
+                callbackExecutor.sendResponse { callback.onError(VimeoResponse.Error.Exception(t)) }
             }
         })
         return CancellableVimeoRequest(call)
     }
 
     override fun enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest {
-        callbackExecutor.sendResponse { callback.onApiError(ApiResponse.Failure.ApiFailure(apiError)) }
+        callbackExecutor.sendResponse { callback.onError(VimeoResponse.Error.Api(apiError)) }
         return NoOpVimeoRequest
     }
 

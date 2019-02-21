@@ -24,19 +24,11 @@ import okhttp3.Credentials
  * val authenticator = Authenticator.create(serverConfig)
  * authenticator.clientCredentials(object: VimeoCallback<BasicAuthToken>() {
  *
- *      override fun onSuccess(authResponse: ApiResponse.Success<BasicAuthToken>) {
+ *       override fun onSuccess(authResponse: VimeoResponse.Success<BasicAuthToken>) {
  *
  *       }
  *
- *       override fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure) {
- *
- *       }
- *
- *       override fun onApiError(apiFailure: ApiResponse.Failure.ApiFailure) {
- *
- *       }
- *
- *       override fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure) {
+ *       override fun onError(error: VimeoResponse.Error) {
  *
  *       }
  * })

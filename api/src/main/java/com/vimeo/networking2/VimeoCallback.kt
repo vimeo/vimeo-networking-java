@@ -10,29 +10,14 @@ interface VimeoCallback<ResponseType_T> {
      *
      * @param response  Data returned by the API.
      */
-    fun onSuccess(response: ApiResponse.Success<ResponseType_T>)
+    fun onSuccess(response: VimeoResponse.Success<ResponseType_T>)
 
     /**
-     * An error occurred on the API. [apiError] contains information about the error that occurred.
+     * An error occurred when making the request.
      *
-     * @param apiError Information on the error returned by API.
+     * @param error Information on the error. This error could be due to an exception thrown or
+     *              parsing response error.
      */
-    fun onApiError(apiError: ApiResponse.Failure.ApiFailure)
-
-    /**
-     * Generic error occurred. This occurred was not caused by the API rather it was due to
-     * parsing the data or the response body was null.
-     *
-     * @param genericFailure  The response code of the API request.
-     */
-    fun onGenericError(genericFailure: ApiResponse.Failure.GenericFailure)
-
-    /**
-     * An exception occurred by Retrofit in the API request.
-     *
-     * @param exceptionFailure  The exception thrown by Retrofit for the request.
-     */
-    fun onExceptionError(exceptionFailure: ApiResponse.Failure.ExceptionFailure)
+    fun onError(error: VimeoResponse.Error)
 
 }
-
