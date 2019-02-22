@@ -1045,21 +1045,6 @@ public class VimeoClient {
     public Call<Object> addToAlbum(@NotNull final Album album,
                                    @NotNull final Video video,
                                    @NotNull final IgnoreResponseVimeoCallback callback) {
-//        String addUri = null;
-//        if (album.getMetadata() != null
-//            && album.getMetadata().getInteractions() != null
-//            && album.getMetadata().getInteractions().getAddVideos() != null
-//            && album.getMetadata().getInteractions().getAddVideos().getUri() != null) {
-//            addUri = album.getMetadata().getInteractions().getAddVideos().getUri();
-//        }
-//        if (!VimeoNetworkUtil.validateString(addUri,
-//                                             "Add videos interaction uri cannot be empty in addToAlbum.",
-//                                             callback)
-//            || !VimeoNetworkUtil.validateString(video.getUri(), "Video uri cannot be empty in addToAlbum.", callback)) {
-//            return null;
-//        }
-//        final Call<Object> call = mVimeoService.addToAlbum(getAuthHeader(), addUri + "/" + video.getUri());
-
         if (!VimeoNetworkUtil.validateString(album.getUri(),
                                              "Add videos interaction cannot be empty in addToAlbum",
                                              callback)
