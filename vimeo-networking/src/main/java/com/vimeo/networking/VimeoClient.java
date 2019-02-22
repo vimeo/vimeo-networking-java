@@ -1045,20 +1045,28 @@ public class VimeoClient {
     public Call<Object> addToAlbum(@NotNull final Album album,
                                    @NotNull final Video video,
                                    @NotNull final IgnoreResponseVimeoCallback callback) {
-        String addUri = null;
-        if (album.getMetadata() != null
-            && album.getMetadata().getInteractions() != null
-            && album.getMetadata().getInteractions().getAddVideos() != null
-            && album.getMetadata().getInteractions().getAddVideos().getUri() != null) {
-            addUri = album.getMetadata().getInteractions().getAddVideos().getUri();
-        }
-        if (!VimeoNetworkUtil.validateString(addUri,
-                                             "Add videos interaction uri cannot be empty in addToAlbum.",
+//        String addUri = null;
+//        if (album.getMetadata() != null
+//            && album.getMetadata().getInteractions() != null
+//            && album.getMetadata().getInteractions().getAddVideos() != null
+//            && album.getMetadata().getInteractions().getAddVideos().getUri() != null) {
+//            addUri = album.getMetadata().getInteractions().getAddVideos().getUri();
+//        }
+//        if (!VimeoNetworkUtil.validateString(addUri,
+//                                             "Add videos interaction uri cannot be empty in addToAlbum.",
+//                                             callback)
+//            || !VimeoNetworkUtil.validateString(video.getUri(), "Video uri cannot be empty in addToAlbum.", callback)) {
+//            return null;
+//        }
+//        final Call<Object> call = mVimeoService.addToAlbum(getAuthHeader(), addUri + "/" + video.getUri());
+
+        if (!VimeoNetworkUtil.validateString(album.getUri(),
+                                             "Add videos interaction cannot be empty in addToAlbum",
                                              callback)
-            || !VimeoNetworkUtil.validateString(video.getUri(), "Video uri cannot be empty in addToAlbum.", callback)) {
+            || !VimeoNetworkUtil.validateString(video.getUri(), "Video uri cannot be empty in addToAlbum", callback)) {
             return null;
         }
-        final Call<Object> call = mVimeoService.addToAlbum(getAuthHeader(), addUri + "/" + video.getUri());
+        final Call<Object> call = mVimeoService.addToAlbum(getAuthHeader(), album.getUri() + "/" + video.getUri());
         call.enqueue(callback);
         return call;
     }
@@ -1077,9 +1085,11 @@ public class VimeoClient {
                                 @NotNull final Video video,
                                 @NotNull final IgnoreResponseVimeoCallback callback) {
         if (!VimeoNetworkUtil.validateString(album.getUri(),
-                                             "Add videos interaction cannot be empty in addToAlbum",
+                                             "Add videos interaction cannot be empty in removeFromAlbum",
                                              callback)
-            || !VimeoNetworkUtil.validateString(video.getUri(), "Video uri cannot be empty in addToAlbum", callback)) {
+            || !VimeoNetworkUtil.validateString(video.getUri(),
+                                                "Video uri cannot be empty in removeFromAlbum",
+                                                callback)) {
             return null;
         }
         final Call<Object> call = mVimeoService.removeFromAlbum(getAuthHeader(), album.getUri() + "/" + video.getUri());
