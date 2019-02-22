@@ -22,10 +22,10 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.model.Album;
-import com.vimeo.networking.model.AlbumList;
 import com.vimeo.networking.AnnotatedConverterFactory.ConverterType;
 import com.vimeo.networking.AnnotatedConverterFactory.Serializer;
+import com.vimeo.networking.model.Album;
+import com.vimeo.networking.model.AlbumList;
 import com.vimeo.networking.model.Category;
 import com.vimeo.networking.model.CategoryList;
 import com.vimeo.networking.model.Channel;
@@ -72,7 +72,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
@@ -178,15 +177,11 @@ public interface VimeoService {
     @DELETE
     Call<Object> deleteAlbum(@Header("Authorization") String authHeader, @Url String uri);
 
-    @PUT("{ADD_TO_ALBUM_URI}/{VIDEO_URI}")
-    Call<Object> addToAlbum(@Header("Authorization") String authHeader,
-                            @Path("ADD_TO_ALBUM_URI") String albumInteractionUri,
-                            @Path("VIDEO_URI") String videoUri);
+    @PUT
+    Call<Object> addToAlbum(@Header("Authorization") String authHeader, @Url String addToAlbumUri);
 
-    @DELETE("{ALBUM_URI}/{VIDEO_URI}")
-    Call<Object> removeFromAlbum(@Header("Authorization") String authHeader,
-                                 @Path("ALBUM_URI") String albumUri,
-                                 @Path("VIDEO_URI") String videoUri);
+    @DELETE
+    Call<Object> removeFromAlbum(@Header("Authorization") String authHeader, @Url String addToAlbumUri);
     // </editor-fold>
 
     /**
