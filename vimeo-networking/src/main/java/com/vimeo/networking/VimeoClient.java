@@ -1066,7 +1066,7 @@ public class VimeoClient {
             || !VimeoNetworkUtil.validateString(video.getUri(), "Video uri cannot be empty in addToAlbum", callback)) {
             return null;
         }
-        final Call<Object> call = mVimeoService.addToAlbum(getAuthHeader(), album.getUri() + "/" + video.getUri());
+        final Call<Object> call = mVimeoService.addToAlbum(getAuthHeader(), album.getUri() + video.getUri());
         call.enqueue(callback);
         return call;
     }
@@ -1092,7 +1092,7 @@ public class VimeoClient {
                                                 callback)) {
             return null;
         }
-        final Call<Object> call = mVimeoService.removeFromAlbum(getAuthHeader(), album.getUri() + "/" + video.getUri());
+        final Call<Object> call = mVimeoService.removeFromAlbum(getAuthHeader(), album.getUri() + video.getUri());
         call.enqueue(callback);
         return call;
     }
