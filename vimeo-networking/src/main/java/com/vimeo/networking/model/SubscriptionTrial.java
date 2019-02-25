@@ -37,7 +37,7 @@ import java.io.Serializable;
 @UseStag
 public class SubscriptionTrial implements Serializable {
 
-    private static final long serialVersionUID = -8956377218490008936L;
+    private static final long serialVersionUID = 6509094783021017691L;
 
     private static final String TRIAL_TYPE_FREE_TRIAL = "free_trial";
 
@@ -54,6 +54,13 @@ public class SubscriptionTrial implements Serializable {
     @SerializedName("status")
     private String mStatus;
 
+    /**
+     * Has the user been in (or is currently in) a free trial.
+     */
+    @Nullable
+    @SerializedName("has_been_in_free_trial")
+    private Boolean mHasBeenInFreeTrial;
+
     @Nullable
     public String getStatus() {
         return mStatus;
@@ -69,5 +76,22 @@ public class SubscriptionTrial implements Serializable {
         } else {
             return TrialType.UNKNOWN;
         }
+    }
+
+    @Nullable
+    public Boolean getHasBeenInFreeTrial() {
+        return mHasBeenInFreeTrial;
+    }
+
+    void setHasBeenInFreeTrial(@Nullable Boolean hasBeenInFreeTrial) {
+        mHasBeenInFreeTrial = hasBeenInFreeTrial;
+    }
+
+    @Override
+    public String toString() {
+        return "SubscriptionTrial{" +
+                "mStatus='" + mStatus + '\'' +
+                ", mHasBeenInFreeTrial=" + mHasBeenInFreeTrial +
+                '}';
     }
 }

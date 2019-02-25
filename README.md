@@ -72,7 +72,7 @@ git submodule add git@github.com:vimeo/vimeo-networking-java.git
 ```
 Then in your `build.gradle` use:
 ```groovy
-compile project(':vimeo-networking-java:vimeo-networking')
+implementation project(':vimeo-networking-java:vimeo-networking')
 ```
 
 ### Initialization

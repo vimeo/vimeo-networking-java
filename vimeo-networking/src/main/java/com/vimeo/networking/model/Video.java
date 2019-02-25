@@ -25,6 +25,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.model.Interaction.Stream;
+import com.vimeo.networking.model.Privacy.ViewValue;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.live.Live;
 import com.vimeo.networking.model.live.Live.LiveStatus;
@@ -211,6 +212,10 @@ public class Video implements Serializable, Entity {
     private ReviewPage mReviewPage;
 
     @Nullable
+    @SerializedName("file_transfer")
+    private FileTransferPage mFileTransferPage;
+
+    @Nullable
     @SerializedName("play")
     public Play mPlay;
 
@@ -341,12 +346,21 @@ public class Video implements Serializable, Entity {
         return mUpload;
     }
 
+    @Nullable
+    public FileTransferPage getFileTransferPage() {
+        return mFileTransferPage;
+    }
+
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
     // Setters
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Setters">
+
+    public void setFileTransferPage(@Nullable FileTransferPage fileTransferPage) {
+        mFileTransferPage = fileTransferPage;
+    }
 
     public void setDescription(String description) {
         mDescription = description;
@@ -519,7 +533,13 @@ public class Video implements Serializable, Entity {
     // <editor-fold desc="Like">
     @Nullable
     public Interaction getLikeInteraction() {
-        if (mMetadata != null && mMetadata.mInteractions != null && mMetadata.mInteractions.mLike != null) {
+        // API hasn't restricted the interaction, but we don't want to allow viewers to like/unlike stock clips
+        // so we explicitly exclude it on the client level by checking isStock()
+        // TODO: remove when https://vimean.atlassian.net/browse/SWR-1276 is fixed
+        if (mMetadata != null &&
+            mMetadata.mInteractions != null &&
+            mMetadata.mInteractions.mLike != null &&
+            !isStock()) {
             return mMetadata.mInteractions.mLike;
         }
         return null;
@@ -535,7 +555,13 @@ public class Video implements Serializable, Entity {
 
     @Nullable
     public Connection getLikesConnection() {
-        if ((mMetadata != null) && (mMetadata.mConnections != null) && (mMetadata.mConnections.mLikes != null)) {
+        // API hasn't restricted the interaction, but we don't want to allow viewers to like/unlike stock clips
+        // so we explicitly exclude it on the client level by checking isStock()
+        // TODO: remove when https://vimean.atlassian.net/browse/SWR-1276 is fixed
+        if ((mMetadata != null) &&
+            (mMetadata.mConnections != null) &&
+            (mMetadata.mConnections.mLikes != null) &&
+            !isStock()) {
             return mMetadata.mConnections.mLikes;
         }
         return null;
@@ -930,6 +956,10 @@ public class Video implements Serializable, Entity {
      */
     public boolean isTvod() {
         return mMetadata != null && mMetadata.mConnections != null && mMetadata.mConnections.mTvod != null;
+    }
+
+    public boolean isStock() {
+        return mPrivacy != null && mPrivacy.getView() == ViewValue.STOCK;
     }
 
     /**

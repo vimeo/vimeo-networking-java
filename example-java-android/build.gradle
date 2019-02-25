@@ -23,5 +23,5 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation "com.android.support:design:$supportLibraryVersion"
 
-    compile project(':vimeo-networking')
+    implementation project(':vimeo-networking')
 }

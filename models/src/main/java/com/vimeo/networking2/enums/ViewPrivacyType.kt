@@ -11,6 +11,11 @@ enum class ViewPrivacyType(override val value: String?) : StringValue {
     ANYBODY("anybody"),
 
     /**
+     * This is a stock video and may have limited access restrictions.
+     */
+    STOCK("stock"),
+
+    /**
      * Only contacts can view the user's videos.
      */
     CONTACTS("contacts"),

@@ -46,11 +46,11 @@ class RetrofitSetupTest {
     @Test
     fun `user agent is successfully created with valid characters`() {
         val retrofitSetup = RetrofitSetup(
-                Configuration.Builder("test")
-                        .setBaseUrl("http://unittesting")
-                        .setUserAgentString("test/test")
-                        .build(),
-                null
+            Configuration.Builder("test")
+                .setBaseUrl("http://unittesting")
+                .setUserAgentString("test/test")
+                .build(),
+            null
         )
 
         assertEquals("test/test VimeoNetworking/${BuildConfig.VERSION} (Java)", retrofitSetup.createUserAgent())
@@ -59,11 +59,11 @@ class RetrofitSetupTest {
     @Test
     fun `user agent is created without provided characters if invalid`() {
         val retrofitSetup = RetrofitSetup(
-                Configuration.Builder("test")
-                        .setBaseUrl("http://unittesting")
-                        .setUserAgentString("test/™")
-                        .build(),
-                null
+            Configuration.Builder("test")
+                .setBaseUrl("http://unittesting")
+                .setUserAgentString("test/™")
+                .build(),
+            null
         )
 
         assertEquals("VimeoNetworking/${BuildConfig.VERSION} (Java)", retrofitSetup.createUserAgent())
@@ -75,44 +75,51 @@ class RetrofitSetupTest {
     @Test
     fun testInjectedHeaders() {
         // These values will get set by the interceptor below:
-        var acceptHeader = "(unset)"
-        var userAgentHeader = "(unset)"
+        var acceptHeader: String? = null
+        var userAgentHeader: String? = null
 
         val configuration = Builder("")
-                .setBaseUrl("http://unittesting")
-                .setClientIdAndSecret("unit", "testing")
-                .setScope("unittesting")
-                .setUserAgentString("unit-testing-user-agent") // <-- This value will be asserted
-                .enableCertPinning(false)
-                .addInterceptor { chain ->
-                    // Intercept request and return some static data
-                    val mockResponse = ResponseBody.create(MediaType.parse("application/json"), "{'unit': 'testing'}")
+            .setBaseUrl("http://unittesting")
+            .setClientIdAndSecret("unit", "testing")
+            .setScope("unittesting")
+            .setUserAgentString("unit-testing-user-agent") // <-- This value will be asserted
+            .enableCertPinning(false)
+            .addInterceptor { chain ->
+                // Intercept request and return some static data
+                val mockResponse = ResponseBody.create(MediaType.parse("application/json"), "{'unit': 'testing'}")
 
-                    // Store HTTP header values that we will assert.
-                    val request = chain.request().apply {
-                        acceptHeader = header(Vimeo.HEADER_ACCEPT)
-                        userAgentHeader = header(Vimeo.HEADER_USER_AGENT)
-                    }
-
-                    // Return static response (avoiding actual network request in unit testing)
-                    Response.Builder().request(request)
-                            .protocol(Protocol.HTTP_1_1)
-                            .code(200)
-                            .body(mockResponse)
-                            .build()
+                // Store HTTP header values that we will assert.
+                val request = chain.request().apply {
+                    acceptHeader = header(Vimeo.HEADER_ACCEPT)
+                    userAgentHeader = header(Vimeo.HEADER_USER_AGENT)
                 }
-                .build()
+
+                // Return static response (avoiding actual network request in unit testing)
+                Response.Builder().request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .body(mockResponse)
+                    .message("")
+                    .build()
+            }
+            .build()
 
         with(RetrofitSetup(configuration, null).createOkHttpClient()) {
             val request = Request.Builder().url("http://unit.test").build()
             newCall(request).execute()
         }
 
-        assertTrue("ACCEPT header does not start as expected: [$acceptHeader]",
-                acceptHeader.startsWith("application/vnd.vimeo.*+json;"))
-        assertTrue("USER-AGENT header does not contain 'unit-testing-user-agent': [$userAgentHeader]",
-                userAgentHeader.contains("unit-testing-user-agent"))
-        assertTrue("USER-AGENT header does not contain 'VimeoNetworking': [$userAgentHeader]",
-                userAgentHeader.contains("VimeoNetworking"))
+        assertTrue(
+            "ACCEPT header does not start as expected: [$acceptHeader]",
+            acceptHeader?.startsWith("application/vnd.vimeo.*+json;") == true
+        )
+        assertTrue(
+            "USER-AGENT header does not contain 'unit-testing-user-agent': [$userAgentHeader]",
+            userAgentHeader?.contains("unit-testing-user-agent") == true
+        )
+        assertTrue(
+            "USER-AGENT header does not contain 'VimeoNetworking': [$userAgentHeader]",
+            userAgentHeader?.contains("VimeoNetworking") == true
+        )
     }
 }

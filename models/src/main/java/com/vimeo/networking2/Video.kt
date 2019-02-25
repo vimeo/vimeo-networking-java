@@ -168,6 +168,14 @@ data class Video(
     val reviewPage: ReviewPage? = null,
 
     /**
+     * Information about the file transfer page associated with this video. This data
+     * requires a bearer token with the private scope.
+     */
+    @Internal
+    @Json(name = "file_transfer")
+    val fileTransferPage: FileTransferPage? = null,
+
+    /**
      * 360 spatial data.
      */
     @Json(name = "spatial")

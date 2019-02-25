@@ -32,22 +32,21 @@ repositories {
 tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testCompile "org.assertj:assertj-core:3.11.1"
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':models')
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation "org.assertj:assertj-core:3.11.1"
+    implementation project(':models')
 
-    def retrofitVersion = '2.1.0'
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    compile "com.squareup.moshi:moshi-adapters:1.7.0"
+    def retrofitVersion = '2.5.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "com.squareup.moshi:moshi-adapters:1.7.0"
 
-    compile 'org.jetbrains:annotations:16.0.2@jar'
+    implementation 'org.jetbrains:annotations:16.0.2@jar'
 
     def stagVersion = '2.5.1'
-    compile ("com.vimeo.stag:stag-library:$stagVersion"){
+    implementation ("com.vimeo.stag:stag-library:$stagVersion"){
         exclude group: 'com.intellij', module: 'annotations'
     }
     apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
