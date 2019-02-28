@@ -1,6 +1,5 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'kotlin'
-apply plugin: 'kotlin-kapt'
 apply from: '../publish.gradle'
 
 repositories {
@@ -8,14 +7,16 @@ repositories {
 }
 
 dependencies {
-    implementation project(':models')
+    api project(":models")
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    api "com.squareup.retrofit2:retrofit:2.5.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
-    implementation 'com.squareup.moshi:moshi-adapters:1.7.0'
+
+    // Moshi Adapters
+    implementation "com.squareup.moshi:moshi-adapters:1.8.0"
 
 }

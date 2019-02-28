@@ -1,4 +1,4 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 compileJava {
@@ -32,24 +32,26 @@ repositories {
 tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation "org.assertj:assertj-core:3.11.1"
-    implementation project(':models')
+    api project(':models')
 
     def retrofitVersion = '2.5.0'
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    api "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    implementation "com.squareup.moshi:moshi-adapters:1.7.0"
 
-    implementation 'org.jetbrains:annotations:16.0.2@jar'
+    implementation "com.squareup.moshi:moshi-adapters:1.8.0"
+
+    implementation 'org.jetbrains:annotations:17.0.0'
 
     def stagVersion = '2.5.1'
     implementation ("com.vimeo.stag:stag-library:$stagVersion"){
         exclude group: 'com.intellij', module: 'annotations'
     }
     apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation "org.assertj:assertj-core:3.11.1"
 }
 
 buildConfig {
