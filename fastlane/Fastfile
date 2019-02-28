@@ -88,7 +88,7 @@ platform :android do
     # run the tests, but dont puke everywhere until the report is printed.
     begin
       gradle(
-        task: "vimeo-networking:test example-java-android:build example-kotlin-android:build models:build api:build auth:build"
+        task: "vimeo-networking:test example-java-android:build example-kotlin-android:build models:test api:test auth:test"
       )
     rescue => error
       begin
