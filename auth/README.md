@@ -89,15 +89,18 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
 ```
 
-Upon success, a [BasicAuthToken]() is returned. It contains your basic access token that you could use to make requests with. The onError method will inform you of three types of possible errors that can occur - api error, exception and generic error. 
+Upon success, a [BasicAuthToken]() is returned. It contains your basic access token that you could use to make requests with. The `onError` method will inform you of three types of possible errors that can occur - api error, exception and generic error. 
 
 __Scopes__
 
-What you could access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#scopes) that can be provided. Each scope maps to an enum [ScopeType](../api/src/main/java/com/vimeo/networking2/ScopeType.kt). Providing a list of scopes is optional. If you don't provide one, by default `ScopeType.PUBLIC` will be used.
+The data you could access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#scopes) that can be provided. Each scope maps to an enum [ScopeType](../api/src/main/java/com/vimeo/networking2/ScopeType.kt). Providing a list of scopes is optional. If you don't provide one, by default `ScopeType.PUBLIC` will be used.
 
 ```kotlin
+
+// Kotlin
 val scopes = listOf(ScopeType.PRIVATE, ScopeType.CREATE, ScopeType.EDIT)
 val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET, scopes)
+
 ```
 
 ### Advanced Authentication
@@ -120,32 +123,67 @@ authenticator.emailJoin(
               
                override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>) { ...  }
 
-                override fun onError(error: VimeoResponse.Error) { ... }
+               override fun onError(error: VimeoResponse.Error) { ... }
 
-            })
+        })
             
 ```
 
-Upon success, you will get a [AuthenticatedAccessToken](...). This object contains the access token, but it also contains the [User](...) object of authenticated user.
+```java
+
+// Java
+authenticator.emailJoin(
+        "John Doe", 
+        "john.doe@gmail.com", 
+        "password", 
+        false,
+        new VimeoCallback<AuthenticatedAccessToken>() {
+                    
+            @Override
+            public void onSuccess(@NotNull Success<AuthenticatedAccessToken> response) { }
+
+            @Override
+            public void onError(@NotNull Error error) { }
+            
+        });
+
+```
+
+Upon success, you will get a [AuthenticatedAccessToken](../models/src/main/java/com/vimeo/networking2/AuthenticatedAccessToken.kt) which contains the access token and the authenticated [User](../models/src/main/java/com/vimeo/networking2/User.kt) object.
 
 __Login via email__
-
-To login via email and password, use `Authenticator#loginEmail`.
 
 ```kotlin
 
 // Kotlin
 authenticator.emailLogin(
-          email = "john.doe@gmail.com",
-          password = "password",
-           authCallback = object: VimeoCallback<AuthenticatedAccessToken> {
+        email = "john.doe@gmail.com",
+        password = "password",
+        authCallback = object: VimeoCallback<AuthenticatedAccessToken> {
                   
-                   override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>) { ... }
-                    override fun onError(error: VimeoResponse.Error) { ... }
+             override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>) { ... }
+             
+             override fun onError(error: VimeoResponse.Error) { ... }
 
-                }
-            )
+        })
             
+```
+
+```java
+
+// Java
+authenticator.emailLogin(
+        "john.doe@gmail.com", 
+        "password", 
+        new VimeoCallback<AuthenticatedAccessToken>() {
+            
+            @Override
+            public void onSuccess(@NotNull Success<AuthenticatedAccessToken> response) { }
+
+            @Override
+            public void onError(@NotNull Error error) { }
+        });
+
 ```
 
 __Facebook and Google Authentication__
@@ -156,14 +194,33 @@ There is a single method the SDK provides to create a Vimeo Account with Google 
 
 // Kotlin
 authenticator.google(
-             token = "google_token",
-             email = "john.doe@gmail.com",
-             marketingOptIn = false,
-             authCallback = object : VimeoCallback<AuthenticatedAccessToken> {
-                    override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>){ ... }
+        token = "google_token",
+        email = "john.doe@gmail.com",
+        marketingOptIn = false,
+        authCallback = object : VimeoCallback<AuthenticatedAccessToken> {
+                    
+            override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>){ ... }
 
-                    override fun onError(error: VimeoResponse.Error) { ... }
-                })
+            override fun onError(error: VimeoResponse.Error) { ... }
+        })
+
+```
+
+```java
+
+// Java
+authenticator.google(
+        "google_token", 
+        "john.doe@gmail.com", 
+        false, 
+        new VimeoCallback<AuthenticatedAccessToken>() {
+    
+            @Override
+            public void onSuccess(@NotNull Success<AuthenticatedAccessToken> response) {  }
+
+           @Override
+           public void onError(@NotNull Error error) { }
+       });
 
 ```
 
@@ -224,7 +281,7 @@ If any exception occurs during your request, you will also be informed through t
 
 ```kotlin
 
-// Java
+// Kotlin
  override fun onError(error: VimeoResponse.Error) { 
          
         if (error is VimeoResponse.Error.Exception) {
@@ -273,7 +330,7 @@ A generic error could occur if the SDK failed to parse the response from the API
 }
 ```
 
-```
+```java
 
 // Java
 @Override
@@ -287,6 +344,7 @@ public void onError(@NotNull Error error) {
 
     }                
 }
+
 ```
 
 The HTTP status code and any possible data returned from the API can extracted from the `VimeoResponse.GenericError` class.
@@ -296,9 +354,12 @@ __Certificate Pinning__
 
 By default certificate pining is enabled for every request. If you would like to disable it, you may specify it when configuring the SDK. 
 
-```
+```kotlin
+
+// Kotlin
 val certPinningEnabled = false
 val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET, scopes, certPinningEnabled)
+
 ```
 
 If you are using the SDK on KitKat, then you will have to turn on certificate pinning. In KitKat, TLS is disabled by default. 
