@@ -1,6 +1,6 @@
 # Authentication
 
-In order to get data from the Vimeo API, we need to generate an access token. There are two types of access tokens - basic and authenticated. It can be obtained by using the [Authenticator](/src/main/java/com/vimeo/networking2/Authenticator.kt) interface. It provides methods to authenticate via email, Google or Facebook. These methods will provide you with an access token via a callback.
+In order to get data from the Vimeo API, we need to generate an access token. There are two types of access tokens - basic and authenticated. It can be obtained by using the [Authenticator](./src/main/java/com/vimeo/networking2/Authenticator.kt) interface. It provides methods to authenticate via email, Google or Facebook. These methods will provide you with an access token via a callback.
 
 ### Basic Authentication
 
