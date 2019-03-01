@@ -91,7 +91,7 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
 Upon success, a [BasicAuthToken](../models/src/main/java/com/vimeo/networking2/BasicAccessToken.kt) is returned. It contains your basic access token that you could use to make requests with. The `onError` method will inform you of three types of possible errors that can occur - api error, exception and generic error. 
 
-__Scopes__
+## Scopes
 
 The data you could access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#scopes) that can be provided. Each scope maps to an enum [ScopeType](../api/src/main/java/com/vimeo/networking2/ScopeType.kt). Providing a list of scopes is optional. If you don't provide one, by default `ScopeType.PUBLIC` will be used.
 
@@ -106,7 +106,7 @@ val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET, scopes)
 
 ## Advanced Authentication
 
-__Create a Vimeo Account via Email__
+### Create a Vimeo Account via Email
 
 If you would like to create a Vimeo account via email, you will need to provide the display name, email and password, and whether you want to opt out of marketing emails. This can be done as follows:
 
@@ -152,7 +152,7 @@ authenticator.emailJoin(
 
 Upon success, you will get a [AuthenticatedAccessToken](../models/src/main/java/com/vimeo/networking2/AuthenticatedAccessToken.kt) which contains the access token and the authenticated [User](../models/src/main/java/com/vimeo/networking2/User.kt) object.
 
-__Login via email__
+### Login via email
 
 ```kotlin
 
@@ -187,7 +187,7 @@ authenticator.emailLogin(
 
 ```
 
-__Facebook and Google Authentication__
+### Facebook and Google Authentication
 
 There is a single method the SDK provides to create a Vimeo Account with Google or Facebook or to login via these social channels. 
 
@@ -234,8 +234,6 @@ __API Error__
 
 If you provide an invalid client id and secret and attempt to make a request, the SDK will notify you on error. Error info is provided to you in the class `ApiError`. Here is how you could get info on the error:
 
-Kotlin
-
 ```kotlin
 
 // Kotlin
@@ -275,7 +273,7 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
 The error message and code could be extracted from the `ApiError` object.
 
-__Exception__
+### Exception
 
 If any exception occurs during your request, you will also be informed through the `onError` callback method. A exception may occur if you don't have a connection and you had attempted to make a request. 
 
@@ -315,7 +313,7 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
 You could extract information from the throwable that is returned to you.
 
-__Generic Error__
+### Generic Error
 
 A generic error could occur if the SDK failed to parse the response from the API or the API didn't return a response at all. The request returned an http status code and no exceptions were thrown. 
 
