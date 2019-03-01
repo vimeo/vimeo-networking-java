@@ -89,7 +89,7 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
 ```
 
-Upon success, a [BasicAuthToken]() is returned. It contains your basic access token that you could use to make requests with. The `onError` method will inform you of three types of possible errors that can occur - api error, exception and generic error. 
+Upon success, a [BasicAuthToken](../models/src/main/java/com/vimeo/networking2/BasicAccessToken.kt) is returned. It contains your basic access token that you could use to make requests with. The `onError` method will inform you of three types of possible errors that can occur - api error, exception and generic error. 
 
 __Scopes__
 
@@ -103,11 +103,12 @@ val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET, scopes)
 
 ```
 
+
 ### Advanced Authentication
 
 __Create a Vimeo Account via Email__
 
-If you would like to create a Vimeo account via, you will need to provide the display name, email and password, and whether you want to opt out of marketing emails. This can be done as follows:
+If you would like to create a Vimeo account via email, you will need to provide the display name, email and password, and whether you want to opt out of marketing emails. This can be done as follows:
 
 Kotlin
 
