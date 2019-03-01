@@ -4,41 +4,45 @@ In order to get data from the Vimeo API, we need to generate an access token. Th
 
 ### Basic Authentication
 
-A basic access token can be obtained by using your client id, client secret and access scopes. A client id and client secret can created by [Creating an App](https://developer.vimeo.com/).
+A basic access token can be obtained by using your client id, client secret and access scopes. A client id and client secret can created by going to [Create an App](https://developer.vimeo.com/).
 
 After you get your client credentials, create an instance of [ServerConfig](../api/src/main/java/com/vimeo/networking2/config/ServerConfig.kt) as  follows:
 
-Kotlin
-
 ```kotlin
+
+// Kotlin
 val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET)
+
 ```
 
-Java
-
 ```java
+
+// Java
 ServerConfig serverConfig = new ServerConfig(CLIENT_ID, CLIENT_SECRET);
+
 ```
 
 In order to authenticate with your client credentials, create an instance of [Authenticator](./src/main/java/com/vimeo/networking2/Authenticator.kt) and pass your `ServerConfig` object to it.
 
-Kotlin
-
 ```kotlin
+
+// Kotlin
 val authenticator = Authenticator.create(serverConfig)
+
 ```
 
-Java
-
 ```java
+
+// Java
 Authenticator authenticator = Authenticator.Factory.create(serverConfig);
+
 ```
 
 To authenticate, you would invoke the `Authenticor#clientCredentials` method by supplying a `VimeoCallback`. The callback has a `onSuccess` and `onError` method to provide you the result of the request.
 
-Kotlin
-
 ```kotlin
+
+// Kotlin
 authenticator.clientCredentials(object: VimeoCallback<BasicAuthToken>() {
 
       override fun onSuccess(authResponse: VimeoResponse.Success<BasicAuthToken>) {
@@ -55,11 +59,12 @@ authenticator.clientCredentials(object: VimeoCallback<BasicAuthToken>() {
                  }
        }
 })
+
 ```
 
-Java
-
 ```java
+
+// Java
 authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
     @Override
@@ -81,6 +86,7 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
         String accessToken = data.getAccessToken();
     }
 });
+
 ```
 
 Upon success, a [BasicAuthToken]() is returned. It contains your basic access token that you could use to make requests with. The onError method will inform you of three types of possible errors that can occur - api error, exception and generic error. 
@@ -94,6 +100,8 @@ If you provide an invalid client id and secret and attempt to make a request, th
 Kotlin
 
 ```kotlin
+
+// Kotlin
 override fun onError(error: VimeoResponse.Error) { 
          
          if (error is VimeoResponse.Error.Api) {
@@ -102,11 +110,12 @@ override fun onError(error: VimeoResponse.Error) {
               error.reason.invalidParameters
          }
 }
+
 ```
 
-Java
-
 ```java
+
+// Java
 authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
     @Override
@@ -124,6 +133,7 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
         }
     }
 });
+
 ```
 
 The error message and code could be extracted from the `ApiError` object.
@@ -132,9 +142,10 @@ __Exception__
 
 If any exception occurs during your request, you will also be informed through the `onError` callback method. A exception may occur if you don't have a connection and you had attempted to make a request. 
 
-Koltin
 
 ```kotlin
+
+// Java
  override fun onError(error: VimeoResponse.Error) { 
          
         if (error is VimeoResponse.Error.Exception) {
@@ -142,11 +153,12 @@ Koltin
              error.exception.printStackTrace()
         }
 }
+
 ```
 
-Java
-
 ```java
+
+// Java
 authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
     @Override
@@ -161,6 +173,7 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
         }
     }
 });
+
 ```
 
 You could extract information from the throwable that is returned to you.
@@ -169,9 +182,9 @@ __Generic Error__
 
 A generic error could occur if the SDK failed to parse the response from the API or the API didn't return a response at all. The request returned an http status code and no exceptions were thrown. 
 
-Kotlin
-
 ```kotlin
+
+// Kotlin
  override fun onError(error: VimeoResponse.Error) { 
 
        if(error is Error.Generic) {
@@ -181,9 +194,9 @@ Kotlin
 }
 ```
 
-Java
-
 ```
+
+// Java
 @Override
 public void onError(@NotNull Error error) {
                 
@@ -217,6 +230,8 @@ If you would like to create a Vimeo account via, you will need to provide the di
 Kotlin
 
 ```kotlin
+
+// Kotlin
 authenticator.emailJoin(
         display_name = "John Doe", 
         email = "john.doe@gmail.com", 
@@ -229,6 +244,7 @@ authenticator.emailJoin(
                 override fun onError(error: VimeoResponse.Error) { ... }
 
             })
+            
 ```
 
 Upon success, you will get a [AuthenticatedAccessToken](...). This object contains the access token, but it also contains the [User](...) object of authenticated user.
@@ -238,6 +254,8 @@ __Login via email__
 To login via email and password, use `Authenticator#loginEmail`.
 
 ```kotlin
+
+// Kotlin
 authenticator.emailLogin(
           email = "john.doe@gmail.com",
           password = "password",
@@ -248,6 +266,7 @@ authenticator.emailLogin(
 
                 }
             )
+            
 ```
 
 __Facebook and Google Authentication__
@@ -255,6 +274,8 @@ __Facebook and Google Authentication__
 There is a single method the SDK provides to create a Vimeo Account with Google or Facebook or to login via these social channels. 
 
 ```kotlin
+
+// Kotlin
 authenticator.google(
              token = "google_token",
              email = "john.doe@gmail.com",
@@ -264,6 +285,7 @@ authenticator.google(
 
                     override fun onError(error: VimeoResponse.Error) { ... }
                 })
+
 ```
 
 After you successfully login into Google, use the returned token to authenticate as shown above. If you don't have a Vimeo Account, this will create one for you. Otherwise, it will log you in. 
