@@ -2,7 +2,7 @@
 
 In order to get data from the Vimeo API, we need to generate an access token. There are two types of access tokens - basic and authenticated. It can be obtained by using the [Authenticator](./src/main/java/com/vimeo/networking2/Authenticator.kt) interface. It provides methods to authenticate via email, Google or Facebook. These methods will provide you with an access token via a callback.
 
-### Basic Authentication
+## Basic Authentication
 
 A basic access token can be obtained by using your client id, client secret and access scopes. A client id and client secret can created by going to [Create an App](https://developer.vimeo.com/).
 
@@ -104,7 +104,7 @@ val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET, scopes)
 ```
 
 
-### Advanced Authentication
+## Advanced Authentication
 
 __Create a Vimeo Account via Email__
 
@@ -228,7 +228,7 @@ authenticator.google(
 After you successfully login into Google, use the returned token to authenticate as shown above. If you don't have a Vimeo Account, this will create one for you. Otherwise, it will log you in. 
 
 
-### Errors
+## Errors
 
 __API Error__
 
@@ -351,7 +351,7 @@ public void onError(@NotNull Error error) {
 The HTTP status code and any possible data returned from the API can extracted from the `VimeoResponse.GenericError` class.
 
 
-__Certificate Pinning__
+## Certificate Pinning
 
 By default certificate pining is enabled for every request. If you would like to disable it, you may specify it when configuring the SDK. 
 
