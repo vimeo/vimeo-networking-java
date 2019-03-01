@@ -38,7 +38,7 @@ Authenticator authenticator = Authenticator.Factory.create(serverConfig);
 
 ```
 
-To authenticate, you would invoke the [Authenticator#clientCredentials](./src/main/java/com/vimeo/networking2/Authenticator.kt#L47) method by supplying a [VimeoCallback](../api/src/main/java/com/vimeo/networking2/VimeoCallback.kt). The callback has a `onSuccess` and `onError` method to provide you the result of the request.
+To authenticate, you would invoke the [Authenticator.clientCredentials](./src/main/java/com/vimeo/networking2/Authenticator.kt#L47) method by supplying a [VimeoCallback](../api/src/main/java/com/vimeo/networking2/VimeoCallback.kt). The callback has a `onSuccess` and `onError` method to provide you the result of the request.
 
 ```kotlin
 
