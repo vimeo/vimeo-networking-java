@@ -38,7 +38,7 @@ Authenticator authenticator = Authenticator.Factory.create(serverConfig);
 
 ```
 
-To authenticate, you would invoke the `Authenticor#clientCredentials` method by supplying a `VimeoCallback`. The callback has a `onSuccess` and `onError` method to provide you the result of the request.
+To authenticate, you would invoke the [Authenticator#clientCredentials](./src/main/java/com/vimeo/networking2/Authenticator.kt#L47) method by supplying a [VimeoCallback](../api/src/main/java/com/vimeo/networking2/VimeoCallback.kt). The callback has a `onSuccess` and `onError` method to provide you the result of the request.
 
 ```kotlin
 
@@ -91,9 +91,88 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
 Upon success, a [BasicAuthToken]() is returned. It contains your basic access token that you could use to make requests with. The onError method will inform you of three types of possible errors that can occur - api error, exception and generic error. 
 
-__Errors__
+__Scopes__
 
-API Error
+What you could access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#scopes) that can be provided. Each scope maps to an enum [ScopeType](../api/src/main/java/com/vimeo/networking2/ScopeType.kt). Providing a list of scopes is optional. If you don't provide one, by default `ScopeType.PUBLIC` will be used.
+
+```kotlin
+val scopes = listOf(ScopeType.PRIVATE, ScopeType.CREATE, ScopeType.EDIT)
+val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET, scopes)
+```
+
+### Advanced Authentication
+
+__Create a Vimeo Account via Email__
+
+If you would like to create a Vimeo account via, you will need to provide the display name, email and password, and whether you want to opt out of marketing emails. This can be done as follows:
+
+Kotlin
+
+```kotlin
+
+// Kotlin
+authenticator.emailJoin(
+        display_name = "John Doe", 
+        email = "john.doe@gmail.com", 
+        password = "password", 
+        marketingOptIn = false, 
+        callback = object : VimeoCallback<AuthenticatedAccessToken> {
+              
+               override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>) { ...  }
+
+                override fun onError(error: VimeoResponse.Error) { ... }
+
+            })
+            
+```
+
+Upon success, you will get a [AuthenticatedAccessToken](...). This object contains the access token, but it also contains the [User](...) object of authenticated user.
+
+__Login via email__
+
+To login via email and password, use `Authenticator#loginEmail`.
+
+```kotlin
+
+// Kotlin
+authenticator.emailLogin(
+          email = "john.doe@gmail.com",
+          password = "password",
+           authCallback = object: VimeoCallback<AuthenticatedAccessToken> {
+                  
+                   override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>) { ... }
+                    override fun onError(error: VimeoResponse.Error) { ... }
+
+                }
+            )
+            
+```
+
+__Facebook and Google Authentication__
+
+There is a single method the SDK provides to create a Vimeo Account with Google or Facebook or to login via these social channels. 
+
+```kotlin
+
+// Kotlin
+authenticator.google(
+             token = "google_token",
+             email = "john.doe@gmail.com",
+             marketingOptIn = false,
+             authCallback = object : VimeoCallback<AuthenticatedAccessToken> {
+                    override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>){ ... }
+
+                    override fun onError(error: VimeoResponse.Error) { ... }
+                })
+
+```
+
+After you successfully login into Google, use the returned token to authenticate as shown above. If you don't have a Vimeo Account, this will create one for you. Otherwise, it will log you in. 
+
+
+### Errors
+
+__API Error__
 
 If you provide an invalid client id and secret and attempt to make a request, the SDK will notify you on error. Error info is provided to you in the class `ApiError`. Here is how you could get info on the error:
 
@@ -212,83 +291,6 @@ public void onError(@NotNull Error error) {
 
 The HTTP status code and any possible data returned from the API can extracted from the `VimeoResponse.GenericError` class.
 
-__Scopes__
-
-What you could access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#scopes) that can be provided. Each scope maps to an enum [ScopeType](../api/src/main/java/com/vimeo/networking2/ScopeType.kt). Providing a list of scopes is optional. If you don't provide one, by default `ScopeType.PUBLIC` will be used.
-
-```kotlin
-val scopes = listOf(ScopeType.PRIVATE, ScopeType.CREATE, ScopeType.EDIT)
-val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET, scopes)
-```
-
-### Advanced Authentication
-
-__Create a Vimeo Account via Email__
-
-If you would like to create a Vimeo account via, you will need to provide the display name, email and password, and whether you want to opt out of marketing emails. This can be done as follows:
-
-Kotlin
-
-```kotlin
-
-// Kotlin
-authenticator.emailJoin(
-        display_name = "John Doe", 
-        email = "john.doe@gmail.com", 
-        password = "password", 
-        marketingOptIn = false, 
-        callback = object : VimeoCallback<AuthenticatedAccessToken> {
-              
-               override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>) { ...  }
-
-                override fun onError(error: VimeoResponse.Error) { ... }
-
-            })
-            
-```
-
-Upon success, you will get a [AuthenticatedAccessToken](...). This object contains the access token, but it also contains the [User](...) object of authenticated user.
-
-__Login via email__
-
-To login via email and password, use `Authenticator#loginEmail`.
-
-```kotlin
-
-// Kotlin
-authenticator.emailLogin(
-          email = "john.doe@gmail.com",
-          password = "password",
-           authCallback = object: VimeoCallback<AuthenticatedAccessToken> {
-                  
-                   override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>) { ... }
-                    override fun onError(error: VimeoResponse.Error) { ... }
-
-                }
-            )
-            
-```
-
-__Facebook and Google Authentication__
-
-There is a single method the SDK provides to create a Vimeo Account with Google or Facebook or to login via these social channels. 
-
-```kotlin
-
-// Kotlin
-authenticator.google(
-             token = "google_token",
-             email = "john.doe@gmail.com",
-             marketingOptIn = false,
-             authCallback = object : VimeoCallback<AuthenticatedAccessToken> {
-                    override fun onSuccess(response: VimeoResponse.Success<AuthenticatedAccessToken>){ ... }
-
-                    override fun onError(error: VimeoResponse.Error) { ... }
-                })
-
-```
-
-After you successfully login into Google, use the returned token to authenticate as shown above. If you don't have a Vimeo Account, this will create one for you. Otherwise, it will log you in. 
 
 __Certificate Pinning__
 
