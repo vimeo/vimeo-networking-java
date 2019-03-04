@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    api project(':api')
+    api project(':api-core')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
