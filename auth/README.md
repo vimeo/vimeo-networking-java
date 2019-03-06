@@ -229,7 +229,6 @@ override fun onError(error: VimeoResponse.Error) {
 
 // Java
 authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
-
     @Override
     public void onError(@NotNull Error error) {
         if (error instanceof Error.Api) {
