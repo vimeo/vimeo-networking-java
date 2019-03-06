@@ -7,14 +7,14 @@ import com.vimeo.networking2.VimeoResponse.Success
  * Result of the API response. [Success] contains the data while the [Error] class will
  * inform you of an api error.
  */
-sealed class VimeoResponse<out T> {
+sealed class VimeoResponse<in T> {
 
     /**
      * A successful response.
      *
      * @param data The parsed data for the request.
      */
-    data class Success<out T>(val data: T) : VimeoResponse<T>()
+    data class Success<T>(val data: T) : VimeoResponse<T>()
 
     /**
      * An error occurred when making the request. This error may be due to invalid parameters,
