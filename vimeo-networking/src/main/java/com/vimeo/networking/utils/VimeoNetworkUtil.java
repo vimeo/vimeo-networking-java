@@ -27,7 +27,11 @@ package com.vimeo.networking.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.VimeoClient;
+import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.model.AlbumPrivacy;
+import com.vimeo.networking.model.AlbumPrivacy.AlbumPrivacyViewValue;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.stag.generated.Stag;
 
@@ -204,5 +208,74 @@ public class VimeoNetworkUtil {
         }
         vimeoError.setResponse(response);
         return vimeoError;
+    }
+
+    /**
+     * Call this method to validate a string that is expected to not be blank. In the event that the string is
+     * null or blank, the callback.failure will be invoked and false will be returned.
+     *
+     * @param input        The string to be tested.
+     * @param errorMessage An error message to be relayed to the callback in the event of failure.
+     * @param callback     A callback to be invoked when the string is null or empty.
+     * @return false if the string is null or blank, true otherwise
+     */
+    public static boolean validateString(@Nullable final String input,
+                                         @NotNull final String errorMessage,
+                                         @NotNull final VimeoCallback callback) {
+        if (input == null || input.isEmpty()) {
+            callback.failure(new VimeoError(errorMessage));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Prepare album parameters for making a network request to edit or add an album. This method will combine
+     * known parameters with the optional extended parameters and perform validation on the known parameters.
+     * In the event of invalid parameters, the callback.failure will be invoked and the method will return null.
+     *
+     * @param name         A non-blank string that will be the new name of the album.
+     * @param albumPrivacy A representation of the viewing privacy for the album. The expectation is that if the
+     *                     album is password protected that this object will also contain the required password.
+     * @param description  A nullable description for the album.
+     * @param parameters   Additional less common parameters that modify the album.
+     * @param callback     A callback that will receive the results of the network request.
+     * @return A prepared map of parameters or null in the event of an error.
+     */
+    @Nullable
+    public static Map<String, Object> prepareAlbumEditParameters(@NotNull final String name,
+                                                                 @NotNull final AlbumPrivacy albumPrivacy,
+                                                                 @Nullable final String description,
+                                                                 @Nullable final Map<String, Object> parameters,
+                                                                 @NotNull final VimeoCallback callback) {
+        Map<String, Object> retVal = new HashMap<>();
+        if (parameters != null) {
+            retVal = new HashMap<>(parameters);
+        }
+        retVal.put(Vimeo.PARAMETER_ALBUM_NAME, name);
+
+        final String viewingPermissions =
+                albumPrivacy.getViewingPermissions() != null ? albumPrivacy.getViewingPermissions().toString() : null;
+
+        if (!validateString(viewingPermissions, "ViewingPermissions can't be empty in album edit.", callback)) {
+            return null;
+        }
+
+        retVal.put(Vimeo.PARAMETER_ALBUM_PRIVACY, viewingPermissions);
+
+        if (description != null) {
+            retVal.put(Vimeo.PARAMETER_ALBUM_DESCRIPTION, description);
+        }
+
+        if (albumPrivacy.getViewingPermissions() == AlbumPrivacyViewValue.PASSWORD) {
+            if (!validateString(albumPrivacy.getPassword(),
+                                "Password can't be empty in password protected album edit.",
+                                callback)) {
+                return null;
+            }
+            retVal.put(Vimeo.PARAMETER_ALBUM_PASSWORD, albumPrivacy.getPassword());
+        }
+
+        return retVal;
     }
 }

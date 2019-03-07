@@ -22,10 +22,10 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.model.Album;
-import com.vimeo.networking.model.AlbumList;
 import com.vimeo.networking.AnnotatedConverterFactory.ConverterType;
 import com.vimeo.networking.AnnotatedConverterFactory.Serializer;
+import com.vimeo.networking.model.Album;
+import com.vimeo.networking.model.AlbumList;
 import com.vimeo.networking.model.Category;
 import com.vimeo.networking.model.CategoryList;
 import com.vimeo.networking.model.Channel;
@@ -162,6 +162,30 @@ public interface VimeoService {
 
     /**
      * ----------------------------------------------------------------------------------------------------
+     * Album Modifications
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Album Modifications">
+    @POST("me/albums")
+    Call<Album> createAlbum(@Header("Authorization") String authHeader, @Body Map<String, Object> parameters);
+
+    @PATCH
+    Call<Album> editAlbum(@Header("Authorization") String authHeader,
+                          @Url String uri,
+                          @Body Map<String, Object> parameters);
+
+    @DELETE
+    Call<Object> deleteAlbum(@Header("Authorization") String authHeader, @Url String uri);
+
+    @PUT
+    Call<Object> addToAlbum(@Header("Authorization") String authHeader, @Url String addToAlbumUri);
+
+    @DELETE
+    Call<Object> removeFromAlbum(@Header("Authorization") String authHeader, @Url String addToAlbumUri);
+    // </editor-fold>
+
+    /**
+     * ----------------------------------------------------------------------------------------------------
      * Editing
      * -----------------------------------------------------------------------------------------------------
      */
@@ -293,9 +317,9 @@ public interface VimeoService {
 
     @GET
     Call<Album> getAlbum(@Header("Authorization") String authHeader,
-                           @Url String uri,
-                           @QueryMap Map<String, String> options,
-                           @Header("Cache-Control") String cacheHeaderValue);
+                         @Url String uri,
+                         @QueryMap Map<String, String> options,
+                         @Header("Cache-Control") String cacheHeaderValue);
 
     // </editor-fold>
 
