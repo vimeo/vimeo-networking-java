@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply from: '../publish.gradle'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    api project(':api-core')
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+}

@@ -1,0 +1,22 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply from: '../publish.gradle'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    api project(":models")
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Retrofit
+    api "com.squareup.retrofit2:retrofit:2.5.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
+
+    // Moshi Adapters
+    implementation "com.squareup.moshi:moshi-adapters:1.8.0"
+
+}
