@@ -26,6 +26,7 @@ import com.vimeo.networking.Vimeo.LogLevel;
 import com.vimeo.networking.logging.LogProvider;
 import com.vimeo.networking.model.VimeoAccount;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -188,7 +189,7 @@ public class Configuration {
         private String accessToken;
 
         private AccountStore accountStore;
-        private GsonDeserializer deserializer = new GsonDeserializer();
+        private GsonDeserializer deserializer;
 
         private String apiVersionString = DEFAULT_VERSION_STRING;
         private File cacheDirectory;
@@ -258,7 +259,7 @@ public class Configuration {
             this.clientSecret = clientSecret;
             this.scope = scope;
             this.accountStore = accountStore;
-            this.deserializer = deserializer;
+            this.deserializer = (deserializer == null) ? new GsonDeserializer() : deserializer;
         }
 
         public Builder setBaseUrl(String baseUrl) {
@@ -278,7 +279,7 @@ public class Configuration {
             return this;
         }
 
-        public Builder setGsonDeserializer(GsonDeserializer deserializer) {
+        public Builder setGsonDeserializer(@NotNull GsonDeserializer deserializer) {
             this.deserializer = deserializer;
             return this;
         }
