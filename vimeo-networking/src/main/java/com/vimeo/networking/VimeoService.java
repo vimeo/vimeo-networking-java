@@ -259,6 +259,13 @@ public interface VimeoService {
                                                                           @Header("Cache-Control") String cacheHeader);
 
     @GET
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.CategoryList> getCategoryListMoshi(@Header("Authorization") String authHeader,
+                                                                  @Url String uri,
+                                                                  @QueryMap Map<String, String> options,
+                                                                  @Header("Cache-Control") String cacheHeader);
+
+    @GET
     Call<Category> getCategory(@Header("Authorization") String authHeader,
                                @Url String uri,
                                @QueryMap Map<String, String> options,
