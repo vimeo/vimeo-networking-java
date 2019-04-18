@@ -23,7 +23,6 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking2.common.Pageable;
 import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
@@ -34,7 +33,7 @@ import java.util.ArrayList;
  */
 @SuppressWarnings("unused")
 @UseStag
-public abstract class BaseResponseList<T> implements Serializable, Pageable<T> {
+public abstract class BaseResponseList<T> implements Serializable {
 
     private static final long serialVersionUID = -1641146617506148394L;
 
@@ -53,7 +52,7 @@ public abstract class BaseResponseList<T> implements Serializable, Pageable<T> {
     @SerializedName("data")
     private ArrayList<T> mData;
 
-    public Integer getTotal() {
+    public int getTotal() {
         return mTotal;
     }
 
@@ -61,7 +60,7 @@ public abstract class BaseResponseList<T> implements Serializable, Pageable<T> {
         mTotal = total;
     }
 
-    public Integer getPage() {
+    public int getPage() {
         return mPage;
     }
 
