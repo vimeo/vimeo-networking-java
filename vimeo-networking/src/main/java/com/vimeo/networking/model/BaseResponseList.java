@@ -23,7 +23,6 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.networking2.interop.InteropBaseResponseList;
 import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
@@ -34,7 +33,7 @@ import java.util.ArrayList;
  */
 @SuppressWarnings("unused")
 @UseStag
-public abstract class BaseResponseList<T> implements Serializable, InteropBaseResponseList {
+public abstract class BaseResponseList<T> implements Serializable {
 
     private static final long serialVersionUID = -1641146617506148394L;
 

@@ -1,13 +1,12 @@
 package com.vimeo.networking2.common
 
 import com.vimeo.networking2.Paging
-import com.vimeo.networking2.interop.InteropBaseResponseList
 
 /**
  * All lists that can be paged should implement this interface to provide
  * paging urls, total number of items returns for each page and the data for each page.
  */
-interface Pageable<Data_T>: InteropBaseResponseList {
+interface Pageable<Data_T> {
 
     /**
      * Total number of items returned.

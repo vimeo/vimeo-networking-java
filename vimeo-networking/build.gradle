@@ -33,7 +33,6 @@ tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
     api project(':models')
-    api project(':interop')
 
     def retrofitVersion = '2.5.0'
     api "com.squareup.retrofit2:retrofit:$retrofitVersion"
