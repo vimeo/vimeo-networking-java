@@ -1,18 +1,12 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
-android {
-    compileSdkVersion 28
-}
-
-androidExtensions {
-    experimental = true
+repositories {
+    jcenter()
 }
 
 dependencies {
-    implementation project(':models-internal')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

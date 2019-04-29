@@ -1,12 +1,12 @@
 # Authentication
 
-In order to get data from the Vimeo API, we need to generate an access token. There are two types of access tokens - basic and authenticated. It can be obtained by using the [Authenticator](./src/main/java/com/vimeo/networking2/Authenticator.kt) interface. It provides methods to authenticate via email, Google or Facebook. These methods will provide you with an access token via a callback.
+In order to get data from the Vimeo API, we need to generate an access token. There are two types of access tokens - basic and authenticated. It can be obtained by using the [Authenticator](./src/main/java/com/vimeo/com.vimeo.networking2/Authenticator.kt) interface. It provides methods to authenticate via email, Google or Facebook. These methods will provide you with an access token via a callback.
 
 ## Basic Authentication
 
 A basic access token can be obtained by using your client id, client secret and access scopes. A client id and client secret can created by going to [Create an App](https://developer.vimeo.com/).
 
-After you get your client credentials, create an instance of [ServerConfig](../api/src/main/java/com/vimeo/networking2/config/ServerConfig.kt) as  follows:
+After you get your client credentials, create an instance of [ServerConfig](../api/src/main/java/com/vimeo/com.vimeo.networking2/config/ServerConfig.kt) as  follows:
 
 ```kotlin
 
@@ -22,7 +22,7 @@ ServerConfig serverConfig = new ServerConfig(CLIENT_ID, CLIENT_SECRET);
 
 ```
 
-In order to authenticate with your client credentials, create an instance of [Authenticator](./src/main/java/com/vimeo/networking2/Authenticator.kt) and pass your `ServerConfig` object to it.
+In order to authenticate with your client credentials, create an instance of [Authenticator](./src/main/java/com/vimeo/com.vimeo.networking2/Authenticator.kt) and pass your `ServerConfig` object to it.
 
 ```kotlin
 
@@ -38,7 +38,7 @@ Authenticator authenticator = Authenticator.Factory.create(serverConfig);
 
 ```
 
-To authenticate, you would invoke the [Authenticator.clientCredentials](./src/main/java/com/vimeo/networking2/Authenticator.kt#L47) method by supplying a [VimeoCallback](../api/src/main/java/com/vimeo/networking2/VimeoCallback.kt). The callback has an `onSuccess` and `onError` method to provide you the result of the request.
+To authenticate, you would invoke the [Authenticator.clientCredentials](./src/main/java/com/vimeo/com.vimeo.networking2/Authenticator.kt#L47) method by supplying a [VimeoCallback](../api/src/main/java/com/vimeo/com.vimeo.networking2/VimeoCallback.kt). The callback has an `onSuccess` and `onError` method to provide you the result of the request.
 
 ```kotlin
 
@@ -81,11 +81,11 @@ authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
 
 ```
 
-Upon success, a [BasicAccessToken](../models/src/main/java/com/vimeo/networking2/BasicAccessToken.kt) is returned. It contains your basic access token that you could use to make requests with. The `onError` method will inform you of three types of possible errors that can occur - API error, exception and generic error. 
+Upon success, a [BasicAccessToken](../models/src/main/java/com/vimeo/com.vimeo.networking2/BasicAccessToken.kt) is returned. It contains your basic access token that you could use to make requests with. The `onError` method will inform you of three types of possible errors that can occur - API error, exception and generic error. 
 
 ## Scopes
 
-The data you could access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#scopes) that can be provided. Each scope maps to an enum [ScopeType](../api/src/main/java/com/vimeo/networking2/ScopeType.kt). Providing a list of scopes is optional. If you don't provide one, by default `ScopeType.PUBLIC` will be used.
+The data you could access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#scopes) that can be provided. Each scope maps to an enum [ScopeType](../api/src/main/java/com/vimeo/com.vimeo.networking2/ScopeType.kt). Providing a list of scopes is optional. If you don't provide one, by default `ScopeType.PUBLIC` will be used.
 
 ```kotlin
 
@@ -141,7 +141,7 @@ authenticator.emailJoin(
 });
 ```
 
-Upon success, you will get an [AuthenticatedAccessToken](../models/src/main/java/com/vimeo/networking2/AuthenticatedAccessToken.kt) which contains the access token and the authenticated [User](../models/src/main/java/com/vimeo/networking2/User.kt) object.
+Upon success, you will get an [AuthenticatedAccessToken](../models/src/main/java/com/vimeo/com.vimeo.networking2/AuthenticatedAccessToken.kt) which contains the access token and the authenticated [User](../models/src/main/java/com/vimeo/com.vimeo.networking2/User.kt) object.
 
 ### Login via email
 
@@ -211,7 +211,7 @@ After you successfully login into Google, use the returned token to authenticate
 
 __API Error__
 
-If you provide an invalid client id and secret and attempt to make a request, the SDK will notify you on error. Error info is provided to you in the class [ApiError](../models/src/main/java/com/vimeo/networking2/ApiError.kt). Here is how you could get info on the error:
+If you provide an invalid client id and secret and attempt to make a request, the SDK will notify you on error. Error info is provided to you in the class [ApiError](../models/src/main/java/com/vimeo/com.vimeo.networking2/ApiError.kt). Here is how you could get info on the error:
 
 ```kotlin
 

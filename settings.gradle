@@ -1,5 +1,5 @@
-include ':vimeo-networking', ':models', ':auth', ':api-core', ':models-parcelable'
+include ':vimeo-networking', ':models-internal', ':auth', ':api-core', ':models-parcelable', ':models-serializable'
 
 if (!System.env.JITPACK) {
-    include ':example-java-android', ':example-kotlin-android', ':example-vimeo-networking2-android'
+    include ':example-java-android', ':example-kotlin-android', ':example-vimeo-com.vimeo.networking2-android'
 }

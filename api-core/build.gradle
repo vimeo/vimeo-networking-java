@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    api project(":models")
+    api project(':models-internal')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
