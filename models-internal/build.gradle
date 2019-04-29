@@ -8,6 +8,8 @@ repositories {
 }
 
 dependencies {
+    implementation project(':models-serializable')
+    implementation project(path: ':models-parcelable', configuration: 'default')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
