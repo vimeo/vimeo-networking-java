@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 import okhttp3.CacheControl;
 
@@ -95,6 +96,10 @@ public class InteractionCollection implements Serializable {
     @Nullable
     @SerializedName("add_videos")
     private Interaction mAddVideos;
+
+    @Nullable
+    @SerializedName("add_to")
+    private Interaction mAddTo;
 
     @Nullable
     public Interaction getWatchLater() {
@@ -175,6 +180,24 @@ public class InteractionCollection implements Serializable {
 
     void setAddVideos(@Nullable Interaction addVideos) {
         mAddVideos = addVideos;
+    }
+
+    /**
+     * @return An {@link Interaction} that will be present in the Album or Channel objects returned from
+     * a request to an "available_channels" or "available_albums" connection on a video object. The
+     * {@link Interaction#getUri()} will provide the uri needed to pass to
+     * {@link VimeoClient#putContent(String, Map, IgnoreResponseVimeoCallback)} to add or remove the video
+     * from the collection.  In the event that the video is not yet added to the album/channel,
+     * {@link Interaction#getOptions()} will contain "PUT". In the event that the video is already added to the
+     * album/channel, {@link Interaction#getOptions()} will contain "DELETE".
+     */
+    @Nullable
+    public Interaction getAddTo() {
+        return mAddTo;
+    }
+
+    void setAddTo(@Nullable Interaction addTo) {
+        mAddTo = addTo;
     }
 
     @Nullable

@@ -154,6 +154,18 @@ public class ConnectionCollection implements Serializable {
     protected Connection mRecommendedChannels;
 
     @Nullable
+    @SerializedName("available_channels")
+    protected Connection mAvailableChannels;
+
+    @Nullable
+    @SerializedName("available_albums")
+    protected Connection mAvailableAlbums;
+
+    @Nullable
+    @SerializedName("available_videos")
+    protected Connection mAvailableVideos;
+
+    @Nullable
     @SerializedName("recommended_users")
     protected Connection mRecommendedUsers;
 
@@ -332,6 +344,33 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     public Connection getRecommendedChannels() {
         return mRecommendedChannels;
+    }
+
+    /**
+     * @return A {@link Connection} for channels managed by the logged-in user. This {@link Connection}
+     * will be present for {@link Video} objects when available.
+     */
+    @Nullable
+    public Connection getAvailableChannels() {
+        return mAvailableChannels;
+    }
+
+    /**
+     * @return A {@link Connection} for albums managed by the logged-in user. This {@link Connection}
+     * will be present for {@link Video} objects when available.
+     */
+    @Nullable
+    public Connection getAvailableAlbums() {
+        return mAvailableAlbums;
+    }
+
+    /**
+     * @return A {@link Connection} for videos managed by the logged-in user. This {@link Connection}
+     * will be present for {@link Album} or {@link Channel} objects when available.
+     */
+    @Nullable
+    public Connection getAvailableVideos() {
+        return mAvailableVideos;
     }
 
     @Nullable
