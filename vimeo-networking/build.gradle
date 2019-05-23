@@ -39,7 +39,7 @@ dependencies {
     api "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
-    implementation "com.squareup.moshi:moshi-adapters:1.8.0"
+    implementation "com.squareup.moshi:moshi-adapters:1.7.0"
 
     implementation 'org.jetbrains:annotations:17.0.0'
 
