@@ -98,6 +98,10 @@ public class InteractionCollection implements Serializable {
     private Interaction mAddVideos;
 
     @Nullable
+    @SerializedName("album")
+    private Interaction mAlbum;
+
+    @Nullable
     @SerializedName("add_to")
     private Interaction mAddTo;
 
@@ -180,6 +184,24 @@ public class InteractionCollection implements Serializable {
 
     void setAddVideos(@Nullable Interaction addVideos) {
         mAddVideos = addVideos;
+    }
+
+    /**
+     * @return An {@link Interaction} that will be present in the Video objects returned from
+     * a request to an "available_videos" connection on an album object. The
+     * {@link Interaction#getUri()} will provide the uri needed to pass to
+     * {@link VimeoClient#putContent(String, Map, IgnoreResponseVimeoCallback)} to add or remove the video
+     * from the collection.  In the event that the video is not yet added to the album,
+     * {@link Interaction#getOptions()} will contain "PUT". In the event that the video is already added to the
+     * album/channel, {@link Interaction#getOptions()} will contain "DELETE".
+     */
+    @Nullable
+    public Interaction getAlbum() {
+        return mAlbum;
+    }
+
+    void setAlbum(@Nullable Interaction album) {
+        mAlbum = album;
     }
 
     /**
