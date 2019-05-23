@@ -19,7 +19,4 @@ dependencies {
     // Moshi Adapters
     implementation "com.squareup.moshi:moshi-adapters:1.7.0"
 
-    // Okio used by Moshi
-    implementation "com.squareup.okio:okio:2.2.2"
-
 }
