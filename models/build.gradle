@@ -16,6 +16,9 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.7.0"
     implementation "com.squareup.moshi:moshi:1.7.0"
 
+    // Okio used by Moshi
+    implementation "com.squareup.okio:okio:2.2.2"
+
     // Test dependencies
     testImplementation "junit:junit:4.12"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
