@@ -30,6 +30,6 @@ public class ModifyVideosInAlbum implements Serializable {
     public List<RemoveVideoFromAlbum> mRemoveVideoList;
 
     @Nullable
-    @SerializedName("add")
+    @SerializedName("set")
     public List<AddVideoToAlbum> mAddVideoList;
 }
