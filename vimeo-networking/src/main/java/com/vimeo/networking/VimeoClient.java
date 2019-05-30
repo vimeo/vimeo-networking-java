@@ -33,6 +33,7 @@ import com.vimeo.networking.model.Album;
 import com.vimeo.networking.model.AlbumPrivacy;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
+import com.vimeo.networking.model.ModifyVideosInAlbum;
 import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
@@ -40,6 +41,7 @@ import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
+import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.LocalErrorCode;
@@ -1081,6 +1083,23 @@ public class VimeoClient {
         call.enqueue(callback);
         return call;
     }
+
+    @Nullable
+    public Call modifyVideosInAlbum(@NotNull final Album album,
+                                    @NotNull final ModifyVideosInAlbum modificationSpecs,
+                                    @NotNull VimeoCallback<VideoList> callback) {
+        if (!VimeoNetworkUtil.validateString(album.getUri(),
+                                             "Album uri cannot be empty in modifyVideosInAlbum",
+                                             callback)) {
+            return null;
+        }
+        final Call<VideoList> call = mVimeoService.modifyVideosInAlbum(getAuthHeader(),
+                                                                       album.getUri() + "/videos",
+                                                                       modificationSpecs);
+        call.enqueue(callback);
+        return call;
+    }
+
 
     @Nullable
     public Call<Video> editVideo(@Nullable String uri,
