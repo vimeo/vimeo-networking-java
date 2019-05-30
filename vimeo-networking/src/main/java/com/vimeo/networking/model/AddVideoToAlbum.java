@@ -9,6 +9,7 @@ import java.io.Serializable;
 /**
  * An object that is used to patch video addition updates to an Album.
  */
+@SuppressWarnings("unused")
 public class AddVideoToAlbum implements Serializable {
 
     private static final long serialVersionUID = -855083653273120166L;
@@ -20,15 +21,22 @@ public class AddVideoToAlbum implements Serializable {
 
     @NotNull
     @SerializedName("uri")
-    public String mUri;
+    private final String mUri;
 
     @SerializedName("position")
-    public int mPosition;
+    private final int mPosition;
 
+    /**
+     * @return The uri for the video to be added to the album.
+     */
+    @NotNull
     public String getUri() {
         return mUri;
     }
 
+    /**
+     * @return The position in the album where the video should be added.
+     */
     public int getPosition() {
         return mPosition;
     }

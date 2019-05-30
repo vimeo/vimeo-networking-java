@@ -11,33 +11,18 @@ import java.util.List;
 /**
  * An object that is used to patch video addition and deletion updates to an Album.
  */
+@SuppressWarnings("unused")
 public class ModifyVideosInAlbum implements Serializable {
 
     private static final long serialVersionUID = -3094719083671086785L;
 
-    private class NamedWrapperForAdd implements Serializable {
+    @Nullable
+    @SerializedName("remove")
+    private List<NamedWrapperForRemove> mRemoveVideoList;
 
-        private static final long serialVersionUID = 8713902512465812810L;
-
-        NamedWrapperForAdd(AddVideoToAlbum addVideoToAlbum) {
-            mAddVideoToAlbum = addVideoToAlbum;
-        }
-
-        @SerializedName("video")
-        public AddVideoToAlbum mAddVideoToAlbum;
-    }
-
-    private class NamedWrapperForRemove implements Serializable {
-
-        private static final long serialVersionUID = -8122735684596463036L;
-
-        NamedWrapperForRemove(RemoveVideoFromAlbum removeVideoFromAlbum) {
-            mRemoveVideoFromAlbum = removeVideoFromAlbum;
-        }
-
-        @SerializedName("video")
-        public RemoveVideoFromAlbum mRemoveVideoFromAlbum;
-    }
+    @Nullable
+    @SerializedName("set")
+    private List<NamedWrapperForAdd> mAddVideoList;
 
     public ModifyVideosInAlbum(@Nullable List<RemoveVideoFromAlbum> removeVideoList,
                                @Nullable List<AddVideoToAlbum> addVideoList) {
@@ -55,11 +40,75 @@ public class ModifyVideosInAlbum implements Serializable {
         }
     }
 
+    /**
+     * @return A nullable list of RemoveVideoFromAlbum objects, containing the wrapped list of videos to be removed
+     * from the album.
+     */
     @Nullable
-    @SerializedName("remove")
-    public List<NamedWrapperForRemove> mRemoveVideoList;
+    public List<RemoveVideoFromAlbum> getRemoveVideoList() {
+        if (mRemoveVideoList == null) {
+            return null;
+        }
+        final List<RemoveVideoFromAlbum> retVal = new ArrayList<>();
+        for (final NamedWrapperForRemove curRemove : mRemoveVideoList) {
+            retVal.add(curRemove.getRemoveVideoFromAlbum());
+        }
+        return retVal;
+    }
 
+    /**
+     * @return A nullable list of AddVideoToAlbum objects, containing the wrapped list of videos to be added
+     * to the album.
+     */
     @Nullable
-    @SerializedName("set")
-    public List<NamedWrapperForAdd> mAddVideoList;
+    public List<AddVideoToAlbum> getAddVideoList() {
+        if (mAddVideoList == null) {
+            return null;
+        }
+        final List<AddVideoToAlbum> retVal = new ArrayList<>();
+        for (final NamedWrapperForAdd curAdd : mAddVideoList) {
+            retVal.add(curAdd.getAddVideoToAlbum());
+        }
+        return retVal;
+    }
+
+    private class NamedWrapperForAdd implements Serializable {
+
+        private static final long serialVersionUID = 8713902512465812810L;
+
+        @SerializedName("video")
+        private final AddVideoToAlbum mAddVideoToAlbum;
+
+        NamedWrapperForAdd(AddVideoToAlbum addVideoToAlbum) {
+            mAddVideoToAlbum = addVideoToAlbum;
+        }
+
+        /**
+         * @return The wrapped AddVideoToAlbum object.
+         */
+        AddVideoToAlbum getAddVideoToAlbum() {
+            return mAddVideoToAlbum;
+        }
+    }
+
+    private class NamedWrapperForRemove implements Serializable {
+
+        private static final long serialVersionUID = -8122735684596463036L;
+
+        @SerializedName("video")
+        private final RemoveVideoFromAlbum mRemoveVideoFromAlbum;
+
+        NamedWrapperForRemove(RemoveVideoFromAlbum removeVideoFromAlbum) {
+            mRemoveVideoFromAlbum = removeVideoFromAlbum;
+        }
+
+        /**
+         * @return The wrapped RemoveVideoFromAlbum object.
+         */
+        RemoveVideoFromAlbum getRemoveVideoFromAlbum() {
+            return mRemoveVideoFromAlbum;
+        }
+    }
+
+
 }

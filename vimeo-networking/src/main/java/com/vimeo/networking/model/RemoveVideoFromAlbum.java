@@ -19,8 +19,12 @@ public class RemoveVideoFromAlbum implements Serializable {
 
     @NotNull
     @SerializedName("uri")
-    public String mUri;
+    private final String mUri;
 
+    /**
+     * @return The uri for the video to be removed from the album.
+     */
+    @NotNull
     public String getUri() {
         return mUri;
     }
