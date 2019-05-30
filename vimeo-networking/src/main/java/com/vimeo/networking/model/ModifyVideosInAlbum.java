@@ -15,8 +15,8 @@ public class ModifyVideosInAlbum implements Serializable {
 
     private static final long serialVersionUID = -3094719083671086785L;
 
-    public ModifyVideosInAlbum(@Nullable ArrayList<RemoveVideoFromAlbum> removeVideoList,
-                               @Nullable ArrayList<AddVideoToAlbum> addVideoList) {
+    public ModifyVideosInAlbum(@Nullable List<RemoveVideoFromAlbum> removeVideoList,
+                               @Nullable List<AddVideoToAlbum> addVideoList) {
         if (removeVideoList != null) {
             mRemoveVideoList = new ArrayList<>(removeVideoList);
         }
