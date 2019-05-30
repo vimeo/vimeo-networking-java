@@ -15,45 +15,51 @@ public class ModifyVideosInAlbum implements Serializable {
 
     private static final long serialVersionUID = -3094719083671086785L;
 
-    private class NamedWrapperForAdd implements Serializable{
+    private class NamedWrapperForAdd implements Serializable {
 
         private static final long serialVersionUID = 8713902512465812810L;
 
-        NamedWrapperForAdd(List<AddVideoToAlbum> addVideoList) {
-            mAddVideosToAlbums = new ArrayList<>(addVideoList);
+        NamedWrapperForAdd(AddVideoToAlbum addVideoToAlbum) {
+            mAddVideoToAlbum = addVideoToAlbum;
         }
 
         @SerializedName("video")
-        public List<AddVideoToAlbum> mAddVideosToAlbums;
+        public AddVideoToAlbum mAddVideoToAlbum;
     }
 
-    private class NamedWrapperForRemove implements Serializable{
+    private class NamedWrapperForRemove implements Serializable {
 
         private static final long serialVersionUID = -8122735684596463036L;
 
-        NamedWrapperForRemove(List<RemoveVideoFromAlbum> removeVideoList) {
-            mRemoveVideosFromAlbums = new ArrayList<>(removeVideoList);
+        NamedWrapperForRemove(RemoveVideoFromAlbum removeVideoFromAlbum) {
+            mRemoveVideoFromAlbum = removeVideoFromAlbum;
         }
 
         @SerializedName("video")
-        public List<RemoveVideoFromAlbum> mRemoveVideosFromAlbums;
+        public RemoveVideoFromAlbum mRemoveVideoFromAlbum;
     }
 
     public ModifyVideosInAlbum(@Nullable List<RemoveVideoFromAlbum> removeVideoList,
                                @Nullable List<AddVideoToAlbum> addVideoList) {
         if (removeVideoList != null) {
-            mRemoveVideoList = new NamedWrapperForRemove(removeVideoList);
+            mRemoveVideoList = new ArrayList<>();
+            for (final RemoveVideoFromAlbum curRemove : removeVideoList) {
+                mRemoveVideoList.add(new NamedWrapperForRemove(curRemove));
+            }
         }
         if (addVideoList != null) {
-            mAddVideoList = new NamedWrapperForAdd(addVideoList);
+            mAddVideoList = new ArrayList<>();
+            for (final AddVideoToAlbum curAdd : addVideoList) {
+                mAddVideoList.add(new NamedWrapperForAdd(curAdd));
+            }
         }
     }
 
     @Nullable
     @SerializedName("remove")
-    public NamedWrapperForRemove mRemoveVideoList;
+    public List<NamedWrapperForRemove> mRemoveVideoList;
 
     @Nullable
     @SerializedName("set")
-    public NamedWrapperForAdd mAddVideoList;
+    public List<NamedWrapperForAdd> mAddVideoList;
 }
