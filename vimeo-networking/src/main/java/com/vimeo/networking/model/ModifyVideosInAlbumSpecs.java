@@ -12,7 +12,7 @@ import java.util.List;
  * An object that is used to patch video addition and deletion updates to an Album.
  */
 @SuppressWarnings("unused")
-public class ModifyVideosInAlbum implements Serializable {
+public class ModifyVideosInAlbumSpecs implements Serializable {
 
     private static final long serialVersionUID = -3094719083671086785L;
 
@@ -24,8 +24,8 @@ public class ModifyVideosInAlbum implements Serializable {
     @SerializedName("set")
     private List<NamedWrapperForAdd> mAddVideoList;
 
-    public ModifyVideosInAlbum(@Nullable List<RemoveVideoFromAlbum> removeVideoList,
-                               @Nullable List<AddVideoToAlbum> addVideoList) {
+    public ModifyVideosInAlbumSpecs(@Nullable List<RemoveVideoFromAlbum> removeVideoList,
+                                    @Nullable List<AddVideoToAlbum> addVideoList) {
         if (removeVideoList != null) {
             mRemoveVideoList = new ArrayList<>();
             for (final RemoveVideoFromAlbum curRemove : removeVideoList) {
