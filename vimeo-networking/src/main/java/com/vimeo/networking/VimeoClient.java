@@ -1718,7 +1718,7 @@ public class VimeoClient {
             }
         } catch (final Exception e) {
             vimeoError = new VimeoError();
-            vimeoError.setException(e);
+            vimeoError.setThrowable(e);
         }
 
         return vimeoError;
