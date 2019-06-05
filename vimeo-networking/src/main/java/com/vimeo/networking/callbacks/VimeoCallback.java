@@ -47,7 +47,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
     public void onResponse(Call<T> call, Response<T> response) {
         // response.isSuccess() is true if the response code is 2xx
         if (response.isSuccessful()) {
-            T t = response.body();
+            final T t = response.body();
             success(t);
         } else {
             VimeoError vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
@@ -68,9 +68,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
          *      Cancelled request (cancelling may also lead to socket issues if request has been made)
          *      Retrofit deserialization errors in which Retrofit cannot determine the response
          */
-        t.printStackTrace();
-        VimeoError vimeoError = new VimeoError();
-        vimeoError.setDeveloperMessage(t.getMessage());
+        final VimeoError vimeoError = new VimeoError(t.getMessage(), t);
         vimeoError.setErrorMessage(t.getMessage());
         vimeoError.setIsCanceledError(call != null && call.isCanceled());
         failure(vimeoError);
