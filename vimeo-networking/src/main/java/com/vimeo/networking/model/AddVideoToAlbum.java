@@ -14,17 +14,17 @@ public class AddVideoToAlbum implements Serializable {
 
     private static final long serialVersionUID = -855083653273120166L;
 
-    public AddVideoToAlbum(@NotNull String uri, int position) {
-        mUri = uri;
-        mPosition = position;
-    }
-
     @NotNull
     @SerializedName("uri")
     private final String mUri;
 
     @SerializedName("position")
     private final int mPosition;
+
+    public AddVideoToAlbum(@NotNull String uri, int position) {
+        mUri = uri;
+        mPosition = position;
+    }
 
     /**
      * @return The uri for the video to be added to the album.
