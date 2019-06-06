@@ -289,6 +289,15 @@ public enum ErrorCode {
     UPLOAD_QUOTA_SIZE_EXCEEDED,
     @SerializedName("4102")
     UPLOAD_QUOTA_COUNT_EXCEEDED,
+    // Albums
+    @SerializedName("3200")
+    ALBUM_THUMBNAIL_ACCESS_FORBIDDEN,
+    @SerializedName("3429")
+    ALBUM_EDIT_FORBIDDEN_FOR_AUTHENTICATED_USER,
+    @SerializedName("3433")
+    ADD_VIDEO_TO_ALBUM_FORBIDDEN,
+    @SerializedName("4016")
+    UNEXPECTED_ALBUM_THUMBNAIL_EXCEPTION,
     // Unused
     // These most likely won't affect the Vimeo app since we don't currently have these settings
     @SerializedName("2254")
