@@ -30,6 +30,7 @@ import com.google.gson.GsonBuilder;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.VimeoCallback;
+import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.model.AlbumPrivacy;
 import com.vimeo.networking.model.AlbumPrivacy.AlbumPrivacyViewValue;
 import com.vimeo.networking.model.error.VimeoError;
@@ -63,7 +64,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by kylevenn on 10/30/15.
  */
 @SuppressWarnings("unused")
-public class VimeoNetworkUtil {
+public final class VimeoNetworkUtil {
 
     @Nullable
     private static Gson sGson;
@@ -112,18 +113,18 @@ public class VimeoNetworkUtil {
     public static Map<String, String> getSimpleQueryMap(@NotNull String uri) {
         final Map<String, String> queryPairs = new LinkedHashMap<>();
         try {
-            String query = uri.split("\\?")[1];
-            String[] pairs = query.split("&");
-            for (String pair : pairs) {
-                int idx = pair.indexOf("=");
+            final String query = uri.split("\\?")[1];
+            final String[] pairs = query.split("&");
+            for (final String pair : pairs) {
+                final int idx = pair.indexOf("=");
                 queryPairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
                                URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
             }
             return queryPairs;
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             // Just print the trace, we don't want to crash the app. If you ever get an empty query params
             // map back, then we know there was a malformed URL returned from the api (or a failure) 1/27/16 [KV]
-            e.printStackTrace();
+            ClientLogger.e("Error while encoding query map", e);
         }
 
         return queryPairs;
@@ -138,7 +139,7 @@ public class VimeoNetworkUtil {
      */
     @NotNull
     public static CacheControl.Builder getCacheControlBuilder(@NotNull CacheControl cacheControl) {
-        CacheControl.Builder builder = new CacheControl.Builder();
+        final CacheControl.Builder builder = new CacheControl.Builder();
         if (cacheControl.maxAgeSeconds() > -1) {
             builder.maxAge(cacheControl.maxAgeSeconds(), TimeUnit.SECONDS);
         }
@@ -170,7 +171,7 @@ public class VimeoNetworkUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (Call call : callList) {
+                for (final Call call : callList) {
                     if (call != null) {
                         call.cancel();
                     }
@@ -199,8 +200,7 @@ public class VimeoNetworkUtil {
                         .responseBodyConverter(VimeoError.class, new Annotation[0]);
                 vimeoError = errorConverter.convert(response.errorBody());
             } catch (final Exception e) {
-                //noinspection CallToPrintStackTrace
-                e.printStackTrace();
+                ClientLogger.e("Error while attempting to convert response body to VimeoError", e);
             }
         }
         if (vimeoError == null) {

@@ -74,7 +74,7 @@ public class VimeoError extends RuntimeException {
     @SerializedName("invalid_parameters")
     protected List<InvalidParameter> mInvalidParameters;
 
-    private Exception mException;
+    private Throwable mThrowable;
     private int mHttpStatusCode = Vimeo.NOT_FOUND;
 
     private boolean mIsCanceledError;
@@ -86,9 +86,9 @@ public class VimeoError extends RuntimeException {
         this.mDeveloperMessage = errorMessage;
     }
 
-    public VimeoError(String errorMessage, Exception exception) {
+    public VimeoError(String errorMessage, Throwable throwable) {
         this.mDeveloperMessage = errorMessage;
-        this.mException = exception;
+        this.mThrowable = throwable;
     }
 
     public Response getResponse() {
@@ -204,12 +204,12 @@ public class VimeoError extends RuntimeException {
         return getInvalidParameter() != null ? getInvalidParameter().getErrorCode() : null;
     }
 
-    public Exception getException() {
-        return mException;
+    public Throwable getThrowable() {
+        return mThrowable;
     }
 
-    public void setException(Exception exception) {
-        this.mException = exception;
+    public void setThrowable(Throwable throwable) {
+        this.mThrowable = throwable;
     }
 
     public int getHttpStatusCode() {
@@ -291,8 +291,8 @@ public class VimeoError extends RuntimeException {
             return getDeveloperMessage();
         } else if (this.mErrorMessage != null) {
             return this.mErrorMessage;
-        } else if (mException != null && mException.getMessage() != null) {
-            return "Exception: " + mException.getMessage();
+        } else if (mThrowable != null && mThrowable.getMessage() != null) {
+            return "Exception: " + mThrowable.getMessage();
         } else if (getErrorCode() != ErrorCode.DEFAULT) {
             return "Error Code " + getErrorCode();
         } else if (getHttpStatusCode() != Vimeo.NOT_FOUND) {
