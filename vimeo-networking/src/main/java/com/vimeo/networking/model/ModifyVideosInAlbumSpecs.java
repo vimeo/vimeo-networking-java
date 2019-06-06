@@ -1,8 +1,6 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.vimeo.stag.UseStag;
-import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -14,7 +12,6 @@ import java.util.Set;
  * An object that is used to patch video addition and deletion updates to an Album.
  */
 @SuppressWarnings("unused")
-@UseStag(FieldOption.SERIALIZED_NAME)
 public class ModifyVideosInAlbumSpecs implements Serializable {
 
     private static final long serialVersionUID = -3094719083671086785L;
