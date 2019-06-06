@@ -169,7 +169,7 @@ enum class ErrorCodeType(override val value: String?) : StringValue {
     ALBUM_EDIT_FORBIDDEN_FOR_AUTHENTICATED_USER("3429"),
 
     ADD_VIDEO_TO_ALBUM_FORBIDDEN("3433"),
-    
+
     UNEXPECTED_ALBUM_THUMBNAIL_EXCEPTION("4016"),
 
     // Generic Auth Errors

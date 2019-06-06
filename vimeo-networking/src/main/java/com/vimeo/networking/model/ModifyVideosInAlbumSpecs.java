@@ -1,41 +1,44 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * An object that is used to patch video addition and deletion updates to an Album.
  */
 @SuppressWarnings("unused")
+@UseStag(FieldOption.SERIALIZED_NAME)
 public class ModifyVideosInAlbumSpecs implements Serializable {
 
     private static final long serialVersionUID = -3094719083671086785L;
 
     @Nullable
     @SerializedName("remove")
-    private List<NamedWrapperForRemove> mRemoveVideoList;
+    private Set<NamedWrapperForRemove> mRemoveVideoSet;
 
     @Nullable
     @SerializedName("set")
-    private List<NamedWrapperForAdd> mAddVideoList;
+    private Set<NamedWrapperForAdd> mAddVideoSet;
 
-    public ModifyVideosInAlbumSpecs(@Nullable List<RemoveVideoFromAlbum> removeVideoList,
-                                    @Nullable List<AddVideoToAlbum> addVideoList) {
-        if (removeVideoList != null) {
-            mRemoveVideoList = new ArrayList<>();
-            for (final RemoveVideoFromAlbum curRemove : removeVideoList) {
-                mRemoveVideoList.add(new NamedWrapperForRemove(curRemove));
+    public ModifyVideosInAlbumSpecs(@Nullable Set<RemoveVideoFromAlbum> removeVideoSet,
+                                    @Nullable Set<AddVideoToAlbum> addVideoSet) {
+        if (removeVideoSet != null) {
+            mRemoveVideoSet = new LinkedHashSet<>();
+            for (final RemoveVideoFromAlbum curRemove : removeVideoSet) {
+                mRemoveVideoSet.add(new NamedWrapperForRemove(curRemove));
             }
         }
-        if (addVideoList != null) {
-            mAddVideoList = new ArrayList<>();
-            for (final AddVideoToAlbum curAdd : addVideoList) {
-                mAddVideoList.add(new NamedWrapperForAdd(curAdd));
+        if (addVideoSet != null) {
+            mAddVideoSet = new LinkedHashSet<>();
+            for (final AddVideoToAlbum curAdd : addVideoSet) {
+                mAddVideoSet.add(new NamedWrapperForAdd(curAdd));
             }
         }
     }
@@ -45,12 +48,12 @@ public class ModifyVideosInAlbumSpecs implements Serializable {
      * from the album.
      */
     @Nullable
-    public List<RemoveVideoFromAlbum> getRemoveVideoList() {
-        if (mRemoveVideoList == null) {
+    public Set<RemoveVideoFromAlbum> getRemoveVideoSet() {
+        if (mRemoveVideoSet == null) {
             return null;
         }
-        final List<RemoveVideoFromAlbum> retVal = new ArrayList<>();
-        for (final NamedWrapperForRemove curRemove : mRemoveVideoList) {
+        final Set<RemoveVideoFromAlbum> retVal = new LinkedHashSet<>();
+        for (final NamedWrapperForRemove curRemove : mRemoveVideoSet) {
             retVal.add(curRemove.getRemoveVideoFromAlbum());
         }
         return retVal;
@@ -61,12 +64,12 @@ public class ModifyVideosInAlbumSpecs implements Serializable {
      * to the album.
      */
     @Nullable
-    public List<AddVideoToAlbum> getAddVideoList() {
-        if (mAddVideoList == null) {
+    public Set<AddVideoToAlbum> getAddVideoSet() {
+        if (mAddVideoSet == null) {
             return null;
         }
-        final List<AddVideoToAlbum> retVal = new ArrayList<>();
-        for (final NamedWrapperForAdd curAdd : mAddVideoList) {
+        final Set<AddVideoToAlbum> retVal = new LinkedHashSet<>();
+        for (final NamedWrapperForAdd curAdd : mAddVideoSet) {
             retVal.add(curAdd.getAddVideoToAlbum());
         }
         return retVal;
