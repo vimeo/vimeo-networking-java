@@ -81,6 +81,18 @@ data class VideoConnections(
      * Information about the user privacy of this video, if the video privacy is users.
      */
     @Json(name = "users_with_access")
-    val usersWithAccess: Connection? = null
+    val usersWithAccess: Connection? = null,
+
+    /**
+     * Connection to get all the logged-in user's available albums that this video can be added to.
+     */
+    @Json(name = "available_albums")
+    val availableAlbums: Connection? = null,
+
+    /**
+     * Connection to get all the logged-in user's available channels that this video can be added to.
+     */
+    @Json(name = "available_channels")
+    val availableChannels: Connection? = null
 
 )

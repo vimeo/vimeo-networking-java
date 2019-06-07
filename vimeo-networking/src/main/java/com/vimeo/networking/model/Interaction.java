@@ -94,6 +94,10 @@ public class Interaction implements Serializable {
         }
     }
 
+    @Nullable
+    @SerializedName("options")
+    protected ArrayList<String> mOptions;
+
     @SerializedName("added")
     protected boolean mAdded;
 
@@ -157,5 +161,14 @@ public class Interaction implements Serializable {
     @Nullable
     public List<String> getReportingReasons() {
         return mReportingReasons;
+    }
+
+    /**
+     * @return a {@code List<String>} containing the options that are available for the {@link #getUri()}
+     * endpoint in this {@link Interaction}. The options will be things like "PUT", "DELETE", etc.
+     */
+    @Nullable
+    public List<String> getOptions() {
+        return new ArrayList<String>(mOptions);
     }
 }

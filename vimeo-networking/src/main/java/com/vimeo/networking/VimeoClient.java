@@ -33,6 +33,7 @@ import com.vimeo.networking.model.Album;
 import com.vimeo.networking.model.AlbumPrivacy;
 import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.Document;
+import com.vimeo.networking.model.ModifyVideosInAlbumSpecs;
 import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
 import com.vimeo.networking.model.PinCodeInfo;
@@ -40,6 +41,7 @@ import com.vimeo.networking.model.Privacy;
 import com.vimeo.networking.model.TextTrackList;
 import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
+import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.LocalErrorCode;
@@ -1081,6 +1083,36 @@ public class VimeoClient {
         call.enqueue(callback);
         return call;
     }
+
+
+    /**
+     * Call this method to batch add/remove videos to/from an album.
+     *
+     * @param album             The album whose video list will be modified.
+     * @param modificationSpecs The {@link ModifyVideosInAlbumSpecs} object containing the specifications for which
+     *                          videos should be added and removed.
+     * @param callback          A callback to be notified when the album's video list is modified. A {@link VideoList}
+     *                          containing the modified list of videos in the album will be returned in the event of
+     *                          success.
+     * @return A Call object or null if a client-side initialization error has occurred. In the event of an error,
+     * the callback will still be notified.
+     */
+    @Nullable
+    public Call modifyVideosInAlbum(@NotNull final Album album,
+                                    @NotNull final ModifyVideosInAlbumSpecs modificationSpecs,
+                                    @NotNull VimeoCallback<VideoList> callback) {
+        if (!VimeoNetworkUtil.validateString(album.getUri(),
+                                             "Album uri cannot be empty in modifyVideosInAlbum",
+                                             callback)) {
+            return null;
+        }
+        final Call<VideoList> call = mVimeoService.modifyVideosInAlbum(getAuthHeader(),
+                                                                       album.getUri() + "/videos",
+                                                                       modificationSpecs);
+        call.enqueue(callback);
+        return call;
+    }
+
 
     @Nullable
     public Call<Video> editVideo(@Nullable String uri,

@@ -17,7 +17,7 @@ import java.util.List;
  */
 @SuppressWarnings({"unused"})
 @UseStag(FieldOption.SERIALIZED_NAME)
-public class Album implements Serializable {
+public class Album implements Serializable, Entity {
 
     private static final long serialVersionUID = 1587389468069117149L;
 
@@ -513,5 +513,11 @@ public class Album implements Serializable {
         result = 31 * result + (mUri != null ? mUri.hashCode() : 0);
         result = 31 * result + (mResourceKey != null ? mResourceKey.hashCode() : 0);
         return result;
+    }
+
+    @Nullable
+    @Override
+    public String getIdentifier() {
+        return mResourceKey;
     }
 }
