@@ -114,7 +114,7 @@ class RetrofitSetup {
         if (mCache != null) {
             retrofitClientBuilder.setCache(mCache);
         }
-        retrofitClientBuilder.addNetworkInterceptor(new CacheControlInterceptor())
+        retrofitClientBuilder.addNetworkInterceptor(new CacheControlInterceptor(mConfiguration.mCacheMaxAge))
                 .setReadTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
                 .setConnectionTimeout(mConfiguration.mTimeout, TimeUnit.SECONDS)
                 .addInterceptor(new LoggingInterceptor())
