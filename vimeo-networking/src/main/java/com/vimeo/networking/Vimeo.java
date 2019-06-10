@@ -97,8 +97,12 @@ public final class Vimeo {
     public static final String HEADER_ACCEPT = "Accept";
     public static final String HEADER_ACCEPT_LANGUAGE = "Accept-Language";
 
-    // Header Values
-    public static final String HEADER_CACHE_PUBLIC = "public";
+    /**
+     * To get data from the cache, we set a max age to 7 hours. This prevents OkHttp
+     * from throwing a 504 exception. API no longer sends a max age in the header.
+     * OkHttp determines the cache to be invalid. This is a work around for this issue.
+     */
+    public static final String HEADER_CACHE_PUBLIC_WITH_MAX_AGE = "public, max-age:25200";
 
     // Video Analytics Parameters
     public static final String PARAMETER_SESSION_ID = "session_id";

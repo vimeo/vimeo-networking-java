@@ -33,8 +33,8 @@ import okhttp3.Response;
 
 /**
  * Rewrite the server's cache-control header because our server sets all {@code Cache-Control} headers
- * to {@code no-store}
- * Created by brentwatson on 8/7/17.
+ * to {@code no-store}.
+ *
  */
 public class CacheControlInterceptor implements Interceptor {
 
@@ -42,7 +42,7 @@ public class CacheControlInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         return chain.proceed(chain.request())
                 .newBuilder()
-                .header(Vimeo.HEADER_CACHE_CONTROL, Vimeo.HEADER_CACHE_PUBLIC)
+                .header(Vimeo.HEADER_CACHE_CONTROL, Vimeo.HEADER_CACHE_PUBLIC_WITH_MAX_AGE)
                 .build();
     }
 }
