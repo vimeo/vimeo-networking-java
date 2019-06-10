@@ -24,6 +24,7 @@
 
 package com.vimeo.networking.interceptors;
 
+import com.vimeo.networking.Configuration;
 import com.vimeo.networking.Vimeo;
 
 import java.io.IOException;
@@ -33,16 +34,25 @@ import okhttp3.Response;
 
 /**
  * Rewrite the server's cache-control header because our server sets all {@code Cache-Control} headers
- * to {@code no-store}.
- *
+ * to {@code no-store}. To get data from the cache, we set a max age to
+ * {@link Configuration#getCacheMaxAge()}. This prevents OkHttp from throwing a 504 exception.
+ * API no longer sends a max age in the header. OkHttp determines the cache to be invalid. This is a work
+ * around for this issue.
  */
 public class CacheControlInterceptor implements Interceptor {
 
+    private final int mMaxAge;
+
+    public CacheControlInterceptor(final int maxAge) {
+        this.mMaxAge = maxAge;
+    }
+
     @Override
     public Response intercept(Chain chain) throws IOException {
+        final String cacheControlValue = Vimeo.HEADER_CACHE_PUBLIC + ", max-age:" + mMaxAge;
         return chain.proceed(chain.request())
                 .newBuilder()
-                .header(Vimeo.HEADER_CACHE_CONTROL, Vimeo.HEADER_CACHE_PUBLIC_WITH_MAX_AGE)
+                .header(Vimeo.HEADER_CACHE_CONTROL, cacheControlValue)
                 .build();
     }
 }
