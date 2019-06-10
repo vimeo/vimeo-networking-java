@@ -96,6 +96,8 @@ public final class Vimeo {
     public static final String HEADER_USER_AGENT = "User-Agent";
     public static final String HEADER_ACCEPT = "Accept";
     public static final String HEADER_ACCEPT_LANGUAGE = "Accept-Language";
+
+    // Header Values
     public static final String HEADER_CACHE_PUBLIC = "public";
 
     // Video Analytics Parameters
