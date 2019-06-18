@@ -18,11 +18,11 @@ public class ModifyVideosInAlbumSpecs implements Serializable {
 
     @Nullable
     @SerializedName("remove")
-    private final Set<NamedWrapperForRemove> mRemoveVideoSet;
+    transient private final Set<NamedWrapperForRemove> mRemoveVideoSet;
 
     @Nullable
     @SerializedName("set")
-    private final Set<NamedWrapperForAdd> mAddVideoSet;
+    transient private final Set<NamedWrapperForAdd> mAddVideoSet;
 
     public ModifyVideosInAlbumSpecs(@Nullable Set<RemoveVideoFromAlbum> removeVideoSet,
                                     @Nullable Set<AddVideoToAlbum> addVideoSet) {
