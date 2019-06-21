@@ -3,6 +3,7 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -18,10 +19,11 @@ public class AddVideoToAlbum implements Serializable {
     @SerializedName("uri")
     private final String mUri;
 
+    @Nullable
     @SerializedName("position")
-    private final int mPosition;
+    private final Integer mPosition;
 
-    public AddVideoToAlbum(@NotNull String uri, int position) {
+    public AddVideoToAlbum(@NotNull String uri, @Nullable Integer position) {
         mUri = uri;
         mPosition = position;
     }
@@ -37,7 +39,8 @@ public class AddVideoToAlbum implements Serializable {
     /**
      * @return The position in the album where the video should be added.
      */
-    public int getPosition() {
+    @Nullable
+    public Integer getPosition() {
         return mPosition;
     }
 
@@ -48,14 +51,14 @@ public class AddVideoToAlbum implements Serializable {
 
         final AddVideoToAlbum that = (AddVideoToAlbum) o;
 
-        if (mPosition != that.mPosition) { return false; }
-        return mUri.equals(that.mUri);
+        if (!mUri.equals(that.mUri)) { return false; }
+        return mPosition != null ? mPosition.equals(that.mPosition) : that.mPosition == null;
     }
 
     @Override
     public int hashCode() {
         int result = mUri.hashCode();
-        result = 31 * result + mPosition;
+        result = 31 * result + (mPosition != null ? mPosition.hashCode() : 0);
         return result;
     }
 }
