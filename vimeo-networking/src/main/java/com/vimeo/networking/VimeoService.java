@@ -34,6 +34,7 @@ import com.vimeo.networking.model.Comment;
 import com.vimeo.networking.model.CommentList;
 import com.vimeo.networking.model.Document;
 import com.vimeo.networking.model.FeedList;
+import com.vimeo.networking.model.ModifyVideoInAlbumsSpecs;
 import com.vimeo.networking.model.ModifyVideosInAlbumSpecs;
 import com.vimeo.networking.model.PictureCollection;
 import com.vimeo.networking.model.PictureResource;
@@ -188,6 +189,11 @@ public interface VimeoService {
     Call<VideoList> modifyVideosInAlbum(@Header("Authorization") String authHeader,
                                         @Url String uri,
                                         @Body ModifyVideosInAlbumSpecs modificationSpecs);
+
+    @PATCH
+    Call<AlbumList> modifyVideoInAlbums(@Header("Authorization") String authHeader,
+                                        @Url String uri,
+                                        @Body ModifyVideoInAlbumsSpecs modificationSpecs);
     // </editor-fold>
 
     /**
