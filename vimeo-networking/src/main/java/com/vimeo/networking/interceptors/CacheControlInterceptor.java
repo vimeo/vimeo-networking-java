@@ -49,7 +49,7 @@ public class CacheControlInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        final String cacheControlValue = Vimeo.HEADER_CACHE_PUBLIC + ", max-age:" + mMaxAge;
+        final String cacheControlValue = Vimeo.HEADER_CACHE_PUBLIC + ", max-age=" + mMaxAge;
         return chain.proceed(chain.request())
                 .newBuilder()
                 .header(Vimeo.HEADER_CACHE_CONTROL, cacheControlValue)
