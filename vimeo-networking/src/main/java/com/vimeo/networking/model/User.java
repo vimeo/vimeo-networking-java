@@ -58,6 +58,7 @@ public class User implements Serializable, Followable, Entity {
     private static final String ACCOUNT_LIVE_PREMIUM = "live_premium";
     private static final String ACCOUNT_PRO_UNLIMITED = "pro_unlimited";
     private static final String ACCOUNT_PRODUCER = "producer";
+    private static final String ACCOUNT_ENTERPRISE = "enterprise";
 
     public enum AccountType {
         BASIC,
@@ -69,7 +70,8 @@ public class User implements Serializable, Followable, Entity {
         LIVE_PRO,
         LIVE_PREMIUM,
         PRO_UNLIMITED,
-        PRODUCER
+        PRODUCER,
+        ENTERPRISE
     }
 
     @SerializedName("uri")
@@ -162,6 +164,8 @@ public class User implements Serializable, Followable, Entity {
                 return AccountType.LIVE_PREMIUM;
             case ACCOUNT_PRODUCER:
                 return AccountType.PRODUCER;
+            case ACCOUNT_ENTERPRISE:
+                return AccountType.ENTERPRISE;
             case ACCOUNT_BASIC:
             default:
                 return AccountType.BASIC;

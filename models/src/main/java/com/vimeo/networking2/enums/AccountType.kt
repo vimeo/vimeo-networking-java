@@ -51,6 +51,11 @@ enum class AccountType(override val value: String?) : StringValue {
     PRODUCER("producer"),
 
     /**
+     * The user has an enterprise subscription.
+     */
+    ENTERPRISE("enterprise"),
+
+    /**
      * Unknown account type.
      */
     UNKNOWN(null)
