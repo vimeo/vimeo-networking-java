@@ -45,6 +45,10 @@ public class LiveQuota implements Serializable {
     private LiveStreamsQuota mStreams;
 
     @Nullable
+    @SerializedName("status")
+    private String mStatus;
+
+    @Nullable
     @SerializedName("time")
     private LiveTime mTime;
 
@@ -55,6 +59,22 @@ public class LiveQuota implements Serializable {
 
     public void setStreams(@Nullable LiveStreamsQuota streams) {
         mStreams = streams;
+    }
+
+    /**
+     * @return A string representing LiveQuota status information.
+     */
+    @Nullable
+    public String getStatus() {
+        return mStatus;
+    }
+
+    /**
+     * Set LiveQuota status information
+     * @param status A string status.
+     */
+    public void setStatus(@Nullable String status) {
+        mStatus = status;
     }
 
     @Nullable
