@@ -27,12 +27,13 @@ package com.vimeo.networking.model.live;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
 /**
- * Created by zetterstromk on 9/11/17.
+ * A LiveQuota data object.
  */
 @SuppressWarnings("unused")
 @UseStag
@@ -40,13 +41,63 @@ public class LiveQuota implements Serializable {
 
     private static final long serialVersionUID = -2144444972795249825L;
 
+    private static final String LIVE_QUOTA_AVAILABLE = "available";
+    private static final String LIVE_QUOTA_PRIVATE_MODE = "private_mode";
+    private static final String LIVE_QUOTA_STREAM_LIMIT = "stream_limit";
+    private static final String LIVE_QUOTA_TIME_LIMIT = "time_limit";
+    private static final String LIVE_QUOTA_UNKNOWN = "unknown";
+
+
+    @UseStag
+    public enum StatusValue {
+
+        @SerializedName(LIVE_QUOTA_AVAILABLE)
+        AVAILABLE(LIVE_QUOTA_AVAILABLE),
+
+        @SerializedName(LIVE_QUOTA_PRIVATE_MODE)
+        PRIVATE_MODE(LIVE_QUOTA_PRIVATE_MODE),
+
+        @SerializedName(LIVE_QUOTA_TIME_LIMIT)
+        TIME_LIMIT(LIVE_QUOTA_TIME_LIMIT),
+
+        @SerializedName(LIVE_QUOTA_STREAM_LIMIT)
+        STREAM_LIMIT(LIVE_QUOTA_STREAM_LIMIT),
+
+        @SerializedName(LIVE_QUOTA_UNKNOWN)
+        UNKNOWN(LIVE_QUOTA_UNKNOWN);
+
+        @NotNull
+        private final String mType;
+
+        StatusValue(@NotNull String text) {
+            this.mType = text;
+        }
+
+        @Nullable
+        public static LiveQuota.StatusValue statusValueFromString(@Nullable final String string) {
+            if (string != null) {
+                for (final LiveQuota.StatusValue statusValue : LiveQuota.StatusValue.values()) {
+                    if (string.equalsIgnoreCase(statusValue.mType)) {
+                        return statusValue;
+                    }
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String toString() {
+            return mType;
+        }
+    }
+
     @Nullable
     @SerializedName("streams")
     private LiveStreamsQuota mStreams;
 
     @Nullable
     @SerializedName("status")
-    private String mStatus;
+    private StatusValue mStatus;
 
     @Nullable
     @SerializedName("time")
@@ -62,18 +113,19 @@ public class LiveQuota implements Serializable {
     }
 
     /**
-     * @return A string representing LiveQuota status information.
+     * @return A StatusValue representing LiveQuota status information.
      */
-    @Nullable
-    public String getStatus() {
-        return mStatus;
+    @NotNull
+    public StatusValue getStatus() {
+        return mStatus == null ? StatusValue.UNKNOWN : mStatus;
     }
 
     /**
      * Set LiveQuota status information
-     * @param status A string status.
+     *
+     * @param status A StatusValue status.
      */
-    public void setStatus(@Nullable String status) {
+    public void setStatus(@Nullable StatusValue status) {
         mStatus = status;
     }
 
@@ -89,18 +141,19 @@ public class LiveQuota implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
+        if (o == null || !getClass().equals(o.getClass())) { return false; }
 
-        LiveQuota liveQuota = (LiveQuota) o;
+        final LiveQuota liveQuota = (LiveQuota) o;
 
         if (mStreams != null ? !mStreams.equals(liveQuota.mStreams) : liveQuota.mStreams != null) { return false; }
+        if (mStatus != liveQuota.mStatus) { return false; }
         return mTime != null ? mTime.equals(liveQuota.mTime) : liveQuota.mTime == null;
-
     }
 
     @Override
     public int hashCode() {
         int result = mStreams != null ? mStreams.hashCode() : 0;
+        result = 31 * result + (mStatus != null ? mStatus.hashCode() : 0);
         result = 31 * result + (mTime != null ? mTime.hashCode() : 0);
         return result;
     }
@@ -110,6 +163,7 @@ public class LiveQuota implements Serializable {
         return "LiveQuota{" +
                "mStreams=" + mStreams +
                ", mTime=" + mTime +
+               ", mStatus=" + mStatus +
                '}';
     }
 }
