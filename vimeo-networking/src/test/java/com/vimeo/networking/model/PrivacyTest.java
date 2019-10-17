@@ -16,7 +16,7 @@ public class PrivacyTest {
 
     @Test
     public void verifyTypeAdapterWasNotGenerated() throws Exception {
-        Utils.verifyNoTypeAdapterGeneration(Privacy.class);
+        Utils.verifyTypeAdapterGeneration(Privacy.class);
     }
 
     @Test
