@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
+import com.vimeo.stag.UseStag.FieldOption;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,8 +35,7 @@ import java.io.Serializable;
  * Created by hanssena on 4/23/15.
  */
 @SuppressWarnings("unused")
-// TODO: Figure out how to enable UseStag on this class without breaking deserialization due to the API giving us back integers for add and download 2/1/17 [AR]
-// @UseStag(FieldOption.SERIALIZED_NAME)
+ @UseStag(FieldOption.SERIALIZED_NAME)
 public class Privacy implements Serializable {
 
     private static final long serialVersionUID = -1679908652622815871L;
