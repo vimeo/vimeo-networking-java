@@ -45,6 +45,8 @@ import com.vimeo.networking.model.User;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking.model.connectedapp.ConnectedApp;
+import com.vimeo.networking.model.connectedapp.ConnectedAppList;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.LocalErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
@@ -1254,6 +1256,84 @@ public class VimeoClient {
 
         return call;
     }
+
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Conected Apps
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Connected Apps">
+
+    /**
+     * Gets a {@link ConnectedAppList} for the authorized user.
+     *
+     * @param callback The callback to be invoked when the request finishes.
+     * @return A {@link Call} object.
+     */
+    @NotNull
+    public Call<ConnectedAppList> getConnectedApps(@NotNull VimeoCallback<ConnectedAppList> callback) {
+        final Call<ConnectedAppList> call = mVimeoService.getConnectedApps(getAuthHeader());
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * Gets a {@link ConnectedApp} for the authorized user for a specific {@link ConnectedApp.ConnectedAppType}.
+     *
+     * @param callback The callback to be invoked when the request finishes.
+     * @param type     The {@link ConnectedApp.ConnectedAppType} of the {@link ConnectedApp} to return.
+     * @return A {@link Call} object.
+     */
+    @NotNull
+    public Call<ConnectedApp> getConnectedApp(@NotNull VimeoCallback<ConnectedApp> callback,
+                                              @NotNull ConnectedApp.ConnectedAppType type) {
+        final Call<ConnectedApp> call = mVimeoService.getConnectedApp(getAuthHeader(), type.toString());
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * Creates a {@link ConnectedApp} for the authorized user for a specific {@link ConnectedApp.ConnectedAppType}.
+     *
+     * @param callback      The callback to be invoked when the request finishes.
+     * @param type          The {@link ConnectedApp.ConnectedAppType} of the {@link ConnectedApp} to create.
+     * @param authorization An authorization string for the third party platform. The nature of the string will
+     *                      vary depending upon the {@link ConnectedApp.ConnectedAppType} but should never be
+     *                      empty or the request will fail.
+     * @return A Call object or null if a client-side initialization error has occurred. In the event of an error,
+     * the callback will still be notified.
+     */
+    @Nullable
+    public Call<ConnectedApp> createConnectedApp(@NotNull VimeoCallback<ConnectedApp> callback,
+                                                 @NotNull ConnectedApp.ConnectedAppType type,
+                                                 @NotNull String authorization) {
+        String auth = null;
+        Map<String, Object> params =
+                VimeoNetworkUtil.prepareConnectedAppCreateParameters(type, authorization, callback);
+        if (params == null) {
+            return null;
+        }
+        final Call<ConnectedApp> call = mVimeoService.createConnectedApp(getAuthHeader(), type.toString(), params);
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * Deletes a {@link ConnectedApp} for the authorized user for a specific {@link ConnectedApp.ConnectedAppType}.
+     *
+     * @param callback The callback to be invoked when the request finishes.
+     * @param type     The {@link ConnectedApp.ConnectedAppType} of the {@link ConnectedApp} to delete.
+     * @return A {@link Call} object.
+     */
+    @Nullable
+    public Call<Void> deleteConnectedApps(@NotNull VimeoCallback<Void> callback,
+                                          @NotNull ConnectedApp.ConnectedAppType type) {
+        final Call<Void> call = mVimeoService.deleteConnectedApp(getAuthHeader(), type.toString());
+        call.enqueue(callback);
+        return call;
+    }
+
+    // </editor-fold>
 
     // </editor-fold>
 

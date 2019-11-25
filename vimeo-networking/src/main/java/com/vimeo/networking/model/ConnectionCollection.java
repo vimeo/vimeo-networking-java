@@ -197,6 +197,10 @@ public class ConnectionCollection implements Serializable {
     @SerializedName("live_stats")
     private Interaction mLiveStats;
 
+    @Nullable
+    @SerializedName("connected_apps")
+    private Connection mConnectedApps;
+
     /**
      * @return the {@link Interaction} for getting the {@link com.vimeo.networking.model.live.LiveStats}
      * for a live {@link Video}
@@ -406,6 +410,19 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     public Connection getUsersWithAccess() {
         return mUsersWithAccess;
+    }
+
+    /**
+     * @return the {@link Connection} for getting the {@link com.vimeo.networking.model.connectedapp.ConnectedApp}
+     * for a logged in {@link com.vimeo.networking.model.User}
+     */
+    @Nullable
+    public Connection getConnectedApps() {
+        return mConnectedApps;
+    }
+
+    void setConnectedApps(@Nullable Connection connectedApps) {
+        mConnectedApps = connectedApps;
     }
 
     public void setUsersWithAccess(@Nullable Connection usersWithAccess) {

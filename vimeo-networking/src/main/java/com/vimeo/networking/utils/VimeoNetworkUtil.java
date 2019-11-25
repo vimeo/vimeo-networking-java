@@ -33,6 +33,7 @@ import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.model.AlbumPrivacy;
 import com.vimeo.networking.model.AlbumPrivacy.AlbumPrivacyViewValue;
+import com.vimeo.networking.model.connectedapp.ConnectedApp;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.stag.generated.Stag;
 
@@ -276,6 +277,40 @@ public final class VimeoNetworkUtil {
             retVal.put(Vimeo.PARAMETER_ALBUM_PASSWORD, albumPrivacy.getPassword());
         }
 
+        return retVal;
+    }
+
+    /**
+     * Prepare the parameters for creating a {@link ConnectedApp}. In the event of invalid parameters,
+     * the callback.failure will be invoked and the method will return null.
+     *
+     * @param type          The {@link ConnectedApp.ConnectedAppType} of the {@link ConnectedApp} that will be created.
+     * @param authorization A non-null, non-empty (will be validated) authorization token. The contents of this string
+     *                      will vary depending on the {@link ConnectedApp.ConnectedAppType}.
+     * @param callback      A callback that will receive the results of the network request.
+     * @return A prepared map of parameters or null in the event of an error.
+     */
+    @Nullable
+    public static Map<String, Object> prepareConnectedAppCreateParameters(@NotNull ConnectedApp.ConnectedAppType type,
+                                                                          @NotNull String authorization,
+                                                                          @NotNull final VimeoCallback callback) {
+        final String emptyAuthError = "Authorization can't be empty in connected app create.";
+        if (!validateString(authorization, emptyAuthError, callback)) {
+            return null;
+        }
+        final Map<String, Object> retVal = new HashMap<>();
+        switch (type) {
+            case FACEBOOK:
+                retVal.put(Vimeo.PARAMETER_ACCESS_TOKEN, authorization);
+                break;
+            case LINKED_IN:
+            case YOUTUBE:
+                retVal.put(Vimeo.PARAMETER_AUTH_CODE, authorization);
+                break;
+            case TWITTER:
+                retVal.put(Vimeo.PARAMETER_ACCESS_TOKEN_SECRET, authorization);
+                break;
+        }
         return retVal;
     }
 }

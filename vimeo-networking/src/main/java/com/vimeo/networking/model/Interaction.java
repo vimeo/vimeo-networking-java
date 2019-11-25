@@ -23,6 +23,7 @@
 package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vimeo.networking.model.connectedapp.ConnectedScopes;
 import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.NotNull;
@@ -122,6 +123,14 @@ public class Interaction implements Serializable {
     protected Date mExpiration;
 
     @Nullable
+    @SerializedName("is_connected")
+    protected boolean mIsConnected;
+
+    @Nullable
+    @SerializedName("all_scopes")
+    protected ConnectedScopes mAllScopes;
+
+    @Nullable
     @SerializedName("reason")
     protected ArrayList<String> mReportingReasons;
 
@@ -147,6 +156,15 @@ public class Interaction implements Serializable {
     @Nullable
     public Date getExpiration() {
         return mExpiration;
+    }
+
+    public boolean isConnected() {
+        return mIsConnected;
+    }
+
+    @Nullable
+    public ConnectedScopes getAllScopes() {
+        return mAllScopes;
     }
 
     public void setIsAdded(boolean added) {

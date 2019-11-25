@@ -87,6 +87,10 @@ public final class Vimeo {
     public static final String PARAMETER_ALBUM_PRIVACY = "privacy";
     public static final String PARAMETER_ALBUM_PASSWORD = "password";
 
+    public static final String PARAMETER_ACCESS_TOKEN = "access_token";
+    public static final String PARAMETER_ACCESS_TOKEN_SECRET = "access_token_secret";
+    public static final String PARAMETER_AUTH_CODE = "auth_code";
+
     public static final String PARAMETER_COMMENT_TEXT_BODY = "text";
 
     public static final String PARAMETER_ACTIVE = "active";

@@ -48,6 +48,8 @@ import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.appconfiguration.AppConfiguration;
 import com.vimeo.networking.model.cinema.ProgramContentItemList;
+import com.vimeo.networking.model.connectedapp.ConnectedApp;
+import com.vimeo.networking.model.connectedapp.ConnectedAppList;
 import com.vimeo.networking.model.iap.Product;
 import com.vimeo.networking.model.iap.Products;
 import com.vimeo.networking.model.live.LiveStats;
@@ -74,6 +76,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
@@ -159,6 +162,28 @@ public interface VimeoService {
                                         @Field("user_code") String pinCode,
                                         @Field("device_code") String deviceCode,
                                         @Field("scope") String scope);
+
+    // </editor-fold>
+
+    /**
+     * ----------------------------------------------------------------------------------------------------
+     * Connected Apps
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Connected Apps">
+    @GET("me/connected_apps")
+    Call<ConnectedAppList> getConnectedApps(@Header("Authorization") String authHeader);
+
+    @GET("me/connected_apps/{type}")
+    Call<ConnectedApp> getConnectedApp(@Header("Authorization") String authHeader, @Path("type") String type);
+
+    @PUT("me/connected_apps/{type}")
+    Call<ConnectedApp> createConnectedApp(@Header("Authorization") String authHeader,
+                                          @Path("type") String type,
+                                          @Body Map<String, Object> parameters);
+
+    @DELETE("me/connected_apps/{type}")
+    Call<Void> deleteConnectedApp(@Header("Authorization") String authHeader, @Path("type") String type);
 
     // </editor-fold>
 

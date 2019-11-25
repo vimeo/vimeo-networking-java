@@ -106,6 +106,22 @@ public class InteractionCollection implements Serializable {
     private Interaction mAddTo;
 
     @Nullable
+    @SerializedName("facebook_connected_app")
+    private Interaction mFacebookConnectedApp;
+
+    @Nullable
+    @SerializedName("youtube_connected_app")
+    private Interaction mYouTubeConnectedApp;
+
+    @Nullable
+    @SerializedName("linkedin_connected_app")
+    private Interaction mLinkedInConnectedApp;
+
+    @Nullable
+    @SerializedName("twitter_connected_app")
+    private Interaction mTwitterConnectedApp;
+
+    @Nullable
     public Interaction getWatchLater() {
         return mWatchLater;
     }
@@ -202,6 +218,66 @@ public class InteractionCollection implements Serializable {
 
     void setAlbum(@Nullable Interaction album) {
         mAlbum = album;
+    }
+
+    /**
+     * @return Information related to the user's connected Facebook app.
+     */
+    @Nullable
+    public Interaction getFacebookConnectedApp() {
+        return mFacebookConnectedApp;
+    }
+
+    /**
+     * Set information related to the user's connected Facebook app.
+     */
+    void setFacebookConnectedApp(@Nullable Interaction facebookConnectedApp) {
+        mFacebookConnectedApp = facebookConnectedApp;
+    }
+
+    /**
+     * @return Information related to the user's connected YouTube app.
+     */
+    @Nullable
+    public Interaction getYouTubeConnectedApp() {
+        return mYouTubeConnectedApp;
+    }
+
+    /**
+     * Set information related to the user's connected YouTube app.
+     */
+    void setYouTubeConnectedApp(@Nullable Interaction youTubeConnectedApp) {
+        mYouTubeConnectedApp = youTubeConnectedApp;
+    }
+
+    /**
+     * @return Information related to the user's connected LinkedIn app.
+     */
+    @Nullable
+    public Interaction getLinkedInConnectedApp() {
+        return mLinkedInConnectedApp;
+    }
+
+    /**
+     * Set information related to the user's connected LinkedIn app.
+     */
+    void setLinkedInConnectedApp(@Nullable Interaction linkedInConnectedApp) {
+        mLinkedInConnectedApp = linkedInConnectedApp;
+    }
+
+    /**
+     * @return Information related to the user's connected Twitter app.
+     */
+    @Nullable
+    public Interaction getTwitterConnectedApp() {
+        return mTwitterConnectedApp;
+    }
+
+    /**
+     * Set information related to the user's connected Twitter app.
+     */
+    void setTwitterConnectedApp(@Nullable Interaction twitterConnectedApp) {
+        mTwitterConnectedApp = twitterConnectedApp;
     }
 
     /**
