@@ -217,6 +217,8 @@ public enum ErrorCode {
     URL_UNAVAILABLE,
     @SerializedName("2406")
     USER_NOT_AUTHORIZED_TO_DELETE_ACCOUNT,
+    @SerializedName("3102")
+    INVALID_INPUT_PASSWORD_TOO_LONG,
     // </editor-fold>
 
     // ---- Video Settings ----
