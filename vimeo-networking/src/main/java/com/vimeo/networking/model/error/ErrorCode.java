@@ -154,6 +154,8 @@ public enum ErrorCode {
     INVALID_INPUT_EMAIL_NOT_RECOGNIZED,
     @SerializedName("2218")
     INVALID_INPUT_PASSWORD_EMAIL_MISMATCH,
+    @SerializedName("3102")
+    INVALID_INPUT_PASSWORD_TOO_LONG,
     // Auth Errors
     @SerializedName("2303")
     UNABLE_TO_CREATE_USER_INVALID_TOKEN,
