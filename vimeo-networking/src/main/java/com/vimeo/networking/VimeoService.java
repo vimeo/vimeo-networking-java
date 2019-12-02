@@ -174,13 +174,29 @@ public interface VimeoService {
     @GET("me/connected_apps")
     Call<ConnectedAppList> getConnectedApps(@Header("Authorization") String authHeader);
 
+    @GET("me/connected_apps")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.ConnectedAppList> getConnectedAppsMoshi(@Header("Authorization") String authHeader);
+
+
     @GET("me/connected_apps/{type}")
     Call<ConnectedApp> getConnectedApp(@Header("Authorization") String authHeader, @Path("type") String type);
+
+    @GET("me/connected_apps/{type}")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.ConnectedApp> getConnectedAppMoshi(@Header("Authorization") String authHeader,
+                                                                  @Path("type") String type);
 
     @PUT("me/connected_apps/{type}")
     Call<ConnectedApp> createConnectedApp(@Header("Authorization") String authHeader,
                                           @Path("type") String type,
                                           @Body Map<String, Object> parameters);
+
+    @PUT("me/connected_apps/{type}")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.ConnectedApp> createConnectedAppMoshi(@Header("Authorization") String authHeader,
+                                                                     @Path("type") String type,
+                                                                     @Body Map<String, Object> parameters);
 
     @DELETE("me/connected_apps/{type}")
     Call<Void> deleteConnectedApp(@Header("Authorization") String authHeader, @Path("type") String type);
@@ -327,6 +343,12 @@ public interface VimeoService {
                        @Url String uri,
                        @QueryMap Map<String, String> options,
                        @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET("me")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.User> getUserMoshi(@Header("Authorization") String authHeader,
+                                                  @QueryMap Map<String, String> options,
+                                                  @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<Video> getVideo(@Header("Authorization") String authHeader,

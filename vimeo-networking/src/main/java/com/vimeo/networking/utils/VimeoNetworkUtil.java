@@ -35,6 +35,7 @@ import com.vimeo.networking.model.AlbumPrivacy;
 import com.vimeo.networking.model.AlbumPrivacy.AlbumPrivacyViewValue;
 import com.vimeo.networking.model.connectedapp.ConnectedApp;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking2.enums.ConnectedAppType;
 import com.vimeo.stag.generated.Stag;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,6 +70,8 @@ public final class VimeoNetworkUtil {
 
     @Nullable
     private static Gson sGson;
+
+    private VimeoNetworkUtil() {}
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
@@ -223,11 +226,18 @@ public final class VimeoNetworkUtil {
     public static boolean validateString(@Nullable final String input,
                                          @NotNull final String errorMessage,
                                          @NotNull final VimeoCallback callback) {
-        if (input == null || input.isEmpty()) {
+        if (isStringEmpty(input)) {
             callback.failure(new VimeoError(errorMessage));
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return true if the passed string is null or empty, false otherwise
+     */
+    private static boolean isStringEmpty(@Nullable final String input) {
+        return input == null || input.isEmpty();
     }
 
     /**
@@ -284,9 +294,10 @@ public final class VimeoNetworkUtil {
      * Prepare the parameters for creating a {@link ConnectedApp}. In the event of invalid parameters,
      * the callback.failure will be invoked and the method will return null.
      *
-     * @param type          The {@link ConnectedApp.ConnectedAppType} of the {@link ConnectedApp} that will be created.
+     * @param type          The {@link ConnectedAppType} of the {@link com.vimeo.networking2.ConnectedApp}
+     *                      that will be created.
      * @param authorization A non-null, non-empty (will be validated) authorization token. The contents of this string
-     *                      will vary depending on the {@link ConnectedApp.ConnectedAppType}.
+     *                      will vary depending on the {@link ConnectedAppType}.
      * @param callback      A callback that will receive the results of the network request.
      * @return A prepared map of parameters or null in the event of an error.
      */
@@ -298,19 +309,27 @@ public final class VimeoNetworkUtil {
         if (!validateString(authorization, emptyAuthError, callback)) {
             return null;
         }
-        final Map<String, Object> retVal = new HashMap<>();
-        switch (type) {
-            case FACEBOOK:
-                retVal.put(Vimeo.PARAMETER_ACCESS_TOKEN, authorization);
-                break;
-            case LINKED_IN:
-            case YOUTUBE:
-                retVal.put(Vimeo.PARAMETER_AUTH_CODE, authorization);
-                break;
-            case TWITTER:
-                retVal.put(Vimeo.PARAMETER_ACCESS_TOKEN_SECRET, authorization);
-                break;
+        return prepareConnectedAppCreateParameters(type.toString(), authorization);
+    }
+
+    @Nullable
+    public static Map<String, Object> prepareConnectedAppCreateParameters(@NotNull ConnectedAppType type,
+                                                                          @NotNull String authorization) {
+        final String typeString = type.getValue();
+        if (isStringEmpty(typeString) || type == ConnectedAppType.UNKNOWN) {
+            return null;
         }
+        return prepareConnectedAppCreateParameters(typeString, authorization);
+    }
+
+    @Nullable
+    private static Map<String, Object> prepareConnectedAppCreateParameters(@NotNull String type, @NotNull String auth) {
+        if (isStringEmpty(auth) || isStringEmpty(type)) {
+            return null;
+        }
+        final Map<String, Object> retVal = new HashMap<>();
+        retVal.put(Vimeo.PARAMETER_AUTH_CODE, auth);
+        retVal.put(Vimeo.PARAMETER_APP_TYPE, type);
         return retVal;
     }
 }

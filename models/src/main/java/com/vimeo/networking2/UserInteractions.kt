@@ -1,8 +1,8 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.common.FollowableInteractions
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.FollowableInteractions
 
 /**
  * All actions that can be taken on a user.
@@ -32,6 +32,30 @@ data class UserInteractions(
      * Information regarding where and how to report a user.
      */
     @Json(name = "report")
-    val report: BasicInteraction? = null
+    val report: BasicInteraction? = null,
+
+    /**
+     * Information related to the Facebook connected app.
+     */
+    @Json(name = "facebook_connected_app")
+    val facebookConnectedApp: ConnectedAppInteraction? = null,
+
+    /**
+     * Information related to the YouTube connected app.
+     */
+    @Json(name = "youtube_connected_app")
+    val youtubeConnectedApp: ConnectedAppInteraction? = null,
+
+    /**
+     * Information related to the LinkedIn connected app.
+     */
+    @Json(name = "linkedin_connected_app")
+    val linkedinConnectedApp: ConnectedAppInteraction? = null,
+
+    /**
+     * Information related to the Twitter connected app.
+     */
+    @Json(name = "twitter_connected_app")
+    val twitterConnectedApp: ConnectedAppInteraction? = null
 
 ): FollowableInteractions
