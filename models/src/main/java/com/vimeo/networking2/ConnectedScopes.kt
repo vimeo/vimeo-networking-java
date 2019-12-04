@@ -1,10 +1,12 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  * Provides the lists of scopes that are required for third-party connected app features.
  */
+@JsonClass(generateAdapter = true)
 data class ConnectedScopes(
 
         /**
