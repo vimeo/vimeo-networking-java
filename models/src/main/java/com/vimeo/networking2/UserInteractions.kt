@@ -44,13 +44,13 @@ data class UserInteractions(
      * Information related to the YouTube connected app.
      */
     @Json(name = "youtube_connected_app")
-    val youtubeConnectedApp: ConnectedAppInteraction? = null,
+    val youTubeConnectedApp: ConnectedAppInteraction? = null,
 
     /**
      * Information related to the LinkedIn connected app.
      */
     @Json(name = "linkedin_connected_app")
-    val linkedinConnectedApp: ConnectedAppInteraction? = null,
+    val linkedInConnectedApp: ConnectedAppInteraction? = null,
 
     /**
      * Information related to the Twitter connected app.
