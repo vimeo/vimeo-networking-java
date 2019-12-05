@@ -1268,35 +1268,45 @@ public class VimeoClient {
     /**
      * Gets a {@link ConnectedAppList} for the authorized user.
      *
-     * @param callback The callback to be invoked when the request finishes.
+     * @param cacheControl The cache control.
+     * @param callback     The callback to be invoked when the request finishes.
      * @return A {@link Call} object.
      */
     @NotNull
-    public Call<ConnectedAppList> getConnectedApps(@NotNull final VimeoCallback<ConnectedAppList> callback) {
-        final Call<ConnectedAppList> call = mVimeoService.getConnectedApps(getAuthHeader());
+    public Call<ConnectedAppList> getConnectedApps(@NotNull final CacheControl cacheControl,
+                                                   @NotNull final VimeoCallback<ConnectedAppList> callback) {
+        final Call<ConnectedAppList> call = mVimeoService.getConnectedApps(getAuthHeader(),
+                                                                           createCacheControlString(cacheControl));
         call.enqueue(callback);
         return call;
     }
 
     /**
+     * Gets a {@link com.vimeo.networking2.ConnectedAppList} for the authorized user.
+     *
+     * @param cacheControl The cache control.
      * @return A {@link Call} object that can be used to request a {@link com.vimeo.networking2.ConnectedAppList}.
      */
     @NotNull
-    public Call<com.vimeo.networking2.ConnectedAppList> getConnectedApps() {
-        return mVimeoService.getConnectedAppsMoshi(getAuthHeader());
+    public Call<com.vimeo.networking2.ConnectedAppList> getConnectedApps(@NotNull final CacheControl cacheControl) {
+        return mVimeoService.getConnectedAppsMoshi(getAuthHeader(), createCacheControlString(cacheControl));
     }
 
     /**
      * Gets a {@link ConnectedApp} for the authorized user for a specific {@link ConnectedApp.ConnectedAppType}.
      *
-     * @param type     The {@link ConnectedApp.ConnectedAppType} of the {@link ConnectedApp} to return.
-     * @param callback The callback to be invoked when the request finishes.
+     * @param type         The {@link ConnectedApp.ConnectedAppType} of the {@link ConnectedApp} to return.
+     * @param cacheControl The cache control.
+     * @param callback     The callback to be invoked when the request finishes.
      * @return A {@link Call} object.
      */
     @NotNull
     public Call<ConnectedApp> getConnectedApp(@NotNull final ConnectedApp.ConnectedAppType type,
+                                              @NotNull final CacheControl cacheControl,
                                               @NotNull final VimeoCallback<ConnectedApp> callback) {
-        final Call<ConnectedApp> call = mVimeoService.getConnectedApp(getAuthHeader(), type.toString());
+        final Call<ConnectedApp> call = mVimeoService.getConnectedApp(getAuthHeader(),
+                                                                      type.toString(),
+                                                                      createCacheControlString(cacheControl));
         call.enqueue(callback);
         return call;
     }
@@ -1304,12 +1314,16 @@ public class VimeoClient {
     /**
      * Returns a {@link Call} object that can be used to request a {@link com.vimeo.networking2.ConnectedApp}.
      *
-     * @param type The {@link ConnectedAppType} of the {@link com.vimeo.networking2.ConnectedApp} to return.
+     * @param type         The {@link ConnectedAppType} of the {@link com.vimeo.networking2.ConnectedApp} to return.
+     * @param cacheControl The cache control.
      * @return A {@link Call} object that can be used to request a {@link com.vimeo.networking2.ConnectedApp}.
      */
     @NotNull
-    public Call<com.vimeo.networking2.ConnectedApp> getConnectedApp(@NotNull final ConnectedAppType type) {
-        return mVimeoService.getConnectedAppMoshi(getAuthHeader(), type.getValue());
+    public Call<com.vimeo.networking2.ConnectedApp> getConnectedApp(@NotNull final ConnectedAppType type,
+                                                                    @NotNull final CacheControl cacheControl) {
+        return mVimeoService.getConnectedAppMoshi(getAuthHeader(),
+                                                  type.getValue(),
+                                                  createCacheControlString(cacheControl));
     }
 
     /**
@@ -1726,6 +1740,7 @@ public class VimeoClient {
 
     /**
      * Fetches the currently authenticated user from the API
+     *
      * @param query         Query string for hitting the search endpoint
      * @param refinementMap Used to refine lists (generally for search) with sorts and filters
      *                      {@link RequestRefinementBuilder}
@@ -1735,7 +1750,7 @@ public class VimeoClient {
      */
     public Call<com.vimeo.networking2.User> getCurrentUser(@Nullable String query,
                                                            @Nullable Map<String, String> refinementMap,
-                                                           @Nullable String fieldFilter){
+                                                           @Nullable String fieldFilter) {
         return mVimeoService.getUserMoshi(getAuthHeader(),
                                           createQueryMap(query, refinementMap, fieldFilter),
                                           createCacheControlString(CacheControl.FORCE_NETWORK));

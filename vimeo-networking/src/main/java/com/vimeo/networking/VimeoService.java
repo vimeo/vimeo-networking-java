@@ -172,33 +172,41 @@ public interface VimeoService {
      */
     // <editor-fold desc="Connected Apps">
     @GET("me/connected_apps")
-    Call<ConnectedAppList> getConnectedApps(@Header("Authorization") String authHeader);
+    Call<ConnectedAppList> getConnectedApps(@Header("Authorization") String authHeader,
+                                            @Header("Cache-Control") String cacheHeader);
 
     @GET("me/connected_apps")
     @Serializer(converter = ConverterType.MOSHI)
-    Call<com.vimeo.networking2.ConnectedAppList> getConnectedAppsMoshi(@Header("Authorization") String authHeader);
+    Call<com.vimeo.networking2.ConnectedAppList> getConnectedAppsMoshi(@Header("Authorization") String authHeader,
+                                                                       @Header("Cache-Control") String cacheHeader);
 
 
     @GET("me/connected_apps/{type}")
-    Call<ConnectedApp> getConnectedApp(@Header("Authorization") String authHeader, @Path("type") String type);
+    Call<ConnectedApp> getConnectedApp(@Header("Authorization") String authHeader,
+                                       @Path("type") String type,
+                                       @Header("Cache-Control") String cacheHeader);
 
     @GET("me/connected_apps/{type}")
     @Serializer(converter = ConverterType.MOSHI)
     Call<com.vimeo.networking2.ConnectedApp> getConnectedAppMoshi(@Header("Authorization") String authHeader,
-                                                                  @Path("type") String type);
+                                                                  @Path("type") String type,
+                                                                  @Header("Cache-Control") String cacheHeader);
 
     @PUT("me/connected_apps/{type}")
+    @Headers("Cache-Control: no-cache, no-store")
     Call<ConnectedApp> createConnectedApp(@Header("Authorization") String authHeader,
                                           @Path("type") String type,
                                           @Body Map<String, Object> parameters);
 
     @PUT("me/connected_apps/{type}")
     @Serializer(converter = ConverterType.MOSHI)
+    @Headers("Cache-Control: no-cache, no-store")
     Call<com.vimeo.networking2.ConnectedApp> createConnectedAppMoshi(@Header("Authorization") String authHeader,
                                                                      @Path("type") String type,
                                                                      @Body Map<String, Object> parameters);
 
     @DELETE("me/connected_apps/{type}")
+    @Headers("Cache-Control: no-cache, no-store")
     Call<Void> deleteConnectedApp(@Header("Authorization") String authHeader, @Path("type") String type);
 
     // </editor-fold>
