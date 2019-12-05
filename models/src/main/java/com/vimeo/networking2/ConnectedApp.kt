@@ -26,7 +26,7 @@ data class ConnectedApp(
          * The list of remaining scopes on this connected app that the user needs for a particular feature.
          */
         @Json(name = "needed_scopes")
-        val pictures: List<String>? = null,
+        val neededScopes: ConnectedScopes? = null,
 
         /**
          * The list of third party pages that is associated with the user's account (Facebook and LinkedIn only).

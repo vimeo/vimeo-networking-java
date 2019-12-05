@@ -67,7 +67,7 @@ public class ConnectedApp implements Serializable, Entity {
 
     @Nullable
     @SerializedName("needed_scopes")
-    private List<String> mNeededScopes;
+    private ConnectedScopes mNeededScopes;
 
     @Nullable
     @SerializedName("pages")
@@ -126,15 +126,15 @@ public class ConnectedApp implements Serializable, Entity {
      * @return The list of remaining scopes on this connected app that the user needs for a particular feature.
      */
     @Nullable
-    public List<String> getNeededScopes() {
-        return mNeededScopes == null ? null : Collections.unmodifiableList(mNeededScopes);
+    public ConnectedScopes getNeededScopes() {
+        return mNeededScopes;
     }
 
     /**
      * Set the list of remaining scopes on this connected app that the user needs for a particular Vimeo feature.
      */
-    void setNeededScopes(@Nullable List<String> neededScopes) {
-        mNeededScopes = neededScopes == null ? null : Collections.unmodifiableList(neededScopes);
+    void setNeededScopes(@Nullable ConnectedScopes neededScopes) {
+        mNeededScopes = neededScopes;
     }
 
     /**
