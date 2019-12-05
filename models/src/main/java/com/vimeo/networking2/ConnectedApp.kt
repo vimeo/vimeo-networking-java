@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.ConnectedAppType
+import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
@@ -69,9 +70,16 @@ data class ConnectedApp(
          * The [ConnectedAppType] of the connected app.
          */
         @Json(name = "type")
-        val type: ConnectedAppType? = null
+        val typeAsString: String? = null
+
 ) : Entity {
-
     override val identifier: String? = uri
-
 }
+
+
+/**
+ * @see ConnectedApp.typeAsString
+ * @see ConnectedAppType
+ */
+val ConnectedApp.type: ConnectedAppType
+    get() = typeAsString.asEnum(ConnectedAppType.UNKNOWN)
