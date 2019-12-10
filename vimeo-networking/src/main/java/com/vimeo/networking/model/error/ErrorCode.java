@@ -206,6 +206,10 @@ public enum ErrorCode {
     UNABLE_TO_LOGIN_GOOGLE_COULD_NOT_VERIFY_TOKEN,
     @SerializedName("2337")
     UNABLE_TO_CREATE_USER_GOOGLE_COULD_NOT_VERIFY_TOKEN,
+    @SerializedName("2339")
+    TWITTER_COULD_NOT_VERIFY_TOKEN,
+    @SerializedName("2340")
+    LINKEDIN_COULD_NOT_VERIFY_TOKEN,
     // Generic Auth Errors
     @SerializedName("2400")
     USER_EXISTS,
@@ -219,6 +223,8 @@ public enum ErrorCode {
     URL_UNAVAILABLE,
     @SerializedName("2406")
     USER_NOT_AUTHORIZED_TO_DELETE_ACCOUNT,
+    @SerializedName("2419")
+    CONNECTED_APP_ALREADY_EXISTS,
     // </editor-fold>
 
     // ---- Video Settings ----

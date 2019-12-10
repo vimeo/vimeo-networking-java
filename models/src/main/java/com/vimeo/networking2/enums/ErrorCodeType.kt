@@ -163,6 +163,10 @@ enum class ErrorCodeType(override val value: String?) : StringValue {
 
     UNABLE_TO_CREATE_USER_GOOGLE_COULD_NOT_VERIFY_TOKEN("2337"),
 
+    TWITTER_COULD_NOT_VERIFY_TOKEN("2339"),
+
+    LINKEDIN_COULD_NOT_VERIFY_TOKEN("2340"),
+
     // Albums
     ALBUM_THUMBNAIL_ACCESS_FORBIDDEN("3200"),
 
@@ -184,6 +188,8 @@ enum class ErrorCodeType(override val value: String?) : StringValue {
     URL_UNAVAILABLE("2404"),
 
     USER_NOT_AUTHORIZED_TO_DELETE_ACCOUNT("2406"),
+
+    CONNECTED_APP_ALREADY_EXISTS("2419"),
 
     INVALID_INPUT_BAD_UPLOAD_TYPE("2230"),
 
