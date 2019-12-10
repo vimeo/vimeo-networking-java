@@ -8,9 +8,9 @@ import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
 /**
- * A `ConnectedApp` represents a connection to a social media platform. Some activities, like simultaneously live
+ * A [ConnectedApp] represents a connection to a social media platform. Some activities, like simultaneously live
  * stream to multiple destinations, or publishing across platforms, require requesting specific scopes. The scopes
- * required will always be returned in the `neededScopes` array.
+ * required will always be returned in the [neededScopes] array.
  * - Note: Some properties are specific to a particular platform. These cases have been noted in the documentation
  * where relevant.
  */
@@ -70,7 +70,7 @@ data class ConnectedApp(
          * The [ConnectedAppType] of the connected app.
          */
         @Json(name = "type")
-        val typeAsString: String? = null
+        val rawType: String? = null
 
 ) : Entity {
     override val identifier: String? = uri
@@ -78,8 +78,8 @@ data class ConnectedApp(
 
 
 /**
- * @see ConnectedApp.typeAsString
+ * @see ConnectedApp.rawType
  * @see ConnectedAppType
  */
 val ConnectedApp.type: ConnectedAppType
-    get() = typeAsString.asEnum(ConnectedAppType.UNKNOWN)
+    get() = rawType.asEnum(ConnectedAppType.UNKNOWN)

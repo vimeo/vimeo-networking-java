@@ -3,7 +3,6 @@ package com.vimeo.networking2.enums
 /**
  * An enumeration of the supported connected app types.
  */
-@Suppress("unused")
 enum class ConnectedAppType(override val value: String?) : StringValue {
 
     /**

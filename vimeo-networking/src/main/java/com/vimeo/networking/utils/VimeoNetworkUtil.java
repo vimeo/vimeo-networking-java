@@ -33,9 +33,7 @@ import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking.model.AlbumPrivacy;
 import com.vimeo.networking.model.AlbumPrivacy.AlbumPrivacyViewValue;
-import com.vimeo.networking.model.connectedapp.ConnectedApp;
 import com.vimeo.networking.model.error.VimeoError;
-import com.vimeo.networking2.enums.ConnectedAppType;
 import com.vimeo.stag.generated.Stag;
 
 import org.jetbrains.annotations.NotNull;
@@ -236,7 +234,7 @@ public final class VimeoNetworkUtil {
     /**
      * @return true if the passed string is null or empty, false otherwise
      */
-    private static boolean isStringEmpty(@Nullable final String input) {
+    public static boolean isStringEmpty(@Nullable final String input) {
         return input == null || input.isEmpty();
     }
 
@@ -290,46 +288,4 @@ public final class VimeoNetworkUtil {
         return retVal;
     }
 
-    /**
-     * Prepare the parameters for creating a {@link ConnectedApp}. In the event of invalid parameters,
-     * the callback.failure will be invoked and the method will return null.
-     *
-     * @param type          The {@link ConnectedAppType} of the {@link com.vimeo.networking2.ConnectedApp}
-     *                      that will be created.
-     * @param authorization A non-null, non-empty (will be validated) authorization token. The contents of this string
-     *                      will vary depending on the {@link ConnectedAppType}.
-     * @param callback      A callback that will receive the results of the network request.
-     * @return A prepared map of parameters or null in the event of an error.
-     */
-    @Nullable
-    public static Map<String, Object> prepareConnectedAppCreateParameters(@NotNull ConnectedApp.ConnectedAppType type,
-                                                                          @NotNull String authorization,
-                                                                          @NotNull final VimeoCallback callback) {
-        final String emptyAuthError = "Authorization can't be empty in connected app create.";
-        if (!validateString(authorization, emptyAuthError, callback)) {
-            return null;
-        }
-        return prepareConnectedAppCreateParameters(type.toString(), authorization);
-    }
-
-    @Nullable
-    public static Map<String, Object> prepareConnectedAppCreateParameters(@NotNull ConnectedAppType type,
-                                                                          @NotNull String authorization) {
-        final String typeString = type.getValue();
-        if (isStringEmpty(typeString) || type == ConnectedAppType.UNKNOWN) {
-            return null;
-        }
-        return prepareConnectedAppCreateParameters(typeString, authorization);
-    }
-
-    @Nullable
-    private static Map<String, Object> prepareConnectedAppCreateParameters(@NotNull String type, @NotNull String auth) {
-        if (isStringEmpty(auth) || isStringEmpty(type)) {
-            return null;
-        }
-        final Map<String, Object> retVal = new HashMap<>();
-        retVal.put(Vimeo.PARAMETER_AUTH_CODE, auth);
-        retVal.put(Vimeo.PARAMETER_APP_TYPE, type);
-        return retVal;
-    }
 }
