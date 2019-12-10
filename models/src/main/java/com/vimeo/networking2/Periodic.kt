@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.util.*
 
 /**
  * Periodic upload quota information.
@@ -21,12 +20,6 @@ data class Periodic(
      */
     @Json(name = "max")
     val max: Long? = null,
-
-    /**
-     * The time in ISO 8601 format when your upload quota resets.
-     */
-    @Json(name = "reset_date")
-    val resetDate: Date? = null,
 
     /**
      * The number of bytes that you've already uploaded against your quota in the current period.

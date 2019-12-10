@@ -56,6 +56,9 @@ import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.utils.BaseUrlInterceptor;
 import com.vimeo.networking.utils.PrivacySettingsParams;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
+import com.vimeo.networking2.ConnectedApp;
+import com.vimeo.networking2.ConnectedAppList;
+import com.vimeo.networking2.enums.ConnectedAppType;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -1258,6 +1261,88 @@ public class VimeoClient {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
+    // Connected Apps
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Connected Apps">
+
+    /**
+     * Gets a {@link ConnectedAppList} for the authorized user.
+     *
+     * @param cacheControl The cache control.
+     * @return A {@link Call} object that can be used to request a {@link ConnectedAppList}.
+     */
+    @NotNull
+    public Call<ConnectedAppList> getConnectedApps(@NotNull final CacheControl cacheControl) {
+        return mVimeoService.getConnectedApps(getAuthHeader(), createCacheControlString(cacheControl));
+    }
+
+
+    /**
+     * Returns a {@link Call} object that can be used to request a {@link ConnectedApp}.
+     *
+     * @param type         The {@link ConnectedAppType} of the {@link ConnectedApp} to return.
+     * @param cacheControl The cache control.
+     * @return A {@link Call} object that can be used to request a {@link ConnectedApp}.
+     */
+    @NotNull
+    public Call<ConnectedApp> getConnectedApp(@NotNull final ConnectedAppType type,
+                                              @NotNull final CacheControl cacheControl) {
+        return mVimeoService.getConnectedApp(getAuthHeader(),
+                                             type.getValue(),
+                                             createCacheControlString(cacheControl));
+    }
+
+    /**
+     * Creates a {@link ConnectedApp} for the authorized user for a specific
+     * {@link ConnectedAppType}.
+     *
+     * @param type          The {@link ConnectedAppType} of the {@link ConnectedApp} to create.
+     * @param authorization An authorization string for the third party platform. The nature of the string will
+     *                      vary depending upon the {@link ConnectedAppType} but should never be
+     *                      empty or the request will fail.
+     * @return A {@link Call} object or null if a client-side initialization error has occurred due to an invalid type
+     * or authorization argument.
+     */
+    @Nullable
+    public Call<ConnectedApp> createConnectedApp(@NotNull final ConnectedAppType type,
+                                                 @NotNull final String authorization) {
+        final String typeString = type.getValue();
+        if (type == ConnectedAppType.UNKNOWN || VimeoNetworkUtil.isStringEmpty(authorization)) {
+            return null;
+        }
+        if (VimeoNetworkUtil.isStringEmpty(typeString)) {
+            throw new AssertionError("ConnectedAppType is not valid.");
+        }
+        final Map<String, Object> params = new HashMap<>();
+        params.put(Vimeo.PARAMETER_AUTH_CODE, authorization);
+        params.put(Vimeo.PARAMETER_APP_TYPE, typeString);
+        return mVimeoService.createConnectedApp(getAuthHeader(), type.getValue(), params);
+    }
+
+    /**
+     * Deletes a {@link ConnectedApp} for the authorized user for a specific {@link ConnectedAppType}.
+     *
+     * @param type The {@link ConnectedAppType} of the {@link ConnectedApp} to delete.
+     * @return A {@link Call} object that can be used to delete a {@link ConnectedApp}.
+     */
+    @Nullable
+    public Call<Void> deleteConnectedApp(@NotNull final ConnectedAppType type) {
+        final String typeString = type.getValue();
+
+        if (type == ConnectedAppType.UNKNOWN) {
+            return null;
+        }
+
+        if (VimeoNetworkUtil.isStringEmpty(typeString)) {
+            throw new AssertionError("ConnectedAppType is not valid.");
+        }
+
+        return mVimeoService.deleteConnectedApp(getAuthHeader(), typeString);
+    }
+
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
     // Documents
     // -----------------------------------------------------------------------------------------------------
     // <editor-fold desc="Documents">
@@ -1586,7 +1671,31 @@ public class VimeoClient {
      * @return {@link Call} that can be used to cancel network requests.
      */
     public Call<Product> getProduct(String uri, VimeoCallback<Product> callback) {
-        return getContent(uri, CacheControl.FORCE_NETWORK, GetRequestCaller.PRODUCT, null, null, null, callback);
+        return getContent(uri,
+                          CacheControl.FORCE_NETWORK,
+                          GetRequestCaller.PRODUCT,
+                          null,
+                          null,
+                          null,
+                          callback);
+    }
+
+    /**
+     * Fetches the currently authenticated user from the API
+     *
+     * @param query         Query string for hitting the search endpoint
+     * @param refinementMap Used to refine lists (generally for search) with sorts and filters
+     *                      {@link RequestRefinementBuilder}
+     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a>
+     *                      to optimize the request query. May be null. (highly recommended!)
+     * @return A {@link Call} object that can be used to get a {@link com.vimeo.networking2.User}.
+     */
+    public Call<com.vimeo.networking2.User> getCurrentUser(@Nullable String query,
+                                                           @Nullable Map<String, String> refinementMap,
+                                                           @Nullable String fieldFilter) {
+        return mVimeoService.getUserMoshi(getAuthHeader(),
+                                          createQueryMap(query, refinementMap, fieldFilter),
+                                          createCacheControlString(CacheControl.FORCE_NETWORK));
     }
 
     /**

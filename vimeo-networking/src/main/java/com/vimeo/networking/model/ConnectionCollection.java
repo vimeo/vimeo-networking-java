@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.model.notifications.NotificationConnection;
+import com.vimeo.networking2.ConnectedApp;
 import com.vimeo.stag.UseStag;
 import com.vimeo.stag.UseStag.FieldOption;
 
@@ -196,6 +197,10 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     @SerializedName("live_stats")
     private Interaction mLiveStats;
+
+    @Nullable
+    @SerializedName("connected_apps")
+    private Connection mConnectedApps;
 
     /**
      * @return the {@link Interaction} for getting the {@link com.vimeo.networking.model.live.LiveStats}
@@ -406,6 +411,19 @@ public class ConnectionCollection implements Serializable {
     @Nullable
     public Connection getUsersWithAccess() {
         return mUsersWithAccess;
+    }
+
+    /**
+     * @return the {@link Connection} for getting the {@link ConnectedApp}
+     * for a logged in {@link com.vimeo.networking.model.User}
+     */
+    @Nullable
+    public Connection getConnectedApps() {
+        return mConnectedApps;
+    }
+
+    void setConnectedApps(@Nullable Connection connectedApps) {
+        mConnectedApps = connectedApps;
     }
 
     public void setUsersWithAccess(@Nullable Connection usersWithAccess) {

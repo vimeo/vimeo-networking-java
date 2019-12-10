@@ -42,6 +42,12 @@ data class UserConnections(
     val channels: Connection? = null,
 
     /**
+     * Information about this user's connected apps.
+     */
+    @Json(name = "connected_apps")
+    val connectedApps: Connection? = null,
+
+    /**
      * Information about this user's feed.
      */
     @Json(name = "feed")

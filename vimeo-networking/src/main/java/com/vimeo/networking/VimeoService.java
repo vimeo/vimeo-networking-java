@@ -74,6 +74,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
@@ -159,6 +160,36 @@ public interface VimeoService {
                                         @Field("user_code") String pinCode,
                                         @Field("device_code") String deviceCode,
                                         @Field("scope") String scope);
+
+    // </editor-fold>
+
+    /**
+     * ----------------------------------------------------------------------------------------------------
+     * Connected Apps
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Connected Apps">
+    @GET("me/connected_apps")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.ConnectedAppList> getConnectedApps(@Header("Authorization") String authHeader,
+                                                                  @Header("Cache-Control") String cacheHeader);
+
+    @GET("me/connected_apps/{type}")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.ConnectedApp> getConnectedApp(@Header("Authorization") String authHeader,
+                                                             @Path("type") String type,
+                                                             @Header("Cache-Control") String cacheHeader);
+
+    @PUT("me/connected_apps/{type}")
+    @Serializer(converter = ConverterType.MOSHI)
+    @Headers("Cache-Control: no-cache, no-store")
+    Call<com.vimeo.networking2.ConnectedApp> createConnectedApp(@Header("Authorization") String authHeader,
+                                                                @Path("type") String type,
+                                                                @Body Map<String, Object> parameters);
+
+    @DELETE("me/connected_apps/{type}")
+    @Headers("Cache-Control: no-cache, no-store")
+    Call<Void> deleteConnectedApp(@Header("Authorization") String authHeader, @Path("type") String type);
 
     // </editor-fold>
 
@@ -302,6 +333,12 @@ public interface VimeoService {
                        @Url String uri,
                        @QueryMap Map<String, String> options,
                        @Header("Cache-Control") String cacheHeaderValue);
+
+    @GET("me")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<com.vimeo.networking2.User> getUserMoshi(@Header("Authorization") String authHeader,
+                                                  @QueryMap Map<String, String> options,
+                                                  @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<Video> getVideo(@Header("Authorization") String authHeader,

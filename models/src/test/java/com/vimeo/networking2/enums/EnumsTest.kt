@@ -16,6 +16,7 @@ class EnumsTest {
         BillingPeriodType::class.java,
         CommentType::class.java,
         CommentPrivacyType::class.java,
+        ConnectedAppType::class.java,
         ContentFilterType::class.java,
         DownloadType::class.java,
         EmbedPrivacyType::class.java,

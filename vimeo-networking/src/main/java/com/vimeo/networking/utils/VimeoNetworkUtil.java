@@ -69,6 +69,8 @@ public final class VimeoNetworkUtil {
     @Nullable
     private static Gson sGson;
 
+    private VimeoNetworkUtil() {}
+
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
      * <p>
@@ -222,11 +224,18 @@ public final class VimeoNetworkUtil {
     public static boolean validateString(@Nullable final String input,
                                          @NotNull final String errorMessage,
                                          @NotNull final VimeoCallback callback) {
-        if (input == null || input.isEmpty()) {
+        if (isStringEmpty(input)) {
             callback.failure(new VimeoError(errorMessage));
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return true if the passed string is null or empty, false otherwise
+     */
+    public static boolean isStringEmpty(@Nullable final String input) {
+        return input == null || input.isEmpty();
     }
 
     /**
@@ -278,4 +287,5 @@ public final class VimeoNetworkUtil {
 
         return retVal;
     }
+
 }
