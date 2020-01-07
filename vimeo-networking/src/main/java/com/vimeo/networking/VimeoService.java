@@ -58,6 +58,7 @@ import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.model.tvod.SeasonList;
 import com.vimeo.networking.model.tvod.TvodItem;
 import com.vimeo.networking.model.tvod.TvodList;
+import com.vimeo.networking2.BatchPublishToSocialMedia;
 import com.vimeo.networking2.PublishJob;
 
 import java.util.ArrayList;
@@ -205,6 +206,12 @@ public interface VimeoService {
     Call<PublishJob> getPublishJob(@Header("Authorization") String authHeader,
                                    @Path("video_id") String videoId,
                                    @Header("Cache-Control") String cacheHeader);
+
+    @PUT("videos/{video_id}/publish_to_social")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<PublishJob> putPublishJob(@Header("Authorization") String authHeader,
+                                   @Path("video_id") String videoId,
+                                   @Body BatchPublishToSocialMedia publishData);
     // </editor-fold>
 
     /**
