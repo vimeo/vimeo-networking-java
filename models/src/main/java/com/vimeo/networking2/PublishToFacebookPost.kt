@@ -25,7 +25,7 @@ data class PublishToFacebookPost(
          * The identifier of the page being posted to on Facebook.
          */
         @Json(name = "page_id")
-        val pageId: Int,
+        val pageId: Long,
 
         /**
          * An optional Facebook category of the video.
