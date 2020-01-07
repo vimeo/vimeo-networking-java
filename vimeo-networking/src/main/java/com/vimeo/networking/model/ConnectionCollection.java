@@ -202,6 +202,10 @@ public class ConnectionCollection implements Serializable {
     @SerializedName("connected_apps")
     private Connection mConnectedApps;
 
+    @Nullable
+    @SerializedName("publish_to_social")
+    private PublishJobConnection mPublishJobConnection;
+
     /**
      * @return the {@link Interaction} for getting the {@link com.vimeo.networking.model.live.LiveStats}
      * for a live {@link Video}
@@ -422,6 +426,11 @@ public class ConnectionCollection implements Serializable {
         return mConnectedApps;
     }
 
+    @Nullable
+    public PublishJobConnection getPublishJobConnection() {
+        return mPublishJobConnection;
+    }
+
     void setConnectedApps(@Nullable Connection connectedApps) {
         mConnectedApps = connectedApps;
     }
@@ -440,5 +449,9 @@ public class ConnectionCollection implements Serializable {
 
     void setUploadAttempt(@Nullable Connection uploadAttempt) {
         mUploadAttempt = uploadAttempt;
+    }
+
+    void setPublishJobConnection(@Nullable PublishJobConnection publishJobConnection) {
+        mPublishJobConnection = publishJobConnection;
     }
 }
