@@ -58,6 +58,7 @@ import com.vimeo.networking.utils.PrivacySettingsParams;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 import com.vimeo.networking2.ConnectedApp;
 import com.vimeo.networking2.ConnectedAppList;
+import com.vimeo.networking2.PublishJob;
 import com.vimeo.networking2.enums.ConnectedAppType;
 
 import org.jetbrains.annotations.NotNull;
@@ -1338,6 +1339,21 @@ public class VimeoClient {
         }
 
         return mVimeoService.deleteConnectedApp(getAuthHeader(), typeString);
+    }
+
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Connected Apps
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Connected Apps">
+
+    public Call<PublishJob> getPublishJob(@NotNull final String videoId,
+                                          @NotNull final CacheControl cacheControl) {
+        if (VimeoNetworkUtil.isStringEmpty(videoId)) {
+            throw new AssertionError("Video Id is not valid for publish job.");
+        }
+        return mVimeoService.getPublishJob(getAuthHeader(), videoId, createCacheControlString(cacheControl));
     }
 
     // </editor-fold>

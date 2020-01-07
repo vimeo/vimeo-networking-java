@@ -58,6 +58,7 @@ import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.model.tvod.SeasonList;
 import com.vimeo.networking.model.tvod.TvodItem;
 import com.vimeo.networking.model.tvod.TvodList;
+import com.vimeo.networking2.PublishJob;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -191,6 +192,19 @@ public interface VimeoService {
     @Headers("Cache-Control: no-cache, no-store")
     Call<Void> deleteConnectedApp(@Header("Authorization") String authHeader, @Path("type") String type);
 
+    // </editor-fold>
+
+    /**
+     * ----------------------------------------------------------------------------------------------------
+     * Publish Jobs
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Publish Jobs">
+    @GET("videos/{video_id}/publish_to_social")
+    @Serializer(converter = ConverterType.MOSHI)
+    Call<PublishJob> getPublishJob(@Header("Authorization") String authHeader,
+                                   @Path("video_id") String videoId,
+                                   @Header("Cache-Control") String cacheHeader);
     // </editor-fold>
 
     /**

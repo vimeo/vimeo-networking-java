@@ -21,7 +21,7 @@ data class ConnectedApp(
          * The time in ISO 8601 format when the connected app was added.
          */
         @Json(name = "add_date")
-        var dateAdded: Date? = null,
+        val dateAdded: Date? = null,
 
         /**
          * The list of remaining scopes on this connected app that the user needs for a particular feature.
@@ -70,10 +70,16 @@ data class ConnectedApp(
          * The [ConnectedAppType] of the connected app.
          */
         @Json(name = "type")
-        val rawType: String? = null
+        val rawType: String? = null,
+
+        /**
+         * The resource key string of the ConnectedApp.
+         */
+        @Json(name = "resource_key")
+        val resourceKey: String? = null
 
 ) : Entity {
-    override val identifier: String? = uri
+    override val identifier: String? = resourceKey
 }
 
 
