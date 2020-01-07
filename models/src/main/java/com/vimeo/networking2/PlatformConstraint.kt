@@ -11,5 +11,5 @@ data class PlatformConstraint(
         @Json(name = "duration")
         val duration: Int = 0,
         @Json(name = "size")
-        val size: Int = 0
+        val size: Long = 0
 )

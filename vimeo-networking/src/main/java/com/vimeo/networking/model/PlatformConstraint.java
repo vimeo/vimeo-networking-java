@@ -11,7 +11,7 @@ public class PlatformConstraint {
     private int mDuration;
 
     @SerializedName("size")
-    private int mSize;
+    private Long mSize;
 
     PlatformConstraint() {
     }
@@ -24,11 +24,11 @@ public class PlatformConstraint {
         this.mDuration = duration;
     }
 
-    public int getSize() {
+    public Long getSize() {
         return mSize;
     }
 
-    public void setSize(int size) {
+    public void setSize(Long size) {
         this.mSize = size;
     }
 }
