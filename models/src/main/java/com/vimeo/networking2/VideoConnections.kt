@@ -93,6 +93,8 @@ data class VideoConnections(
      * Connection to get all the logged-in user's available channels that this video can be added to.
      */
     @Json(name = "available_channels")
-    val availableChannels: Connection? = null
+    val availableChannels: Connection? = null,
 
+    @Json(name = "publish_to_social")
+    val publish: PublishJobConnection? = null
 )
