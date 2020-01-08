@@ -95,6 +95,9 @@ data class VideoConnections(
     @Json(name = "available_channels")
     val availableChannels: Connection? = null,
 
+    /**
+     * Connection to get the Publish to Social data for this video.
+     */
     @Json(name = "publish_to_social")
     val publish: PublishJobConnection? = null
 )
