@@ -3,9 +3,13 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import java.io.Serializable;
+
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
-public class PublishJobDestinations {
+public class PublishJobDestinations implements Serializable {
+
+    private static final long serialVersionUID = 932702517657008794L;
 
     @SerializedName("facebook")
     private boolean mFacebook;

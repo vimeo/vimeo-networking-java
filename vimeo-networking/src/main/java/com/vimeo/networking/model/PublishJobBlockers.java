@@ -3,12 +3,15 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
-public class PublishJobBlockers {
+public class PublishJobBlockers implements Serializable {
+
+    private static final long serialVersionUID = -112432222471334867L;
 
     @UseStag
     public enum Blocker {
