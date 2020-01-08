@@ -2,7 +2,7 @@ package com.vimeo.networking2.enums
 
 /**
  * An enumeration of the supported types representing the published status
- * of the upload/post on the specified platform.
+ * of the upload/post on a third party social network platform.
  */
 enum class PublishStatusType(override val value: String?) : StringValue {
 

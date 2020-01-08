@@ -1345,13 +1345,15 @@ public class VimeoClient {
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
-    // Connected Apps
+    // Publish Jobs
     // -----------------------------------------------------------------------------------------------------
-    // <editor-fold desc="Connected Apps">
+    // <editor-fold desc="Publish Jobs">
 
     /**
      * Gets the latest {@link PublishJob} for a {@link Video}. This object will be created for a {@link Video}
      * once an attempt to publish to social has been made with {@link #putPublishJob(String, BatchPublishToSocialMedia)}
+     * The {@link PublishJob} will always reflect the latest publish job to a social media platform, new jobs overwrite
+     * old data for the same platform. The last job status for each platform is returned.
      *
      * @param videoId      The id of the {@link Video} that has been published to social media.
      * @param cacheControl The cache control.
