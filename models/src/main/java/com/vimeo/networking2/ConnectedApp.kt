@@ -82,7 +82,6 @@ data class ConnectedApp(
     override val identifier: String? = resourceKey
 }
 
-
 /**
  * @see ConnectedApp.rawType
  * @see ConnectedAppType

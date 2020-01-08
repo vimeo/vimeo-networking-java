@@ -22,7 +22,7 @@ data class PublishToFacebookPost(
         val description: String,
 
         /**
-         * The identifier of the page being posted to on Facebook.
+         * The destination identifier (page id) of the page being posted to on Facebook.
          */
         @Json(name = "destination")
         val destination: Long,

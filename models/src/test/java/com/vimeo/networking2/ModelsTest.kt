@@ -17,6 +17,7 @@ class ModelsTest {
         ApiError::class,
         AppConfiguration::class,
         BasicInteraction::class,
+        BatchPublishToSocialMedia::class,
         BuyInteraction::class,
         Category::class,
         CategoryConnections::class,
