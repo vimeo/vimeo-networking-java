@@ -13,23 +13,23 @@ data class BatchPublishToSocialMedia(
          * Optional publishing data for Facebook.
          */
         @Json(name = "facebook")
-        val facebookPost: PublishToFacebookPost? = null,
+        val facebook: PublishToFacebookPost? = null,
 
         /**
          * Optional publishing data for YouTube.
          */
         @Json(name = "youtube")
-        val youTubePost: PublishToYouTubePost? = null,
+        val youtube: PublishToYouTubePost? = null,
 
         /**
          * Optional publishing data for Twitter.
          */
         @Json(name = "twitter")
-        val twitterPost: PublishToTwitterPost? = null,
+        val twitter: PublishToTwitterPost? = null,
 
         /**
          * Optional publishing data for LinkedIn.
          */
         @Json(name = "linkedin")
-        val linkedInPost: PublishToLinkedInPost? = null
+        val linkedin: PublishToLinkedInPost? = null
 )
