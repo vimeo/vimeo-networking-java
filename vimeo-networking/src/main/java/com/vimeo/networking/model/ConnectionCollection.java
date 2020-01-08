@@ -426,6 +426,10 @@ public class ConnectionCollection implements Serializable {
         return mConnectedApps;
     }
 
+    /**
+     * @return {@link com.vimeo.networking.model.PublishJobConnection} to get the Publish to Social data
+     * for this {@link com.vimeo.networking.model.Video}.
+     */
     @Nullable
     public PublishJobConnection getPublishJobConnection() {
         return mPublishJobConnection;

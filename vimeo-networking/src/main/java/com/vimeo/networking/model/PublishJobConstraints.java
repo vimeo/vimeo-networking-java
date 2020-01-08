@@ -5,6 +5,9 @@ import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
+/**
+ * An object representing the information on the publishing constraints for each social network.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
 public class PublishJobConstraints implements Serializable {
@@ -23,21 +26,30 @@ public class PublishJobConstraints implements Serializable {
     @SerializedName("twitter")
     public PlatformConstraint mTwitter;
 
-    public PublishJobConstraints() {
-    }
-
+    /**
+     * @return the publish constraints for Facebook.
+     */
     public PlatformConstraint getFacebook() {
         return mFacebook;
     }
 
+    /**
+     * @return the publish constraints for LinkedIn.
+     */
     public PlatformConstraint getLinkedin() {
         return mLinkedin;
     }
 
+    /**
+     * @return the publish constraints for YouTube.
+     */
     public PlatformConstraint getYouTube() {
         return mYouTube;
     }
 
+    /**
+     * @return the publish constraints for Twitter.
+     */
     public PlatformConstraint getTwitter() {
         return mTwitter;
     }

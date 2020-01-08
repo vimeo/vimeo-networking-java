@@ -5,7 +5,10 @@ import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
-@SuppressWarnings({"unused"})
+/**
+ * Constraints put in place by a social media platform on uploading videos.
+ */
+@SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
 public class PlatformConstraint implements Serializable {
 
@@ -17,9 +20,9 @@ public class PlatformConstraint implements Serializable {
     @SerializedName("size")
     private Long mSize;
 
-    PlatformConstraint() {
-    }
-
+    /**
+     * @return the max length of a video for the corresponding platform.
+     */
     public int getDuration() {
         return mDuration;
     }
@@ -28,11 +31,32 @@ public class PlatformConstraint implements Serializable {
         this.mDuration = duration;
     }
 
+    /**
+     * @return the max file size of a video for the corresponding platform.
+     */
     public Long getSize() {
         return mSize;
     }
 
     public void setSize(Long size) {
         this.mSize = size;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+
+        PlatformConstraint that = (PlatformConstraint) o;
+
+        if (getDuration() != that.getDuration()) { return false; }
+        return getSize() != null ? getSize().equals(that.getSize()) : that.getSize() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getDuration();
+        result = 31 * result + (getSize() != null ? getSize().hashCode() : 0);
+        return result;
     }
 }

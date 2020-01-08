@@ -5,6 +5,9 @@ import com.vimeo.stag.UseStag;
 
 import java.io.Serializable;
 
+/**
+ * An object representing the information on which social network the corresponding video was published to.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
 public class PublishJobDestinations implements Serializable {
@@ -23,21 +26,30 @@ public class PublishJobDestinations implements Serializable {
     @SerializedName("twitter")
     private boolean mTwitter;
 
-    public PublishJobDestinations() {
-    }
-
+    /**
+     * @return true or false depending on whether the video was ever published to Facebook.
+     */
     public boolean isFacebook() {
         return mFacebook;
     }
 
+    /**
+     * @return true or false depending on whether the video was ever published to YouTube.
+     */
     public boolean isYoutube() {
         return mYoutube;
     }
 
+    /**
+     * @return true or false depending on whether the video was ever published to LinkedIn.
+     */
     public boolean isLinkedin() {
         return mLinkedin;
     }
 
+    /**
+     * @return true or false depending on whether the video was ever published to Twitter.
+     */
     public boolean isTwitter() {
         return mTwitter;
     }

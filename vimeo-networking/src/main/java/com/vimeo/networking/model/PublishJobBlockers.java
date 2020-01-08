@@ -3,28 +3,50 @@ package com.vimeo.networking.model;
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.stag.UseStag;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * An object that represents the blockers keeping a video from being published to each platform.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
 public class PublishJobBlockers implements Serializable {
 
+    private static final String S_SIZE = "size";
+    private static final String S_DURATION = "duration";
+    private static final String S_FB_NO_PAGES = "fb_no_pages";
+    private static final String S_LI_NO_ORGANIZATIONS = "li_no_organizations";
     private static final long serialVersionUID = -112432222471334867L;
 
+    /**
+     * an enumeration of the possible blockers for a video being posted.
+     * NOTE: some are of these are platform specific and will be documented as such.
+     */
     @UseStag
     public enum Blocker {
-        @SerializedName("size")
-        SIZE,
-        @SerializedName("duration")
-        DURATION,
-        @SerializedName("fb_no_pages")
-        FB_NO_PAGES,
-        @SerializedName("li_no_organizations")
-        LI_NO_ORGANIZATIONS;
+        @SerializedName(S_SIZE)
+        SIZE(S_SIZE), // The video size is too large.
+        @SerializedName(S_DURATION)
+        DURATION(S_DURATION), // The video is too long.
+        @SerializedName(S_FB_NO_PAGES)
+        FB_NO_PAGES(S_FB_NO_PAGES), // The user has no pages connected to their account. (Facebook only)
+        @SerializedName(S_LI_NO_ORGANIZATIONS)
+        LI_NO_ORGANIZATIONS(S_LI_NO_ORGANIZATIONS); // The user has no organization pages connected to their account. (LinkedIn only)
 
-        Blocker() {
+        @NotNull
+        private final String mType;
+
+        Blocker(@NotNull String type) {
+            mType = type;
+        }
+
+        @Override
+        public String toString() {
+            return mType;
         }
     }
 
@@ -40,21 +62,30 @@ public class PublishJobBlockers implements Serializable {
     @SerializedName("twitter")
     private List<Blocker> mTwitter;
 
-    PublishJobBlockers() {
-    }
-
+    /**
+     * @return the list of blockers keeping this video from being uploaded to Facebook.
+     */
     public List<Blocker> getFacebook() {
         return mFacebook == null ? null : Collections.unmodifiableList(mFacebook);
     }
 
+    /**
+     * @return the list of blockers keeping this video from being uploaded to YouTube.
+     */
     public List<Blocker> getYoutube() {
         return mYoutube == null ? null : Collections.unmodifiableList(mYoutube);
     }
 
+    /**
+     * @return the list of blockers keeping this video from being uploaded to LinkedIn.
+     */
     public List<Blocker> getLinkedin() {
         return mLinkedin == null ? null : Collections.unmodifiableList(mLinkedin);
     }
 
+    /**
+     * @return the list of blockers keeping this video from being uploaded to Twitter.
+     */
     public List<Blocker> getTwitter() {
         return mTwitter == null ? null : Collections.unmodifiableList(mTwitter);
     }

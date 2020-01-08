@@ -9,6 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * A Connection to provide the Publish to Social data for this video.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
 public class PublishJobConnection extends Connection implements Entity {
@@ -24,23 +27,29 @@ public class PublishJobConnection extends Connection implements Entity {
     @SerializedName("publish_destinations")
     private PublishJobDestinations mPublishJobDestinations;
 
-    PublishJobConnection() {
-    }
-
     @Nullable
     @Override
     public String getIdentifier() {
         return mUri;
     }
 
+    /**
+     * @return an object representing the blockers for each platform preventing the video from being published.
+     */
     public PublishJobBlockers getPublishJobBlockers() {
         return mPublishJobBlockers;
     }
 
+    /**
+     * @return an object representing publish constraints for each social media platform.
+     */
     public PublishJobConstraints getPublishJobConstraints() {
         return mPublishJobConstraints;
     }
 
+    /**
+     * @return an object representing which destinations the video was been published to.
+     */
     public PublishJobDestinations getPublishJobDestinations() {
         return mPublishJobDestinations;
     }
