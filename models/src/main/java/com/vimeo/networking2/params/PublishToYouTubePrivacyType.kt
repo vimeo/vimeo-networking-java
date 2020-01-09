@@ -12,13 +12,13 @@ enum class PublishToYouTubePrivacyType {
     /**
      * The video will be publicly available.
      */
-    @SerializedName(name = "public")
+    @SerializedName(value = "public")
     PUBLIC,
 
     /**
      * The video will not be publicly available, and only viewable to the owner.
      */
-    @SerializedName(name = "private")
+    @SerializedName(value = "private")
     PRIVATE
 
 }
