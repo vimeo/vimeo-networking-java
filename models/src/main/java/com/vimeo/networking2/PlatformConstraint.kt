@@ -9,14 +9,14 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class PlatformConstraint(
         /**
-         * The max length of a video for the corresponding platform.
+         * The max length in seconds of a video for the corresponding platform.
          */
         @Json(name = "duration")
-        val duration: Int = 0,
+        val duration: Int? = null,
 
         /**
-         * The max file size of a video for the corresponding platform.
+         * The max file size in gigabytes of a video for the corresponding platform.
          */
         @Json(name = "size")
-        val size: Long = 0
+        val size: Long? = null
 )

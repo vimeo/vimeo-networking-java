@@ -18,10 +18,10 @@ public class PlatformConstraint implements Serializable {
     private int mDuration;
 
     @SerializedName("size")
-    private Long mSize;
+    private long mSize;
 
     /**
-     * @return the max length of a video for the corresponding platform.
+     * @return the max length in seconds of a video for the corresponding platform.
      */
     public int getDuration() {
         return mDuration;
@@ -32,13 +32,13 @@ public class PlatformConstraint implements Serializable {
     }
 
     /**
-     * @return the max file size of a video for the corresponding platform.
+     * @return the max file size in gigabytes of a video for the corresponding platform.
      */
-    public Long getSize() {
+    public long getSize() {
         return mSize;
     }
 
-    public void setSize(Long size) {
+    public void setSize(long size) {
         this.mSize = size;
     }
 
@@ -50,13 +50,13 @@ public class PlatformConstraint implements Serializable {
         PlatformConstraint that = (PlatformConstraint) o;
 
         if (getDuration() != that.getDuration()) { return false; }
-        return getSize() != null ? getSize().equals(that.getSize()) : that.getSize() == null;
+        return getSize() == that.getSize();
     }
 
     @Override
     public int hashCode() {
         int result = getDuration();
-        result = 31 * result + (getSize() != null ? getSize().hashCode() : 0);
+        result = 31 * result + (int) (getSize() ^ (getSize() >>> 32));
         return result;
     }
 }

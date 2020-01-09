@@ -15,16 +15,16 @@ public class PublishJobConstraints implements Serializable {
     private static final long serialVersionUID = -2012494818939132360L;
 
     @SerializedName("facebook")
-    public PlatformConstraint mFacebook;
+    private PlatformConstraint mFacebook;
 
     @SerializedName("linkedIn")
-    public PlatformConstraint mLinkedin;
+    private PlatformConstraint mLinkedin;
 
     @SerializedName("youtube")
-    public PlatformConstraint mYouTube;
+    private PlatformConstraint mYouTube;
 
     @SerializedName("twitter")
-    public PlatformConstraint mTwitter;
+    private PlatformConstraint mTwitter;
 
     /**
      * @return the publish constraints for Facebook.
