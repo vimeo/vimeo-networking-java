@@ -1,35 +1,35 @@
 package com.vimeo.networking2.params
 
+import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
  *  Encapsulates publishing data for each of the supported social media platforms.
  */
-@JsonClass(generateAdapter = true)
 data class BatchPublishToSocialMedia(
 
         /**
          * Optional publishing data for Facebook.
          */
-        @Json(name = "facebook")
+        @SerializedName(value = "facebook")
         val facebook: PublishToFacebookPost? = null,
 
         /**
          * Optional publishing data for YouTube.
          */
-        @Json(name = "youtube")
-        val youtube: PublishToYouTubePost? = null,
+        @SerializedName(value = "youtube")
+        val youTube: PublishToYouTubePost? = null,
 
         /**
          * Optional publishing data for Twitter.
          */
-        @Json(name = "twitter")
+        @SerializedName(value = "twitter")
         val twitter: PublishToTwitterPost? = null,
 
         /**
          * Optional publishing data for LinkedIn.
          */
-        @Json(name = "linkedin")
-        val linkedin: PublishToLinkedInPost? = null
+        @SerializedName(value = "linkedin")
+        val linkedIn: PublishToLinkedInPost? = null
 )

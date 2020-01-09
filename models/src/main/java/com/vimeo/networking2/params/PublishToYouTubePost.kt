@@ -1,42 +1,42 @@
 package com.vimeo.networking2.params
 
+import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
  * Represents the required data for a YouTube post.
  */
-@JsonClass(generateAdapter = true)
 data class PublishToYouTubePost(
 
         /**
          * The title of the video as it will appear on YouTube.
          */
-        @Json(name = "title")
+        @SerializedName(value = "title")
         val title: String,
 
         /**
          * Am optional description of the video as it will appear on YouTube.
          */
-        @Json(name = "description")
+        @SerializedName(value = "description")
         val description: String? = null,
 
         /**
          * An optional list of tags for the video on YouTube.
          */
-        @Json(name = "tags")
+        @SerializedName(value = "tags")
         val tags: List<String>? = null,
 
         /**
          * The privacy option for this video on YouTube.
          */
-        @Json(name = "privacy")
+        @SerializedName(value = "privacy")
         val privacy: PublishToYouTubePrivacyType,
 
         /**
          * The YouTube category of the video.
          */
-        @Json(name = "category_id")
+        @SerializedName(value = "category_id")
         val categoryId: String
 
 )
