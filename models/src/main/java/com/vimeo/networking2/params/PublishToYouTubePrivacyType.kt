@@ -6,7 +6,6 @@ import com.squareup.moshi.JsonClass
 /**
  * The allowable privacy settings when publishing a video to YouTube.
  */
-@JsonClass(generateAdapter = true)
 enum class PublishToYouTubePrivacyType {
 
     /**
