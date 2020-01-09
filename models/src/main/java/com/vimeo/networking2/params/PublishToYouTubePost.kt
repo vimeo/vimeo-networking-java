@@ -1,4 +1,4 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -29,11 +29,9 @@ data class PublishToYouTubePost(
 
         /**
          * The privacy option for this video on YouTube.
-         * public: The video will be publicly available.
-         * private: The video will not be publicly available, and only viewable to the owner.
          */
         @Json(name = "privacy")
-        val privacy: String,
+        val privacy: PublishToYouTubePrivacyType,
 
         /**
          * The YouTube category of the video.

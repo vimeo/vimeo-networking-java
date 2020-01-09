@@ -58,7 +58,7 @@ import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.model.tvod.SeasonList;
 import com.vimeo.networking.model.tvod.TvodItem;
 import com.vimeo.networking.model.tvod.TvodList;
-import com.vimeo.networking2.BatchPublishToSocialMedia;
+import com.vimeo.networking2.params.BatchPublishToSocialMedia;
 import com.vimeo.networking2.PublishJob;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.vimeo.networking2
+package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

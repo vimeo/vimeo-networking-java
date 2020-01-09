@@ -56,7 +56,7 @@ import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.utils.BaseUrlInterceptor;
 import com.vimeo.networking.utils.PrivacySettingsParams;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
-import com.vimeo.networking2.BatchPublishToSocialMedia;
+import com.vimeo.networking2.params.BatchPublishToSocialMedia;
 import com.vimeo.networking2.ConnectedApp;
 import com.vimeo.networking2.ConnectedAppList;
 import com.vimeo.networking2.PublishJob;
