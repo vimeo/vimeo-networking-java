@@ -3,10 +3,12 @@ package com.vimeo.networking2.params
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * Represents the required data for a Facebook post.
  */
+@JsonClass(generateAdapter = true)
 data class PublishToFacebookPost(
 
         /**
@@ -58,4 +60,10 @@ data class PublishToFacebookPost(
         @SerializedName(value = "allow_social_actions")
         val allowSocialActions: Boolean
 
-)
+) : Serializable {
+
+    companion object {
+        const val serialVersionUID = -74L
+    }
+
+}

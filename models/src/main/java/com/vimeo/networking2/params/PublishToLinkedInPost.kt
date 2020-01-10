@@ -3,6 +3,7 @@ package com.vimeo.networking2.params
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * Represents the required data for a LinkedIn post.
@@ -27,4 +28,10 @@ data class PublishToLinkedInPost(
         @SerializedName(value = "description")
         val description: String
 
-)
+) : Serializable {
+
+    companion object {
+        const val serialVersionUID = -77L
+    }
+
+}
