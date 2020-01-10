@@ -209,6 +209,7 @@ public interface VimeoService {
 
     @PUT("videos/{video_id}/publish_to_social")
     @Serializer(converter = ConverterType.MOSHI)
+    @Headers("Cache-Control: no-cache, no-store")
     Call<PublishJob> putPublishJob(@Header("Authorization") String authHeader,
                                    @Path("video_id") String videoId,
                                    @Body BatchPublishToSocialMedia publishData);
