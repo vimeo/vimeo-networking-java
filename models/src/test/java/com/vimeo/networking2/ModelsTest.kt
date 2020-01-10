@@ -92,6 +92,7 @@ class ModelsTest {
             ProgrammedContentItemList::class,
             Publish::class,
             PublishJob::class,
+            PublishJobAttempts::class,
             PublishJobBlockers::class,
             PublishJobDestination::class,
             PublishJobDestinations::class,

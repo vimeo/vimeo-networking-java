@@ -6,11 +6,12 @@ import com.vimeo.stag.UseStag;
 import java.io.Serializable;
 
 /**
- * An object representing the information on which social network the corresponding video was published to.
+ * An object representing information on previous attempts to publish to
+ * third-party social networks.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @UseStag
-public class PublishJobDestinations implements Serializable {
+public class PublishJobAttempts implements Serializable {
 
     private static final long serialVersionUID = 932702517657008794L;
 
@@ -27,28 +28,32 @@ public class PublishJobDestinations implements Serializable {
     private boolean mTwitter;
 
     /**
-     * @return true or false depending on whether the video was ever published to Facebook.
+     * @return true or false depending on whether a previous attempt was made to publish the video
+     * to Facebook. Note that if a previous attempt failed, this value will still be true.
      */
     public boolean isFacebook() {
         return mFacebook;
     }
 
     /**
-     * @return true or false depending on whether the video was ever published to YouTube.
+     * @return true or false depending on whether a previous attempt was made to publish the video
+     * to YouTube. Note that if a previous attempt failed, this value will still be true.
      */
     public boolean isYoutube() {
         return mYoutube;
     }
 
     /**
-     * @return true or false depending on whether the video was ever published to LinkedIn.
+     * @return true or false depending on whether a previous attempt was made to publish the video
+     * to LinkedIn. Note that if a previous attempt failed, this value will still be true.
      */
     public boolean isLinkedin() {
         return mLinkedin;
     }
 
     /**
-     * @return true or false depending on whether the video was ever published to Twitter.
+     * @return true or false depending on whether a previous attempt was made to publish the
+     * video to Twitter. Note that if a previous attempt failed, this value will still be true.
      */
     public boolean isTwitter() {
         return mTwitter;
@@ -75,7 +80,7 @@ public class PublishJobDestinations implements Serializable {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
 
-        PublishJobDestinations that = (PublishJobDestinations) o;
+        PublishJobAttempts that = (PublishJobAttempts) o;
 
         if (isFacebook() != that.isFacebook()) { return false; }
         if (isYoutube() != that.isYoutube()) { return false; }
