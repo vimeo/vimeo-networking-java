@@ -3,7 +3,6 @@ package com.vimeo.networking2.params
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Represents the required data for a YouTube post.
@@ -40,8 +39,4 @@ data class PublishToYouTubePost(
         @SerializedName(value = "category_id")
         val categoryId: String
 
-) : Serializable {
-        companion object{
-                const val serialVersionUID: Long = -81L
-        }
-}
+)
