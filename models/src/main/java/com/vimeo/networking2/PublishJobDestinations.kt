@@ -4,32 +4,34 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * An object representing the information on which social network the corresponding video was published to.
+ * Contains information about upload/post status on all
+ * third party social networks available for publishing.
  */
 @JsonClass(generateAdapter = true)
 data class PublishJobDestinations(
 
         /**
-         * true or false depending on whether the video was ever published to Facebook.
+         * Information about the upload/post on Facebook.
          */
         @Json(name = "facebook")
-        val facebook: Boolean? = null,
+        val facebook: PublishJobDestination? = null,
 
         /**
-         * true or false depending on whether the video was ever published to YouTube.
+         * Information about the upload/post on YouTube.
          */
         @Json(name = "youtube")
-        val youtube: Boolean? = null,
+        val youTube: PublishJobDestination? = null,
 
         /**
-         * true or false depending on whether the video was ever published to LinkedIn.
+         * Information about the upload/post on LinkedIn.
          */
         @Json(name = "linkedin")
-        val linkedin: Boolean? = null,
+        val linkedIn: PublishJobDestination? = null,
 
         /**
-         * true or false depending on whether the video was ever published to Twitter.
+         * Information about the upload/post on Twitter.
          */
         @Json(name = "twitter")
-        val twitter: Boolean? = null
+        val twitter: PublishJobDestination? = null
+
 )

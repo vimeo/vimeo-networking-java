@@ -6,9 +6,6 @@ import com.vimeo.stag.UseStag;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.io.Serializable;
-import java.util.List;
-
 /**
  * A Connection to provide the Publish to Social data for this video.
  */
@@ -25,7 +22,7 @@ public class PublishJobConnection extends Connection implements Entity {
     private PublishJobConstraints mPublishJobConstraints;
 
     @SerializedName("publish_destinations")
-    private PublishJobDestinations mPublishJobDestinations;
+    private PublishJobAttempts mPublishJobAttempts;
 
     @Nullable
     @Override
@@ -48,10 +45,11 @@ public class PublishJobConnection extends Connection implements Entity {
     }
 
     /**
-     * @return an object representing which destinations the video was been published to.
+     * @return an object representing whether attempts have been made to publish
+     * the video to third party social platform destinations.
      */
-    public PublishJobDestinations getPublishJobDestinations() {
-        return mPublishJobDestinations;
+    public PublishJobAttempts getPublishJobAttempts() {
+        return mPublishJobAttempts;
     }
 
     public void setPublishJobBlockers(PublishJobBlockers publishJobBlockers) {
@@ -62,8 +60,8 @@ public class PublishJobConnection extends Connection implements Entity {
         mPublishJobConstraints = publishJobConstraints;
     }
 
-    public void setPublishJobDestinations(PublishJobDestinations publishJobDestinations) {
-        mPublishJobDestinations = publishJobDestinations;
+    public void setPublishJobAttempts(PublishJobAttempts publishJobAttempts) {
+        mPublishJobAttempts = publishJobAttempts;
     }
 
     @Override
@@ -79,14 +77,14 @@ public class PublishJobConnection extends Connection implements Entity {
         if (getPublishJobConstraints() != null ? !getPublishJobConstraints().equals(that.getPublishJobConstraints()) : that.getPublishJobConstraints() != null) {
             return false;
         }
-        return getPublishJobDestinations() != null ? getPublishJobDestinations().equals(that.getPublishJobDestinations()) : that.getPublishJobDestinations() == null;
+        return getPublishJobAttempts() != null ? getPublishJobAttempts().equals(that.getPublishJobAttempts()) : that.getPublishJobAttempts() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getPublishJobBlockers() != null ? getPublishJobBlockers().hashCode() : 0;
         result = 31 * result + (getPublishJobConstraints() != null ? getPublishJobConstraints().hashCode() : 0);
-        result = 31 * result + (getPublishJobDestinations() != null ? getPublishJobDestinations().hashCode() : 0);
+        result = 31 * result + (getPublishJobAttempts() != null ? getPublishJobAttempts().hashCode() : 0);
         return result;
     }
 }

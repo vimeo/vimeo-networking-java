@@ -23,10 +23,11 @@ data class PublishJobConnection(
         val publishJobConstraints: PublishJobConstraints? = null,
 
         /**
-         * An object representing which destinations the video was been published to.
+         * An object representing whether attempts have been made to publish
+         * the video to third party social platform destinations.
          */
         @Json(name = "publish_destinations")
-        val publishJobDestinations: PublishJobDestinations? = null,
+        val publishJobAttempts: PublishJobAttempts? = null,
 
         /**
          * An array of HTTP methods permitted on this URI
@@ -39,7 +40,7 @@ data class PublishJobConnection(
          */
         @Json(name = "uri")
         val uri: String? = null
+
 ) : Entity {
     override val identifier: String? = uri
 }
-

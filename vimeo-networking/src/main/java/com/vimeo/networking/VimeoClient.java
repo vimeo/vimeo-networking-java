@@ -56,8 +56,10 @@ import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.utils.BaseUrlInterceptor;
 import com.vimeo.networking.utils.PrivacySettingsParams;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
+import com.vimeo.networking2.params.BatchPublishToSocialMedia;
 import com.vimeo.networking2.ConnectedApp;
 import com.vimeo.networking2.ConnectedAppList;
+import com.vimeo.networking2.PublishJob;
 import com.vimeo.networking2.enums.ConnectedAppType;
 
 import org.jetbrains.annotations.NotNull;
@@ -1338,6 +1340,47 @@ public class VimeoClient {
         }
 
         return mVimeoService.deleteConnectedApp(getAuthHeader(), typeString);
+    }
+
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Publish Jobs
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Publish Jobs">
+
+    /**
+     * Gets the latest {@link PublishJob} for a {@link Video}. This object will be created for a {@link Video}
+     * once an attempt to publish to social has been made with {@link #putPublishJob(String, BatchPublishToSocialMedia)}
+     * The {@link PublishJob} will always reflect the latest publish job to a social media platform, new jobs overwrite
+     * old data for the same platform. The last job status for each platform is returned.
+     *
+     * @param videoId      The id of the {@link Video} that has been published to social media.
+     * @param cacheControl The cache control.
+     * @return A {@link PublishJob} containing information about previous posts of the {@link Video} to social media.
+     */
+    public Call<PublishJob> getPublishJob(@NotNull final String videoId,
+                                          @NotNull final CacheControl cacheControl) {
+        if (VimeoNetworkUtil.isStringEmpty(videoId)) {
+            throw new AssertionError("Video Id is not valid for publish job.");
+        }
+        return mVimeoService.getPublishJob(getAuthHeader(), videoId, createCacheControlString(cacheControl));
+    }
+
+    /**
+     * Publishes a {@link Video} to social media as defined by {@link BatchPublishToSocialMedia}.
+     *
+     * @param videoId     The id of the {@link Video} that has been published to social media.
+     * @param publishData The {@link BatchPublishToSocialMedia} that encapsulates the data and third party
+     *                    social media platforms that a {@link Video} will natively be posted to.
+     * @return A {@link PublishJob} containing information about the post of the {@link Video} to social media.
+     */
+    public Call<PublishJob> putPublishJob(@NotNull final String videoId,
+                                          @NotNull final BatchPublishToSocialMedia publishData) {
+        if (VimeoNetworkUtil.isStringEmpty(videoId)) {
+            throw new AssertionError("Video Id is not valid for publish job.");
+        }
+        return mVimeoService.putPublishJob(getAuthHeader(), videoId, publishData);
     }
 
     // </editor-fold>

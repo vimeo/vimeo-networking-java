@@ -78,7 +78,7 @@ public final class AnnotatedConverterFactory extends Converter.Factory {
                                                           @NotNull Annotation[] parameterAnnotations,
                                                           @NotNull Annotation[] methodAnnotations,
                                                           @NotNull Retrofit retrofit) {
-        return chooseFactoryForSerializer(parameterAnnotations)
+        return chooseFactoryForSerializer(methodAnnotations)
                 .requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit);
     }
 
