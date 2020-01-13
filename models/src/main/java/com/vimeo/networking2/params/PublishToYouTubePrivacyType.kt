@@ -1,8 +1,6 @@
 package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import com.google.gson.annotations.SerializedName
 
 /**
  * The allowable privacy settings when publishing a video to YouTube.
@@ -12,13 +10,13 @@ enum class PublishToYouTubePrivacyType {
     /**
      * The video will be publicly available.
      */
-    @SerializedName(value = "public")
+    @Json(name = "public")
     PUBLIC,
 
     /**
      * The video will not be publicly available, and only viewable to the owner.
      */
-    @SerializedName(value = "private")
+    @Json(name = "private")
     PRIVATE
 
 }
