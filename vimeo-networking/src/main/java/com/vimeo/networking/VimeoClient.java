@@ -1355,32 +1355,40 @@ public class VimeoClient {
      * The {@link PublishJob} will always reflect the latest publish job to a social media platform, new jobs overwrite
      * old data for the same platform. The last job status for each platform is returned.
      *
-     * @param videoId      The id of the {@link Video} that has been published to social media.
+     * @param publishUri   The uri of the publish to social endpoint for a {@link Video}. This uri is available at
+     *                     Video.getMetadata().getConnections().getPublishJobConnection().getUri(). A user's
+     *                     has access to this method when
+     *                     Video.getMetadata().getConnections().getPublishJobConnection().getOptions()
+     *                     has a "GET" command listed.
      * @param cacheControl The cache control.
      * @return A {@link PublishJob} containing information about previous posts of the {@link Video} to social media.
      */
-    public Call<PublishJob> getPublishJob(@NotNull final String videoId,
+    public Call<PublishJob> getPublishJob(@NotNull final String publishUri,
                                           @NotNull final CacheControl cacheControl) {
-        if (VimeoNetworkUtil.isStringEmpty(videoId)) {
+        if (VimeoNetworkUtil.isStringEmpty(publishUri)) {
             throw new AssertionError("Video Id is not valid for publish job.");
         }
-        return mVimeoService.getPublishJob(getAuthHeader(), videoId, createCacheControlString(cacheControl));
+        return mVimeoService.getPublishJob(getAuthHeader(), publishUri, createCacheControlString(cacheControl));
     }
 
     /**
      * Publishes a {@link Video} to social media as defined by {@link BatchPublishToSocialMedia}.
      *
-     * @param videoId     The id of the {@link Video} that has been published to social media.
+     * @param publishUri  The uri of the publish to social endpoint for a {@link Video}. This uri is available at
+     *                    Video.getMetadata().getConnections().getPublishJobConnection().getUri(). A user's
+     *                    has access to this method when
+     *                    Video.getMetadata().getConnections().getPublishJobConnection().getOptions()
+     *                    has a "PUT" command listed.
      * @param publishData The {@link BatchPublishToSocialMedia} that encapsulates the data and third party
      *                    social media platforms that a {@link Video} will natively be posted to.
      * @return A {@link PublishJob} containing information about the post of the {@link Video} to social media.
      */
-    public Call<PublishJob> putPublishJob(@NotNull final String videoId,
+    public Call<PublishJob> putPublishJob(@NotNull final String publishUri,
                                           @NotNull final BatchPublishToSocialMedia publishData) {
-        if (VimeoNetworkUtil.isStringEmpty(videoId)) {
+        if (VimeoNetworkUtil.isStringEmpty(publishUri)) {
             throw new AssertionError("Video Id is not valid for publish job.");
         }
-        return mVimeoService.putPublishJob(getAuthHeader(), videoId, publishData);
+        return mVimeoService.putPublishJob(getAuthHeader(), publishUri, publishData);
     }
 
     // </editor-fold>
