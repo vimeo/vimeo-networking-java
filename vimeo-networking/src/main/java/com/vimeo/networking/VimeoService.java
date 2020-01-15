@@ -201,11 +201,13 @@ public interface VimeoService {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Publish Jobs">
+    @GET
     @Serializer(converter = ConverterType.MOSHI)
     Call<PublishJob> getPublishJob(@Header("Authorization") String authHeader,
                                    @Url String url,
                                    @Header("Cache-Control") String cacheHeader);
 
+    @PUT
     @Serializer(converter = ConverterType.MOSHI)
     @Headers("Cache-Control: no-cache, no-store")
     Call<PublishJob> putPublishJob(@Header("Authorization") String authHeader,
