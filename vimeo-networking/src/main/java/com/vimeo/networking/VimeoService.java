@@ -201,17 +201,15 @@ public interface VimeoService {
      * -----------------------------------------------------------------------------------------------------
      */
     // <editor-fold desc="Publish Jobs">
-    @GET("videos/{video_id}/publish_to_social")
     @Serializer(converter = ConverterType.MOSHI)
     Call<PublishJob> getPublishJob(@Header("Authorization") String authHeader,
-                                   @Path("video_id") String videoId,
+                                   @Url String url,
                                    @Header("Cache-Control") String cacheHeader);
 
-    @PUT("videos/{video_id}/publish_to_social")
     @Serializer(converter = ConverterType.MOSHI)
     @Headers("Cache-Control: no-cache, no-store")
     Call<PublishJob> putPublishJob(@Header("Authorization") String authHeader,
-                                   @Path("video_id") String videoId,
+                                   @Url String url,
                                    @Body BatchPublishToSocialMedia publishData);
     // </editor-fold>
 
