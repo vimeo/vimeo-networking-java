@@ -25,5 +25,10 @@ enum class BlockerType(override val value: String?) : StringValue {
      */
     LI_NO_ORGANIZATIONS("li_no_organizations"),
 
+    /**
+     * The user has no YouTube channel associated with their connected google account.
+     */
+    YT_NO_CHANNEL("yt_no_channel"),
+
     UNKNOWN(null)
 }

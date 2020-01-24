@@ -20,6 +20,7 @@ public class PublishJobBlockers implements Serializable {
     private static final String S_DURATION = "duration";
     private static final String S_FB_NO_PAGES = "fb_no_pages";
     private static final String S_LI_NO_ORGANIZATIONS = "li_no_organizations";
+    private static final String S_YT_NO_CHANNEL = "yt_no_channel";
     private static final long serialVersionUID = -112432222471334867L;
 
     /**
@@ -35,7 +36,10 @@ public class PublishJobBlockers implements Serializable {
         @SerializedName(S_FB_NO_PAGES)
         FB_NO_PAGES(S_FB_NO_PAGES), // The user has no pages connected to their account. (Facebook only)
         @SerializedName(S_LI_NO_ORGANIZATIONS)
-        LI_NO_ORGANIZATIONS(S_LI_NO_ORGANIZATIONS); // The user has no organization pages connected to their account. (LinkedIn only)
+        LI_NO_ORGANIZATIONS(S_LI_NO_ORGANIZATIONS), // The user has no organization pages connected to their account. (LinkedIn only)
+        @SerializedName(S_YT_NO_CHANNEL)
+        YT_NO_CHANNEL(S_YT_NO_CHANNEL); // The user has no YouTube channel associated with their connected google account.
+
 
         @NotNull
         private final String mType;
