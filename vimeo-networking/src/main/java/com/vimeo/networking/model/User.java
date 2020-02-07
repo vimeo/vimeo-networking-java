@@ -445,8 +445,7 @@ public class User implements Serializable, Followable, Entity {
     /**
      * @return whether the user is an active staff member of Vimeo
      */
-    @Nullable
-    public Boolean getIsStaff() {
+    public boolean getIsStaff() {
         return getBadge() != null && getBadge().getBadgeType() == UserBadgeType.STAFF;
     }
 
