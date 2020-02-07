@@ -24,6 +24,7 @@ package com.vimeo.networking.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.vimeo.networking.Vimeo;
+import com.vimeo.networking.model.UserBadge.UserBadgeType;
 import com.vimeo.networking.model.live.LiveQuota;
 import com.vimeo.networking.model.notifications.NotificationConnection;
 import com.vimeo.networking.model.uploadquota.UploadQuota;
@@ -123,10 +124,6 @@ public class User implements Serializable, Followable, Entity {
     private String mId;
 
     @Nullable
-    @SerializedName("is_staff")
-    private Boolean mIsStaff;
-
-    @Nullable
     @SerializedName("is_creator")
     private Boolean mIsVideoCreator;
 
@@ -138,6 +135,13 @@ public class User implements Serializable, Followable, Entity {
     @SerializedName("membership")
     private Membership mMembership;
 
+    /**
+     * Do not use this method to check if {@link AccountType} is {@link AccountType#STAFF} as you will get inconsistent results.
+     * This method can only return a single {@link AccountType} at a time so if a user happens to be a
+     * staff member with a Pro account, it will only return the {@link AccountType#PRO}.
+     * <p>
+     * Please use {@link #getIsStaff()} instead.
+     */
     public AccountType getAccountType() {
         if (this.mMembership == null || this.mMembership.getType() == null) {
             //We should assume the account object could be null; also, a User object could
@@ -443,7 +447,7 @@ public class User implements Serializable, Followable, Entity {
      */
     @Nullable
     public Boolean getIsStaff() {
-        return mIsStaff;
+        return getBadge() != null && getBadge().getBadgeType() == UserBadgeType.STAFF;
     }
 
     /**
@@ -498,10 +502,6 @@ public class User implements Serializable, Followable, Entity {
 
     void setIsVideoCreator(@Nullable Boolean videoCreator) {
         mIsVideoCreator = videoCreator;
-    }
-
-    void setIsStaff(@Nullable Boolean staff) {
-        mIsStaff = staff;
     }
 
     void setMembership(@Nullable Membership membership) {
