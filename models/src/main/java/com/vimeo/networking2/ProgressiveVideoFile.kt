@@ -9,6 +9,9 @@ import com.vimeo.networking2.enums.VideoSourceType
 import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
+/**
+ * The representation of a video file that could be one of a number of types.
+ */
 @JsonClass(generateAdapter = true)
 data class ProgressiveVideoFile(
 

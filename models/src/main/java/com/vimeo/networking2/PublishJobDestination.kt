@@ -12,41 +12,41 @@ import com.vimeo.networking2.enums.asEnum
 @JsonClass(generateAdapter = true)
 data class PublishJobDestination(
 
-        /**
-         * The [PublishStatusType] of the connected job as a String.
-         */
-        @Json(name = "status")
-        val status: String? = null,
+    /**
+     * The [PublishStatusType] of the connected job as a String.
+     */
+    @Json(name = "status")
+    val status: String? = null,
 
-        /**
-         * The url of the post/job on the specified social network.
-         */
-        @Json(name = "third_party_post_url")
-        val url: String? = null,
+    /**
+     * The url of the post/job on the specified social network.
+     */
+    @Json(name = "third_party_post_url")
+    val url: String? = null,
 
-        /**
-         * The id of the post/job on the specified social network.
-         */
-        @Json(name = "third_party_post_id")
-        val id: String? = null,
+    /**
+     * The id of the post/job on the specified social network.
+     */
+    @Json(name = "third_party_post_id")
+    val id: String? = null,
 
-        /**
-         * The number of views of the post/job on the specified social network.
-         */
-        @Json(name = "third_party_view_count")
-        val viewCount: Long? = null,
+    /**
+     * The number of views of the post/job on the specified social network.
+     */
+    @Json(name = "third_party_view_count")
+    val viewCount: Long? = null,
 
-        /**
-         * The number of likes of the post/job on the specified social network.
-         */
-        @Json(name = "third_party_like_count")
-        val likeCount: Long? = null,
+    /**
+     * The number of likes of the post/job on the specified social network.
+     */
+    @Json(name = "third_party_like_count")
+    val likeCount: Long? = null,
 
-        /**
-         * The number of comments of the post/job on the specified social network.
-         */
-        @Json(name = "third_party_comment_count")
-        val commentCount: Long? = null
+    /**
+     * The number of comments of the post/job on the specified social network.
+     */
+    @Json(name = "third_party_comment_count")
+    val commentCount: Long? = null
 ) : Entity {
     override val identifier: String? = id
 }

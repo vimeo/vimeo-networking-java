@@ -19,7 +19,7 @@ data class Subscriptions(
      * The "you are added to the credits of a video".
      */
     @Json(name = "credit")
-    val  credit: Boolean = false,
+    val credit: Boolean = false,
 
     /**
      * The "new likes on your videos" setting.

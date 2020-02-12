@@ -9,6 +9,9 @@ import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.enums.asEnum
 
+/**
+ * The representation of the user's video privacy settings.
+ */
 @JsonClass(generateAdapter = true)
 data class Privacy(
 

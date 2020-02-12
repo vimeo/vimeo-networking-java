@@ -58,4 +58,4 @@ data class UserInteractions(
     @Json(name = "twitter_connected_app")
     val twitterConnectedApp: ConnectedAppInteraction? = null
 
-): FollowableInteractions
+) : FollowableInteractions

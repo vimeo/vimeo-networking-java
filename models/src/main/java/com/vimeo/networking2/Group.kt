@@ -78,7 +78,7 @@ data class Group(
     @Json(name = "user")
     val user: User? = null
 
-): Followable, Entity {
+) : Followable, Entity {
 
     override val identifier: String? = resourceKey
 

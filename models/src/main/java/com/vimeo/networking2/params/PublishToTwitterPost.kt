@@ -9,10 +9,10 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class PublishToTwitterPost(
 
-        /**
-         * The contents of the tweet as it will appear on Twitter.
-         */
-        @Json(name = "tweet")
-        val tweet: String
+    /**
+     * The contents of the tweet as it will appear on Twitter.
+     */
+    @Json(name = "tweet")
+    val tweet: String
 
 )
