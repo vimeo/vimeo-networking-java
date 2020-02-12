@@ -15,7 +15,7 @@ import java.util.concurrent.Executor
  * @param callbackExecutor          The executor upon which the caller is notified.
  * @param responseBodyConverter     Converter to parse the error response into a [ApiError].
  */
-internal class ErrorHandlingCallAdapter<T>(
+internal class ErrorHandlingCallAdapter<T : Any>(
     private val responseType: Type,
     private val callbackExecutor: Executor?,
     private val responseBodyConverter: Converter<ResponseBody, ApiError>
