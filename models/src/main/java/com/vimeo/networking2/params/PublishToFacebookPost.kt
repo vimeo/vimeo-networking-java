@@ -13,13 +13,13 @@ data class PublishToFacebookPost(
          * The title of the post as it will appear on Facebook.
          */
         @Json(name = "title")
-        val title: String,
+        val title: String?,
 
         /**
          * The description of the post as it will appear on Facebook.
          */
         @Json(name = "description")
-        val description: String,
+        val description: String?,
 
         /**
          * The destination identifier (page id) of the page being posted to on Facebook.
