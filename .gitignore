@@ -8,11 +8,14 @@ gen/
 *.dex
 .gradle
 /local.properties
-.idea/
+.idea/*
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
 values.xml
+
+# Code style should be shared
+!/.idea/codeStyles
 
 # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
 fastlane/report.xml
