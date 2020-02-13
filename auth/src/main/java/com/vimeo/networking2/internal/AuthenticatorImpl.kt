@@ -72,6 +72,7 @@ internal class AuthenticatorImpl(
      * client. If they were invalid values such as a empty string, it will inform the client of the
      * error. Otherwise, an API request is made and the result is returned to the user.
      */
+    @SuppressWarnings("LongParameterList")
     private fun socialAuthenticate(
         token: String,
         email: String,

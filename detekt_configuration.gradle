@@ -1,0 +1,8 @@
+detekt {
+    toolVersion = "1.0.0-RC14"
+    input = files("$projectDir/src/main/java")
+    config = files("$rootDir/detekt.yml")
+    filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    failFast = true
+    parallel = true
+}

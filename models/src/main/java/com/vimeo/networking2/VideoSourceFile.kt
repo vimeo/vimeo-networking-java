@@ -9,6 +9,9 @@ import com.vimeo.networking2.enums.VideoSourceType
 import com.vimeo.networking2.enums.asEnum
 import java.util.*
 
+/**
+ * A video file that is a source for a published video.
+ */
 @JsonClass(generateAdapter = true)
 data class VideoSourceFile(
 

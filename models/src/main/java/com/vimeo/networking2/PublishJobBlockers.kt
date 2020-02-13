@@ -11,34 +11,34 @@ import com.vimeo.networking2.enums.asEnumList
 @JsonClass(generateAdapter = true)
 data class PublishJobBlockers(
 
-        /**
-         * The list of blockers keeping this video from being uploaded to Facebook.
-         * @see PublishJobBlockers.facebookTypes
-         */
-        @Json(name = "facebook")
-        val facebook: List<String>? = null,
+    /**
+     * The list of blockers keeping this video from being uploaded to Facebook.
+     * @see PublishJobBlockers.facebookTypes
+     */
+    @Json(name = "facebook")
+    val facebook: List<String>? = null,
 
-        /**
-         *  The list of blockers keeping this video from being uploaded to YouTube.
-         *  @see PublishJobBlockers.youTubeTypes
-         */
+    /**
+     *  The list of blockers keeping this video from being uploaded to YouTube.
+     *  @see PublishJobBlockers.youTubeTypes
+     */
 
-        @Json(name = "youtube")
-        val youtube: List<String>? = null,
+    @Json(name = "youtube")
+    val youtube: List<String>? = null,
 
-        /**
-         * The list of blockers keeping this video from being uploaded to LinkedIn.
-         * @see PublishJobBlockers.linkedinTypes
-         */
-        @Json(name = "linkedin")
-        val linkedin: List<String>? = null,
+    /**
+     * The list of blockers keeping this video from being uploaded to LinkedIn.
+     * @see PublishJobBlockers.linkedinTypes
+     */
+    @Json(name = "linkedin")
+    val linkedin: List<String>? = null,
 
-        /**
-         * The list of blockers keeping this video from being uploaded to Twitter.
-         * @see PublishJobBlockers.twitterTypes
-         */
-        @Json(name = "twitter")
-        val twitter: List<String>? = null
+    /**
+     * The list of blockers keeping this video from being uploaded to Twitter.
+     * @see PublishJobBlockers.twitterTypes
+     */
+    @Json(name = "twitter")
+    val twitter: List<String>? = null
 )
 
 /**

@@ -19,7 +19,7 @@ import java.util.concurrent.Executor
  *                              OkHttp's dispatcher.
  * @param responseBodyConverter Converter to convert the error response to [ApiError].
  */
-internal class VimeoCallAdapter<T>(
+internal class VimeoCallAdapter<T : Any>(
     private val call: Call<T>,
     private val callbackExecutor: Executor?,
     private val responseBodyConverter: Converter<ResponseBody, ApiError>
@@ -32,7 +32,7 @@ internal class VimeoCallAdapter<T>(
 
                 if (response.hasBody()) {
                     callbackExecutor.sendResponse {
-                        callback.onSuccess(VimeoResponse.Success(response.body()!!))
+                        callback.onSuccess(VimeoResponse.Success(requireNotNull(response.body())))
                     }
                 } else {
                     val apiError = response.parseApiError()

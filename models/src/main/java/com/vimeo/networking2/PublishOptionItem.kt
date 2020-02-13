@@ -10,17 +10,17 @@ import com.vimeo.networking2.common.Entity
 @JsonClass(generateAdapter = true)
 data class PublishOptionItem(
 
-        /**
-         * The ID of the publish item.
-         */
-        @Json(name = "id")
-        val id: String? = null,
+    /**
+     * The ID of the publish item.
+     */
+    @Json(name = "id")
+    val id: String? = null,
 
-        /**
-         * The name or display name of the publish item, i.e.: "art", "family", "vacation" etc.
-         */
-        @Json(name = "name")
-        val name: String? = null
+    /**
+     * The name or display name of the publish item, i.e.: "art", "family", "vacation" etc.
+     */
+    @Json(name = "name")
+    val name: String? = null
 
 ) : Entity {
 

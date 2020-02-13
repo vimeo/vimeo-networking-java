@@ -23,4 +23,4 @@ data class WatchLaterInteraction(
     @Json(name = "uri")
     override val uri: String? = null
 
-): UpdatableInteraction
+) : UpdatableInteraction

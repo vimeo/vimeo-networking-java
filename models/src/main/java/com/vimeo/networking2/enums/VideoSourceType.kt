@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * The type of the video file that a source represents.
+ */
 enum class VideoSourceType(override val value: String?) : StringValue {
 
     SOURCE("source"),

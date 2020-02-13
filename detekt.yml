@@ -1,0 +1,82 @@
+# Fail build if any issues are found
+build:
+  maxIssues: 1
+
+#
+# Configure detekt's 8 different rulesets (comments, complexity, empty-blocks, exceptions, naming, performance,
+# potential-bugs, style).
+#
+# Ruleset, rule, and rule attribute docs can be found here: https://arturbosch.github.io/detekt
+#
+
+comments:
+  CommentOverPrivateFunction:
+    active: false
+  CommentOverPrivateProperty:
+    active: false
+  EndOfSentenceFormat:
+    active: false
+
+complexity:
+  LabeledExpression:
+    active: false
+  TooManyFunctions:
+    active: false
+  LongParameterList:
+    threshold: 6
+    ignoreDefaultParameters: true
+  NestedBlockDepth:
+    threshold: 5
+
+exceptions:
+  TooGenericExceptionCaught:
+    exceptionNames:
+      - Error
+      - Throwable
+  TooGenericExceptionThrown:
+    exceptionNames:
+      - Exception
+      - Error
+      - Throwable
+
+naming:
+  FunctionMaxLength:
+    maximumFunctionNameLength: 40
+  MatchingDeclarationName:
+    active: false
+
+performance:
+  SpreadOperator:
+    active: false
+
+potential-bugs:
+  UnsafeCast:
+    active: false
+  LateinitUsage:
+    active: false
+
+style:
+  ForbiddenComment:
+    active: false
+  ExpressionBodySyntax:
+    active: false
+  MatchingDeclarationName:
+    active: false
+  ReturnCount:
+    active: false
+  FunctionMaxLength:
+    active: false
+  WildcardImport:
+    active: false
+  UnnecessaryParentheses:
+    active: false
+  UnusedPrivateMember:
+    active: false
+  UnderscoresInNumericLiterals:
+    active: false
+  PreferToOverPairSyntax:
+    active: false
+  UnnecessaryApply:
+    active: false
+  ForbiddenVoid:
+    active: false

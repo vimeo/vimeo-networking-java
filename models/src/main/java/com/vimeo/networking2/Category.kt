@@ -80,7 +80,7 @@ data class Category(
     @Json(name = "uri")
     val uri: String? = null
 
-): Followable, Entity {
+) : Followable, Entity {
 
     override val identifier: String? = resourceKey
 

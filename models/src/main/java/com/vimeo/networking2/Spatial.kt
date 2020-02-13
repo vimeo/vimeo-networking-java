@@ -8,6 +8,9 @@ import com.vimeo.networking2.enums.SpatialProjectionType
 import com.vimeo.networking2.enums.StereoFormatType
 import com.vimeo.networking2.enums.asEnum
 
+/**
+ * The information used to properly project a 360 video in 3D space.
+ */
 @JsonClass(generateAdapter = true)
 data class Spatial(
 

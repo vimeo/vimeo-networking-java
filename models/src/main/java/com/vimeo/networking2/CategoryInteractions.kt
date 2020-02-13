@@ -13,4 +13,4 @@ data class CategoryInteractions(
     @Json(name = "follow")
     override val follow: FollowInteraction? = null
 
-): FollowableInteractions
+) : FollowableInteractions

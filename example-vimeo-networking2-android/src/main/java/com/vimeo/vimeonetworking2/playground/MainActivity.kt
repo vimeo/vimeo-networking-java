@@ -10,6 +10,9 @@ import com.vimeo.networking2.VimeoResponse
 import com.vimeo.networking2.config.ServerConfig
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * The sample activity in which we create an authenticator instance and then authenticate with the server.
+ */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

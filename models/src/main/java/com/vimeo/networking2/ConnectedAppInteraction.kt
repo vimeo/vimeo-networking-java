@@ -10,22 +10,22 @@ import com.vimeo.networking2.common.Interaction
 @JsonClass(generateAdapter = true)
 data class ConnectedAppInteraction(
 
-        @Json(name = "options")
-        override val options: List<String>? = null,
+    @Json(name = "options")
+    override val options: List<String>? = null,
 
-        @Json(name = "uri")
-        override val uri: String? = null,
+    @Json(name = "uri")
+    override val uri: String? = null,
 
-        /**
-         * Whether an app is connected or not.
-         */
-        @Json(name = "is_connected")
-        val isConnected: Boolean? = null,
+    /**
+     * Whether an app is connected or not.
+     */
+    @Json(name = "is_connected")
+    val isConnected: Boolean? = null,
 
-        /**
-         * Provides the lists of scopes that are required for third-party connected app features.
-         */
-        @Json(name = "all_scopes")
-        val allScopes: ConnectedScopes? = null
+    /**
+     * Provides the lists of scopes that are required for third-party connected app features.
+     */
+    @Json(name = "all_scopes")
+    val allScopes: ConnectedScopes? = null
 
 ) : Interaction

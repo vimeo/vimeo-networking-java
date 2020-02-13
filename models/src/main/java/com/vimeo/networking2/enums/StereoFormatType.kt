@@ -1,5 +1,8 @@
 package com.vimeo.networking2.enums
 
+/**
+ * The video layout format used for 360 videos.
+ */
 enum class StereoFormatType(override val value: String?) : StringValue {
 
     /**

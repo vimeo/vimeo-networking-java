@@ -17,4 +17,4 @@ data class AuthenticatedAccessToken(
     @Json(name = "user")
     val user: User
 
-): AccessTokenProvider
+) : AccessTokenProvider
