@@ -37,6 +37,6 @@ data class PublishToYouTubePost(
      * The YouTube category of the video.
      */
     @Json(name = "category_id")
-    val categoryId: String
+    val categoryId: String? = null
 
 )
