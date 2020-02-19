@@ -10,16 +10,16 @@ dependencies {
     api project(":models")
 
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // Retrofit
-    api "com.squareup.retrofit2:retrofit:2.5.0"
-    implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
+    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
     // Moshi Adapters
-    implementation "com.squareup.moshi:moshi-adapters:1.8.0"
+    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
 
     // Okio used by Moshi
-    implementation "com.squareup.okio:okio:2.2.2"
+    implementation "com.squareup.okio:okio:$okioVersion"
 
 }
