@@ -45,7 +45,7 @@ dependencies {
     implementation 'org.jetbrains:annotations:18.0.0'
 
     implementation ("com.vimeo.stag:stag-library:$stagVersion"){
-        exclude group: 'com.intellij', module: 'annotations'
+        exclude group: 'org.jetbrains', module: 'annotations-java5'
     }
     apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
 
