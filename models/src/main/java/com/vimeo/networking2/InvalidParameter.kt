@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.ErrorCodeType
 import com.vimeo.networking2.enums.asEnum
 
@@ -8,6 +9,7 @@ import com.vimeo.networking2.enums.asEnum
  * Similar to [ApiError] object, this holds error codes/error messages relevant to a
  * specific invalid field.
  */
+@JsonClass(generateAdapter = true)
 data class InvalidParameter(
 
     /**
