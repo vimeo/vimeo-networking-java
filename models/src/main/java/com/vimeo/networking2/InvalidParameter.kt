@@ -1,3 +1,5 @@
+@file:JvmName("InvalidParameterUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
@@ -24,6 +26,12 @@ data class InvalidParameter(
      */
     @Json(name = "error_code")
     val errorCode: String? = null,
+
+    /**
+     * The user readable error message detailing why the request was invalid.
+     */
+    @Json(name = "error")
+    val error: String? = null,
 
     /**
      * Detailed description on why the field is invalid.

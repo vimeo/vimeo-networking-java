@@ -1,3 +1,5 @@
+@file:JvmName("PublishJobDestinationUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json

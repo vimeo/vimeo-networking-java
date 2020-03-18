@@ -1,3 +1,5 @@
+@file:JvmName("SubscriptionTrialUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
