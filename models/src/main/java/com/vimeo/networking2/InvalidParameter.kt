@@ -28,6 +28,12 @@ data class InvalidParameter(
     val errorCode: String? = null,
 
     /**
+     * The user readable error message detailing why the request was invalid.
+     */
+    @Json(name = "error")
+    val error: String? = null,
+
+    /**
      * Detailed description on why the field is invalid.
      */
     @Json(name = "developer_message")
