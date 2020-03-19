@@ -4,6 +4,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.PlayableFile
 import com.vimeo.networking2.enums.VideoQualityType
 import com.vimeo.networking2.enums.VideoSourceType
 import com.vimeo.networking2.enums.asEnum
@@ -14,6 +15,15 @@ import java.util.*
  */
 @JsonClass(generateAdapter = true)
 data class ProgressiveVideoFile(
+
+    @Json(name = "link")
+    override val link: String? = null,
+
+    @Json(name = "link_expiration_time")
+    override val linkExpirationTime: Date? = null,
+
+    @Json(name = "log")
+    override val log: String? = null,
 
     /**
      * The time in ISO 8601 format when the video file was created.
@@ -32,24 +42,6 @@ data class ProgressiveVideoFile(
      */
     @Json(name = "height")
     val height: Int? = null,
-
-    /**
-     * The direct link to this video file.
-     */
-    @Json(name = "link")
-    val link: String? = null,
-
-    /**
-     * The time in ISO 8601 format when the link to this video file expires.
-     */
-    @Json(name = "link_expiration_time")
-    val linkExpirationTime: String? = null,
-
-    /**
-     * Video logging information.
-     */
-    @Json(name = "log")
-    val log: String? = null,
 
     /**
      * The MD5 hash of the video file.
@@ -89,7 +81,7 @@ data class ProgressiveVideoFile(
     @Json(name = "width")
     val width: Int? = null
 
-)
+) : PlayableFile
 
 /**
  * @see ProgressiveVideoFile.videoQuality
