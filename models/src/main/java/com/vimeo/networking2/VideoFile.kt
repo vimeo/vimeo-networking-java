@@ -23,6 +23,12 @@ data class VideoFile(
 
     @Internal
     @Json(name = "log")
-    override val log: String? = null
+    override val log: String? = null,
 
+    /**
+     * The info about the live heartbeat endpoint, used if the video is a live video.
+     */
+    @Internal
+    @Json(name = "live")
+    val live: LiveHeartbeat? = null
 ) : PlayableFile
