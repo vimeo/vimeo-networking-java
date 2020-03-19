@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * All connections for a category.
@@ -33,4 +34,8 @@ data class CategoryConnections(
     @Json(name = "videos")
     val videos: Connection? = null
 
-)
+): Serializable {
+    companion object {
+        private const val serialVersionUID = -113L
+    }
+}

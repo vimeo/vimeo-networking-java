@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -22,4 +23,9 @@ data class SubscriptionRenewal(
      */
     @Json(name = "renewal_date")
     var renewalDate: Date? = null
-)
+): Serializable {
+
+    companion object {
+        private const val serialVersionUID = -30433L
+    }
+}

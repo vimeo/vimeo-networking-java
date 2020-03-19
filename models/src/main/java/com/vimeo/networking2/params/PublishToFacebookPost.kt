@@ -2,6 +2,7 @@ package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * Represents the required data for a Facebook post.
@@ -58,4 +59,9 @@ data class PublishToFacebookPost(
     @Json(name = "allow_social_actions")
     val allowSocialActions: Boolean
 
-)
+): Serializable {
+
+    companion object {
+        private const val serialVersionUID = -312972751L
+    }
+}

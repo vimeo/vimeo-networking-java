@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
+import java.io.Serializable
 
 /**
  * A Connection to provide the Publish to Social data for this video.
@@ -41,6 +42,11 @@ data class PublishJobConnection(
     @Json(name = "uri")
     val uri: String? = null
 
-) : Entity {
+) : Entity, Serializable {
+
     override val identifier: String? = uri
+
+    companion object {
+        private const val serialVersionUID = -35L
+    }
 }

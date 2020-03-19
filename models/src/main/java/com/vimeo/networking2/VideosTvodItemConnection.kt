@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * All connections for a [TvodItem].
@@ -45,4 +46,9 @@ data class VideosTvodItemConnection(
     @Json(name = "viewable_total")
     val viewableTotal: Int? = null
 
-)
+): Serializable {
+
+    companion object {
+        private const val serialVersionUID = -106L
+    }
+}

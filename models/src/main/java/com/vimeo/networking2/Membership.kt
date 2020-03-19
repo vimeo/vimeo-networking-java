@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.AccountType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * This object contains user membership information.
@@ -39,7 +40,12 @@ data class Membership(
      */
     @Json(name = "subscription")
     val subscription: Subscription? = null
-)
+): Serializable {
+
+    companion object {
+        private const val serialVersionUID = -4319876L
+    }
+}
 
 /**
  * @see [Membership.rawType]

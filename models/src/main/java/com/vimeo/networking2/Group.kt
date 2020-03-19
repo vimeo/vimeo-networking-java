@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.common.Followable
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -78,8 +79,11 @@ data class Group(
     @Json(name = "user")
     val user: User? = null
 
-) : Followable, Entity {
+) : Followable, Entity, Serializable {
 
     override val identifier: String? = resourceKey
 
+    companion object {
+        private const val serialVersionUID = -116L
+    }
 }

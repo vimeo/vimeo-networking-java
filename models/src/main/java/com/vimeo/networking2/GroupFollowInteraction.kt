@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.UpdatableInteraction
 import com.vimeo.networking2.enums.FollowType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -40,7 +41,12 @@ data class GroupFollowInteraction(
     @Json(name = "type")
     val rawType: String? = null
 
-) : UpdatableInteraction
+) : UpdatableInteraction, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -117L
+    }
+}
 
 /**
  * @see GroupFollowInteraction.rawType

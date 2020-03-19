@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.VideoPlayStatusType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * Play information.
@@ -57,7 +58,12 @@ data class Play(
     @Internal
     @Json(name = "status")
     val videoPlayStatus: String? = null
-)
+): Serializable {
+
+    companion object {
+        private const val serialVersionUID = -12L
+    }
+}
 
 /**
  * @see Play.videoPlayStatus

@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.VideoQualityType
 import com.vimeo.networking2.enums.VideoSourceType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -89,7 +90,12 @@ data class VideoSourceFile(
     @Json(name = "width")
     val width: Int? = null
 
-)
+): Serializable {
+
+    companion object {
+        private const val serialVersionUID = -5291456L
+    }
+}
 
 /**
  * @see ProgressiveVideoFile.videoQuality

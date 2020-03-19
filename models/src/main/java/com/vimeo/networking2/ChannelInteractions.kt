@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.FollowableInteractions
+import java.io.Serializable
 
 /**
  * All action that can be taken on a channel.
@@ -44,4 +45,9 @@ data class ChannelInteractions(
     @Json(name = "moderate_videos")
     val moderateVideos: BasicInteraction? = null
 
-) : FollowableInteractions
+) : FollowableInteractions, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -8375965L
+    }
+}

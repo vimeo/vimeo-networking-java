@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * A model that holds the type of push subscriptions a user has.
@@ -51,4 +52,9 @@ data class Subscriptions(
     @Json(name = "followed_user_video_available")
     val followedUserVideoAvailable: Boolean = false
 
-)
+): Serializable {
+
+    companion object {
+        private const val serialVersionUID = -304215419646L
+    }
+}

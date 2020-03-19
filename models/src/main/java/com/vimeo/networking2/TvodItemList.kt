@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
+import java.io.Serializable
 
 /**
  * List of [TvodItem] that could be paged.
@@ -25,4 +26,9 @@ data class TvodItemList(
     @Json(name = "data")
     override val data: List<TvodItem>? = null
 
-) : Pageable<TvodItem>
+) : Pageable<TvodItem>, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -2538893L
+    }
+}

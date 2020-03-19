@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
+import java.io.Serializable
 
 /**
  * A model representing the specific data needed for the live chat feature when a live video is playing.
@@ -33,4 +34,9 @@ data class LiveChat(
     @Json(name = "user")
     val user: User? = null
 
-)
+): Serializable {
+
+    companion object {
+        private const val serialVersionUID = -2530478L
+    }
+}
