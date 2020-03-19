@@ -19,14 +19,14 @@ internal class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
         annotations: Array<Annotation>,
         retrofit: Retrofit
     ): CallAdapter<*, *>? {
-        if (CallAdapter.Factory.getRawType(returnType) != VimeoCall::class.java) {
+        if (getRawType(returnType) != VimeoCall::class.java) {
             return null
         }
 
         if (returnType !is ParameterizedType) {
             throw IllegalStateException("VimeoCall must have generic type (e.g., VimeoCall<ResponseBody>)")
         }
-        val responseType = CallAdapter.Factory.getParameterUpperBound(0, returnType)
+        val responseType = getParameterUpperBound(0, returnType)
         val callbackExecutor = retrofit.callbackExecutor()
         val errorResponseConverter = retrofit.responseBodyConverter<ApiError>(
             ApiError::class.java,
