@@ -29,38 +29,36 @@ import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
 import com.vimeo.networking.interceptors.LanguageHeaderInterceptor;
 import com.vimeo.networking.logging.ClientLogger;
-import com.vimeo.networking.model.Album;
-import com.vimeo.networking.model.AlbumList;
-import com.vimeo.networking.model.AlbumPrivacy;
-import com.vimeo.networking.model.Comment;
-import com.vimeo.networking.model.Document;
-import com.vimeo.networking.model.ModifyVideoInAlbumsSpecs;
-import com.vimeo.networking.model.ModifyVideosInAlbumSpecs;
-import com.vimeo.networking.model.PictureCollection;
-import com.vimeo.networking.model.PictureResource;
-import com.vimeo.networking.model.PinCodeInfo;
-import com.vimeo.networking.model.Privacy;
-import com.vimeo.networking.model.TextTrackList;
-import com.vimeo.networking.model.User;
-import com.vimeo.networking.model.Video;
-import com.vimeo.networking.model.VideoList;
-import com.vimeo.networking.model.VimeoAccount;
 import com.vimeo.networking.model.error.ErrorCode;
 import com.vimeo.networking.model.error.LocalErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
-import com.vimeo.networking.model.iap.Product;
-import com.vimeo.networking.model.iap.Products;
-import com.vimeo.networking.model.notifications.SubscriptionCollection;
-import com.vimeo.networking.model.search.SearchResponse;
-import com.vimeo.networking.model.search.SuggestionResponse;
 import com.vimeo.networking.utils.BaseUrlInterceptor;
 import com.vimeo.networking.utils.PrivacySettingsParams;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
+import com.vimeo.networking2.Album;
+import com.vimeo.networking2.AlbumList;
+import com.vimeo.networking2.AlbumPrivacy;
+import com.vimeo.networking2.Comment;
+import com.vimeo.networking2.Document;
+import com.vimeo.networking2.NotificationSubscriptions;
+import com.vimeo.networking2.PictureCollection;
+import com.vimeo.networking2.PinCodeInfo;
+import com.vimeo.networking2.Product;
+import com.vimeo.networking2.ProductList;
+import com.vimeo.networking2.SearchResultList;
+import com.vimeo.networking2.TextTrackList;
+import com.vimeo.networking2.User;
+import com.vimeo.networking2.Video;
+import com.vimeo.networking2.VideoList;
+import com.vimeo.networking2.VimeoAccount;
+import com.vimeo.networking2.enums.ViewPrivacyType;
 import com.vimeo.networking2.params.BatchPublishToSocialMedia;
 import com.vimeo.networking2.ConnectedApp;
 import com.vimeo.networking2.ConnectedAppList;
 import com.vimeo.networking2.PublishJob;
 import com.vimeo.networking2.enums.ConnectedAppType;
+import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs;
+import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -247,7 +245,7 @@ public class VimeoClient {
         if (vimeoAccount == null) {
             // If the provided account was null but we have an access token, persist the vimeo account with
             // just a token in it. Otherwise we'll want to leave the persisted account as null.
-            vimeoAccount = new VimeoAccount(mConfiguration.mAccessToken);
+            vimeoAccount = new VimeoAccount(mConfiguration.mAccessToken, null, null, null, null, null);
             //noinspection VariableNotUsedInsideIf
             if (mConfiguration.mAccessToken != null) {
                 mConfiguration.saveAccount(vimeoAccount, null);
@@ -762,8 +760,8 @@ public class VimeoClient {
             if (vimeoAccount.getUser() != null && (mEmail == null || mEmail.isEmpty())) {
                 // We must always have a `name` field, which is used by the Android Account Manager for
                 // display in the device Settings -> Accounts [KZ] 12/17/15
-                final String userName = vimeoAccount.getUser().mName;
-                final String name = userName != null ? userName : vimeoAccount.getUser().mUri;
+                final String userName = vimeoAccount.getUser().getName();
+                final String name = userName != null ? userName : vimeoAccount.getUser().getName();
                 mClient.saveAccount(vimeoAccount, name);
             } else {
                 mClient.saveAccount(vimeoAccount, mEmail);
@@ -1183,9 +1181,9 @@ public class VimeoClient {
 
         if (privacySettingsParams != null && !privacySettingsParams.getParams().isEmpty()) {
             final Map<String, Object> privacyMap = privacySettingsParams.getParams();
-            final Privacy.ViewValue viewPrivacyValue = (Privacy.ViewValue) privacyMap.get(Vimeo.PARAMETER_VIDEO_VIEW);
+            final ViewPrivacyType viewPrivacyValue = (ViewPrivacyType) privacyMap.get(Vimeo.PARAMETER_VIDEO_VIEW);
 
-            if (viewPrivacyValue == Privacy.ViewValue.PASSWORD) {
+            if (viewPrivacyValue == ViewPrivacyType.PASSWORD) {
                 if (password == null) {
                     callback.failure(new VimeoError("Password cannot be null password privacy type"));
                     return null;
@@ -1251,10 +1249,10 @@ public class VimeoClient {
      * @return A Call so that the request can be cancelled if need be
      */
     @Nullable
-    public Call<SubscriptionCollection> editSubscriptions(@NotNull Map<String, Boolean> subscriptionMap,
-                                                          @NotNull VimeoCallback<SubscriptionCollection> callback) {
+    public Call<NotificationSubscriptions> editSubscriptions(@NotNull Map<String, Boolean> subscriptionMap,
+                                                             @NotNull VimeoCallback<NotificationSubscriptions> callback) {
 
-        final Call<SubscriptionCollection> call = mVimeoService.editSubscriptions(getAuthHeader(), subscriptionMap);
+        final Call<NotificationSubscriptions> call = mVimeoService.editSubscriptions(getAuthHeader(), subscriptionMap);
         call.enqueue(callback);
 
         return call;
@@ -1483,13 +1481,13 @@ public class VimeoClient {
      * @param callback The VimeoCallback containing PictureResource data
      */
     @Nullable
-    public Call<PictureResource> createPictureResource(String uri, VimeoCallback<PictureResource> callback) {
+    public Call<PictureCollection> createPictureResource(String uri, VimeoCallback<PictureCollection> callback) {
         if (uri == null || uri.trim().isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
         }
 
-        final Call<PictureResource> call = mVimeoService.createPictureResource(getAuthHeader(), uri);
+        final Call<PictureCollection> call = mVimeoService.createPictureResource(getAuthHeader(), uri);
         call.enqueue(callback);
         return call;
     }
@@ -1676,40 +1674,23 @@ public class VimeoClient {
      * @return the Call object provided by the Retrofit service
      */
     @NotNull
-    Call<SearchResponse> search(@NotNull Map<String, String> queryMap,
-                                @NotNull VimeoCallback<SearchResponse> callback) {
+    Call<SearchResultList> search(@NotNull Map<String, String> queryMap,
+                                  @NotNull VimeoCallback<SearchResultList> callback) {
 
-        final Call<SearchResponse> call = mVimeoService.search(getAuthHeader(), queryMap);
+        final Call<SearchResultList> call = mVimeoService.search(getAuthHeader(), queryMap);
         call.enqueue(callback);
         return call;
     }
 
     /**
-     * A package private search suggestions method. See {@link Search#suggest(String, int, int, VimeoCallback)} for
-     * public usage of the suggestion API.
-     *
-     * @param queryMap the query parameters
-     * @param callback the callback to be invoked when the call finishes
-     * @return the {@link Call} object provided by Retrofit
-     */
-    @NotNull
-    Call<SuggestionResponse> suggest(@NotNull Map<String, String> queryMap,
-                                     @NotNull VimeoCallback<SuggestionResponse> callback) {
-        final Call<SuggestionResponse> call = mVimeoService.suggest(getAuthHeader(), queryMap);
-        call.enqueue(callback);
-
-        return call;
-    }
-
-    /**
-     * Gets a list of {@link Products} that can be purchased, such as Vimeo subscriptions.
+     * Gets a list of {@link ProductList} that can be purchased, such as Vimeo subscriptions.
      *
      * @param callback the {@link VimeoCallback} to be invoked when the request finishes
-     * @return a {@link Call} with the {@link Products}. This can be used for request cancellation.
+     * @return a {@link Call} with the {@link ProductList}. This can be used for request cancellation.
      */
     @NotNull
-    public Call<Products> getProducts(@NotNull VimeoCallback<Products> callback) {
-        Call<Products> call = mVimeoService.getProducts(getAuthHeader());
+    public Call<ProductList> getProducts(@NotNull VimeoCallback<ProductList> callback) {
+        Call<ProductList> call = mVimeoService.getProducts(getAuthHeader());
         call.enqueue(callback);
         return call;
     }
@@ -2084,7 +2065,9 @@ public class VimeoClient {
     public String getAuthHeader() {
         final String credential;
 
-        if (mVimeoAccount != null && mVimeoAccount.isAuthenticated()) {
+        if (mVimeoAccount != null
+            && mVimeoAccount.getAccessToken() != null
+            && !mVimeoAccount.getAccessToken().isEmpty()) {
             credential = "Bearer " + mVimeoAccount.getAccessToken();
         } else {
             credential = getBasicAuthHeader();

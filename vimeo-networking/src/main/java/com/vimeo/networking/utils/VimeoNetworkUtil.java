@@ -31,9 +31,10 @@ import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.ClientLogger;
-import com.vimeo.networking.model.AlbumPrivacy;
-import com.vimeo.networking.model.AlbumPrivacy.AlbumPrivacyViewValue;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking2.AlbumPrivacy;
+import com.vimeo.networking2.AlbumPrivacyUtils;
+import com.vimeo.networking2.enums.AlbumViewPrivacyType;
 import com.vimeo.stag.generated.Stag;
 
 import org.jetbrains.annotations.NotNull;
@@ -263,8 +264,7 @@ public final class VimeoNetworkUtil {
         }
         retVal.put(Vimeo.PARAMETER_ALBUM_NAME, name);
 
-        final String viewingPermissions =
-                albumPrivacy.getViewingPermissions() != null ? albumPrivacy.getViewingPermissions().toString() : null;
+        final String viewingPermissions = AlbumPrivacyUtils.getViewPrivacyType(albumPrivacy).getValue();
 
         if (!validateString(viewingPermissions, "ViewingPermissions can't be empty in album edit.", callback)) {
             return null;
@@ -276,7 +276,7 @@ public final class VimeoNetworkUtil {
             retVal.put(Vimeo.PARAMETER_ALBUM_DESCRIPTION, description);
         }
 
-        if (albumPrivacy.getViewingPermissions() == AlbumPrivacyViewValue.PASSWORD) {
+        if (AlbumPrivacyUtils.getViewPrivacyType(albumPrivacy) == AlbumViewPrivacyType.PASSWORD) {
             if (!validateString(albumPrivacy.getPassword(),
                                 "Password can't be empty in password protected album edit.",
                                 callback)) {

@@ -28,29 +28,29 @@ import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.VimeoClient.Caller;
 import com.vimeo.networking.VimeoService;
 import com.vimeo.networking.callbacks.VimeoCallback;
-import com.vimeo.networking.model.Album;
-import com.vimeo.networking.model.AlbumList;
-import com.vimeo.networking.model.Category;
-import com.vimeo.networking.model.CategoryList;
-import com.vimeo.networking.model.Channel;
-import com.vimeo.networking.model.ChannelList;
-import com.vimeo.networking.model.Comment;
-import com.vimeo.networking.model.CommentList;
-import com.vimeo.networking.model.FeedList;
-import com.vimeo.networking.model.RecommendationList;
-import com.vimeo.networking.model.User;
-import com.vimeo.networking.model.UserList;
-import com.vimeo.networking.model.Video;
-import com.vimeo.networking.model.VideoList;
-import com.vimeo.networking.model.appconfiguration.AppConfiguration;
-import com.vimeo.networking.model.cinema.ProgramContentItemList;
-import com.vimeo.networking.model.iap.Product;
-import com.vimeo.networking.model.live.LiveStats;
-import com.vimeo.networking.model.notifications.NotificationList;
-import com.vimeo.networking.model.search.SearchResponse;
-import com.vimeo.networking.model.tvod.SeasonList;
-import com.vimeo.networking.model.tvod.TvodItem;
-import com.vimeo.networking.model.tvod.TvodList;
+import com.vimeo.networking2.Album;
+import com.vimeo.networking2.AlbumList;
+import com.vimeo.networking2.AppConfiguration;
+import com.vimeo.networking2.Category;
+import com.vimeo.networking2.CategoryList;
+import com.vimeo.networking2.Channel;
+import com.vimeo.networking2.ChannelList;
+import com.vimeo.networking2.Comment;
+import com.vimeo.networking2.CommentList;
+import com.vimeo.networking2.FeedList;
+import com.vimeo.networking2.LiveStats;
+import com.vimeo.networking2.NotificationList;
+import com.vimeo.networking2.Product;
+import com.vimeo.networking2.ProgrammedContentItemList;
+import com.vimeo.networking2.RecommendationList;
+import com.vimeo.networking2.SearchResultList;
+import com.vimeo.networking2.SeasonList;
+import com.vimeo.networking2.TvodItem;
+import com.vimeo.networking2.TvodItemList;
+import com.vimeo.networking2.User;
+import com.vimeo.networking2.UserList;
+import com.vimeo.networking2.Video;
+import com.vimeo.networking2.VideoList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -275,14 +275,14 @@ public final class GetRequestCaller {
      * Used in association with
      * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
-     * to get a {@link ProgramContentItemList} response from an API endpoint.
+     * to get a {@link ProgrammedContentItemList} response from an API endpoint.
      */
-    public static final Caller<ProgramContentItemList> PROGRAM_CONTENT_ITEM_LIST =
-            new Caller<ProgramContentItemList>() {
+    public static final Caller<ProgrammedContentItemList> PROGRAM_CONTENT_ITEM_LIST =
+            new Caller<ProgrammedContentItemList>() {
 
                 @NotNull
                 @Override
-                public Call<ProgramContentItemList> call(
+                public Call<ProgrammedContentItemList> call(
                         @NotNull String authHeader,
                         @NotNull String uri,
                         @NotNull Map<String, String> queryMap,
@@ -316,14 +316,14 @@ public final class GetRequestCaller {
      * Used in association with
      * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
-     * to get a {@link SearchResponse} response from an API endpoint.
+     * to get a {@link SearchResultList} response from an API endpoint.
      */
-    public static final Caller<SearchResponse> SEARCH_RESPONSE_LIST =
-            new Caller<SearchResponse>() {
+    public static final Caller<SearchResultList> SEARCH_RESPONSE_LIST =
+            new Caller<SearchResultList>() {
 
                 @NotNull
                 @Override
-                public Call<SearchResponse> call(@NotNull String authHeader,
+                public Call<SearchResultList> call(@NotNull String authHeader,
                                                  @NotNull String uri,
                                                  @NotNull Map<String, String> queryMap,
                                                  @NotNull String cacheHeader,
@@ -376,14 +376,14 @@ public final class GetRequestCaller {
      * Used in association with
      * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
-     * to get a {@link TvodList} response from an API endpoint.
+     * to get a {@link TvodItemList} response from an API endpoint.
      */
-    public static final Caller<TvodList> TVOD_LIST =
-            new Caller<TvodList>() {
+    public static final Caller<TvodItemList> TVOD_LIST =
+            new Caller<TvodItemList>() {
 
                 @NotNull
                 @Override
-                public Call<TvodList> call(@NotNull String authHeader,
+                public Call<TvodItemList> call(@NotNull String authHeader,
                                            @NotNull String uri,
                                            @NotNull Map<String, String> queryMap,
                                            @NotNull String cacheHeader,

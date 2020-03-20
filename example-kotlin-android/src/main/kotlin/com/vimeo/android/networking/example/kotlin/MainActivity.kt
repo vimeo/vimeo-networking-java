@@ -10,10 +10,9 @@ import com.vimeo.networking.VimeoClient
 import com.vimeo.networking.callbacks.AuthCallback
 import com.vimeo.networking.callbacks.VimeoCallback
 import com.vimeo.networking.callers.GetRequestCaller
-import com.vimeo.networking.callers.MoshiGetRequestCaller
-import com.vimeo.networking.model.User
-import com.vimeo.networking.model.VideoList
 import com.vimeo.networking.model.error.VimeoError
+import com.vimeo.networking2.User
+import com.vimeo.networking2.VideoList
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.*
@@ -82,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             val moshiTime = async(Dispatchers.IO) {
                 measureTimeMillis {
                     repeat(repeatTimes) {
-                        fetchStaffPicky(MoshiGetRequestCaller.VIDEO_LIST)
+                        fetchStaffPicky(GetRequestCaller.VIDEO_LIST)
                     }
                 }
             }.await()
@@ -162,7 +161,7 @@ class MainActivity : AppCompatActivity() {
                         val videoTitles = StringBuilder()
                         var addNewLine = false
 
-                        videoList.data.forEach { video ->
+                        videoList.data?.forEach { video ->
                             if (addNewLine) videoTitles.append("\n")
                             addNewLine = true
                             videoTitles.append(video.name)
