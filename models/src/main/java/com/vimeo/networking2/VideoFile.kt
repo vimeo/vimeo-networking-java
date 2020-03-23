@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
+import com.vimeo.networking2.common.PlayableFile
 import java.io.Serializable
 import java.util.*
 
@@ -13,27 +14,25 @@ import java.util.*
 @JsonClass(generateAdapter = true)
 data class VideoFile(
 
-    /**
-     * The direct link to the video file.
-     */
     @Internal
     @Json(name = "link")
-    val link: String? = null,
+    override val link: String? = null,
 
-    /**
-     * The time in ISO 8601 format when the link to the video file expires.
-     */
     @Internal
     @Json(name = "link_expiration_time")
-    val linkExpirationTime: Date? = null,
+    override val linkExpirationTime: Date? = null,
 
-    /**
-     * The URL for logging events.
-     */
     @Internal
     @Json(name = "log")
-    val log: String? = null
-): Serializable {
+    override val log: String? = null,
+
+    /**
+     * The info about the live heartbeat endpoint, used if the video is a live video.
+     */
+    @Internal
+    @Json(name = "live")
+    val live: LiveHeartbeat? = null
+) : PlayableFile, Serializable {
 
     companion object {
         private const val serialVersionUID = -26505L

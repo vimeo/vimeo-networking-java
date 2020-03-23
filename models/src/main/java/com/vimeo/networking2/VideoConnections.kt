@@ -37,6 +37,13 @@ data class VideoConnections(
     val liveStats: Connection? = null,
 
     /**
+     * Information about the video's on-demand status.
+     */
+    @Internal
+    @Json(name = "ondemand")
+    val onDemand: Connection? = null,
+
+    /**
      * Information about this video's thumbnails.
      */
     @Json(name = "pictures")
