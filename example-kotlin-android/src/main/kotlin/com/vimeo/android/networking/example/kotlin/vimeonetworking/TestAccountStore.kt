@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import com.vimeo.android.networking.example.kotlin.AccountPreferenceManager
 import com.vimeo.networking.AccountStore
 import com.vimeo.networking.VimeoClient
-import com.vimeo.networking.model.VimeoAccount
+import com.vimeo.networking2.VimeoAccount
 
 /**
  * An account store that is backed by [SharedPreferences].
@@ -21,7 +21,7 @@ class TestAccountStore(context: Context?) : AccountStore {
     // @RequiresPermission(Manifest.permission.GET_ACCOUNTS)
     // val mAccountManager: AccountManager? = AccountManager.get(context!!)
 
-    override fun loadAccount() = AccountPreferenceManager.clientAccount
+    override fun loadAccount(): VimeoAccount? = AccountPreferenceManager.clientAccount
 
     override fun saveAccount(vimeoAccount: VimeoAccount, email: String) {
         AccountPreferenceManager.clientAccount = vimeoAccount
