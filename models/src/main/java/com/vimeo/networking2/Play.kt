@@ -20,14 +20,14 @@ data class Play(
      */
     @Internal
     @Json(name = "dash")
-    val dash: VideoFile? = null,
+    val dash: DashVideoFile? = null,
 
     /**
      * HLS video files.
      */
     @Internal
     @Json(name = "hls")
-    val hls: VideoFile? = null,
+    val hls: HlsVideoFile? = null,
 
     /**
      * The play progress in seconds.

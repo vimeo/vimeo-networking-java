@@ -5,7 +5,7 @@ import java.util.*
 /**
  * The representation of a file that can be downloaded for playback.
  */
-interface PlayableFile {
+interface VideoFile {
 
     /**
      * The direct link to the playable file.
