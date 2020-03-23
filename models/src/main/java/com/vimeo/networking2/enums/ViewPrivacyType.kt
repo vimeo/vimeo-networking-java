@@ -16,6 +16,11 @@ enum class ViewPrivacyType(override val value: String?) : StringValue {
     STOCK("stock"),
 
     /**
+     * This is an on-demand video that is limited to buyers of the video.
+     */
+    TVOD("ptv"),
+
+    /**
      * Only contacts can view the user's videos.
      */
     CONTACTS("contacts"),
