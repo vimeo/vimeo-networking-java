@@ -56,7 +56,14 @@ data class Play(
      */
     @Internal
     @Json(name = "status")
-    val videoPlayStatus: String? = null
+    val videoPlayStatus: String? = null,
+
+    /**
+     * The DRM play data for a protected stream.
+     */
+    @Internal
+    @Json(name = "drm")
+    val drm: Drm? = null
 )
 
 /**

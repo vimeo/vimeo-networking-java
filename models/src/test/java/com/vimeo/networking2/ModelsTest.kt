@@ -39,6 +39,7 @@ class ModelsTest {
         Credit::class,
         DashVideoFile::class,
         Document::class,
+        Drm::class,
         Email::class,
         EmbedButtons::class,
         EmbedTitle::class,
