@@ -10,11 +10,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class ProductInteractions(
 
-        /**
-         * Purchase product.
-         */
-        @Json(name = "purchase")
-        val purchase: PurchaseInteraction? = null
+    /**
+     * Purchase product.
+     */
+    @Json(name = "purchase")
+    val purchase: PurchaseInteraction? = null
 
 ) : Serializable {
 

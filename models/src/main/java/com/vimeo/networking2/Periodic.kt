@@ -11,14 +11,14 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Periodic(
 
-        @Json(name = "free")
-        override val free: Long? = null,
+    @Json(name = "free")
+    override val free: Long? = null,
 
-        @Json(name = "max")
-        override val max: Long? = null,
+    @Json(name = "max")
+    override val max: Long? = null,
 
-        @Json(name = "used")
-        override val used: Long? = null
+    @Json(name = "used")
+    override val used: Long? = null
 
 ) : StorageQuota, Serializable {
 

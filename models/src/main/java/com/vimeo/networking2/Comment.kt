@@ -16,42 +16,42 @@ import java.util.*
 @JsonClass(generateAdapter = true)
 data class Comment(
 
-        /**
-         * The time in ISO 8601 format when the comment was posted.
-         */
-        @Json(name = "created_on")
-        val createdOn: Date? = null,
+    /**
+     * The time in ISO 8601 format when the comment was posted.
+     */
+    @Json(name = "created_on")
+    val createdOn: Date? = null,
 
-        /**
-         * Metadata for comments.
-         */
-        @Json(name = "metadata")
-        val metadata: MetadataConnections<CommentConnections>? = null,
+    /**
+     * Metadata for comments.
+     */
+    @Json(name = "metadata")
+    val metadata: MetadataConnections<CommentConnections>? = null,
 
-        /**
-         * The resource key string for the comment.
-         */
-        @Json(name = "resource_key")
-        val resourceKey: String? = null,
+    /**
+     * The resource key string for the comment.
+     */
+    @Json(name = "resource_key")
+    val resourceKey: String? = null,
 
-        /**
-         * The content of the comment.
-         */
-        @Json(name = "text")
-        val text: String? = null,
+    /**
+     * The content of the comment.
+     */
+    @Json(name = "text")
+    val text: String? = null,
 
-        /**
-         * The Vimeo content to which the comment relates.
-         * @see Comment.type
-         */
-        @Json(name = "type")
-        val rawType: String? = null,
+    /**
+     * The Vimeo content to which the comment relates.
+     * @see Comment.type
+     */
+    @Json(name = "type")
+    val rawType: String? = null,
 
-        /**
-         * The user who posted the comment.
-         */
-        @Json(name = "user")
-        val user: User? = null
+    /**
+     * The user who posted the comment.
+     */
+    @Json(name = "user")
+    val user: User? = null
 
 ) : Entity, Serializable {
 

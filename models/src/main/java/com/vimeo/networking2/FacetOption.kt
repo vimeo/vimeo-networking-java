@@ -10,23 +10,23 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class FacetOption(
 
-        /**
-         * Option name.
-         */
-        @Json(name = "name")
-        val name: String? = null,
+    /**
+     * Option name.
+     */
+    @Json(name = "name")
+    val name: String? = null,
 
-        /**
-         * Option total.
-         */
-        @Json(name = "total")
-        val total: Int? = null,
+    /**
+     * Option total.
+     */
+    @Json(name = "total")
+    val total: Int? = null,
 
-        /**
-         * Option text.
-         */
-        @Json(name = "text")
-        val text: String? = null
+    /**
+     * Option text.
+     */
+    @Json(name = "text")
+    val text: String? = null
 
 ) : Serializable {
 

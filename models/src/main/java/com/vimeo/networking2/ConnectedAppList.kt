@@ -11,11 +11,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class ConnectedAppList(
 
-        @Json(name = "total")
-        override val total: Int? = null,
+    @Json(name = "total")
+    override val total: Int? = null,
 
-        @Json(name = "data")
-        override val data: List<ConnectedApp>? = null
+    @Json(name = "data")
+    override val data: List<ConnectedApp>? = null
 
 ) : Page<ConnectedApp>, Serializable {
 

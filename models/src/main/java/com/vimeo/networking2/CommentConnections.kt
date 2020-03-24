@@ -10,11 +10,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class CommentConnections(
 
-        /**
-         * Information about this comment's replies.
-         */
-        @Json(name = "replies")
-        val replies: Connection? = null
+    /**
+     * Information about this comment's replies.
+     */
+    @Json(name = "replies")
+    val replies: Connection? = null
 
 ) : Serializable {
 

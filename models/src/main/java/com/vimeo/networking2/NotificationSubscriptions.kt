@@ -11,23 +11,23 @@ import java.util.*
 @JsonClass(generateAdapter = true)
 data class NotificationSubscriptions(
 
-        /**
-         * The ISODate time the settings were modified.
-         */
-        @Json(name = "modified_time")
-        val modifiedTime: Date? = null,
+    /**
+     * The ISODate time the settings were modified.
+     */
+    @Json(name = "modified_time")
+    val modifiedTime: Date? = null,
 
-        /**
-         * The settings for each notification subscription.
-         */
-        @Json(name = "subscriptions")
-        val subscriptions: Subscriptions? = null,
+    /**
+     * The settings for each notification subscription.
+     */
+    @Json(name = "subscriptions")
+    val subscriptions: Subscriptions? = null,
 
-        /**
-         * The subscription settings' canonical relative URI.
-         */
-        @Json(name = "uri")
-        val uri: String? = null
+    /**
+     * The subscription settings' canonical relative URI.
+     */
+    @Json(name = "uri")
+    val uri: String? = null
 
 ) : Serializable {
 

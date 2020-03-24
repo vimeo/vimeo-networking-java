@@ -12,19 +12,19 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class LiveStreamsQuota(
 
-        /**
-         * The maximum amount of streams that the user can create.
-         */
-        @Internal
-        @Json(name = "maximum")
-        val maximum: Int? = null,
+    /**
+     * The maximum amount of streams that the user can create.
+     */
+    @Internal
+    @Json(name = "maximum")
+    val maximum: Int? = null,
 
-        /**
-         * The amount of remaining live streams that the user can create this month.
-         */
-        @Internal
-        @Json(name = "remaining")
-        val remaining: Int? = null
+    /**
+     * The amount of remaining live streams that the user can create this month.
+     */
+    @Internal
+    @Json(name = "remaining")
+    val remaining: Int? = null
 
 ) : Serializable {
 

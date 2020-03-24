@@ -11,8 +11,8 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class BasicAccessToken(
 
-        @Json(name = "access_token")
-        override val accessToken: String
+    @Json(name = "access_token")
+    override val accessToken: String
 
 ) : AccessTokenProvider, Serializable {
     companion object {

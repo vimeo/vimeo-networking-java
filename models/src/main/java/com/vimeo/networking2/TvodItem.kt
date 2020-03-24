@@ -14,66 +14,66 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class TvodItem(
 
-        /**
-         * The description of this [TvodItem].
-         */
-        @Json(name = "description")
-        val description: String? = null,
+    /**
+     * The description of this [TvodItem].
+     */
+    @Json(name = "description")
+    val description: String? = null,
 
-        /**
-         * This [TvodItem]'s film, if it is a film.
-         */
-        @Json(name = "film")
-        val film: Video? = null,
+    /**
+     * This [TvodItem]'s film, if it is a film.
+     */
+    @Json(name = "film")
+    val film: Video? = null,
 
-        /**
-         * The link to the [TvodItem] on Vimeo.
-         */
-        @Json(name = "link")
-        val link: String? = null,
+    /**
+     * The link to the [TvodItem] on Vimeo.
+     */
+    @Json(name = "link")
+    val link: String? = null,
 
-        /**
-         * Metadata about [TvodItem].
-         */
-        @Json(name = "metadata")
-        val metadata: Metadata<TvodItemConnections, PurchaseOnDemandInteraction>? = null,
+    /**
+     * Metadata about [TvodItem].
+     */
+    @Json(name = "metadata")
+    val metadata: Metadata<TvodItemConnections, PurchaseOnDemandInteraction>? = null,
 
-        /**
-         * A descriptive title of this [TvodItem].
-         */
-        @Json(name = "name")
-        val name: String? = null,
+    /**
+     * A descriptive title of this [TvodItem].
+     */
+    @Json(name = "name")
+    val name: String? = null,
 
-        /**
-         * The active poster for this [TvodItem].
-         */
-        @Json(name = "pictures")
-        val pictures: PictureCollection? = null,
+    /**
+     * The active poster for this [TvodItem].
+     */
+    @Json(name = "pictures")
+    val pictures: PictureCollection? = null,
 
-        /**
-         * Information on the time the [TvodItem] was published.
-         */
-        @Json(name = "published")
-        val published: Publish? = null,
+    /**
+     * Information on the time the [TvodItem] was published.
+     */
+    @Json(name = "published")
+    val published: Publish? = null,
 
-        /**
-         * Whether this [TvodItem] is for a film or a series.
-         * @see TvodItem.type
-         */
-        @Json(name = "type")
-        val rawType: String? = null,
+    /**
+     * Whether this [TvodItem] is for a film or a series.
+     * @see TvodItem.type
+     */
+    @Json(name = "type")
+    val rawType: String? = null,
 
-        /**
-         * The trailer for this [TvodItem].
-         */
-        @Json(name = "trailer")
-        val trailer: Video? = null,
+    /**
+     * The trailer for this [TvodItem].
+     */
+    @Json(name = "trailer")
+    val trailer: Video? = null,
 
-        /**
-         * The user who created this [TvodItem].
-         */
-        @Json(name = "user")
-        val user: User? = null
+    /**
+     * The user who created this [TvodItem].
+     */
+    @Json(name = "user")
+    val user: User? = null
 
 ) : Serializable {
 

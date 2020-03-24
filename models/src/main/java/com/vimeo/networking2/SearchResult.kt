@@ -14,60 +14,60 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class SearchResult(
 
-        /**
-         * Channel data.
-         */
-        @Json(name = "channel")
-        val channel: Channel? = null,
+    /**
+     * Channel data.
+     */
+    @Json(name = "channel")
+    val channel: Channel? = null,
 
-        /**
-         * Blog.
-         */
-        @Json(name = "blog")
-        val blog: String? = null,
+    /**
+     * Blog.
+     */
+    @Json(name = "blog")
+    val blog: String? = null,
 
-        /**
-         * Group data.
-         */
-        @Json(name = "group")
-        val group: Group? = null,
+    /**
+     * Group data.
+     */
+    @Json(name = "group")
+    val group: Group? = null,
 
-        /**
-         * Video data.
-         */
-        @Json(name = "video")
-        val video: Video? = null,
+    /**
+     * Video data.
+     */
+    @Json(name = "video")
+    val video: Video? = null,
 
-        /**
-         * Is this video a featured result?
-         */
-        @Json(name = "is_featured")
-        val isFeatured: Boolean? = null,
+    /**
+     * Is this video a featured result?
+     */
+    @Json(name = "is_featured")
+    val isFeatured: Boolean? = null,
 
-        /**
-         * Is this On Demand a 360 video?
-         */
-        @Json(name = "is_spatial")
-        val isSpatial: Boolean? = null,
+    /**
+     * Is this On Demand a 360 video?
+     */
+    @Json(name = "is_spatial")
+    val isSpatial: Boolean? = null,
 
-        /**
-         * Is this video a Staff Pick?
-         */
-        @Json(name = "is_staffpick")
-        val isStaffPick: Boolean? = null,
+    /**
+     * Is this video a Staff Pick?
+     */
+    @Json(name = "is_staffpick")
+    val isStaffPick: Boolean? = null,
 
-        /**
-         * User data.
-         */
-        @Json(name = "people")
-        val user: User? = null,
+    /**
+     * User data.
+     */
+    @Json(name = "people")
+    val user: User? = null,
 
-        /**
-         * The type of object that this search result is representing.
-         * @see SearchResult.type
-         */
-        @Json(name = "type")
-        val rawType: String? = null
+    /**
+     * The type of object that this search result is representing.
+     * @see SearchResult.type
+     */
+    @Json(name = "type")
+    val rawType: String? = null
 
 ) : Serializable {
 

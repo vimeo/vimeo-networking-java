@@ -10,11 +10,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class SeasonConnections(
 
-        /**
-         * The Videos connection.
-         */
-        @Json(name = "videos")
-        val videos: Connection? = null
+    /**
+     * The Videos connection.
+     */
+    @Json(name = "videos")
+    val videos: Connection? = null
 
 ) : Serializable {
 

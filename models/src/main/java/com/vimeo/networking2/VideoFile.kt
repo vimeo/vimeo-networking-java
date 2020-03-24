@@ -14,24 +14,24 @@ import java.util.*
 @JsonClass(generateAdapter = true)
 data class VideoFile(
 
-        @Internal
-        @Json(name = "link")
-        override val link: String? = null,
+    @Internal
+    @Json(name = "link")
+    override val link: String? = null,
 
-        @Internal
-        @Json(name = "link_expiration_time")
-        override val linkExpirationTime: Date? = null,
+    @Internal
+    @Json(name = "link_expiration_time")
+    override val linkExpirationTime: Date? = null,
 
-        @Internal
-        @Json(name = "log")
-        override val log: String? = null,
+    @Internal
+    @Json(name = "log")
+    override val log: String? = null,
 
-        /**
-         * The info about the live heartbeat endpoint, used if the video is a live video.
-         */
-        @Internal
-        @Json(name = "live")
-        val live: LiveHeartbeat? = null
+    /**
+     * The info about the live heartbeat endpoint, used if the video is a live video.
+     */
+    @Internal
+    @Json(name = "live")
+    val live: LiveHeartbeat? = null
 ) : PlayableFile, Serializable {
 
     companion object {

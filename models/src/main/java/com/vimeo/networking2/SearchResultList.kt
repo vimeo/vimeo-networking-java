@@ -11,32 +11,32 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class SearchResultList(
 
-        /**
-         * The search facets.
-         */
-        @Json(name = "facets")
-        val facetCollection: SearchFacetCollection? = null,
+    /**
+     * The search facets.
+     */
+    @Json(name = "facets")
+    val facetCollection: SearchFacetCollection? = null,
 
-        /**
-         * The number of videos that were hidden from the results due to mature content.
-         */
-        @Json(name = "mature_hidden_count")
-        val matureHiddenCount: Int? = null,
+    /**
+     * The number of videos that were hidden from the results due to mature content.
+     */
+    @Json(name = "mature_hidden_count")
+    val matureHiddenCount: Int? = null,
 
-        @Json(name = "total")
-        override val total: Int? = null,
+    @Json(name = "total")
+    override val total: Int? = null,
 
-        @Json(name = "page")
-        override val page: Int? = null,
+    @Json(name = "page")
+    override val page: Int? = null,
 
-        @Json(name = "per_page")
-        override val perPage: Int? = null,
+    @Json(name = "per_page")
+    override val perPage: Int? = null,
 
-        @Json(name = "paging")
-        override val paging: Paging? = null,
+    @Json(name = "paging")
+    override val paging: Paging? = null,
 
-        @Json(name = "data")
-        override val data: List<SearchResult>? = null
+    @Json(name = "data")
+    override val data: List<SearchResult>? = null
 
 ) : Pageable<SearchResult>, Serializable {
 

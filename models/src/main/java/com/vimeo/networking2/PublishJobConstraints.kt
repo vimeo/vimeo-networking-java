@@ -9,29 +9,29 @@ import java.io.Serializable
  */
 @JsonClass(generateAdapter = true)
 data class PublishJobConstraints(
-        /**
-         * The publish constraints for Facebook.
-         */
-        @Json(name = "facebook")
-        val facebook: PlatformConstraint? = null,
+    /**
+     * The publish constraints for Facebook.
+     */
+    @Json(name = "facebook")
+    val facebook: PlatformConstraint? = null,
 
-        /**
-         * The publish constraints for LinkedIn.
-         */
-        @Json(name = "linkedin")
-        val linkedin: PlatformConstraint? = null,
+    /**
+     * The publish constraints for LinkedIn.
+     */
+    @Json(name = "linkedin")
+    val linkedin: PlatformConstraint? = null,
 
-        /**
-         * The publish constraints for YouTube.
-         */
-        @Json(name = "youtube")
-        val youtube: PlatformConstraint? = null,
+    /**
+     * The publish constraints for YouTube.
+     */
+    @Json(name = "youtube")
+    val youtube: PlatformConstraint? = null,
 
-        /**
-         * The publish constraints for Twitter.
-         */
-        @Json(name = "twitter")
-        val twitter: PlatformConstraint? = null
+    /**
+     * The publish constraints for Twitter.
+     */
+    @Json(name = "twitter")
+    val twitter: PlatformConstraint? = null
 ) : Serializable {
 
     companion object {

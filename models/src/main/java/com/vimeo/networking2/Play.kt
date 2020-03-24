@@ -16,48 +16,48 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Play(
 
-        /**
-         * The DASH video file.
-         */
-        @Internal
-        @Json(name = "dash")
-        val dash: VideoFile? = null,
+    /**
+     * The DASH video file.
+     */
+    @Internal
+    @Json(name = "dash")
+    val dash: VideoFile? = null,
 
-        /**
-         * HLS video files.
-         */
-        @Internal
-        @Json(name = "hls")
-        val hls: VideoFile? = null,
+    /**
+     * HLS video files.
+     */
+    @Internal
+    @Json(name = "hls")
+    val hls: VideoFile? = null,
 
-        /**
-         * The play progress in seconds.
-         */
-        @Internal
-        @Json(name = "progress")
-        val progress: PlayProgress? = null,
+    /**
+     * The play progress in seconds.
+     */
+    @Internal
+    @Json(name = "progress")
+    val progress: PlayProgress? = null,
 
-        /**
-         * Progressive files.
-         */
-        @Internal
-        @Json(name = "progressive")
-        val progressive: List<ProgressiveVideoFile>? = null,
+    /**
+     * Progressive files.
+     */
+    @Internal
+    @Json(name = "progressive")
+    val progressive: List<ProgressiveVideoFile>? = null,
 
-        /**
-         * The source file of the video.
-         */
-        @Internal
-        @Json(name = "source")
-        val source: List<VideoSourceFile>? = null,
+    /**
+     * The source file of the video.
+     */
+    @Internal
+    @Json(name = "source")
+    val source: List<VideoSourceFile>? = null,
 
-        /**
-         * The play status of the video.
-         * @see Play.videoPlayStatusType
-         */
-        @Internal
-        @Json(name = "status")
-        val videoPlayStatus: String? = null
+    /**
+     * The play status of the video.
+     * @see Play.videoPlayStatusType
+     */
+    @Internal
+    @Json(name = "status")
+    val videoPlayStatus: String? = null
 ) : Serializable {
 
     companion object {

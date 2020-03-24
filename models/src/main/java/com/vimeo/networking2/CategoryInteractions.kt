@@ -11,8 +11,8 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class CategoryInteractions(
 
-        @Json(name = "follow")
-        override val follow: FollowInteraction? = null
+    @Json(name = "follow")
+    override val follow: FollowInteraction? = null
 
 ) : FollowableInteractions, Serializable {
     companion object {

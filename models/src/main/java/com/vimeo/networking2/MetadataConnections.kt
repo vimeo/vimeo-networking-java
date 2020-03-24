@@ -10,11 +10,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class MetadataConnections<Connections_T>(
 
-        /**
-         * Connections for [Connections_T].
-         */
-        @Json(name = "connections")
-        val connections: Connections_T? = null
+    /**
+     * Connections for [Connections_T].
+     */
+    @Json(name = "connections")
+    val connections: Connections_T? = null
 
 ) : Serializable {
 

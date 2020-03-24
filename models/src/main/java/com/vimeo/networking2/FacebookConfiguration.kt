@@ -12,12 +12,12 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class FacebookConfiguration(
 
-        /**
-         * An array of required scopes for connecting users to Facebook.
-         */
-        @Internal
-        @Json(name = "required_scopes")
-        val requiredScopes: List<String>? = null
+    /**
+     * An array of required scopes for connecting users to Facebook.
+     */
+    @Internal
+    @Json(name = "required_scopes")
+    val requiredScopes: List<String>? = null
 
 ) : Serializable {
 

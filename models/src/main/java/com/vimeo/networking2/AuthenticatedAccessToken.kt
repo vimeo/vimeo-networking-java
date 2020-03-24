@@ -11,14 +11,14 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class AuthenticatedAccessToken(
 
-        @Json(name = "access_token")
-        override val accessToken: String,
+    @Json(name = "access_token")
+    override val accessToken: String,
 
-        /**
-         * Authenticated user.
-         */
-        @Json(name = "user")
-        val user: User
+    /**
+     * Authenticated user.
+     */
+    @Json(name = "user")
+    val user: User
 
 ) : AccessTokenProvider, Serializable {
     companion object {

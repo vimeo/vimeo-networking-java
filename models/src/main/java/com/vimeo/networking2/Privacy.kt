@@ -16,38 +16,38 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Privacy(
 
-        /**
-         * Whether other users can add the user's videos.
-         */
-        @Json(name = "add")
-        val add: Boolean? = null,
+    /**
+     * Whether other users can add the user's videos.
+     */
+    @Json(name = "add")
+    val add: Boolean? = null,
 
-        /**
-         * The user's privacy preference for comments.
-         * @see Privacy.commentPrivacyType
-         */
-        @Json(name = "comments")
-        val commentPrivacy: String? = null,
+    /**
+     * The user's privacy preference for comments.
+     * @see Privacy.commentPrivacyType
+     */
+    @Json(name = "comments")
+    val commentPrivacy: String? = null,
 
-        /**
-         * Whether other users can download the user's videos.
-         */
-        @Json(name = "download")
-        val download: Boolean? = null,
+    /**
+     * Whether other users can download the user's videos.
+     */
+    @Json(name = "download")
+    val download: Boolean? = null,
 
-        /**
-         * The user's privacy preference for embeds.
-         * @see Privacy.embedPrivacyType
-         */
-        @Json(name = "embed")
-        val embedPrivacy: String? = null,
+    /**
+     * The user's privacy preference for embeds.
+     * @see Privacy.embedPrivacyType
+     */
+    @Json(name = "embed")
+    val embedPrivacy: String? = null,
 
-        /**
-         * The privacy settings of the channel.
-         * @see Privacy.viewPrivacyType
-         */
-        @Json(name = "view")
-        val viewPrivacy: String? = null
+    /**
+     * The privacy settings of the channel.
+     * @see Privacy.viewPrivacyType
+     */
+    @Json(name = "view")
+    val viewPrivacy: String? = null
 ) : Serializable {
 
     companion object {

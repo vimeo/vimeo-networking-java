@@ -15,36 +15,36 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class ApiError(
 
-        /**
-         * Developer friendly error message.
-         */
-        @Json(name = "developer_message")
-        val developerMessage: String? = null,
+    /**
+     * Developer friendly error message.
+     */
+    @Json(name = "developer_message")
+    val developerMessage: String? = null,
 
-        /**
-         * User friendly error message.
-         */
-        @Json(name = "error")
-        val errorMessage: String? = null,
+    /**
+     * User friendly error message.
+     */
+    @Json(name = "error")
+    val errorMessage: String? = null,
 
-        /**
-         * The error code.
-         * @see ApiError.errorCodeType
-         */
-        @Json(name = "error_code")
-        val errorCode: String? = null,
+    /**
+     * The error code.
+     * @see ApiError.errorCodeType
+     */
+    @Json(name = "error_code")
+    val errorCode: String? = null,
 
-        /**
-         * Information on invalid parameters send in the request.
-         */
-        @Json(name = "invalid_parameters")
-        val invalidParameters: List<InvalidParameter>? = null,
+    /**
+     * Information on invalid parameters send in the request.
+     */
+    @Json(name = "invalid_parameters")
+    val invalidParameters: List<InvalidParameter>? = null,
 
-        /**
-         * A link to more information about the error.
-         */
-        @Json(name = "link")
-        val link: String? = null
+    /**
+     * A link to more information about the error.
+     */
+    @Json(name = "link")
+    val link: String? = null
 
 ) : Serializable {
     companion object {

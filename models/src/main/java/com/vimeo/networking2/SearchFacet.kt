@@ -10,17 +10,17 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class SearchFacet(
 
-        /**
-         * Option name
-         */
-        @Json(name = "name")
-        val name: String? = null,
+    /**
+     * Option name
+     */
+    @Json(name = "name")
+    val name: String? = null,
 
-        /**
-         * Search options.
-         */
-        @Json(name = "options")
-        val options: List<FacetOption>? = null
+    /**
+     * Search options.
+     */
+    @Json(name = "options")
+    val options: List<FacetOption>? = null
 ) : Serializable {
 
     companion object {

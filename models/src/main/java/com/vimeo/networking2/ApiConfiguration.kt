@@ -10,11 +10,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class ApiConfiguration(
 
-        /**
-         * URL to access the API.
-         */
-        @Json(name = "host")
-        val host: String? = null
+    /**
+     * URL to access the API.
+     */
+    @Json(name = "host")
+    val host: String? = null
 
 ) : Serializable {
     companion object {

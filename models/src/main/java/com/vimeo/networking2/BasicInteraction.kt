@@ -13,13 +13,13 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class BasicInteraction(
 
-        @Internal
-        @Json(name = "options")
-        override val options: List<String>? = null,
+    @Internal
+    @Json(name = "options")
+    override val options: List<String>? = null,
 
-        @Internal
-        @Json(name = "uri")
-        override val uri: String? = null
+    @Internal
+    @Json(name = "uri")
+    override val uri: String? = null
 
 ) : Interaction, Serializable {
     companion object {

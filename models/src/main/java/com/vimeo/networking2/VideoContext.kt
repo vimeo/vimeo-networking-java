@@ -14,18 +14,18 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class VideoContext(
 
-        /**
-         * The contextual action.
-         * @see VideoContext.videoActionType
-         */
-        @Json(name = "action")
-        val videoAction: String? = null,
+    /**
+     * The contextual action.
+     * @see VideoContext.videoActionType
+     */
+    @Json(name = "action")
+    val videoAction: String? = null,
 
-        /**
-         * The contextual resource type.
-         */
-        @Json(name = "resource_type")
-        val resourceType: String? = null
+    /**
+     * The contextual resource type.
+     */
+    @Json(name = "resource_type")
+    val resourceType: String? = null
 
 ) : Serializable {
 

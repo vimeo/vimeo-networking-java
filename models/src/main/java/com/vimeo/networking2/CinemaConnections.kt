@@ -10,11 +10,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class CinemaConnections(
 
-        /**
-         * Information about the contents of this programmed cinema item.
-         */
-        @Json(name = "contents")
-        val contents: Connection? = null
+    /**
+     * Information about the contents of this programmed cinema item.
+     */
+    @Json(name = "contents")
+    val contents: Connection? = null
 
 ) : Serializable {
 

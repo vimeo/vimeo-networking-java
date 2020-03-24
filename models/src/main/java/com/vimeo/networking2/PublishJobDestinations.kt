@@ -11,29 +11,29 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class PublishJobDestinations(
 
-        /**
-         * Information about the upload/post on Facebook.
-         */
-        @Json(name = "facebook")
-        val facebook: PublishJobDestination? = null,
+    /**
+     * Information about the upload/post on Facebook.
+     */
+    @Json(name = "facebook")
+    val facebook: PublishJobDestination? = null,
 
-        /**
-         * Information about the upload/post on YouTube.
-         */
-        @Json(name = "youtube")
-        val youTube: PublishJobDestination? = null,
+    /**
+     * Information about the upload/post on YouTube.
+     */
+    @Json(name = "youtube")
+    val youTube: PublishJobDestination? = null,
 
-        /**
-         * Information about the upload/post on LinkedIn.
-         */
-        @Json(name = "linkedin")
-        val linkedIn: PublishJobDestination? = null,
+    /**
+     * Information about the upload/post on LinkedIn.
+     */
+    @Json(name = "linkedin")
+    val linkedIn: PublishJobDestination? = null,
 
-        /**
-         * Information about the upload/post on Twitter.
-         */
-        @Json(name = "twitter")
-        val twitter: PublishJobDestination? = null
+    /**
+     * Information about the upload/post on Twitter.
+     */
+    @Json(name = "twitter")
+    val twitter: PublishJobDestination? = null
 
 ) : Serializable {
 

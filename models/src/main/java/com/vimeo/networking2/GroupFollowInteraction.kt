@@ -16,30 +16,30 @@ import java.util.*
 @JsonClass(generateAdapter = true)
 data class GroupFollowInteraction(
 
-        @Json(name = "added")
-        override val added: Boolean? = null,
+    @Json(name = "added")
+    override val added: Boolean? = null,
 
-        @Json(name = "added_time")
-        override val addedTime: Date? = null,
+    @Json(name = "added_time")
+    override val addedTime: Date? = null,
 
-        @Json(name = "options")
-        override val options: List<String>? = null,
+    @Json(name = "options")
+    override val options: List<String>? = null,
 
-        @Json(name = "uri")
-        override val uri: String? = null,
+    @Json(name = "uri")
+    override val uri: String? = null,
 
-        /**
-         * The user's title, or the null value if not applicable.
-         */
-        @Json(name = "title")
-        val title: String? = null,
+    /**
+     * The user's title, or the null value if not applicable.
+     */
+    @Json(name = "title")
+    val title: String? = null,
 
-        /**
-         * Whether the authenticated user is a moderator or subscriber.
-         * @see GroupFollowInteraction.type
-         */
-        @Json(name = "type")
-        val rawType: String? = null
+    /**
+     * Whether the authenticated user is a moderator or subscriber.
+     * @see GroupFollowInteraction.type
+     */
+    @Json(name = "type")
+    val rawType: String? = null
 
 ) : UpdatableInteraction, Serializable {
 

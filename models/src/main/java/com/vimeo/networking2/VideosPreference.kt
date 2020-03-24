@@ -10,11 +10,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class VideosPreference(
 
-        /**
-         * Privacy values for videos.
-         */
-        @Json(name = "privacy")
-        val privacy: Privacy? = null
+    /**
+     * Privacy values for videos.
+     */
+    @Json(name = "privacy")
+    val privacy: Privacy? = null
 
 ) : Serializable {
 
