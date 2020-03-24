@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.StorageQuota
 import com.vimeo.networking2.enums.UploadSpaceType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * Upload quota space data.
@@ -40,7 +41,12 @@ data class Space(
     @Json(name = "used")
     override val used: Long? = null
 
-) : StorageQuota
+) : StorageQuota, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -19688L
+    }
+}
 
 /**
  * @see Space.showing

@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.FollowableInteractions
+import java.io.Serializable
 
 /**
  * All actions that can be taken on a user.
@@ -58,4 +59,9 @@ data class UserInteractions(
     @Json(name = "twitter_connected_app")
     val twitterConnectedApp: ConnectedAppInteraction? = null
 
-) : FollowableInteractions
+) : FollowableInteractions, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -18L
+    }
+}

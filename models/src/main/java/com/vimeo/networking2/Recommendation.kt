@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.RecommendationType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * Recommendation DTO.
@@ -45,10 +46,13 @@ data class Recommendation(
     @Json(name = "user")
     val user: User? = null
 
-) : Entity {
+) : Entity, Serializable {
 
     override val identifier: String? = resourceKey
 
+    companion object {
+        private const val serialVersionUID = -28L
+    }
 }
 
 /**

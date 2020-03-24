@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.CommentType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -52,10 +53,13 @@ data class Comment(
     @Json(name = "user")
     val user: User? = null
 
-) : Entity {
+) : Entity, Serializable {
 
     override val identifier: String? = resourceKey
 
+    companion object {
+        private const val serialVersionUID = -11486L
+    }
 }
 
 /**

@@ -6,6 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AlbumViewPrivacyType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * The privacy set for an album.
@@ -25,7 +26,11 @@ data class AlbumPrivacy(
      */
     @Json(name = "view")
     val viewPrivacy: String? = null
-)
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = -16L
+    }
+}
 
 /**
  * @see AlbumPrivacy.viewPrivacy

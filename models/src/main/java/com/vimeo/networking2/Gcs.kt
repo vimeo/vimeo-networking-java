@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
+import java.io.Serializable
 
 /**
  * GCS data.
@@ -31,4 +32,8 @@ data class Gcs(
     @Internal
     @Json(name = "upload_link")
     val uploadLink: String? = null
-)
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = -2792L
+    }
+}

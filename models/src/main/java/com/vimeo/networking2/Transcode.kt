@@ -6,6 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.TranscodeStatusType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * The transcode information for a video upload.
@@ -20,7 +21,12 @@ data class Transcode(
     @Json(name = "status")
     val status: String? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -31891L
+    }
+}
 
 /**
  * @see Transcode.status

@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
+import java.io.Serializable
 
 /**
  * This data requires a bearer token with the private scope.
@@ -109,4 +110,9 @@ data class NotificationTypeCount(
     @Json(name = "vod_rental_expiration_warning")
     val vodRentalExpirationWarning: Int? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -2503130845730444L
+    }
+}

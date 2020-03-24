@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * A collection of stats associated with this video.
@@ -15,4 +16,9 @@ data class VideoStats(
     @Json(name = "plays")
     val plays: Int? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -20L
+    }
+}

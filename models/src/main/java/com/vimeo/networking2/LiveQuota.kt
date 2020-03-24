@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.LiveQuotaStatusType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * Live Quota information.
@@ -35,7 +36,12 @@ data class LiveQuota(
     @Json(name = "status")
     val status: String? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -617738141L
+    }
+}
 
 /**
  * @see LiveQuota.status

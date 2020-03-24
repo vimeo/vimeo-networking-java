@@ -6,6 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.BillingPeriodType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * Product data.
@@ -50,7 +51,12 @@ data class Product(
     @Json(name = "uri")
     val uri: String? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -2541259L
+    }
+}
 
 /**
  * @see Product.billingPeriod

@@ -6,6 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.TrialStatusType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * Information about the user's trial period.
@@ -25,7 +26,12 @@ data class SubscriptionTrial(
      */
     @Json(name = "has_been_in_free_trial")
     var hasBeenInFreeTrial: Boolean? = null
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -548793131005L
+    }
+}
 
 /**
  * @see [SubscriptionTrial.rawStatus]
