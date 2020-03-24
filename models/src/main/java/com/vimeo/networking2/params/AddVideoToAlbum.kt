@@ -18,5 +18,5 @@ data class AddVideoToAlbum(
      * The position of the video.
      */
     @Json(name = "position")
-    val position: Int
+    val position: Int?
 )
