@@ -20,12 +20,14 @@ data class ChannelInteractions(
         val addModerators: BasicInteraction? = null,
 
         /**
-         * An interaction that will be present in [Channel] objects returned from a request to an "available_channels"
-         * connection on a video object (/videos/{video_id}/available_channels). The [BasicInteraction.uri] will provide the
-         * endpoint needed to complete a subsequent add/remove action to add/remove the related video to/from the channel.
-         * In the event that the video is not yet added to the channel, [BasicInteraction.options] will contain "PUT". In
-         * the event that the video is already added to the channel, [BasicInteraction.options] will contain "DELETE".
-         * This data requires a bearer token with the private scope.
+         * An interaction that will be present in [Channel] objects returned from
+         * a request to an "available_channels"connection on a video object
+         * (/videos/{video_id}/available_channels). The [BasicInteraction.uri] will
+         * provide the endpoint needed to complete a subsequent add/remove action to
+         * add/remove the related video to/from the channel.In the event that the video
+         * is not yet added to the channel, [BasicInteraction.options] will contain "PUT". In
+         * the event that the video is already added to the channel, [BasicInteraction.options]
+         * will contain "DELETE". This data requires a bearer token with the private scope.
          */
         @Json(name = "add_to")
         val addTo: BasicInteraction? = null,
