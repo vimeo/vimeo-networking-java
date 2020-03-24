@@ -12,21 +12,21 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class PurchaseOnDemandInteraction(
 
-    /**
-     * Whether the On Demand video for purchase has DRM.
-     */
-    @Internal
-    @Json(name = "buy")
-    val buy: BuyInteraction? = null,
+        /**
+         * Whether the On Demand video for purchase has DRM.
+         */
+        @Internal
+        @Json(name = "buy")
+        val buy: BuyInteraction? = null,
 
-    /**
-     * Subscribe to on demand video.
-     */
-    @Internal
-    @Json(name = "subscribe")
-    val subscriptionInteraction: SubscriptionInteraction? = null
+        /**
+         * Subscribe to on demand video.
+         */
+        @Internal
+        @Json(name = "subscribe")
+        val subscriptionInteraction: SubscriptionInteraction? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -75L

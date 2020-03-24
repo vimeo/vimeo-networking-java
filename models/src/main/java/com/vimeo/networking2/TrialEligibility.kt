@@ -12,13 +12,13 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class TrialEligibility(
 
-    /**
-     * `true` or `false` depending on if the user is eligible for a trial period.
-     */
-    @Internal
-    @Json(name = "eligible")
-    val eligible: Boolean? = null
-): Serializable {
+        /**
+         * `true` or `false` depending on if the user is eligible for a trial period.
+         */
+        @Internal
+        @Json(name = "eligible")
+        val eligible: Boolean? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -84200125843L

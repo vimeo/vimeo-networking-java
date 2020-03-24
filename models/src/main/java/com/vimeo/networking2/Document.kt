@@ -10,13 +10,13 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Document(
 
-    /**
-     * The partially stripped html for documents like the terms of service.
-     */
-    @Json(name = "html")
-    val html: String? = null
+        /**
+         * The partially stripped html for documents like the terms of service.
+         */
+        @Json(name = "html")
+        val html: String? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -10L

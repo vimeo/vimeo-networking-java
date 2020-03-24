@@ -10,24 +10,24 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Website(
 
-    /**
-     * The website's description.
-     */
-    @Json(name = "description")
-    val description: String? = null,
+        /**
+         * The website's description.
+         */
+        @Json(name = "description")
+        val description: String? = null,
 
-    /**
-     * The URL of the website.
-     */
-    @Json(name = "link")
-    val link: String? = null,
+        /**
+         * The URL of the website.
+         */
+        @Json(name = "link")
+        val link: String? = null,
 
-    /**
-     * The name of the website.
-     */
-    @Json(name = "users_with_access")
-    val name: String? = null
-): Serializable {
+        /**
+         * The name of the website.
+         */
+        @Json(name = "users_with_access")
+        val name: String? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -53L

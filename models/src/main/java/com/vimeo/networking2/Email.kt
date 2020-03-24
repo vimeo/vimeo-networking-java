@@ -10,10 +10,10 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Email(
 
-    @Json(name = "email")
-    val email: String? = null
+        @Json(name = "email")
+        val email: String? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -1440735877L

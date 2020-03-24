@@ -10,25 +10,25 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class LiveStats(
 
-    /**
-     * The current total amount of plays this video has received.
-     */
-    @Json(name = "plays")
-    val plays: Long? = null,
+        /**
+         * The current total amount of plays this video has received.
+         */
+        @Json(name = "plays")
+        val plays: Long? = null,
 
-    /**
-     * The total amount of time spent watching this video by all viewers.
-     */
-    @Json(name = "total_view_time")
-    val totalViewTime: Long? = null,
+        /**
+         * The total amount of time spent watching this video by all viewers.
+         */
+        @Json(name = "total_view_time")
+        val totalViewTime: Long? = null,
 
-    /**
-     * Information about the number of people watching the stream.
-     */
-    @Json(name = "viewers")
-    val viewers: LiveStatsViewers? = null
+        /**
+         * Information about the number of people watching the stream.
+         */
+        @Json(name = "viewers")
+        val viewers: LiveStatsViewers? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -2L

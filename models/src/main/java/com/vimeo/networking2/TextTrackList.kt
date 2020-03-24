@@ -1,9 +1,8 @@
 package com.vimeo.networking2
 
-import com.vimeo.networking2.common.Pageable
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Pageable
 import java.io.Serializable
 
 /**
@@ -12,20 +11,20 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class TextTrackList(
 
-    @Json(name = "total")
-    override val total: Int? = null,
+        @Json(name = "total")
+        override val total: Int? = null,
 
-    @Json(name = "page")
-    override val page: Int? = null,
+        @Json(name = "page")
+        override val page: Int? = null,
 
-    @Json(name = "per_page")
-    override val perPage: Int? = null,
+        @Json(name = "per_page")
+        override val perPage: Int? = null,
 
-    @Json(name = "paging")
-    override val paging: Paging? = null,
+        @Json(name = "paging")
+        override val paging: Paging? = null,
 
-    @Json(name = "data")
-    override val data: List<TextTrack>? = null
+        @Json(name = "data")
+        override val data: List<TextTrack>? = null
 
 ) : Pageable<TextTrack>, Serializable {
 

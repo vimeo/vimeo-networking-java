@@ -10,12 +10,12 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class MetadataInteractions<Interactions_T>(
 
-    /**
-     * Interactions for [Interactions_T].
-     */
-    @Json(name = "interactions")
-    val interactions: Interactions_T? = null
-): Serializable {
+        /**
+         * Interactions for [Interactions_T].
+         */
+        @Json(name = "interactions")
+        val interactions: Interactions_T? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -1700504L

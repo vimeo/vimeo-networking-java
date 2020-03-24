@@ -10,31 +10,31 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class CategoryConnections(
 
-    /**
-     * Information about the channels related to this category.
-     */
-    @Json(name = "channels")
-    val channels: Connection? = null,
+        /**
+         * Information about the channels related to this category.
+         */
+        @Json(name = "channels")
+        val channels: Connection? = null,
 
-    /**
-     * Information about the groups related to this category.
-     */
-    @Json(name = "groups")
-    val groups: Connection? = null,
+        /**
+         * Information about the groups related to this category.
+         */
+        @Json(name = "groups")
+        val groups: Connection? = null,
 
-    /**
-     * Information about the users related to this category.
-     */
-    @Json(name = "users")
-    val users: Connection? = null,
+        /**
+         * Information about the users related to this category.
+         */
+        @Json(name = "users")
+        val users: Connection? = null,
 
-    /**
-     * Information about the videos related to this category.
-     */
-    @Json(name = "videos")
-    val videos: Connection? = null
+        /**
+         * Information about the videos related to this category.
+         */
+        @Json(name = "videos")
+        val videos: Connection? = null
 
-): Serializable {
+) : Serializable {
     companion object {
         private const val serialVersionUID = -113L
     }

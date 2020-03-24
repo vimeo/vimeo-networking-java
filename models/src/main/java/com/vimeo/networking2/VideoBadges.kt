@@ -10,24 +10,24 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class VideoBadges(
 
-    /**
-     * Whether the video has an HDR-compatible transcode.
-     */
-    @Json(name = "hdr")
-    val hdr: Boolean? = null,
+        /**
+         * Whether the video has an HDR-compatible transcode.
+         */
+        @Json(name = "hdr")
+        val hdr: Boolean? = null,
 
-    /**
-     * Live data.
-     */
-    @Json(name = "live")
-    val live: Live? = null,
+        /**
+         * Live data.
+         */
+        @Json(name = "live")
+        val live: Live? = null,
 
-    /**
-     * Whether the video is a Vimeo Weekend Challenge.
-     */
-    @Json(name = "weekendChallenge")
-    val weekendChallenge: Boolean? = null
-): Serializable {
+        /**
+         * Whether the video is a Vimeo Weekend Challenge.
+         */
+        @Json(name = "weekendChallenge")
+        val weekendChallenge: Boolean? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -67L

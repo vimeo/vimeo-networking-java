@@ -13,28 +13,28 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class LiveChat(
 
-    /**
-     * The identification number of the live clip's chat room.
-     */
-    @Internal
-    @Json(name = "room_id")
-    val roomId: String? = null,
+        /**
+         * The identification number of the live clip's chat room.
+         */
+        @Internal
+        @Json(name = "room_id")
+        val roomId: String? = null,
 
-    /**
-     * The JSON Web Token to access the live clip's chat room.
-     */
-    @Internal
-    @Json(name = "token")
-    val token: String? = null,
+        /**
+         * The JSON Web Token to access the live clip's chat room.
+         */
+        @Internal
+        @Json(name = "token")
+        val token: String? = null,
 
-    /**
-     * User.
-     */
-    @Internal
-    @Json(name = "user")
-    val user: User? = null
+        /**
+         * User.
+         */
+        @Internal
+        @Json(name = "user")
+        val user: User? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -2530478L

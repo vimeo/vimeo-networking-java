@@ -10,13 +10,13 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class VideoLog(
 
-    /**
-     * The URL to record a Play logging event.
-     */
-    @Json(name = "play")
-    val play: String? = null
+        /**
+         * The URL to record a Play logging event.
+         */
+        @Json(name = "play")
+        val play: String? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -125L

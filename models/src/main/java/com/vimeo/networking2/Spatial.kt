@@ -15,21 +15,21 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Spatial(
 
-    /**
-     * The 360 spatial projection.
-     * @see Spatial.spatialProjectionType
-     */
-    @Json(name = "projection")
-    val spatialProjection: String? = null,
+        /**
+         * The 360 spatial projection.
+         * @see Spatial.spatialProjectionType
+         */
+        @Json(name = "projection")
+        val spatialProjection: String? = null,
 
-    /**
-     * The 360 stereo format.
-     * @see Spatial.stereoFormatType
-     */
-    @Json(name = "stereo_format")
-    val stereoFormat: String? = null
+        /**
+         * The 360 stereo format.
+         * @see Spatial.stereoFormatType
+         */
+        @Json(name = "stereo_format")
+        val stereoFormat: String? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -15285318034421L

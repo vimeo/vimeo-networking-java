@@ -12,14 +12,14 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class PlayProgress(
 
-    /**
-     * The play progress in seconds.
-     */
-    @Internal
-    @Json(name = "seconds")
-    val seconds: Int? = null
+        /**
+         * The play progress in seconds.
+         */
+        @Internal
+        @Json(name = "seconds")
+        val seconds: Int? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -26L

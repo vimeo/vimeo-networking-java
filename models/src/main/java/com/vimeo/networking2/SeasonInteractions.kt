@@ -11,14 +11,14 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class SeasonInteractions(
 
-    /**
-     * The interactions for an On Demand video.
-     */
-    @Internal
-    @Json(name = "purchase")
-    val purchase: PurchaseOnDemandInteraction? = null
+        /**
+         * The interactions for an On Demand video.
+         */
+        @Internal
+        @Json(name = "purchase")
+        val purchase: PurchaseOnDemandInteraction? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -97L

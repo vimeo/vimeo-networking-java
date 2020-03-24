@@ -11,11 +11,11 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class GroupInteractions(
 
-    /**
-     * An action indicating that someone has joined the group.
-     */
-    @Json(name = "join")
-    override val follow: GroupFollowInteraction? = null
+        /**
+         * An action indicating that someone has joined the group.
+         */
+        @Json(name = "join")
+        override val follow: GroupFollowInteraction? = null
 
 ) : FollowableInteractions, Serializable {
 

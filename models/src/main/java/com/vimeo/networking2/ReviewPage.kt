@@ -12,35 +12,35 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class ReviewPage(
 
-    /**
-     * Setting to check if the review page is active for this video.
-     */
-    @Internal
-    @Json(name = "active")
-    val active: Boolean? = null,
+        /**
+         * Setting to check if the review page is active for this video.
+         */
+        @Internal
+        @Json(name = "active")
+        val active: Boolean? = null,
 
-    /**
-     * Link to the Vimeo review page.
-     */
-    @Internal
-    @Json(name = "link")
-    val link: String? = null,
+        /**
+         * Link to the Vimeo review page.
+         */
+        @Internal
+        @Json(name = "link")
+        val link: String? = null,
 
-    /**
-     * Setting to check if notes are enabled or disabled on the review page.
-     */
-    @Internal
-    @Json(name = "notes")
-    val notes: String? = null,
+        /**
+         * Setting to check if notes are enabled or disabled on the review page.
+         */
+        @Internal
+        @Json(name = "notes")
+        val notes: String? = null,
 
-    /**
-     * Setting to check if the vimeo logo should be displayed on the review page.
-     */
-    @Internal
-    @Json(name = "vimeo_logo")
-    val vimeoLogo: Boolean? = null
+        /**
+         * Setting to check if the vimeo logo should be displayed on the review page.
+         */
+        @Internal
+        @Json(name = "vimeo_logo")
+        val vimeoLogo: Boolean? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -58L

@@ -15,49 +15,49 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class GroupPrivacy(
 
-    /**
-     * Who can comment on the group.
-     * @see GroupPrivacy.commentPrivacyType
-     */
-    @Json(name = "comment")
-    val commentPrivacy: String? = null,
+        /**
+         * Who can comment on the group.
+         * @see GroupPrivacy.commentPrivacyType
+         */
+        @Json(name = "comment")
+        val commentPrivacy: String? = null,
 
-    /**
-     * Who is allowed to use forums related to the group.
-     * @see GroupPrivacy.forumsPrivacyType
-     */
-    @Json(name = "forums")
-    val forumsPrivacy: String? = null,
+        /**
+         * Who is allowed to use forums related to the group.
+         * @see GroupPrivacy.forumsPrivacyType
+         */
+        @Json(name = "forums")
+        val forumsPrivacy: String? = null,
 
-    /**
-     * Who can invite new members to the group.
-     * @see GroupPrivacy.invitePrivacyType
-     */
-    @Json(name = "invite")
-    val invitePrivacy: String? = null,
+        /**
+         * Who can invite new members to the group.
+         * @see GroupPrivacy.invitePrivacyType
+         */
+        @Json(name = "invite")
+        val invitePrivacy: String? = null,
 
-    /**
-     * Who can join the group.
-     * @see GroupPrivacy.joinPrivacyType
-     */
-    @Json(name = "join")
-    val joinPrivacy: String? = null,
+        /**
+         * Who can join the group.
+         * @see GroupPrivacy.joinPrivacyType
+         */
+        @Json(name = "join")
+        val joinPrivacy: String? = null,
 
-    /**
-     * Who can add videos to the group.
-     * @see GroupPrivacy.videosPrivacyType
-     */
-    @Json(name = "videos")
-    val videosPrivacy: String? = null,
+        /**
+         * Who can add videos to the group.
+         * @see GroupPrivacy.videosPrivacyType
+         */
+        @Json(name = "videos")
+        val videosPrivacy: String? = null,
 
-    /**
-     * Who can view the group.
-     * @see GroupPrivacy.viewPrivacyType
-     */
-    @Json(name = "videos")
-    val viewPrivacy: String? = null
+        /**
+         * Who can view the group.
+         * @see GroupPrivacy.viewPrivacyType
+         */
+        @Json(name = "videos")
+        val viewPrivacy: String? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -57L

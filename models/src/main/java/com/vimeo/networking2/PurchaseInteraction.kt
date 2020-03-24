@@ -15,18 +15,18 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class PurchaseInteraction(
 
-    @Json(name = "options")
-    override val options: List<String>? = null,
+        @Json(name = "options")
+        override val options: List<String>? = null,
 
-    @Json(name = "uri")
-    override val uri: String? = null,
+        @Json(name = "uri")
+        override val uri: String? = null,
 
-    /**
-     * Purchase status.
-     * @see PurchaseInteraction.purchaseStatusType
-     */
-    @Json(name = "status")
-    val purchaseStatus: String? = null
+        /**
+         * Purchase status.
+         * @see PurchaseInteraction.purchaseStatusType
+         */
+        @Json(name = "status")
+        val purchaseStatus: String? = null
 
 ) : Interaction, Serializable {
 

@@ -12,13 +12,13 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class FileTransferPage(
 
-    /**
-     * The link to the file transfer page.
-     */
-    @Internal
-    @Json(name = "link")
-    val link: String? = null
-): Serializable {
+        /**
+         * The link to the file transfer page.
+         */
+        @Internal
+        @Json(name = "link")
+        val link: String? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -7340170069002914807L

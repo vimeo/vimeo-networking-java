@@ -10,13 +10,13 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class ApiConfiguration(
 
-    /**
-     * URL to access the API.
-     */
-    @Json(name = "host")
-    val host: String? = null
+        /**
+         * URL to access the API.
+         */
+        @Json(name = "host")
+        val host: String? = null
 
-): Serializable {
+) : Serializable {
     companion object {
         private const val serialVersionUID = -8L
     }

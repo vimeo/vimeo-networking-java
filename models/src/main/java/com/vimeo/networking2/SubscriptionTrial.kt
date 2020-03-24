@@ -14,19 +14,19 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class SubscriptionTrial(
 
-    /**
-     * The status of the user's trial.
-     * If the value is "free_trial" the user is currently in a free trial.
-     */
-    @Json(name = "status")
-    var rawStatus: String? = null,
+        /**
+         * The status of the user's trial.
+         * If the value is "free_trial" the user is currently in a free trial.
+         */
+        @Json(name = "status")
+        var rawStatus: String? = null,
 
-    /**
-     * Has the user been in (or is currently in) a free trial.
-     */
-    @Json(name = "has_been_in_free_trial")
-    var hasBeenInFreeTrial: Boolean? = null
-): Serializable {
+        /**
+         * Has the user been in (or is currently in) a free trial.
+         */
+        @Json(name = "has_been_in_free_trial")
+        var hasBeenInFreeTrial: Boolean? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -548793131005L

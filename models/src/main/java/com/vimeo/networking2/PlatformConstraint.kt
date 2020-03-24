@@ -9,18 +9,18 @@ import java.io.Serializable
  */
 @JsonClass(generateAdapter = true)
 data class PlatformConstraint(
-    /**
-     * The max length in seconds of a video for the corresponding platform.
-     */
-    @Json(name = "duration")
-    val duration: Int? = null,
+        /**
+         * The max length in seconds of a video for the corresponding platform.
+         */
+        @Json(name = "duration")
+        val duration: Int? = null,
 
-    /**
-     * The max file size in gigabytes of a video for the corresponding platform.
-     */
-    @Json(name = "size")
-    val size: Long? = null
-): Serializable {
+        /**
+         * The max file size in gigabytes of a video for the corresponding platform.
+         */
+        @Json(name = "size")
+        val size: Long? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -116L

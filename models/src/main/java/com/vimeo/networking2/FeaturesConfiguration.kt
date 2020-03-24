@@ -12,14 +12,14 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class FeaturesConfiguration(
 
-    /**
-     * Is play tracking enabled?
-     */
-    @Internal
-    @Json(name = "play_tracking")
-    val playTracking: Boolean? = null
+        /**
+         * Is play tracking enabled?
+         */
+        @Internal
+        @Json(name = "play_tracking")
+        val playTracking: Boolean? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -5160100L

@@ -19,7 +19,7 @@ data class ConnectedAppList(
 
 ) : Page<ConnectedApp>, Serializable {
 
-        companion object {
-                private const val serialVersionUID = -4687611L
-        }
+    companion object {
+        private const val serialVersionUID = -4687611L
+    }
 }

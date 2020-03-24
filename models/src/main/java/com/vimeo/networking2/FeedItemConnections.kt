@@ -10,13 +10,13 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class FeedItemConnections(
 
-    /**
-     * A list of resource URIs related to the activity.
-     */
-    @Json(name = "related")
-    val related: Connection? = null
+        /**
+         * A list of resource URIs related to the activity.
+         */
+        @Json(name = "related")
+        val related: Connection? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -39L

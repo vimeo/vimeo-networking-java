@@ -14,50 +14,50 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class ProgrammedContentItem(
 
-    /**
-     * The category associated with this programmed cinema item.
-     */
-    @Json(name = "category")
-    val category: Category? = null,
+        /**
+         * The category associated with this programmed cinema item.
+         */
+        @Json(name = "category")
+        val category: Category? = null,
 
-    /**
-     * The channel associated with this programmed cinema item.
-     */
-    @Json(name = "channel")
-    val channel: Channel? = null,
+        /**
+         * The channel associated with this programmed cinema item.
+         */
+        @Json(name = "channel")
+        val channel: Channel? = null,
 
-    /**
-     * Content for the programmed cinema item.
-     */
-    @Json(name = "content")
-    val videoList: List<Video>? = null,
+        /**
+         * Content for the programmed cinema item.
+         */
+        @Json(name = "content")
+        val videoList: List<Video>? = null,
 
-    /**
-     * ProgrammedContentItem metadata.
-     */
-    @Json(name = "metadata")
-    val metadata: MetadataConnections<CinemaConnections>? = null,
+        /**
+         * ProgrammedContentItem metadata.
+         */
+        @Json(name = "metadata")
+        val metadata: MetadataConnections<CinemaConnections>? = null,
 
-    /**
-     * The name of the programmed cinema item.
-     */
-    @Json(name = "name")
-    val name: String? = null,
+        /**
+         * The name of the programmed cinema item.
+         */
+        @Json(name = "name")
+        val name: String? = null,
 
-    /**
-     * The type of programmed cinema item.
-     * @see ProgrammedContentItem.type
-     */
-    @Json(name = "type")
-    val rawType: String? = null,
+        /**
+         * The type of programmed cinema item.
+         * @see ProgrammedContentItem.type
+         */
+        @Json(name = "type")
+        val rawType: String? = null,
 
-    /**
-     * The programmed cinema items' canonical relative URI.
-     */
-    @Json(name = "uri")
-    val uri: String? = null
+        /**
+         * The programmed cinema items' canonical relative URI.
+         */
+        @Json(name = "uri")
+        val uri: String? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -7254722L

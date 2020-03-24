@@ -15,32 +15,32 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Membership(
 
-    /**
-     * The user's membership level
-     */
-    @Json(name = "display")
-    val display: String? = null,
+        /**
+         * The user's membership level
+         */
+        @Json(name = "display")
+        val display: String? = null,
 
-    /**
-     * The user's account type.
-     * @see [Membership.type]
-     */
-    @Json(name = "type")
-    val rawType: String? = null,
+        /**
+         * The user's account type.
+         * @see [Membership.type]
+         */
+        @Json(name = "type")
+        val rawType: String? = null,
 
-    /**
-     * Information about the user's badge.
-     */
-    @Internal
-    @Json(name = "badge")
-    val badge: UserBadge? = null,
+        /**
+         * Information about the user's badge.
+         */
+        @Internal
+        @Json(name = "badge")
+        val badge: UserBadge? = null,
 
-    /**
-     * Information about the user's subscription.
-     */
-    @Json(name = "subscription")
-    val subscription: Subscription? = null
-): Serializable {
+        /**
+         * Information about the user's subscription.
+         */
+        @Json(name = "subscription")
+        val subscription: Subscription? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -4319876L

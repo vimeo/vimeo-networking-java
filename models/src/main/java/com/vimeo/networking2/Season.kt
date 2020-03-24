@@ -17,54 +17,54 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Season(
 
-    /**
-     * The description for this season.
-     */
-    @Json(name = "description")
-    val description: String? = null,
+        /**
+         * The description for this season.
+         */
+        @Json(name = "description")
+        val description: String? = null,
 
-    /**
-     * Season metadata.
-     */
-    @Json(name = "metadata")
-    val metadata: Metadata<SeasonConnections, SeasonInteractions>? = null,
+        /**
+         * Season metadata.
+         */
+        @Json(name = "metadata")
+        val metadata: Metadata<SeasonConnections, SeasonInteractions>? = null,
 
-    /**
-     * The descriptive name of the season.
-     */
-    @Json(name = "name")
-    val name: String? = null,
+        /**
+         * The descriptive name of the season.
+         */
+        @Json(name = "name")
+        val name: String? = null,
 
-    /**
-     * The position of the season relative to other seasons in the series.
-     */
-    @Json(name = "position")
-    val position: Int? = null,
+        /**
+         * The position of the season relative to other seasons in the series.
+         */
+        @Json(name = "position")
+        val position: Int? = null,
 
-    /**
-     * The unique identifier for this On Demand season.
-     */
-    @Json(name = "resource_key")
-    val resourceKey: String? = null,
+        /**
+         * The unique identifier for this On Demand season.
+         */
+        @Json(name = "resource_key")
+        val resourceKey: String? = null,
 
-    /**
-     * The type of season.
-     * @see Season.type
-     */
-    @Json(name = "type")
-    val rawType: String? = null,
+        /**
+         * The type of season.
+         * @see Season.type
+         */
+        @Json(name = "type")
+        val rawType: String? = null,
 
-    /**
-     * The season container''s relative URI.
-     */
-    @Json(name = "uri")
-    val uri: String? = null,
+        /**
+         * The season container''s relative URI.
+         */
+        @Json(name = "uri")
+        val uri: String? = null,
 
-    /**
-     * The creator of this On Demand page.
-     */
-    @Json(name = "user")
-    val user: User? = null
+        /**
+         * The creator of this On Demand page.
+         */
+        @Json(name = "user")
+        val user: User? = null
 
 ) : Entity, Serializable {
 

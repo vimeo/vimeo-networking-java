@@ -9,12 +9,12 @@ import java.io.Serializable
  */
 @JsonClass(generateAdapter = true)
 data class LiveHeartbeat(
-    /**
-     * The endpoint that can be called to trigger a heartbeat for a streaming video.
-     */
-    @Json(name = "heartbeat")
-    val heartbeat: String? = null
-): Serializable {
+        /**
+         * The endpoint that can be called to trigger a heartbeat for a streaming video.
+         */
+        @Json(name = "heartbeat")
+        val heartbeat: String? = null
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -44L

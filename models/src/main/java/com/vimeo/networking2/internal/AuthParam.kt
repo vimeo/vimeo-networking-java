@@ -11,8 +11,8 @@ import com.vimeo.networking2.enums.ErrorCodeType
  * @param developerMessage  Message to the client on why the param is invalid.
  */
 enum class AuthParam(
-    val errorCode: ErrorCodeType? = null,
-    val developerMessage: String? = null
+        val errorCode: ErrorCodeType? = null,
+        val developerMessage: String? = null
 ) {
 
     @Json(name = "name")

@@ -12,34 +12,34 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class AppConfiguration(
 
-    /**
-     * API configuration data.
-     */
-    @Json(name = "api")
-    val api: ApiConfiguration? = null,
+        /**
+         * API configuration data.
+         */
+        @Json(name = "api")
+        val api: ApiConfiguration? = null,
 
-    /**
-     * Facebook API configuration data.
-     */
-    @Internal
-    @Json(name = "facebook")
-    val facebook: FacebookConfiguration? = null,
+        /**
+         * Facebook API configuration data.
+         */
+        @Internal
+        @Json(name = "facebook")
+        val facebook: FacebookConfiguration? = null,
 
-    /**
-     * Various feature configuration data.
-     */
-    @Internal
-    @Json(name = "features")
-    val features: FeaturesConfiguration? = null,
+        /**
+         * Various feature configuration data.
+         */
+        @Internal
+        @Json(name = "features")
+        val features: FeaturesConfiguration? = null,
 
-    /**
-     * Various live streaming configuration data.
-     */
-    @Internal
-    @Json(name = "live")
-    val live: LiveConfiguration? = null
+        /**
+         * Various live streaming configuration data.
+         */
+        @Internal
+        @Json(name = "live")
+        val live: LiveConfiguration? = null
 
-): Serializable {
+) : Serializable {
     companion object {
         private const val serialVersionUID = -64L
     }

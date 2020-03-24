@@ -14,14 +14,14 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Transcode(
 
-    /**
-     * Status code for clip availability.
-     * @see Transcode.statusType
-     */
-    @Json(name = "status")
-    val status: String? = null
+        /**
+         * Status code for clip availability.
+         * @see Transcode.statusType
+         */
+        @Json(name = "status")
+        val status: String? = null
 
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val serialVersionUID = -31891L
