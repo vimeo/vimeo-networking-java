@@ -23,6 +23,13 @@ data class Privacy(
     val add: Boolean? = null,
 
     /**
+     * The token used to authenticate in playback scenarios where password entry is impossible, and
+     * the user initiating playback has already entered the password.
+     */
+    @Json(name = "_bypass_token")
+    val bypassToken: String? = null,
+
+    /**
      * The user's privacy preference for comments.
      * @see Privacy.commentPrivacyType
      */
