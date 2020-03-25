@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.common.Followable
 import java.io.Serializable
+import java.util.*
 
 /**
  * Channel information.
@@ -22,7 +23,7 @@ data class Channel(
      * The time in ISO 8601 format when the channel was created.
      */
     @Json(name = "created_time")
-    val createdTime: String? = null,
+    val createdTime: Date? = null,
 
     /**
      * A brief explanation of the channel's content.
@@ -52,7 +53,7 @@ data class Channel(
      * The time in ISO 8601 format when the album was last modified.
      */
     @Json(name = "modified_time")
-    val modifiedTime: String? = null,
+    val modifiedTime: Date? = null,
 
     /**
      * The display name that identifies the channel.
