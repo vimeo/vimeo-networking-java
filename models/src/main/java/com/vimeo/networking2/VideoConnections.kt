@@ -71,7 +71,7 @@ data class VideoConnections(
      * Information about the video's season.
      */
     @Json(name = "season")
-    val season: Connection? = null,
+    val season: VideoSeasonConnection? = null,
 
     /**
      * Information about this video's text tracks.
