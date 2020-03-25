@@ -15,10 +15,10 @@ import java.util.*
 data class Notification(
 
     /**
-     * The clip associated with a clip like notification.
+     * The video associated with a video like notification.
      */
     @Json(name = "clip")
-    val clip: Video? = null,
+    val video: Video? = null,
 
     /**
      * The clip comment associated with a comment notification.
