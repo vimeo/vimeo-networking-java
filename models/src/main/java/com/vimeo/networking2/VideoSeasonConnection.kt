@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * Information about the season the video is associated with.
@@ -26,4 +27,8 @@ data class VideoSeasonConnection(
      */
     @Json(name = "name")
     val name: String? = null
-)
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = -90000093L
+    }
+}
