@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
+import java.io.Serializable
 
 /**
  * List of [FeedItem]s to show in a user's feed.
@@ -25,4 +26,9 @@ data class FeedList(
     @Json(name = "data")
     override val data: List<FeedItem>? = null
 
-) : Pageable<FeedItem>
+) : Pageable<FeedItem>, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -635029129L
+    }
+}

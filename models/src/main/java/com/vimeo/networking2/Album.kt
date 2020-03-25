@@ -9,6 +9,7 @@ import com.vimeo.networking2.enums.AlbumLayoutType
 import com.vimeo.networking2.enums.AlbumThemeType
 import com.vimeo.networking2.enums.SortType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -141,10 +142,12 @@ data class Album(
     @Json(name = "user")
     val user: User? = null
 
-) : Entity {
-
+) : Entity, Serializable {
     override val identifier: String? = resourceKey
 
+    companion object {
+        private const val serialVersionUID = -101L
+    }
 }
 
 /**

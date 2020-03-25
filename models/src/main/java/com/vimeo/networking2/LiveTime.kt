@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * Live time data.
@@ -27,4 +28,9 @@ data class LiveTime(
     @Json(name = "monthly_remaining")
     val monthlyRemaining: Long? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -6308L
+    }
+}

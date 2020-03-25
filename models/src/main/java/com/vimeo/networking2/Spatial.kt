@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.SpatialProjectionType
 import com.vimeo.networking2.enums.StereoFormatType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * The information used to properly project a 360 video in 3D space.
@@ -28,7 +29,12 @@ data class Spatial(
     @Json(name = "stereo_format")
     val stereoFormat: String? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -15285318034421L
+    }
+}
 
 /**
  * @see Spatial.spatialProjection

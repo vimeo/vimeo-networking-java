@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * Authenticate token that you would receive from email, Google or Facebook login. In addition to
@@ -19,4 +20,8 @@ data class AuthenticatedAccessToken(
     @Json(name = "user")
     val user: User
 
-) : AccessTokenProvider
+) : AccessTokenProvider, Serializable {
+    companion object {
+        private const val serialVersionUID = -106L
+    }
+}

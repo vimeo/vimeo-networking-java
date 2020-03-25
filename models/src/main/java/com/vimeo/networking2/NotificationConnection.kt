@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
+import java.io.Serializable
 
 /**
  * All actions that can be taken on notifications.
@@ -56,4 +57,9 @@ data class NotificationConnection(
     @Json(name = "uri")
     val uri: String? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -2348765L
+    }
+}

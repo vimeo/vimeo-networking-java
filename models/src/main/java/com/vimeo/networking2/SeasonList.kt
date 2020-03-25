@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
+import java.io.Serializable
 
 /**
  * List of seasons that are pageable.
@@ -25,4 +26,9 @@ data class SeasonList(
     @Json(name = "data")
     override val data: List<Season>? = null
 
-) : Pageable<Season>
+) : Pageable<Season>, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -123L
+    }
+}

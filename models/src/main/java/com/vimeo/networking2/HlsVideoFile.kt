@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.common.VideoFile
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -31,4 +32,9 @@ data class HlsVideoFile(
     @Internal
     @Json(name = "live")
     val live: LiveHeartbeat? = null
-) : VideoFile
+) : VideoFile, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -26505L
+    }
+}

@@ -9,6 +9,7 @@ import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.LicenseType
 import com.vimeo.networking2.enums.VideoStatusType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -232,10 +233,13 @@ data class Video(
     @Json(name = "width")
     val width: Int? = null
 
-) : Entity {
+) : Entity, Serializable {
 
     override val identifier: String? = resourceKey
 
+    companion object {
+        private const val serialVersionUID = -23L
+    }
 }
 
 /**

@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * Embed buttons data.
@@ -51,4 +52,9 @@ data class EmbedButtons(
     @Json(name = "watchlater")
     val watchLater: Boolean? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -1777324019L
+    }
+}

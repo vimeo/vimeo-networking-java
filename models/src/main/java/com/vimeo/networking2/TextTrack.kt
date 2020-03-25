@@ -6,6 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.TextTrackType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -64,7 +65,12 @@ data class TextTrack(
     @Json(name = "type")
     val rawType: String? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -119L
+    }
+}
 
 /**
  * @see TextTrack.rawType

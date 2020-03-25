@@ -8,6 +8,7 @@ import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.ApproachType
 import com.vimeo.networking2.enums.UploadStatusType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * Upload data.
@@ -72,7 +73,12 @@ data class Upload(
     @Json(name = "upload_link")
     val uploadLink: String? = null
 
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -66L
+    }
+}
 
 /**
  * @see Upload.approach

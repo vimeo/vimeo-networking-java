@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.SeasonType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * This model represents a "season" of content. Seasons are logical groupings
@@ -65,10 +66,13 @@ data class Season(
     @Json(name = "user")
     val user: User? = null
 
-) : Entity {
+) : Entity, Serializable {
 
     override val identifier: String? = resourceKey
 
+    companion object {
+        private const val serialVersionUID = -82L
+    }
 }
 
 /**

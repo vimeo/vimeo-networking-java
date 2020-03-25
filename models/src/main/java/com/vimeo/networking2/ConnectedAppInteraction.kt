@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Interaction
+import java.io.Serializable
 
 /**
  * All of the interactions for a connected app.
@@ -28,4 +29,9 @@ data class ConnectedAppInteraction(
     @Json(name = "all_scopes")
     val allScopes: ConnectedScopes? = null
 
-) : Interaction
+) : Interaction, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -14007L
+    }
+}

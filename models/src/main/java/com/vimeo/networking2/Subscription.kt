@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 /**
  * Information about the user's subscription.
@@ -20,4 +21,9 @@ data class Subscription(
      */
     @Json(name = "trial")
     val trial: SubscriptionTrial? = null
-)
+) : Serializable {
+
+    companion object {
+        private const val serialVersionUID = -51L
+    }
+}

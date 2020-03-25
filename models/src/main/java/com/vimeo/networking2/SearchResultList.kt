@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
+import java.io.Serializable
 
 /**
  * List of search result that could be paged.
@@ -37,4 +38,9 @@ data class SearchResultList(
     @Json(name = "data")
     override val data: List<SearchResult>? = null
 
-) : Pageable<SearchResult>
+) : Pageable<SearchResult>, Serializable {
+
+    companion object {
+        private const val serialVersionUID = -97L
+    }
+}

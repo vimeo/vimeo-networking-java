@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
+import java.io.Serializable
 
 /**
  * A tag which is used to tag videos.
@@ -40,8 +41,11 @@ data class Tag(
     @Json(name = "uri")
     val uri: String? = null
 
-) : Entity {
+) : Entity, Serializable {
 
     override val identifier: String? = resourceKey
 
+    companion object {
+        private const val serialVersionUID = -1268568268L
+    }
 }
