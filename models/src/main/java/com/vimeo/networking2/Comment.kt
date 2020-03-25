@@ -17,6 +17,12 @@ import java.util.*
 data class Comment(
 
     /**
+     * The URI of this comment.
+     */
+    @Json(name = "uri")
+    val uri: String? = null,
+
+    /**
      * The time in ISO 8601 format when the comment was posted.
      */
     @Json(name = "created_on")
