@@ -1,7 +1,9 @@
 package com.vimeo.networking.utils;
 
 import com.vimeo.networking.Vimeo;
-import com.vimeo.networking.model.Privacy;
+import com.vimeo.networking2.enums.CommentPrivacyType;
+import com.vimeo.networking2.enums.EmbedPrivacyType;
+import com.vimeo.networking2.enums.ViewPrivacyType;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +12,7 @@ import java.util.Map;
 
 /**
  * Builder for setting privacy params for a video.
- *
+ * <p>
  * Created by Mohit Sarveiya on 3/20/18.
  */
 public final class PrivacySettingsParams {
@@ -20,11 +22,10 @@ public final class PrivacySettingsParams {
     /**
      * Set privacy setting for commenting on a video.
      *
-     * @param commentValue a value of {@link Privacy.CommentValue}.
-     *
+     * @param commentValue a value of {@link com.vimeo.networking2.enums.CommentPrivacyType}.
      * @return An instance of {@link PrivacySettingsParams}.
      */
-    public PrivacySettingsParams comments(@NotNull final Privacy.CommentValue commentValue) {
+    public PrivacySettingsParams comments(@NotNull final CommentPrivacyType commentValue) {
         params.put(Vimeo.PARAMETER_VIDEO_COMMENTS, commentValue);
         return this;
     }
@@ -33,7 +34,6 @@ public final class PrivacySettingsParams {
      * Set privacy setting for downloading on a video.
      *
      * @param download set {@code true} if video could be downloaded, otherwise {@code false}.
-     *
      * @return An instance of {@link PrivacySettingsParams}.
      */
     public PrivacySettingsParams download(final boolean download) {
@@ -45,7 +45,6 @@ public final class PrivacySettingsParams {
      * Set privacy setting for adding a video to a collection.
      *
      * @param add set {@code true} if video could be added to a collection, otherwise {@code false}.
-     *
      * @return An instance of {@link PrivacySettingsParams}.
      */
     public PrivacySettingsParams addToCollections(final boolean add) {
@@ -56,11 +55,10 @@ public final class PrivacySettingsParams {
     /**
      * Set privacy setting to embed a video.
      *
-     * @param privacyEmbedType a value of {@link Privacy.EmbedValue}.
-     *
+     * @param privacyEmbedType a value of {@link EmbedPrivacyType}.
      * @return An instance of {@link PrivacySettingsParams}.
      */
-    public PrivacySettingsParams embed(@NotNull final Privacy.EmbedValue privacyEmbedType) {
+    public PrivacySettingsParams embed(@NotNull final EmbedPrivacyType privacyEmbedType) {
         params.put(Vimeo.PARAMETER_VIDEO_EMBED, privacyEmbedType);
         return this;
     }
@@ -68,11 +66,10 @@ public final class PrivacySettingsParams {
     /**
      * Set privacy setting to view a video.
      *
-     * @param privacyViewType a value of {@link Privacy.ViewValue}.
-     *
+     * @param privacyViewType a value of {@link ViewPrivacyType}.
      * @return An instance of {@link PrivacySettingsParams}.
      */
-    public PrivacySettingsParams view(@NotNull final Privacy.ViewValue privacyViewType) {
+    public PrivacySettingsParams view(@NotNull final ViewPrivacyType privacyViewType) {
         params.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyViewType);
         return this;
     }
