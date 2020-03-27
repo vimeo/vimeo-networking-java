@@ -61,7 +61,7 @@ data class ProgressiveVideoFile(
      * The file size of the video.
      */
     @Json(name = "size")
-    val size: Int? = null,
+    val size: Long? = null,
 
     /**
      * The source link for the video file.
