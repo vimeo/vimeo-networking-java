@@ -27,6 +27,8 @@ package com.vimeo.networking.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.VimeoCallback;
@@ -70,6 +72,9 @@ public final class VimeoNetworkUtil {
     @Nullable
     private static Gson sGson;
 
+    @Nullable
+    private static Moshi sMoshi;
+
     private VimeoNetworkUtil() {}
 
     /**
@@ -85,6 +90,23 @@ public final class VimeoNetworkUtil {
             sGson = getGsonBuilder().create();
         }
         return sGson;
+    }
+
+    /**
+     * Static helper method that automatically applies the VimeoClient Moshi preferences
+     * <p>
+     * This includes formatting for dates, and any serializers used.
+     *
+     * @return Moshi object that can be used to serialize and deserialize JSON.
+     */
+    @NotNull
+    public static Moshi getMoshi() {
+        if (sMoshi == null) {
+            sMoshi = new Moshi.Builder()
+                    .add(Date.class, new Rfc3339DateJsonAdapter().nullSafe())
+                    .build();
+        }
+        return sMoshi;
     }
 
     /**
