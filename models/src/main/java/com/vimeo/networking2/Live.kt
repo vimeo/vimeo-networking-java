@@ -71,7 +71,7 @@ data class Live(
      */
     @Internal
     @Json(name = "seconds_remaining")
-    val secondsRemaining: Date? = null,
+    val secondsRemaining: Long? = null,
 
     /**
      * The status of the RTMP [link].
