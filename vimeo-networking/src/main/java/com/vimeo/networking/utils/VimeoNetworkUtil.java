@@ -75,7 +75,8 @@ public final class VimeoNetworkUtil {
     @Nullable
     private static Moshi sMoshi;
 
-    private VimeoNetworkUtil() {}
+    private VimeoNetworkUtil() {
+    }
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
@@ -143,7 +144,7 @@ public final class VimeoNetworkUtil {
             for (final String pair : pairs) {
                 final int idx = pair.indexOf("=");
                 queryPairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
-                               URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+                        URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
             }
             return queryPairs;
         } catch (final UnsupportedEncodingException e) {
@@ -190,7 +191,9 @@ public final class VimeoNetworkUtil {
         return builder;
     }
 
-    /** A helper which cancels an array of {@link Call} objects. */
+    /**
+     * A helper which cancels an array of {@link Call} objects.
+     */
     public static void cancelCalls(@NotNull final ArrayList<Call> callsToCancel) {
         final List<Call> callList = new CopyOnWriteArrayList<>(callsToCancel);
         new Thread(new Runnable() {
@@ -220,10 +223,7 @@ public final class VimeoNetworkUtil {
         VimeoError vimeoError = null;
         if (response != null && response.errorBody() != null) {
             try {
-                final Converter<ResponseBody, VimeoError> errorConverter = VimeoClient.getInstance()
-                        .getRetrofit()
-                        .responseBodyConverter(VimeoError.class, new Annotation[0]);
-                vimeoError = errorConverter.convert(response.errorBody());
+                vimeoError = getGson().fromJson(response.errorBody().string(), VimeoError.class);
             } catch (final Exception e) {
                 ClientLogger.e("Error while attempting to convert response body to VimeoError", e);
             }
@@ -300,8 +300,8 @@ public final class VimeoNetworkUtil {
 
         if (AlbumPrivacyUtils.getViewPrivacyType(albumPrivacy) == AlbumViewPrivacyType.PASSWORD) {
             if (!validateString(albumPrivacy.getPassword(),
-                                "Password can't be empty in password protected album edit.",
-                                callback)) {
+                    "Password can't be empty in password protected album edit.",
+                    callback)) {
                 return null;
             }
             retVal.put(Vimeo.PARAMETER_ALBUM_PASSWORD, albumPrivacy.getPassword());
