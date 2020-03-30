@@ -60,7 +60,6 @@ import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs;
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -106,7 +105,7 @@ public interface VimeoService {
 
     @POST("users")
     Call<VimeoAccount> join(@Header("Authorization") String authHeader,
-                            @Body HashMap<String, String> parameters);
+                            @Body Map<String, String> parameters);
 
     @FormUrlEncoded
     @POST("oauth/authorize/password")
@@ -256,22 +255,22 @@ public interface VimeoService {
     @PATCH
     Call<Object> edit(@Header("Authorization") String authHeader,
                       @Url String uri,
-                      @Body HashMap<String, Object> parameters);
+                      @Body Map<String, Object> parameters);
 
     @PATCH
     Call<Video> editVideo(@Header("Authorization") String authHeader,
                           @Url String uri,
-                          @Body HashMap<String, Object> parameters);
+                          @Body Map<String, Object> parameters);
 
     @PATCH
     Call<User> editUser(@Header("Authorization") String authHeader,
                         @Url String uri,
-                        @Body HashMap<String, Object> parameters);
+                        @Body Map<String, Object> parameters);
 
     @PATCH
     Call<PictureCollection> editPictureCollection(@Header("Authorization") String authHeader,
                                                   @Url String uri,
-                                                  @Body HashMap<String, Object> parameters);
+                                                  @Body Map<String, Object> parameters);
 
 
     @PATCH("me/notifications/subscriptions")
@@ -292,7 +291,7 @@ public interface VimeoService {
     // <editor-fold desc="POSTs">
     @POST
     Call<Comment> comment(@Header("Authorization") String authHeader, @Url String uri,
-                          @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters);
+                          @QueryMap Map<String, String> options, @Body Map<String, String> parameters);
 
 
     @POST
@@ -300,7 +299,7 @@ public interface VimeoService {
 
     @POST
     Call<Void> emptyResponsePost(@Header("Authorization") String authHeader, @Url String uri,
-                                 @Body HashMap<String, String> parameters);
+                                 @Body Map<String, String> parameters);
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -542,7 +541,7 @@ public interface VimeoService {
     Call<Object> POST(@Header("Authorization") String authHeader,
                       @Url String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
-                      @Body HashMap<String, String> parameters);
+                      @Body Map<String, String> parameters);
 
     @POST
     Call<Object> POST(@Header("Authorization") String authHeader,
