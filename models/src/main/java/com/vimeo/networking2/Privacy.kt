@@ -4,6 +4,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.ViewPrivacyType
@@ -26,6 +27,7 @@ data class Privacy(
      * The token used to authenticate in playback scenarios where password entry is impossible, and
      * the user initiating playback has already entered the password.
      */
+    @Internal
     @Json(name = "_bypass_token")
     val bypassToken: String? = null,
 
