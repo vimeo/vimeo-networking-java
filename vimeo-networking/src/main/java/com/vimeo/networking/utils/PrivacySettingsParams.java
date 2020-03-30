@@ -12,8 +12,6 @@ import java.util.Map;
 
 /**
  * Builder for setting privacy params for a video.
- * <p>
- * Created by Mohit Sarveiya on 3/20/18.
  */
 public final class PrivacySettingsParams {
 
