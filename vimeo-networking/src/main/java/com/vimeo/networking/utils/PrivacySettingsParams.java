@@ -12,8 +12,6 @@ import java.util.Map;
 
 /**
  * Builder for setting privacy params for a video.
- * <p>
- * Created by Mohit Sarveiya on 3/20/18.
  */
 public final class PrivacySettingsParams {
 
@@ -26,7 +24,7 @@ public final class PrivacySettingsParams {
      * @return An instance of {@link PrivacySettingsParams}.
      */
     public PrivacySettingsParams comments(@NotNull final CommentPrivacyType commentValue) {
-        params.put(Vimeo.PARAMETER_VIDEO_COMMENTS, commentValue);
+        params.put(Vimeo.PARAMETER_VIDEO_COMMENTS, commentValue.getValue());
         return this;
     }
 
@@ -59,7 +57,7 @@ public final class PrivacySettingsParams {
      * @return An instance of {@link PrivacySettingsParams}.
      */
     public PrivacySettingsParams embed(@NotNull final EmbedPrivacyType privacyEmbedType) {
-        params.put(Vimeo.PARAMETER_VIDEO_EMBED, privacyEmbedType);
+        params.put(Vimeo.PARAMETER_VIDEO_EMBED, privacyEmbedType.getValue());
         return this;
     }
 
@@ -70,7 +68,7 @@ public final class PrivacySettingsParams {
      * @return An instance of {@link PrivacySettingsParams}.
      */
     public PrivacySettingsParams view(@NotNull final ViewPrivacyType privacyViewType) {
-        params.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyViewType);
+        params.put(Vimeo.PARAMETER_VIDEO_VIEW, privacyViewType.getValue());
         return this;
     }
 
