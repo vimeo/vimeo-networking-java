@@ -415,11 +415,10 @@ public interface VimeoService {
                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    @Serializer(converter = ConverterType.MOSHI)
-    Call<com.vimeo.networking2.FeedList> getFeedListMoshi(@Header("Authorization") String authHeader,
-                                                          @Url String uri,
-                                                          @QueryMap Map<String, String> options,
-                                                          @Header("Cache-Control") String cacheHeaderValue);
+    Call<FeedList> getFeedListMoshi(@Header("Authorization") String authHeader,
+                                    @Url String uri,
+                                    @QueryMap Map<String, String> options,
+                                    @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<NotificationList> getNotificationList(@Header("Authorization") String authHeader,
@@ -557,6 +556,6 @@ public interface VimeoService {
     @Headers("Cache-Control: no-cache, no-store")
     @GET("search")
     Call<SearchResultList> search(@Header("Authorization") String authHeader,
-                                @QueryMap Map<String, String> queryParams);
+                                  @QueryMap Map<String, String> queryParams);
     // </editor-fold>
 }
