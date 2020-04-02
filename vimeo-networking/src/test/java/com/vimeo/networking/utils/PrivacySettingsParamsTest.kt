@@ -9,8 +9,6 @@ import org.junit.Test
 
 /**
  * Tests for {@link PrivacySettingsParams}.
- *
- * Created by Mohit Sarveiya on 10/30/15.
  */
 class PrivacySettingsParamsTest {
 
@@ -25,9 +23,9 @@ class PrivacySettingsParamsTest {
                 .download(true)
 
         with(privacySettingsParams.params) {
-            assertThat(this[Vimeo.PARAMETER_VIDEO_COMMENTS]).isEqualTo(CommentPrivacyType.ANYBODY)
-            assertThat(this[Vimeo.PARAMETER_VIDEO_EMBED]).isEqualTo(EmbedPrivacyType.PRIVATE)
-            assertThat(this[Vimeo.PARAMETER_VIDEO_VIEW]).isEqualTo(ViewPrivacyType.ANYBODY)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_COMMENTS]).isEqualTo(CommentPrivacyType.ANYBODY.value)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_EMBED]).isEqualTo(EmbedPrivacyType.PRIVATE.value)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_VIEW]).isEqualTo(ViewPrivacyType.ANYBODY.value)
             assertThat(this[Vimeo.PARAMETER_VIDEO_ADD]).isEqualTo(true)
             assertThat(this[Vimeo.PARAMETER_VIDEO_DOWNLOAD]).isEqualTo(true)
         }
