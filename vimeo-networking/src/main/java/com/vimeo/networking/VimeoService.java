@@ -59,7 +59,7 @@ import com.vimeo.networking2.PublishJob;
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs;
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -546,7 +546,7 @@ public interface VimeoService {
     Call<Object> POST(@Header("Authorization") String authHeader,
                       @Url String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
-                      @Body ArrayList<Object> parameters);
+                      @Body List<Object> parameters);
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
