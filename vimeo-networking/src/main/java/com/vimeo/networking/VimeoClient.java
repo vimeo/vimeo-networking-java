@@ -1181,9 +1181,10 @@ public class VimeoClient {
 
         if (privacySettingsParams != null && !privacySettingsParams.getParams().isEmpty()) {
             final Map<String, Object> privacyMap = privacySettingsParams.getParams();
-            final ViewPrivacyType viewPrivacyValue = (ViewPrivacyType) privacyMap.get(Vimeo.PARAMETER_VIDEO_VIEW);
+            final String viewPrivacyValue = (String) privacyMap.get(Vimeo.PARAMETER_VIDEO_VIEW);
 
-            if (viewPrivacyValue == ViewPrivacyType.PASSWORD) {
+            //noinspection ConstantConditions
+            if (ViewPrivacyType.PASSWORD.getValue().equals(viewPrivacyValue)) {
                 if (password == null) {
                     callback.failure(new VimeoError("Password cannot be null password privacy type"));
                     return null;
