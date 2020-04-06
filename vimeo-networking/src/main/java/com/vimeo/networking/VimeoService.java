@@ -295,7 +295,7 @@ public interface VimeoService {
 
 
     @POST
-    Call<PictureCollection> createPictureResource(@Header("Authorization") String authHeader, @Url String uri);
+    Call<PictureCollection> createPictureCollection(@Header("Authorization") String authHeader, @Url String uri);
 
     @POST
     Call<Void> emptyResponsePost(@Header("Authorization") String authHeader, @Url String uri,

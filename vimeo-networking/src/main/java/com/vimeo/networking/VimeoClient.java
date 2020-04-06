@@ -1481,16 +1481,16 @@ public class VimeoClient {
      *
      * @param uri      should be in the format /videos/{video_id}/pictures or /user/{user_id}/pictures
      *                 The Uri should be obtained from metadata.connections.pictures.uri
-     * @param callback The VimeoCallback containing PictureResource data
+     * @param callback The VimeoCallback containing PictureCollection data
      */
     @Nullable
-    public Call<PictureCollection> createPictureResource(String uri, VimeoCallback<PictureCollection> callback) {
+    public Call<PictureCollection> createPictureCollection(String uri, VimeoCallback<PictureCollection> callback) {
         if (uri == null || uri.trim().isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
         }
 
-        final Call<PictureCollection> call = mVimeoService.createPictureResource(getAuthHeader(), uri);
+        final Call<PictureCollection> call = mVimeoService.createPictureCollection(getAuthHeader(), uri);
         call.enqueue(callback);
         return call;
     }
@@ -1498,11 +1498,11 @@ public class VimeoClient {
     /**
      * Activate a picture resource
      *
-     * @param uri The Uri that is found in the PictureResource returned from
-     *            {@link #createPictureResource(String, VimeoCallback)}
+     * @param uri The Uri that is found in the PictureCollection returned from
+     *            {@link #createPictureCollection(String, VimeoCallback)}
      */
     @Nullable
-    public Call<PictureCollection> activatePictureResource(String uri, VimeoCallback<PictureCollection> callback) {
+    public Call<PictureCollection> activatePictureCollection(String uri, VimeoCallback<PictureCollection> callback) {
         if (uri == null || uri.trim().isEmpty()) {
             callback.failure(new VimeoError("uri cannot be empty!"));
             return null;
