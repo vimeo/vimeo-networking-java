@@ -72,6 +72,12 @@ class RetrofitSetup {
     private final Gson mGson;
 
     /**
+     * {@link Moshi} object used to serialize / deserialize JSON responses.
+     */
+    @NotNull
+    private final Moshi mMoshi;
+
+    /**
      * Value appended to {@code User-Agent} header to identify which version of this library is used.
      */
     @NotNull
@@ -81,6 +87,7 @@ class RetrofitSetup {
         mConfiguration = configuration;
         mCache = cache;
         mGson = VimeoNetworkUtil.getGson();
+        mMoshi = VimeoNetworkUtil.getMoshi();
         mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION + " (Java)";
     }
 
@@ -94,16 +101,8 @@ class RetrofitSetup {
         return new Retrofit.Builder().baseUrl(mConfiguration.getBaseUrl())
                 .client(createOkHttpClient())
                 .addConverterFactory(new AnnotatedConverterFactory(GsonConverterFactory.create(mGson),
-                                                                   MoshiConverterFactory.create(createMoshi())))
+                        MoshiConverterFactory.create(mMoshi)))
                 .build();
-    }
-
-    /**
-     * Create an instance of Moshi with a date adapter.
-     */
-    @NotNull
-    private Moshi createMoshi() {
-        return new Moshi.Builder().add(Date.class, new Rfc3339DateJsonAdapter().nullSafe()).build();
     }
 
     /**
