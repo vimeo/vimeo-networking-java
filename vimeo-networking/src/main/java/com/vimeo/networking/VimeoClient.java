@@ -763,7 +763,7 @@ public class VimeoClient {
                 // We must always have a `name` field, which is used by the Android Account Manager for
                 // display in the device Settings -> Accounts [KZ] 12/17/15
                 final String userName = vimeoAccount.getUser().getName();
-                final String name = userName != null ? userName : vimeoAccount.getUser().getName();
+                final String name = userName != null ? userName : vimeoAccount.getUser().getUri();
                 mClient.saveAccount(vimeoAccount, name);
             } else {
                 mClient.saveAccount(vimeoAccount, mEmail);
