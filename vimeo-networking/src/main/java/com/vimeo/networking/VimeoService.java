@@ -415,12 +415,6 @@ public interface VimeoService {
                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    Call<FeedList> getFeedListMoshi(@Header("Authorization") String authHeader,
-                                    @Url String uri,
-                                    @QueryMap Map<String, String> options,
-                                    @Header("Cache-Control") String cacheHeaderValue);
-
-    @GET
     Call<NotificationList> getNotificationList(@Header("Authorization") String authHeader,
                                                @Url String uri,
                                                @QueryMap Map<String, String> options,
@@ -463,24 +457,10 @@ public interface VimeoService {
                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    @Serializer(converter = ConverterType.MOSHI)
-    Call<com.vimeo.networking2.UserList> getUserListMoshi(@Header("Authorization") String authHeader,
-                                                          @Url String uri,
-                                                          @QueryMap Map<String, String> options,
-                                                          @Header("Cache-Control") String cacheHeaderValue);
-
-    @GET
     Call<VideoList> getVideoList(@Header("Authorization") String authHeader,
                                  @Url String uri,
                                  @QueryMap Map<String, String> options,
                                  @Header("Cache-Control") String cacheHeaderValue);
-
-    @GET
-    @Serializer(converter = ConverterType.MOSHI)
-    Call<com.vimeo.networking2.VideoList> getVideoListMoshi(@Header("Authorization") String authHeader,
-                                                            @Url String uri,
-                                                            @QueryMap Map<String, String> options,
-                                                            @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<AlbumList> getAlbumList(@Header("Authorization") String authHeader,
@@ -529,18 +509,6 @@ public interface VimeoService {
     Call<Object> DELETE(@Header("Authorization") String authHeader,
                         @Url String uri,
                         @QueryMap Map<String, String> options);
-
-    @GET
-    Call<Object> GET(@Header("Authorization") String authHeader,
-                     @Url String uri,
-                     @QueryMap Map<String, String> options,
-                     @Header("Cache-Control") String cacheHeaderValue);
-
-    @POST
-    Call<Object> POST(@Header("Authorization") String authHeader,
-                      @Url String uri,
-                      @Header("Cache-Control") String cacheHeaderValue,
-                      @Body Map<String, String> parameters);
 
     @POST
     Call<Object> POST(@Header("Authorization") String authHeader,
