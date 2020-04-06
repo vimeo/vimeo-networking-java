@@ -34,6 +34,7 @@ import com.vimeo.networking.model.error.LocalErrorCode;
 import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.utils.BaseUrlInterceptor;
 import com.vimeo.networking.utils.PrivacySettingsParams;
+import com.vimeo.networking.utils.VimeoAccountFactory;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 import com.vimeo.networking2.Album;
 import com.vimeo.networking2.AlbumList;
@@ -245,7 +246,8 @@ public class VimeoClient {
         if (vimeoAccount == null) {
             // If the provided account was null but we have an access token, persist the vimeo account with
             // just a token in it. Otherwise we'll want to leave the persisted account as null.
-            vimeoAccount = new VimeoAccount(mConfiguration.mAccessToken, null, null, null, null, null);
+            vimeoAccount =
+                    VimeoAccountFactory.createVimeoAccountWithToken(mConfiguration.mAccessToken);
             //noinspection VariableNotUsedInsideIf
             if (mConfiguration.mAccessToken != null) {
                 mConfiguration.saveAccount(vimeoAccount, null);
