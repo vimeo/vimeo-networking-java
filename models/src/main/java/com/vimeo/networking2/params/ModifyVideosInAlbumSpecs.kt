@@ -12,12 +12,12 @@ data class ModifyVideosInAlbumSpecs(
      * The set of videos that should be removed.
      */
     @Json(name = "remove")
-    val removeVideoSet: Set<NamedWrapperForRemove>? = null,
+    val removeVideoSet: Set<RemoveVideoFromAlbumContainer>? = null,
 
     /**
      * The set of videos that should be added.
      */
     @Json(name = "set")
-    val addVideoSet: Set<NamedWrapperForAdd>? = null
+    val addVideoSet: Set<AddVideoToAlbumContainer>? = null
 
 )
