@@ -12,6 +12,12 @@ import java.io.Serializable
 data class VideoInteractions(
 
     /**
+     * The interaction used to add a video to multiple albums.
+     */
+    @Json(name = "album")
+    val album: BasicInteraction? = null,
+
+    /**
      * The buy interaction for a On Demand video.
      */
     @Internal

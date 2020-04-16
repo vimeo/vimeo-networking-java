@@ -35,7 +35,7 @@ data class SearchResult(
     /**
      * Video data.
      */
-    @Json(name = "video")
+    @Json(name = "clip")
     val video: Video? = null,
 
     /**

@@ -14,8 +14,8 @@ data class VideoConnections(
     /**
      * Information about the comments on this video.
      */
-    @Json(name = "comment")
-    val comment: Connection? = null,
+    @Json(name = "comments")
+    val comments: Connection? = null,
 
     /**
      * Information about the users credited in this video.
@@ -71,7 +71,7 @@ data class VideoConnections(
      * Information about the video's season.
      */
     @Json(name = "season")
-    val season: Connection? = null,
+    val season: VideoSeasonConnection? = null,
 
     /**
      * Information about this video's text tracks.

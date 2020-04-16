@@ -54,7 +54,7 @@ data class GroupPrivacy(
      * Who can view the group.
      * @see GroupPrivacy.viewPrivacyType
      */
-    @Json(name = "videos")
+    @Json(name = "view")
     val viewPrivacy: String? = null
 
 ) : Serializable {

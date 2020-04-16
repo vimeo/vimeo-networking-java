@@ -40,7 +40,7 @@ data class Upload(
      */
     @Internal
     @Json(name = "gcs")
-    val gcs: Gcs? = null,
+    val gcs: List<Gcs>? = null,
 
     /**
      * The link of the video to capture through the pull approach.

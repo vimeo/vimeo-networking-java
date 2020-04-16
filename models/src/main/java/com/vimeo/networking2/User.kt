@@ -51,6 +51,12 @@ data class User(
     val emails: List<Email>? = null,
 
     /**
+     * Set to true for user instances embedded in a [Video] instance, otherwise will be unset.
+     */
+    @Json(name = "is_creator")
+    val isCreator: Boolean? = null,
+
+    /**
      * The absolute URL of this user's profile page.
      */
     @Json(name = "link")

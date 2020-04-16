@@ -1,14 +1,14 @@
 package com.vimeo.networking.utils
 
 import com.vimeo.networking.Vimeo
-import com.vimeo.networking.model.Privacy
+import com.vimeo.networking2.enums.CommentPrivacyType
+import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.ViewPrivacyType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 /**
  * Tests for {@link PrivacySettingsParams}.
- *
- * Created by Mohit Sarveiya on 10/30/15.
  */
 class PrivacySettingsParamsTest {
 
@@ -16,16 +16,16 @@ class PrivacySettingsParamsTest {
     fun `Check privacy settings are set`() {
         val privacySettingsParams = PrivacySettingsParams()
         privacySettingsParams
-                .comments(Privacy.CommentValue.ANYBODY)
-                .embed(Privacy.EmbedValue.PRIVATE)
-                .view(Privacy.ViewValue.ANYBODY)
+                .comments(CommentPrivacyType.ANYBODY)
+                .embed(EmbedPrivacyType.PRIVATE)
+                .view(ViewPrivacyType.ANYBODY)
                 .addToCollections(true)
                 .download(true)
 
         with(privacySettingsParams.params) {
-            assertThat(this[Vimeo.PARAMETER_VIDEO_COMMENTS]).isEqualTo(Privacy.CommentValue.ANYBODY)
-            assertThat(this[Vimeo.PARAMETER_VIDEO_EMBED]).isEqualTo(Privacy.EmbedValue.PRIVATE)
-            assertThat(this[Vimeo.PARAMETER_VIDEO_VIEW]).isEqualTo(Privacy.ViewValue.ANYBODY)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_COMMENTS]).isEqualTo(CommentPrivacyType.ANYBODY.value)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_EMBED]).isEqualTo(EmbedPrivacyType.PRIVATE.value)
+            assertThat(this[Vimeo.PARAMETER_VIDEO_VIEW]).isEqualTo(ViewPrivacyType.ANYBODY.value)
             assertThat(this[Vimeo.PARAMETER_VIDEO_ADD]).isEqualTo(true)
             assertThat(this[Vimeo.PARAMETER_VIDEO_DOWNLOAD]).isEqualTo(true)
         }
