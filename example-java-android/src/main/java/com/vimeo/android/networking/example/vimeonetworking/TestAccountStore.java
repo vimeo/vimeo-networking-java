@@ -8,7 +8,7 @@ import com.vimeo.android.networking.example.AccountPreferenceManager;
 import com.vimeo.android.networking.example.TestApp;
 import com.vimeo.networking.AccountStore;
 import com.vimeo.networking.VimeoClient;
-import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking2.VimeoAccount;
 
 /**
  * An account store that is backed by {@link SharedPreferences}.

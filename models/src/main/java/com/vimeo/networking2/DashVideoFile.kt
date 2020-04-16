@@ -3,16 +3,15 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import com.vimeo.networking2.common.PlayableFile
+import com.vimeo.networking2.common.VideoFile
 import java.io.Serializable
 import java.util.*
 
 /**
- * Video file data.
+ * A video file that represents a DASH stream.
  */
-@Internal
 @JsonClass(generateAdapter = true)
-data class VideoFile(
+data class DashVideoFile(
 
     @Internal
     @Json(name = "link")
@@ -31,10 +30,23 @@ data class VideoFile(
      */
     @Internal
     @Json(name = "live")
-    val live: LiveHeartbeat? = null
-) : PlayableFile, Serializable {
+    val live: LiveHeartbeat? = null,
 
+    /**
+     * The token used for DRM protected streams.
+     */
+    @Internal
+    @Json(name = "token")
+    val token: String? = null,
+
+    /**
+     * The license link for DRM protected streams.
+     */
+    @Internal
+    @Json(name = "license_link")
+    val licenseLink: String? = null
+) : VideoFile, Serializable {
     companion object {
-        private const val serialVersionUID = -26505L
+        private const val serialVersionUID = -90000120L
     }
 }

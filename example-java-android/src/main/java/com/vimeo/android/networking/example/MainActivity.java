@@ -17,11 +17,10 @@ import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
-import com.vimeo.networking.callers.MoshiGetRequestCaller;
-import com.vimeo.networking.model.User;
-import com.vimeo.networking.model.Video;
-import com.vimeo.networking.model.VideoList;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking2.User;
+import com.vimeo.networking2.Video;
+import com.vimeo.networking2.VideoList;
 
 import okhttp3.CacheControl;
 
@@ -132,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                             videoTitlesString += "\n";
                         }
                         addNewLine = true;
-                        videoTitlesString += video.mName;
+                        videoTitlesString += video.getName();
                     }
                     mRequestOutputTv.setText(videoTitlesString);
                 }
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private void fetchStaffPicksWithMoshi() {
         final long initialTime = System.currentTimeMillis();
         mProgressDialog.show();
-        mApiClient.getContent(STAFF_PICKS_VIDEO_URI, CacheControl.FORCE_NETWORK, MoshiGetRequestCaller.VIDEO_LIST, null, null, null, new VimeoCallback<com.vimeo.networking2.VideoList>() {
+        mApiClient.getContent(STAFF_PICKS_VIDEO_URI, CacheControl.FORCE_NETWORK, GetRequestCaller.VIDEO_LIST, null, null, null, new VimeoCallback<com.vimeo.networking2.VideoList>() {
             @Override
             public void success(com.vimeo.networking2.VideoList videoList) {
                 final long finalTime = System.currentTimeMillis();

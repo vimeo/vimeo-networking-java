@@ -21,14 +21,14 @@ data class Play(
      */
     @Internal
     @Json(name = "dash")
-    val dash: VideoFile? = null,
+    val dash: DashVideoFile? = null,
 
     /**
      * HLS video files.
      */
     @Internal
     @Json(name = "hls")
-    val hls: VideoFile? = null,
+    val hls: HlsVideoFile? = null,
 
     /**
      * The play progress in seconds.
@@ -57,7 +57,14 @@ data class Play(
      */
     @Internal
     @Json(name = "status")
-    val videoPlayStatus: String? = null
+    val videoPlayStatus: String? = null,
+
+    /**
+     * The DRM play data for a protected stream.
+     */
+    @Internal
+    @Json(name = "drm")
+    val drm: Drm? = null
 ) : Serializable {
 
     companion object {

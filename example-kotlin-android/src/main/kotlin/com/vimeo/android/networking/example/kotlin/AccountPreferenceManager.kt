@@ -3,9 +3,9 @@ package com.vimeo.android.networking.example.kotlin
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.vimeo.networking.model.User
-import com.vimeo.networking.model.VimeoAccount
 import com.vimeo.networking.utils.VimeoNetworkUtil
+import com.vimeo.networking2.User
+import com.vimeo.networking2.VimeoAccount
 
 /**
  * Class for persisting the the auth access token (and possibly the user)

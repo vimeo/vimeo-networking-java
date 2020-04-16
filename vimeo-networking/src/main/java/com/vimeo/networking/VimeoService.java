@@ -24,45 +24,42 @@ package com.vimeo.networking;
 
 import com.vimeo.networking.AnnotatedConverterFactory.ConverterType;
 import com.vimeo.networking.AnnotatedConverterFactory.Serializer;
-import com.vimeo.networking.model.Album;
-import com.vimeo.networking.model.AlbumList;
-import com.vimeo.networking.model.Category;
-import com.vimeo.networking.model.CategoryList;
-import com.vimeo.networking.model.Channel;
-import com.vimeo.networking.model.ChannelList;
-import com.vimeo.networking.model.Comment;
-import com.vimeo.networking.model.CommentList;
-import com.vimeo.networking.model.Document;
-import com.vimeo.networking.model.FeedList;
-import com.vimeo.networking.model.ModifyVideoInAlbumsSpecs;
-import com.vimeo.networking.model.ModifyVideosInAlbumSpecs;
-import com.vimeo.networking.model.PictureCollection;
-import com.vimeo.networking.model.PictureResource;
-import com.vimeo.networking.model.PinCodeInfo;
-import com.vimeo.networking.model.RecommendationList;
-import com.vimeo.networking.model.TextTrackList;
-import com.vimeo.networking.model.User;
-import com.vimeo.networking.model.UserList;
-import com.vimeo.networking.model.Video;
-import com.vimeo.networking.model.VideoList;
-import com.vimeo.networking.model.VimeoAccount;
-import com.vimeo.networking.model.appconfiguration.AppConfiguration;
-import com.vimeo.networking.model.cinema.ProgramContentItemList;
-import com.vimeo.networking.model.iap.Product;
-import com.vimeo.networking.model.iap.Products;
-import com.vimeo.networking.model.live.LiveStats;
-import com.vimeo.networking.model.notifications.NotificationList;
-import com.vimeo.networking.model.notifications.SubscriptionCollection;
-import com.vimeo.networking.model.search.SearchResponse;
-import com.vimeo.networking.model.search.SuggestionResponse;
-import com.vimeo.networking.model.tvod.SeasonList;
-import com.vimeo.networking.model.tvod.TvodItem;
-import com.vimeo.networking.model.tvod.TvodList;
+import com.vimeo.networking2.Album;
+import com.vimeo.networking2.AlbumList;
+import com.vimeo.networking2.AppConfiguration;
+import com.vimeo.networking2.Category;
+import com.vimeo.networking2.CategoryList;
+import com.vimeo.networking2.Channel;
+import com.vimeo.networking2.ChannelList;
+import com.vimeo.networking2.Comment;
+import com.vimeo.networking2.CommentList;
+import com.vimeo.networking2.Document;
+import com.vimeo.networking2.FeedList;
+import com.vimeo.networking2.LiveStats;
+import com.vimeo.networking2.NotificationList;
+import com.vimeo.networking2.NotificationSubscriptions;
+import com.vimeo.networking2.PictureCollection;
+import com.vimeo.networking2.PinCodeInfo;
+import com.vimeo.networking2.Product;
+import com.vimeo.networking2.ProductList;
+import com.vimeo.networking2.ProgrammedContentItemList;
+import com.vimeo.networking2.RecommendationList;
+import com.vimeo.networking2.SearchResultList;
+import com.vimeo.networking2.SeasonList;
+import com.vimeo.networking2.TextTrackList;
+import com.vimeo.networking2.TvodItem;
+import com.vimeo.networking2.TvodItemList;
+import com.vimeo.networking2.User;
+import com.vimeo.networking2.UserList;
+import com.vimeo.networking2.Video;
+import com.vimeo.networking2.VideoList;
+import com.vimeo.networking2.VimeoAccount;
 import com.vimeo.networking2.params.BatchPublishToSocialMedia;
 import com.vimeo.networking2.PublishJob;
+import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs;
+import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -108,7 +105,7 @@ public interface VimeoService {
 
     @POST("users")
     Call<VimeoAccount> join(@Header("Authorization") String authHeader,
-                            @Body HashMap<String, String> parameters);
+                            @Body Map<String, String> parameters);
 
     @FormUrlEncoded
     @POST("oauth/authorize/password")
@@ -258,27 +255,27 @@ public interface VimeoService {
     @PATCH
     Call<Object> edit(@Header("Authorization") String authHeader,
                       @Url String uri,
-                      @Body HashMap<String, Object> parameters);
+                      @Body Map<String, Object> parameters);
 
     @PATCH
     Call<Video> editVideo(@Header("Authorization") String authHeader,
                           @Url String uri,
-                          @Body HashMap<String, Object> parameters);
+                          @Body Map<String, Object> parameters);
 
     @PATCH
     Call<User> editUser(@Header("Authorization") String authHeader,
                         @Url String uri,
-                        @Body HashMap<String, Object> parameters);
+                        @Body Map<String, Object> parameters);
 
     @PATCH
     Call<PictureCollection> editPictureCollection(@Header("Authorization") String authHeader,
                                                   @Url String uri,
-                                                  @Body HashMap<String, Object> parameters);
+                                                  @Body Map<String, Object> parameters);
 
 
     @PATCH("me/notifications/subscriptions")
-    Call<SubscriptionCollection> editSubscriptions(@Header("Authorization") String authHeader,
-                                                   @Body Map<String, Boolean> parameters);
+    Call<NotificationSubscriptions> editSubscriptions(@Header("Authorization") String authHeader,
+                                                      @Body Map<String, Boolean> parameters);
 
     @Headers("Cache-Control: no-cache, no-store")
     @PATCH
@@ -294,15 +291,15 @@ public interface VimeoService {
     // <editor-fold desc="POSTs">
     @POST
     Call<Comment> comment(@Header("Authorization") String authHeader, @Url String uri,
-                          @QueryMap Map<String, String> options, @Body HashMap<String, String> parameters);
+                          @QueryMap Map<String, String> options, @Body Map<String, String> parameters);
 
 
     @POST
-    Call<PictureResource> createPictureResource(@Header("Authorization") String authHeader, @Url String uri);
+    Call<PictureCollection> createPictureCollection(@Header("Authorization") String authHeader, @Url String uri);
 
     @POST
     Call<Void> emptyResponsePost(@Header("Authorization") String authHeader, @Url String uri,
-                                 @Body HashMap<String, String> parameters);
+                                 @Body Map<String, String> parameters);
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -315,13 +312,6 @@ public interface VimeoService {
                                                @Url String uri,
                                                @QueryMap Map<String, String> options,
                                                @Header("Cache-Control") String cacheHeaderValue);
-
-    @GET
-    @Serializer(converter = ConverterType.MOSHI)
-    Call<com.vimeo.networking2.AppConfiguration> getAppConfigurationMoshi(@Header("Authorization") String authHeader,
-                                                                          @Url String uri,
-                                                                          @QueryMap Map<String, String> options,
-                                                                          @Header("Cache-Control") String cacheHeader);
 
     @GET
     Call<Category> getCategory(@Header("Authorization") String authHeader,
@@ -425,23 +415,16 @@ public interface VimeoService {
                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    @Serializer(converter = ConverterType.MOSHI)
-    Call<com.vimeo.networking2.FeedList> getFeedListMoshi(@Header("Authorization") String authHeader,
-                                                          @Url String uri,
-                                                          @QueryMap Map<String, String> options,
-                                                          @Header("Cache-Control") String cacheHeaderValue);
-
-    @GET
     Call<NotificationList> getNotificationList(@Header("Authorization") String authHeader,
                                                @Url String uri,
                                                @QueryMap Map<String, String> options,
                                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    Call<ProgramContentItemList> getProgramContentItemList(@Header("Authorization") String authHeader,
-                                                           @Url String uri,
-                                                           @QueryMap Map<String, String> options,
-                                                           @Header("Cache-Control") String cacheHeaderValue);
+    Call<ProgrammedContentItemList> getProgramContentItemList(@Header("Authorization") String authHeader,
+                                                              @Url String uri,
+                                                              @QueryMap Map<String, String> options,
+                                                              @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<RecommendationList> getRecommendationList(@Header("Authorization") String authHeader,
@@ -450,10 +433,10 @@ public interface VimeoService {
                                                    @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    Call<SearchResponse> getSearchResponse(@Header("Authorization") String authHeader,
-                                           @Url String uri,
-                                           @QueryMap Map<String, String> options,
-                                           @Header("Cache-Control") String cacheHeaderValue);
+    Call<SearchResultList> getSearchResponse(@Header("Authorization") String authHeader,
+                                             @Url String uri,
+                                             @QueryMap Map<String, String> options,
+                                             @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<SeasonList> getSeasonList(@Header("Authorization") String authHeader,
@@ -462,10 +445,10 @@ public interface VimeoService {
                                    @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    Call<TvodList> getTvodList(@Header("Authorization") String authHeader,
-                               @Url String uri,
-                               @QueryMap Map<String, String> options,
-                               @Header("Cache-Control") String cacheHeaderValue);
+    Call<TvodItemList> getTvodList(@Header("Authorization") String authHeader,
+                                   @Url String uri,
+                                   @QueryMap Map<String, String> options,
+                                   @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<UserList> getUserList(@Header("Authorization") String authHeader,
@@ -474,24 +457,10 @@ public interface VimeoService {
                                @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
-    @Serializer(converter = ConverterType.MOSHI)
-    Call<com.vimeo.networking2.UserList> getUserListMoshi(@Header("Authorization") String authHeader,
-                                                          @Url String uri,
-                                                          @QueryMap Map<String, String> options,
-                                                          @Header("Cache-Control") String cacheHeaderValue);
-
-    @GET
     Call<VideoList> getVideoList(@Header("Authorization") String authHeader,
                                  @Url String uri,
                                  @QueryMap Map<String, String> options,
                                  @Header("Cache-Control") String cacheHeaderValue);
-
-    @GET
-    @Serializer(converter = ConverterType.MOSHI)
-    Call<com.vimeo.networking2.VideoList> getVideoListMoshi(@Header("Authorization") String authHeader,
-                                                            @Url String uri,
-                                                            @QueryMap Map<String, String> options,
-                                                            @Header("Cache-Control") String cacheHeaderValue);
 
     @GET
     Call<AlbumList> getAlbumList(@Header("Authorization") String authHeader,
@@ -503,7 +472,7 @@ public interface VimeoService {
     Call<TextTrackList> getTextTrackList(@Header("Authorization") String authHeader, @Url String uri);
 
     @GET("products")
-    Call<Products> getProducts(@Header("Authorization") String authHeader);
+    Call<ProductList> getProducts(@Header("Authorization") String authHeader);
     // </editor-fold>
 
     @PUT
@@ -541,23 +510,11 @@ public interface VimeoService {
                         @Url String uri,
                         @QueryMap Map<String, String> options);
 
-    @GET
-    Call<Object> GET(@Header("Authorization") String authHeader,
-                     @Url String uri,
-                     @QueryMap Map<String, String> options,
-                     @Header("Cache-Control") String cacheHeaderValue);
-
     @POST
     Call<Object> POST(@Header("Authorization") String authHeader,
                       @Url String uri,
                       @Header("Cache-Control") String cacheHeaderValue,
-                      @Body HashMap<String, String> parameters);
-
-    @POST
-    Call<Object> POST(@Header("Authorization") String authHeader,
-                      @Url String uri,
-                      @Header("Cache-Control") String cacheHeaderValue,
-                      @Body ArrayList<Object> parameters);
+                      @Body List<Object> parameters);
     // </editor-fold>
 
     // -----------------------------------------------------------------------------------------------------
@@ -566,11 +523,7 @@ public interface VimeoService {
     // <editor-fold desc="Search">
     @Headers("Cache-Control: no-cache, no-store")
     @GET("search")
-    Call<SearchResponse> search(@Header("Authorization") String authHeader,
-                                @QueryMap Map<String, String> queryParams);
+    Call<SearchResultList> search(@Header("Authorization") String authHeader,
+                                  @QueryMap Map<String, String> queryParams);
     // </editor-fold>
-
-    @GET("suggest")
-    Call<SuggestionResponse> suggest(@Header("Authorization") String authHeader,
-                                     @QueryMap Map<String, String> queryParams);
 }

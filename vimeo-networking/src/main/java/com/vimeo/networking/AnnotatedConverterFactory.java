@@ -90,10 +90,10 @@ public final class AnnotatedConverterFactory extends Converter.Factory {
     @NotNull
     private Converter.Factory chooseFactoryForSerializer(@NotNull final Annotation[] annotations) {
         final Serializer serializer = findSerializerInArray(annotations);
-        if (serializer != null && serializer.converter() == ConverterType.MOSHI) {
-            return moshiFactory;
-        } else {
+        if (serializer != null && serializer.converter() == ConverterType.GSON) {
             return gsonFactory;
+        } else {
+            return moshiFactory;
         }
     }
 

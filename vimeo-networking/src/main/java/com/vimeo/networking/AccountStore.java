@@ -22,7 +22,7 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking2.VimeoAccount;
 
 /**
  * Interface responsible for handling the creation, deletion, and loading of Vimeo accounts on the client.

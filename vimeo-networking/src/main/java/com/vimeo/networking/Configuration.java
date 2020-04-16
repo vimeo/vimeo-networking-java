@@ -24,7 +24,7 @@ package com.vimeo.networking;
 
 import com.vimeo.networking.Vimeo.LogLevel;
 import com.vimeo.networking.logging.LogProvider;
-import com.vimeo.networking.model.VimeoAccount;
+import com.vimeo.networking2.VimeoAccount;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

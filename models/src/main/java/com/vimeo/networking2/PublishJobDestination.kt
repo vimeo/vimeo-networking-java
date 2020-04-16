@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.PublishStatusType
 import com.vimeo.networking2.enums.asEnum
+import java.io.Serializable
 
 /**
  * Encapsulates the destination, status, and identity of a post/job on a social network.
@@ -49,8 +50,13 @@ data class PublishJobDestination(
      */
     @Json(name = "third_party_comment_count")
     val commentCount: Long? = null
-) : Entity {
+) : Entity, Serializable {
+
     override val identifier: String? = id
+
+    companion object {
+        private const val serialVersionUID = -90000038L
+    }
 }
 
 /**

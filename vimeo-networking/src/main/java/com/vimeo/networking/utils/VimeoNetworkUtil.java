@@ -27,13 +27,16 @@ package com.vimeo.networking.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.ClientLogger;
-import com.vimeo.networking.model.AlbumPrivacy;
-import com.vimeo.networking.model.AlbumPrivacy.AlbumPrivacyViewValue;
 import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking2.AlbumPrivacy;
+import com.vimeo.networking2.AlbumPrivacyUtils;
+import com.vimeo.networking2.enums.AlbumViewPrivacyType;
 import com.vimeo.stag.generated.Stag;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,7 +72,11 @@ public final class VimeoNetworkUtil {
     @Nullable
     private static Gson sGson;
 
-    private VimeoNetworkUtil() {}
+    @Nullable
+    private static Moshi sMoshi;
+
+    private VimeoNetworkUtil() {
+    }
 
     /**
      * Static helper method that automatically applies the VimeoClient Gson preferences
@@ -84,6 +91,23 @@ public final class VimeoNetworkUtil {
             sGson = getGsonBuilder().create();
         }
         return sGson;
+    }
+
+    /**
+     * Static helper method that automatically applies the VimeoClient Moshi preferences
+     * <p>
+     * This includes formatting for dates, and any serializers used.
+     *
+     * @return Moshi object that can be used to serialize and deserialize JSON.
+     */
+    @NotNull
+    public static Moshi getMoshi() {
+        if (sMoshi == null) {
+            sMoshi = new Moshi.Builder()
+                    .add(Date.class, new Rfc3339DateJsonAdapter().nullSafe())
+                    .build();
+        }
+        return sMoshi;
     }
 
     /**
@@ -120,7 +144,7 @@ public final class VimeoNetworkUtil {
             for (final String pair : pairs) {
                 final int idx = pair.indexOf("=");
                 queryPairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
-                               URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+                        URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
             }
             return queryPairs;
         } catch (final UnsupportedEncodingException e) {
@@ -167,7 +191,9 @@ public final class VimeoNetworkUtil {
         return builder;
     }
 
-    /** A helper which cancels an array of {@link Call} objects. */
+    /**
+     * A helper which cancels an array of {@link Call} objects.
+     */
     public static void cancelCalls(@NotNull final ArrayList<Call> callsToCancel) {
         final List<Call> callList = new CopyOnWriteArrayList<>(callsToCancel);
         new Thread(new Runnable() {
@@ -197,10 +223,7 @@ public final class VimeoNetworkUtil {
         VimeoError vimeoError = null;
         if (response != null && response.errorBody() != null) {
             try {
-                final Converter<ResponseBody, VimeoError> errorConverter = VimeoClient.getInstance()
-                        .getRetrofit()
-                        .responseBodyConverter(VimeoError.class, new Annotation[0]);
-                vimeoError = errorConverter.convert(response.errorBody());
+                vimeoError = getGson().fromJson(response.errorBody().string(), VimeoError.class);
             } catch (final Exception e) {
                 ClientLogger.e("Error while attempting to convert response body to VimeoError", e);
             }
@@ -263,8 +286,7 @@ public final class VimeoNetworkUtil {
         }
         retVal.put(Vimeo.PARAMETER_ALBUM_NAME, name);
 
-        final String viewingPermissions =
-                albumPrivacy.getViewingPermissions() != null ? albumPrivacy.getViewingPermissions().toString() : null;
+        final String viewingPermissions = AlbumPrivacyUtils.getViewPrivacyType(albumPrivacy).getValue();
 
         if (!validateString(viewingPermissions, "ViewingPermissions can't be empty in album edit.", callback)) {
             return null;
@@ -276,10 +298,10 @@ public final class VimeoNetworkUtil {
             retVal.put(Vimeo.PARAMETER_ALBUM_DESCRIPTION, description);
         }
 
-        if (albumPrivacy.getViewingPermissions() == AlbumPrivacyViewValue.PASSWORD) {
+        if (AlbumPrivacyUtils.getViewPrivacyType(albumPrivacy) == AlbumViewPrivacyType.PASSWORD) {
             if (!validateString(albumPrivacy.getPassword(),
-                                "Password can't be empty in password protected album edit.",
-                                callback)) {
+                    "Password can't be empty in password protected album edit.",
+                    callback)) {
                 return null;
             }
             retVal.put(Vimeo.PARAMETER_ALBUM_PASSWORD, albumPrivacy.getPassword());
