@@ -149,6 +149,22 @@ public final class Vimeo {
     public static final String SORT_MODIFIED_TIME = "modified_time";
     public static final String SORT_COMMENTS = "comments";
 
+    // Notification values
+    public static final String NOTIFICATION_COMMENT = "comment";
+    public static final String NOTIFICATION_CREDIT = "credit";
+    public static final String NOTIFICATION_LIKE = "like";
+    public static final String NOTIFICATION_REPLY = "reply";
+    public static final String NOTIFICATION_FOLLOW = "follow";
+    public static final String NOTIFICATION_VIDEO_AVAILABLE = "video_available";
+    public static final String NOTIFICATION_SHARE = "share";
+    public static final String NOTIFICATION_MENTION = "mention";
+    public static final String NOTIFICATION_STORAGE_WARNING = "storage_warning";
+    public static final String NOTIFICATION_ACCOUNT_EXPIRATION_WARNING = "account_expiration_warning";
+    public static final String NOTIFICATION_TVOD_PURCHASE = "vod_purchase";
+    public static final String NOTIFICATION_TVOD_PREORDER_AVAILABLE = "vod_preorder_available";
+    public static final String NOTIFICATION_TVOD_RENTAL_EXPIRATION_WARNING = "vod_rental_expiration_warning";
+    public static final String NOTIFICATION_FOLLOWED_USER_VIDEO_AVAILABLE = "followed_user_video_available";
+
     // Sort Direction Values
     public static final String SORT_DIRECTION_ASCENDING = "asc";
     public static final String SORT_DIRECTION_DESCENDING = "desc";
