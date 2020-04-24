@@ -9,6 +9,8 @@ import com.vimeo.networking.utils.VimeoNetworkUtil;
 import com.vimeo.networking2.User;
 import com.vimeo.networking2.VimeoAccount;
 
+import java.io.IOException;
+
 /**
  * Class for persisting the the auth access token (and possibly the user)
  * <p/>
@@ -35,45 +37,40 @@ public class AccountPreferenceManager {
     }
 
     @Nullable
-    public static VimeoAccount getClientAccount() {
+    public static VimeoAccount getClientAccount() throws IOException {
         // NOTE: This happens on the main thread, don't do this
         String accountJSON = sSharedPreferences.getString(CLIENT_ACCOUNT_JSON, null);
-        return accountJSON == null ? null : VimeoNetworkUtil.getGson()
-                .fromJson(accountJSON, VimeoAccount.class);
+        return accountJSON == null ? null : VimeoNetworkUtil.getMoshi()
+                .adapter(VimeoAccount.class).fromJson(accountJSON);
     }
 
     public static void setClientAccount(VimeoAccount vimeoAccount) {
         if (vimeoAccount != null) {
             // NOTE: This happens on the main thread, don't do this
-            String accountJSON = VimeoNetworkUtil.getGson().toJson(vimeoAccount);
-            if (accountJSON == null) {
-                removeClientAccount();
-                return;
-            }
+            String accountJSON = VimeoNetworkUtil.getMoshi()
+                    .adapter(VimeoAccount.class).toJson(vimeoAccount);
             sSharedPreferences.edit().putString(CLIENT_ACCOUNT_JSON, accountJSON).apply();
         }
     }
 
     @Nullable
-    public static User getCurrentUser() {
+    public static User getCurrentUser() throws IOException {
         VimeoAccount clientAccount = AccountPreferenceManager.getClientAccount();
         return clientAccount != null ? clientAccount.getUser() : null;
     }
 
     public static void cacheClientCredentialsAccount(VimeoAccount vimeoAccount) {
         if (vimeoAccount != null) {
-            String accountJSON = VimeoNetworkUtil.getGson().toJson(vimeoAccount);
-            if (accountJSON == null) {
-                return;
-            }
+            String accountJSON = VimeoNetworkUtil.getMoshi()
+                    .adapter(VimeoAccount.class).toJson(vimeoAccount);
             sSharedPreferences.edit().putString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, accountJSON).apply();
         }
     }
 
-    public static VimeoAccount getCachedClientCredentialsAccount() {
+    public static VimeoAccount getCachedClientCredentialsAccount() throws IOException {
         String accountJSON = sSharedPreferences.getString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, null);
-        return accountJSON == null ? null : VimeoNetworkUtil.getGson()
-                .fromJson(accountJSON, VimeoAccount.class);
+        return accountJSON == null ? null : VimeoNetworkUtil.getMoshi()
+                .adapter(VimeoAccount.class).fromJson(accountJSON);
     }
 
     // </editor-fold>

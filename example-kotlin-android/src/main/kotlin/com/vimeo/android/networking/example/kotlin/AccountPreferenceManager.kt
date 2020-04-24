@@ -37,11 +37,13 @@ object AccountPreferenceManager {
         get() {
             val accountJSON = sharedPreferences.getString(CLIENT_ACCOUNT_JSON, null) ?: return null
 
-            return VimeoNetworkUtil.getGson().fromJson(accountJSON, VimeoAccount::class.java)
+            return VimeoNetworkUtil.getMoshi()
+                    .adapter(VimeoAccount::class.java).fromJson(accountJSON)
         }
         set(vimeoAccount) {
             if (vimeoAccount != null) {
-                VimeoNetworkUtil.getGson().toJson(vimeoAccount)?.also {
+                VimeoNetworkUtil.getMoshi()
+                        .adapter(VimeoAccount::class.java).toJson(vimeoAccount)?.also {
                     sharedPreferences.edit().putString(CLIENT_ACCOUNT_JSON, it).apply()
                 } ?: removeClientAccount()
             }
@@ -51,7 +53,8 @@ object AccountPreferenceManager {
 
     fun cacheClientCredentialsAccount(vimeoAccount: VimeoAccount?) {
         vimeoAccount?.run {
-            val accountJSON = VimeoNetworkUtil.getGson().toJson(vimeoAccount) ?: return
+            val accountJSON = VimeoNetworkUtil.getMoshi()
+                    .adapter(VimeoAccount::class.java).toJson(vimeoAccount) ?: return
             sharedPreferences.edit().putString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, accountJSON).apply()
         }
     }
@@ -61,7 +64,8 @@ object AccountPreferenceManager {
             val accountJSON = sharedPreferences.getString(CACHED_CLIENT_CREDENTIALS_ACCOUNT_JSON, null)
                 ?: return null
 
-            return VimeoNetworkUtil.getGson().fromJson(accountJSON, VimeoAccount::class.java)
+            return VimeoNetworkUtil.getMoshi()
+                    .adapter(VimeoAccount::class.java).fromJson(accountJSON)
         }
 
     // </editor-fold>

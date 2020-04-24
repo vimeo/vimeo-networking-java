@@ -17,10 +17,12 @@ import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.AuthCallback;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
-import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking2.User;
 import com.vimeo.networking2.Video;
 import com.vimeo.networking2.VideoList;
+import com.vimeo.networking2.VimeoResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import okhttp3.CacheControl;
 
@@ -142,9 +144,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
 
             @Override
-            public void failure(VimeoError error) {
+            public void failure(@NotNull VimeoResponse.Error error) {
                 toast("Staff Picks Failure");
-                mRequestOutputTv.setText(error.getDeveloperMessage());
+                mRequestOutputTv.setText(error.getMessage());
                 mProgressDialog.hide();
             }
         });
@@ -177,9 +179,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
 
             @Override
-            public void failure(VimeoError error) {
+            public void failure(@NotNull VimeoResponse.Error error) {
                 toast("Staff Picks Failure");
-                mRequestOutputTv.setText(error.getDeveloperMessage());
+                mRequestOutputTv.setText(error.getMessage());
                 mProgressDialog.hide();
             }
         });
@@ -200,9 +202,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
 
             @Override
-            public void failure(VimeoError error) {
+            public void failure(@NotNull VimeoResponse.Error error) {
                 toast("Account Check Failure");
-                mRequestOutputTv.setText(error.getDeveloperMessage());
+                mRequestOutputTv.setText(error.getMessage());
                 mProgressDialog.hide();
             }
         });
@@ -219,10 +221,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
 
             @Override
-            public void failure(VimeoError error) {
+            public void failure(@NotNull VimeoResponse.Error error) {
                 AccountPreferenceManager.removeClientAccount();
                 toast("Logout Failure");
-                mRequestOutputTv.setText(error.getDeveloperMessage());
+                mRequestOutputTv.setText(error.getMessage());
                 mProgressDialog.hide();
             }
         });
@@ -240,9 +242,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
 
             @Override
-            public void failure(VimeoError error) {
+            public void failure(@NotNull VimeoResponse.Error error) {
                 toast("Client Credentials Authorization Failure");
-                mRequestOutputTv.setText(error.getDeveloperMessage());
+                mRequestOutputTv.setText(error.getMessage());
                 mProgressDialog.hide();
             }
         });
@@ -262,9 +264,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
 
             @Override
-            public void failure(VimeoError error) {
+            public void failure(@NotNull VimeoResponse.Error error) {
                 toast("Code Grant Failure");
-                mRequestOutputTv.setText(error.getDeveloperMessage());
+                mRequestOutputTv.setText(error.getMessage());
                 mProgressDialog.hide();
             }
         });

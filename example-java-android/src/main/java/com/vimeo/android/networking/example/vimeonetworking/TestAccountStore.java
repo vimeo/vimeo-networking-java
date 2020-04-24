@@ -10,6 +10,8 @@ import com.vimeo.networking.AccountStore;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking2.VimeoAccount;
 
+import java.io.IOException;
+
 /**
  * An account store that is backed by {@link SharedPreferences}.
  * <p/>
@@ -32,7 +34,11 @@ public class TestAccountStore implements AccountStore {
 
     @Override
     public VimeoAccount loadAccount() {
-        return AccountPreferenceManager.getClientAccount();
+        try {
+            return AccountPreferenceManager.getClientAccount();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     @Override

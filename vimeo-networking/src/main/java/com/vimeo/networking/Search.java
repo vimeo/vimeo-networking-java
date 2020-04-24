@@ -25,7 +25,6 @@
 package com.vimeo.networking;
 
 import com.vimeo.networking.callbacks.VimeoCallback;
-import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking2.SearchResultList;
 
 import org.jetbrains.annotations.NotNull;
