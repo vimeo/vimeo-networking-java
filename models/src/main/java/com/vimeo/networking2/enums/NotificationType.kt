@@ -51,11 +51,6 @@ enum class NotificationType(override val value: String?) : StringValue {
     SHARE("share"),
 
     /**
-     * You’re approaching your weekly storage limit.
-     */
-    STORAGE_WARNING("storage_warning"),
-
-    /**
      * New upload transcode complete (new video is posted).
      */
     VIDEO_AVAILABLE("video_available"),
