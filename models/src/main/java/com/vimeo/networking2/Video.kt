@@ -10,7 +10,7 @@ import com.vimeo.networking2.enums.LicenseType
 import com.vimeo.networking2.enums.VideoStatusType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * Video data.

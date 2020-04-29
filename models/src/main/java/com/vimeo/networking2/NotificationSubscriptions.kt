@@ -3,7 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * A collection of push notifications the user is subscribed to.

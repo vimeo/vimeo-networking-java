@@ -8,7 +8,7 @@ import com.vimeo.networking2.common.UpdatableInteraction
 import com.vimeo.networking2.enums.FollowType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * Follow a channel interaction.

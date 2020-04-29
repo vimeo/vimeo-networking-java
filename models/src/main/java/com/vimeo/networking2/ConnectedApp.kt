@@ -8,7 +8,7 @@ import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * A [ConnectedApp] represents a connection to a social media platform. Some activities, like simultaneously live

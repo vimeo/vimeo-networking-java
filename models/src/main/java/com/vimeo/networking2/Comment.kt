@@ -8,7 +8,7 @@ import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.CommentType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * Comment data.

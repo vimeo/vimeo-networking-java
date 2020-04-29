@@ -8,7 +8,7 @@ import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.StreamAccessType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * Information on the subscription video action.
