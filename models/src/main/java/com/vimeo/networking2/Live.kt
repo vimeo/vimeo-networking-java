@@ -8,7 +8,7 @@ import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.LiveStatusType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * Live video information.

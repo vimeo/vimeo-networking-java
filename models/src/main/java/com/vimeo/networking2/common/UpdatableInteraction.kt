@@ -1,6 +1,6 @@
 package com.vimeo.networking2.common
 
-import java.util.*
+import java.util.Date
 
 /**
  * Interactions that update the state of a video, category, channel, etc..

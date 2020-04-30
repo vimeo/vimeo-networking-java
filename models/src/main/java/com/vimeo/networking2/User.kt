@@ -10,7 +10,7 @@ import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.ContentFilterType
 import com.vimeo.networking2.enums.asEnumList
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * User information.

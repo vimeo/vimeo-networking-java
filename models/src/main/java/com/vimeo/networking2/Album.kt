@@ -10,7 +10,7 @@ import com.vimeo.networking2.enums.AlbumThemeType
 import com.vimeo.networking2.enums.SortType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * Group of videos to share publicly or privately.

@@ -1,6 +1,6 @@
 package com.vimeo.networking2.common
 
-import java.util.*
+import java.util.Date
 
 /**
  * The representation of a file that can be downloaded for playback.
