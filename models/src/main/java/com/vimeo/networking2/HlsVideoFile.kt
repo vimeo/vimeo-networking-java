@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.common.VideoFile
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * Video file data.

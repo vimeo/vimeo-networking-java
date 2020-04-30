@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.io.Serializable
 
-import java.util.*
+import java.util.Date
 
 /**
  * This class represents an authenticated account with Vimeo. It can be through client credentials

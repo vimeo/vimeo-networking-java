@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AttributionType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * An item in the user's feed.

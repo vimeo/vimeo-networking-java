@@ -8,7 +8,7 @@ import com.vimeo.networking2.enums.VideoQualityType
 import com.vimeo.networking2.enums.VideoSourceType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * A video file that is a source for a published video.

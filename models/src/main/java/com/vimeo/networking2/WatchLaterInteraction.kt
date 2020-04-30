@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.UpdatableInteraction
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * All actions for watch later.

@@ -10,7 +10,7 @@ import com.vimeo.networking2.enums.DownloadType
 import com.vimeo.networking2.enums.StreamAccessType
 import com.vimeo.networking2.enums.asEnum
 import java.io.Serializable
-import java.util.*
+import java.util.Date
 
 /**
  * The buy interaction for a On Demand video.
