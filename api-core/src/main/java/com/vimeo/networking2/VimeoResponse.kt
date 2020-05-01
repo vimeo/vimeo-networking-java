@@ -32,7 +32,7 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
          * Vimeo API returned an error response for the request you made.
          *
          * @param reason Info on the error.
-         * @param httpStatusCode HTTP status code.
+         * @param httpStatusCode HTTP status code, -1 if not applicable or if the error was created locally.
          */
         data class Api(
             val reason: ApiError,
@@ -40,25 +40,25 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
         ) : Error("API error: ${reason.errorCode ?: "unknown"}", httpStatusCode)
 
         /**
-         * Exception was thrown when making the request. This maybe due to no internet.
+         * Exception was thrown when making the request, e.g. the internet connection failed. This should only be used
+         * if a response was not received from the server. If a response is received from the server, an [Api] should
+         * be created instead, or if one cannot be parsed, an [Unknown].
          *
          * @param throwable Info on the exception that was thrown.
-         * @param httpStatusCode HTTP status code.
          */
         data class Exception(
-            val throwable: Throwable,
-            override val httpStatusCode: Int
-        ) : Error("Exception thrown", httpStatusCode)
+            val throwable: Throwable
+        ) : Error("Exception thrown", -1)
 
         /**
-         * Generic error occurred. The request was successful, but the response could not be
-         * parsed by the SDK. This is maybe because it is not formatted correctly. The raw response
-         * will allow you to see info about the request.
+         * An unknown error occurred. The request should have been parsed into an [Api], but the response could not be
+         * parsed by the SDK. This is maybe because it is not formatted correctly. The raw response will allow you to
+         * see info about the request.
          *
          * @param rawResponse Raw response from the API.
-         * @param httpStatusCode HTTP status code.
+         * @param httpStatusCode HTTP status code, -1 if not applicable or if the error was created locally.
          */
-        data class Generic(
+        data class Unknown(
             val rawResponse: String,
             override val httpStatusCode: Int
         ) : Error("Generic error", httpStatusCode)

@@ -178,10 +178,7 @@ public final class VimeoNetworkUtil {
      */
     @NotNull
     public static VimeoResponse.Error.Exception createLocalError(@NotNull final String message) {
-        return new VimeoResponse.Error.Exception(
-                new IllegalArgumentException(message),
-                -1
-        );
+        return new VimeoResponse.Error.Exception(new IllegalArgumentException(message));
     }
 
     /**
@@ -205,28 +202,32 @@ public final class VimeoNetworkUtil {
      * @param response A non-null response from the Vimeo API
      * @return a {@link VimeoResponse.Error} object extracted from the response or null
      */
-    @Nullable
-    public static <ResponseType_T> VimeoResponse.Error getErrorFromResponse(@Nullable final Response<ResponseType_T> response) {
-        if (response != null && response.isSuccessful()) {
-            return null;
+    @NotNull
+    public static <ResponseType_T> VimeoResponse.Error getErrorFromResponse(@NotNull final Response<ResponseType_T> response) {
+        if (response.isSuccessful()) {
+            throw new IllegalStateException("Cannot get error from a successful response");
         }
         final VimeoResponse.Error vimeoError;
-        ApiError apiError = null;
-        if (response != null && response.errorBody() != null) {
+        String errorBody = null;
+        if (response.errorBody() != null) {
             try {
-                apiError = getMoshi().adapter(ApiError.class).fromJson(response.errorBody().string());
+                errorBody = response.errorBody().string();
+                final ApiError apiError = getMoshi().adapter(ApiError.class).fromJson(errorBody);
+                if (apiError != null) {
+                    return new VimeoResponse.Error.Api(apiError, response.code());
+                } else {
+                    return new VimeoResponse.Error.Unknown(errorBody, response.code());
+                }
             } catch (final Exception e) {
                 ClientLogger.e("Error while attempting to convert response body to VimeoError", e);
+                if (errorBody == null) {
+                    errorBody = "Unable to read error body";
+                }
+                return new VimeoResponse.Error.Unknown(errorBody, response.code());
             }
-        }
-        if (apiError == null && response != null) {
-            vimeoError = new VimeoResponse.Error.Generic("Error while attempting to convert response body to ApiError", response.code());
-        } else if (apiError == null) {
-            vimeoError = new VimeoResponse.Error.Exception(new IllegalStateException("Null response"), -1);
         } else {
-            vimeoError = new VimeoResponse.Error.Api(apiError, response.code());
+            return new VimeoResponse.Error.Unknown("Null error body", response.code());
         }
-        return vimeoError;
     }
 
     /**
@@ -242,7 +243,7 @@ public final class VimeoNetworkUtil {
                                          @NotNull final String errorMessage,
                                          @NotNull final VimeoCallback callback) {
         if (isStringEmpty(input)) {
-            callback.failure(new VimeoResponse.Error.Exception(new IllegalArgumentException(errorMessage), -1));
+            callback.failure(new VimeoResponse.Error.Exception(new IllegalArgumentException(errorMessage)));
             return false;
         }
         return true;

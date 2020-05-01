@@ -908,8 +908,7 @@ public class VimeoClient {
                     mTimer.cancel();
                     if (authCallback != null && now >= mExpiresInNano) {
                         final VimeoResponse.Error error = new VimeoResponse.Error.Exception(
-                                new PinCodeExpiredException("Pin code expired"),
-                                -1
+                                new PinCodeExpiredException("Pin code expired")
                         );
                         authCallback.failure(error);
                     }
@@ -1960,15 +1959,9 @@ public class VimeoClient {
             final Response<Void> response = call.execute();
             if (!isSuccessfulResponse(response)) {
                 vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
-                if (vimeoError == null) {
-                    vimeoError = new VimeoResponse.Error.Exception(
-                            new IllegalStateException("Unable to parse error"),
-                            response.code()
-                    );
-                }
             }
         } catch (final Exception e) {
-            vimeoError = new VimeoResponse.Error.Exception(e, -1);
+            vimeoError = new VimeoResponse.Error.Exception(e);
         }
 
         return vimeoError;

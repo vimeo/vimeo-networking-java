@@ -53,10 +53,6 @@ public abstract class VimeoCallback<T> implements Callback<T> {
             success(t);
         } else {
             VimeoResponse.Error vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
-            if (vimeoError == null) {
-                vimeoError = new VimeoResponse.Error.Exception(new IllegalStateException("Unable to parse error"),
-                                                               response.code());
-            }
             failure(vimeoError);
         }
     }
@@ -71,7 +67,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
          *      Retrofit deserialization errors in which Retrofit cannot determine the response
          */
         if (call == null || !call.isCanceled()) {
-            final VimeoResponse.Error vimeoError = new VimeoResponse.Error.Exception(t, -1);
+            final VimeoResponse.Error vimeoError = new VimeoResponse.Error.Exception(t);
             failure(vimeoError);
         }
     }
