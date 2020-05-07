@@ -37,7 +37,7 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
         data class Api(
             val reason: ApiError,
             override val httpStatusCode: Int
-        ) : Error("API error: ${reason.errorCode ?: "unknown"}", httpStatusCode)
+        ) : Error("API error: ${reason.errorCode ?: NA}", httpStatusCode)
 
         /**
          * Exception was thrown when making the request, e.g. the internet connection failed. This should only be used
@@ -48,7 +48,7 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
          */
         data class Exception(
             val throwable: Throwable
-        ) : Error("Exception thrown", -1)
+        ) : Error("Exception: ${throwable.javaClass} - ${throwable.message ?: NA}", -1)
 
         /**
          * An unknown error occurred. The request should have been parsed into an [Api], but the response could not be
@@ -61,8 +61,11 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
         data class Unknown(
             val rawResponse: String,
             override val httpStatusCode: Int
-        ) : Error("Generic error", httpStatusCode)
+        ) : Error("Unknown error: $httpStatusCode", httpStatusCode)
 
+        private companion object {
+            private const val NA = "N/A"
+        }
     }
 
 }
