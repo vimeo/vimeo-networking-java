@@ -49,7 +49,7 @@ object AccountPreferenceManager {
             }
         }
 
-    val currentUser: User? get() = AccountPreferenceManager.clientAccount?.user
+    val currentUser: User? get() = clientAccount?.user
 
     fun cacheClientCredentialsAccount(vimeoAccount: VimeoAccount?) {
         vimeoAccount?.run {
