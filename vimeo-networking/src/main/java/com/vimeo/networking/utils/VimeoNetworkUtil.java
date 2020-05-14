@@ -32,6 +32,7 @@ import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking2.AlbumPrivacy;
 import com.vimeo.networking2.AlbumPrivacyUtils;
+import com.vimeo.networking2.ApiConstants;
 import com.vimeo.networking2.ApiError;
 import com.vimeo.networking2.InvalidParameter;
 import com.vimeo.networking2.VimeoResponse;
@@ -192,7 +193,7 @@ public final class VimeoNetworkUtil {
                                                               @NotNull final InvalidParameter... invalidParameters) {
         return new VimeoResponse.Error.Api(ApiErrorFactory.createApiErrorWithInvalidParameters(message,
                                                                                                invalidParameters),
-                                           -1);
+                                           VimeoResponse.HTTP_NONE);
     }
 
     /**

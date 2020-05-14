@@ -32,7 +32,8 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
          * Vimeo API returned an error response for the request you made.
          *
          * @param reason Info on the error.
-         * @param httpStatusCode HTTP status code, -1 if not applicable or if the error was created locally.
+         * @param httpStatusCode HTTP status code, [HTTP_NONE] if not applicable or if the error was
+         * created locally.
          */
         data class Api(
             val reason: ApiError,
@@ -48,7 +49,7 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
          */
         data class Exception(
             val throwable: Throwable
-        ) : Error("Exception: ${throwable.javaClass} - ${throwable.message ?: NA}", -1)
+        ) : Error("Exception: ${throwable.javaClass} - ${throwable.message ?: NA}", HTTP_NONE)
 
         /**
          * An unknown error occurred. The request should have been parsed into an [Api], but the response could not be
@@ -56,16 +57,21 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
          * see info about the request.
          *
          * @param rawResponse Raw response from the API.
-         * @param httpStatusCode HTTP status code, -1 if not applicable or if the error was created locally.
+         * @param httpStatusCode HTTP status code, [HTTP_NONE] if not applicable or if the error was
+         * created locally.
          */
         data class Unknown(
             val rawResponse: String,
             override val httpStatusCode: Int
         ) : Error("Unknown error: $httpStatusCode", httpStatusCode)
 
-        private companion object {
-            private const val NA = "N/A"
-        }
+    }
+
+    companion object {
+
+        private const val NA = "N/A"
+
+        const val HTTP_NONE = -1
     }
 
 }
