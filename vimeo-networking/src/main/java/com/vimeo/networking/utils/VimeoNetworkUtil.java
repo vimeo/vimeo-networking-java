@@ -24,26 +24,24 @@
 
 package com.vimeo.networking.utils;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
 import com.vimeo.networking.Vimeo;
-import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.ClientLogger;
-import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking2.AlbumPrivacy;
 import com.vimeo.networking2.AlbumPrivacyUtils;
+import com.vimeo.networking2.ApiConstants;
+import com.vimeo.networking2.ApiError;
+import com.vimeo.networking2.InvalidParameter;
+import com.vimeo.networking2.VimeoResponse;
 import com.vimeo.networking2.enums.AlbumViewPrivacyType;
-import com.vimeo.stag.generated.Stag;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.annotation.Annotation;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,11 +53,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CacheControl;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Converter;
 import retrofit2.Response;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A utility class that can eventually be shared across various retrofit/vimeo-api reliant libraries
@@ -76,21 +71,6 @@ public final class VimeoNetworkUtil {
     private static Moshi sMoshi;
 
     private VimeoNetworkUtil() {
-    }
-
-    /**
-     * Static helper method that automatically applies the VimeoClient Gson preferences
-     * <p>
-     * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
-     *
-     * @return Gson object that can be passed into a {@link GsonConverterFactory} create() method
-     */
-    @NotNull
-    public static Gson getGson() {
-        if (sGson == null) {
-            sGson = getGsonBuilder().create();
-        }
-        return sGson;
     }
 
     /**
@@ -111,22 +91,6 @@ public final class VimeoNetworkUtil {
     }
 
     /**
-     * Static helper method that automatically applies the VimeoClient Gson preferences
-     * <p>
-     * This includes formatting for dates as well as a LOWER_CASE_WITH_UNDERSCORES field naming policy
-     *
-     * @return GsonBuilder that can be built upon and then created
-     */
-    @NotNull
-    public static GsonBuilder getGsonBuilder() {
-        // Example date: "2015-05-21T14:24:03+00:00"
-        return new GsonBuilder().registerTypeAdapterFactory(new Stag.Factory())
-                .registerTypeAdapter(Date.class, ISO8601Wrapper.getDateSerializer())
-                .registerTypeAdapter(Date.class, ISO8601Wrapper.getDateDeserializer())
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-    }
-
-    /**
      * Returns a simple query map from a provided uri. The simple map enforces there is exactly one value for
      * every name (multiple values for the same name are regularly allowed in a set of parameters)
      *
@@ -144,7 +108,7 @@ public final class VimeoNetworkUtil {
             for (final String pair : pairs) {
                 final int idx = pair.indexOf("=");
                 queryPairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
-                        URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+                               URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
             }
             return queryPairs;
         } catch (final UnsupportedEncodingException e) {
@@ -209,30 +173,62 @@ public final class VimeoNetworkUtil {
     }
 
     /**
-     * This utility method takes a Retrofit response and extracts a {@link VimeoError} object out of it if
+     * Creates a local error with the provided error message.
+     *
+     * @param message The message explaining the error.
+     */
+    @NotNull
+    public static VimeoResponse.Error.Exception createLocalError(@NotNull final String message) {
+        return new VimeoResponse.Error.Exception(new IllegalArgumentException(message));
+    }
+
+    /**
+     * Creates a local API error with the provided error message and invalid parameters list.
+     *
+     * @param message           The message explaining the error.
+     * @param invalidParameters The parameters that were invalid.
+     */
+    @NotNull
+    public static VimeoResponse.Error.Api createLocalApiError(@NotNull final String message,
+                                                              @NotNull final InvalidParameter... invalidParameters) {
+        return new VimeoResponse.Error.Api(ApiErrorFactory.createApiErrorWithInvalidParameters(message,
+                                                                                               invalidParameters),
+                                           VimeoResponse.HTTP_NONE);
+    }
+
+    /**
+     * This utility method takes a Retrofit response and extracts a {@link ApiError} object out of it if
      * applicable. It will return null in the case where there has been a successful response.
      *
      * @param response A non-null response from the Vimeo API
-     * @return a {@link VimeoError} object extracted from the response or null
+     * @return a {@link VimeoResponse.Error} object extracted from the response or null
      */
-    @Nullable
-    public static <ResponseType_T> VimeoError getErrorFromResponse(@Nullable final Response<ResponseType_T> response) {
-        if (response != null && response.isSuccessful()) {
-            return null;
+    @NotNull
+    public static <ResponseType_T> VimeoResponse.Error getErrorFromResponse(@NotNull final Response<ResponseType_T> response) {
+        if (response.isSuccessful()) {
+            throw new IllegalStateException("Cannot get error from a successful response");
         }
-        VimeoError vimeoError = null;
-        if (response != null && response.errorBody() != null) {
+        final VimeoResponse.Error vimeoError;
+        String errorBody = null;
+        if (response.errorBody() != null) {
             try {
-                vimeoError = getGson().fromJson(response.errorBody().string(), VimeoError.class);
+                errorBody = response.errorBody().string();
+                final ApiError apiError = getMoshi().adapter(ApiError.class).fromJson(errorBody);
+                if (apiError != null) {
+                    return new VimeoResponse.Error.Api(apiError, response.code());
+                } else {
+                    return new VimeoResponse.Error.Unknown(errorBody, response.code());
+                }
             } catch (final Exception e) {
                 ClientLogger.e("Error while attempting to convert response body to VimeoError", e);
+                if (errorBody == null) {
+                    errorBody = "Unable to read error body";
+                }
+                return new VimeoResponse.Error.Unknown(errorBody, response.code());
             }
+        } else {
+            return new VimeoResponse.Error.Unknown("Null error body", response.code());
         }
-        if (vimeoError == null) {
-            vimeoError = new VimeoError();
-        }
-        vimeoError.setResponse(response);
-        return vimeoError;
     }
 
     /**
@@ -248,7 +244,7 @@ public final class VimeoNetworkUtil {
                                          @NotNull final String errorMessage,
                                          @NotNull final VimeoCallback callback) {
         if (isStringEmpty(input)) {
-            callback.failure(new VimeoError(errorMessage));
+            callback.failure(new VimeoResponse.Error.Exception(new IllegalArgumentException(errorMessage)));
             return false;
         }
         return true;
@@ -300,8 +296,8 @@ public final class VimeoNetworkUtil {
 
         if (AlbumPrivacyUtils.getViewPrivacyType(albumPrivacy) == AlbumViewPrivacyType.PASSWORD) {
             if (!validateString(albumPrivacy.getPassword(),
-                    "Password can't be empty in password protected album edit.",
-                    callback)) {
+                                "Password can't be empty in password protected album edit.",
+                                callback)) {
                 return null;
             }
             retVal.put(Vimeo.PARAMETER_ALBUM_PASSWORD, albumPrivacy.getPassword());

@@ -29,40 +29,60 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
     sealed class Error(val message: String, override val httpStatusCode: Int) : VimeoResponse<Nothing>(httpStatusCode) {
 
         /**
-         * Vimeo API returned an error response for the request you made.
+         * The Vimeo API returned an error response for the request you made.
+         *
+         * This error type provides an instance of an [ApiError] and is parsed from the error response of a network
+         * request. Occasionally, the library creates internal instances of this error itself in order to eagerly catch
+         * issues, such as when a parameter wrongly provided. In cases where the response is from the API, the
+         * [httpStatusCode] will provide the appropriate status code, otherwise local errors will populate it with
+         * [HTTP_NONE].
          *
          * @param reason Info on the error.
-         * @param httpStatusCode HTTP status code.
+         * @param httpStatusCode HTTP status code, [HTTP_NONE] if not applicable or if the error was
+         * created locally.
          */
         data class Api(
             val reason: ApiError,
             override val httpStatusCode: Int
-        ) : Error("API error: ${reason.errorCode ?: "unknown"}", httpStatusCode)
+        ) : Error("API error: ${reason.errorCode ?: NA}", httpStatusCode)
 
         /**
-         * Exception was thrown when making the request. This maybe due to no internet.
+         * An exception was thrown when making the request, e.g. the internet connection failed and a
+         * [java.io.IOException] is thrown. This should only be used if a response was not received from the server. If
+         * a response is received from the server, an [Api] should be created instead, or if one cannot be parsed, an
+         * [Unknown]. In the case of an exception being thrown, we haven't received a response from the API, so the
+         * [httpStatusCode] will always be set to [HTTP_NONE].
          *
          * @param throwable Info on the exception that was thrown.
-         * @param httpStatusCode HTTP status code.
          */
         data class Exception(
-            val throwable: Throwable,
-            override val httpStatusCode: Int
-        ) : Error("Exception thrown", httpStatusCode)
+            val throwable: Throwable
+        ) : Error("Exception: ${throwable.javaClass} - ${throwable.message ?: NA}", HTTP_NONE)
 
         /**
-         * Generic error occurred. The request was successful, but the response could not be
-         * parsed by the SDK. This is maybe because it is not formatted correctly. The raw response
-         * will allow you to see info about the request.
+         * An unknown error occurred.
+         *
+         * This error type is reserved for cases that don't fall into either the [Api] case or the [Exception] case.
+         * This error will be used if the response should result in an [Api] error and no exception was thrown, but we
+         * were unable to parse the error response correctly. This type should never be created by the consumer as it
+         * requires the response for debugging. The raw response will allow the consumer to see info about the request.
          *
          * @param rawResponse Raw response from the API.
-         * @param httpStatusCode HTTP status code.
+         * @param httpStatusCode HTTP status code, [HTTP_NONE] if not applicable or if the error was
+         * created locally.
          */
-        data class Generic(
+        data class Unknown(
             val rawResponse: String,
             override val httpStatusCode: Int
-        ) : Error("Generic error", httpStatusCode)
+        ) : Error("Unknown error: $httpStatusCode", httpStatusCode)
 
+    }
+
+    companion object {
+
+        private const val NA = "N/A"
+
+        const val HTTP_NONE = -1
     }
 
 }

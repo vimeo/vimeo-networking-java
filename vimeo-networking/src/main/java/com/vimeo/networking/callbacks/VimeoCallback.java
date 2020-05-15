@@ -22,8 +22,10 @@
 
 package com.vimeo.networking.callbacks;
 
-import com.vimeo.networking.model.error.VimeoError;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
+import com.vimeo.networking2.VimeoResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +40,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
 
     public abstract void success(T t);
 
-    public abstract void failure(VimeoError error);
+    public abstract void failure(@NotNull VimeoResponse.Error error);
 
     public VimeoCallback() {
     }
@@ -50,11 +52,7 @@ public abstract class VimeoCallback<T> implements Callback<T> {
             final T t = response.body();
             success(t);
         } else {
-            VimeoError vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
-            if (vimeoError == null) {
-                vimeoError = new VimeoError();
-            }
-            vimeoError.setResponse(response);
+            VimeoResponse.Error vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
             failure(vimeoError);
         }
     }
@@ -68,9 +66,9 @@ public abstract class VimeoCallback<T> implements Callback<T> {
          *      Cancelled request (cancelling may also lead to socket issues if request has been made)
          *      Retrofit deserialization errors in which Retrofit cannot determine the response
          */
-        final VimeoError vimeoError = new VimeoError(t.getMessage(), t);
-        vimeoError.setErrorMessage(t.getMessage());
-        vimeoError.setIsCanceledError(call != null && call.isCanceled());
-        failure(vimeoError);
+        if (call == null || !call.isCanceled()) {
+            final VimeoResponse.Error vimeoError = new VimeoResponse.Error.Exception(t);
+            failure(vimeoError);
+        }
     }
 }

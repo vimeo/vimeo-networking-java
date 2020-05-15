@@ -22,7 +22,9 @@
 
 package com.vimeo.networking.callbacks;
 
-import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking2.VimeoResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Callback used specifically for authorization
@@ -33,5 +35,5 @@ public interface AuthCallback {
 
     void success();
 
-    void failure(VimeoError error);
+    void failure(@NotNull VimeoResponse.Error error);
 }

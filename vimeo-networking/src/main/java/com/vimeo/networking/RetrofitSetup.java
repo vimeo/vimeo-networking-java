@@ -24,9 +24,7 @@
 
 package com.vimeo.networking;
 
-import com.google.gson.Gson;
 import com.squareup.moshi.Moshi;
-import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
 import com.vimeo.networking.interceptors.AcceptHeaderInterceptor;
 import com.vimeo.networking.interceptors.CacheControlInterceptor;
 import com.vimeo.networking.interceptors.UserAgentInterceptor;
@@ -37,14 +35,12 @@ import com.vimeo.networking.utils.VimeoNetworkUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 /**
@@ -66,12 +62,6 @@ class RetrofitSetup {
     private final Cache mCache;
 
     /**
-     * {@link Gson} object used to marshal / unmarshal JSON responses.
-     */
-    @NotNull
-    private final Gson mGson;
-
-    /**
      * {@link Moshi} object used to serialize / deserialize JSON responses.
      */
     @NotNull
@@ -86,7 +76,6 @@ class RetrofitSetup {
     RetrofitSetup(@NotNull Configuration configuration, @Nullable Cache cache) {
         mConfiguration = configuration;
         mCache = cache;
-        mGson = VimeoNetworkUtil.getGson();
         mMoshi = VimeoNetworkUtil.getMoshi();
         mLibraryUserAgentComponent = "VimeoNetworking/" + BuildConfig.VERSION + " (Java)";
     }
@@ -100,8 +89,7 @@ class RetrofitSetup {
     public Retrofit createRetrofit() {
         return new Retrofit.Builder().baseUrl(mConfiguration.getBaseUrl())
                 .client(createOkHttpClient())
-                .addConverterFactory(new AnnotatedConverterFactory(GsonConverterFactory.create(mGson),
-                        MoshiConverterFactory.create(mMoshi)))
+                .addConverterFactory(MoshiConverterFactory.create(mMoshi))
                 .build();
     }
 

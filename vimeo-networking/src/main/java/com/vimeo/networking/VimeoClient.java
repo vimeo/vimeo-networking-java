@@ -29,10 +29,9 @@ import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.callers.GetRequestCaller;
 import com.vimeo.networking.interceptors.LanguageHeaderInterceptor;
 import com.vimeo.networking.logging.ClientLogger;
-import com.vimeo.networking.model.error.ErrorCode;
-import com.vimeo.networking.model.error.LocalErrorCode;
-import com.vimeo.networking.model.error.VimeoError;
+import com.vimeo.networking.utils.ApiErrorFactory;
 import com.vimeo.networking.utils.BaseUrlInterceptor;
+import com.vimeo.networking.utils.PinCodeExpiredException;
 import com.vimeo.networking.utils.PrivacySettingsParams;
 import com.vimeo.networking.utils.VimeoAccountFactory;
 import com.vimeo.networking.utils.VimeoNetworkUtil;
@@ -41,6 +40,7 @@ import com.vimeo.networking2.AlbumList;
 import com.vimeo.networking2.AlbumPrivacy;
 import com.vimeo.networking2.Comment;
 import com.vimeo.networking2.Document;
+import com.vimeo.networking2.InvalidParameter;
 import com.vimeo.networking2.NotificationSubscriptions;
 import com.vimeo.networking2.PictureCollection;
 import com.vimeo.networking2.PinCodeInfo;
@@ -52,6 +52,8 @@ import com.vimeo.networking2.User;
 import com.vimeo.networking2.Video;
 import com.vimeo.networking2.VideoList;
 import com.vimeo.networking2.VimeoAccount;
+import com.vimeo.networking2.VimeoResponse;
+import com.vimeo.networking2.enums.ErrorCodeType;
 import com.vimeo.networking2.enums.ViewPrivacyType;
 import com.vimeo.networking2.params.BatchPublishToSocialMedia;
 import com.vimeo.networking2.ConnectedApp;
@@ -322,7 +324,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri must not be null"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri must not be null"));
 
             return null;
         }
@@ -335,7 +337,7 @@ public class VimeoClient {
             !state.equals(mCurrentCodeGrantState)) {
             mCurrentCodeGrantState = null;
 
-            callback.failure(new VimeoError("Code grant code/state is null or state has changed"));
+            callback.failure(VimeoNetworkUtil.createLocalError("Code grant code/state is null or state has changed"));
 
             return null;
         }
@@ -473,20 +475,32 @@ public class VimeoClient {
         if (displayName == null || displayName.isEmpty() || email == null || email.isEmpty() ||
             password == null || password.isEmpty()) {
 
-            final VimeoError error = new VimeoError("Name, email, and password must be set.");
-
+            final List<InvalidParameter> invalidParameters = new ArrayList<>();
             if (displayName == null || displayName.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_NAME, ErrorCode.INVALID_INPUT_NO_NAME,
-                                          "An empty or null name was provided.");
+                invalidParameters.add(ApiErrorFactory.createInvalidParameter(
+                        Vimeo.FIELD_NAME,
+                        ErrorCodeType.INVALID_INPUT_NO_NAME,
+                        "An empty or null name was provided."
+                ));
             }
             if (email == null || email.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_EMAIL, ErrorCode.INVALID_INPUT_NO_EMAIL,
-                                          "An empty or null email was provided.");
+                invalidParameters.add(ApiErrorFactory.createInvalidParameter(
+                        Vimeo.FIELD_EMAIL,
+                        ErrorCodeType.INVALID_INPUT_NO_EMAIL,
+                        "An empty or null email was provided."
+                ));
             }
             if (password == null || password.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_PASSWORD, ErrorCode.INVALID_INPUT_NO_PASSWORD,
-                                          "An empty or null password was provided.");
+                invalidParameters.add(ApiErrorFactory.createInvalidParameter(
+                        Vimeo.FIELD_PASSWORD,
+                        ErrorCodeType.INVALID_INPUT_NO_PASSWORD,
+                        "An empty or null password was provided."
+                ));
             }
+            final VimeoResponse.Error error = VimeoNetworkUtil.createLocalApiError(
+                    "Name, email, and password must be set.",
+                    invalidParameters.toArray(new InvalidParameter[0])
+            );
             callback.failure(error);
 
             return null;
@@ -519,10 +533,13 @@ public class VimeoClient {
                                                     final boolean marketingOptIn,
                                                     @NotNull final AuthCallback callback) {
         if (facebookToken.isEmpty()) {
-            final VimeoError error = new VimeoError("Facebook authentication error.");
-            error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                                      "An empty or null Facebook access token was provided.");
-            callback.failure(error);
+            callback.failure(VimeoNetworkUtil.createLocalApiError(
+                    "Facebook authentication error.",
+                    ApiErrorFactory.createInvalidParameter(
+                            Vimeo.FIELD_TOKEN,
+                            ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN,
+                            "An empty or null Facebook access token was provided."
+                    )));
             return null;
         }
 
@@ -551,10 +568,13 @@ public class VimeoClient {
                                                   final boolean marketingOptIn,
                                                   @NotNull final AuthCallback callback) {
         if (googleToken.isEmpty()) {
-            final VimeoError error = new VimeoError("Google authentication error.");
-            error.addInvalidParameter(Vimeo.FIELD_TOKEN, ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                                      "An empty or null Google access token was provided.");
-            callback.failure(error);
+            callback.failure(VimeoNetworkUtil.createLocalApiError(
+                    "Google authentication error.",
+                    ApiErrorFactory.createInvalidParameter(
+                            Vimeo.FIELD_TOKEN,
+                            ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN,
+                            "An empty or null Google access token was provided."
+                    )));
             return null;
         }
 
@@ -575,18 +595,25 @@ public class VimeoClient {
         }
 
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            final VimeoError error = new VimeoError("Email and password must be set.");
-
+            final List<InvalidParameter> invalidParameters = new ArrayList<>();
             if (email == null || email.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_USERNAME,
-                                          ErrorCode.INVALID_INPUT_NO_EMAIL,
-                                          "An empty or null email was provided.");
+                invalidParameters.add(ApiErrorFactory.createInvalidParameter(
+                        Vimeo.FIELD_USERNAME,
+                        ErrorCodeType.INVALID_INPUT_NO_EMAIL,
+                        "An empty or null email was provided."
+                ));
             }
             if (password == null || password.isEmpty()) {
-                error.addInvalidParameter(Vimeo.FIELD_PASSWORD,
-                                          ErrorCode.INVALID_INPUT_NO_PASSWORD,
-                                          "An empty or null password was provided.");
+                invalidParameters.add(ApiErrorFactory.createInvalidParameter(
+                        Vimeo.FIELD_PASSWORD,
+                        ErrorCodeType.INVALID_INPUT_NO_PASSWORD,
+                        "An empty or null password was provided."
+                ));
             }
+            final VimeoResponse.Error error = VimeoNetworkUtil.createLocalApiError(
+                    "Email and password must be set.",
+                    invalidParameters.toArray(new InvalidParameter[0])
+            );
             callback.failure(error);
 
             return null;
@@ -642,10 +669,15 @@ public class VimeoClient {
                                                      @NotNull final String email,
                                                      @NotNull final AuthCallback callback) {
         if (facebookToken.isEmpty()) {
-            final VimeoError error = new VimeoError("Facebook authentication error.");
-            error.addInvalidParameter(Vimeo.FIELD_TOKEN,
-                                      ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                                      "An empty or null Facebook access token was provided.");
+            final VimeoResponse.Error error = VimeoNetworkUtil.createLocalApiError(
+                    "Facebook authentication error.",
+                    ApiErrorFactory.createInvalidParameter(
+                            Vimeo.FIELD_TOKEN,
+                            ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN,
+                            "An empty or null Facebook access token was provided."
+                    )
+            );
+            callback.failure(error);
             return null;
         }
 
@@ -670,10 +702,14 @@ public class VimeoClient {
                                                    @NotNull final String email,
                                                    @NotNull final AuthCallback callback) {
         if (googleToken.isEmpty()) {
-            final VimeoError error = new VimeoError("Google authentication error.");
-            error.addInvalidParameter(Vimeo.FIELD_TOKEN,
-                                      ErrorCode.UNABLE_TO_LOGIN_NO_TOKEN,
-                                      "An empty or null Google access token was provided.");
+            final VimeoResponse.Error error = VimeoNetworkUtil.createLocalApiError(
+                    "Google authentication error.",
+                    ApiErrorFactory.createInvalidParameter(
+                            Vimeo.FIELD_TOKEN,
+                            ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN,
+                            "An empty or null Google access token was provided."
+                    )
+            );
             callback.failure(error);
             return null;
         }
@@ -698,7 +734,7 @@ public class VimeoClient {
         if (mConfiguration.mAccessToken != null && mVimeoAccount != null &&
             mConfiguration.mAccessToken.equals(mVimeoAccount.getAccessToken())) {
             if (callback != null) {
-                callback.failure(new VimeoError(
+                callback.failure(VimeoNetworkUtil.createLocalError(
                         "Don't log out of the account provided through the configuration builder. Need to ensure " +
                         "that the access token generated in the dev console isn't accidentally invalidated."));
             }
@@ -714,7 +750,7 @@ public class VimeoClient {
             }
 
             @Override
-            public void failure(VimeoError error) {
+            public void failure(@NotNull VimeoResponse.Error error) {
                 if (callback != null) {
                     callback.failure(error);
                 }
@@ -772,7 +808,7 @@ public class VimeoClient {
         }
 
         @Override
-        public void failure(VimeoError error) {
+        public void failure(@NotNull VimeoResponse.Error error) {
             mCallback.failure(error);
         }
     }
@@ -806,7 +842,7 @@ public class VimeoClient {
             }
         }
 
-        public void failure(VimeoError error) {
+        public void failure(@NotNull VimeoResponse.Error error) {
             if (VimeoClient.sContinuePinCodeAuthorizationRefreshCycle) {
                 if (error.getHttpStatusCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
                     // 400: Bad Request implies the code hasn't been activated yet, so try again
@@ -871,8 +907,9 @@ public class VimeoClient {
                     VimeoClient.sContinuePinCodeAuthorizationRefreshCycle = false;
                     mTimer.cancel();
                     if (authCallback != null && now >= mExpiresInNano) {
-                        final VimeoError error = new VimeoError("Pin code expired.");
-                        error.setLocalErrorCode(LocalErrorCode.UNABLE_TO_LOGIN_PINCODE_EXPIRED);
+                        final VimeoResponse.Error error = new VimeoResponse.Error.Exception(
+                                new PinCodeExpiredException("Pin code expired")
+                        );
                         authCallback.failure(error);
                     }
                 }
@@ -925,12 +962,14 @@ public class VimeoClient {
         call.enqueue(new VimeoCallback<PinCodeInfo>() {
             @Override
             public void success(PinCodeInfo pinCodeInfo) {
-                if (pinCodeInfo.getUserCode() == null ||
-                    pinCodeInfo.getDeviceCode() == null ||
-                    pinCodeInfo.getActivateLink() == null ||
-                    pinCodeInfo.getExpiresIn() <= 0 ||
-                    pinCodeInfo.getInterval() <= 0) {
-                    pinCodeCallback.failure(new VimeoError("Invalid data returned from server for pin code"));
+                if (pinCodeInfo.getUserCode() == null
+                    || pinCodeInfo.getDeviceCode() == null
+                    || pinCodeInfo.getActivateLink() == null
+                    || pinCodeInfo.getExpiresIn() == null
+                    || pinCodeInfo.getInterval() == null
+                    || pinCodeInfo.getExpiresIn() <= 0
+                    || pinCodeInfo.getInterval() <= 0) {
+                    pinCodeCallback.failure(VimeoNetworkUtil.createLocalError("Invalid data returned from server for pin code"));
                     return;
                 }
                 pinCodeCallback.success(pinCodeInfo);
@@ -948,7 +987,7 @@ public class VimeoClient {
             }
 
             @Override
-            public void failure(VimeoError error) {
+            public void failure(@NotNull VimeoResponse.Error error) {
                 pinCodeCallback.failure(error);
             }
         });
@@ -1158,14 +1197,16 @@ public class VimeoClient {
                                  @Nullable HashMap<String, Object> parameters,
                                  @NotNull VimeoCallback<Video> callback) {
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
 
             return null;
         }
-        if (title == null && description == null && (privacySettingsParams == null || privacySettingsParams.getParams().isEmpty())) {
+        if (title == null
+            && description == null
+            && (privacySettingsParams == null || privacySettingsParams.getParams().isEmpty())) {
             // The fields above can be null individually, but if they're all null there is no point
             // in making the request 1/26/16 [KV]
-            callback.failure(new VimeoError("title, description, and privacy settings cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("title, description, and privacy settings cannot be empty!"));
 
             return null;
         }
@@ -1188,7 +1229,7 @@ public class VimeoClient {
             //noinspection ConstantConditions
             if (ViewPrivacyType.PASSWORD.getValue().equals(viewPrivacyValue)) {
                 if (password == null) {
-                    callback.failure(new VimeoError("Password cannot be null password privacy type"));
+                    callback.failure(VimeoNetworkUtil.createLocalError("Password cannot be null password privacy type"));
                     return null;
                 }
                 parameters.put(Vimeo.PARAMETER_VIDEO_PASSWORD, password);
@@ -1213,14 +1254,14 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
 
             return null;
         }
 
-        if (name == null && location == null && bio == null) // No point in editing user
-        {
-            callback.failure(new VimeoError("name, location, and bio cannot all be empty!"));
+        // No point in editing user
+        if (name == null && location == null && bio == null) {
+            callback.failure(VimeoNetworkUtil.createLocalError("name, location, and bio cannot all be empty!"));
 
             return null;
         }
@@ -1486,7 +1527,7 @@ public class VimeoClient {
     @Nullable
     public Call<PictureCollection> createPictureCollection(String uri, VimeoCallback<PictureCollection> callback) {
         if (uri == null || uri.trim().isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
             return null;
         }
 
@@ -1504,7 +1545,7 @@ public class VimeoClient {
     @Nullable
     public Call<PictureCollection> activatePictureCollection(String uri, VimeoCallback<PictureCollection> callback) {
         if (uri == null || uri.trim().isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
             return null;
         }
         final HashMap<String, Object> parameters = new HashMap<>();
@@ -1607,7 +1648,7 @@ public class VimeoClient {
         }
 
         if (uri == null || uri.isEmpty() || comment == null || comment.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
 
             return null;
         }
@@ -1782,7 +1823,7 @@ public class VimeoClient {
                                                     @Nullable String fieldFilter,
                                                     @NotNull VimeoCallback<DataType_T> callback) {
         if (uri.isEmpty()) {
-            callback.failure(new VimeoError("Uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("Uri cannot be empty!"));
             return null;
         }
 
@@ -1881,7 +1922,7 @@ public class VimeoClient {
         }
 
         if (uri == null) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
 
             return null;
         }
@@ -1898,15 +1939,15 @@ public class VimeoClient {
     /**
      * A synchronous version of {@link #emptyResponsePost(String, HashMap, VimeoCallback)}
      *
-     * @return A {@link VimeoError} if there has been a network error or null if the call has been successful.
+     * @return A {@link VimeoResponse.Error} if there has been a network error or null if the call has been successful.
      * @see #emptyResponsePost
      */
     @Nullable
-    public VimeoError emptyResponsePostSync(@Nullable String uri, @Nullable HashMap<String, String> postBody) {
+    public VimeoResponse.Error emptyResponsePostSync(@Nullable String uri, @Nullable HashMap<String, String> postBody) {
 
-        VimeoError vimeoError = null;
+        VimeoResponse.Error vimeoError = null;
         if (uri == null) {
-            return new VimeoError("uri cannot be empty!");
+            return VimeoNetworkUtil.createLocalError("uri cannot be empty!");
         }
 
         if (postBody == null) {
@@ -1918,13 +1959,9 @@ public class VimeoClient {
             final Response<Void> response = call.execute();
             if (!isSuccessfulResponse(response)) {
                 vimeoError = VimeoNetworkUtil.getErrorFromResponse(response);
-                if (vimeoError == null) {
-                    vimeoError = new VimeoError();
-                }
             }
         } catch (final Exception e) {
-            vimeoError = new VimeoError();
-            vimeoError.setThrowable(e);
+            vimeoError = new VimeoResponse.Error.Exception(e);
         }
 
         return vimeoError;
@@ -1982,7 +2019,7 @@ public class VimeoClient {
                                                  @Nullable final Object body,
                                                  @NotNull final VimeoCallback<User> callback) {
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
             return null;
         }
 
@@ -2013,7 +2050,7 @@ public class VimeoClient {
                            @NotNull final IgnoreResponseVimeoCallback callback) {
 
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
             return null;
         }
 
@@ -2043,7 +2080,7 @@ public class VimeoClient {
                               @Nullable Map<String, String> options,
                               @NotNull IgnoreResponseVimeoCallback callback) {
         if (uri == null || uri.isEmpty()) {
-            callback.failure(new VimeoError("uri cannot be empty!"));
+            callback.failure(VimeoNetworkUtil.createLocalError("uri cannot be empty!"));
             return null;
         }
         if (options == null) {

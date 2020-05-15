@@ -22,6 +22,12 @@ data class ApiError(
     val developerMessage: String? = null,
 
     /**
+     * User friendly error message, can be used for displaying messages to the user.
+     */
+    @Json(name = "user_message")
+    val userMessage: String? = null,
+
+    /**
      * User friendly error message.
      */
     @Json(name = "error")

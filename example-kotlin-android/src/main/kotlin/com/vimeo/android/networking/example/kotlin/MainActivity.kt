@@ -10,12 +10,16 @@ import com.vimeo.networking.VimeoClient
 import com.vimeo.networking.callbacks.AuthCallback
 import com.vimeo.networking.callbacks.VimeoCallback
 import com.vimeo.networking.callers.GetRequestCaller
-import com.vimeo.networking.model.error.VimeoError
 import com.vimeo.networking2.User
 import com.vimeo.networking2.VideoList
+import com.vimeo.networking2.VimeoResponse
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import okhttp3.CacheControl
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -141,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                     cont.resume(t)
                 }
 
-                override fun failure(error: VimeoError?) {
+                override fun failure(error: VimeoResponse.Error) {
                     cont.resume(null)
                 }
 
@@ -173,9 +177,9 @@ class MainActivity : AppCompatActivity() {
                     progressDialog.hide()
                 }
 
-                override fun failure(error: VimeoError?) {
+                override fun failure(error: VimeoResponse.Error) {
                     toast("Staff Picks Failure")
-                    request_output_tv.text = error?.developerMessage
+                    request_output_tv.text = error?.message
                     progressDialog.hide()
                 }
 
@@ -197,9 +201,9 @@ class MainActivity : AppCompatActivity() {
                     progressDialog.hide()
                 }
 
-                override fun failure(error: VimeoError) {
+                override fun failure(error: VimeoResponse.Error) {
                     toast("Account Check Failure")
-                    request_output_tv.text = error.developerMessage
+                    request_output_tv.text = error.message
                     progressDialog.hide()
                 }
             }
@@ -216,10 +220,10 @@ class MainActivity : AppCompatActivity() {
                     progressDialog.hide()
                 }
 
-                override fun failure(error: VimeoError) {
+                override fun failure(error: VimeoResponse.Error) {
                     AccountPreferenceManager.removeClientAccount()
                     toast("Logout Failure")
-                    request_output_tv.text = error.developerMessage
+                    request_output_tv.text = error.message
                     progressDialog.hide()
                 }
             }
@@ -237,9 +241,9 @@ class MainActivity : AppCompatActivity() {
                     progressDialog.hide()
                 }
 
-                override fun failure(error: VimeoError) {
+                override fun failure(error: VimeoResponse.Error) {
                     toast("Client Credentials Authorization Failure")
-                    request_output_tv.text = error.developerMessage
+                    request_output_tv.text = error.message
                     progressDialog.hide()
                 }
             }
@@ -258,9 +262,9 @@ class MainActivity : AppCompatActivity() {
                 progressDialog.hide()
             }
 
-            override fun failure(error: VimeoError) {
+            override fun failure(error: VimeoResponse.Error) {
                 toast("Code Grant Failure")
-                request_output_tv.text = error.developerMessage
+                request_output_tv.text = error.message
                 progressDialog.hide()
             }
         })

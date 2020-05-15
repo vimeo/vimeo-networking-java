@@ -22,8 +22,6 @@
 
 package com.vimeo.networking;
 
-import com.vimeo.networking.AnnotatedConverterFactory.ConverterType;
-import com.vimeo.networking.AnnotatedConverterFactory.Serializer;
 import com.vimeo.networking2.Album;
 import com.vimeo.networking2.AlbumList;
 import com.vimeo.networking2.AppConfiguration;
@@ -169,18 +167,15 @@ public interface VimeoService {
      */
     // <editor-fold desc="Connected Apps">
     @GET("me/connected_apps")
-    @Serializer(converter = ConverterType.MOSHI)
     Call<com.vimeo.networking2.ConnectedAppList> getConnectedApps(@Header("Authorization") String authHeader,
                                                                   @Header("Cache-Control") String cacheHeader);
 
     @GET("me/connected_apps/{type}")
-    @Serializer(converter = ConverterType.MOSHI)
     Call<com.vimeo.networking2.ConnectedApp> getConnectedApp(@Header("Authorization") String authHeader,
                                                              @Path("type") String type,
                                                              @Header("Cache-Control") String cacheHeader);
 
     @PUT("me/connected_apps/{type}")
-    @Serializer(converter = ConverterType.MOSHI)
     @Headers("Cache-Control: no-cache, no-store")
     Call<com.vimeo.networking2.ConnectedApp> createConnectedApp(@Header("Authorization") String authHeader,
                                                                 @Path("type") String type,
@@ -199,13 +194,11 @@ public interface VimeoService {
      */
     // <editor-fold desc="Publish Jobs">
     @GET
-    @Serializer(converter = ConverterType.MOSHI)
     Call<PublishJob> getPublishJob(@Header("Authorization") String authHeader,
                                    @Url String url,
                                    @Header("Cache-Control") String cacheHeader);
 
     @PUT
-    @Serializer(converter = ConverterType.MOSHI)
     @Headers("Cache-Control: no-cache, no-store")
     Call<PublishJob> putPublishJob(@Header("Authorization") String authHeader,
                                    @Url String url,
@@ -347,7 +340,6 @@ public interface VimeoService {
                        @Header("Cache-Control") String cacheHeaderValue);
 
     @GET("me")
-    @Serializer(converter = ConverterType.MOSHI)
     Call<com.vimeo.networking2.User> getUserMoshi(@Header("Authorization") String authHeader,
                                                   @QueryMap Map<String, String> options,
                                                   @Header("Cache-Control") String cacheHeaderValue);

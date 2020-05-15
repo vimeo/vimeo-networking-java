@@ -28,7 +28,6 @@ internal class VimeoCallAdapter<T : Any>(
     override fun enqueue(callback: VimeoCallback<T>): VimeoRequest {
         call.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
-
                 if (response.hasBody()) {
                     callbackExecutor.sendResponse {
                         callback.onSuccess(VimeoResponse.Success(requireNotNull(response.body()), response.code()))
@@ -42,7 +41,7 @@ internal class VimeoCallAdapter<T : Any>(
                     } else {
                         callbackExecutor.sendResponse {
                             callback.onError(
-                                VimeoResponse.Error.Generic(
+                                VimeoResponse.Error.Unknown(
                                     response.raw().toString(),
                                     response.code()
                                 )
@@ -53,14 +52,14 @@ internal class VimeoCallAdapter<T : Any>(
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
-                callbackExecutor.sendResponse { callback.onError(VimeoResponse.Error.Exception(t, -1)) }
+                callbackExecutor.sendResponse { callback.onError(VimeoResponse.Error.Exception(t)) }
             }
         })
         return CancellableVimeoRequest(call)
     }
 
     override fun enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest {
-        callbackExecutor.sendResponse { callback.onError(VimeoResponse.Error.Api(apiError, -1)) }
+        callbackExecutor.sendResponse { callback.onError(VimeoResponse.Error.Api(apiError, VimeoResponse.HTTP_NONE)) }
         return NoOpVimeoRequest
     }
 
