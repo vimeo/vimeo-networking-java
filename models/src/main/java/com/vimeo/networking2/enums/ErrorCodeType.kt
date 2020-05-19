@@ -103,6 +103,10 @@ enum class ErrorCodeType(override val value: String?) : StringValue {
 
     INVALID_INPUT_PASSWORD_TOO_LONG("3102"),
 
+    INVALID_INPUT_PASSWORD_TOO_COMMON("3127"),
+
+    INVALID_INPUT_PASSWORD_REUSED("3128"),
+
     INVALID_INPUT_NO_NAME("2213"),
 
     INVALID_INPUT_NO_EMAIL("2214"),
