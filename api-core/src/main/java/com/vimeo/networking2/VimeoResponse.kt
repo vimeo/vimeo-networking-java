@@ -47,6 +47,20 @@ sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
         ) : Error("API error: ${reason.errorCode ?: NA}", httpStatusCode)
 
         /**
+         * The Vimeo API returned a fatal error that indicates that the token used to make the request is invalid. The
+         * token should be discarded and a new token should be acquired. Further requests should not be made with the
+         * token.
+         *
+         * @param reason Info on the error.
+         * @param httpStatusCode HTTP status code, [HTTP_NONE] if not applicable or if the error was
+         * created locally.
+         */
+        data class InvalidToken(
+            val reason: ApiError?,
+            override val httpStatusCode: Int
+        ) : Error("Unauthorized error: ${reason?.errorCode ?: NA}", httpStatusCode)
+
+        /**
          * An exception was thrown when making the request, e.g. the internet connection failed and a
          * [java.io.IOException] is thrown. This should only be used if a response was not received from the server. If
          * a response is received from the server, an [Api] should be created instead, or if one cannot be parsed, an
