@@ -32,7 +32,6 @@ import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.logging.ClientLogger;
 import com.vimeo.networking2.AlbumPrivacy;
 import com.vimeo.networking2.AlbumPrivacyUtils;
-import com.vimeo.networking2.ApiConstants;
 import com.vimeo.networking2.ApiError;
 import com.vimeo.networking2.InvalidParameter;
 import com.vimeo.networking2.VimeoResponse;
@@ -63,6 +62,12 @@ import retrofit2.Response;
  */
 @SuppressWarnings("unused")
 public final class VimeoNetworkUtil {
+
+    @NotNull
+    private static final String INVALID_TOKEN_VALUE = "Bearer error=\"invalid_token\"";
+
+    @NotNull
+    private static final String AUTHENTICATE_HEADER = "WWW-Authenticate";
 
     @Nullable
     private static Gson sGson;
@@ -210,11 +215,14 @@ public final class VimeoNetworkUtil {
         }
         final VimeoResponse.Error vimeoError;
         String errorBody = null;
+        final boolean isUnauthorizedError = INVALID_TOKEN_VALUE.equals(response.headers().get(AUTHENTICATE_HEADER));
         if (response.errorBody() != null) {
             try {
                 errorBody = response.errorBody().string();
                 final ApiError apiError = getMoshi().adapter(ApiError.class).fromJson(errorBody);
-                if (apiError != null) {
+                if (isUnauthorizedError) {
+                    return new VimeoResponse.Error.InvalidToken(apiError, response.code());
+                } else if (apiError != null) {
                     return new VimeoResponse.Error.Api(apiError, response.code());
                 } else {
                     return new VimeoResponse.Error.Unknown(errorBody, response.code());
@@ -224,8 +232,14 @@ public final class VimeoNetworkUtil {
                 if (errorBody == null) {
                     errorBody = "Unable to read error body";
                 }
-                return new VimeoResponse.Error.Unknown(errorBody, response.code());
+                if (isUnauthorizedError) {
+                    return new VimeoResponse.Error.InvalidToken(null, response.code());
+                } else {
+                    return new VimeoResponse.Error.Unknown(errorBody, response.code());
+                }
             }
+        } else if (isUnauthorizedError) {
+            return new VimeoResponse.Error.InvalidToken(null, response.code());
         } else {
             return new VimeoResponse.Error.Unknown("Null error body", response.code());
         }
