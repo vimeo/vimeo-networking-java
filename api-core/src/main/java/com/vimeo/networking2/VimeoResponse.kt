@@ -9,7 +9,7 @@ import com.vimeo.networking2.VimeoResponse.Success
  *
  * @param httpStatusCode HTTP status code.
  */
-sealed class VimeoResponse<in T>(open val httpStatusCode: Int) {
+sealed class VimeoResponse<out T>(open val httpStatusCode: Int) {
 
     /**
      * A successful response.
