@@ -153,7 +153,8 @@ class ModelsTest {
         VimeoAccount::class,
         WatchedInteraction::class,
         WatchLaterInteraction::class,
-        Website::class
+        Website::class,
+        VideoStatus::class
     )
 
     @Test

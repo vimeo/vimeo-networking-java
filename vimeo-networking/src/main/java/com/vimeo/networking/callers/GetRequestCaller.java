@@ -51,6 +51,7 @@ import com.vimeo.networking2.User;
 import com.vimeo.networking2.UserList;
 import com.vimeo.networking2.Video;
 import com.vimeo.networking2.VideoList;
+import com.vimeo.networking2.VideoStatus;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -549,6 +550,26 @@ public final class GetRequestCaller {
                                           @NotNull String cacheHeader,
                                           @NotNull VimeoService vimeoService) {
                     return vimeoService.getProduct(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link VideoStatus} response from an API endpoint.
+     */
+    public static final Caller<VideoStatus> VIDEO_STATUS =
+            new Caller<VideoStatus>() {
+
+                @NotNull
+                @Override
+                public Call<VideoStatus> call(@NotNull String authHeader,
+                                          @NotNull String uri,
+                                          @NotNull Map<String, String> queryMap,
+                                          @NotNull String cacheHeader,
+                                          @NotNull VimeoService vimeoService) {
+                    return vimeoService.getVideoStatus(authHeader, uri, queryMap, cacheHeader);
                 }
             };
 
