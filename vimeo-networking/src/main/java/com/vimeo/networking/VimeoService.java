@@ -51,6 +51,7 @@ import com.vimeo.networking2.User;
 import com.vimeo.networking2.UserList;
 import com.vimeo.networking2.Video;
 import com.vimeo.networking2.VideoList;
+import com.vimeo.networking2.VideoStatus;
 import com.vimeo.networking2.VimeoAccount;
 import com.vimeo.networking2.params.BatchPublishToSocialMedia;
 import com.vimeo.networking2.PublishJob;
@@ -465,6 +466,12 @@ public interface VimeoService {
 
     @GET("products")
     Call<ProductList> getProducts(@Header("Authorization") String authHeader);
+
+    @GET
+    Call<VideoStatus> getVideoStatus(@Header("Authorization") String authHeader,
+                                     @Url String uri,
+                                     @QueryMap Map<String, String> options,
+                                     @Header("Cache-Control") String cacheHeaderValue);
     // </editor-fold>
 
     @PUT

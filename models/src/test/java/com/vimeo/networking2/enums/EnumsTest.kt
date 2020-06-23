@@ -51,7 +51,8 @@ class EnumsTest {
             VideoQualityType::class.java,
             VideoSourceType::class.java,
             VideoStatusType::class.java,
-            ViewPrivacyType::class.java
+            ViewPrivacyType::class.java,
+            VideoStateType::class.java
     )
 
     @Test
