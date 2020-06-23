@@ -21,13 +21,13 @@ data class VideoStatus(
          * The percentage of the transcoding process that is complete.
          */
         @Json(name = "progress")
-        val progress: Int? = 0,
+        val progress: Int? = null,
 
         /**
          * The remaining time in seconds before transcoding is complete.
          */
         @Json(name = "time_left")
-        val timeLeft: Long? = 0
+        val timeLeft: Long? = null
 ) : Serializable {
 
     companion object {
