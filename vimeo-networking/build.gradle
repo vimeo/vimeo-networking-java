@@ -34,6 +34,7 @@ tasks.withType(Javadoc).all { enabled = true }
 dependencies {
     api project(':api-core')
     api project(':models')
+    api project(':request')
 
     api "com.squareup.retrofit2:retrofit:$retrofitVersion"
     api "com.squareup.retrofit2:converter-gson:$retrofitVersion"

@@ -1,3 +1,4 @@
+include ':request'
 include ':vimeo-networking', ':models', ':auth', ':api-core'
 
 if (!System.env.JITPACK) {

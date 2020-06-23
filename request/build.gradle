@@ -1,0 +1,13 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply from: '../publish.gradle'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    api project(':models')
+    api project(':auth')
+}
+
