@@ -7,17 +7,13 @@ import java.io.Serializable
 import java.util.Date
 
 /**
- * This class represents an authenticated account with Vimeo. It can be through client credentials
- * or a truly authenticated [User].
+ * This class represents an authenticated user of Vimeo.
  */
 @JsonClass(generateAdapter = true)
 data class VimeoAccount(
 
-    /**
-     * The access token string.
-     */
     @Json(name = "access_token")
-    val accessToken: String? = null,
+    override val accessToken: String,
 
     /**
      * The date and time that the token expires.
@@ -41,7 +37,7 @@ data class VimeoAccount(
      * The authenticated user.
      */
     @Json(name = "user")
-    val user: User? = null,
+    val user: User,
 
     /**
      * The token type.
@@ -49,7 +45,7 @@ data class VimeoAccount(
     @Json(name = "token_type")
     val tokenType: String? = null
 
-) : Serializable {
+) : AccessTokenProvider, Serializable {
 
     companion object {
         private const val serialVersionUID = -104L

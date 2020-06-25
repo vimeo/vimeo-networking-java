@@ -6,13 +6,13 @@ import com.vimeo.networking2.*
  * Authentication with email, google, facebook or pincode.
  *
  * @param authService           Retrofit service for authentication.
- * @param authHeaders           Client id and client secret header.
+ * @param authHeader           Client id and client secret header.
  * @param scopes                All the scopes for authentication.
  */
 internal class AuthenticatorImpl(
     private val authService: AuthService,
-    private val authHeaders: String,
-    private val scopes: String
+    private val authHeader: String,
+    private val scopes: Scopes
 ) : Authenticator {
 
     override fun clientCredentials(authCallback: VimeoCallback<BasicAccessToken>): VimeoRequest {
@@ -20,7 +20,11 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_GRANT_TYPE to GrantType.CLIENT_CREDENTIALS.value,
             AuthParam.FIELD_SCOPES to scopes
         )
-        val call = authService.authorizeWithClientCredentialsGrant(authHeaders, params)
+        val call = authService.authorizeWithClientCredentialsGrant(
+            authorization = authHeader,
+            grantType = GrantType.CLIENT_CREDENTIALS,
+            scope = scopes
+        )
 
         val invalidAuthParams = params.validate()
 
@@ -39,61 +43,60 @@ internal class AuthenticatorImpl(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        return socialAuthenticate(
-            token,
-            email,
-            marketingOptIn,
-            AuthParam.FIELD_ID_TOKEN,
-            "Google authentication error.",
-            authCallback
+        val params = mapOf(
+            AuthParam.FIELD_ID_TOKEN to token,
+            AuthParam.FIELD_EMAIL to email,
+            AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
+            AuthParam.FIELD_SCOPES to scopes
         )
+        val call = authService.joinInWithGoogle(
+            authorization = authHeader,
+            email = email,
+            idToken = token,
+            scope = scopes,
+            params = mapOf(AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString())
+        )
+
+        val invalidAuthParams = params.validate()
+
+        return if (invalidAuthParams.isNotEmpty()) {
+            val apiError = ApiError(
+                errorMessage = "Google authentication failure",
+                invalidParameters = invalidAuthParams
+            )
+            call.enqueueError(apiError, authCallback)
+        } else {
+            call.enqueue(authCallback)
+        }
     }
 
     override fun facebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        return socialAuthenticate(
-            token,
-            email,
-            marketingOptIn,
-            AuthParam.FIELD_TOKEN,
-            "Facebook authentication error.",
-            authCallback
-        )
-    }
-
-    /**
-     * Performs a Google or Facebook auth request. It will first validate the auth params given the
-     * client. If they were invalid values such as a empty string, it will inform the client of the
-     * error. Otherwise, an API request is made and the result is returned to the user.
-     */
-    @SuppressWarnings("LongParameterList")
-    private fun socialAuthenticate(
-        token: String,
-        email: String,
-        marketingOptIn: Boolean,
-        tokenField: AuthParam,
-        errorMessage: String,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
-    ): VimeoRequest {
-
         val params = mapOf(
-            tokenField to token,
+            AuthParam.FIELD_TOKEN to token,
             AuthParam.FIELD_EMAIL to email,
-            AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString()
+            AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
+            AuthParam.FIELD_SCOPES to scopes
         )
-        val call = authService.join(authHeaders, params)
+        val call = authService.joinInWithFacebook(
+            authorization = authHeader,
+            email = email,
+            token = token,
+            scope = scopes,
+            params = mapOf(AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString())
+        )
 
         val invalidAuthParams = params.validate()
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
-                errorMessage,
+                errorMessage = "Facebook authentication failure",
                 invalidParameters = invalidAuthParams
             )
             call.enqueueError(apiError, authCallback)
@@ -107,9 +110,8 @@ internal class AuthenticatorImpl(
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-
         val params = mapOf(
             AuthParam.FIELD_NAME to displayName,
             AuthParam.FIELD_EMAIL to email,
@@ -117,7 +119,14 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
             AuthParam.FIELD_SCOPES to scopes
         )
-        val call = authService.join(authHeaders, params)
+        val call = authService.join(
+            authorization = authHeader,
+            name = displayName,
+            email = email,
+            password = password,
+            scope = scopes,
+            params = mapOf(AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString())
+        )
 
         val invalidAuthParams = params.validate()
 
@@ -135,16 +144,21 @@ internal class AuthenticatorImpl(
     override fun emailLogin(
         email: String,
         password: String,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
 
         val params = mapOf(
             AuthParam.FIELD_USERNAME to email,
             AuthParam.FIELD_PASSWORD to password,
-            AuthParam.FIELD_GRANT_TYPE to GrantType.PASSWORD.value,
             AuthParam.FIELD_SCOPES to scopes
         )
-        val call = authService.logIn(authHeaders, params)
+        val call = authService.logIn(
+            authorization = authHeader,
+            email = email,
+            password = password,
+            grantType = GrantType.PASSWORD,
+            scope = scopes
+        )
 
         val invalidAuthParams = params.validate()
 

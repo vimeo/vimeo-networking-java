@@ -60,7 +60,7 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -77,7 +77,7 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -96,7 +96,7 @@ interface Authenticator {
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -110,7 +110,7 @@ interface Authenticator {
     fun emailLogin(
         email: String,
         password: String,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -129,19 +129,16 @@ interface Authenticator {
         fun create(serverConfig: ServerConfig): Authenticator {
 
             val authService = RetrofitSetupModule
-                .retrofit(serverConfig)
-                .create(AuthService::class.java)
+                    .retrofit(serverConfig)
+                    .create(AuthService::class.java)
 
             val authHeaders: String =
-                Credentials.basic(
-                    serverConfig.clientId,
-                    serverConfig.clientSecret
-                )
+                    Credentials.basic(
+                        serverConfig.clientId,
+                        serverConfig.clientSecret
+                    )
 
-            val scopes = serverConfig.scopes
-                .joinToString(separator = " ", transform = { it.name.toLowerCase() })
-
-            return AuthenticatorImpl(authService, authHeaders, scopes)
+            return AuthenticatorImpl(authService, authHeaders, Scopes(serverConfig.scopes))
         }
 
     }

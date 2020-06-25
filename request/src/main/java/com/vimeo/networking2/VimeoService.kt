@@ -28,8 +28,6 @@ import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
 import okhttp3.CacheControl
 import retrofit2.http.Body
 import retrofit2.http.DELETE
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -45,103 +43,6 @@ import retrofit2.http.Url
  */
 @Suppress("unused", "UndocumentedPublicFunction", "ComplexInterface")
 interface VimeoService {
-
-    @FormUrlEncoded
-    @POST("oauth/access_token")
-    fun authenticateWithCodeGrant(
-        @Header(AUTHORIZATION) authorization: String,
-        @Field("redirect_uri") redirectURI: String,
-        @Field("code") code: String,
-        @Field("grant_type") grantType: String
-    ): VimeoCall<VimeoAccount>
-
-    @FormUrlEncoded
-    @POST("oauth/authorize/client")
-    fun authorizeWithClientCredentialsGrant(
-        @Header(AUTHORIZATION) authorization: String,
-        @Field("grant_type") grantType: String,
-        @Field("scope") scope: String
-    ): VimeoCall<VimeoAccount>
-
-    @POST("users")
-    fun join(
-        @Header(AUTHORIZATION) authorization: String,
-        @Body parameters: Map<String, String>
-    ): VimeoCall<VimeoAccount>
-
-    @FormUrlEncoded
-    @POST("oauth/authorize/password")
-    fun logIn(
-        @Header(AUTHORIZATION) authorization: String,
-        @Field("username") email: String,
-        @Field("password") password: String,
-        @Field("grant_type") grantType: String,
-        @Field("scope") scope: String
-    ): VimeoCall<VimeoAccount>
-
-    @FormUrlEncoded
-    @POST("oauth/authorize/facebook")
-    fun logInWithFacebook(
-        @Header(AUTHORIZATION) authorization: String,
-        @Field("grant_type") grantType: String,
-        @Field("token") token: String,
-        @Field("scope") scope: String
-    ): VimeoCall<VimeoAccount>
-
-    @FormUrlEncoded
-    @POST("oauth/authorize/google")
-    fun logInWithGoogle(
-        @Header(AUTHORIZATION) authorization: String,
-        @Field("grant_type") grantType: String,
-        @Field("id_token") idToken: String,
-        @Field("scope") scope: String
-    ): VimeoCall<VimeoAccount>
-
-    @Headers("Cache-Control: no-cache, no-store")
-    @DELETE("tokens")
-    fun logOut(
-        @Header(AUTHORIZATION) authorization: String
-    ): VimeoCall<Any>
-
-    @FormUrlEncoded
-    @POST("oauth/authorize/vimeo_oauth1")
-    fun exchangeOAuthOneToken(
-        @Header(AUTHORIZATION) authorization: String,
-        @Field("grant_type") grantType: String,
-        @Field("token") token: String,
-        @Field("token_secret") tokenSecret: String,
-        @Field("scope") scope: String
-    ): VimeoCall<VimeoAccount>
-
-    @FormUrlEncoded
-    @POST("oauth/appexchange")
-    fun ssoTokenExchange(
-        @Header(AUTHORIZATION) basicAuth: String,
-        @Field("access_token") token: String,
-        @Field("scope") scope: String
-    ): VimeoCall<VimeoAccount>
-
-    @FormUrlEncoded
-    @Headers("Cache-Control: no-cache, no-store")
-    @POST("oauth/device")
-    fun getPinCodeInfo(
-        @Header(AUTHORIZATION) authorization: String,
-        @Field("grant_type") grantType: String,
-        @Field("scope") scope: String
-    ): VimeoCall<PinCodeInfo>
-
-    @FormUrlEncoded
-    @Headers("Cache-Control: no-cache, no-store")
-    @POST("oauth/device/authorize")
-    fun logInWithPinCode(
-        @Header(AUTHORIZATION) authorization: String,
-        @Field("grant_type") grantType: String,
-        @Field("user_code") pinCode: String,
-        @Field("device_code") deviceCode: String,
-        @Field("scope") scope: String
-    ): VimeoCall<VimeoAccount>
-
-    // TODO: end login
 
     @GET("me/connected_apps")
     fun getConnectedAppList(

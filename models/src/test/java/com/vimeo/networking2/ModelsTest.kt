@@ -150,7 +150,6 @@ class ModelsTest {
         VideosPreference::class,
         VideoStats::class,
         VideosTvodItemConnection::class,
-        VimeoAccount::class,
         WatchedInteraction::class,
         WatchLaterInteraction::class,
         Website::class,
