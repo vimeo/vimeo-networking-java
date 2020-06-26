@@ -51,7 +51,7 @@ internal interface AuthService {
      */
     @FormUrlEncoded
     @POST("users")
-    fun join(
+    fun joinWithEmail(
         @Header(AUTHORIZATION) authorization: String,
         @Field("name") name: String,
         @Field("username") email: String,
@@ -62,7 +62,7 @@ internal interface AuthService {
 
     @FormUrlEncoded
     @POST("users")
-    fun joinInWithFacebook(
+    fun joinWithFacebook(
         @Header(AUTHORIZATION) authorization: String,
         @Field("username") email: String,
         @Field("token") token: String,
@@ -72,7 +72,7 @@ internal interface AuthService {
 
     @FormUrlEncoded
     @POST("users")
-    fun joinInWithGoogle(
+    fun joinWithGoogle(
         @Header(AUTHORIZATION) authorization: String,
         @Field("username") email: String,
         @Field("id_token") idToken: String,
@@ -94,7 +94,7 @@ internal interface AuthService {
      */
     @FormUrlEncoded
     @POST("oauth/authorize/password")
-    fun logIn(
+    fun logInWithEmail(
         @Header(AUTHORIZATION) authorization: String,
         @Field("username") email: String,
         @Field("password") password: String,

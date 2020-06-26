@@ -51,7 +51,7 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
             AuthParam.FIELD_SCOPES to scopes
         )
-        val call = authService.joinInWithGoogle(
+        val call = authService.joinWithGoogle(
             authorization = authHeader,
             email = email,
             idToken = token,
@@ -84,7 +84,7 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
             AuthParam.FIELD_SCOPES to scopes
         )
-        val call = authService.joinInWithFacebook(
+        val call = authService.joinWithFacebook(
             authorization = authHeader,
             email = email,
             token = token,
@@ -119,7 +119,7 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
             AuthParam.FIELD_SCOPES to scopes
         )
-        val call = authService.join(
+        val call = authService.joinWithEmail(
             authorization = authHeader,
             name = displayName,
             email = email,
@@ -152,7 +152,7 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_PASSWORD to password,
             AuthParam.FIELD_SCOPES to scopes
         )
-        val call = authService.logIn(
+        val call = authService.logInWithEmail(
             authorization = authHeader,
             email = email,
             password = password,
