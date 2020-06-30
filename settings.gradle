@@ -1,5 +1,8 @@
-include ':request'
-include ':vimeo-networking', ':models', ':auth', ':api-core'
+include ':vimeo-networking',
+        ':models',
+        ':auth',
+        ':api-core',
+        ':request'
 
 if (!System.env.JITPACK) {
     include ':example-java-android', ':example-kotlin-android', ':example-vimeo-networking2-android'
