@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    api project(":models")
+    api project(':models')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -23,3 +23,6 @@ dependencies {
     implementation "com.squareup.okio:okio:$okioVersion"
 
 }
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'

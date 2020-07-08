@@ -33,8 +33,9 @@ val authenticator = Authenticator.create(serverConfig)
 
 ```java
 
+
 // Java
-Authenticator authenticator = Authenticator.Factory.create(serverConfig);
+Authenticator authenticator = Authenticator.create(serverConfig);
 
 ```
 

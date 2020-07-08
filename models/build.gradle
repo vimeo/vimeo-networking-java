@@ -23,3 +23,6 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
 }
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'

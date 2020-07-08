@@ -137,7 +137,7 @@ interface Authenticator {
     /**
      * Factory to create an instance of [Authenticator].
      */
-    companion object Factory {
+    companion object {
 
         /**
          * Create an instance of Authenticator to make authentication
@@ -147,7 +147,8 @@ interface Authenticator {
          *                     interceptors, read timeouts, base url etc...) that can be set for
          *                     authentication and making requests.
          */
-        fun create(serverConfig: ServerConfig): Authenticator {
+        @JvmName("create")
+        operator fun invoke(serverConfig: ServerConfig): Authenticator {
             val authService = RetrofitSetupModule
                     .retrofit(serverConfig)
                     .create(AuthService::class.java)
