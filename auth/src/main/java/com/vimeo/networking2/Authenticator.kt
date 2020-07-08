@@ -148,7 +148,6 @@ interface Authenticator {
          *                     authentication and making requests.
          */
         fun create(serverConfig: ServerConfig): Authenticator {
-
             val authService = RetrofitSetupModule
                     .retrofit(serverConfig)
                     .create(AuthService::class.java)
@@ -161,7 +160,5 @@ interface Authenticator {
 
             return AuthenticatorImpl(authService, authHeaders, Scopes(serverConfig.scopes))
         }
-
     }
-
 }

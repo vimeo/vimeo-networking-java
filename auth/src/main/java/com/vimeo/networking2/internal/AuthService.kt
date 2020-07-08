@@ -36,6 +36,8 @@ import retrofit2.http.POST
 
 /**
  * All the authentication endpoints.
+ *
+ * TODO: Add docs to remaining functions.
  */
 @Suppress("unused", "LongParameterList", "ComplexInterface")
 internal interface AuthService {

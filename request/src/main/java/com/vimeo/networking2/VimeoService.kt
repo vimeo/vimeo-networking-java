@@ -40,6 +40,8 @@ import retrofit2.http.Url
 
 /**
  * Retrofit service for the Vimeo API.
+ *
+ * TODO: Add documentation to functions.
  */
 @Suppress("unused", "UndocumentedPublicFunction", "ComplexInterface")
 interface VimeoService {
