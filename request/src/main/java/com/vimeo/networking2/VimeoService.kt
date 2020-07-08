@@ -70,7 +70,7 @@ interface VimeoService {
     fun deleteConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
         @Path("type") type: String
-    ): VimeoCall<Void>
+    ): VimeoCall<Unit>
 
     @GET
     fun getPublishJob(
@@ -106,19 +106,19 @@ interface VimeoService {
     fun deleteAlbum(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String
-    ): VimeoCall<Any>
+    ): VimeoCall<Unit>
 
     @PUT
     fun addToAlbum(
         @Header(AUTHORIZATION) authorization: String,
         @Url addToAlbumUri: String
-    ): VimeoCall<Any>
+    ): VimeoCall<Unit>
 
     @DELETE
     fun removeFromAlbum(
         @Header(AUTHORIZATION) authorization: String,
         @Url addToAlbumUri: String
-    ): VimeoCall<Any>
+    ): VimeoCall<Unit>
 
     @PATCH
     fun modifyVideosInAlbum(
@@ -141,7 +141,7 @@ interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Body parameters: Map<String, Any>
-    ): VimeoCall<Any>
+    ): VimeoCall<Unit>
 
     @PATCH
     fun editVideo(
@@ -410,19 +410,19 @@ interface VimeoService {
     ): VimeoCall<User>
 
     @GET
-    fun getVoid(
+    fun getUnit(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @QueryMap options: Map<String, String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
-    ): VimeoCall<Void>
+    ): VimeoCall<Unit>
 
     @PUT
     fun put(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @QueryMap options: Map<String, String>
-    ): VimeoCall<Any>
+    ): VimeoCall<Unit>
 
     @PUT
     fun put(
@@ -431,14 +431,14 @@ interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?,
         @QueryMap options: Map<String, String>,
         @Body body: Any
-    ): VimeoCall<Any>
+    ): VimeoCall<Unit>
 
     @DELETE
     fun delete(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @QueryMap options: Map<String, String>
-    ): VimeoCall<Any>
+    ): VimeoCall<Unit>
 
     @POST
     fun post(
@@ -446,7 +446,7 @@ interface VimeoService {
         @Url uri: String,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?,
         @Body parameters: List<Any>
-    ): VimeoCall<Any>
+    ): VimeoCall<Unit>
 
     @Headers(HEADER_NO_CACHE)
     @PATCH
@@ -455,14 +455,14 @@ interface VimeoService {
         @Url uri: String,
         @QueryMap options: Map<String, String>,
         @Body parameters: Any
-    ): VimeoCall<Void>
+    ): VimeoCall<Unit>
 
     @POST
     fun emptyResponsePost(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Body parameters: Map<String, String>
-    ): VimeoCall<Void>
+    ): VimeoCall<Unit>
 
     @Headers(HEADER_NO_CACHE)
     @GET("search")
