@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         login.setOnClickListener {
 
             val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET)
-            val authenticator = Authenticator.create(serverConfig)
+            val authenticator = Authenticator(serverConfig)
 
             authenticator.clientCredentials(object : VimeoCallback<BasicAccessToken> {
                 override fun onSuccess(response: VimeoResponse.Success<BasicAccessToken>) {

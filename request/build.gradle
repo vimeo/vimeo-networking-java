@@ -8,20 +8,8 @@ repositories {
 
 dependencies {
     api project(':models')
-
-    // Kotlin
+    api project(':auth')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    // Retrofit
-    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-
-    // Moshi Adapters
-    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
-
-    // Okio used by Moshi
-    implementation "com.squareup.okio:okio:$okioVersion"
-
 }
 
 compileKotlin {

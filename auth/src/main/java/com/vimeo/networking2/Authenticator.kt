@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2020 Vimeo (https://vimeo.com)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.vimeo.networking2
 
 import com.vimeo.networking2.config.RetrofitSetupModule
@@ -21,7 +42,7 @@ import okhttp3.Credentials
  * Ex:
  *
  * ```
- * val authenticator = Authenticator.create(serverConfig)
+ * val authenticator = Authenticator(serverConfig)
  * authenticator.clientCredentials(object: VimeoCallback<BasicAuthToken>() {
  *
  *       override fun onSuccess(authResponse: VimeoResponse.Success<BasicAuthToken>) {
@@ -60,7 +81,7 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -77,7 +98,7 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -96,7 +117,7 @@ interface Authenticator {
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -110,13 +131,13 @@ interface Authenticator {
     fun emailLogin(
         email: String,
         password: String,
-        authCallback: VimeoCallback<AuthenticatedAccessToken>
+        authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
      * Factory to create an instance of [Authenticator].
      */
-    companion object Factory {
+    companion object {
 
         /**
          * Create an instance of Authenticator to make authentication
@@ -126,24 +147,20 @@ interface Authenticator {
          *                     interceptors, read timeouts, base url etc...) that can be set for
          *                     authentication and making requests.
          */
-        fun create(serverConfig: ServerConfig): Authenticator {
-
+        @JvmStatic
+        @JvmName("create")
+        operator fun invoke(serverConfig: ServerConfig): Authenticator {
             val authService = RetrofitSetupModule
-                .retrofit(serverConfig)
-                .create(AuthService::class.java)
+                    .retrofit(serverConfig)
+                    .create(AuthService::class.java)
 
             val authHeaders: String =
-                Credentials.basic(
-                    serverConfig.clientId,
-                    serverConfig.clientSecret
-                )
+                    Credentials.basic(
+                        serverConfig.clientId,
+                        serverConfig.clientSecret
+                    )
 
-            val scopes = serverConfig.scopes
-                .joinToString(separator = " ", transform = { it.name.toLowerCase() })
-
-            return AuthenticatorImpl(authService, authHeaders, scopes)
+            return AuthenticatorImpl(authService, authHeaders, Scopes(serverConfig.scopes))
         }
-
     }
-
 }
