@@ -42,7 +42,7 @@ import okhttp3.Credentials
  * Ex:
  *
  * ```
- * val authenticator = Authenticator.create(serverConfig)
+ * val authenticator = Authenticator(serverConfig)
  * authenticator.clientCredentials(object: VimeoCallback<BasicAuthToken>() {
  *
  *       override fun onSuccess(authResponse: VimeoResponse.Success<BasicAuthToken>) {
@@ -147,6 +147,7 @@ interface Authenticator {
          *                     interceptors, read timeouts, base url etc...) that can be set for
          *                     authentication and making requests.
          */
+        @JvmStatic
         @JvmName("create")
         operator fun invoke(serverConfig: ServerConfig): Authenticator {
             val authService = RetrofitSetupModule
