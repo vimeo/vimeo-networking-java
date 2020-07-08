@@ -58,7 +58,7 @@ interface VimeoService {
     ): VimeoCall<ConnectedApp>
 
     @PUT("me/connected_apps/{type}")
-    @Headers("Cache-Control: no-cache, no-store")
+    @Headers(HEADER_NO_CACHE)
     fun createConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
         @Path("type") type: String,
@@ -66,7 +66,7 @@ interface VimeoService {
     ): VimeoCall<ConnectedApp>
 
     @DELETE("me/connected_apps/{type}")
-    @Headers("Cache-Control: no-cache, no-store")
+    @Headers(HEADER_NO_CACHE)
     fun deleteConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
         @Path("type") type: String
@@ -80,7 +80,7 @@ interface VimeoService {
     ): VimeoCall<PublishJob>
 
     @PUT
-    @Headers("Cache-Control: no-cache, no-store")
+    @Headers(HEADER_NO_CACHE)
     fun putPublishJob(
         @Header(AUTHORIZATION) authorization: String,
         @Url url: String,
@@ -448,7 +448,7 @@ interface VimeoService {
         @Body parameters: List<Any>
     ): VimeoCall<Any>
 
-    @Headers("Cache-Control: no-cache, no-store")
+    @Headers(HEADER_NO_CACHE)
     @PATCH
     fun emptyResponsePatch(
         @Header(AUTHORIZATION) authorization: String,
@@ -464,7 +464,7 @@ interface VimeoService {
         @Body parameters: Map<String, String>
     ): VimeoCall<Void>
 
-    @Headers("Cache-Control: no-cache, no-store")
+    @Headers(HEADER_NO_CACHE)
     @GET("search")
     fun search(
         @Header(AUTHORIZATION) authorization: String,
@@ -474,5 +474,6 @@ interface VimeoService {
     companion object {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"
+        private const val HEADER_NO_CACHE = "Cache-Control: no-cache, no-store"
     }
 }
