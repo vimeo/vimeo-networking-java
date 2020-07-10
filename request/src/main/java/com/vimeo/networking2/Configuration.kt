@@ -1,0 +1,249 @@
+package com.vimeo.networking2
+
+import com.vimeo.networking2.logging.LogDelegate
+import com.vimeo.networking2.logging.DefaultLogDelegate
+import okhttp3.Interceptor
+import java.io.File
+import java.util.Locale
+
+/**
+ * The configuration for the client.
+ *
+ * @param baseUrl The base API URL to which all requests will be made.
+ * @param clientId The Vimeo API ID of the client application.
+ * @param clientSecret The Vimeo API secret of the client application.
+ * @param scope The [Scopes] required by the client application.
+ * @param codeGrantRedirectUri The code grant redirect used for OAuth.
+ * @param locales A list of locales which the API should use to localize responses. Locales are prioritized based on
+ * index.
+ * @param accountStore The store used to remember authenticated accounts.
+ * @param networkInterceptors The interceptors that should be attached to network requests.
+ * @param interceptors The interceptors that should be attached to all requests.
+ * @param userAgent The supplemental user agent string which will be added to the internal user agent, identifying the
+ * client.
+ * @param requestTimeoutSeconds The maximum number of seconds a request will wait to complete before timing out.
+ * @param isCertPinningEnabled True if the library should pin certificates, false otherwise. Note: should be turned off
+ * when debugging.
+ * @param logDelegate The instance to which logging will be delegated.
+ * @param logLevel The level of logging which will be performed by the library.
+ * @param cacheDirectory The optional directory in which requests will be cached.
+ * @param cacheMaxSizeBytes The maximum size of the cache, if one was provided.
+ * @param cacheMaxAgeSeconds The maximum age of items in the cache, if one was provided.
+ */
+data class Configuration(
+    val baseUrl: String,
+
+    val clientId: String,
+    val clientSecret: String,
+    val scope: Scopes,
+    val codeGrantRedirectUri: String,
+
+    val locales: List<Locale>,
+
+    val accountStore: AccountStore,
+
+    val networkInterceptors: List<Interceptor>,
+    val interceptors: List<Interceptor>,
+
+    val userAgent: String,
+
+    val requestTimeoutSeconds: Int,
+
+    val isCertPinningEnabled: Boolean,
+
+    val logDelegate: LogDelegate,
+    val logLevel: LogDelegate.Level,
+
+    val cacheDirectory: File?,
+    val cacheMaxSizeBytes: Long,
+    val cacheMaxAgeSeconds: Int
+) {
+
+    /**
+     * The builder for the [Configuration].
+     *
+     * @param clientID The Vimeo API client ID, required to construct an instance.
+     * @param clientSecret The Vimeo API client secret, required to construct an instance.
+     * @param scope The permission scopes requested by the client, required to construct an instance.
+     */
+    class Builder(private val clientID: String, private val clientSecret: String, private val scope: Scopes) {
+        private var baseUrl: String = DEFAULT_BASE_URL
+
+        private var codeGrantRedirectUrl: String = "vimeo$clientID://auth"
+
+        private var locales: List<Locale> = listOf(Locale.US)
+
+        private var accountStore: AccountStore = InMemoryAccountStore()
+
+        private var networkInterceptors: List<Interceptor> = emptyList()
+        private var interceptors: List<Interceptor> = emptyList()
+
+        private var userAgent: String = DEFAULT_USER_AGENT
+
+        private var requestTimeoutSeconds: Int = DEFAULT_TIMEOUT
+
+        private var isCertPinningEnabled: Boolean = true
+
+        private var logDelegate: LogDelegate = DefaultLogDelegate()
+        private var logLevel: LogDelegate.Level = LogDelegate.Level.DEBUG
+
+        private var cacheDirectory: File? = null
+        private var cacheMaxSizeBytes: Long = DEFAULT_CACHE_SIZE
+        private var cacheMaxAgeSeconds: Int = DEFAULT_CACHE_MAX_AGE
+
+        /**
+         * Use a different base URL. Defaults to [DEFAULT_BASE_URL].
+         *
+         * @see Configuration.baseUrl
+         */
+        fun withBaseUrl(baseUrl: String) = apply { this.baseUrl = baseUrl }
+
+        /**
+         * Use a different code grant redirect. Defaults to `vimeo{clientId}://auth`.
+         *
+         * @see Configuration.codeGrantRedirectUri
+         */
+        fun withCodeGrantRedirectUrl(codeGrantRedirectUrl: String) = apply {
+            this.codeGrantRedirectUrl = codeGrantRedirectUrl
+        }
+
+        /**
+         * Use a different set of locales. Defaults to a list containing [Locale.US].
+         *
+         * @see Configuration.locales
+         */
+        fun withLocales(locales: List<Locale>) = apply { this.locales = locales }
+
+        /**
+         * Use a different store. Defaults to [InMemoryAccountStore].
+         *
+         * @see Configuration.locales
+         */
+        fun withAccountStore(accountStore: AccountStore) = apply { this.accountStore = accountStore }
+
+        /**
+         * Use a different set of network request interceptors. Defaults to none.
+         *
+         * @see Configuration.networkInterceptors
+         */
+        fun withNetworkInterceptors(networkInterceptors: List<Interceptor>) = apply {
+            this.networkInterceptors = networkInterceptors
+        }
+
+        /**
+         * Use a different set of regular interceptors. Defaults to none.
+         *
+         * @see Configuration.interceptors
+         */
+        fun withInterceptors(interceptors: List<Interceptor>) = apply { this.interceptors = interceptors }
+
+        /**
+         * Use a different supplemental user agent. Defaults to [DEFAULT_USER_AGENT].
+         *
+         * @see Configuration.userAgent
+         */
+        fun withUserAgent(userAgent: String) = apply { this.userAgent = userAgent }
+
+        /**
+         * Use a different request time out. Defaults to [DEFAULT_TIMEOUT].
+         *
+         * @see Configuration.requestTimeoutSeconds
+         */
+        fun withRequestTimeout(requestTimeoutSeconds: Int) = apply {
+            this.requestTimeoutSeconds = requestTimeoutSeconds
+        }
+
+        /**
+         * Enable or disable certificate pinning. Defaults to true.
+         *
+         * @see Configuration.isCertPinningEnabled
+         */
+        fun withCertPinning(certPinningEnabled: Boolean) = apply { this.isCertPinningEnabled = certPinningEnabled }
+
+        /**
+         * Use a different log delegate. Defaults to [DefaultLogDelegate] which logs to the system output.
+         *
+         * @see Configuration.logDelegate
+         */
+        fun withLogDelegate(logDelegate: LogDelegate) = apply { this.logDelegate = logDelegate }
+
+        /**
+         * Use a different log level. Defaults to [LogDelegate.Level.DEBUG].
+         *
+         * @see Configuration.logLevel
+         */
+        fun withLogLevel(logLevel: LogDelegate.Level) = apply { this.logLevel = logLevel }
+
+        /**
+         * Use a different cache directory. Defaults to no cache.
+         *
+         * @see Configuration.cacheDirectory
+         */
+        fun withCacheDirectory(cacheDirectory: File) = apply { this.cacheDirectory = cacheDirectory }
+
+        /**
+         * Use a different maximum cache size. Defaults to [DEFAULT_CACHE_SIZE].
+         *
+         * @see Configuration.cacheMaxSizeBytes
+         */
+        fun withCacheMaxSizeBytes(cacheMaxSizeBytes: Long) = apply { this.cacheMaxSizeBytes = cacheMaxSizeBytes }
+
+        /**
+         * Use a different maximum cache age. Defaults to [DEFAULT_CACHE_MAX_AGE].
+         *
+         * @see Configuration.cacheMaxAgeSeconds
+         */
+        fun withCacheMaxAgeSeconds(cacheMaxAgeSeconds: Int) = apply { this.cacheMaxAgeSeconds = cacheMaxAgeSeconds }
+
+        /**
+         * Build the configuration instance using the chosen modifications and unspecified default values.
+         */
+        fun build(): Configuration = Configuration(
+            baseUrl = baseUrl,
+            clientId = clientID,
+            clientSecret = clientSecret,
+            scope = scope,
+            codeGrantRedirectUri = codeGrantRedirectUrl,
+            locales = locales,
+            accountStore = accountStore,
+            networkInterceptors = networkInterceptors,
+            interceptors = interceptors,
+            userAgent = userAgent,
+            requestTimeoutSeconds = requestTimeoutSeconds,
+            isCertPinningEnabled = isCertPinningEnabled,
+            logDelegate = logDelegate,
+            logLevel = logLevel,
+            cacheDirectory = cacheDirectory,
+            cacheMaxSizeBytes = cacheMaxSizeBytes,
+            cacheMaxAgeSeconds = cacheMaxAgeSeconds
+        )
+    }
+
+    companion object {
+        /**
+         * The default max age of the cache, 2 hours.
+         */
+        private const val DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2
+
+        /**
+         * The default size of the cache, 10 Mib
+         */
+        private const val DEFAULT_CACHE_SIZE = 10L * 1024 * 1024
+
+        /**
+         * Default response timeout, 60 seconds.
+         */
+        private const val DEFAULT_TIMEOUT = 60
+
+        /**
+         * An unspecified user agent.
+         */
+        private const val DEFAULT_USER_AGENT = "UNSPECIFIED"
+
+        /**
+         * The default base URL for the Vimeo API.
+         */
+        private const val DEFAULT_BASE_URL = "https://api.vimeo.com/"
+    }
+
+}
