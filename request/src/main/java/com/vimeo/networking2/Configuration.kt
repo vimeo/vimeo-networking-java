@@ -115,14 +115,14 @@ data class Configuration(
         private var cacheMaxAgeSeconds: Int = DEFAULT_CACHE_MAX_AGE
 
         /**
-         * Use a different base URL. Defaults to [DEFAULT_BASE_URL].
+         * Specify a base URL. Defaults to [DEFAULT_BASE_URL].
          *
          * @see Configuration.baseUrl
          */
         fun withBaseUrl(baseUrl: String) = apply { this.baseUrl = baseUrl }
 
         /**
-         * Use a different code grant redirect. Defaults to `vimeo{clientId}://auth`.
+         * Specify a code grant redirect. Defaults to `vimeo{clientId}://auth`.
          *
          * @see Configuration.codeGrantRedirectUri
          */
@@ -131,21 +131,21 @@ data class Configuration(
         }
 
         /**
-         * Use a different set of locales. Defaults to a list containing [Locale.US].
+         * Specify a set of locales. Defaults to a list containing [Locale.US].
          *
          * @see Configuration.locales
          */
         fun withLocales(locales: List<Locale>) = apply { this.locales = locales }
 
         /**
-         * Use a different store. Defaults to [InMemoryAccountStore].
+         * Specify a store. Defaults to [InMemoryAccountStore].
          *
          * @see Configuration.locales
          */
         fun withAccountStore(accountStore: AccountStore) = apply { this.accountStore = accountStore }
 
         /**
-         * Use a different set of network request interceptors. Defaults to none.
+         * Specify a set of network request interceptors. Defaults to none.
          *
          * @see Configuration.networkInterceptors
          */
@@ -154,21 +154,21 @@ data class Configuration(
         }
 
         /**
-         * Use a different set of regular interceptors. Defaults to none.
+         * Specify a set of application interceptors. Defaults to none.
          *
          * @see Configuration.interceptors
          */
         fun withInterceptors(interceptors: List<Interceptor>) = apply { this.interceptors = interceptors }
 
         /**
-         * Use a different supplemental user agent. Defaults to [DEFAULT_USER_AGENT].
+         * Specify a supplemental user agent. Defaults to [DEFAULT_USER_AGENT].
          *
          * @see Configuration.userAgent
          */
         fun withUserAgent(userAgent: String) = apply { this.userAgent = userAgent }
 
         /**
-         * Use a different request time out. Defaults to [DEFAULT_TIMEOUT].
+         * Specify a request time out. Defaults to [DEFAULT_TIMEOUT].
          *
          * @see Configuration.requestTimeoutSeconds
          */
@@ -184,36 +184,35 @@ data class Configuration(
         fun withCertPinning(certPinningEnabled: Boolean) = apply { this.isCertPinningEnabled = certPinningEnabled }
 
         /**
-         * Use a different log delegate, or none at all. Defaults to [DefaultLogDelegate] which logs to the system
-         * output.
+         * Specify a log delegate, or none at all. Defaults to [DefaultLogDelegate] which logs to the system output.
          *
          * @see Configuration.logDelegate
          */
         fun withLogDelegate(logDelegate: LogDelegate?) = apply { this.logDelegate = logDelegate }
 
         /**
-         * Use a different log level. Defaults to [LogDelegate.Level.DEBUG].
+         * Specify a log level. Defaults to [LogDelegate.Level.DEBUG].
          *
          * @see Configuration.logLevel
          */
         fun withLogLevel(logLevel: LogDelegate.Level) = apply { this.logLevel = logLevel }
 
         /**
-         * Use a different cache directory. Defaults to no cache.
+         * Specify a cache directory. Defaults to no cache.
          *
          * @see Configuration.cacheDirectory
          */
         fun withCacheDirectory(cacheDirectory: File) = apply { this.cacheDirectory = cacheDirectory }
 
         /**
-         * Use a different maximum cache size. Defaults to [DEFAULT_CACHE_SIZE].
+         * Specify a maximum cache size. Defaults to [DEFAULT_CACHE_SIZE].
          *
          * @see Configuration.cacheMaxSizeBytes
          */
         fun withCacheMaxSizeBytes(cacheMaxSizeBytes: Long) = apply { this.cacheMaxSizeBytes = cacheMaxSizeBytes }
 
         /**
-         * Use a different maximum cache age. Defaults to [DEFAULT_CACHE_MAX_AGE].
+         * Specify a maximum cache age. Defaults to [DEFAULT_CACHE_MAX_AGE].
          *
          * @see Configuration.cacheMaxAgeSeconds
          */
