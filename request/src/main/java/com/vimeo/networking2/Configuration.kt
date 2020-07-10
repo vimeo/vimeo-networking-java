@@ -38,8 +38,10 @@ import java.util.Locale
  * @param locales A list of locales which the API should use to localize responses. Locales are prioritized based on
  * index.
  * @param accountStore The store used to remember authenticated accounts.
- * @param networkInterceptors The interceptors that should be attached to network requests.
- * @param interceptors The interceptors that should be attached to all requests.
+ * @param networkInterceptors The interceptors that should be attached to network requests. See
+ * [https://square.github.io/okhttp/interceptors/].
+ * @param interceptors The interceptors that should be attached to all requests. See
+ * [https://square.github.io/okhttp/interceptors/].
  * @param userAgent The supplemental user agent string which will be added to the internal user agent, identifying the
  * client.
  * @param requestTimeoutSeconds The maximum number of seconds a request will wait to complete before timing out.
@@ -72,7 +74,7 @@ data class Configuration(
 
     val isCertPinningEnabled: Boolean,
 
-    val logDelegate: LogDelegate,
+    val logDelegate: LogDelegate?,
     val logLevel: LogDelegate.Level,
 
     val cacheDirectory: File?,
@@ -83,14 +85,14 @@ data class Configuration(
     /**
      * The builder for the [Configuration].
      *
-     * @param clientID The Vimeo API client ID, required to construct an instance.
+     * @param clientId The Vimeo API client ID, required to construct an instance.
      * @param clientSecret The Vimeo API client secret, required to construct an instance.
      * @param scope The permission scopes requested by the client, required to construct an instance.
      */
-    class Builder(private val clientID: String, private val clientSecret: String, private val scope: Scopes) {
+    class Builder(private val clientId: String, private val clientSecret: String, private val scope: Scopes) {
         private var baseUrl: String = DEFAULT_BASE_URL
 
-        private var codeGrantRedirectUrl: String = "vimeo$clientID://auth"
+        private var codeGrantRedirectUrl: String = "vimeo$clientId://auth"
 
         private var locales: List<Locale> = listOf(Locale.US)
 
@@ -105,7 +107,7 @@ data class Configuration(
 
         private var isCertPinningEnabled: Boolean = true
 
-        private var logDelegate: LogDelegate = DefaultLogDelegate()
+        private var logDelegate: LogDelegate? = DefaultLogDelegate()
         private var logLevel: LogDelegate.Level = LogDelegate.Level.DEBUG
 
         private var cacheDirectory: File? = null
@@ -182,11 +184,12 @@ data class Configuration(
         fun withCertPinning(certPinningEnabled: Boolean) = apply { this.isCertPinningEnabled = certPinningEnabled }
 
         /**
-         * Use a different log delegate. Defaults to [DefaultLogDelegate] which logs to the system output.
+         * Use a different log delegate, or none at all. Defaults to [DefaultLogDelegate] which logs to the system
+         * output.
          *
          * @see Configuration.logDelegate
          */
-        fun withLogDelegate(logDelegate: LogDelegate) = apply { this.logDelegate = logDelegate }
+        fun withLogDelegate(logDelegate: LogDelegate?) = apply { this.logDelegate = logDelegate }
 
         /**
          * Use a different log level. Defaults to [LogDelegate.Level.DEBUG].
@@ -221,7 +224,7 @@ data class Configuration(
          */
         fun build(): Configuration = Configuration(
             baseUrl = baseUrl,
-            clientId = clientID,
+            clientId = clientId,
             clientSecret = clientSecret,
             scope = scope,
             codeGrantRedirectUri = codeGrantRedirectUrl,
