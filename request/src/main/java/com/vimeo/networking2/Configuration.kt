@@ -246,27 +246,27 @@ data class Configuration(
         /**
          * The default max age of the cache, 2 hours.
          */
-        private const val DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2
+        const val DEFAULT_CACHE_MAX_AGE = 60 * 60 * 2
 
         /**
-         * The default size of the cache, 10 Mib
+         * The default size of the cache, 10 Mib.
          */
-        private const val DEFAULT_CACHE_SIZE = 10L * 1024 * 1024
+        const val DEFAULT_CACHE_SIZE = 10L * 1024 * 1024
 
         /**
          * Default response timeout, 60 seconds.
          */
-        private const val DEFAULT_TIMEOUT = 60
+        const val DEFAULT_TIMEOUT = 60
 
         /**
          * An unspecified user agent.
          */
-        private const val DEFAULT_USER_AGENT = "UNSPECIFIED"
+        const val DEFAULT_USER_AGENT = "UNSPECIFIED"
 
         /**
          * The default base URL for the Vimeo API.
          */
-        private const val DEFAULT_BASE_URL = "https://api.vimeo.com/"
+        const val DEFAULT_BASE_URL = "https://api.vimeo.com/"
     }
 
 }
