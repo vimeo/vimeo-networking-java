@@ -108,7 +108,7 @@ data class Configuration(
         private var isCertPinningEnabled: Boolean = true
 
         private var logDelegate: LogDelegate? = DefaultLogDelegate()
-        private var logLevel: LogDelegate.Level = LogDelegate.Level.DEBUG
+        private var logLevel: LogDelegate.Level = LogDelegate.Level.NONE
 
         private var cacheDirectory: File? = null
         private var cacheMaxSizeBytes: Long = DEFAULT_CACHE_SIZE
@@ -191,7 +191,7 @@ data class Configuration(
         fun withLogDelegate(logDelegate: LogDelegate?) = apply { this.logDelegate = logDelegate }
 
         /**
-         * Specify a log level. Defaults to [LogDelegate.Level.DEBUG].
+         * Specify a log level. Defaults to [LogDelegate.Level.NONE], which never logs.
          *
          * @see Configuration.logLevel
          */
