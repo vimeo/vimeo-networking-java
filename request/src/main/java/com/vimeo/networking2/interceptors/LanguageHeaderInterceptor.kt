@@ -28,7 +28,10 @@ import okhttp3.Response
 import java.util.Locale
 
 /**
- * Add custom `Accept-Language` header to all requests.
+ * Add a custom `Accept-Language` header to all requests.
+ *
+ * @param locales The list of locales that should be supported, shouldn't be empty as this may result in undefined
+ * behavior of the API.
  */
 class LanguageHeaderInterceptor(locales: List<Locale>) : Interceptor {
     private val validLocales: String = locales.joinToString(separator = ",", transform = Locale::getLanguage)

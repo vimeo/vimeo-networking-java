@@ -27,7 +27,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
- * Add custom `User-Agent` header to all requests.
+ * Add a custom `User-Agent` header to all requests.
+ *
+ * @param userAgent The user agent that should be sent with every request.
  */
 class UserAgentHeaderInterceptor(private val userAgent: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response =

@@ -29,15 +29,17 @@ import okhttp3.Response
 
 /**
  * Rewrite the server's cache-control header because our server sets all `Cache-Control` headers to `no-store`. To get
- * data from the cache, we set a max age to [Configuration.cacheMaxAgeSeconds]. This prevents OkHttp from throwing a 504
- * exception. API no longer sends a max age in the header. OkHttp determines the cache to be invalid. This is a work
- * around for this issue.
+ * data from the cache, we set a max age to [Configuration.cacheMaxAgeSeconds]. Normally the API indicates that the
+ * contents should not be cached. Since most clients want common requests to be available via cache for performance
+ * reasons, we overwrite this behavior and set our own [maxAgeSeconds] expiration.
+ *
+ * @param maxAgeSeconds The max age of the cache before expiration in seconds.
  */
-class CacheControlHeaderInterceptor(private val mMaxAge: Int) : Interceptor {
+class CacheControlHeaderInterceptor(private val maxAgeSeconds: Int) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response =
             chain.proceed(chain.request())
                     .newBuilder()
-                    .header(HEADER_CACHE_CONTROL, "$HEADER_CACHE_PUBLIC, max-age=$mMaxAge")
+                    .header(HEADER_CACHE_CONTROL, "$HEADER_CACHE_PUBLIC, max-age=$maxAgeSeconds")
                     .build()
 
     companion object {
