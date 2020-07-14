@@ -19,8 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.config
 
+import com.vimeo.networking2.ApiConstants
+import com.vimeo.networking2.ScopeType
+import com.vimeo.networking2.Scopes
+import com.vimeo.networking2.account.AccountStore
+import com.vimeo.networking2.account.InMemoryAccountStore
 import com.vimeo.networking2.logging.LogDelegate
 import com.vimeo.networking2.logging.DefaultLogDelegate
 import okhttp3.Interceptor
@@ -70,7 +75,7 @@ data class Configuration(
 
     val userAgent: String,
 
-    val requestTimeoutSeconds: Int,
+    val requestTimeoutSeconds: Long,
 
     val isCertPinningEnabled: Boolean,
 
@@ -87,10 +92,10 @@ data class Configuration(
      *
      * @param clientId The Vimeo API client ID, required to construct an instance.
      * @param clientSecret The Vimeo API client secret, required to construct an instance.
-     * @param scope The permission scopes requested by the client, required to construct an instance.
+     * @param scopes The permission scopes requested by the client, required to construct an instance.
      */
-    class Builder(private val clientId: String, private val clientSecret: String, private val scope: Scopes) {
-        private var baseUrl: String = DEFAULT_BASE_URL
+    class Builder(private val clientId: String, private val clientSecret: String, private val scopes: List<ScopeType>) {
+        private var baseUrl: String = ApiConstants.BASE_URL
 
         private var codeGrantRedirectUrl: String = "vimeo$clientId://auth"
 
@@ -103,7 +108,7 @@ data class Configuration(
 
         private var userAgent: String = DEFAULT_USER_AGENT
 
-        private var requestTimeoutSeconds: Int = DEFAULT_TIMEOUT
+        private var requestTimeoutSeconds: Long = DEFAULT_TIMEOUT
 
         private var isCertPinningEnabled: Boolean = true
 
@@ -115,7 +120,7 @@ data class Configuration(
         private var cacheMaxAgeSeconds: Int = DEFAULT_CACHE_MAX_AGE
 
         /**
-         * Specify a base URL. Defaults to [DEFAULT_BASE_URL].
+         * Specify a base URL. Defaults to [ApiConstants.BASE_URL].
          *
          * @see Configuration.baseUrl
          */
@@ -172,7 +177,7 @@ data class Configuration(
          *
          * @see Configuration.requestTimeoutSeconds
          */
-        fun withRequestTimeout(requestTimeoutSeconds: Int) = apply {
+        fun withRequestTimeout(requestTimeoutSeconds: Long) = apply {
             this.requestTimeoutSeconds = requestTimeoutSeconds
         }
 
@@ -225,7 +230,7 @@ data class Configuration(
             baseUrl = baseUrl,
             clientId = clientId,
             clientSecret = clientSecret,
-            scope = scope,
+            scope = Scopes(scopes),
             codeGrantRedirectUri = codeGrantRedirectUrl,
             locales = locales,
             accountStore = accountStore,
@@ -256,17 +261,13 @@ data class Configuration(
         /**
          * Default response timeout, 60 seconds.
          */
-        const val DEFAULT_TIMEOUT = 60
+        const val DEFAULT_TIMEOUT = 60L
 
         /**
          * An unspecified user agent.
          */
         const val DEFAULT_USER_AGENT = "UNSPECIFIED"
 
-        /**
-         * The default base URL for the Vimeo API.
-         */
-        const val DEFAULT_BASE_URL = "https://api.vimeo.com/"
     }
 
 }

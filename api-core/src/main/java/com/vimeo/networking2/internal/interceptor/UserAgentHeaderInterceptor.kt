@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2020 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2020 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,29 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.internal.interceptor
+
+import okhttp3.Interceptor
+import okhttp3.Response
 
 /**
- * Interface responsible for handling the creation, deletion, and loading of Vimeo accounts on the client.
+ * Add a custom `User-Agent` header to all requests.
+ *
+ * @param userAgent The user agent that should be sent with every request.
  */
-interface AccountStore {
-    /**
-     * Load an account that has been saved previously. Returns `null` if no account was saved.
-     */
-    fun loadAccount(): VimeoAccount?
+class UserAgentHeaderInterceptor(private val userAgent: String) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response =
+        chain.proceed(chain.request().newBuilder().header(HEADER_USER_AGENT, userAgent).build())
 
-    /**
-     * Save the provided account associated with an email.
-     *
-     * @param vimeoAccount The account to save.
-     * @param email The email associated with the account.
-     */
-    fun saveAccount(vimeoAccount: VimeoAccount, email: String)
-
-    /**
-     * Delete the provided account from the store.
-     *
-     * @param vimeoAccount The account to delete.
-     */
-    fun deleteAccount(vimeoAccount: VimeoAccount)
+    companion object {
+        private const val HEADER_USER_AGENT = "User-Agent"
+    }
 }

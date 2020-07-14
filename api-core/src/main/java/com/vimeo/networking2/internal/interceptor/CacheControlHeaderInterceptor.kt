@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.interceptors
+package com.vimeo.networking2.internal.interceptor
 
-import com.vimeo.networking2.Configuration
+import com.vimeo.networking2.config.Configuration
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -37,10 +37,10 @@ import okhttp3.Response
  */
 class CacheControlHeaderInterceptor(private val maxAgeSeconds: Int) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response =
-            chain.proceed(chain.request())
-                    .newBuilder()
-                    .header(HEADER_CACHE_CONTROL, "$HEADER_CACHE_PUBLIC, max-age=$maxAgeSeconds")
-                    .build()
+        chain.proceed(chain.request())
+            .newBuilder()
+            .header(HEADER_CACHE_CONTROL, "$HEADER_CACHE_PUBLIC, max-age=$maxAgeSeconds")
+            .build()
 
     companion object {
         private const val HEADER_CACHE_CONTROL = "Cache-Control"

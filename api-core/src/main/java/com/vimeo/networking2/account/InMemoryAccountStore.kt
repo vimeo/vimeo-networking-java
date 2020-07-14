@@ -1,7 +1,5 @@
 /*
- * The MIT License (MIT)
- *
- * Copyright (c) 2020 Vimeo
+ * Copyright (c) 2020 Vimeo (https://vimeo.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,22 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.interceptors
+package com.vimeo.networking2.account
 
-import com.vimeo.networking2.ApiConstants
-import okhttp3.Interceptor
-import okhttp3.Response
+import com.vimeo.networking2.VimeoAccount
 
 /**
- * Add a custom `Accept` header to all requests.
+ * An account store that just holds the accounts in memory.
  */
-class AcceptHeaderInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
-        chain.request().newBuilder().header(HEADER_ACCEPT, HEADER_ACCEPT_VALUE).build())
+class InMemoryAccountStore : AccountStore {
+    private var vimeoAccount: VimeoAccount? = null
 
-    companion object {
-        private const val HEADER_ACCEPT = "Accept"
-        private const val HEADER_ACCEPT_VALUE: String =
-                "application/vnd.vimeo.*+json; version=${ApiConstants.API_VERSION}"
+    override fun loadAccount(): VimeoAccount? = vimeoAccount
+
+    override fun saveAccount(vimeoAccount: VimeoAccount, email: String) {
+        this.vimeoAccount = vimeoAccount
+    }
+
+    override fun deleteAccount(vimeoAccount: VimeoAccount) {
+        this.vimeoAccount = null
     }
 }

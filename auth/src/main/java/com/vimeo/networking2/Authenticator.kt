@@ -21,8 +21,8 @@
  */
 package com.vimeo.networking2
 
+import com.vimeo.networking2.config.Configuration
 import com.vimeo.networking2.config.RetrofitSetupModule
-import com.vimeo.networking2.config.ServerConfig
 import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
 import okhttp3.Credentials
@@ -59,7 +59,7 @@ import okhttp3.Credentials
 interface Authenticator {
 
     /**
-     * Authenticate client id and client secret.
+     * Authenticate using the client id and client secret to obtain a logged out token.
      *
      * @param authCallback informs you of the result of the response.
      *
@@ -68,12 +68,12 @@ interface Authenticator {
     fun clientCredentials(authCallback: VimeoCallback<BasicAccessToken>): VimeoRequest
 
     /**
-     * Authenticate via Google.
+     * Authenticate via Google sign in to obtain a logged in token.
      *
-     * @param token             Google authentication token.
-     * @param email             Email addressed used to sign in to Google.
-     * @param marketingOptIn    Opt in or out on GDPR.
-     * @param authCallback      Callback to be notified of the result of the request.
+     * @param token Google authentication token.
+     * @param email Email addressed used to sign in to Google.
+     * @param marketingOptIn Opt in or out on GDPR.
+     * @param authCallback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -85,12 +85,12 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Authenticate via Facebook.
+     * Authenticate via Facebook sign in to obtain a logged in token.
      *
-     * @param token             Google authentication token.
-     * @param email             Email addressed used to sign in to Google.
-     * @param marketingOptIn    Opt in or out on GDPR.
-     * @param authCallback      Callback to be notified of the result of the request.
+     * @param token Google authentication token.
+     * @param email Email addressed used to sign in to Google.
+     * @param marketingOptIn Opt in or out on GDPR.
+     * @param authCallback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -102,13 +102,13 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Join Vimeo by email.
+     * Join Vimeo using email and obtain a logged in token.
      *
-     * @param displayName       User name to set for your Vimeo account.
-     * @param email             Email to use to login to your Vimeo account.
-     * @param password          Password for your Vimeo account.
-     * @param marketingOptIn    Opt in or out on GDPR.
-     * @param authCallback      Callback to be notified of the result of the request.
+     * @param displayName User name to set for your Vimeo account.
+     * @param email Email to use to login to your Vimeo account.
+     * @param password Password for your Vimeo account.
+     * @param marketingOptIn Opt in or out on GDPR.
+     * @param authCallback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -121,10 +121,10 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Login via email.
+     * Login via email to obtain a logged in token.
      *
-     * @param email         Email address associated with your Vimeo account.
-     * @param password      Password for your Vimeo account.
+     * @param email Email address associated with your Vimeo account.
+     * @param password Password for your Vimeo account.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -140,27 +140,18 @@ interface Authenticator {
     companion object {
 
         /**
-         * Create an instance of Authenticator to make authentication
-         * requests.
+         * Create an instance of Authenticator to make authentication requests.
          *
-         * @param serverConfig All the server configuration (client id and secret, custom
-         *                     interceptors, read timeouts, base url etc...) that can be set for
-         *                     authentication and making requests.
+         * @param configuration All the server configuration (client id and secret, custom interceptors, read timeouts,
+         * base url etc...) that can be set for authentication and making requests.
          */
         @JvmStatic
         @JvmName("create")
-        operator fun invoke(serverConfig: ServerConfig): Authenticator {
-            val authService = RetrofitSetupModule
-                    .retrofit(serverConfig)
-                    .create(AuthService::class.java)
+        operator fun invoke(configuration: Configuration): Authenticator {
+            val authService = RetrofitSetupModule.retrofit(configuration).create(AuthService::class.java)
+            val authHeaders: String = Credentials.basic(configuration.clientId, configuration.clientSecret)
 
-            val authHeaders: String =
-                    Credentials.basic(
-                        serverConfig.clientId,
-                        serverConfig.clientSecret
-                    )
-
-            return AuthenticatorImpl(authService, authHeaders, Scopes(serverConfig.scopes))
+            return AuthenticatorImpl(authService, authHeaders, configuration.scope)
         }
     }
 }

@@ -24,9 +24,12 @@ package com.vimeo.networking2.config
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.vimeo.networking2.ApiConstants
-import com.vimeo.networking2.ApiConstants.API_VERSION
 import com.vimeo.networking2.ApiConstants.SDK_VERSION
 import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
+import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
+import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
+import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
+import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -41,10 +44,7 @@ import java.util.concurrent.TimeUnit
 object RetrofitSetupModule {
 
     private const val AUTHORIZATION_HEADER = "Authorization"
-    private const val USER_AGENT_HEADER = "User-Agent"
     private const val USER_AGENT_HEADER_VALUE = "Kotlin VimeoNetworking/$SDK_VERSION"
-    private const val HEADER_ACCEPT = "Accept"
-    private const val HEADER_ACCEPT_VALUE = "application/vnd.vimeo.*+json; version=$API_VERSION"
 
     /**
      * Create Moshi object for serialization and deserialization.
@@ -54,37 +54,23 @@ object RetrofitSetupModule {
         .build()
 
     /**
-     * Header for specifying which API version to use.
-     */
-    private val acceptHeaderInterceptor =
-        Interceptor { chain ->
-            chain.proceed(
-                chain
-                    .request()
-                    .newBuilder()
-                    .header(HEADER_ACCEPT, HEADER_ACCEPT_VALUE)
-                    .build()
-            )
-        }
-
-    /**
      * Creates the object graph for the setup dependencies. After the graph is created, the method
      * return an instance of [Retrofit] which is root of the graph.
      */
-    fun retrofit(serverConfig: ServerConfig, userAgent: String? = null, accessToken: String? = null): Retrofit {
+    fun retrofit(configuration: Configuration, accessToken: String? = null): Retrofit {
         val interceptors = mutableListOf<Interceptor>()
         if (accessToken?.isNotBlank() == true) {
             interceptors.add(accessTokenInterceptor(accessToken))
         }
-        interceptors.add(userAgentInterceptor(userAgent))
-        interceptors.add(acceptHeaderInterceptor)
+        interceptors.add(UserAgentHeaderInterceptor(createCompositeUserAgent(configuration.userAgent)))
+        interceptors.add(AcceptHeaderInterceptor())
+        interceptors.add(LanguageHeaderInterceptor(configuration.locales))
+        interceptors.addAll(configuration.interceptors)
 
-        if (serverConfig.customInterceptors?.isNotEmpty() == true) {
-            interceptors.addAll(serverConfig.customInterceptors)
-        }
+        val networkInterceptors = listOf(CacheControlHeaderInterceptor(configuration.cacheMaxAgeSeconds))
 
-        val okHttpClient = okHttpClient(serverConfig, interceptors)
-        return createRetrofit(serverConfig, okHttpClient)
+        val okHttpClient = okHttpClient(configuration, interceptors, networkInterceptors)
+        return createRetrofit(configuration, okHttpClient)
     }
 
     /**
@@ -101,46 +87,32 @@ object RetrofitSetupModule {
             chain.proceed(builder.build())
         }
 
-    /**
-     * Create interceptor for adding a user agent.
-     */
-    private fun userAgentInterceptor(userAgent: String?) =
-        Interceptor { chain ->
-            val request = chain.request()
-            val builder = request.newBuilder()
-
-            if (request.header(USER_AGENT_HEADER).isNullOrBlank()) {
-
-                val customUserAgent = userAgent?.let {
-                    "$it $USER_AGENT_HEADER_VALUE"
-                } ?: USER_AGENT_HEADER_VALUE
-
-                builder.addHeader(USER_AGENT_HEADER, customUserAgent)
-            }
-            chain.proceed(builder.build())
-        }
+    private fun createCompositeUserAgent(providedUserAgent: String?) =
+        providedUserAgent?.let { "$it $USER_AGENT_HEADER_VALUE" } ?: USER_AGENT_HEADER_VALUE
 
     /**
      * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
      */
-    private fun okHttpClient(serverConfig: ServerConfig,
-                             customInterceptors: List<Interceptor>?): OkHttpClient =
-        OkHttpClient.Builder().apply {
-            serverConfig.networkInterceptors?.forEach { addNetworkInterceptor(it) }
-            serverConfig.customInterceptors?.forEach { addInterceptor(it) }
+    private fun okHttpClient(
+        configuration: Configuration,
+        applicationInterceptors: List<Interceptor>,
+        networkInterceptors: List<Interceptor>
+    ): OkHttpClient = OkHttpClient.Builder().apply {
+        configuration.networkInterceptors.forEach { addNetworkInterceptor(it) }
+        configuration.interceptors.forEach { addInterceptor(it) }
 
-            connectTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
-            readTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
-            writeTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
-            retryOnConnectionFailure(false)
+        connectTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        readTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        writeTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        retryOnConnectionFailure(false)
 
-            if (!customInterceptors.isNullOrEmpty()) {
-                interceptors().addAll(customInterceptors)
-            }
-            if (serverConfig.certPinningEnabled) {
-                certificatePinner(createCertificatePinner())
-            }
-        }.build()
+        interceptors().addAll(applicationInterceptors)
+        networkInterceptors().addAll(networkInterceptors)
+
+        if (configuration.isCertPinningEnabled) {
+            certificatePinner(createCertificatePinner())
+        }
+    }.build()
 
     /**
      * Create certificate pinner to configure OkHttpClient.
@@ -152,9 +124,9 @@ object RetrofitSetupModule {
     /**
      * Create [Retrofit] with OkHttpClient and Moshi.
      */
-    private fun createRetrofit(serverConfig: ServerConfig, okHttpClient: OkHttpClient): Retrofit =
+    private fun createRetrofit(configuration: Configuration, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(serverConfig.baseUrl)
+            .baseUrl(configuration.baseUrl)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(ErrorHandlingCallAdapterFactory())
