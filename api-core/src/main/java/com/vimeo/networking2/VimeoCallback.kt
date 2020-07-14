@@ -19,6 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+@file:JvmName("VimeoCallbackUtils")
+
 package com.vimeo.networking2
 
 /**
@@ -27,7 +29,7 @@ package com.vimeo.networking2
 interface VimeoCallback<ResponseType_T> {
 
     /**
-     * Successful API request.
+     * A successful API response.
      *
      * @param response  Data returned by the API.
      */
@@ -41,4 +43,18 @@ interface VimeoCallback<ResponseType_T> {
      */
     fun onError(error: VimeoResponse.Error)
 
+}
+
+/**
+ * Create a lambda friendly instance of the [VimeoCallback].
+ *
+ * @param onSuccess Called when the request completes successfully.
+ * @param onError Called when the request completes unsuccessfully.
+ */
+fun <ResponseType_T> vimeoCallback(
+        onSuccess: (VimeoResponse.Success<ResponseType_T>) -> Unit,
+        onError: (VimeoResponse.Error) -> Unit
+): VimeoCallback<ResponseType_T> = object : VimeoCallback<ResponseType_T> {
+    override fun onSuccess(response: VimeoResponse.Success<ResponseType_T>) = onSuccess(response)
+    override fun onError(error: VimeoResponse.Error) = onError(error)
 }

@@ -17,23 +17,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         login.setOnClickListener {
+            val authenticator = Authenticator(
+                Configuration.Builder(
+                    CLIENT_ID,
+                    CLIENT_SECRET,
+                    listOf(ScopeType.PUBLIC)
+                ).build()
+            )
 
-            val configuration = Configuration.Builder(
-                CLIENT_ID,
-                CLIENT_SECRET,
-                listOf(ScopeType.PUBLIC)
-            ).build()
-            val authenticator = Authenticator(configuration)
-
-            authenticator.clientCredentials(object : VimeoCallback<BasicAccessToken> {
-                override fun onSuccess(response: VimeoResponse.Success<BasicAccessToken>) {
-
+            authenticator.clientCredentials(vimeoCallback(
+                onSuccess = {
+                    // Use the logged out token
+                },
+                onError = {
+                    // Handle the error
                 }
-
-                override fun onError(error: VimeoResponse.Error) {
-
-                }
-            })
+            ))
         }
     }
 
