@@ -246,12 +246,12 @@ public class VimeoClient {
 
     public void setVimeoAccount(@Nullable VimeoAccount vimeoAccount) {
         if (vimeoAccount == null) {
+            // If the provided account was null but we have an access token, persist the vimeo account with
+            // just a token in it. Otherwise we'll want to leave the persisted account as null.
+            vimeoAccount =
+                    VimeoAccountFactory.createVimeoAccountWithToken(mConfiguration.mAccessToken);
             //noinspection VariableNotUsedInsideIf
             if (mConfiguration.mAccessToken != null) {
-                // If the provided account was null but we have an access token, persist the vimeo account with
-                // just a token in it. Otherwise we'll want to leave the persisted account as null.
-                vimeoAccount =
-                        VimeoAccountFactory.createVimeoAccountWithToken(mConfiguration.mAccessToken);
                 mConfiguration.saveAccount(vimeoAccount, null);
             }
         }

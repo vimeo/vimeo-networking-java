@@ -12,7 +12,7 @@ import java.io.Serializable
 data class BasicAccessToken(
 
     @Json(name = "access_token")
-    override val accessToken: String,
+    override val accessToken: String?,
 
     /**
      * The scope or scopes that the token supports.

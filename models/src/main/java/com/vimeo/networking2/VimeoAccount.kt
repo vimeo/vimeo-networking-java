@@ -13,7 +13,7 @@ import java.util.Date
 data class VimeoAccount(
 
     @Json(name = "access_token")
-    override val accessToken: String,
+    override val accessToken: String?,
 
     /**
      * The date and time that the token expires.
@@ -37,7 +37,7 @@ data class VimeoAccount(
      * The authenticated user.
      */
     @Json(name = "user")
-    val user: User,
+    val user: User? = null,
 
     /**
      * The token type.
