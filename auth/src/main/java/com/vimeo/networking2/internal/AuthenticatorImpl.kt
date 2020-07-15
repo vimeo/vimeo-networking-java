@@ -26,9 +26,9 @@ import com.vimeo.networking2.*
 /**
  * Authentication with email, google, facebook or pincode.
  *
- * @param authService           Retrofit service for authentication.
- * @param authHeader           Client id and client secret header.
- * @param scopes                All the scopes for authentication.
+ * @param authService Retrofit service for authentication.
+ * @param authHeader Client id and client secret header.
+ * @param scopes All the scopes for authentication.
  */
 internal class AuthenticatorImpl(
     private val authService: AuthService,
