@@ -30,6 +30,7 @@ import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
+import okhttp3.Cache
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -105,6 +106,10 @@ object RetrofitSetupModule {
         readTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
         writeTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
         retryOnConnectionFailure(false)
+
+        if (configuration.cacheDirectory != null) {
+            cache(Cache(configuration.cacheDirectory, configuration.cacheMaxSizeBytes))
+        }
 
         interceptors().addAll(applicationInterceptors)
         networkInterceptors().addAll(networkInterceptors)
