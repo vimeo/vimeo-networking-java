@@ -217,7 +217,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<ConnectedApp>
     ): VimeoRequest {
         return vimeoService.createConnectedApp(
-            authorization,
+            authHeader,
             type.value!!,
             mapOf(
                 ApiConstants.Parameters.PARAMETER_AUTH_CODE to authorization,
