@@ -44,7 +44,6 @@ import java.util.concurrent.TimeUnit
  */
 object RetrofitSetupModule {
 
-    private const val AUTHORIZATION_HEADER = "Authorization"
     private const val USER_AGENT_HEADER_VALUE = "Kotlin VimeoNetworking/$SDK_VERSION"
 
     /**
@@ -58,14 +57,12 @@ object RetrofitSetupModule {
      * Creates the object graph for the setup dependencies. After the graph is created, the method
      * return an instance of [Retrofit] which is root of the graph.
      */
-    fun retrofit(configuration: Configuration, accessToken: String? = null): Retrofit {
-        val interceptors = mutableListOf<Interceptor>()
-        if (accessToken?.isNotBlank() == true) {
-            interceptors.add(accessTokenInterceptor(accessToken))
-        }
-        interceptors.add(UserAgentHeaderInterceptor(createCompositeUserAgent(configuration.userAgent)))
-        interceptors.add(AcceptHeaderInterceptor())
-        interceptors.add(LanguageHeaderInterceptor(configuration.locales))
+    fun retrofit(configuration: Configuration): Retrofit {
+        val interceptors = mutableListOf(
+            UserAgentHeaderInterceptor(createCompositeUserAgent(configuration.userAgent)),
+            AcceptHeaderInterceptor(),
+            LanguageHeaderInterceptor(configuration.locales)
+        )
         interceptors.addAll(configuration.interceptors)
 
         val networkInterceptors = listOf(CacheControlHeaderInterceptor(configuration.cacheMaxAgeSeconds))
@@ -73,20 +70,6 @@ object RetrofitSetupModule {
         val okHttpClient = okHttpClient(configuration, interceptors, networkInterceptors)
         return createRetrofit(configuration, okHttpClient)
     }
-
-    /**
-     * Interceptor for adding an access token.
-     */
-    private fun accessTokenInterceptor(accessToken: String) =
-        Interceptor { chain ->
-            val request = chain.request()
-            val builder = request.newBuilder()
-
-            if (request.header(AUTHORIZATION_HEADER).isNullOrBlank()) {
-                builder.addHeader(AUTHORIZATION_HEADER, "Bearer $accessToken")
-            }
-            chain.proceed(builder.build())
-        }
 
     private fun createCompositeUserAgent(providedUserAgent: String?) =
         providedUserAgent?.let { "$it $USER_AGENT_HEADER_VALUE" } ?: USER_AGENT_HEADER_VALUE
