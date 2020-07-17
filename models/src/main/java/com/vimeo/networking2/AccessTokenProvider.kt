@@ -8,6 +8,6 @@ interface AccessTokenProvider {
     /**
      * Access token for making requests.
      */
-    val accessToken: String?
+    val accessToken: String
 
 }

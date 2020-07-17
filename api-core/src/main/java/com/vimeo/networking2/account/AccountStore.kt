@@ -24,26 +24,23 @@ package com.vimeo.networking2.account
 import com.vimeo.networking2.VimeoAccount
 
 /**
- * Interface responsible for handling the creation, deletion, and loading of Vimeo accounts on the client.
+ * Interface responsible for persistence of [VimeoAccount] instances.
  */
 interface AccountStore {
     /**
-     * Load an account that has been saved previously. Returns `null` if no account was saved.
+     * Load the account that has been stored previously. Returns `null` if no account was saved.
      */
     fun loadAccount(): VimeoAccount?
 
     /**
-     * Save the provided account associated with an email.
+     * Save the provided account, overwriting any previously stored account.
      *
      * @param vimeoAccount The account to save.
-     * @param email The email associated with the account.
      */
-    fun saveAccount(vimeoAccount: VimeoAccount, email: String)
+    fun storeAccount(vimeoAccount: VimeoAccount)
 
     /**
-     * Delete the provided account from the store.
-     *
-     * @param vimeoAccount The account to delete.
+     * Delete the stored account.
      */
-    fun deleteAccount(vimeoAccount: VimeoAccount)
+    fun removeAccount()
 }

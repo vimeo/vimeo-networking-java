@@ -22,7 +22,6 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
-import com.vimeo.networking2.account.AccountStore
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.config.Configuration
 import com.vimeo.networking2.enums.CommentPrivacyType
@@ -33,30 +32,31 @@ import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
 import okhttp3.CacheControl
-import okhttp3.Credentials
 
 /**
  * The internal implementation of the [VimeoApiClient]. Once configured, this client cannot be re-configured.
  *
  * @param vimeoService The service used to make requests to the Vimeo API.
- * @param accountStore The store used to obtain the account which should be used to perform network requests.
+ * @param authenticator The authenticator used to obtain tokens which can be used to make requests.
  * @param configuration The configuration used by this client instance.
+ * @param basicAuthHeader The basic auth header using the client ID and secret, used if the account store does not
+ * provide an authenticated account.
  * @param localVimeoCallAdapter The adapter used to notify consumers of local errors.
  */
 @Suppress("UnsafeCallOnNullableType")
 internal class VimeoApiClientImpl(
     private val vimeoService: VimeoService,
-    private val accountStore: AccountStore,
+    private val authenticator: Authenticator,
     private val configuration: Configuration,
+    private val basicAuthHeader: String,
     private val localVimeoCallAdapter: LocalVimeoCallAdapter
 ) : VimeoApiClient {
 
     private val authHeader: String
         get() {
-            val vimeoAccount = accountStore.loadAccount()
+            val vimeoAccount = authenticator.currentAccount
 
-            return vimeoAccount?.accessToken?.let { "Bearer $it" }
-                ?: Credentials.basic(configuration.clientId, configuration.clientSecret)
+            return vimeoAccount?.accessToken?.let { "Bearer $it" } ?: basicAuthHeader
         }
 
     override fun createAlbum(

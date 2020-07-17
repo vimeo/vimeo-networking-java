@@ -21,7 +21,6 @@
  */
 package com.vimeo.networking2.internal
 
-import com.vimeo.networking2.BasicAccessToken
 import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.Scopes
@@ -49,7 +48,7 @@ internal interface AuthService {
      * @param grantType The type of authorization grant that is being performed.
      * @param scope The permissions scope that should be granted to the client.
      *
-     * @return A [VimeoCall] that provides a [BasicAccessToken] that can be used to perform unauthenticated requests.
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform unauthenticated requests.
      */
     @FormUrlEncoded
     @POST("oauth/authorize/client")
@@ -57,7 +56,7 @@ internal interface AuthService {
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field(SCOPE) scope: Scopes
-    ): VimeoCall<BasicAccessToken>
+    ): VimeoCall<VimeoAccount>
 
     /**
      * Used to sign up for Vimeo using email.

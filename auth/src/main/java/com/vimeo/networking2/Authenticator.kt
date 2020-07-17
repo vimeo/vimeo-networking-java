@@ -21,10 +21,12 @@
  */
 package com.vimeo.networking2
 
+import com.vimeo.networking2.account.CachingAccountStore
 import com.vimeo.networking2.config.Configuration
 import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
+import com.vimeo.networking2.internal.MutableAuthenticatorDelegate
 import okhttp3.Credentials
 
 /**
@@ -43,20 +45,20 @@ import okhttp3.Credentials
  *
  * ```
  * val authenticator = Authenticator(serverConfig)
- * authenticator.clientCredentials(object: VimeoCallback<BasicAuthToken>() {
- *
- *       override fun onSuccess(authResponse: VimeoResponse.Success<BasicAuthToken>) {
- *
- *       }
- *
- *       override fun onError(error: VimeoResponse.Error) {
- *
- *       }
- * })
+ * authenticator.clientCredentials(vimeoCallback(
+ *      onSuccess = { authResponse: VimeoResponse.Success<VimeoAccount> -> }
+ *      onError = { error: VimeoResponse.Error -> }
+ * ))
  * ```
  *
  */
 interface Authenticator {
+
+    /**
+     * The currently authenticated account, if the client has successfully authenticated. May represent either a logged
+     * in or logged out user.
+     */
+    val currentAccount: VimeoAccount?
 
     /**
      * Authenticate using the client id and client secret to obtain a logged out token.
@@ -65,7 +67,7 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun clientCredentials(authCallback: VimeoCallback<BasicAccessToken>): VimeoRequest
+    fun clientCredentials(authCallback: VimeoCallback<VimeoAccount>): VimeoRequest
 
     /**
      * Authenticate via Google sign in to obtain a logged in token.
@@ -135,6 +137,15 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
+     * Log out of the currently authenticated account.
+     *
+     * @param authCallback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun logOut(authCallback: VimeoCallback<Unit>): VimeoRequest
+
+    /**
      * Factory to create an instance of [Authenticator].
      */
     companion object {
@@ -149,9 +160,33 @@ interface Authenticator {
         @JvmName("create")
         operator fun invoke(configuration: Configuration): Authenticator {
             val authService = RetrofitSetupModule.retrofit(configuration).create(AuthService::class.java)
-            val authHeaders: String = Credentials.basic(configuration.clientId, configuration.clientSecret)
+            val basicAuthHeader: String = Credentials.basic(configuration.clientId, configuration.clientSecret)
 
-            return AuthenticatorImpl(authService, authHeaders, configuration.scope)
+            return AuthenticatorImpl(
+                authService,
+                basicAuthHeader,
+                configuration.scope,
+                CachingAccountStore(configuration.accountStore)
+            )
         }
+
+        private val delegate: MutableAuthenticatorDelegate = MutableAuthenticatorDelegate()
+
+        /**
+         * Initialize the singleton instance of the [Authenticator] with a [Configuration]. If the authenticator was
+         * already initialized, this will reconfigure it. This function must be called before [instance] is used.
+         *
+         * @param configuration The configuration used by the authenticator.
+         */
+        @JvmStatic
+        fun initialize(configuration: Configuration) {
+            delegate.actual = Authenticator(configuration)
+        }
+
+        /**
+         * Access the singleton instance of the [Authenticator]. Always returns the same instance.
+         */
+        @JvmStatic
+        fun instance(): Authenticator = delegate
     }
 }

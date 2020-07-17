@@ -22,27 +22,33 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
+import com.vimeo.networking2.account.CachingAccountStore
 
 /**
  * Authentication with email, google, facebook or pincode.
  *
  * @param authService Retrofit service for authentication.
- * @param authHeader Client id and client secret header.
+ * @param basicAuthHeader Client id and client secret header.
  * @param scopes All the scopes for authentication.
+ * @param accountStore The account store used to store and retrieve credentials.
  */
 internal class AuthenticatorImpl(
     private val authService: AuthService,
-    private val authHeader: String,
-    private val scopes: Scopes
+    private val basicAuthHeader: String,
+    private val scopes: Scopes,
+    private val accountStore: CachingAccountStore
 ) : Authenticator {
 
-    override fun clientCredentials(authCallback: VimeoCallback<BasicAccessToken>): VimeoRequest {
+    override val currentAccount: VimeoAccount?
+        get() = accountStore.loadAccount()
+
+    override fun clientCredentials(authCallback: VimeoCallback<VimeoAccount>): VimeoRequest {
         val params = mapOf(
             AuthParam.FIELD_GRANT_TYPE to GrantType.CLIENT_CREDENTIALS.value,
             AuthParam.FIELD_SCOPES to scopes
         )
         val call = authService.authorizeWithClientCredentialsGrant(
-            authorization = authHeader,
+            authorization = basicAuthHeader,
             grantType = GrantType.CLIENT_CREDENTIALS,
             scope = scopes
         )
@@ -73,7 +79,7 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_SCOPES to scopes
         )
         val call = authService.joinWithGoogle(
-            authorization = authHeader,
+            authorization = basicAuthHeader,
             email = email,
             idToken = token,
             scope = scopes,
@@ -89,7 +95,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueue(authCallback)
+            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
         }
     }
 
@@ -106,7 +112,7 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_SCOPES to scopes
         )
         val call = authService.joinWithFacebook(
-            authorization = authHeader,
+            authorization = basicAuthHeader,
             email = email,
             token = token,
             scope = scopes,
@@ -122,7 +128,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueue(authCallback)
+            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
         }
     }
 
@@ -141,7 +147,7 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_SCOPES to scopes
         )
         val call = authService.joinWithEmail(
-            authorization = authHeader,
+            authorization = basicAuthHeader,
             name = displayName,
             email = email,
             password = password,
@@ -158,7 +164,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueue(authCallback)
+            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
         }
     }
 
@@ -167,14 +173,13 @@ internal class AuthenticatorImpl(
         password: String,
         authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-
         val params = mapOf(
             AuthParam.FIELD_USERNAME to email,
             AuthParam.FIELD_PASSWORD to password,
             AuthParam.FIELD_SCOPES to scopes
         )
         val call = authService.logInWithEmail(
-            authorization = authHeader,
+            authorization = basicAuthHeader,
             email = email,
             password = password,
             grantType = GrantType.PASSWORD,
@@ -190,8 +195,15 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueue(authCallback)
+            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
         }
     }
 
+    override fun logOut(authCallback: VimeoCallback<Unit>): VimeoRequest {
+        val accessToken = currentAccount?.accessToken
+        accountStore.removeAccount()
+        accessToken ?: return NoOpVimeoRequest
+
+        return authService.logOut(accessToken).enqueue(authCallback)
+    }
 }

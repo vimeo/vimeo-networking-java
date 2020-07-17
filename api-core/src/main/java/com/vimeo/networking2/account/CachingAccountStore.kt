@@ -24,12 +24,26 @@ package com.vimeo.networking2.account
 import com.vimeo.networking2.VimeoAccount
 
 /**
- * An account store that just holds the accounts in memory.
+ * An [AccountStore] that caches the stored account for fast retrieval and delegates actual storage to another
+ * [AccountStore].
+ *
+ * @param actualAccountStore The store which will be used to persist the account outside the lifecycle of this
  */
-class InMemoryAccountStore : AccountStore {
+class CachingAccountStore(private val actualAccountStore: AccountStore) : AccountStore {
+
     private var vimeoAccount: VimeoAccount? = null
 
-    override fun loadAccount(): VimeoAccount? = vimeoAccount
-    override fun storeAccount(vimeoAccount: VimeoAccount) { this.vimeoAccount = vimeoAccount }
-    override fun removeAccount() { this.vimeoAccount = null }
+    override fun loadAccount(): VimeoAccount? {
+        return vimeoAccount ?: actualAccountStore.loadAccount().also { vimeoAccount = it }
+    }
+
+    override fun storeAccount(vimeoAccount: VimeoAccount) {
+        this.vimeoAccount = vimeoAccount
+        actualAccountStore.storeAccount(vimeoAccount)
+    }
+
+    override fun removeAccount() {
+        vimeoAccount = null
+        actualAccountStore.removeAccount()
+    }
 }

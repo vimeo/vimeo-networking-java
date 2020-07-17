@@ -24,7 +24,10 @@ package com.vimeo.networking2
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.config.Configuration
 import com.vimeo.networking2.config.RetrofitSetupModule
-import com.vimeo.networking2.enums.*
+import com.vimeo.networking2.enums.CommentPrivacyType
+import com.vimeo.networking2.enums.ConnectedAppType
+import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
 import com.vimeo.networking2.internal.VimeoApiClientImpl
@@ -32,6 +35,7 @@ import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
 import okhttp3.CacheControl
+import okhttp3.Credentials
 
 /**
  * The Vimeo API client definition.
@@ -494,17 +498,20 @@ interface VimeoApiClient {
          *
          * @param configuration All the server configuration (client id and secret, custom interceptors, read timeouts,
          * base url etc...) that can be set for authentication and making requests.
+         * @param authenticator The authenticator instance used to obtain authorization to make requests.
          */
         @JvmStatic
         @JvmName("create")
-        operator fun invoke(configuration: Configuration): VimeoApiClient {
+        operator fun invoke(configuration: Configuration, authenticator: Authenticator): VimeoApiClient {
             val retrofit = RetrofitSetupModule.retrofit(configuration)
             val vimeoService = retrofit.create(VimeoService::class.java)
+            val basicAuthHeader = Credentials.basic(configuration.clientId, configuration.clientSecret)
 
             return VimeoApiClientImpl(
                 vimeoService,
-                configuration.accountStore,
+                authenticator,
                 configuration,
+                basicAuthHeader,
                 LocalVimeoCallAdapter(retrofit)
             )
         }
@@ -516,10 +523,11 @@ interface VimeoApiClient {
          * initialized, this will reconfigure it. This function must be called before [instance] is used.
          *
          * @param configuration The configuration used by the client.
+         * @param authenticator The authenticator used by the client to obtain authorization to make requests.
          */
         @JvmStatic
-        fun initialize(configuration: Configuration) {
-            delegate.actual = VimeoApiClient(configuration)
+        fun initialize(configuration: Configuration, authenticator: Authenticator) {
+            delegate.actual = VimeoApiClient(configuration, authenticator)
         }
 
         /**

@@ -19,17 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.account
+package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.VimeoAccount
+import com.vimeo.networking2.VimeoCallback
+import com.vimeo.networking2.VimeoResponse
+import com.vimeo.networking2.account.AccountStore
 
 /**
- * An account store that just holds the accounts in memory.
+ * A [VimeoCallback] that stores the account received on a successful response.
+ *
+ * @param accountStore The store which will be used to save the received account.
+ * @param actualVimeoCallback The callback which we are intercepting and will eventually be notified.
  */
-class InMemoryAccountStore : AccountStore {
-    private var vimeoAccount: VimeoAccount? = null
+internal class AccountStoringVimeoCallback(
+    private val accountStore: AccountStore,
+    private val actualVimeoCallback: VimeoCallback<VimeoAccount>
+) : VimeoCallback<VimeoAccount> {
+    override fun onSuccess(response: VimeoResponse.Success<VimeoAccount>) {
+        accountStore.storeAccount(response.data)
+        actualVimeoCallback.onSuccess(response)
+    }
 
-    override fun loadAccount(): VimeoAccount? = vimeoAccount
-    override fun storeAccount(vimeoAccount: VimeoAccount) { this.vimeoAccount = vimeoAccount }
-    override fun removeAccount() { this.vimeoAccount = null }
+    override fun onError(error: VimeoResponse.Error) {
+        actualVimeoCallback.onError(error)
+    }
 }
