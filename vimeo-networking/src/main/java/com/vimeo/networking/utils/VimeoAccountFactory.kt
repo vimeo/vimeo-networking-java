@@ -10,5 +10,5 @@ import com.vimeo.networking2.VimeoAccount
 @Suppress("UnsafeCallOnNullableType")
 // TODO: Remove usage of this function
 fun createVimeoAccountWithToken(accessToken: String?): VimeoAccount = VimeoAccount(
-    accessToken = accessToken
+    accessToken = accessToken ?: ""
 )
