@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Interaction
 import com.vimeo.networking2.enums.PurchaseStatusType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * Purchase a video action data.
@@ -28,12 +27,7 @@ data class PurchaseInteraction(
     @Json(name = "status")
     val purchaseStatus: String? = null
 
-) : Interaction, Serializable {
-
-    companion object {
-        private const val serialVersionUID = -11196L
-    }
-}
+) : Interaction
 
 /**
  * @see PurchaseInteraction.purchaseStatus

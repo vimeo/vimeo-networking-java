@@ -2,7 +2,6 @@ package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  *  Encapsulates publishing data for each of the supported social media platforms.
@@ -33,9 +32,4 @@ data class BatchPublishToSocialMedia(
      */
     @Json(name = "linkedin")
     val linkedIn: PublishToLinkedInPost? = null
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -5L
-    }
-}
+)

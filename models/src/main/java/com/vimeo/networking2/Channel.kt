@@ -4,7 +4,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.common.Followable
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -98,11 +97,6 @@ data class Channel(
     @Json(name = "user")
     val user: User? = null
 
-) : Followable, Entity, Serializable {
-
+) : Followable, Entity {
     override val identifier: String? = resourceKey
-
-    companion object {
-        private const val serialVersionUID = -216923680153L
-    }
 }

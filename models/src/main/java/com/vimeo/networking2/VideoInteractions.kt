@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import java.io.Serializable
 
 /**
  * All action that can be taken on a video.
@@ -64,9 +63,4 @@ data class VideoInteractions(
     @Json(name = "watchlater")
     val watchLater: WatchLaterInteraction? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -8244162L
-    }
-}
+)

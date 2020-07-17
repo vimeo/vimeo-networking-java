@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.LiveStatusType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -88,12 +87,7 @@ data class Live(
     @Json(name = "streaming_error")
     val streamingError: ApiError? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -57L
-    }
-}
+)
 
 /**
  * @see Live.liveStatus

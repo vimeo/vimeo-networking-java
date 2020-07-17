@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Quota data.
@@ -22,9 +21,4 @@ data class Quota(
     @Json(name = "sd")
     val sd: Boolean? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -15L
-    }
-}
+)

@@ -6,7 +6,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.ProgrammedContentItemType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * Cinema data.
@@ -57,12 +56,7 @@ data class ProgrammedContentItem(
     @Json(name = "uri")
     val uri: String? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -7254722L
-    }
-}
+)
 
 /**
  * @see ProgrammedContentItem.rawType

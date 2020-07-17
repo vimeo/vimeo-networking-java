@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * Video transcoding states.
  */
-enum class VideoStateType(override val value: String?): StringValue {
+enum class VideoStateType(override val value: String?) : StringValue {
 
     ACTIVE("active"),
 
