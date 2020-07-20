@@ -1344,12 +1344,14 @@ public class VimeoClient {
      * @param authorization An authorization string for the third party platform. The nature of the string will
      *                      vary depending upon the {@link ConnectedAppType} but should never be
      *                      empty or the request will fail.
+     * @param clientId      The client id from the third party platform.
      * @return A {@link Call} object or null if a client-side initialization error has occurred due to an invalid type
      * or authorization argument.
      */
     @Nullable
     public Call<ConnectedApp> createConnectedApp(@NotNull final ConnectedAppType type,
-                                                 @NotNull final String authorization) {
+                                                 @NotNull final String authorization,
+                                                 @NotNull final String clientId) {
         final String typeString = type.getValue();
         if (type == ConnectedAppType.UNKNOWN || VimeoNetworkUtil.isStringEmpty(authorization)) {
             return null;
@@ -1360,6 +1362,7 @@ public class VimeoClient {
         final Map<String, Object> params = new HashMap<>();
         params.put(Vimeo.PARAMETER_AUTH_CODE, authorization);
         params.put(Vimeo.PARAMETER_APP_TYPE, typeString);
+        params.put(Vimeo.PARAMETER_CLIENT_ID, clientId);
         return mVimeoService.createConnectedApp(getAuthHeader(), type.getValue(), params);
     }
 
