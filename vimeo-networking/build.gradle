@@ -33,7 +33,7 @@ tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
     api project(path: ':api-core', configuration: 'default')
-    implementation project(path: ':models', configuration: 'default')
+    compileOnly project(path: ':models', configuration: 'default')
 
     api "com.squareup.retrofit2:retrofit:$retrofitVersion"
     api "com.squareup.retrofit2:converter-gson:$retrofitVersion"
