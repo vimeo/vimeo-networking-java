@@ -52,7 +52,7 @@ internal class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
             emptyArray()
         )
 
-        if (returnType == Unit::class.java) {
+        if (responseType == Unit::class.java) {
             // Requests with an expected empty response need to be handled differently, as empty responses are otherwise
             // treated as errors.
             return ErrorHandlingUnitCallAdapter(
