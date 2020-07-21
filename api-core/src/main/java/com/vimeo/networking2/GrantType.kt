@@ -31,5 +31,6 @@ enum class GrantType(override val value: String) : StringValue {
     AUTHORIZATION_CODE("authorization_code"),
     PASSWORD("password"),
     FACEBOOK("facebook"),
-    GOOGLE("google")
+    GOOGLE("google"),
+    OAUTH_ONE("vimeo_oauth1")
 }

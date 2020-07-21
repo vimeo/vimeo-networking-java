@@ -199,6 +199,15 @@ internal class AuthenticatorImpl(
         }
     }
 
+    override fun exchangeOAuthOneToken(
+        token: String,
+        tokenSecret: String,
+        authCallback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest {
+        return authService.exchangeOAuthOneToken(basicAuthHeader, GrantType.OAUTH_ONE, token, tokenSecret, scopes)
+            .enqueue(authCallback)
+    }
+
     override fun logOut(authCallback: VimeoCallback<Unit>): VimeoRequest {
         val accessToken = currentAccount?.accessToken
         accountStore.removeAccount()

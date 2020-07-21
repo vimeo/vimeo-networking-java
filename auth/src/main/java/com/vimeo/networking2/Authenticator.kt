@@ -50,7 +50,6 @@ import okhttp3.Credentials
  *      onError = { error: VimeoResponse.Error -> }
  * ))
  * ```
- *
  */
 interface Authenticator {
 
@@ -133,6 +132,18 @@ interface Authenticator {
     fun emailLogin(
         email: String,
         password: String,
+        authCallback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest
+
+    /**
+     * Exchange an OAuth 1 token and secret for a new OAuth 2 token.
+     *
+     * @param token The old token to use in the exchange.
+     * @param tokenSecret The old token secret to use in the exchange.
+     */
+    fun exchangeOAuthOneToken(
+        token: String,
+        tokenSecret: String,
         authCallback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
