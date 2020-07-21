@@ -68,6 +68,12 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override fun emailLogin(email: String, password: String, authCallback: VimeoCallback<VimeoAccount>): VimeoRequest =
         authenticator.emailLogin(email, password, authCallback)
 
+    override fun exchangeOAuthOneToken(
+        token: String,
+        tokenSecret: String,
+        authCallback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.exchangeOAuthOneToken(token, tokenSecret, authCallback)
+
     override fun logOut(authCallback: VimeoCallback<Unit>): VimeoRequest =
         authenticator.logOut(authCallback)
 }
