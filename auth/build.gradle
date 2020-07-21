@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     api project(':api-core')
+    implementation project(path: ':models', configuration: 'default')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
