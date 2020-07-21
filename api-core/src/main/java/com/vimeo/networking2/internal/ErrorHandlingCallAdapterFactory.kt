@@ -26,15 +26,13 @@ import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
+import java.util.concurrent.Executor
 
 /**
  * Factory for creating a custom [ErrorHandlingCallAdapter].
  */
 internal class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
 
-    /**
-     * Creates and returns a [ErrorHandlingCallAdapter].
-     */
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,
@@ -53,6 +51,26 @@ internal class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
             ApiError::class.java,
             emptyArray()
         )
-        return ErrorHandlingCallAdapter<Any>(responseType, callbackExecutor, errorResponseConverter)
+
+        if (returnType == Unit::class.java) {
+            // Requests with an expected empty response need to be handled differently, as empty responses are otherwise
+            // treated as errors.
+            return ErrorHandlingUnitCallAdapter(
+                callbackExecutor ?: synchronousExecutor,
+                errorResponseConverter
+            )
+        }
+        return ErrorHandlingCallAdapter<Any>(
+            responseType,
+            callbackExecutor ?: synchronousExecutor,
+            errorResponseConverter
+        )
+    }
+
+    private companion object {
+        /**
+         * If no executor is provided, we will execute runnables synchronously.
+         */
+        private val synchronousExecutor = Executor { it.run() }
     }
 }
