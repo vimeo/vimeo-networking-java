@@ -35,10 +35,9 @@ allprojects {
         // Requires apply plugin: maven-publish
         publishing {
             publications {
-                MyPublication(MavenPublication) {
-                    from components.java
-                    artifact sourcesJar
-                    artifact javadocJar
+                release(MavenPublication) {
+                    from components.release
+                    artifact androidSourcesJar
                     groupId project.group
                     artifactId project.name
                     version project.version
@@ -55,18 +54,14 @@ allprojects {
     }
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.source
 }
 
 artifacts {
-    archives sourcesJar, javadocJar
+    archives androidSourcesJar
 }
 
 // Only execute the bintray task if this is the actual networking project (not an include)
@@ -78,7 +73,7 @@ allprojects {
                 user = System.getenv('BINTRAY_USER')
                 // api key
                 key = System.getenv('BINTRAY_API_KEY')
-                publications = ['MyPublication']
+                publications = ['release']
                 dryRun = false // Whether to run this as dry-run, without deploying
                 override = false
                 pkg {
@@ -99,10 +94,12 @@ allprojects {
                             passphrase = System.getenv('BINTRAY_GPG_PASSWORD')
                         }
                         mavenCentralSync {
-                            sync = true //Optional (true by default). Determines whether to sync the version to Maven Central.
+                            sync = true
+                            //Optional (true by default). Determines whether to sync the version to Maven Central.
                             user = System.getenv('SONATYPE_TOKEN_USER') //OSS user token
                             password = System.getenv('SONATYPE_TOKEN_PASSWORD') //OSS user password
-                            close = '1' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+                            close = '1'
+                            //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
                         }
                     }
                 }
