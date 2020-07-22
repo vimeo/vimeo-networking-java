@@ -95,5 +95,13 @@ object ApiConstants {
         const val PARAMETER_GET_UPLOAD_DATE_FILTER = "filter_upload_date"
         const val PARAMETER_GET_NOTIFICATION_TYPES_FILTER = "filter_notification_types"
         const val PARAMETER_PATCH_LATEST_NOTIFICATION_URI = "latest_notification_uri"
+
+        // Search parameters
+        const val FILTER_CATEGORY = "filter_category"
+        const val FILTER_UPLOADED = "filter_uploaded"
+        const val FILTER_DURATION = "filter_duration"
+        const val FILTER_TYPE = "filter_type"
+        const val FILTER_FEATURED_COUNT = "featured_clip_count"
+        const val PARAMETER_GET_FACETS = "facets"
     }
 }

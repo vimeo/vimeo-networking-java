@@ -34,6 +34,12 @@ import com.vimeo.networking2.internal.VimeoApiClientImpl
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.SearchDateType
+import com.vimeo.networking2.params.SearchDurationType
+import com.vimeo.networking2.params.SearchFacetType
+import com.vimeo.networking2.params.SearchFilterType
+import com.vimeo.networking2.params.SearchSortDirectionType
+import com.vimeo.networking2.params.SearchSortType
 import okhttp3.CacheControl
 import okhttp3.Credentials
 
@@ -444,6 +450,22 @@ interface VimeoApiClient {
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TextTrackList>
+    ): VimeoRequest
+
+    fun search(
+        query: String,
+        searchFilterType: SearchFilterType,
+        fieldFilter: String?,
+        searchSortType: SearchSortType?,
+        searchSortDirectionType: SearchSortDirectionType?,
+        searchDateType: SearchDateType?,
+        searchDurationType: SearchDurationType?,
+        searchFacetTypes: List<SearchFacetType>?,
+        category: String?,
+        featuredVideoCount: Int?,
+        containerFieldFilter: String?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<SearchResultList>
     ): VimeoRequest
 
     fun postContent(

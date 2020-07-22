@@ -30,6 +30,12 @@ import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.SearchDateType
+import com.vimeo.networking2.params.SearchDurationType
+import com.vimeo.networking2.params.SearchFacetType
+import com.vimeo.networking2.params.SearchFilterType
+import com.vimeo.networking2.params.SearchSortDirectionType
+import com.vimeo.networking2.params.SearchSortType
 import okhttp3.CacheControl
 
 /**
@@ -177,6 +183,36 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<TextTrackList>
     ): VimeoRequest = client.fetchTextTrackList(uri, fieldFilter, cacheControl, callback)
+
+    override fun search(
+        query: String,
+        searchFilterType: SearchFilterType,
+        fieldFilter: String?,
+        searchSortType: SearchSortType?,
+        searchSortDirectionType: SearchSortDirectionType?,
+        searchDateType: SearchDateType?,
+        searchDurationType: SearchDurationType?,
+        searchFacetTypes: List<SearchFacetType>?,
+        category: String?,
+        featuredVideoCount: Int?,
+        containerFieldFilter: String?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<SearchResultList>
+    ): VimeoRequest = client.search(
+        query,
+        searchFilterType,
+        fieldFilter,
+        searchSortType,
+        searchSortDirectionType,
+        searchDateType,
+        searchDurationType,
+        searchFacetTypes,
+        category,
+        featuredVideoCount,
+        containerFieldFilter,
+        queryParams,
+        callback
+    )
 
     override fun createPictureCollection(uri: String, callback: VimeoCallback<PictureCollection>): VimeoRequest =
         client.createPictureCollection(uri, callback)

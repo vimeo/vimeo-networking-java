@@ -31,6 +31,12 @@ import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.SearchDateType
+import com.vimeo.networking2.params.SearchDurationType
+import com.vimeo.networking2.params.SearchFacetType
+import com.vimeo.networking2.params.SearchFilterType
+import com.vimeo.networking2.params.SearchSortDirectionType
+import com.vimeo.networking2.params.SearchSortType
 import okhttp3.CacheControl
 
 /**
@@ -43,7 +49,7 @@ import okhttp3.CacheControl
  * provide an authenticated account.
  * @param localVimeoCallAdapter The adapter used to notify consumers of local errors.
  */
-@Suppress("UnsafeCallOnNullableType")
+@Suppress("UnsafeCallOnNullableType", "LargeClass")
 internal class VimeoApiClientImpl(
     private val vimeoService: VimeoService,
     private val authenticator: Authenticator,
@@ -276,6 +282,62 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         return vimeoService.getTextTrackList(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl)
             .enqueue(callback)
+    }
+
+    @Suppress("ComplexMethod")
+    override fun search(
+        query: String,
+        searchFilterType: SearchFilterType,
+        fieldFilter: String?,
+        searchSortType: SearchSortType?,
+        searchSortDirectionType: SearchSortDirectionType?,
+        searchDateType: SearchDateType?,
+        searchDurationType: SearchDurationType?,
+        searchFacetTypes: List<SearchFacetType>?,
+        category: String?,
+        featuredVideoCount: Int?,
+        containerFieldFilter: String?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<SearchResultList>
+    ): VimeoRequest {
+
+        val map = mutableMapOf(
+            ApiConstants.Parameters.PARAMETER_GET_QUERY to query,
+            ApiConstants.Parameters.FILTER_TYPE to searchFilterType.value!!
+        )
+        if (fieldFilter != null) {
+            map[ApiConstants.Parameters.PARAMETER_GET_FILTER] = fieldFilter
+        }
+        if (searchSortType != null) {
+            map[ApiConstants.Parameters.PARAMETER_GET_SORT] = searchSortType.value!!
+        }
+        if (searchSortDirectionType != null) {
+            map[ApiConstants.Parameters.PARAMETER_GET_DIRECTION] = searchSortDirectionType.value!!
+        }
+        if (searchDateType != null) {
+            map[ApiConstants.Parameters.FILTER_UPLOADED] = searchDateType.value!!
+        }
+        if (searchDurationType != null) {
+            map[ApiConstants.Parameters.FILTER_DURATION] = searchDurationType.value!!
+        }
+        if (searchFacetTypes != null) {
+            map[ApiConstants.Parameters.PARAMETER_GET_FACETS] =
+                searchFacetTypes.joinToString(separator = ",", transform = { it.value!! })
+        }
+        if (category != null) {
+            map[ApiConstants.Parameters.FILTER_CATEGORY] = category
+        }
+        if (featuredVideoCount != null) {
+            map[ApiConstants.Parameters.FILTER_FEATURED_COUNT] = featuredVideoCount.toString()
+        }
+        if (containerFieldFilter != null) {
+            map[ApiConstants.Parameters.PARAMETER_GET_CONTAINER_FIELD_FILTER] = containerFieldFilter
+        }
+        if (queryParams != null) {
+            map.putAll(queryParams)
+        }
+
+        return vimeoService.search(authHeader, mapOf()).enqueue(callback)
     }
 
     override fun createPictureCollection(uri: String, callback: VimeoCallback<PictureCollection>): VimeoRequest {
