@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Paging urls for next, previous, fist and last pages.
@@ -34,9 +33,4 @@ data class Paging(
     @Json(name = "last")
     val last: String? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -7562L
-    }
-}
+)

@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.GroupForumsPrivacyType
 import com.vimeo.networking2.enums.GroupPrivacyType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * Group's privacy settings.
@@ -57,12 +56,7 @@ data class GroupPrivacy(
     @Json(name = "view")
     val viewPrivacy: String? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -57L
-    }
-}
+)
 
 /**
  * @see GroupPrivacy.commentPrivacy

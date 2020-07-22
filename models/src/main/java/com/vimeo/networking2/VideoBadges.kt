@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Video badges data.
@@ -27,9 +26,4 @@ data class VideoBadges(
      */
     @Json(name = "weekendChallenge")
     val weekendChallenge: Boolean? = null
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -67L
-    }
-}
+)

@@ -6,7 +6,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.TvodItemType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * This class represents the model for a Video On Demand (VOD) container.
@@ -75,12 +74,7 @@ data class TvodItem(
     @Json(name = "user")
     val user: User? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -5345447L
-    }
-}
+)
 
 /**
  * @see TvodItem.rawType

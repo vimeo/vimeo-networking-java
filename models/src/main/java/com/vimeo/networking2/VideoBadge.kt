@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.VideoBadgeType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * Video badge data.
@@ -47,12 +46,7 @@ data class VideoBadge(
     @Json(name = "type")
     val rawType: String? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -75L
-    }
-}
+)
 
 /**
  * @see VideoBadge.rawType

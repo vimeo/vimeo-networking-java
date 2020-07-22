@@ -9,7 +9,6 @@ import com.vimeo.networking2.common.Interaction
 import com.vimeo.networking2.enums.DownloadType
 import com.vimeo.networking2.enums.StreamAccessType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -85,11 +84,7 @@ data class BuyInteraction(
     @Json(name = "uri")
     override val uri: String? = null
 
-) : Interaction, Serializable {
-    companion object {
-        private const val serialVersionUID = -71L
-    }
-}
+) : Interaction
 
 /**
  * @see BuyInteraction.download

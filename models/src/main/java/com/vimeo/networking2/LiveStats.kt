@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Live stats data.
@@ -28,9 +27,4 @@ data class LiveStats(
     @Json(name = "viewers")
     val viewers: LiveStatsViewers? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -2L
-    }
-}
+)

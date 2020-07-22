@@ -9,7 +9,6 @@ import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.ContentFilterType
 import com.vimeo.networking2.enums.asEnumList
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -128,13 +127,8 @@ data class User(
     @Json(name = "membership")
     val membership: Membership? = null
 
-) : Followable, Entity, Serializable {
-
+) : Followable, Entity {
     override val identifier: String? = resourceKey
-
-    companion object {
-        private const val serialVersionUID = -1694932L
-    }
 }
 
 /**

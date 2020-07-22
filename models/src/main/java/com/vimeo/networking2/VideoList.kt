@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
-import java.io.Serializable
 
 /**
  * List of videos that could be paged.
@@ -26,9 +25,4 @@ data class VideoList(
     @Json(name = "data")
     override val data: List<Video>? = null
 
-) : Pageable<Video>, Serializable {
-
-    companion object {
-        private const val serialVersionUID = -102L
-    }
-}
+) : Pageable<Video>

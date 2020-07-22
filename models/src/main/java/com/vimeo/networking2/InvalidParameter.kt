@@ -6,7 +6,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.ErrorCodeType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * Similar to [ApiError] object, this holds error codes/error messages relevant to a
@@ -40,12 +39,7 @@ data class InvalidParameter(
     @Json(name = "developer_message")
     val developerMessage: String? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -324967066105L
-    }
-}
+)
 
 /**
  * @see InvalidParameter.errorCode

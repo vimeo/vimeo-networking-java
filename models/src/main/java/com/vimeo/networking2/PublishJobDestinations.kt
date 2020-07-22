@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Contains information about upload/post status on all
@@ -34,10 +33,4 @@ data class PublishJobDestinations(
      */
     @Json(name = "twitter")
     val twitter: PublishJobDestination? = null
-
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -42L
-    }
-}
+)

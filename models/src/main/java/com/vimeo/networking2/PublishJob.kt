@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -34,11 +33,6 @@ data class PublishJob(
     @Json(name = "resource_key")
     val resourceKey: String? = null
 
-) : Entity, Serializable {
-
+) : Entity {
     override val identifier: String? = resourceKey
-
-    companion object {
-        private const val serialVersionUID = -88L
-    }
 }

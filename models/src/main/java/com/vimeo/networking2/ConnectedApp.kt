@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -81,13 +80,8 @@ data class ConnectedApp(
     @Json(name = "resource_key")
     val resourceKey: String? = null
 
-) : Entity, Serializable {
-
+) : Entity {
     override val identifier: String? = resourceKey
-
-    companion object {
-        private const val serialVersionUID = -21422L
-    }
 }
 
 /**
