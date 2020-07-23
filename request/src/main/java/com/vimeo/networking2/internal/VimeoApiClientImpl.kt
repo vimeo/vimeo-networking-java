@@ -132,6 +132,7 @@ internal class VimeoApiClientImpl(
         return vimeoService.modifyVideoInAlbums(authHeader, video.uri!!, modificationSpecs).enqueue(callback)
     }
 
+    @Suppress("ComplexMethod")
     override fun editVideo(
         uri: String,
         title: String?,
@@ -167,6 +168,9 @@ internal class VimeoApiClientImpl(
         }
         if (embedPrivacyType != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_EMBED] = embedPrivacyType.value!!
+        }
+        if (viewPrivacyType != null) {
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_VIEW] = viewPrivacyType.value!!
         }
         if (privacy.isNotEmpty()) {
             body[ApiConstants.Parameters.PARAMETER_VIDEO_PRIVACY] = privacy
