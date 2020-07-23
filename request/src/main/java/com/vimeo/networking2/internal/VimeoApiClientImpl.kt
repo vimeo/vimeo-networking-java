@@ -152,20 +152,24 @@ internal class VimeoApiClientImpl(
         if (description != null) {
             body[ApiConstants.Parameters.PARAMETER_VIDEO_DESCRIPTION] = description
         }
+        val privacy = mutableMapOf<String, Any>()
         if (password != null) {
-            body[ApiConstants.Parameters.PARAMETER_VIDEO_PASSWORD] = password
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_PASSWORD] = password
         }
         if (commentPrivacyType != null) {
-            body[ApiConstants.Parameters.PARAMETER_VIDEO_COMMENTS] = commentPrivacyType.value!!
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_COMMENTS] = commentPrivacyType.value!!
         }
         if (allowDownload != null) {
-            body[ApiConstants.Parameters.PARAMETER_VIDEO_DOWNLOAD] = allowDownload
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_DOWNLOAD] = allowDownload
         }
         if (allowAddToCollections != null) {
-            body[ApiConstants.Parameters.PARAMETER_VIDEO_ADD] = allowAddToCollections
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_ADD] = allowAddToCollections
         }
         if (embedPrivacyType != null) {
-            body[ApiConstants.Parameters.PARAMETER_VIDEO_EMBED] = embedPrivacyType.value!!
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_EMBED] = embedPrivacyType.value!!
+        }
+        if (privacy.isNotEmpty()) {
+            body[ApiConstants.Parameters.PARAMETER_VIDEO_PRIVACY] = privacy
         }
 
         return vimeoService.editVideo(authHeader, uri, body).enqueue(callback)
@@ -214,7 +218,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<ConnectedApp>
     ): VimeoRequest {
         return vimeoService.getConnectedApp(authHeader, type.value!!, fieldFilter.asRefinementMap(), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun createConnectedApp(
@@ -245,7 +249,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest {
         return vimeoService.getPublishJob(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun putPublishJob(
@@ -283,7 +287,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<TextTrackList>
     ): VimeoRequest {
         return vimeoService.getTextTrackList(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     @Suppress("ComplexMethod")
@@ -324,7 +328,7 @@ internal class VimeoApiClientImpl(
         }
         if (searchFacetTypes != null) {
             map[ApiConstants.Parameters.PARAMETER_GET_FACETS] =
-                searchFacetTypes.joinToString(separator = ",", transform = { it.value!! })
+                    searchFacetTypes.joinToString(separator = ",", transform = { it.value!! })
         }
         if (category != null) {
             map[ApiConstants.Parameters.FILTER_CATEGORY] = category
@@ -526,7 +530,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Video>
     ): VimeoRequest {
         return vimeoService.getVideo(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchVideoList(
@@ -537,7 +541,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
         return vimeoService.getVideoList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchFeedList(
@@ -548,7 +552,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<FeedList>
     ): VimeoRequest {
         return vimeoService.getFeedList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchProgrammedContentItemList(
@@ -559,7 +563,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<ProgrammedContentItemList>
     ): VimeoRequest {
         return vimeoService.getProgramContentItemList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchRecommendationList(
@@ -570,7 +574,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<RecommendationList>
     ): VimeoRequest {
         return vimeoService.getRecommendationList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchSearchResultList(
@@ -581,7 +585,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<SearchResultList>
     ): VimeoRequest {
         return vimeoService.getSearchResultList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchSeasonList(
@@ -592,7 +596,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<SeasonList>
     ): VimeoRequest {
         return vimeoService.getSeasonList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchNotificationList(
@@ -603,7 +607,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<NotificationList>
     ): VimeoRequest {
         return vimeoService.getNotificationList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchUser(
@@ -624,7 +628,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<UserList>
     ): VimeoRequest {
         return vimeoService.getUserList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchCategory(
@@ -635,7 +639,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Category>
     ): VimeoRequest {
         return vimeoService.getCategory(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchCategoryList(
@@ -646,7 +650,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<CategoryList>
     ): VimeoRequest {
         return vimeoService.getCategoryList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchChannel(
@@ -657,7 +661,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Channel>
     ): VimeoRequest {
         return vimeoService.getChannel(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchChannelList(
@@ -668,7 +672,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<ChannelList>
     ): VimeoRequest {
         return vimeoService.getChannelList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchAppConfiguration(
@@ -679,7 +683,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<AppConfiguration>
     ): VimeoRequest {
         return vimeoService.getAppConfiguration(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchAlbum(
@@ -690,7 +694,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Album>
     ): VimeoRequest {
         return vimeoService.getAlbum(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchAlbumList(
@@ -701,7 +705,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
         return vimeoService.getAlbumList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchTvodItem(
@@ -712,7 +716,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<TvodItem>
     ): VimeoRequest {
         return vimeoService.getTvodItem(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchTvodItemList(
@@ -723,7 +727,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<TvodItemList>
     ): VimeoRequest {
         return vimeoService.getTvodItemList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchComment(
@@ -734,7 +738,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
         return vimeoService.getComment(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     override fun fetchCommentList(
@@ -745,11 +749,11 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<CommentList>
     ): VimeoRequest {
         return vimeoService.getCommentList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
-            .enqueue(callback)
+                .enqueue(callback)
     }
 
     private fun String?.asPasswordParameter(): Map<String, String> =
-        this?.let { mapOf(ApiConstants.Parameters.PARAMETER_PASSWORD to it) } ?: emptyMap()
+            this?.let { mapOf(ApiConstants.Parameters.PARAMETER_PASSWORD to it) } ?: emptyMap()
 
     private fun Map<String, String>?.include(fieldFilter: String?): Map<String, String> {
         return if (this == null && fieldFilter == null) {
@@ -768,5 +772,5 @@ internal class VimeoApiClientImpl(
     }
 
     private fun String?.asRefinementMap(): Map<String, String> =
-        this?.let { mapOf(ApiConstants.Parameters.PARAMETER_GET_FIELD_FILTER to this) } ?: emptyMap()
+            this?.let { mapOf(ApiConstants.Parameters.PARAMETER_GET_FIELD_FILTER to this) } ?: emptyMap()
 }
