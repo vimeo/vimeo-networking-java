@@ -537,6 +537,17 @@ internal class VimeoApiClientImpl(
             .enqueue(callback)
     }
 
+    override fun fetchLiveStats(
+        uri: String,
+        fieldFilter: String?,
+        refinementMap: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<LiveStats>
+    ): VimeoRequest {
+        return vimeoService.getLiveStats(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+            .enqueue(callback)
+    }
+
     override fun fetchVideoList(
         uri: String,
         fieldFilter: String?,

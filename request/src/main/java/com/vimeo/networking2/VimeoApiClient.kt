@@ -238,6 +238,14 @@ interface VimeoApiClient {
         callback: VimeoCallback<Video>
     ): VimeoRequest
 
+    fun fetchLiveStats(
+        uri: String,
+        fieldFilter: String?,
+        refinementMap: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<LiveStats>
+    ): VimeoRequest
+
     fun fetchVideoList(
         uri: String,
         fieldFilter: String?,

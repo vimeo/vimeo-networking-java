@@ -300,6 +300,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Video>
     ): VimeoRequest = client.fetchVideo(uri, fieldFilter, refinementMap, cacheControl, callback)
 
+    override fun fetchLiveStats(
+        uri: String,
+        fieldFilter: String?,
+        refinementMap: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<LiveStats>
+    ): VimeoRequest = client.fetchLiveStats(uri, fieldFilter, refinementMap, cacheControl, callback)
+
     override fun fetchVideoList(
         uri: String,
         fieldFilter: String?,
