@@ -1,0 +1,109 @@
+apply plugin: 'maven-publish'
+
+group = 'com.vimeo.networking'
+
+// Create the pom configuration
+// All the fields below are required by Maven Central
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT License"
+            url "http://www.opensource.org/licenses/mit-license.php"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "vimeo"
+            name "Vimeo Mobile"
+            email "mobileops@vimeo.com"
+            organisation "Vimeo"
+            organisationUrl "https://github.com/vimeo"
+        }
+    }
+
+    scm {
+        connection "scm:git:git://github.com/vimeo/vimeo-networking-java.git"
+        developerConnection "scm:git:ssh://github.com:vimeo/vimeo-networking-java.git"
+        url "https://github.com/vimeo/vimeo-networking-java"
+    }
+}
+
+allprojects {
+    afterEvaluate {
+        // Create the publication with the pom configuration:
+        // Requires apply plugin: maven-publish
+        publishing {
+            publications {
+                release(MavenPublication) {
+                    from components.release
+                    artifact androidSourcesJar
+                    groupId project.group
+                    artifactId project.name
+                    version project.version
+                    pom.withXml {
+                        def root = asNode()
+                        root.appendNode('description', 'vimeo-networking is a networking library used for interacting with the Vimeo API. It is Java and Kotlin friendly.')
+                        root.appendNode('name', 'vimeo-networking')
+                        root.appendNode('url', 'https://github.com/vimeo/vimeo-networking-java')
+                        root.children().last() + pomConfig
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.source
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+
+// Only execute the bintray task if this is the actual networking project (not an include)
+allprojects {
+    afterEvaluate { project ->
+        def bintrayProject = project.plugins.hasPlugin('com.jfrog.bintray')
+        if (bintrayProject) {
+            bintray {
+                user = System.getenv('BINTRAY_USER')
+                // api key
+                key = System.getenv('BINTRAY_API_KEY')
+                publications = ['release']
+                dryRun = false // Whether to run this as dry-run, without deploying
+                override = false
+                pkg {
+                    repo = 'maven'
+                    name = 'vimeo-networking'
+                    userOrg = 'vimeo'
+                    licenses = ['MIT']
+                    websiteUrl = 'https://github.com/vimeo/vimeo-networking-java'
+                    issueTrackerUrl = 'https://github.com/vimeo/vimeo-networking-java/issues'
+                    vcsUrl = 'https://github.com/vimeo/vimeo-networking-java.git'
+                    labels = ['vimeo', 'android', 'java', 'networking', 'api']
+                    publicDownloadNumbers = true
+                    version {
+                        name = project.version
+                        vcsTag = project.version
+                        gpg {
+                            sign = true
+                            passphrase = System.getenv('BINTRAY_GPG_PASSWORD')
+                        }
+                        mavenCentralSync {
+                            sync = true
+                            //Optional (true by default). Determines whether to sync the version to Maven Central.
+                            user = System.getenv('SONATYPE_TOKEN_USER') //OSS user token
+                            password = System.getenv('SONATYPE_TOKEN_PASSWORD') //OSS user password
+                            close = '1'
+                            //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

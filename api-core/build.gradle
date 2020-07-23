@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    api project(":models")
+    compileOnly project(':models')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

@@ -5,8 +5,8 @@ package com.vimeo.networking2.enums
  */
 inline fun <reified T> String?.asEnum(defaultValue: T): T where T : Enum<T>, T : StringValue =
         T::class.java.enumConstants
-                .filterIsInstance<T>()
-                .find { it.value == this }
+                ?.filterIsInstance<T>()
+                ?.find { it.value == this }
                 ?: defaultValue
 
 /**

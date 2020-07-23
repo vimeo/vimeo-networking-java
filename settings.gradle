@@ -1,5 +1,15 @@
-include ':vimeo-networking', ':models', ':auth', ':api-core'
+includeBuild('model-generator/plugin')
+include ':vimeo-networking',
+        ':models',
+        ':auth',
+        ':api-core',
+        ':models-parcelable',
+        ':models-serializable',
+        ':model-generator:integrations:models-input',
+        ':model-generator:integrations:models-output'
 
 if (!System.env.JITPACK) {
-    include ':example-java-android', ':example-kotlin-android', ':example-vimeo-networking2-android'
+    include ':example-java-android',
+            ':example-kotlin-android',
+            ':example-vimeo-networking2-android'
 }

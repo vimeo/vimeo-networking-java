@@ -29,23 +29,27 @@ def pomConfig = {
     }
 }
 
-// Create the publication with the pom configuration:
-// Requires apply plugin: maven-publish
-publishing {
-    publications {
-        MyPublication(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            groupId project.group
-            artifactId project.name
-            version project.version
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', 'vimeo-networking is a networking library used for interacting with the Vimeo API. It is Java and Kotlin friendly.')
-                root.appendNode('name', 'vimeo-networking')
-                root.appendNode('url', 'https://github.com/vimeo/vimeo-networking-java')
-                root.children().last() + pomConfig
+allprojects {
+    afterEvaluate {
+        // Create the publication with the pom configuration:
+        // Requires apply plugin: maven-publish
+        publishing {
+            publications {
+                MyPublication(MavenPublication) {
+                    from components.java
+                    artifact sourcesJar
+                    artifact javadocJar
+                    groupId project.group
+                    artifactId project.name
+                    version project.version
+                    pom.withXml {
+                        def root = asNode()
+                        root.appendNode('description', 'vimeo-networking is a networking library used for interacting with the Vimeo API. It is Java and Kotlin friendly.')
+                        root.appendNode('name', 'vimeo-networking')
+                        root.appendNode('url', 'https://github.com/vimeo/vimeo-networking-java')
+                        root.children().last() + pomConfig
+                    }
+                }
             }
         }
     }
