@@ -6,7 +6,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.AttributionType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -81,12 +80,7 @@ data class FeedItem(
     @Json(name = "user")
     val user: User? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -85L
-    }
-}
+)
 
 /**
  * @see FeedItem.rawType

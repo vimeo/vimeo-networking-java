@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.enums.StreamAccessType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -81,12 +80,7 @@ data class RentInteraction(
     @Json(name = "uri")
     val uri: String? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -26774L
-    }
-}
+)
 
 /**
  * @see RentInteraction.streamAccess

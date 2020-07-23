@@ -3,13 +3,14 @@ package com.vimeo.android.networking.example;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 
 import com.vimeo.networking.utils.VimeoNetworkUtil;
 import com.vimeo.networking2.User;
 import com.vimeo.networking2.VimeoAccount;
 
 import java.io.IOException;
+
+import androidx.annotation.Nullable;
 
 /**
  * Class for persisting the the auth access token (and possibly the user)

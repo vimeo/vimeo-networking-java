@@ -1,0 +1,62 @@
+import com.vimeo.modelgenerator.ModelType
+
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+    id "kotlin-android-extensions"
+    id "kotlin-kapt"
+    id "model.generator"
+}
+
+apply from: '../publish_android.gradle'
+
+generated {
+    inputPath = "models/src/main/java/com/vimeo/networking2"
+    typeGenerated = ModelType.PARCELABLE
+}
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "com.squareup.moshi:moshi-kotlin:1.9.3"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.3"
+
+    testImplementation "junit:junit:4.13"
+    testImplementation "org.assertj:assertj-core:3.16.1"
+    testImplementation "io.github.classgraph:classgraph:4.8.87"
+    testImplementation "uk.co.jemos.podam:podam:7.2.3.RELEASE"
+    testImplementation 'org.robolectric:robolectric:4.3.1'
+}

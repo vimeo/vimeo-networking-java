@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import java.io.Serializable
 
 /**
  * All connections for a video.
@@ -108,9 +107,4 @@ data class VideoConnections(
      */
     @Json(name = "publish_to_social")
     val publish: PublishJobConnection? = null
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -16585L
-    }
-}
+)

@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 import java.util.Date
 
 /**
@@ -29,9 +28,4 @@ data class NotificationSubscriptions(
     @Json(name = "uri")
     val uri: String? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -82L
-    }
-}
+)

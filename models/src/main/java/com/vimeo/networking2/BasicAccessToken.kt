@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Basic authentication for client credentials. It contains an access token that consumers can use to make
@@ -26,8 +25,4 @@ data class BasicAccessToken(
     @Json(name = "token_type")
     val tokenType: String? = null
 
-) : AccessTokenProvider, Serializable {
-    companion object {
-        private const val serialVersionUID = -29177L
-    }
-}
+) : AccessTokenProvider

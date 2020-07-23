@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.vimeo.example"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
@@ -24,7 +24,11 @@ android {
 
 dependencies {
     implementation project(':vimeo-networking')
+    implementation project(':models')
 
-    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
-    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.annotation:annotation:1.1.0"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
+    implementation "com.google.android.material:material:1.1.0"
 }

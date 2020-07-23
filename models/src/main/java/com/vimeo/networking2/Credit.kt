@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Video credit data.
@@ -40,9 +39,4 @@ data class Credit(
     @Json(name = "video")
     val video: Video? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -3210181L
-    }
-}
+)

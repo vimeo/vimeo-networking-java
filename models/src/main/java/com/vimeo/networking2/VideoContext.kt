@@ -6,7 +6,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.VideoActionType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * Video context data.
@@ -27,12 +26,7 @@ data class VideoContext(
     @Json(name = "resource_type")
     val resourceType: String? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -71435993237L
-    }
-}
+)
 
 /**
  * @see VideoContext.videoAction

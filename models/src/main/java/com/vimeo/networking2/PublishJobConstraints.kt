@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * An object representing the information on the publishing constraints for each social network.
@@ -32,9 +31,4 @@ data class PublishJobConstraints(
      */
     @Json(name = "twitter")
     val twitter: PlatformConstraint? = null
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -52L
-    }
-}
+)
