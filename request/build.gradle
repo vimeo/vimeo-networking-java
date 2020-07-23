@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    api project(':models')
+    compileOnly project(path: ':models', configuration: 'default')
     api project(':auth')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
