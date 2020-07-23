@@ -152,10 +152,10 @@ internal class VimeoApiClientImpl(
         if (description != null) {
             body[ApiConstants.Parameters.PARAMETER_VIDEO_DESCRIPTION] = description
         }
-        val privacy = mutableMapOf<String, Any>()
         if (password != null) {
-            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_PASSWORD] = password
+            body[ApiConstants.Parameters.PARAMETER_VIDEO_PASSWORD] = password
         }
+        val privacy = mutableMapOf<String, Any>()
         if (commentPrivacyType != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_COMMENTS] = commentPrivacyType.value!!
         }
