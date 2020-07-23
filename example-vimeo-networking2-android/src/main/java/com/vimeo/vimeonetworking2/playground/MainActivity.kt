@@ -1,7 +1,7 @@
 package com.vimeo.vimeonetworking2.playground
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.vimeo.moshiexampleandroid.R
 import com.vimeo.networking2.*
 import com.vimeo.networking2.config.Configuration

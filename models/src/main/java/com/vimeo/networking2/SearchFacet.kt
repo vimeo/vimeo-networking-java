@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Search Facet.
@@ -21,9 +20,4 @@ data class SearchFacet(
      */
     @Json(name = "options")
     val options: List<FacetOption>? = null
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -76L
-    }
-}
+)

@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * Embed data for a album.
@@ -16,8 +15,4 @@ data class AlbumEmbed(
      */
     @Json(name = "html")
     val html: String? = null
-) : Serializable {
-    companion object {
-        private const val serialVersionUID = -8109953L
-    }
-}
+)

@@ -9,7 +9,6 @@ import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * The representation of the user's video privacy settings.
@@ -63,12 +62,7 @@ data class Privacy(
      */
     @Json(name = "view")
     val viewPrivacy: String? = null
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -28591L
-    }
-}
+)
 
 /**
  * @see Privacy.commentPrivacy

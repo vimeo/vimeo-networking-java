@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
-import java.io.Serializable
 
 /**
  * List of text tracks for a video.
@@ -26,9 +25,4 @@ data class TextTrackList(
     @Json(name = "data")
     override val data: List<TextTrack>? = null
 
-) : Pageable<TextTrack>, Serializable {
-
-    companion object {
-        private const val serialVersionUID = -56L
-    }
-}
+) : Pageable<TextTrack>

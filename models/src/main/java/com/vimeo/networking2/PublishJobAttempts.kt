@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 
 /**
  * An object representing information on previous attempts to publish to
@@ -39,9 +38,4 @@ data class PublishJobAttempts(
     @Json(name = "twitter")
     val twitter: Boolean? = null
 
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -64L
-    }
-}
+)

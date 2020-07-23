@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.StorageQuota
-import java.io.Serializable
 
 /**
  * Lifetime data.
@@ -28,9 +27,4 @@ data class Lifetime(
      */
     @Json(name = "used")
     override val used: Long? = null
-) : StorageQuota, Serializable {
-
-    companion object {
-        private const val serialVersionUID = -1492L
-    }
-}
+) : StorageQuota

@@ -6,7 +6,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.BlockerType
 import com.vimeo.networking2.enums.asEnumList
-import java.io.Serializable
 
 /**
  * An object that represents the blockers keeping a video from being published to each platform.
@@ -42,12 +41,7 @@ data class PublishJobBlockers(
      */
     @Json(name = "twitter")
     val twitter: List<String>? = null
-) : Serializable {
-
-    companion object {
-        private const val serialVersionUID = -36L
-    }
-}
+)
 
 /**
  * @see PublishJobBlockers.facebook

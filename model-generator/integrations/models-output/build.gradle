@@ -1,0 +1,29 @@
+import com.vimeo.modelgenerator.ModelType
+
+plugins {
+    id 'java-library'
+    id 'kotlin'
+    id 'kotlin-kapt'
+    id 'model.generator'
+}
+
+generated {
+    inputPath = "model-generator/integrations/models-input/src/main/java/com/vimeo/networking2"
+    typeGenerated = ModelType.SERIALIZABLE
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "com.squareup.moshi:moshi-kotlin:1.9.3"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.3"
+
+    testImplementation "junit:junit:4.13"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.assertj:assertj-core:3.16.1"
+    testImplementation "io.github.classgraph:classgraph:4.8.87"
+    testImplementation "uk.co.jemos.podam:podam:7.2.3.RELEASE"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

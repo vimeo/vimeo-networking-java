@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.PictureType
 import com.vimeo.networking2.enums.asEnum
-import java.io.Serializable
 
 /**
  * Collection of pictures.
@@ -53,13 +52,8 @@ data class PictureCollection(
     @Json(name = "uri")
     val uri: String? = null
 
-) : Entity, Serializable {
-
+) : Entity {
     override val identifier: String? = resourceKey
-
-    companion object {
-        private const val serialVersionUID = -75L
-    }
 }
 
 /**

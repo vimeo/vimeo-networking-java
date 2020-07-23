@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.StorageQuota
-import java.io.Serializable
 
 /**
  * Periodic upload quota information.
@@ -20,9 +19,4 @@ data class Periodic(
     @Json(name = "used")
     override val used: Long? = null
 
-) : StorageQuota, Serializable {
-
-    companion object {
-        private const val serialVersionUID = -41L
-    }
-}
+) : StorageQuota

@@ -3,7 +3,6 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
-import java.io.Serializable
 
 /**
  * Pictures information such as dimensions, link to image, etc...
@@ -40,11 +39,6 @@ data class Picture(
     @Json(name = "width")
     val width: Int? = null
 
-) : Entity, Serializable {
-
+) : Entity {
     override val identifier: String? = resourceKey
-
-    companion object {
-        private const val serialVersionUID = -6605L
-    }
 }
