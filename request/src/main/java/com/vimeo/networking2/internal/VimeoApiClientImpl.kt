@@ -220,6 +220,7 @@ internal class VimeoApiClientImpl(
     override fun createConnectedApp(
         type: ConnectedAppType,
         authorization: String,
+        clientId: String,
         callback: VimeoCallback<ConnectedApp>
     ): VimeoRequest {
         return vimeoService.createConnectedApp(
@@ -227,7 +228,8 @@ internal class VimeoApiClientImpl(
             type.value!!,
             mapOf(
                 ApiConstants.Parameters.PARAMETER_AUTH_CODE to authorization,
-                ApiConstants.Parameters.PARAMETER_APP_TYPE to type.value!!
+                ApiConstants.Parameters.PARAMETER_APP_TYPE to type.value!!,
+                ApiConstants.Parameters.PARAMETER_CLIENT_ID to clientId
             )
         ).enqueue(callback)
     }

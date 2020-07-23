@@ -143,8 +143,9 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun createConnectedApp(
         type: ConnectedAppType,
         authorization: String,
+        clientId: String,
         callback: VimeoCallback<ConnectedApp>
-    ): VimeoRequest = client.createConnectedApp(type, authorization, callback)
+    ): VimeoRequest = client.createConnectedApp(type, authorization, clientId, callback)
 
     override fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteConnectedApp(type, callback)

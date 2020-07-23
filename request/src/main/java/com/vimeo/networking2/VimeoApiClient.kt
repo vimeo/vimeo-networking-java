@@ -141,6 +141,7 @@ interface VimeoApiClient {
     fun createConnectedApp(
         type: ConnectedAppType,
         authorization: String,
+        clientId: String,
         callback: VimeoCallback<ConnectedApp>
     ): VimeoRequest
 
