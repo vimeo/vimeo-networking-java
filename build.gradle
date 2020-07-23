@@ -25,7 +25,7 @@ ext {
 }
 
 subprojects {
-    if (path.contains("integrations")) {
+    if (path.contains("integrations") || path.contains("models-")) {
         return 
     }
 
