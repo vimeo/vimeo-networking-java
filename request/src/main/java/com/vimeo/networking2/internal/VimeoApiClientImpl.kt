@@ -337,7 +337,7 @@ internal class VimeoApiClientImpl(
             map.putAll(queryParams)
         }
 
-        return vimeoService.search(authHeader, mapOf()).enqueue(callback)
+        return vimeoService.search(authHeader, map).enqueue(callback)
     }
 
     override fun createPictureCollection(uri: String, callback: VimeoCallback<PictureCollection>): VimeoRequest {
