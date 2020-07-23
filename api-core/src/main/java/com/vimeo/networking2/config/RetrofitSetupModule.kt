@@ -24,7 +24,6 @@ package com.vimeo.networking2.config
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.vimeo.networking2.ApiConstants
-import com.vimeo.networking2.ApiConstants.SDK_VERSION
 import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
 import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
@@ -37,15 +36,13 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.*
+import java.util.Date
 import java.util.concurrent.TimeUnit
 
 /**
  * Module which provides all the dependencies needed for setting up [Retrofit].
  */
 object RetrofitSetupModule {
-
-    private const val USER_AGENT_HEADER_VALUE = "Kotlin VimeoNetworking/$SDK_VERSION"
 
     /**
      * Create Moshi object for serialization and deserialization.
@@ -60,7 +57,7 @@ object RetrofitSetupModule {
      */
     fun retrofit(configuration: Configuration): Retrofit {
         val interceptors = mutableListOf(
-            UserAgentHeaderInterceptor(createCompositeUserAgent(configuration.userAgent)),
+            UserAgentHeaderInterceptor(configuration.compositeUserAgent),
             AcceptHeaderInterceptor(),
             LanguageHeaderInterceptor(configuration.locales)
         )
@@ -71,9 +68,6 @@ object RetrofitSetupModule {
         val okHttpClient = okHttpClient(configuration, interceptors, networkInterceptors)
         return createRetrofit(configuration, okHttpClient)
     }
-
-    private fun createCompositeUserAgent(providedUserAgent: String?) =
-        providedUserAgent?.let { "$it $USER_AGENT_HEADER_VALUE" } ?: USER_AGENT_HEADER_VALUE
 
     /**
      * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
