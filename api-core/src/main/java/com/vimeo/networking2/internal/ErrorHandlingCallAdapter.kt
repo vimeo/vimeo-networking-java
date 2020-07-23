@@ -22,6 +22,7 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.ApiError
+import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.CallAdapter
@@ -35,13 +36,15 @@ import java.util.concurrent.Executor
  * @param responseType Type of the response.
  * @param callbackExecutor The executor upon which the caller is notified.
  * @param responseBodyConverter Converter to parse the error response into a [ApiError].
+ * @param vimeoLogger The logger used to log information about error handling.
  */
 internal class ErrorHandlingCallAdapter<T : Any>(
     private val responseType: Type,
     private val callbackExecutor: Executor,
-    private val responseBodyConverter: Converter<ResponseBody, ApiError>
+    private val responseBodyConverter: Converter<ResponseBody, ApiError>,
+    private val vimeoLogger: VimeoLogger
 ) : CallAdapter<T, VimeoCall<T>> {
     override fun responseType() = responseType
 
-    override fun adapt(call: Call<T>) = VimeoCallAdapter(call, callbackExecutor, responseBodyConverter)
+    override fun adapt(call: Call<T>) = VimeoCallAdapter(call, callbackExecutor, responseBodyConverter, vimeoLogger)
 }

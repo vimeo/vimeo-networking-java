@@ -30,6 +30,7 @@ import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
+import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.Cache
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
@@ -117,7 +118,10 @@ object RetrofitSetupModule {
             .baseUrl(configuration.baseUrl)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory())
+            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory(VimeoLogger(
+                configuration.logDelegate,
+                configuration.logLevel
+            )))
             .build()
 
     /**

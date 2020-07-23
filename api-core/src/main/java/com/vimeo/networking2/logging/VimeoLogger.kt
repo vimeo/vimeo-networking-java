@@ -37,25 +37,34 @@ internal class VimeoLogger(
 
     override fun e(error: String) {
         if (logLevel.level <= LogDelegate.Level.ERROR.level) {
-            logDelegate?.e(error)
+            logDelegate?.e(error.prependIdentifier())
         }
     }
 
     override fun e(error: String, exception: Exception) {
         if (logLevel.level <= LogDelegate.Level.ERROR.level) {
-            logDelegate?.e(error, exception)
+            logDelegate?.e(error.prependIdentifier(), exception)
         }
     }
 
     override fun d(message: String) {
         if (logLevel.level <= LogDelegate.Level.DEBUG.level) {
-            logDelegate?.d(message)
+            logDelegate?.d(message.prependIdentifier())
         }
     }
 
     override fun v(message: String) {
         if (logLevel.level <= LogDelegate.Level.VERBOSE.level) {
-            logDelegate?.v(message)
+            logDelegate?.v(message.prependIdentifier())
         }
+    }
+
+    /**
+     * Formats the message to include the library identifier.
+     */
+    private fun String.prependIdentifier(): String = "$LIBRARY_IDENTIFIER: $this"
+
+    private companion object {
+        private const val LIBRARY_IDENTIFIER = "vimeo-networking"
     }
 }

@@ -1,6 +1,7 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
+import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,11 +18,13 @@ import java.util.concurrent.Executor
  * thread on Android. If the executor is null, then the callback will be executed on the thread provided b OkHttp's
  * dispatcher.
  * @param responseBodyConverter Converter to convert the error response to [ApiError].
+ * @param vimeoLogger The logger used to log information about error handling.
  */
 internal class VimeoCallEmptyResponseAdapter(
     private val call: Call<Unit>,
     private val callbackExecutor: Executor,
-    private val responseBodyConverter: Converter<ResponseBody, ApiError>
+    private val responseBodyConverter: Converter<ResponseBody, ApiError>,
+    private val vimeoLogger: VimeoLogger
 ) : VimeoCall<Unit> {
     override fun enqueue(callback: VimeoCallback<Unit>): VimeoRequest {
         call.enqueue(object : Callback<Unit> {
@@ -31,20 +34,9 @@ internal class VimeoCallEmptyResponseAdapter(
                         callback.onSuccess(VimeoResponse.Success(Unit, response.code()))
                     }
                 } else {
-                    val apiError = response.parseApiError(responseBodyConverter)
-                    if (apiError != null) {
-                        callbackExecutor.execute {
-                            callback.onError(VimeoResponse.Error.Api(apiError, response.code()))
-                        }
-                    } else {
-                        callbackExecutor.execute {
-                            callback.onError(
-                                VimeoResponse.Error.Unknown(
-                                    response.raw().toString(),
-                                    response.code()
-                                )
-                            )
-                        }
+                    val vimeoResponseError = response.parseErrorResponse(responseBodyConverter, vimeoLogger)
+                    callbackExecutor.execute {
+                        callback.onError(vimeoResponseError)
                     }
                 }
             }
@@ -65,5 +57,10 @@ internal class VimeoCallEmptyResponseAdapter(
         call.cancel()
     }
 
-    override fun clone() = VimeoCallEmptyResponseAdapter(call.clone(), callbackExecutor, responseBodyConverter)
+    override fun clone() = VimeoCallEmptyResponseAdapter(
+        call.clone(),
+        callbackExecutor,
+        responseBodyConverter,
+        vimeoLogger
+    )
 }

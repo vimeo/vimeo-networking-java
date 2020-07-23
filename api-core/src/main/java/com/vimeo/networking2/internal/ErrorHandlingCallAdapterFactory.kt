@@ -22,6 +22,7 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.ApiError
+import com.vimeo.networking2.logging.VimeoLogger
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
@@ -30,8 +31,10 @@ import java.util.concurrent.Executor
 
 /**
  * Factory for creating a custom [ErrorHandlingCallAdapter].
+ *
+ * @param vimeoLogger The logger used to log information about error handling.
  */
-internal class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
+internal class ErrorHandlingCallAdapterFactory(private val vimeoLogger: VimeoLogger) : CallAdapter.Factory() {
 
     override fun get(
         returnType: Type,
@@ -57,13 +60,15 @@ internal class ErrorHandlingCallAdapterFactory : CallAdapter.Factory() {
             // treated as errors.
             return ErrorHandlingUnitCallAdapter(
                 callbackExecutor ?: synchronousExecutor,
-                errorResponseConverter
+                errorResponseConverter,
+                vimeoLogger
             )
         }
         return ErrorHandlingCallAdapter<Any>(
             responseType,
             callbackExecutor ?: synchronousExecutor,
-            errorResponseConverter
+            errorResponseConverter,
+            vimeoLogger
         )
     }
 
