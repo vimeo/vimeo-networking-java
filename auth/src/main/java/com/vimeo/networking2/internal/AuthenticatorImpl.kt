@@ -62,7 +62,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, authCallback)
         } else {
-            call.enqueue(authCallback)
+            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
         }
     }
 
