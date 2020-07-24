@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.internal
+package com.vimeo.networking2.internal.params
 
 import com.vimeo.networking2.Scopes
 import retrofit2.Converter
@@ -29,5 +29,5 @@ import retrofit2.Converter
  */
 class ScopesConverter : Converter<Scopes, String> {
     override fun convert(value: Scopes): String =
-            value.scopes.joinToString(separator = " ", transform = { it.name.toLowerCase() })
+            value.scopes.joinToString(separator = " ", transform = { it.value.toLowerCase() })
 }

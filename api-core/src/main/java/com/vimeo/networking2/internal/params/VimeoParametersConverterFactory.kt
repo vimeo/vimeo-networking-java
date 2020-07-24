@@ -19,10 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.internal
+package com.vimeo.networking2.internal.params
 
 import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.Scopes
+import com.vimeo.networking2.enums.StringValue
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.reflect.Type
@@ -35,9 +36,10 @@ class VimeoParametersConverterFactory : Converter.Factory() {
         type: Type,
         annotations: Array<Annotation>,
         retrofit: Retrofit
-    ): Converter<*, String>? = when (type) {
-        GrantType::class.java -> GrantTypeConverter()
-        Scopes::class.java -> ScopesConverter()
+    ): Converter<*, String>? = when {
+        type == GrantType::class.java -> GrantTypeConverter()
+        type == Scopes::class.java -> ScopesConverter()
+        type is Class<*> && StringValue::class.java.isAssignableFrom(type) -> StringValueConverter()
         else -> super.stringConverter(type, annotations, retrofit)
     }
 }
