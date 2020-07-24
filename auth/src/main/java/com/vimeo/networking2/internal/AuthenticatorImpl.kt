@@ -213,6 +213,6 @@ internal class AuthenticatorImpl(
         accountStore.removeAccount()
         accessToken ?: return NoOpVimeoRequest
 
-        return authService.logOut(accessToken).enqueue(authCallback)
+        return authService.logOut("Bearer $accessToken").enqueue(authCallback)
     }
 }
