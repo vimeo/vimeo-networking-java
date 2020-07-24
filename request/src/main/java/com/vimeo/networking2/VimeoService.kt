@@ -389,6 +389,14 @@ interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<VideoStatus>
 
+    @GET
+    fun getUnit(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @QueryMap options: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<Unit>
+
     @PUT
     fun putContentWithUserResponse(
         @Header(AUTHORIZATION) authorization: String,
@@ -403,14 +411,6 @@ interface VimeoService {
         @Url uri: String,
         @QueryMap options: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<User>
-
-    @GET
-    fun getUnit(
-        @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
-        @QueryMap options: Map<String, @JvmSuppressWildcards String>,
-        @Header(CACHE_CONTROL) cacheControl: CacheControl?
-    ): VimeoCall<Unit>
 
     @PUT
     fun put(

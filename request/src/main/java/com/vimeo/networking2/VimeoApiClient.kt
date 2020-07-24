@@ -461,6 +461,13 @@ interface VimeoApiClient {
         callback: VimeoCallback<TextTrackList>
     ): VimeoRequest
 
+    fun fetchEmpty(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
     fun search(
         query: String,
         searchFilterType: SearchFilterType,

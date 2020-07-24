@@ -294,6 +294,15 @@ internal class VimeoApiClientImpl(
             .enqueue(callback)
     }
 
+    override fun fetchEmpty(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
+        return vimeoService.getUnit(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl).enqueue(callback)
+    }
+
     @Suppress("ComplexMethod")
     override fun search(
         query: String,

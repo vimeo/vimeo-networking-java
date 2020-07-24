@@ -185,6 +185,13 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<TextTrackList>
     ): VimeoRequest = client.fetchTextTrackList(uri, fieldFilter, cacheControl, callback)
 
+    override fun fetchEmpty(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.fetchEmpty(uri, fieldFilter, cacheControl, callback)
+
     override fun search(
         query: String,
         searchFilterType: SearchFilterType,
