@@ -29,7 +29,7 @@ data class Folder(
      * The folder's metadata.
      */
     @Json(name = "metadata")
-    val metadata: Metadata<FolderConnections, Nothing>? = null,
+    val metadata: Metadata<FolderConnections, Empty>? = null,
 
     /**
      *  The time in ISO 8601 format when the folder was last modified.
