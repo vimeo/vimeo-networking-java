@@ -9,4 +9,4 @@ import com.squareup.moshi.JsonClass
  * generator.
  */
 @JsonClass(generateAdapter = true)
-data class Empty(val neededForGenerator: Int = 666)
+data class Empty(val neededForGenerator: String? = null)
