@@ -43,7 +43,6 @@ class ModelsTest {
         Email::class,
         EmbedButtons::class,
         EmbedTitle::class,
-        Empty::class,
         FacebookConfiguration::class,
         FacetOption::class,
         FeaturesConfiguration::class,
