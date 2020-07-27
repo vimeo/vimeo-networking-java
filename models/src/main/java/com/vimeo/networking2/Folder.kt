@@ -4,7 +4,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.util.*
+import java.util.Date
 
 /**
  * A folder that acts as a container for a list of [Videos][Video] that can be fetched via
