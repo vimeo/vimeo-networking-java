@@ -56,7 +56,7 @@ data class UserConnections(
     /**
      * Information about this user's folders.
      */
-    @Json(name = "folders")
+    @Json(name = "folders_root")
     val folders: Connection? = null,
 
     /**
