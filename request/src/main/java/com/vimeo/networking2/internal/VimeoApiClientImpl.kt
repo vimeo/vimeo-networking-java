@@ -27,6 +27,7 @@ import com.vimeo.networking2.config.Configuration
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.ErrorCodeType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -49,7 +50,7 @@ import okhttp3.CacheControl
  * provide an authenticated account.
  * @param localVimeoCallAdapter The adapter used to notify consumers of local errors.
  */
-@Suppress("UnsafeCallOnNullableType", "LargeClass")
+@Suppress("LargeClass")
 internal class VimeoApiClientImpl(
     private val vimeoService: VimeoService,
     private val authenticator: Authenticator,
@@ -74,12 +75,13 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val body = parameters.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
-        body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy!!
+        body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
+            ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         if (description != null) {
             body[ApiConstants.Parameters.PARAMETER_ALBUM_DESCRIPTION] = description
         }
         if (albumPrivacy.password != null) {
-            body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = albumPrivacy.password!!
+            body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = requireNotNull(albumPrivacy.password)
         }
         return vimeoService.createAlbum(authHeader, body).enqueue(callback)
     }
@@ -94,26 +96,33 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val body = parameters.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
-        body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy!!
+        body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
+            ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         if (description != null) {
             body[ApiConstants.Parameters.PARAMETER_ALBUM_DESCRIPTION] = description
         }
         if (albumPrivacy.password != null) {
-            body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = albumPrivacy.password!!
+            body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = requireNotNull(albumPrivacy.password)
         }
-        return vimeoService.editAlbum(authHeader, album.uri!!, body).enqueue(callback)
+        val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.editAlbum(authHeader, uri, body).enqueue(callback)
     }
 
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.delete(authHeader, album.uri!!, emptyMap()).enqueue(callback)
+        val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.delete(authHeader, uri, emptyMap()).enqueue(callback)
     }
 
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.addToAlbum(authHeader, album.uri!!, video.uri!!).enqueue(callback)
+        val albumUri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val videoUri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.addToAlbum(authHeader, albumUri, videoUri).enqueue(callback)
     }
 
     override fun removeFromAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.removeFromAlbum(authHeader, album.uri!!, video.uri!!).enqueue(callback)
+        val albumUri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val videoUri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.removeFromAlbum(authHeader, albumUri, videoUri).enqueue(callback)
     }
 
     override fun modifyVideosInAlbum(
@@ -121,7 +130,8 @@ internal class VimeoApiClientImpl(
         modificationSpecs: ModifyVideosInAlbumSpecs,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
-        return vimeoService.modifyVideosInAlbum(authHeader, album.uri!!, modificationSpecs).enqueue(callback)
+        val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.modifyVideosInAlbum(authHeader, uri, modificationSpecs).enqueue(callback)
     }
 
     override fun modifyVideoInAlbums(
@@ -129,7 +139,8 @@ internal class VimeoApiClientImpl(
         modificationSpecs: ModifyVideoInAlbumsSpecs,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
-        return vimeoService.modifyVideoInAlbums(authHeader, video.uri!!, modificationSpecs).enqueue(callback)
+        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.modifyVideoInAlbums(authHeader, uri, modificationSpecs).enqueue(callback)
     }
 
     @Suppress("ComplexMethod")
@@ -158,7 +169,8 @@ internal class VimeoApiClientImpl(
         }
         val privacy = mutableMapOf<String, Any>()
         if (commentPrivacyType != null) {
-            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_COMMENTS] = commentPrivacyType.value!!
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_COMMENTS] = commentPrivacyType.value
+                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         }
         if (allowDownload != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_DOWNLOAD] = allowDownload
@@ -167,10 +179,12 @@ internal class VimeoApiClientImpl(
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_ADD] = allowAddToCollections
         }
         if (embedPrivacyType != null) {
-            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_EMBED] = embedPrivacyType.value!!
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_EMBED] = embedPrivacyType.value
+                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         }
         if (viewPrivacyType != null) {
-            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_VIEW] = viewPrivacyType.value!!
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_VIEW] = viewPrivacyType.value
+                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         }
         if (privacy.isNotEmpty()) {
             body[ApiConstants.Parameters.PARAMETER_VIDEO_PRIVACY] = privacy
@@ -221,7 +235,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ConnectedApp>
     ): VimeoRequest {
-        return vimeoService.getConnectedApp(authHeader, type.value!!, fieldFilter.asRefinementMap(), cacheControl)
+        return vimeoService.getConnectedApp(authHeader, type.value
+            ?: throw IllegalStateException(INVALID_ENUM_MESSAGE), fieldFilter.asRefinementMap(), cacheControl)
             .enqueue(callback)
     }
 
@@ -233,17 +248,19 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         return vimeoService.createConnectedApp(
             authHeader,
-            type.value!!,
+            type.value ?: throw IllegalStateException(INVALID_ENUM_MESSAGE),
             mapOf(
                 ApiConstants.Parameters.PARAMETER_AUTH_CODE to authorization,
-                ApiConstants.Parameters.PARAMETER_APP_TYPE to type.value!!,
+                ApiConstants.Parameters.PARAMETER_APP_TYPE to (type.value
+                    ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)),
                 ApiConstants.Parameters.PARAMETER_CLIENT_ID to clientId
             )
         ).enqueue(callback)
     }
 
     override fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.deleteConnectedApp(authHeader, type.value!!).enqueue(callback)
+        return vimeoService.deleteConnectedApp(authHeader, type.value
+            ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)).enqueue(callback)
     }
 
     override fun fetchPublishJob(
@@ -303,7 +320,7 @@ internal class VimeoApiClientImpl(
         return vimeoService.getUnit(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl).enqueue(callback)
     }
 
-    @Suppress("ComplexMethod")
+    @Suppress("ComplexMethod", "LongMethod")
     override fun search(
         query: String,
         searchFilterType: SearchFilterType,
@@ -322,26 +339,33 @@ internal class VimeoApiClientImpl(
 
         val map = mutableMapOf(
             ApiConstants.Parameters.PARAMETER_GET_QUERY to query,
-            ApiConstants.Parameters.FILTER_TYPE to searchFilterType.value!!
+            ApiConstants.Parameters.FILTER_TYPE to (searchFilterType.value
+                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE))
         )
         if (fieldFilter != null) {
             map[ApiConstants.Parameters.PARAMETER_GET_FILTER] = fieldFilter
         }
         if (searchSortType != null) {
-            map[ApiConstants.Parameters.PARAMETER_GET_SORT] = searchSortType.value!!
+            map[ApiConstants.Parameters.PARAMETER_GET_SORT] = searchSortType.value
+                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         }
         if (searchSortDirectionType != null) {
-            map[ApiConstants.Parameters.PARAMETER_GET_DIRECTION] = searchSortDirectionType.value!!
+            map[ApiConstants.Parameters.PARAMETER_GET_DIRECTION] = searchSortDirectionType.value
+                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         }
         if (searchDateType != null) {
-            map[ApiConstants.Parameters.FILTER_UPLOADED] = searchDateType.value!!
+            map[ApiConstants.Parameters.FILTER_UPLOADED] = searchDateType.value
+                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         }
         if (searchDurationType != null) {
-            map[ApiConstants.Parameters.FILTER_DURATION] = searchDurationType.value!!
+            map[ApiConstants.Parameters.FILTER_DURATION] = searchDurationType.value
+                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
         }
         if (searchFacetTypes != null) {
             map[ApiConstants.Parameters.PARAMETER_GET_FACETS] =
-                searchFacetTypes.joinToString(separator = ",", transform = { it.value!! })
+                searchFacetTypes.joinToString(separator = ",", transform = {
+                    it.value ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                })
         }
         if (category != null) {
             map[ApiConstants.Parameters.FILTER_CATEGORY] = category
@@ -384,7 +408,9 @@ internal class VimeoApiClientImpl(
         followable: Followable,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return updateFollow(isFollowing, followable.metadata?.interactions?.follow?.uri!!, callback)
+        val uri = followable.metadata?.interactions?.follow?.uri
+            ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return updateFollow(isFollowing, uri, callback)
     }
 
     override fun updateVideoLike(
@@ -407,7 +433,8 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return updateVideoLike(isLiked, video.uri!!, password, callback)
+        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return updateVideoLike(isLiked, uri, password, callback)
     }
 
     override fun updateVideoWatchLater(
@@ -430,7 +457,8 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return updateVideoWatchLater(isWatchLater, video.uri!!, password, callback)
+        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return updateVideoWatchLater(isWatchLater, uri, password, callback)
     }
 
     override fun createComment(
@@ -454,7 +482,8 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
-        return createComment(video.metadata?.connections?.comments?.uri!!, comment, password, callback)
+        val uri = video.metadata?.connections?.comments?.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return createComment(uri, comment, password, callback)
     }
 
     override fun fetchProducts(
@@ -776,6 +805,14 @@ internal class VimeoApiClientImpl(
             .enqueue(callback)
     }
 
+    private fun <T> LocalVimeoCallAdapter.enqueueEmptyUri(callback: VimeoCallback<T>): VimeoRequest {
+        return enqueueError(ApiError(
+            invalidParameters = listOf(InvalidParameter(
+                errorCode = ErrorCodeType.INVALID_URI.value
+            ))
+        ), callback)
+    }
+
     private fun String?.asPasswordParameter(): Map<String, String> =
         this?.let { mapOf(ApiConstants.Parameters.PARAMETER_PASSWORD to it) } ?: emptyMap()
 
@@ -797,4 +834,8 @@ internal class VimeoApiClientImpl(
 
     private fun String?.asRefinementMap(): Map<String, String> =
         this?.let { mapOf(ApiConstants.Parameters.PARAMETER_GET_FIELD_FILTER to this) } ?: emptyMap()
+
+    private companion object {
+        private const val INVALID_ENUM_MESSAGE = "Invalid enum type provided"
+    }
 }
