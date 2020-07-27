@@ -83,7 +83,7 @@ internal class AuthenticatorImpl(
             email = email,
             idToken = token,
             scope = scopes,
-            params = mapOf(AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString())
+            marketingOptIn = marketingOptIn
         )
 
         val invalidAuthParams = params.validate()
@@ -116,7 +116,7 @@ internal class AuthenticatorImpl(
             email = email,
             token = token,
             scope = scopes,
-            params = mapOf(AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString())
+            marketingOptIn = marketingOptIn
         )
 
         val invalidAuthParams = params.validate()
@@ -152,7 +152,7 @@ internal class AuthenticatorImpl(
             email = email,
             password = password,
             scope = scopes,
-            params = mapOf(AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString())
+            marketingOptIn = marketingOptIn
         )
 
         val invalidAuthParams = params.validate()

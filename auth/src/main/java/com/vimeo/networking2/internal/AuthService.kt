@@ -25,7 +25,6 @@ import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.Scopes
 import com.vimeo.networking2.VimeoAccount
-import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -64,7 +63,7 @@ internal interface AuthService {
      * @param email The email of the account that should be created.
      * @param password The password of the account that should be created.
      * @param scope The permissions scope that should be granted to the client.
-     * @param params Extra parameters associated with the account creation, such as marketing opt in.
+     * @param marketingOptIn True if the use is opting into marketing emails, false otherwise.     *
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -77,7 +76,7 @@ internal interface AuthService {
         @Field("username") email: String,
         @Field("password") password: String,
         @Field(SCOPE) scope: Scopes,
-        @Body params: Map<AuthParam, String>
+        @Field("marketing_opt_in") marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -87,7 +86,7 @@ internal interface AuthService {
      * @param email The email the user uses to log into Facebook.
      * @param token The Facebook token used to authorize with Facebook.
      * @param scope The permissions scope that should be granted to the client.
-     * @param params Extra parameters associated with the account creation, such as marketing opt in.
+     * @param marketingOptIn True if the use is opting into marketing emails, false otherwise.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -99,7 +98,7 @@ internal interface AuthService {
         @Field("username") email: String,
         @Field("token") token: String,
         @Field(SCOPE) scope: Scopes,
-        @Body params: Map<AuthParam, String>
+        @Field("marketing_opt_in") marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -109,7 +108,7 @@ internal interface AuthService {
      * @param email The email the user uses to log into Google.
      * @param idToken The Google token used to authorize with Google.
      * @param scope The permissions scope that should be granted to the client.
-     * @param params Extra parameters associated with the account creation, such as marketing opt in.
+     * @param marketingOptIn True if the use is opting into marketing emails, false otherwise.     *
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -121,7 +120,7 @@ internal interface AuthService {
         @Field("username") email: String,
         @Field("id_token") idToken: String,
         @Field(SCOPE) scope: Scopes,
-        @Body params: Map<AuthParam, String>
+        @Field("marketing_opt_in") marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
