@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
@@ -9,4 +10,10 @@ import com.squareup.moshi.JsonClass
  * generator.
  */
 @JsonClass(generateAdapter = true)
-data class Empty(val neededForGenerator: String? = null)
+data class Empty(
+    /**
+     * This is here to satisfy the needs of the model generator.
+     */
+    @Json(name = "nothing")
+    val nothing: String? = null
+)
