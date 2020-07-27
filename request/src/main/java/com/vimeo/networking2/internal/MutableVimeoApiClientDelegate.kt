@@ -187,10 +187,9 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun fetchEmpty(
         uri: String,
-        fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.fetchEmpty(uri, fieldFilter, cacheControl, callback)
+    ): VimeoRequest = client.fetchEmpty(uri, cacheControl, callback)
 
     override fun search(
         query: String,
@@ -279,11 +278,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Comment>
     ): VimeoRequest = client.createComment(video, comment, password, callback)
 
-    override fun fetchProducts(
+    override fun fetchProductList(
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProductList>
-    ): VimeoRequest = client.fetchProducts(fieldFilter, cacheControl, callback)
+    ): VimeoRequest = client.fetchProductList(fieldFilter, cacheControl, callback)
 
     override fun fetchProduct(
         uri: String,
@@ -507,9 +506,6 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         body: Any?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest = client.putContent(uri, options, body, callback)
-
-    override fun putContent(uri: String, options: Map<String, String>, callback: VimeoCallback<Unit>): VimeoRequest =
-        client.putContent(uri, options, callback)
 
     override fun deleteContent(uri: String, options: Map<String, String>, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteContent(uri, options, callback)

@@ -313,11 +313,10 @@ internal class VimeoApiClientImpl(
 
     override fun fetchEmpty(
         uri: String,
-        fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.getUnit(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl).enqueue(callback)
+        return vimeoService.getUnit(authHeader, uri, emptyMap(), cacheControl).enqueue(callback)
     }
 
     @Suppress("ComplexMethod", "LongMethod")
@@ -486,7 +485,7 @@ internal class VimeoApiClientImpl(
         return createComment(uri, comment, password, callback)
     }
 
-    override fun fetchProducts(
+    override fun fetchProductList(
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProductList>
@@ -554,10 +553,6 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
         return vimeoService.put(authHeader, uri, options, body).enqueue(callback)
-    }
-
-    override fun putContent(uri: String, options: Map<String, String>, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.put(authHeader, uri, options).enqueue(callback)
     }
 
     override fun deleteContent(uri: String, options: Map<String, String>, callback: VimeoCallback<Unit>): VimeoRequest {
