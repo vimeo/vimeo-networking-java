@@ -15,23 +15,23 @@ data class FolderConnections(
      * A basic connection object indicating how to return all the sub-folders in the folder.
      */
     @Json(name = "folders")
-    val folders: BasicInteraction? = null,
+    val folders: Connection? = null,
 
     /**
      * A basic connection object indicating how to return all the project items in the folder.
      */
     @Json(name = "items")
-    val items: BasicInteraction? = null,
+    val items: Connection? = null,
 
     /**
      * Information about the authenticated user's team.
      */
     @Json(name = "team_members")
-    val teamMembers: BasicInteraction? = null,
+    val teamMembers: Connection? = null,
 
     /**
      * A basic connection object indicating how to return all the videos in the folder.
      */
     @Json(name = "videos")
-    val videos: BasicInteraction? = null
+    val videos: Connection? = null
 )
