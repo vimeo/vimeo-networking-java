@@ -35,8 +35,6 @@ import retrofit2.http.POST
 
 /**
  * All the authentication endpoints.
- *
- * TODO: Add docs to remaining functions.
  */
 @Suppress("unused", "LongParameterList", "ComplexInterface")
 internal interface AuthService {
@@ -44,7 +42,7 @@ internal interface AuthService {
     /**
      * Get an access token by providing the client id and client secret along with grant and scope types.
      *
-     * @param authorization It is created from the client id and client secret.
+     * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
      * @param scope The permissions scope that should be granted to the client.
      *
@@ -82,6 +80,18 @@ internal interface AuthService {
         @Body params: Map<AuthParam, String>
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Used to sign up for Vimeo using a Facebook authorization token.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param email The email the user uses to log into Facebook.
+     * @param token The Facebook token used to authorize with Facebook.
+     * @param scope The permissions scope that should be granted to the client.
+     * @param params Extra parameters associated with the account creation, such as marketing opt in.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
     @FormUrlEncoded
     @POST("users")
     fun joinWithFacebook(
@@ -92,6 +102,18 @@ internal interface AuthService {
         @Body params: Map<AuthParam, String>
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Used to sign up for Vimeo using a Google authorization token.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param email The email the user uses to log into Google.
+     * @param idToken The Google token used to authorize with Google.
+     * @param scope The permissions scope that should be granted to the client.
+     * @param params Extra parameters associated with the account creation, such as marketing opt in.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
     @FormUrlEncoded
     @POST("users")
     fun joinWithGoogle(
@@ -124,6 +146,17 @@ internal interface AuthService {
         @Field(SCOPE) scope: Scopes
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Used to log into Vimeo using a Facebook authorization token.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param grantType The type of authorization grant that is being performed.
+     * @param token The Facebook token used to authorize with Facebook.
+     * @param scope The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
     @FormUrlEncoded
     @POST("oauth/authorize/facebook")
     fun logInWithFacebook(
@@ -133,6 +166,17 @@ internal interface AuthService {
         @Field(SCOPE) scope: Scopes
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Used to log into Vimeo using a Google authorization token.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param grantType The type of authorization grant that is being performed.
+     * @param idToken The Google token used to authorize with Google.
+     * @param scope The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
     @FormUrlEncoded
     @POST("oauth/authorize/google")
     fun logInWithGoogle(
@@ -142,15 +186,38 @@ internal interface AuthService {
         @Field(SCOPE) scope: Scopes
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Authorize with the server using a code grant from a redirect URL.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param redirectUri The URI which the user was redirected from.
+     * @param code The code obtained from the authorization grant.
+     * @param grantType The type of authorization grant that is being performed.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
     @FormUrlEncoded
     @POST("oauth/access_token")
     fun authenticateWithCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("redirect_uri") redirectURI: String,
+        @Field("redirect_uri") redirectUri: String,
         @Field("code") code: String,
         @Field(GRANT_TYPE) grantType: GrantType
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Exchanges an old OAuth One token for a shiny OAuth2 token.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param grantType The type of authorization grant that is being performed.
+     * @param token The token being exchanged.
+     * @param tokenSecret The token secret being exchanged.
+     * @param scope The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
     @FormUrlEncoded
     @POST("oauth/authorize/vimeo_oauth1")
     fun exchangeOAuthOneToken(
@@ -161,14 +228,33 @@ internal interface AuthService {
         @Field(SCOPE) scope: Scopes
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Exchange a token obtained through SSO for an authenticated account.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param token The token obtained through SSO which will be used to authenticate the user.
+     * @param scope The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
     @FormUrlEncoded
     @POST("oauth/appexchange")
     fun ssoTokenExchange(
-        @Header(AUTHORIZATION) basicAuth: String,
+        @Header(AUTHORIZATION) authorization: String,
         @Field("access_token") token: String,
         @Field(SCOPE) scope: Scopes
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Obtain a pin code which can be used to authorize a client application from another location.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param grantType The type of authorization grant that is being performed.
+     * @param scope The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that provides a [PinCodeInfo] that can be used to log in with [logInWithPinCode].
+     */
     @FormUrlEncoded
     @Headers("Cache-Control: no-cache, no-store")
     @POST("oauth/device")
@@ -178,6 +264,18 @@ internal interface AuthService {
         @Field(SCOPE) scope: Scopes
     ): VimeoCall<PinCodeInfo>
 
+    /**
+     * Log in using a pin code.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param grantType The type of authorization grant that is being performed.
+     * @param pinCode The pin code that is used to log the user in.
+     * @param deviceCode The device code that is used to log the user in.
+     * @param scope The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
     @FormUrlEncoded
     @POST("oauth/device/authorize")
     fun logInWithPinCode(
@@ -188,6 +286,14 @@ internal interface AuthService {
         @Field(SCOPE) scope: Scopes
     ): VimeoCall<VimeoAccount>
 
+    /**
+     * Logs out of the provided authorization header.
+     *
+     * @param authorization The token which will be deleted on the server. After this token is deleted, it will no
+     * longer work when making other requests.
+     *
+     * @return A [VimeoCall] that will respond with an empty response when the deletion completes successfully.
+     */
     @DELETE("tokens")
     fun logOut(
         @Header(AUTHORIZATION) authorization: String
