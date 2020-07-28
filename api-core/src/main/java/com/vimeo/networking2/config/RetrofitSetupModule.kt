@@ -56,6 +56,7 @@ object RetrofitSetupModule {
      * Creates the object graph for the setup dependencies. After the graph is created, the method
      * return an instance of [Retrofit] which is root of the graph.
      */
+    @JvmStatic
     fun retrofit(configuration: Configuration): Retrofit {
         val interceptors = mutableListOf(
             UserAgentHeaderInterceptor(configuration.compositeUserAgent),
@@ -123,6 +124,7 @@ object RetrofitSetupModule {
     /**
      * Creates a cache for storing Retrofit services.
      */
+    @JvmStatic
     fun retrofitCache(retrofit: Retrofit) = RetrofitServicesCache(retrofit)
 
 }
