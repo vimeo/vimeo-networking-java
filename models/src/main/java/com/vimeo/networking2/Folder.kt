@@ -4,6 +4,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Entity
 import java.util.Date
 
 /**
@@ -66,4 +67,6 @@ data class Folder(
      */
     @Json(name = "user")
     val user: User? = null
-)
+) : Entity {
+    override val identifier: String? = resourceKey
+}

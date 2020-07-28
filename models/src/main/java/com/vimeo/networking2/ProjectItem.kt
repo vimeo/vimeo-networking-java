@@ -20,13 +20,13 @@ data class ProjectItem(
     val rawType: String? = null,
 
     /**
-     *  The item [Folder] if [type] == FOLDER, null otherwise.
+     *  The item is [Folder] if [type] == [ProjectItemType.FOLDER], `null` otherwise.
      */
     @Json(name = "folder")
     val folder: Folder? = null,
 
     /**
-     *  The item [Video] if [type] == VIDEO, null otherwise.
+     *  The item is [Video] if [type] == [ProjectItemType.VIDEO], `null` otherwise.
      */
     @Json(name = "video")
     val video: Video? = null
