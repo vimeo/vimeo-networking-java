@@ -36,9 +36,14 @@ sealed class VimeoResponse<out T>(open val httpStatusCode: Int) {
      * A successful response.
      *
      * @param data The parsed data for the request.
+     * @param responseOrigin The origin of the response.
      * @param httpStatusCode HTTP status code.
      */
-    data class Success<T>(val data: T, override val httpStatusCode: Int) : VimeoResponse<T>(httpStatusCode)
+    data class Success<T>(
+        val data: T,
+        val responseOrigin: ResponseOrigin = ResponseOrigin.NETWORK,
+        override val httpStatusCode: Int
+    ) : VimeoResponse<T>(httpStatusCode)
 
     /**
      * An error occurred when making the request. This error may be due to invalid parameters,

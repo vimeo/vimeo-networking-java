@@ -1,6 +1,7 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.ApiError
+import com.vimeo.networking2.ResponseOrigin
 import com.vimeo.networking2.VimeoResponse
 import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.ResponseBody
@@ -55,6 +56,15 @@ private fun ResponseBody.safeString(vimeoLogger: VimeoLogger): String? = try {
 } catch (e: IOException) {
     vimeoLogger.e("Unable to read error body", e)
     null
+}
+
+/**
+ * Determines the [ResponseOrigin] of the response.
+ */
+fun Response<*>.determineOrigin(): ResponseOrigin = if (raw().cacheResponse() != null) {
+    ResponseOrigin.CACHE
+} else {
+    ResponseOrigin.NETWORK
 }
 
 private const val INVALID_TOKEN_VALUE = "Bearer error=\"invalid_token\""

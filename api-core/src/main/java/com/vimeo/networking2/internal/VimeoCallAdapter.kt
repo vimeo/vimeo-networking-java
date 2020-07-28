@@ -58,7 +58,11 @@ internal class VimeoCallAdapter<T : Any>(
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 if (response.hasBody()) {
                     callbackExecutor.execute {
-                        callback.onSuccess(VimeoResponse.Success(requireNotNull(response.body()), response.code()))
+                        callback.onSuccess(VimeoResponse.Success(
+                            requireNotNull(response.body()),
+                            response.determineOrigin(),
+                            response.code()
+                        ))
                     }
                 } else {
                     val vimeoResponseError = response.parseErrorResponse(responseBodyConverter, vimeoLogger)
