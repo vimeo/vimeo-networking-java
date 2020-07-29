@@ -42,6 +42,7 @@ import com.vimeo.networking2.params.SearchSortDirectionType
 import com.vimeo.networking2.params.SearchSortType
 import okhttp3.CacheControl
 import okhttp3.Credentials
+import java.util.concurrent.Executor
 
 /**
  * The Vimeo API client definition.
@@ -1131,13 +1132,13 @@ interface VimeoApiClient {
             val retrofit = RetrofitSetupModule.retrofit(configuration)
             val vimeoService = retrofit.create(VimeoService::class.java)
             val basicAuthHeader = Credentials.basic(configuration.clientId, configuration.clientSecret)
-
+            val synchronousExecutor = Executor { it.run() }
             return VimeoApiClientImpl(
                 vimeoService,
                 authenticator,
                 configuration,
                 basicAuthHeader,
-                LocalVimeoCallAdapter(retrofit)
+                LocalVimeoCallAdapter(retrofit.callbackExecutor() ?: synchronousExecutor)
             )
         }
 
