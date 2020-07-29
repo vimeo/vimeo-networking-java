@@ -73,7 +73,7 @@ internal interface AuthService {
     fun joinWithEmail(
         @Header(AUTHORIZATION) authorization: String,
         @Field("name") name: String,
-        @Field("username") email: String,
+        @Field("email") email: String,
         @Field("password") password: String,
         @Field(SCOPE) scope: Scopes,
         @Field("marketing_opt_in") marketingOptIn: Boolean
