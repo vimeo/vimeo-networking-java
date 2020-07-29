@@ -63,7 +63,7 @@ import java.util.concurrent.Executor
  * val clientInstance = VimeoApiClient.instance()
  * ```
  */
-@Suppress("UndocumentedPublicFunction", "ComplexInterface", "LongParameterList")
+@Suppress("ComplexInterface", "LongParameterList")
 interface VimeoApiClient {
 
     /**
