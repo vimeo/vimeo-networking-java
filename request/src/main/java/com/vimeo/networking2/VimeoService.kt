@@ -291,6 +291,14 @@ interface VimeoService {
     ): VimeoCall<FeedList>
 
     @GET
+    fun getProjectItemList(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @QueryMap options: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<ProjectItemList>
+
+    @GET
     fun getNotificationList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,

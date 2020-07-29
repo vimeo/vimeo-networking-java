@@ -330,6 +330,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<FeedList>
     ): VimeoRequest = client.fetchFeedList(uri, fieldFilter, refinementMap, cacheControl, callback)
 
+    override fun fetchProjectItemList(
+        uri: String,
+        fieldFilter: String?,
+        refinementMap: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ProjectItemList>
+    ): VimeoRequest = client.fetchProjectItemList(uri, fieldFilter, refinementMap, cacheControl, callback)
+
     override fun fetchProgrammedContentItemList(
         uri: String,
         fieldFilter: String?,
