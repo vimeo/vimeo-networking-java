@@ -603,6 +603,17 @@ internal class VimeoApiClientImpl(
             .enqueue(callback)
     }
 
+    override fun fetchProjectItemList(
+        uri: String,
+        fieldFilter: String?,
+        refinementMap: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ProjectItemList>
+    ): VimeoRequest {
+        return vimeoService.getProjectItemList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+            .enqueue(callback)
+    }
+
     override fun fetchProgrammedContentItemList(
         uri: String,
         fieldFilter: String?,

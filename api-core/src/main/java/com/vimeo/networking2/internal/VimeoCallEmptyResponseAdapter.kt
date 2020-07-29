@@ -15,7 +15,7 @@ import java.util.concurrent.Executor
  *
  * @param call Retrofit call object with empty response.
  * @param callbackExecutor Callback executor set by Retrofit to return the result. Retrofit itself sets it to the main
- * thread on Android. If the executor is null, then the callback will be executed on the thread provided b OkHttp's
+ * thread on Android. If the executor is null, then the callback will be executed on the thread provided by OkHttp's
  * dispatcher.
  * @param responseBodyConverter Converter to convert the error response to [ApiError].
  * @param vimeoLogger The logger used to log information about error handling.

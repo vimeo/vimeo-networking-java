@@ -30,6 +30,8 @@ class InMemoryAccountStore : AccountStore {
     private var vimeoAccount: VimeoAccount? = null
 
     override fun loadAccount(): VimeoAccount? = vimeoAccount
+
     override fun storeAccount(vimeoAccount: VimeoAccount) { this.vimeoAccount = vimeoAccount }
+
     override fun removeAccount() { this.vimeoAccount = null }
 }

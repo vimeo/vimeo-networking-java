@@ -3,7 +3,7 @@ package com.vimeo.networking2.params
 import com.vimeo.networking2.enums.StringValue
 
 /**
- * Created by anthony.restaino on 7/22/20.
+ * The search options for the type of entities being searched.
  */
 enum class SearchFilterType(override val value: String?) : StringValue {
     VIDEO("clip"),

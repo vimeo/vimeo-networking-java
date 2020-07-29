@@ -42,6 +42,7 @@ import com.vimeo.networking2.params.SearchSortDirectionType
 import com.vimeo.networking2.params.SearchSortType
 import okhttp3.CacheControl
 import okhttp3.Credentials
+import java.util.concurrent.Executor
 
 /**
  * The Vimeo API client definition.
@@ -62,7 +63,7 @@ import okhttp3.Credentials
  * val clientInstance = VimeoApiClient.instance()
  * ```
  */
-@Suppress("UndocumentedPublicFunction", "ComplexInterface", "LongParameterList")
+@Suppress("ComplexInterface", "LongParameterList")
 interface VimeoApiClient {
 
     /**
@@ -523,6 +524,25 @@ interface VimeoApiClient {
         refinementMap: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<FeedList>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [ProjectItemList] from the provided endpoint.
+     *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param refinementMap Optional map used to refine the response from the API.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun fetchProjectItemList(
+        uri: String,
+        fieldFilter: String?,
+        refinementMap: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ProjectItemList>
     ): VimeoRequest
 
     /**
@@ -1131,13 +1151,13 @@ interface VimeoApiClient {
             val retrofit = RetrofitSetupModule.retrofit(configuration)
             val vimeoService = retrofit.create(VimeoService::class.java)
             val basicAuthHeader = Credentials.basic(configuration.clientId, configuration.clientSecret)
-
+            val synchronousExecutor = Executor { it.run() }
             return VimeoApiClientImpl(
                 vimeoService,
                 authenticator,
                 configuration,
                 basicAuthHeader,
-                LocalVimeoCallAdapter(retrofit)
+                LocalVimeoCallAdapter(retrofit.callbackExecutor() ?: synchronousExecutor)
             )
         }
 

@@ -22,3 +22,6 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
+/model-generator/integrations/models-output/
+/models-parcelable/src/main/java/com/vimeo/networking2/
+/models-serializable/src/main/java/com/vimeo/networking2/

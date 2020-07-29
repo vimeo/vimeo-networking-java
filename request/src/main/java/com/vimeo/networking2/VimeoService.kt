@@ -90,8 +90,6 @@ interface VimeoService {
         @Body publishData: BatchPublishToSocialMedia?
     ): VimeoCall<PublishJob>
 
-    // TODO: end publish
-
     @POST("me/albums")
     fun createAlbum(
         @Header(AUTHORIZATION) authorization: String,
@@ -108,32 +106,30 @@ interface VimeoService {
     @PUT("{albumUri}/{videoUri}")
     fun addToAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri") albumUri: String,
-        @Path("videoUri") videoUri: String
+        @Path("albumUri", encoded = true) albumUri: String,
+        @Path("videoUri", encoded = true) videoUri: String
     ): VimeoCall<Unit>
 
     @DELETE("{albumUri}/{videoUri}")
     fun removeFromAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri") albumUri: String,
-        @Path("videoUri") videoUri: String
+        @Path("albumUri", encoded = true) albumUri: String,
+        @Path("videoUri", encoded = true) videoUri: String
     ): VimeoCall<Unit>
 
     @PATCH("{albumUri}/videos")
     fun modifyVideosInAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri") albumUri: String,
+        @Path("albumUri", encoded = true) albumUri: String,
         @Body modificationSpecs: ModifyVideosInAlbumSpecs
     ): VimeoCall<VideoList>
 
     @PATCH("{videoUri}/albums")
     fun modifyVideoInAlbums(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("videoUri") videoUri: String,
+        @Path("videoUri", encoded = true) videoUri: String,
         @Body modificationSpecs: ModifyVideoInAlbumsSpecs
     ): VimeoCall<AlbumList>
-
-    // TODO: end albums
 
     @PATCH
     fun editVideo(
@@ -293,6 +289,14 @@ interface VimeoService {
         @QueryMap options: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<FeedList>
+
+    @GET
+    fun getProjectItemList(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @QueryMap options: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<ProjectItemList>
 
     @GET
     fun getNotificationList(

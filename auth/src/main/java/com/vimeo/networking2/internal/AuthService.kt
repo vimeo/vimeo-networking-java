@@ -63,7 +63,7 @@ internal interface AuthService {
      * @param email The email of the account that should be created.
      * @param password The password of the account that should be created.
      * @param scope The permissions scope that should be granted to the client.
-     * @param marketingOptIn True if the use is opting into marketing emails, false otherwise.     *
+     * @param marketingOptIn True if the use is opting into marketing emails, false otherwise.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -73,7 +73,7 @@ internal interface AuthService {
     fun joinWithEmail(
         @Header(AUTHORIZATION) authorization: String,
         @Field("name") name: String,
-        @Field("username") email: String,
+        @Field("email") email: String,
         @Field("password") password: String,
         @Field(SCOPE) scope: Scopes,
         @Field("marketing_opt_in") marketingOptIn: Boolean
