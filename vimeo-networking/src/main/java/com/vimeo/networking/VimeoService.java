@@ -41,6 +41,7 @@ import com.vimeo.networking2.PinCodeInfo;
 import com.vimeo.networking2.Product;
 import com.vimeo.networking2.ProductList;
 import com.vimeo.networking2.ProgrammedContentItemList;
+import com.vimeo.networking2.ProjectItemList;
 import com.vimeo.networking2.RecommendationList;
 import com.vimeo.networking2.SearchResultList;
 import com.vimeo.networking2.SeasonList;
@@ -204,6 +205,19 @@ public interface VimeoService {
     Call<PublishJob> putPublishJob(@Header("Authorization") String authHeader,
                                    @Url String url,
                                    @Body BatchPublishToSocialMedia publishData);
+    // </editor-fold>
+
+    /**
+     * ----------------------------------------------------------------------------------------------------
+     * Folders
+     * -----------------------------------------------------------------------------------------------------
+     */
+    // <editor-fold desc="Folders">
+    @GET
+    Call<ProjectItemList> getProjectItems(@Header("Authorization") String authHeader,
+                                          @Url String url,
+                                          @QueryMap Map<String, String> options,
+                                          @Header("Cache-Control") String cacheHeader);
     // </editor-fold>
 
     /**

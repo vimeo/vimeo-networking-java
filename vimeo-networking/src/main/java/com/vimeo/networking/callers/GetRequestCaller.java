@@ -42,6 +42,7 @@ import com.vimeo.networking2.LiveStats;
 import com.vimeo.networking2.NotificationList;
 import com.vimeo.networking2.Product;
 import com.vimeo.networking2.ProgrammedContentItemList;
+import com.vimeo.networking2.ProjectItemList;
 import com.vimeo.networking2.RecommendationList;
 import com.vimeo.networking2.SearchResultList;
 import com.vimeo.networking2.SeasonList;
@@ -325,10 +326,10 @@ public final class GetRequestCaller {
                 @NotNull
                 @Override
                 public Call<SearchResultList> call(@NotNull String authHeader,
-                                                 @NotNull String uri,
-                                                 @NotNull Map<String, String> queryMap,
-                                                 @NotNull String cacheHeader,
-                                                 @NotNull VimeoService vimeoService) {
+                                                   @NotNull String uri,
+                                                   @NotNull Map<String, String> queryMap,
+                                                   @NotNull String cacheHeader,
+                                                   @NotNull VimeoService vimeoService) {
                     return vimeoService.getSearchResponse(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -385,10 +386,10 @@ public final class GetRequestCaller {
                 @NotNull
                 @Override
                 public Call<TvodItemList> call(@NotNull String authHeader,
-                                           @NotNull String uri,
-                                           @NotNull Map<String, String> queryMap,
-                                           @NotNull String cacheHeader,
-                                           @NotNull VimeoService vimeoService) {
+                                               @NotNull String uri,
+                                               @NotNull Map<String, String> queryMap,
+                                               @NotNull String cacheHeader,
+                                               @NotNull VimeoService vimeoService) {
                     return vimeoService.getTvodList(authHeader, uri, queryMap, cacheHeader);
                 }
             };
@@ -537,6 +538,26 @@ public final class GetRequestCaller {
      * Used in association with
      * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
      * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
+     * to get a {@link ProjectItemList} response from an API endpoint.
+     */
+    public static final Caller<ProjectItemList> PROJECT_ITEM_LIST =
+            new Caller<ProjectItemList>() {
+
+                @NotNull
+                @Override
+                public Call<ProjectItemList> call(@NotNull String authHeader,
+                                                  @NotNull String uri,
+                                                  @NotNull Map<String, String> queryMap,
+                                                  @NotNull String cacheHeader,
+                                                  @NotNull VimeoService vimeoService) {
+                    return vimeoService.getProjectItems(authHeader, uri, queryMap, cacheHeader);
+                }
+            };
+
+    /**
+     * Used in association with
+     * {@link VimeoClient#getContent(String, CacheControl, Caller, String, Map, String, VimeoCallback)} or
+     * {@link VimeoClient#getContentSync(String, CacheControl, String, Map, String, Caller)}
      * to get a {@link Product} response from an API endpoint.
      */
     public static final Caller<Product> PRODUCT =
@@ -565,10 +586,10 @@ public final class GetRequestCaller {
                 @NotNull
                 @Override
                 public Call<VideoStatus> call(@NotNull String authHeader,
-                                          @NotNull String uri,
-                                          @NotNull Map<String, String> queryMap,
-                                          @NotNull String cacheHeader,
-                                          @NotNull VimeoService vimeoService) {
+                                              @NotNull String uri,
+                                              @NotNull Map<String, String> queryMap,
+                                              @NotNull String cacheHeader,
+                                              @NotNull VimeoService vimeoService) {
                     return vimeoService.getVideoStatus(authHeader, uri, queryMap, cacheHeader);
                 }
             };
