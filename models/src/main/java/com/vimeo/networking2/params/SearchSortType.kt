@@ -3,7 +3,8 @@ package com.vimeo.networking2.params
 import com.vimeo.networking2.enums.StringValue
 
 /**
- * Created by anthony.restaino on 7/22/20.
+ * The search options for the type of sorting that should be applied to the results. Used in conjunction with the
+ * [SearchSortDirectionType].
  */
 enum class SearchSortType(override val value: String?) : StringValue {
     RELEVANCE("relevance"),

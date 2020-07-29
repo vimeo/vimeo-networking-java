@@ -3,7 +3,8 @@ package com.vimeo.networking2.params
 import com.vimeo.networking2.enums.StringValue
 
 /**
- * Created by anthony.restaino on 7/22/20.
+ * The search options for the direction in which the search results should be sorted. Used in conjunction with the
+ * [SearchSortType].
  */
 enum class SearchSortDirectionType(override val value: String?) : StringValue {
     ASCENDING("asc"),

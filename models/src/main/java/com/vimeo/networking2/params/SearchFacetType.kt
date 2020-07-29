@@ -3,7 +3,7 @@ package com.vimeo.networking2.params
 import com.vimeo.networking2.enums.StringValue
 
 /**
- * Created by anthony.restaino on 7/22/20.
+ * The search options for the facets requested in the result list.
  */
 enum class SearchFacetType(override val value: String?) : StringValue {
     TYPE("type"),
