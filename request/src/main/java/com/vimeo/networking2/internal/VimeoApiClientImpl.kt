@@ -76,7 +76,7 @@ internal class VimeoApiClientImpl(
         val body = parameters.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
         body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
-            ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+            ?: error(INVALID_ENUM_MESSAGE)
         if (description != null) {
             body[ApiConstants.Parameters.PARAMETER_ALBUM_DESCRIPTION] = description
         }
@@ -97,7 +97,7 @@ internal class VimeoApiClientImpl(
         val body = parameters.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
         body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
-            ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+            ?: error(INVALID_ENUM_MESSAGE)
         if (description != null) {
             body[ApiConstants.Parameters.PARAMETER_ALBUM_DESCRIPTION] = description
         }
@@ -170,7 +170,7 @@ internal class VimeoApiClientImpl(
         val privacy = mutableMapOf<String, Any>()
         if (commentPrivacyType != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_COMMENTS] = commentPrivacyType.value
-                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                ?: error(INVALID_ENUM_MESSAGE)
         }
         if (allowDownload != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_DOWNLOAD] = allowDownload
@@ -180,11 +180,11 @@ internal class VimeoApiClientImpl(
         }
         if (embedPrivacyType != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_EMBED] = embedPrivacyType.value
-                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                ?: error(INVALID_ENUM_MESSAGE)
         }
         if (viewPrivacyType != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_VIEW] = viewPrivacyType.value
-                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                ?: error(INVALID_ENUM_MESSAGE)
         }
         if (privacy.isNotEmpty()) {
             body[ApiConstants.Parameters.PARAMETER_VIDEO_PRIVACY] = privacy
@@ -225,7 +225,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ConnectedAppList>
     ): VimeoRequest {
-        return vimeoService.getConnectedAppList(authHeader, fieldFilter.asRefinementMap(), cacheControl)
+        return vimeoService.getConnectedAppList(authHeader, fieldFilter, cacheControl)
             .enqueue(callback)
     }
 
@@ -236,7 +236,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<ConnectedApp>
     ): VimeoRequest {
         return vimeoService.getConnectedApp(authHeader, type.value
-            ?: throw IllegalStateException(INVALID_ENUM_MESSAGE), fieldFilter.asRefinementMap(), cacheControl)
+            ?: error(INVALID_ENUM_MESSAGE), fieldFilter, cacheControl)
             .enqueue(callback)
     }
 
@@ -248,11 +248,10 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         return vimeoService.createConnectedApp(
             authHeader,
-            type.value ?: throw IllegalStateException(INVALID_ENUM_MESSAGE),
+            type.value ?: error(INVALID_ENUM_MESSAGE),
             mapOf(
                 ApiConstants.Parameters.PARAMETER_AUTH_CODE to authorization,
-                ApiConstants.Parameters.PARAMETER_APP_TYPE to (type.value
-                    ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)),
+                ApiConstants.Parameters.PARAMETER_APP_TYPE to (type.value ?: error(INVALID_ENUM_MESSAGE)),
                 ApiConstants.Parameters.PARAMETER_CLIENT_ID to clientId
             )
         ).enqueue(callback)
@@ -260,7 +259,7 @@ internal class VimeoApiClientImpl(
 
     override fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest {
         return vimeoService.deleteConnectedApp(authHeader, type.value
-            ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)).enqueue(callback)
+            ?: error(INVALID_ENUM_MESSAGE)).enqueue(callback)
     }
 
     override fun fetchPublishJob(
@@ -269,7 +268,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest {
-        return vimeoService.getPublishJob(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl)
+        return vimeoService.getPublishJob(authHeader, uri, fieldFilter, cacheControl)
             .enqueue(callback)
     }
 
@@ -307,7 +306,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<TextTrackList>
     ): VimeoRequest {
-        return vimeoService.getTextTrackList(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl)
+        return vimeoService.getTextTrackList(authHeader, uri, fieldFilter, cacheControl)
             .enqueue(callback)
     }
 
@@ -339,31 +338,31 @@ internal class VimeoApiClientImpl(
         val map = mutableMapOf(
             ApiConstants.Parameters.PARAMETER_GET_QUERY to query,
             ApiConstants.Parameters.FILTER_TYPE to (searchFilterType.value
-                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE))
+                ?: error(INVALID_ENUM_MESSAGE))
         )
         if (fieldFilter != null) {
             map[ApiConstants.Parameters.PARAMETER_GET_FILTER] = fieldFilter
         }
         if (searchSortType != null) {
             map[ApiConstants.Parameters.PARAMETER_GET_SORT] = searchSortType.value
-                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                ?: error(INVALID_ENUM_MESSAGE)
         }
         if (searchSortDirectionType != null) {
             map[ApiConstants.Parameters.PARAMETER_GET_DIRECTION] = searchSortDirectionType.value
-                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                ?: error(INVALID_ENUM_MESSAGE)
         }
         if (searchDateType != null) {
             map[ApiConstants.Parameters.FILTER_UPLOADED] = searchDateType.value
-                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                ?: error(INVALID_ENUM_MESSAGE)
         }
         if (searchDurationType != null) {
             map[ApiConstants.Parameters.FILTER_DURATION] = searchDurationType.value
-                ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                ?: error(INVALID_ENUM_MESSAGE)
         }
         if (searchFacetTypes != null) {
             map[ApiConstants.Parameters.PARAMETER_GET_FACETS] =
                 searchFacetTypes.joinToString(separator = ",", transform = {
-                    it.value ?: throw IllegalStateException(INVALID_ENUM_MESSAGE)
+                    it.value ?: error(INVALID_ENUM_MESSAGE)
                 })
         }
         if (category != null) {
@@ -490,7 +489,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProductList>
     ): VimeoRequest {
-        return vimeoService.getProducts(authHeader, fieldFilter.asRefinementMap(), cacheControl).enqueue(callback)
+        return vimeoService.getProducts(authHeader, fieldFilter, cacheControl).enqueue(callback)
     }
 
     override fun fetchProduct(
@@ -499,7 +498,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Product>
     ): VimeoRequest {
-        return vimeoService.getProduct(authHeader, uri, fieldFilter.asRefinementMap(), cacheControl).enqueue(callback)
+        return vimeoService.getProduct(authHeader, uri, fieldFilter, cacheControl).enqueue(callback)
     }
 
     override fun fetchCurrentUser(
@@ -511,7 +510,8 @@ internal class VimeoApiClientImpl(
         return vimeoService.getUser(
             authHeader,
             ApiConstants.Endpoints.ENDPOINT_ME,
-            refinementMap.include(fieldFilter),
+            fieldFilter,
+            refinementMap,
             cacheControl
         ).enqueue(callback)
     }
@@ -566,7 +566,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
-        return vimeoService.getVideo(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getVideo(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -577,7 +577,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<LiveStats>
     ): VimeoRequest {
-        return vimeoService.getLiveStats(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getLiveStats(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -588,7 +588,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
-        return vimeoService.getVideoList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getVideoList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -599,7 +599,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<FeedList>
     ): VimeoRequest {
-        return vimeoService.getFeedList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getFeedList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -610,7 +610,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProjectItemList>
     ): VimeoRequest {
-        return vimeoService.getProjectItemList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getProjectItemList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -621,7 +621,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProgrammedContentItemList>
     ): VimeoRequest {
-        return vimeoService.getProgramContentItemList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getProgramContentItemList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -632,7 +632,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<RecommendationList>
     ): VimeoRequest {
-        return vimeoService.getRecommendationList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getRecommendationList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -643,7 +643,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<SearchResultList>
     ): VimeoRequest {
-        return vimeoService.getSearchResultList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getSearchResultList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -654,7 +654,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<SeasonList>
     ): VimeoRequest {
-        return vimeoService.getSeasonList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getSeasonList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -665,7 +665,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<NotificationList>
     ): VimeoRequest {
-        return vimeoService.getNotificationList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getNotificationList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -676,7 +676,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        return vimeoService.getUser(authHeader, uri, refinementMap.include(fieldFilter), cacheControl).enqueue(callback)
+        return vimeoService.getUser(authHeader, uri, fieldFilter, refinementMap, cacheControl).enqueue(callback)
     }
 
     override fun fetchUserList(
@@ -686,7 +686,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<UserList>
     ): VimeoRequest {
-        return vimeoService.getUserList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getUserList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -697,7 +697,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Category>
     ): VimeoRequest {
-        return vimeoService.getCategory(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getCategory(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -708,7 +708,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<CategoryList>
     ): VimeoRequest {
-        return vimeoService.getCategoryList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getCategoryList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -719,7 +719,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Channel>
     ): VimeoRequest {
-        return vimeoService.getChannel(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getChannel(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -730,7 +730,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ChannelList>
     ): VimeoRequest {
-        return vimeoService.getChannelList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getChannelList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -741,7 +741,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<AppConfiguration>
     ): VimeoRequest {
-        return vimeoService.getAppConfiguration(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getAppConfiguration(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -752,7 +752,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
-        return vimeoService.getAlbum(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getAlbum(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -763,7 +763,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
-        return vimeoService.getAlbumList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getAlbumList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -774,7 +774,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItem>
     ): VimeoRequest {
-        return vimeoService.getTvodItem(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getTvodItem(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -785,7 +785,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItemList>
     ): VimeoRequest {
-        return vimeoService.getTvodItemList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getTvodItemList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -796,7 +796,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
-        return vimeoService.getComment(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getComment(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -807,7 +807,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<CommentList>
     ): VimeoRequest {
-        return vimeoService.getCommentList(authHeader, uri, refinementMap.include(fieldFilter), cacheControl)
+        return vimeoService.getCommentList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
             .enqueue(callback)
     }
 
@@ -822,24 +822,9 @@ internal class VimeoApiClientImpl(
     private fun String?.asPasswordParameter(): Map<String, String> =
         this?.let { mapOf(ApiConstants.Parameters.PARAMETER_PASSWORD to it) } ?: emptyMap()
 
-    private fun Map<String, String>?.include(fieldFilter: String?): Map<String, String> {
-        return if (this == null && fieldFilter == null) {
-            emptyMap()
-        } else if (this == null && fieldFilter != null) {
-            mapOf(ApiConstants.Parameters.PARAMETER_GET_FIELD_FILTER to fieldFilter)
-        } else if (this != null && fieldFilter != null) {
-            toMutableMap().apply { put(ApiConstants.Parameters.PARAMETER_GET_FIELD_FILTER, fieldFilter) }
-        } else {
-            this ?: emptyMap()
-        }
-    }
-
     private fun <T, V> Map<T, V>?.intoMutableMap(): MutableMap<T, V> {
         return this?.toMutableMap() ?: mutableMapOf()
     }
-
-    private fun String?.asRefinementMap(): Map<String, String> =
-        this?.let { mapOf(ApiConstants.Parameters.PARAMETER_GET_FIELD_FILTER to this) } ?: emptyMap()
 
     private companion object {
         private const val INVALID_ENUM_MESSAGE = "Invalid enum type provided"
