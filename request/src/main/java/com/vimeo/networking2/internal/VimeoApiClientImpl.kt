@@ -511,7 +511,7 @@ internal class VimeoApiClientImpl(
             authHeader,
             ApiConstants.Endpoints.ENDPOINT_ME,
             fieldFilter,
-            refinementMap,
+            refinementMap.orEmpty(),
             cacheControl
         ).enqueue(callback)
     }
@@ -566,7 +566,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
-        return vimeoService.getVideo(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getVideo(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -577,7 +577,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<LiveStats>
     ): VimeoRequest {
-        return vimeoService.getLiveStats(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getLiveStats(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -588,7 +588,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
-        return vimeoService.getVideoList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getVideoList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -599,7 +599,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<FeedList>
     ): VimeoRequest {
-        return vimeoService.getFeedList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getFeedList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -610,7 +610,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProjectItemList>
     ): VimeoRequest {
-        return vimeoService.getProjectItemList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getProjectItemList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -621,8 +621,13 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProgrammedContentItemList>
     ): VimeoRequest {
-        return vimeoService.getProgramContentItemList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
-            .enqueue(callback)
+        return vimeoService.getProgramContentItemList(
+            authHeader,
+            uri,
+            fieldFilter,
+            refinementMap.orEmpty(),
+            cacheControl
+        ).enqueue(callback)
     }
 
     override fun fetchRecommendationList(
@@ -632,7 +637,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<RecommendationList>
     ): VimeoRequest {
-        return vimeoService.getRecommendationList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getRecommendationList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -643,7 +648,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<SearchResultList>
     ): VimeoRequest {
-        return vimeoService.getSearchResultList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getSearchResultList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -654,7 +659,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<SeasonList>
     ): VimeoRequest {
-        return vimeoService.getSeasonList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getSeasonList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -665,7 +670,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<NotificationList>
     ): VimeoRequest {
-        return vimeoService.getNotificationList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getNotificationList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -676,7 +681,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        return vimeoService.getUser(authHeader, uri, fieldFilter, refinementMap, cacheControl).enqueue(callback)
+        return vimeoService.getUser(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+            .enqueue(callback)
     }
 
     override fun fetchUserList(
@@ -686,7 +692,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<UserList>
     ): VimeoRequest {
-        return vimeoService.getUserList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getUserList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -697,7 +703,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Category>
     ): VimeoRequest {
-        return vimeoService.getCategory(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getCategory(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -708,7 +714,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<CategoryList>
     ): VimeoRequest {
-        return vimeoService.getCategoryList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getCategoryList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -719,7 +725,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Channel>
     ): VimeoRequest {
-        return vimeoService.getChannel(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getChannel(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -730,7 +736,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ChannelList>
     ): VimeoRequest {
-        return vimeoService.getChannelList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getChannelList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -741,7 +747,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<AppConfiguration>
     ): VimeoRequest {
-        return vimeoService.getAppConfiguration(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getAppConfiguration(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -752,7 +758,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
-        return vimeoService.getAlbum(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getAlbum(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -763,7 +769,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
-        return vimeoService.getAlbumList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getAlbumList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -774,7 +780,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItem>
     ): VimeoRequest {
-        return vimeoService.getTvodItem(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getTvodItem(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -785,7 +791,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItemList>
     ): VimeoRequest {
-        return vimeoService.getTvodItemList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getTvodItemList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -796,7 +802,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
-        return vimeoService.getComment(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getComment(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -807,7 +813,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<CommentList>
     ): VimeoRequest {
-        return vimeoService.getCommentList(authHeader, uri, fieldFilter, refinementMap, cacheControl)
+        return vimeoService.getCommentList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
