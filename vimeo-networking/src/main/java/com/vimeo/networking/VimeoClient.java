@@ -39,13 +39,18 @@ import com.vimeo.networking2.Album;
 import com.vimeo.networking2.AlbumList;
 import com.vimeo.networking2.AlbumPrivacy;
 import com.vimeo.networking2.Comment;
+import com.vimeo.networking2.ConnectedApp;
+import com.vimeo.networking2.ConnectedAppList;
 import com.vimeo.networking2.Document;
+import com.vimeo.networking2.Folder;
 import com.vimeo.networking2.InvalidParameter;
 import com.vimeo.networking2.NotificationSubscriptions;
 import com.vimeo.networking2.PictureCollection;
 import com.vimeo.networking2.PinCodeInfo;
 import com.vimeo.networking2.Product;
 import com.vimeo.networking2.ProductList;
+import com.vimeo.networking2.ProjectItemList;
+import com.vimeo.networking2.PublishJob;
 import com.vimeo.networking2.SearchResultList;
 import com.vimeo.networking2.TextTrackList;
 import com.vimeo.networking2.User;
@@ -53,13 +58,10 @@ import com.vimeo.networking2.Video;
 import com.vimeo.networking2.VideoList;
 import com.vimeo.networking2.VimeoAccount;
 import com.vimeo.networking2.VimeoResponse;
+import com.vimeo.networking2.enums.ConnectedAppType;
 import com.vimeo.networking2.enums.ErrorCodeType;
 import com.vimeo.networking2.enums.ViewPrivacyType;
 import com.vimeo.networking2.params.BatchPublishToSocialMedia;
-import com.vimeo.networking2.ConnectedApp;
-import com.vimeo.networking2.ConnectedAppList;
-import com.vimeo.networking2.PublishJob;
-import com.vimeo.networking2.enums.ConnectedAppType;
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs;
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs;
 
@@ -1300,6 +1302,76 @@ public class VimeoClient {
         call.enqueue(callback);
 
         return call;
+    }
+
+    // </editor-fold>
+
+    // -----------------------------------------------------------------------------------------------------
+    // Folders
+    // -----------------------------------------------------------------------------------------------------
+    // <editor-fold desc="Folders">
+
+    /**
+     * Returns a {@link ProjectItemList} that is a list of wrapped folders or videos.
+     *
+     * @param uri           The endpoint for getting the {@link ProjectItemList}. Must not be null or blank.
+     * @param cacheControl  The {@link CacheControl} for the request.
+     * @param query         Query string for the request
+     * @param refinementMap Used to refine lists (generally for search) with sorts and filters
+     *                      {@link RequestRefinementBuilder}
+     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a>
+     *                      to optimize the request query. May be null.
+     * @return A {@link Call} object that can be used to get a {@link ProjectItemList}.
+     */
+    @NotNull
+    public Call<ProjectItemList> getProjectItemList(@NotNull String uri,
+                                                    @NotNull CacheControl cacheControl,
+                                                    @Nullable String query,
+                                                    @Nullable Map<String, String> refinementMap,
+                                                    @Nullable String fieldFilter) {
+        if (VimeoNetworkUtil.isStringEmpty(uri)) {
+            throw new AssertionError("uri is not valid for getProjectItemList.");
+        }
+
+        return mVimeoService.getProjectItems(getAuthHeader(),
+                                             uri,
+                                             createQueryMap(query, refinementMap, fieldFilter),
+                                             createCacheControlString(cacheControl));
+    }
+
+    /**
+     * Returns a list of {@link Video} objects contained within the passed {@link Folder}.
+     *
+     * @param folder        The {@link Folder} whose contained videos will be returned. The returned
+     *                      {@link Call} object will be null when the {@link Folder} does not contain
+     *                      a link to retrieve its videos.
+     * @param cacheControl  The {@link CacheControl} for the request.
+     * @param query         Query string for the request
+     * @param refinementMap Used to refine lists (generally for search) with sorts and filters
+     *                      {@link RequestRefinementBuilder}
+     * @param fieldFilter   The <a href="https://developer.vimeo.com/api/common-formats#json-filter">JSON Filter</a>
+     *                      to optimize the request query. May be null.
+     * @return A nullable {@link Call} object that can be used to get a {@link VideoList}.
+     */
+    @Nullable
+    public Call<VideoList> getVideosForFolder(@NotNull Folder folder,
+                                              @NotNull CacheControl cacheControl,
+                                              @Nullable String query,
+                                              @Nullable Map<String, String> refinementMap,
+                                              @Nullable String fieldFilter) {
+        if (folder.getMetadata() != null &&
+            folder.getMetadata().getConnections() != null &&
+            folder.getMetadata().getConnections().getVideos() != null) {
+            final String videoUri = folder.getMetadata().getConnections().getVideos().getUri();
+
+            if (!VimeoNetworkUtil.isStringEmpty(videoUri)) {
+                return mVimeoService.getVideoList(getAuthHeader(),
+                                                  videoUri,
+                                                  createQueryMap(query, refinementMap, fieldFilter),
+                                                  createCacheControlString(cacheControl));
+            }
+        }
+        return null;
     }
 
     // </editor-fold>
