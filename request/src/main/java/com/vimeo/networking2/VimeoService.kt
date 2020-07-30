@@ -468,7 +468,7 @@ interface VimeoService {
     fun post(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Body parameters: List<Any>
+        @Body parameters: List<@JvmSuppressWildcards Any>
     ): VimeoCall<Unit>
 
     @PATCH
