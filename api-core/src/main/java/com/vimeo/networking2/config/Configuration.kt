@@ -28,6 +28,7 @@ import com.vimeo.networking2.account.AccountStore
 import com.vimeo.networking2.account.InMemoryAccountStore
 import com.vimeo.networking2.logging.LogDelegate
 import com.vimeo.networking2.logging.DefaultLogDelegate
+import okhttp3.Cache
 import okhttp3.Interceptor
 import java.io.File
 import java.util.Locale
@@ -86,6 +87,11 @@ data class Configuration(
     val cacheMaxSizeBytes: Long,
     val cacheMaxAgeSeconds: Int
 ) {
+
+    /**
+     * The OkHttp cache that should be used, if any.
+     */
+    internal val cache: Cache? = cacheDirectory?.let { Cache(it, cacheMaxSizeBytes) }
 
     /**
      * The builder for the [Configuration].

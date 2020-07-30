@@ -31,7 +31,6 @@ import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
 import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
 import com.vimeo.networking2.logging.VimeoLogger
-import okhttp3.Cache
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -72,6 +71,14 @@ object RetrofitSetupModule {
     }
 
     /**
+     * Clear the request cache associated with the [Configuration] of all cache entries.
+     */
+    @JvmStatic
+    fun clearRequestCache(configuration: Configuration) {
+        configuration.cache?.evictAll()
+    }
+
+    /**
      * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
      */
     private fun okHttpClient(
@@ -87,8 +94,8 @@ object RetrofitSetupModule {
         writeTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
         retryOnConnectionFailure(false)
 
-        if (configuration.cacheDirectory != null) {
-            cache(Cache(configuration.cacheDirectory, configuration.cacheMaxSizeBytes))
+        if (configuration.cache != null) {
+            cache(configuration.cache)
         }
 
         interceptors().addAll(applicationInterceptors)
