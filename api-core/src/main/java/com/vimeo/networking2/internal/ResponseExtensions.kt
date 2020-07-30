@@ -12,12 +12,21 @@ import java.io.IOException
  * Parse the error body into an appropriate [VimeoResponse.Error] instance.
  *
  * @param responseBodyConverter The converter used to parse the error body.
+ */
+fun <T> Response<T>.parseErrorResponse(
+    responseBodyConverter: Converter<ResponseBody, ApiError>
+): VimeoResponse.Error = parseErrorResponse(responseBodyConverter, null)
+
+/**
+ * Parse the error body into an appropriate [VimeoResponse.Error] instance.
+ *
+ * @param responseBodyConverter The converter used to parse the error body.
  * @param vimeoLogger The logger used to report information about the error handling.
  */
 @Suppress("ComplexMethod")
 internal fun <T> Response<T>.parseErrorResponse(
     responseBodyConverter: Converter<ResponseBody, ApiError>,
-    vimeoLogger: VimeoLogger
+    vimeoLogger: VimeoLogger?
 ): VimeoResponse.Error {
     require(!isSuccessful) { "Cannot get error from a successful response" }
     val errorBody = errorBody()
@@ -32,7 +41,7 @@ internal fun <T> Response<T>.parseErrorResponse(
                     else -> VimeoResponse.Error.Unknown(errorBody.string(), code())
                 }
             } catch (e: Exception) {
-                vimeoLogger.e("Error while attempting to convert response body to VimeoError", e)
+                vimeoLogger?.e("Error while attempting to convert response body to VimeoError", e)
                 val errorBodyString = errorBody.safeString(vimeoLogger) ?: "Unable to read error body"
                 if (isUnauthorizedError) {
                     VimeoResponse.Error.InvalidToken(null, code())
@@ -50,10 +59,10 @@ internal fun <T> Response<T>.parseErrorResponse(
  *
  * @param vimeoLogger The logger used to log information about reading from the error body.
  */
-private fun ResponseBody.safeString(vimeoLogger: VimeoLogger): String? = try {
+private fun ResponseBody.safeString(vimeoLogger: VimeoLogger?): String? = try {
     string()
 } catch (e: IOException) {
-    vimeoLogger.e("Unable to read error body", e)
+    vimeoLogger?.e("Unable to read error body", e)
     null
 }
 
