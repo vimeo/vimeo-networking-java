@@ -503,7 +503,6 @@ internal class VimeoApiClientImpl(
 
     override fun fetchCurrentUser(
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
@@ -511,7 +510,6 @@ internal class VimeoApiClientImpl(
             authHeader,
             ApiConstants.Endpoints.ENDPOINT_ME,
             fieldFilter,
-            refinementMap.orEmpty(),
             cacheControl
         ).enqueue(callback)
     }
@@ -677,11 +675,10 @@ internal class VimeoApiClientImpl(
     override fun fetchUser(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        return vimeoService.getUser(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getUser(authHeader, uri, fieldFilter, cacheControl)
             .enqueue(callback)
     }
 

@@ -293,10 +293,9 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun fetchCurrentUser(
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
-    ): VimeoRequest = client.fetchCurrentUser(fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchCurrentUser(fieldFilter, cacheControl, callback)
 
     override fun fetchVideo(
         uri: String,
@@ -381,10 +380,9 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun fetchUser(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
-    ): VimeoRequest = client.fetchUser(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchUser(uri, fieldFilter, cacheControl, callback)
 
     override fun fetchUserList(
         uri: String,

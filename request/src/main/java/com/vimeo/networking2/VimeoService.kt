@@ -230,7 +230,6 @@ interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
-        @QueryMap options: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<User>
 
