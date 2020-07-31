@@ -50,16 +50,19 @@ import java.util.concurrent.Executor
  * Consumers can instantiate an instance directly using a convenient invoke function.
  * ```Kotlin
  * // Constructing in Kotlin
+ * val authenticator = Authenticator(Configuration)
  * val client = VimeoApiClient(Configuration)
  * ```
  * ```
  * // Constructing in Java
- * val client = VimeoApiClient.create(Configuration)
+ * final Authenticator authenticator = Authenticator.create(Configuration)
+ * final VimeoApiClient client = VimeoApiClient.create(Configuration, authenticator)
  * ```
  * For consumers that don't want to manage the instance of the client themselves, there is also a convenient singleton
  * instance that can be initialized and used.
  * ```
- * VimeoApiClient.initialize(Configuration)
+ * Authenticator.initialize(Configuration)
+ * VimeoApiClient.initialize(Configuration, Authenticator.instance())
  * val clientInstance = VimeoApiClient.instance()
  * ```
  */

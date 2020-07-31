@@ -44,11 +44,18 @@ import okhttp3.Credentials
  * Ex:
  *
  * ```
- * val authenticator = Authenticator(serverConfig)
+ * val authenticator = Authenticator(Configuration)
  * authenticator.clientCredentials(vimeoCallback(
  *      onSuccess = { authResponse: VimeoResponse.Success<VimeoAccount> -> }
  *      onError = { error: VimeoResponse.Error -> }
  * ))
+ * ```
+ * If the consumer does not want to manage the instance of the [Authenticator] themselves, they can utilize the
+ * singleton instance.
+ *
+ * ```
+ * Authenticator.initialize(Configuration)
+ * val instance = Authenticator.instance()
  * ```
  */
 interface Authenticator {
