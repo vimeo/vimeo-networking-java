@@ -42,7 +42,7 @@ internal class AuthenticatorImpl(
     override val currentAccount: VimeoAccount?
         get() = accountStore.loadAccount()
 
-    override fun clientCredentials(authCallback: VimeoCallback<VimeoAccount>): VimeoRequest {
+    override fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest {
         val params = mapOf(
             AuthParam.FIELD_GRANT_TYPE to GrantType.CLIENT_CREDENTIALS.value,
             AuthParam.FIELD_SCOPES to scopes
@@ -60,9 +60,9 @@ internal class AuthenticatorImpl(
                 "Client credentials authentication error.",
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueError(apiError, authCallback)
+            call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
+            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
         }
     }
 
@@ -70,7 +70,7 @@ internal class AuthenticatorImpl(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
         val params = mapOf(
             AuthParam.FIELD_ID_TOKEN to token,
@@ -93,9 +93,9 @@ internal class AuthenticatorImpl(
                 errorMessage = "Google authentication failure",
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueError(apiError, authCallback)
+            call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
+            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
         }
     }
 
@@ -103,7 +103,7 @@ internal class AuthenticatorImpl(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
         val params = mapOf(
             AuthParam.FIELD_TOKEN to token,
@@ -126,9 +126,9 @@ internal class AuthenticatorImpl(
                 errorMessage = "Facebook authentication failure",
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueError(apiError, authCallback)
+            call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
+            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
         }
     }
 
@@ -137,7 +137,7 @@ internal class AuthenticatorImpl(
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
         val params = mapOf(
             AuthParam.FIELD_NAME to displayName,
@@ -162,16 +162,16 @@ internal class AuthenticatorImpl(
                 "Email join error.",
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueError(apiError, authCallback)
+            call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
+            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
         }
     }
 
     override fun emailLogin(
         email: String,
         password: String,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
         val params = mapOf(
             AuthParam.FIELD_USERNAME to email,
@@ -193,26 +193,26 @@ internal class AuthenticatorImpl(
                 "Email login error.",
                 invalidParameters = invalidAuthParams
             )
-            call.enqueueError(apiError, authCallback)
+            call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, authCallback))
+            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
         }
     }
 
     override fun exchangeOAuthOneToken(
         token: String,
         tokenSecret: String,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
         return authService.exchangeOAuthOneToken(basicAuthHeader, GrantType.OAUTH_ONE, token, tokenSecret, scopes)
-            .enqueue(authCallback)
+            .enqueue(callback)
     }
 
-    override fun logOut(authCallback: VimeoCallback<Unit>): VimeoRequest {
+    override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest {
         val accessToken = currentAccount?.accessToken
         accountStore.removeAccount()
         accessToken ?: return NoOpVimeoRequest
 
-        return authService.logOut("Bearer $accessToken").enqueue(authCallback)
+        return authService.logOut("Bearer $accessToken").enqueue(callback)
     }
 }

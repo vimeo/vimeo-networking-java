@@ -40,40 +40,40 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override val currentAccount: VimeoAccount?
         get() = authenticator.currentAccount
 
-    override fun clientCredentials(authCallback: VimeoCallback<VimeoAccount>): VimeoRequest =
-        authenticator.clientCredentials(authCallback)
+    override fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
+        authenticator.clientCredentials(callback)
 
     override fun google(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.google(token, email, marketingOptIn, authCallback)
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.google(token, email, marketingOptIn, callback)
 
     override fun facebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.facebook(token, email, marketingOptIn, authCallback)
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.facebook(token, email, marketingOptIn, callback)
 
     override fun emailJoin(
         displayName: String,
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.emailJoin(displayName, email, password, marketingOptIn, authCallback)
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.emailJoin(displayName, email, password, marketingOptIn, callback)
 
-    override fun emailLogin(email: String, password: String, authCallback: VimeoCallback<VimeoAccount>): VimeoRequest =
-        authenticator.emailLogin(email, password, authCallback)
+    override fun emailLogin(email: String, password: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
+        authenticator.emailLogin(email, password, callback)
 
     override fun exchangeOAuthOneToken(
         token: String,
         tokenSecret: String,
-        authCallback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.exchangeOAuthOneToken(token, tokenSecret, authCallback)
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.exchangeOAuthOneToken(token, tokenSecret, callback)
 
-    override fun logOut(authCallback: VimeoCallback<Unit>): VimeoRequest =
-        authenticator.logOut(authCallback)
+    override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest =
+        authenticator.logOut(callback)
 }

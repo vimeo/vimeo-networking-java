@@ -69,11 +69,11 @@ interface Authenticator {
     /**
      * Authenticate using the client id and client secret to obtain a logged out token.
      *
-     * @param authCallback informs you of the result of the response.
+     * @param callback informs you of the result of the response.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun clientCredentials(authCallback: VimeoCallback<VimeoAccount>): VimeoRequest
+    fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest
 
     /**
      * Authenticate via Google sign in to obtain a logged in token.
@@ -81,7 +81,7 @@ interface Authenticator {
      * @param token Google authentication token.
      * @param email Email addressed used to sign in to Google.
      * @param marketingOptIn Opt in or out on GDPR.
-     * @param authCallback Callback to be notified of the result of the request.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -89,7 +89,7 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -98,7 +98,7 @@ interface Authenticator {
      * @param token Google authentication token.
      * @param email Email addressed used to sign in to Google.
      * @param marketingOptIn Opt in or out on GDPR.
-     * @param authCallback Callback to be notified of the result of the request.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -106,7 +106,7 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -116,7 +116,7 @@ interface Authenticator {
      * @param email Email to use to login to your Vimeo account.
      * @param password Password for your Vimeo account.
      * @param marketingOptIn Opt in or out on GDPR.
-     * @param authCallback Callback to be notified of the result of the request.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -125,7 +125,7 @@ interface Authenticator {
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -133,13 +133,14 @@ interface Authenticator {
      *
      * @param email Email address associated with your Vimeo account.
      * @param password Password for your Vimeo account.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun emailLogin(
         email: String,
         password: String,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
@@ -147,21 +148,24 @@ interface Authenticator {
      *
      * @param token The old token to use in the exchange.
      * @param tokenSecret The old token secret to use in the exchange.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun exchangeOAuthOneToken(
         token: String,
         tokenSecret: String,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
      * Log out of the currently authenticated account.
      *
-     * @param authCallback Callback to be notified of the result of the request.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun logOut(authCallback: VimeoCallback<Unit>): VimeoRequest
+    fun logOut(callback: VimeoCallback<Unit>): VimeoRequest
 
     /**
      * Factory to create an instance of [Authenticator].
