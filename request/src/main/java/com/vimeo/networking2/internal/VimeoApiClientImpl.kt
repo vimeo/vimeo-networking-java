@@ -917,9 +917,7 @@ internal class VimeoApiClientImpl(
     private fun String?.asPasswordParameter(): Map<String, String> =
         this?.let { mapOf(ApiConstants.Parameters.PARAMETER_PASSWORD to it) } ?: emptyMap()
 
-    private fun <T, V> Map<T, V>?.intoMutableMap(): MutableMap<T, V> {
-        return this?.toMutableMap() ?: mutableMapOf()
-    }
+    private fun <T, V> Map<T, V>?.intoMutableMap(): MutableMap<T, V> = this?.toMutableMap() ?: mutableMapOf()
 
     private companion object {
         private const val INVALID_ENUM_MESSAGE = "Invalid enum type provided"
