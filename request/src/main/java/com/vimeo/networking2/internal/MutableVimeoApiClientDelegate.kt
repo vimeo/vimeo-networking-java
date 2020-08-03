@@ -67,14 +67,32 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Album>
     ): VimeoRequest = client.editAlbum(album, name, albumPrivacy, description, parameters, callback)
 
+    override fun editAlbum(
+        albumUri: String,
+        name: String,
+        albumPrivacy: AlbumPrivacy,
+        description: String?,
+        parameters: Map<String, Any>?,
+        callback: VimeoCallback<Album>
+    ): VimeoRequest = client.editAlbum(albumUri, name, albumPrivacy, description, parameters, callback)
+
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteAlbum(album, callback)
+
+    override fun deleteAlbum(albumUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.deleteAlbum(albumUri, callback)
 
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
         client.addToAlbum(album, video, callback)
 
+    override fun addToAlbum(albumUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.addToAlbum(albumUri, videoUri, callback)
+
     override fun removeFromAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
         client.removeFromAlbum(album, video, callback)
+
+    override fun removeFromAlbum(albumUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.removeFromAlbum(albumUri, videoUri, callback)
 
     override fun modifyVideosInAlbum(
         album: Album,
@@ -82,11 +100,23 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<VideoList>
     ): VimeoRequest = client.modifyVideosInAlbum(album, modificationSpecs, callback)
 
+    override fun modifyVideosInAlbum(
+        albumUri: String,
+        modificationSpecs: ModifyVideosInAlbumSpecs,
+        callback: VimeoCallback<VideoList>
+    ): VimeoRequest = client.modifyVideosInAlbum(albumUri, modificationSpecs, callback)
+
     override fun modifyVideoInAlbums(
         video: Video,
         modificationSpecs: ModifyVideoInAlbumsSpecs,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest = client.modifyVideoInAlbums(video, modificationSpecs, callback)
+
+    override fun modifyVideoInAlbums(
+        videoUri: String,
+        modificationSpecs: ModifyVideoInAlbumsSpecs,
+        callback: VimeoCallback<AlbumList>
+    ): VimeoRequest = client.modifyVideoInAlbums(videoUri, modificationSpecs, callback)
 
     override fun editVideo(
         uri: String,
@@ -114,6 +144,32 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback
     )
 
+    override fun editVideo(
+        video: Video,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        parameters: Map<String, Any>?,
+        callback: VimeoCallback<Video>
+    ): VimeoRequest = client.editVideo(
+        video,
+        title,
+        description,
+        password,
+        commentPrivacyType,
+        allowDownload,
+        allowAddToCollections,
+        embedPrivacyType,
+        viewPrivacyType,
+        parameters,
+        callback
+    )
+
     override fun editUser(
         uri: String,
         name: String?,
@@ -121,6 +177,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         bio: String?,
         callback: VimeoCallback<User>
     ): VimeoRequest = client.editUser(uri, name, location, bio, callback)
+
+    override fun editUser(
+        user: User,
+        name: String?,
+        location: String?,
+        bio: String?,
+        callback: VimeoCallback<User>
+    ): VimeoRequest = client.editUser(user, name, location, bio, callback)
 
     override fun editSubscriptions(
         subscriptionMap: Map<String, Boolean>,
@@ -162,6 +226,12 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         publishData: BatchPublishToSocialMedia,
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest = client.putPublishJob(publishUri, publishData, callback)
+
+    override fun putPublishJob(
+        video: Video,
+        publishData: BatchPublishToSocialMedia,
+        callback: VimeoCallback<PublishJob>
+    ): VimeoRequest = client.putPublishJob(video, publishData, callback)
 
     override fun fetchTermsOfService(cacheControl: CacheControl?, callback: VimeoCallback<Document>): VimeoRequest =
         client.fetchTermsOfService(cacheControl, callback)
@@ -226,6 +296,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun activatePictureCollection(uri: String, callback: VimeoCallback<PictureCollection>): VimeoRequest =
         client.activatePictureCollection(uri, callback)
+
+    override fun activatePictureCollection(
+        pictureCollection: PictureCollection,
+        callback: VimeoCallback<PictureCollection>
+    ): VimeoRequest = client.activatePictureCollection(pictureCollection, callback)
 
     override fun updateFollow(isFollowing: Boolean, uri: String, callback: VimeoCallback<Unit>): VimeoRequest =
         client.updateFollow(isFollowing, uri, callback)

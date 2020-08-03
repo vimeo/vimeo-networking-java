@@ -106,6 +106,25 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Edit an album.
+     *
+     * @param albumUri The URI of the album being edited, should not be empty.
+     * @param name The name of the album.
+     * @param albumPrivacy The album's privacy.
+     * @param description The optional description of the album.
+     * @param parameters Other parameters about the album.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun editAlbum(
+        albumUri: String,
+        name: String,
+        albumPrivacy: AlbumPrivacy,
+        description: String?,
+        parameters: Map<String, Any>?,
+        callback: VimeoCallback<Album>
+    ): VimeoRequest
+
+    /**
      * Delete an album.
      *
      * @param album The album being deleted, URI should not be null or empty.
@@ -113,6 +132,17 @@ interface VimeoApiClient {
      */
     fun deleteAlbum(
         album: Album,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Delete an album.
+     *
+     * @param albumUri The URI of the album being deleted, should not be empty.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun deleteAlbum(
+        albumUri: String,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -130,6 +160,19 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Add a video to an album.
+     *
+     * @param albumUri The URI of the album to which a video is being added, should not be empty.
+     * @param videoUri The URI of the video which should be added to the album, should not be empty.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun addToAlbum(
+        albumUri: String,
+        videoUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
      * Remove a video from an album.
      *
      * @param album The album from which the video should be removed, URI should not be null or empty.
@@ -139,6 +182,19 @@ interface VimeoApiClient {
     fun removeFromAlbum(
         album: Album,
         video: Video,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Remove a video from an album.
+     *
+     * @param albumUri The URI of the album from which the video should be removed, should not be empty.
+     * @param videoUri The URI of the video which should be removed from the album, should not be empty.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun removeFromAlbum(
+        albumUri: String,
+        videoUri: String,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -156,6 +212,19 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Bulk add or remove videos to/from an album.
+     *
+     * @param albumUri The URI of the album to/from which the videos should be added/removed, should not be empty.
+     * @param modificationSpecs The bulk list of videos that should be added or removed.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun modifyVideosInAlbum(
+        albumUri: String,
+        modificationSpecs: ModifyVideosInAlbumSpecs,
+        callback: VimeoCallback<VideoList>
+    ): VimeoRequest
+
+    /**
      * Bulk add or remove a video to/from multiple albums.
      *
      * @param video The video which should be added/removed to/from multiple albums.
@@ -164,6 +233,19 @@ interface VimeoApiClient {
      */
     fun modifyVideoInAlbums(
         video: Video,
+        modificationSpecs: ModifyVideoInAlbumsSpecs,
+        callback: VimeoCallback<AlbumList>
+    ): VimeoRequest
+
+    /**
+     * Bulk add or remove a video to/from multiple albums.
+     *
+     * @param videoUri The URI video which should be added/removed to/from multiple albums, should not be empty.
+     * @param modificationSpecs The bulk list of albums to/from which the video will be added/removed.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun modifyVideoInAlbums(
+        videoUri: String,
         modificationSpecs: ModifyVideoInAlbumsSpecs,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest
@@ -200,6 +282,37 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Edit a video.
+     *
+     * @param video The video to be edited, URI should not be null or empty.
+     * @param title The optional title of the video.
+     * @param description The optional description of the video.
+     * @param password The optional password for the video, should be supplied if the [viewPrivacyType] is set to
+     * [ViewPrivacyType.PASSWORD].
+     * @param commentPrivacyType The optional comment privacy type.
+     * @param allowDownload True to allow downloads of the video, false to disallow, null to leave unchanged.
+     * @param allowAddToCollections True to allow the video to be added to collections, false to disallow, null to leave
+     * unchanged.
+     * @param embedPrivacyType The optional embed privacy type.
+     * @param viewPrivacyType The optional view privacy type.
+     * @param parameters Other parameters that can be set on the video.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun editVideo(
+        video: Video,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        parameters: Map<String, Any>?,
+        callback: VimeoCallback<Video>
+    ): VimeoRequest
+
+    /**
      * Edit a user.
      *
      * @param uri The URI of the user.
@@ -210,6 +323,23 @@ interface VimeoApiClient {
      */
     fun editUser(
         uri: String,
+        name: String?,
+        location: String?,
+        bio: String?,
+        callback: VimeoCallback<User>
+    ): VimeoRequest
+
+    /**
+     * Edit a user.
+     *
+     * @param user The user to be edited, URI should not be null or empty.
+     * @param name The optional name of the user.
+     * @param location The optional location description of the user.
+     * @param bio The optional bio of the user.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun editUser(
+        user: User,
         name: String?,
         location: String?,
         bio: String?,
@@ -265,6 +395,19 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Publish a post to any of several destinations.
+     *
+     * @param video The video which will be published to a destination.
+     * @param publishData The post information which will be published to each of the platforms.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun putPublishJob(
+        video: Video,
+        publishData: BatchPublishToSocialMedia,
+        callback: VimeoCallback<PublishJob>
+    ): VimeoRequest
+
+    /**
      * Create a picture collection which can be used to upload pictures.
      *
      * @param uri The URI of the collection creation endpoint.
@@ -283,6 +426,17 @@ interface VimeoApiClient {
      */
     fun activatePictureCollection(
         uri: String,
+        callback: VimeoCallback<PictureCollection>
+    ): VimeoRequest
+
+    /**
+     * Mark picture collection created by [createPictureCollection] as active after images have been uploaded to it.
+     *
+     * @param pictureCollection The collection being activated, URI should not be null or empty.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun activatePictureCollection(
+        pictureCollection: PictureCollection,
         callback: VimeoCallback<PictureCollection>
     ): VimeoRequest
 

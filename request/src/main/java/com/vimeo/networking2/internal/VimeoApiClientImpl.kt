@@ -90,6 +90,18 @@ internal class VimeoApiClientImpl(
         parameters: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
+        val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return editAlbum(uri, name, albumPrivacy, description, parameters, callback)
+    }
+
+    override fun editAlbum(
+        albumUri: String,
+        name: String,
+        albumPrivacy: AlbumPrivacy,
+        description: String?,
+        parameters: Map<String, Any>?,
+        callback: VimeoCallback<Album>
+    ): VimeoRequest {
         val body = parameters.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
         body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
@@ -100,24 +112,35 @@ internal class VimeoApiClientImpl(
         if (albumPrivacy.password != null) {
             body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = requireNotNull(albumPrivacy.password)
         }
-        val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.editAlbum(authHeader, uri, body).enqueue(callback)
+        return vimeoService.editAlbum(authHeader, albumUri, body).enqueue(callback)
     }
 
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest {
         val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.delete(authHeader, uri, emptyMap()).enqueue(callback)
+        return deleteAlbum(uri, callback)
+    }
+
+    override fun deleteAlbum(albumUri: String, callback: VimeoCallback<Unit>): VimeoRequest {
+        return vimeoService.delete(authHeader, albumUri, emptyMap()).enqueue(callback)
     }
 
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
         val albumUri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         val videoUri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return addToAlbum(albumUri, videoUri, callback)
+    }
+
+    override fun addToAlbum(albumUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest {
         return vimeoService.addToAlbum(authHeader, albumUri, videoUri).enqueue(callback)
     }
 
     override fun removeFromAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
         val albumUri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         val videoUri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return removeFromAlbum(albumUri, videoUri, callback)
+    }
+
+    override fun removeFromAlbum(albumUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest {
         return vimeoService.removeFromAlbum(authHeader, albumUri, videoUri).enqueue(callback)
     }
 
@@ -127,7 +150,15 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
         val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.modifyVideosInAlbum(authHeader, uri, modificationSpecs).enqueue(callback)
+        return modifyVideosInAlbum(uri, modificationSpecs, callback)
+    }
+
+    override fun modifyVideosInAlbum(
+        albumUri: String,
+        modificationSpecs: ModifyVideosInAlbumSpecs,
+        callback: VimeoCallback<VideoList>
+    ): VimeoRequest {
+        return vimeoService.modifyVideosInAlbum(authHeader, albumUri, modificationSpecs).enqueue(callback)
     }
 
     override fun modifyVideoInAlbums(
@@ -136,7 +167,15 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
         val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.modifyVideoInAlbums(authHeader, uri, modificationSpecs).enqueue(callback)
+        return modifyVideoInAlbums(uri, modificationSpecs, callback)
+    }
+
+    override fun modifyVideoInAlbums(
+        videoUri: String,
+        modificationSpecs: ModifyVideoInAlbumsSpecs,
+        callback: VimeoCallback<AlbumList>
+    ): VimeoRequest {
+        return vimeoService.modifyVideoInAlbums(authHeader, videoUri, modificationSpecs).enqueue(callback)
     }
 
     @Suppress("ComplexMethod")
@@ -189,6 +228,35 @@ internal class VimeoApiClientImpl(
         return vimeoService.editVideo(authHeader, uri, body).enqueue(callback)
     }
 
+    override fun editVideo(
+        video: Video,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        parameters: Map<String, Any>?,
+        callback: VimeoCallback<Video>
+    ): VimeoRequest {
+        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return editVideo(
+            uri,
+            title,
+            description,
+            password,
+            commentPrivacyType,
+            allowDownload,
+            allowAddToCollections,
+            embedPrivacyType,
+            viewPrivacyType,
+            parameters,
+            callback
+        )
+    }
+
     override fun editUser(
         uri: String,
         name: String?,
@@ -207,6 +275,17 @@ internal class VimeoApiClientImpl(
             body[ApiConstants.Parameters.PARAMETER_USERS_BIO] = bio
         }
         return vimeoService.editUser(authHeader, uri, body).enqueue(callback)
+    }
+
+    override fun editUser(
+        user: User,
+        name: String?,
+        location: String?,
+        bio: String?,
+        callback: VimeoCallback<User>
+    ): VimeoRequest {
+        val uri = user.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return editUser(uri, name, location, bio, callback)
     }
 
     override fun editSubscriptions(
@@ -274,6 +353,15 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest {
         return vimeoService.putPublishJob(authHeader, publishUri, publishData).enqueue(callback)
+    }
+
+    override fun putPublishJob(
+        video: Video,
+        publishData: BatchPublishToSocialMedia,
+        callback: VimeoCallback<PublishJob>
+    ): VimeoRequest {
+        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return putPublishJob(uri, publishData, callback)
     }
 
     override fun fetchTermsOfService(cacheControl: CacheControl?, callback: VimeoCallback<Document>): VimeoRequest {
@@ -387,6 +475,14 @@ internal class VimeoApiClientImpl(
             uri,
             mapOf(ApiConstants.Parameters.PARAMETER_ACTIVE to true)
         ).enqueue(callback)
+    }
+
+    override fun activatePictureCollection(
+        pictureCollection: PictureCollection,
+        callback: VimeoCallback<PictureCollection>
+    ): VimeoRequest {
+        val uri = pictureCollection.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return activatePictureCollection(uri, callback)
     }
 
     override fun updateFollow(isFollowing: Boolean, uri: String, callback: VimeoCallback<Unit>): VimeoRequest {
