@@ -255,7 +255,7 @@ interface VimeoApiClient {
      * Publish a post to any of several destinations.
      *
      * @param publishUri The URI to which the consumer supplies the data to publish.
-     * @param publishData The the post information which will be published to each of the platforms.
+     * @param publishData The post information which will be published to each of the platforms.
      * @param callback The callback which will be notified of the request completion.
      */
     fun putPublishJob(
@@ -347,7 +347,7 @@ interface VimeoApiClient {
      *
      * @param isWatchLater True if the video should be added to watch later, false otherwise.
      * @param uri The URI of the [Video].
-     * @param password The optional password that will be needed to add the the [Video] watch later if it is password
+     * @param password The optional password that will be needed to add the [Video] watch later if it is password
      * protected.
      * @param callback The callback which will be notified of the request completion.
      */
@@ -363,7 +363,7 @@ interface VimeoApiClient {
      *
      * @param isWatchLater True if the video should be added to watch later, false otherwise.
      * @param video The [Video] which should be added/removed to/from watch later.
-     * @param password The optional password that will be needed to add the the [Video] watch later if it is password
+     * @param password The optional password that will be needed to add the [Video] watch later if it is password
      * protected.
      * @param callback The callback which will be notified of the request completion.
      */

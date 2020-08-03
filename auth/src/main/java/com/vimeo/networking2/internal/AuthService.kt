@@ -63,7 +63,7 @@ internal interface AuthService {
      * @param email The email of the account that should be created.
      * @param password The password of the account that should be created.
      * @param scope The permissions scope that should be granted to the client.
-     * @param marketingOptIn True if the use is opting into marketing emails, false otherwise.
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -86,7 +86,7 @@ internal interface AuthService {
      * @param email The email the user uses to log into Facebook.
      * @param token The Facebook token used to authorize with Facebook.
      * @param scope The permissions scope that should be granted to the client.
-     * @param marketingOptIn True if the use is opting into marketing emails, false otherwise.
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -108,7 +108,7 @@ internal interface AuthService {
      * @param email The email the user uses to log into Google.
      * @param idToken The Google token used to authorize with Google.
      * @param scope The permissions scope that should be granted to the client.
-     * @param marketingOptIn True if the use is opting into marketing emails, false otherwise.     *
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.     *
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.

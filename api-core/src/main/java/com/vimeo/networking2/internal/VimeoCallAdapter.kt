@@ -49,7 +49,7 @@ internal class VimeoCallAdapter<T : Any>(
 ) : VimeoCall<T> {
 
     /**
-     * Determine is the response has a body.
+     * Determine if the response has a body.
      */
     private fun Response<T>.hasBody() = isSuccessful && body() != null
 
