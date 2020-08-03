@@ -60,11 +60,7 @@ internal class VimeoApiClientImpl(
 ) : VimeoApiClient {
 
     private val authHeader: String
-        get() {
-            val vimeoAccount = authenticator.currentAccount
-
-            return vimeoAccount?.accessToken?.let { "Bearer $it" } ?: basicAuthHeader
-        }
+        get() = authenticator.currentAccount?.accessToken?.let { "Bearer $it" } ?: basicAuthHeader
 
     override fun createAlbum(
         name: String,
