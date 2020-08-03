@@ -28,6 +28,7 @@ import com.vimeo.networking2.VimeoAccount
  * [AccountStore].
  *
  * @param actualAccountStore The store which will be used to persist the account outside the lifecycle of this
+ * in-memory cache.
  */
 class CachingAccountStore(private val actualAccountStore: AccountStore) : AccountStore {
 
