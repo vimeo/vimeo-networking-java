@@ -57,7 +57,7 @@ internal class AuthenticatorImpl(
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
-                "Client credentials authentication error.",
+                developerMessage = "Client credentials authentication error.",
                 invalidParameters = invalidAuthParams
             )
             call.enqueueError(apiError, callback)
@@ -159,7 +159,7 @@ internal class AuthenticatorImpl(
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
-                "Email join error.",
+                developerMessage = "Email join error.",
                 invalidParameters = invalidAuthParams
             )
             call.enqueueError(apiError, callback)
@@ -190,7 +190,7 @@ internal class AuthenticatorImpl(
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
-                "Email login error.",
+                developerMessage = "Email login error.",
                 invalidParameters = invalidAuthParams
             )
             call.enqueueError(apiError, callback)
