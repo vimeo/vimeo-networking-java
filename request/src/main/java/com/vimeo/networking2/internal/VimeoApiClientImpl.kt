@@ -23,7 +23,7 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
 import com.vimeo.networking2.common.Followable
-import com.vimeo.networking2.config.Configuration
+import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
@@ -45,7 +45,7 @@ import okhttp3.CacheControl
  *
  * @param vimeoService The service used to make requests to the Vimeo API.
  * @param authenticator The authenticator used to obtain tokens which can be used to make requests.
- * @param configuration The configuration used by this client instance.
+ * @param vimeoApiConfiguration The configuration used by this client instance.
  * @param basicAuthHeader The basic auth header using the client ID and secret, used if the account store does not
  * provide an authenticated account.
  * @param localVimeoCallAdapter The adapter used to notify consumers of local errors.
@@ -54,7 +54,7 @@ import okhttp3.CacheControl
 internal class VimeoApiClientImpl(
     private val vimeoService: VimeoService,
     private val authenticator: Authenticator,
-    private val configuration: Configuration,
+    private val vimeoApiConfiguration: VimeoApiConfiguration,
     private val basicAuthHeader: String,
     private val localVimeoCallAdapter: LocalVimeoCallAdapter
 ) : VimeoApiClient {

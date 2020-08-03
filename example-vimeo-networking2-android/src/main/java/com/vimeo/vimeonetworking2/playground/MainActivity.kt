@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.vimeo.moshiexampleandroid.R
 import com.vimeo.networking2.*
-import com.vimeo.networking2.config.Configuration
+import com.vimeo.networking2.config.VimeoApiConfiguration
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             val authenticator = Authenticator(
-                Configuration.Builder(
+                VimeoApiConfiguration.Builder(
                     CLIENT_ID,
                     CLIENT_SECRET,
                     listOf(ScopeType.PUBLIC)

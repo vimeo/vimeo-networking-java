@@ -22,7 +22,7 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.account.CachingAccountStore
-import com.vimeo.networking2.config.Configuration
+import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
@@ -175,34 +175,37 @@ interface Authenticator {
         /**
          * Create an instance of Authenticator to make authentication requests.
          *
-         * @param configuration All the server configuration (client id and secret, custom interceptors, read timeouts,
-         * base url etc...) that can be set for authentication and making requests.
+         * @param vimeoApiConfiguration All the server configuration (client id and secret, custom interceptors, read
+         * timeouts, base url etc...) that can be set for authentication and making requests.
          */
         @JvmStatic
         @JvmName("create")
-        operator fun invoke(configuration: Configuration): Authenticator {
-            val authService = RetrofitSetupModule.retrofit(configuration).create(AuthService::class.java)
-            val basicAuthHeader: String = Credentials.basic(configuration.clientId, configuration.clientSecret)
+        operator fun invoke(vimeoApiConfiguration: VimeoApiConfiguration): Authenticator {
+            val authService = RetrofitSetupModule.retrofit(vimeoApiConfiguration).create(AuthService::class.java)
+            val basicAuthHeader: String = Credentials.basic(
+                vimeoApiConfiguration.clientId,
+                vimeoApiConfiguration.clientSecret
+            )
 
             return AuthenticatorImpl(
                 authService,
                 basicAuthHeader,
-                configuration.scope,
-                CachingAccountStore(configuration.accountStore)
+                vimeoApiConfiguration.scope,
+                CachingAccountStore(vimeoApiConfiguration.accountStore)
             )
         }
 
         private val delegate: MutableAuthenticatorDelegate = MutableAuthenticatorDelegate()
 
         /**
-         * Initialize the singleton instance of the [Authenticator] with a [Configuration]. If the authenticator was
-         * already initialized, this will reconfigure it. This function must be called before [instance] is used.
+         * Initialize the singleton instance of the [Authenticator] with a [VimeoApiConfiguration]. If the authenticator
+         * was already initialized, this will reconfigure it. This function must be called before [instance] is used.
          *
-         * @param configuration The configuration used by the authenticator.
+         * @param vimeoApiConfiguration The configuration used by the authenticator.
          */
         @JvmStatic
-        fun initialize(configuration: Configuration) {
-            delegate.actual = Authenticator(configuration)
+        fun initialize(vimeoApiConfiguration: VimeoApiConfiguration) {
+            delegate.actual = Authenticator(vimeoApiConfiguration)
         }
 
         /**
