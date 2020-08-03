@@ -46,7 +46,7 @@ import retrofit2.http.Url
  * @see VimeoApiClient
  */
 @Suppress("unused", "UndocumentedPublicFunction", "ComplexInterface")
-interface VimeoService {
+internal interface VimeoService {
 
     @GET("me/connected_apps")
     fun getConnectedAppList(

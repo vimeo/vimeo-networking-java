@@ -591,7 +591,7 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Fetch the user that is currently logged into the client.
+     * Fetch the [User] that is currently logged into the client.
      *
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
