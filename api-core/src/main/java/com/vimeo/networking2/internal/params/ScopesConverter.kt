@@ -23,11 +23,12 @@ package com.vimeo.networking2.internal.params
 
 import com.vimeo.networking2.Scopes
 import retrofit2.Converter
+import java.util.Locale
 
 /**
  * A converter for [Scopes] parameters.
  */
 class ScopesConverter : Converter<Scopes, String> {
     override fun convert(value: Scopes): String =
-            value.scopes.joinToString(separator = " ", transform = { it.value.toLowerCase() })
+            value.scopes.joinToString(separator = " ", transform = { it.value.toLowerCase(Locale.ROOT) })
 }
