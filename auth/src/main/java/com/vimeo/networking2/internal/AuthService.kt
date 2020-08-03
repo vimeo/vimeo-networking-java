@@ -206,7 +206,7 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Exchanges an old OAuth One token for a shiny OAuth2 token.
+     * Exchanges an old OAuth One token for a shiny new OAuth2 token.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
