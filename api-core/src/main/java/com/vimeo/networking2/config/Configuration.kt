@@ -46,7 +46,7 @@ import java.util.Locale
  * @param accountStore The store used to remember authenticated accounts.
  * @param networkInterceptors The interceptors that should be attached to network requests. See
  * [https://square.github.io/okhttp/interceptors/].
- * @param interceptors The interceptors that should be attached to all requests. See
+ * @param applicationInterceptors The interceptors that should be attached to all requests. See
  * [https://square.github.io/okhttp/interceptors/].
  * @param userAgent The supplemental user agent string which will be added to the internal user agent, identifying the
  * client.
@@ -72,7 +72,7 @@ data class Configuration(
     val accountStore: AccountStore,
 
     val networkInterceptors: List<Interceptor>,
-    val interceptors: List<Interceptor>,
+    val applicationInterceptors: List<Interceptor>,
 
     val userAgent: String,
 
@@ -110,7 +110,7 @@ data class Configuration(
         private var accountStore: AccountStore = InMemoryAccountStore()
 
         private var networkInterceptors: List<Interceptor> = emptyList()
-        private var interceptors: List<Interceptor> = emptyList()
+        private var applicationInterceptors: List<Interceptor> = emptyList()
 
         private var userAgent: String = DEFAULT_USER_AGENT
 
@@ -167,9 +167,11 @@ data class Configuration(
         /**
          * Specify a set of application interceptors. Defaults to none.
          *
-         * @see Configuration.interceptors
+         * @see Configuration.applicationInterceptors
          */
-        fun withInterceptors(interceptors: List<Interceptor>) = apply { this.interceptors = interceptors }
+        fun withApplicationInterceptors(
+            applicationInterceptors: List<Interceptor>
+        ) = apply { this.applicationInterceptors = applicationInterceptors }
 
         /**
          * Specify a supplemental user agent. Defaults to [DEFAULT_USER_AGENT].
@@ -241,7 +243,7 @@ data class Configuration(
             locales = locales,
             accountStore = accountStore,
             networkInterceptors = networkInterceptors,
-            interceptors = interceptors,
+            applicationInterceptors = applicationInterceptors,
             userAgent = userAgent,
             requestTimeoutSeconds = requestTimeoutSeconds,
             isCertPinningEnabled = isCertPinningEnabled,

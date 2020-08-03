@@ -62,7 +62,7 @@ object RetrofitSetupModule {
             AcceptHeaderInterceptor(),
             LanguageHeaderInterceptor(configuration.locales)
         )
-        interceptors.addAll(configuration.interceptors)
+        interceptors.addAll(configuration.applicationInterceptors)
 
         val networkInterceptors = listOf(CacheControlHeaderInterceptor(configuration.cacheMaxAgeSeconds))
 
@@ -87,7 +87,7 @@ object RetrofitSetupModule {
         networkInterceptors: List<Interceptor>
     ): OkHttpClient = OkHttpClient.Builder().apply {
         configuration.networkInterceptors.forEach { addNetworkInterceptor(it) }
-        configuration.interceptors.forEach { addInterceptor(it) }
+        configuration.applicationInterceptors.forEach { addInterceptor(it) }
 
         connectTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
         readTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
