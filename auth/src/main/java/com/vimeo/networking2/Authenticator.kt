@@ -30,8 +30,7 @@ import com.vimeo.networking2.internal.MutableAuthenticatorDelegate
 import okhttp3.Credentials
 
 /**
- * API that allow you to make the following authentication requests:
- *
+ * An interface that provides the following ways to authenticate with the Vimeo API:
  * - Client credentials.
  * - Google
  * - Facebook
@@ -67,7 +66,8 @@ interface Authenticator {
     val currentAccount: VimeoAccount?
 
     /**
-     * Authenticate using the client id and client secret to obtain a logged out token.
+     * Authenticate using the client ID and client secret (set in the [VimeoApiConfiguration]) to obtain a logged out
+     * access token.
      *
      * @param callback informs you of the result of the response.
      *
