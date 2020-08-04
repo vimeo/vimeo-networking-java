@@ -172,6 +172,25 @@ interface Authenticator {
      */
     companion object {
 
+        private val delegate: MutableAuthenticatorDelegate = MutableAuthenticatorDelegate()
+
+        /**
+         * Initialize the singleton instance of the [Authenticator] with a [VimeoApiConfiguration]. If the authenticator
+         * was already initialized, this will reconfigure it. This function must be called before [instance] is used.
+         *
+         * @param vimeoApiConfiguration The configuration used by the authenticator.
+         */
+        @JvmStatic
+        fun initialize(vimeoApiConfiguration: VimeoApiConfiguration) {
+            delegate.actual = Authenticator(vimeoApiConfiguration)
+        }
+
+        /**
+         * Access the singleton instance of the [Authenticator]. Always returns the same instance.
+         */
+        @JvmStatic
+        fun instance(): Authenticator = delegate
+
         /**
          * Create an instance of Authenticator to make authentication requests.
          *
@@ -194,24 +213,5 @@ interface Authenticator {
                 CachingAccountStore(vimeoApiConfiguration.accountStore)
             )
         }
-
-        private val delegate: MutableAuthenticatorDelegate = MutableAuthenticatorDelegate()
-
-        /**
-         * Initialize the singleton instance of the [Authenticator] with a [VimeoApiConfiguration]. If the authenticator
-         * was already initialized, this will reconfigure it. This function must be called before [instance] is used.
-         *
-         * @param vimeoApiConfiguration The configuration used by the authenticator.
-         */
-        @JvmStatic
-        fun initialize(vimeoApiConfiguration: VimeoApiConfiguration) {
-            delegate.actual = Authenticator(vimeoApiConfiguration)
-        }
-
-        /**
-         * Access the singleton instance of the [Authenticator]. Always returns the same instance.
-         */
-        @JvmStatic
-        fun instance(): Authenticator = delegate
     }
 }

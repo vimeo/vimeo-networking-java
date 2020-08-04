@@ -27,6 +27,7 @@ import com.vimeo.networking2.VimeoAccount
  * An account store that just holds the accounts in memory.
  */
 class InMemoryAccountStore : AccountStore {
+
     private var vimeoAccount: VimeoAccount? = null
 
     override fun loadAccount(): VimeoAccount? = vimeoAccount

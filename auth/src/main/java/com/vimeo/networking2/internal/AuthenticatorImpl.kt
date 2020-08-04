@@ -50,7 +50,7 @@ internal class AuthenticatorImpl(
         val call = authService.authorizeWithClientCredentialsGrant(
             authorization = basicAuthHeader,
             grantType = GrantType.CLIENT_CREDENTIALS,
-            scope = scopes
+            scopes = scopes
         )
 
         val invalidAuthParams = params.validate()
@@ -82,7 +82,7 @@ internal class AuthenticatorImpl(
             authorization = basicAuthHeader,
             email = email,
             idToken = token,
-            scope = scopes,
+            scopes = scopes,
             marketingOptIn = marketingOptIn
         )
 
@@ -115,7 +115,7 @@ internal class AuthenticatorImpl(
             authorization = basicAuthHeader,
             email = email,
             token = token,
-            scope = scopes,
+            scopes = scopes,
             marketingOptIn = marketingOptIn
         )
 
@@ -151,7 +151,7 @@ internal class AuthenticatorImpl(
             name = displayName,
             email = email,
             password = password,
-            scope = scopes,
+            scopes = scopes,
             marketingOptIn = marketingOptIn
         )
 
@@ -183,7 +183,7 @@ internal class AuthenticatorImpl(
             email = email,
             password = password,
             grantType = GrantType.PASSWORD,
-            scope = scopes
+            scopes = scopes
         )
 
         val invalidAuthParams = params.validate()

@@ -1292,6 +1292,26 @@ interface VimeoApiClient {
 
     companion object {
 
+        private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()
+
+        /**
+         * Initialize the singleton instance of the [VimeoApiClient] with a [VimeoApiConfiguration]. If the client was
+         * already initialized, this will reconfigure it. This function must be called before [instance] is used.
+         *
+         * @param vimeoApiConfiguration The configuration used by the client.
+         * @param authenticator The authenticator used by the client to obtain authorization to make requests.
+         */
+        @JvmStatic
+        fun initialize(vimeoApiConfiguration: VimeoApiConfiguration, authenticator: Authenticator) {
+            delegate.actual = VimeoApiClient(vimeoApiConfiguration, authenticator)
+        }
+
+        /**
+         * Access the singleton instance of the [VimeoApiClient]. Always returns the same instance.
+         */
+        @JvmStatic
+        fun instance(): VimeoApiClient = delegate
+
         /**
          * Create an instance of [VimeoApiClient] to make requests.
          *
@@ -1317,26 +1337,6 @@ interface VimeoApiClient {
                 LocalVimeoCallAdapter(retrofit.callbackExecutor() ?: synchronousExecutor)
             )
         }
-
-        private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()
-
-        /**
-         * Initialize the singleton instance of the [VimeoApiClient] with a [VimeoApiConfiguration]. If the client was
-         * already initialized, this will reconfigure it. This function must be called before [instance] is used.
-         *
-         * @param vimeoApiConfiguration The configuration used by the client.
-         * @param authenticator The authenticator used by the client to obtain authorization to make requests.
-         */
-        @JvmStatic
-        fun initialize(vimeoApiConfiguration: VimeoApiConfiguration, authenticator: Authenticator) {
-            delegate.actual = VimeoApiClient(vimeoApiConfiguration, authenticator)
-        }
-
-        /**
-         * Access the singleton instance of the [VimeoApiClient]. Always returns the same instance.
-         */
-        @JvmStatic
-        fun instance(): VimeoApiClient = delegate
     }
 
 }

@@ -42,7 +42,6 @@ interface VimeoCallback<ResponseType_T> {
      *              parsing response error.
      */
     fun onError(error: VimeoResponse.Error)
-
 }
 
 /**

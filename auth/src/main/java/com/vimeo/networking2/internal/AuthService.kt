@@ -52,7 +52,7 @@ internal interface AuthService {
     fun authorizeWithClientCredentialsGrant(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field(SCOPE) scope: Scopes
+        @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -75,7 +75,7 @@ internal interface AuthService {
         @Field("name") name: String,
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field(SCOPE) scope: Scopes,
+        @Field(SCOPE) scopes: Scopes,
         @Field("marketing_opt_in") marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
@@ -97,7 +97,7 @@ internal interface AuthService {
         @Header(AUTHORIZATION) authorization: String,
         @Field("username") email: String,
         @Field("token") token: String,
-        @Field(SCOPE) scope: Scopes,
+        @Field(SCOPE) scopes: Scopes,
         @Field("marketing_opt_in") marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
@@ -119,7 +119,7 @@ internal interface AuthService {
         @Header(AUTHORIZATION) authorization: String,
         @Field("username") email: String,
         @Field("id_token") idToken: String,
-        @Field(SCOPE) scope: Scopes,
+        @Field(SCOPE) scopes: Scopes,
         @Field("marketing_opt_in") marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
@@ -142,7 +142,7 @@ internal interface AuthService {
         @Field("username") email: String,
         @Field("password") password: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field(SCOPE) scope: Scopes
+        @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -162,7 +162,7 @@ internal interface AuthService {
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field("token") token: String,
-        @Field(SCOPE) scope: Scopes
+        @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -182,7 +182,7 @@ internal interface AuthService {
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field("id_token") idToken: String,
-        @Field(SCOPE) scope: Scopes
+        @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -224,7 +224,7 @@ internal interface AuthService {
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field("token") token: String,
         @Field("token_secret") tokenSecret: String,
-        @Field(SCOPE) scope: Scopes
+        @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -242,7 +242,7 @@ internal interface AuthService {
     fun ssoTokenExchange(
         @Header(AUTHORIZATION) authorization: String,
         @Field("access_token") token: String,
-        @Field(SCOPE) scope: Scopes
+        @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -260,7 +260,7 @@ internal interface AuthService {
     fun getPinCodeInfo(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field(SCOPE) scope: Scopes
+        @Field(SCOPE) scopes: Scopes
     ): VimeoCall<PinCodeInfo>
 
     /**
@@ -282,7 +282,7 @@ internal interface AuthService {
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field("user_code") pinCode: String,
         @Field("device_code") deviceCode: String,
-        @Field(SCOPE) scope: Scopes
+        @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
     /**
