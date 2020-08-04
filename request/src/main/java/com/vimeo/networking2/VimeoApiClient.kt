@@ -78,6 +78,8 @@ interface VimeoApiClient {
      * @param description The optional description of the album.
      * @param bodyParams Other parameters about the album.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun createAlbum(
         name: String,
@@ -96,6 +98,8 @@ interface VimeoApiClient {
      * @param description The optional description of the album.
      * @param bodyParams Other parameters about the album.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun editAlbum(
         album: Album,
@@ -115,6 +119,8 @@ interface VimeoApiClient {
      * @param description The optional description of the album.
      * @param bodyParams Other parameters about the album.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun editAlbum(
         uri: String,
@@ -130,6 +136,8 @@ interface VimeoApiClient {
      *
      * @param album The album being deleted, URI should not be null or empty.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteAlbum(
         album: Album,
@@ -141,6 +149,8 @@ interface VimeoApiClient {
      *
      * @param uri The URI of the album being deleted, should not be empty.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteAlbum(
         uri: String,
@@ -153,6 +163,8 @@ interface VimeoApiClient {
      * @param album The album to which a video is being added.
      * @param video The video which should be added to the album.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun addToAlbum(
         album: Album,
@@ -166,6 +178,8 @@ interface VimeoApiClient {
      * @param albumUri The URI of the album to which a video is being added, should not be empty.
      * @param videoUri The URI of the video which should be added to the album, should not be empty.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun addToAlbum(
         albumUri: String,
@@ -179,6 +193,8 @@ interface VimeoApiClient {
      * @param album The album from which the video should be removed, URI should not be null or empty.
      * @param video The video which should be removed from the album, URI should not be null or empty.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun removeFromAlbum(
         album: Album,
@@ -192,6 +208,8 @@ interface VimeoApiClient {
      * @param albumUri The URI of the album from which the video should be removed, should not be empty.
      * @param videoUri The URI of the video which should be removed from the album, should not be empty.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun removeFromAlbum(
         albumUri: String,
@@ -205,6 +223,8 @@ interface VimeoApiClient {
      * @param album The album to/from which the videos should be added/removed.
      * @param modificationSpecs The bulk list of videos that should be added or removed.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun modifyVideosInAlbum(
         album: Album,
@@ -218,6 +238,8 @@ interface VimeoApiClient {
      * @param uri The URI of the album to/from which the videos should be added/removed, should not be empty.
      * @param modificationSpecs The bulk list of videos that should be added or removed.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun modifyVideosInAlbum(
         uri: String,
@@ -231,6 +253,8 @@ interface VimeoApiClient {
      * @param video The video which should be added/removed to/from multiple albums.
      * @param modificationSpecs The bulk list of albums to/from which the video will be added/removed.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun modifyVideoInAlbums(
         video: Video,
@@ -244,6 +268,8 @@ interface VimeoApiClient {
      * @param uri The URI video which should be added/removed to/from multiple albums, should not be empty.
      * @param modificationSpecs The bulk list of albums to/from which the video will be added/removed.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun modifyVideoInAlbums(
         uri: String,
@@ -267,6 +293,8 @@ interface VimeoApiClient {
      * @param viewPrivacyType The optional view privacy type.
      * @param bodyParams Other parameters that can be set on the video.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun editVideo(
         uri: String,
@@ -298,6 +326,8 @@ interface VimeoApiClient {
      * @param viewPrivacyType The optional view privacy type.
      * @param bodyParams Other parameters that can be set on the video.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun editVideo(
         video: Video,
@@ -321,6 +351,8 @@ interface VimeoApiClient {
      * @param location The optional location description of the user.
      * @param bio The optional bio of the user.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun editUser(
         uri: String,
@@ -338,6 +370,8 @@ interface VimeoApiClient {
      * @param location The optional location description of the user.
      * @param bio The optional bio of the user.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun editUser(
         user: User,
@@ -352,6 +386,8 @@ interface VimeoApiClient {
      *
      * @param subscriptionMap The map of subscription names and whether they are enabled or disabled.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun editSubscriptions(
         subscriptionMap: Map<NotificationType, Boolean>,
@@ -366,6 +402,8 @@ interface VimeoApiClient {
      * @param authorization The authorization that enables the connection.
      * @param clientId The ID of the client used to perform the connection.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun createConnectedApp(
         type: ConnectedAppType,
@@ -379,6 +417,8 @@ interface VimeoApiClient {
      *
      * @param type The type of destination from which the consumer is disconnecting.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest
 
@@ -388,6 +428,8 @@ interface VimeoApiClient {
      * @param uri The URI to which the consumer supplies the data to publish.
      * @param publishData The post information which will be published to each of the platforms.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun putPublishJob(
         uri: String,
@@ -401,6 +443,8 @@ interface VimeoApiClient {
      * @param video The video which will be published to a destination.
      * @param publishData The post information which will be published to each of the platforms.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun putPublishJob(
         video: Video,
@@ -413,6 +457,8 @@ interface VimeoApiClient {
      *
      * @param uri The URI of the collection creation endpoint.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun createPictureCollection(
         uri: String,
@@ -424,6 +470,8 @@ interface VimeoApiClient {
      *
      * @param uri The URI of the collection being activated.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun activatePictureCollection(
         uri: String,
@@ -435,6 +483,8 @@ interface VimeoApiClient {
      *
      * @param pictureCollection The collection being activated, URI should not be null or empty.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun activatePictureCollection(
         pictureCollection: PictureCollection,
@@ -447,6 +497,8 @@ interface VimeoApiClient {
      * @param isFollowing True if the user should be following, false otherwise.
      * @param uri The URI of the [Followable].
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun updateFollow(
         isFollowing: Boolean,
@@ -460,6 +512,8 @@ interface VimeoApiClient {
      * @param isFollowing True if the user should be following, false otherwise.
      * @param followable The followable that should be followed or unfollowed.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun updateFollow(
         isFollowing: Boolean,
@@ -474,6 +528,8 @@ interface VimeoApiClient {
      * @param uri The URI of the [Video].
      * @param password The optional password that will be needed to like the [Video] if it is password protected.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun updateVideoLike(
         isLiked: Boolean,
@@ -489,6 +545,8 @@ interface VimeoApiClient {
      * @param video The [Video] which should be liked or disliked.
      * @param password The optional password that will be needed to like the [Video] if it is password protected.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun updateVideoLike(
         isLiked: Boolean,
@@ -505,6 +563,8 @@ interface VimeoApiClient {
      * @param password The optional password that will be needed to add the [Video] watch later if it is password
      * protected.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun updateVideoWatchLater(
         isWatchLater: Boolean,
@@ -521,6 +581,8 @@ interface VimeoApiClient {
      * @param password The optional password that will be needed to add the [Video] watch later if it is password
      * protected.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun updateVideoWatchLater(
         isWatchLater: Boolean,
@@ -536,6 +598,8 @@ interface VimeoApiClient {
      * @param comment The content of the comment.
      * @param password The optional password will be needed to comment on the [Video] if it is password protected.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun createComment(
         uri: String,
@@ -551,6 +615,8 @@ interface VimeoApiClient {
      * @param comment The content of the comment.
      * @param password The optional password will be needed to comment on the [Video] if it is password protected.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun createComment(
         video: Video,
@@ -567,6 +633,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchProductList(
         fieldFilter: String?,
@@ -583,6 +651,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchProduct(
         uri: String,
@@ -599,6 +669,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchCurrentUser(
         fieldFilter: String?,
@@ -616,6 +688,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchVideo(
         uri: String,
@@ -635,6 +709,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchLiveStats(
         uri: String,
@@ -654,6 +730,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchVideoList(
         uri: String,
@@ -673,6 +751,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchFeedList(
         uri: String,
@@ -692,6 +772,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchProjectItemList(
         uri: String,
@@ -711,6 +793,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchProgrammedContentItemList(
         uri: String,
@@ -730,6 +814,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchRecommendationList(
         uri: String,
@@ -749,6 +835,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchSearchResultList(
         uri: String,
@@ -768,6 +856,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchSeasonList(
         uri: String,
@@ -787,6 +877,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchNotificationList(
         uri: String,
@@ -805,6 +897,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchUser(
         uri: String,
@@ -823,6 +917,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchUserList(
         uri: String,
@@ -842,6 +938,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchCategory(
         uri: String,
@@ -861,6 +959,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchCategoryList(
         uri: String,
@@ -880,6 +980,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchChannel(
         uri: String,
@@ -899,6 +1001,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchChannelList(
         uri: String,
@@ -918,6 +1022,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchAppConfiguration(
         uri: String,
@@ -937,6 +1043,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchAlbum(
         uri: String,
@@ -956,6 +1064,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchAlbumList(
         uri: String,
@@ -975,6 +1085,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchTvodItem(
         uri: String,
@@ -994,6 +1106,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchTvodItemList(
         uri: String,
@@ -1013,6 +1127,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchComment(
         uri: String,
@@ -1032,6 +1148,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchCommentList(
         uri: String,
@@ -1047,6 +1165,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchTermsOfService(
         cacheControl: CacheControl?,
@@ -1059,6 +1179,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchPrivacyPolicy(
         cacheControl: CacheControl?,
@@ -1071,6 +1193,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchPaymentAddendum(
         cacheControl: CacheControl?,
@@ -1084,6 +1208,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchDocument(
         uri: String,
@@ -1099,6 +1225,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchConnectedApps(
         fieldFilter: String?,
@@ -1115,6 +1243,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchConnectedApp(
         type: ConnectedAppType,
@@ -1132,6 +1262,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchPublishJob(
         uri: String,
@@ -1149,6 +1281,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchTextTrackList(
         uri: String,
@@ -1164,6 +1298,8 @@ interface VimeoApiClient {
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchEmpty(
         uri: String,
@@ -1190,6 +1326,8 @@ interface VimeoApiClient {
      * be returned.
      * @param queryParams Additional parameters that should be included in the composite query.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun search(
         query: String,
@@ -1213,6 +1351,8 @@ interface VimeoApiClient {
      * @param uri The URI of the endpoint.
      * @param bodyParams The generic body of the POST.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun postContent(
         uri: String,
@@ -1225,6 +1365,8 @@ interface VimeoApiClient {
      *
      * @param uri The URI of the endpoint.
      * @param bodyParams The body of the POST as a [Map] of [Strings][String].
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun emptyResponsePost(
         uri: String,
@@ -1239,6 +1381,8 @@ interface VimeoApiClient {
      * @param queryParams The query parameters included in the PATCH.
      * @param bodyParams The body of the PATCH.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun emptyResponsePatch(
         uri: String,
@@ -1254,6 +1398,8 @@ interface VimeoApiClient {
      * @param queryParams The query parameters included in the PUT.
      * @param bodyParams The optional body of the PUT.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun putContentWithUserResponse(
         uri: String,
@@ -1269,6 +1415,8 @@ interface VimeoApiClient {
      * @param queryParams The query parameters included in the PUT.
      * @param bodyParams The optional body of the PUT.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun putContent(
         uri: String,
@@ -1283,6 +1431,8 @@ interface VimeoApiClient {
      * @param uri The URI of the endpoint.
      * @param queryParams The query parameters to include in the DELETE.
      * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteContent(
         uri: String,
