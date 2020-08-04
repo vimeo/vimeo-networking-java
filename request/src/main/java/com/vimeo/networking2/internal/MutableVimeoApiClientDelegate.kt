@@ -40,7 +40,10 @@ import com.vimeo.networking2.params.SearchSortType
 import okhttp3.CacheControl
 
 /**
- * A [VimeoApiClient] that delegates its implementation to an internal mutable instance [actual].
+ * A [VimeoApiClient] that delegates its implementation to an internal mutable instance [actual]. The purpose of this
+ * class is to allow the [VimeoApiClient] instance to be re-initialized on the fly. It delegates to an underlying actual
+ * implementation that can be changed dynamically. This allows the [VimeoApiClient.initialize] function to change the
+ * implementation used without changing the reference returned by [VimeoApiClient.instance].
  *
  * @param actual The actual implementation of [VimeoApiClient], defaults to null.
  */

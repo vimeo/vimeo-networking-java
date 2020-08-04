@@ -27,7 +27,10 @@ import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
 
 /**
- * An [Authenticator] that delegates its implementation to an internal mutable instance [actual].
+ * An [Authenticator] that delegates its implementation to an internal mutable instance [actual]. The purpose of this
+ * class is to allow the [Authenticator] instance to be re-initialized on the fly. It delegates to an underlying actual
+ * implementation that can be changed dynamically. This allows the [Authenticator.initialize] function to change the
+ * implementation used without changing the reference returned by [Authenticator.instance].
  *
  * @param actual The actual implementation of [Authenticator], defaults to null.
  */
