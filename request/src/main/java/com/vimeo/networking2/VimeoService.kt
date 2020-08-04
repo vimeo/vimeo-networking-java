@@ -79,7 +79,7 @@ internal interface VimeoService {
     @GET
     fun getPublishJob(
         @Header(AUTHORIZATION) authorization: String,
-        @Url url: String,
+        @Url uri: String,
         @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<PublishJob>
@@ -88,7 +88,7 @@ internal interface VimeoService {
     @Headers(HEADER_NO_CACHE)
     fun putPublishJob(
         @Header(AUTHORIZATION) authorization: String,
-        @Url url: String,
+        @Url uri: String,
         @Body publishData: BatchPublishToSocialMedia?
     ): VimeoCall<PublishJob>
 

@@ -66,10 +66,10 @@ internal class VimeoApiClientImpl(
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
-        val body = parameters.intoMutableMap()
+        val body = bodyParams.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
         body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
             ?: error(INVALID_ENUM_MESSAGE)
@@ -87,22 +87,22 @@ internal class VimeoApiClientImpl(
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
         val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return editAlbum(uri, name, albumPrivacy, description, parameters, callback)
+        return editAlbum(uri, name, albumPrivacy, description, bodyParams, callback)
     }
 
     override fun editAlbum(
-        albumUri: String,
+        uri: String,
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
-        val body = parameters.intoMutableMap()
+        val body = bodyParams.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
         body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
             ?: error(INVALID_ENUM_MESSAGE)
@@ -112,7 +112,7 @@ internal class VimeoApiClientImpl(
         if (albumPrivacy.password != null) {
             body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = requireNotNull(albumPrivacy.password)
         }
-        return vimeoService.editAlbum(authHeader, albumUri, body).enqueue(callback)
+        return vimeoService.editAlbum(authHeader, uri, body).enqueue(callback)
     }
 
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest {
@@ -120,8 +120,8 @@ internal class VimeoApiClientImpl(
         return deleteAlbum(uri, callback)
     }
 
-    override fun deleteAlbum(albumUri: String, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.delete(authHeader, albumUri, emptyMap()).enqueue(callback)
+    override fun deleteAlbum(uri: String, callback: VimeoCallback<Unit>): VimeoRequest {
+        return vimeoService.delete(authHeader, uri, emptyMap()).enqueue(callback)
     }
 
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
@@ -154,11 +154,11 @@ internal class VimeoApiClientImpl(
     }
 
     override fun modifyVideosInAlbum(
-        albumUri: String,
+        uri: String,
         modificationSpecs: ModifyVideosInAlbumSpecs,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
-        return vimeoService.modifyVideosInAlbum(authHeader, albumUri, modificationSpecs).enqueue(callback)
+        return vimeoService.modifyVideosInAlbum(authHeader, uri, modificationSpecs).enqueue(callback)
     }
 
     override fun modifyVideoInAlbums(
@@ -171,11 +171,11 @@ internal class VimeoApiClientImpl(
     }
 
     override fun modifyVideoInAlbums(
-        videoUri: String,
+        uri: String,
         modificationSpecs: ModifyVideoInAlbumsSpecs,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
-        return vimeoService.modifyVideoInAlbums(authHeader, videoUri, modificationSpecs).enqueue(callback)
+        return vimeoService.modifyVideoInAlbums(authHeader, uri, modificationSpecs).enqueue(callback)
     }
 
     @Suppress("ComplexMethod")
@@ -189,10 +189,10 @@ internal class VimeoApiClientImpl(
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
-        val body = parameters.intoMutableMap()
+        val body = bodyParams.intoMutableMap()
         if (title != null) {
             body[ApiConstants.Parameters.PARAMETER_VIDEO_NAME] = title
         }
@@ -238,7 +238,7 @@ internal class VimeoApiClientImpl(
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
         val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
@@ -252,7 +252,7 @@ internal class VimeoApiClientImpl(
             allowAddToCollections,
             embedPrivacyType,
             viewPrivacyType,
-            parameters,
+            bodyParams,
             callback
         )
     }
@@ -348,11 +348,11 @@ internal class VimeoApiClientImpl(
     }
 
     override fun putPublishJob(
-        publishUri: String,
+        uri: String,
         publishData: BatchPublishToSocialMedia,
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest {
-        return vimeoService.putPublishJob(authHeader, publishUri, publishData).enqueue(callback)
+        return vimeoService.putPublishJob(authHeader, uri, publishData).enqueue(callback)
     }
 
     override fun putPublishJob(
@@ -606,108 +606,112 @@ internal class VimeoApiClientImpl(
         ).enqueue(callback)
     }
 
-    override fun postContent(uri: String, postBody: List<Any>, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.post(authHeader, uri, postBody).enqueue(callback)
+    override fun postContent(uri: String, bodyParams: List<Any>, callback: VimeoCallback<Unit>): VimeoRequest {
+        return vimeoService.post(authHeader, uri, bodyParams).enqueue(callback)
     }
 
     override fun emptyResponsePost(
         uri: String,
-        postBody: Map<String, String>,
+        bodyParams: Map<String, String>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.emptyResponsePost(authHeader, uri, postBody).enqueue(callback)
+        return vimeoService.emptyResponsePost(authHeader, uri, bodyParams).enqueue(callback)
     }
 
     override fun emptyResponsePatch(
         uri: String,
         queryParams: Map<String, String>,
-        patchBody: Any,
+        bodyParams: Any,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.emptyResponsePatch(authHeader, uri, queryParams, patchBody).enqueue(callback)
+        return vimeoService.emptyResponsePatch(authHeader, uri, queryParams, bodyParams).enqueue(callback)
     }
 
     override fun putContentWithUserResponse(
         uri: String,
-        options: Map<String, String>,
-        body: Any?,
+        queryParams: Map<String, String>,
+        bodyParams: Any?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        return vimeoService.putContentWithUserResponse(authHeader, uri, options, body).enqueue(callback)
+        return vimeoService.putContentWithUserResponse(authHeader, uri, queryParams, bodyParams).enqueue(callback)
     }
 
     override fun putContent(
         uri: String,
-        options: Map<String, String>,
-        body: Any?,
+        queryParams: Map<String, String>,
+        bodyParams: Any?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.put(authHeader, uri, options, body).enqueue(callback)
+        return vimeoService.put(authHeader, uri, queryParams, bodyParams).enqueue(callback)
     }
 
-    override fun deleteContent(uri: String, options: Map<String, String>, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.delete(authHeader, uri, options).enqueue(callback)
+    override fun deleteContent(
+        uri: String,
+        queryParams: Map<String, String>,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
+        return vimeoService.delete(authHeader, uri, queryParams).enqueue(callback)
     }
 
     override fun fetchVideo(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
-        return vimeoService.getVideo(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getVideo(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchLiveStats(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<LiveStats>
     ): VimeoRequest {
-        return vimeoService.getLiveStats(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getLiveStats(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchVideoList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
-        return vimeoService.getVideoList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getVideoList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchFeedList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<FeedList>
     ): VimeoRequest {
-        return vimeoService.getFeedList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getFeedList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchProjectItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProjectItemList>
     ): VimeoRequest {
-        return vimeoService.getProjectItemList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getProjectItemList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchProgrammedContentItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProgrammedContentItemList>
     ): VimeoRequest {
@@ -715,7 +719,7 @@ internal class VimeoApiClientImpl(
             authHeader,
             uri,
             fieldFilter,
-            refinementMap.orEmpty(),
+            queryParams.orEmpty(),
             cacheControl
         ).enqueue(callback)
     }
@@ -723,44 +727,44 @@ internal class VimeoApiClientImpl(
     override fun fetchRecommendationList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<RecommendationList>
     ): VimeoRequest {
-        return vimeoService.getRecommendationList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getRecommendationList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchSearchResultList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<SearchResultList>
     ): VimeoRequest {
-        return vimeoService.getSearchResultList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getSearchResultList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchSeasonList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<SeasonList>
     ): VimeoRequest {
-        return vimeoService.getSeasonList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getSeasonList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchNotificationList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<NotificationList>
     ): VimeoRequest {
-        return vimeoService.getNotificationList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getNotificationList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -777,132 +781,132 @@ internal class VimeoApiClientImpl(
     override fun fetchUserList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<UserList>
     ): VimeoRequest {
-        return vimeoService.getUserList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getUserList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchCategory(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Category>
     ): VimeoRequest {
-        return vimeoService.getCategory(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getCategory(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchCategoryList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<CategoryList>
     ): VimeoRequest {
-        return vimeoService.getCategoryList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getCategoryList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchChannel(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Channel>
     ): VimeoRequest {
-        return vimeoService.getChannel(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getChannel(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchChannelList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ChannelList>
     ): VimeoRequest {
-        return vimeoService.getChannelList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getChannelList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchAppConfiguration(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<AppConfiguration>
     ): VimeoRequest {
-        return vimeoService.getAppConfiguration(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getAppConfiguration(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchAlbum(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
-        return vimeoService.getAlbum(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getAlbum(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchAlbumList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
-        return vimeoService.getAlbumList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getAlbumList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchTvodItem(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItem>
     ): VimeoRequest {
-        return vimeoService.getTvodItem(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getTvodItem(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchTvodItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItemList>
     ): VimeoRequest {
-        return vimeoService.getTvodItemList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getTvodItemList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchComment(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
-        return vimeoService.getComment(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getComment(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
     override fun fetchCommentList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<CommentList>
     ): VimeoRequest {
-        return vimeoService.getCommentList(authHeader, uri, fieldFilter, refinementMap.orEmpty(), cacheControl)
+        return vimeoService.getCommentList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 

@@ -75,14 +75,14 @@ interface VimeoApiClient {
      * @param name The name of the album.
      * @param albumPrivacy The album's privacy.
      * @param description The optional description of the album.
-     * @param parameters Other parameters about the album.
+     * @param bodyParams Other parameters about the album.
      * @param callback The callback which will be notified of the request completion.
      */
     fun createAlbum(
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest
 
@@ -93,7 +93,7 @@ interface VimeoApiClient {
      * @param name The name of the album.
      * @param albumPrivacy The album's privacy.
      * @param description The optional description of the album.
-     * @param parameters Other parameters about the album.
+     * @param bodyParams Other parameters about the album.
      * @param callback The callback which will be notified of the request completion.
      */
     fun editAlbum(
@@ -101,26 +101,26 @@ interface VimeoApiClient {
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest
 
     /**
      * Edit an album.
      *
-     * @param albumUri The URI of the album being edited, should not be empty.
+     * @param uri The URI of the album being edited, should not be empty.
      * @param name The name of the album.
      * @param albumPrivacy The album's privacy.
      * @param description The optional description of the album.
-     * @param parameters Other parameters about the album.
+     * @param bodyParams Other parameters about the album.
      * @param callback The callback which will be notified of the request completion.
      */
     fun editAlbum(
-        albumUri: String,
+        uri: String,
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest
 
@@ -138,11 +138,11 @@ interface VimeoApiClient {
     /**
      * Delete an album.
      *
-     * @param albumUri The URI of the album being deleted, should not be empty.
+     * @param uri The URI of the album being deleted, should not be empty.
      * @param callback The callback which will be notified of the request completion.
      */
     fun deleteAlbum(
-        albumUri: String,
+        uri: String,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -214,12 +214,12 @@ interface VimeoApiClient {
     /**
      * Bulk add or remove videos to/from an album.
      *
-     * @param albumUri The URI of the album to/from which the videos should be added/removed, should not be empty.
+     * @param uri The URI of the album to/from which the videos should be added/removed, should not be empty.
      * @param modificationSpecs The bulk list of videos that should be added or removed.
      * @param callback The callback which will be notified of the request completion.
      */
     fun modifyVideosInAlbum(
-        albumUri: String,
+        uri: String,
         modificationSpecs: ModifyVideosInAlbumSpecs,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest
@@ -240,12 +240,12 @@ interface VimeoApiClient {
     /**
      * Bulk add or remove a video to/from multiple albums.
      *
-     * @param videoUri The URI video which should be added/removed to/from multiple albums, should not be empty.
+     * @param uri The URI video which should be added/removed to/from multiple albums, should not be empty.
      * @param modificationSpecs The bulk list of albums to/from which the video will be added/removed.
      * @param callback The callback which will be notified of the request completion.
      */
     fun modifyVideoInAlbums(
-        videoUri: String,
+        uri: String,
         modificationSpecs: ModifyVideoInAlbumsSpecs,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest
@@ -264,7 +264,7 @@ interface VimeoApiClient {
      * unchanged.
      * @param embedPrivacyType The optional embed privacy type.
      * @param viewPrivacyType The optional view privacy type.
-     * @param parameters Other parameters that can be set on the video.
+     * @param bodyParams Other parameters that can be set on the video.
      * @param callback The callback which will be notified of the request completion.
      */
     fun editVideo(
@@ -277,7 +277,7 @@ interface VimeoApiClient {
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest
 
@@ -295,7 +295,7 @@ interface VimeoApiClient {
      * unchanged.
      * @param embedPrivacyType The optional embed privacy type.
      * @param viewPrivacyType The optional view privacy type.
-     * @param parameters Other parameters that can be set on the video.
+     * @param bodyParams Other parameters that can be set on the video.
      * @param callback The callback which will be notified of the request completion.
      */
     fun editVideo(
@@ -308,7 +308,7 @@ interface VimeoApiClient {
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest
 
@@ -384,12 +384,12 @@ interface VimeoApiClient {
     /**
      * Publish a post to any of several destinations.
      *
-     * @param publishUri The URI to which the consumer supplies the data to publish.
+     * @param uri The URI to which the consumer supplies the data to publish.
      * @param publishData The post information which will be published to each of the platforms.
      * @param callback The callback which will be notified of the request completion.
      */
     fun putPublishJob(
-        publishUri: String,
+        uri: String,
         publishData: BatchPublishToSocialMedia,
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest
@@ -611,7 +611,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -619,7 +619,7 @@ interface VimeoApiClient {
     fun fetchVideo(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Video>
     ): VimeoRequest
@@ -630,7 +630,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -638,7 +638,7 @@ interface VimeoApiClient {
     fun fetchLiveStats(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<LiveStats>
     ): VimeoRequest
@@ -649,7 +649,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -657,7 +657,7 @@ interface VimeoApiClient {
     fun fetchVideoList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest
@@ -668,7 +668,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -676,7 +676,7 @@ interface VimeoApiClient {
     fun fetchFeedList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<FeedList>
     ): VimeoRequest
@@ -687,7 +687,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -695,7 +695,7 @@ interface VimeoApiClient {
     fun fetchProjectItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProjectItemList>
     ): VimeoRequest
@@ -706,7 +706,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -714,7 +714,7 @@ interface VimeoApiClient {
     fun fetchProgrammedContentItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProgrammedContentItemList>
     ): VimeoRequest
@@ -725,7 +725,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -733,7 +733,7 @@ interface VimeoApiClient {
     fun fetchRecommendationList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<RecommendationList>
     ): VimeoRequest
@@ -744,7 +744,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -752,7 +752,7 @@ interface VimeoApiClient {
     fun fetchSearchResultList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<SearchResultList>
     ): VimeoRequest
@@ -763,7 +763,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -771,7 +771,7 @@ interface VimeoApiClient {
     fun fetchSeasonList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<SeasonList>
     ): VimeoRequest
@@ -782,7 +782,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -790,7 +790,7 @@ interface VimeoApiClient {
     fun fetchNotificationList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<NotificationList>
     ): VimeoRequest
@@ -818,7 +818,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -826,7 +826,7 @@ interface VimeoApiClient {
     fun fetchUserList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<UserList>
     ): VimeoRequest
@@ -837,7 +837,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -845,7 +845,7 @@ interface VimeoApiClient {
     fun fetchCategory(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Category>
     ): VimeoRequest
@@ -856,7 +856,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -864,7 +864,7 @@ interface VimeoApiClient {
     fun fetchCategoryList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<CategoryList>
     ): VimeoRequest
@@ -875,7 +875,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -883,7 +883,7 @@ interface VimeoApiClient {
     fun fetchChannel(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Channel>
     ): VimeoRequest
@@ -894,7 +894,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -902,7 +902,7 @@ interface VimeoApiClient {
     fun fetchChannelList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ChannelList>
     ): VimeoRequest
@@ -913,7 +913,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -921,7 +921,7 @@ interface VimeoApiClient {
     fun fetchAppConfiguration(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<AppConfiguration>
     ): VimeoRequest
@@ -932,7 +932,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -940,7 +940,7 @@ interface VimeoApiClient {
     fun fetchAlbum(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Album>
     ): VimeoRequest
@@ -951,7 +951,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -959,7 +959,7 @@ interface VimeoApiClient {
     fun fetchAlbumList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest
@@ -970,7 +970,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -978,7 +978,7 @@ interface VimeoApiClient {
     fun fetchTvodItem(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItem>
     ): VimeoRequest
@@ -989,7 +989,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -997,7 +997,7 @@ interface VimeoApiClient {
     fun fetchTvodItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItemList>
     ): VimeoRequest
@@ -1008,7 +1008,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -1016,7 +1016,7 @@ interface VimeoApiClient {
     fun fetchComment(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest
@@ -1027,7 +1027,7 @@ interface VimeoApiClient {
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
-     * @param refinementMap Optional map used to refine the response from the API.
+     * @param queryParams Optional map used to refine the response from the API.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
      * should be used.
      * @param callback The callback which will be notified of the request completion.
@@ -1035,7 +1035,7 @@ interface VimeoApiClient {
     fun fetchCommentList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<CommentList>
     ): VimeoRequest
@@ -1210,12 +1210,12 @@ interface VimeoApiClient {
      * Perform a POST to a generic endpoint with an empty response.
      *
      * @param uri The URI of the endpoint.
-     * @param postBody The generic body of the POST.
+     * @param bodyParams The generic body of the POST.
      * @param callback The callback which will be notified of the request completion.
      */
     fun postContent(
         uri: String,
-        postBody: List<Any>,
+        bodyParams: List<Any>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -1223,11 +1223,11 @@ interface VimeoApiClient {
      * Perform a POST to a generic endpoint with an empty response.
      *
      * @param uri The URI of the endpoint.
-     * @param postBody The body of the POST as a [Map] of [Strings][String].
+     * @param bodyParams The body of the POST as a [Map] of [Strings][String].
      */
     fun emptyResponsePost(
         uri: String,
-        postBody: Map<String, String>,
+        bodyParams: Map<String, String>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -1236,13 +1236,13 @@ interface VimeoApiClient {
      *
      * @param uri The URI of the endpoint.
      * @param queryParams The query parameters included in the PATCH.
-     * @param patchBody The body of the PATCH.
+     * @param bodyParams The body of the PATCH.
      * @param callback The callback which will be notified of the request completion.
      */
     fun emptyResponsePatch(
         uri: String,
         queryParams: Map<String, String>,
-        patchBody: Any,
+        bodyParams: Any,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -1250,14 +1250,14 @@ interface VimeoApiClient {
      * Perform a PUT to a generic endpoint that returns a [User].
      *
      * @param uri The URI of the endpoint.
-     * @param options The query parameters included in the PUT.
-     * @param body The optional body of the PUT.
+     * @param queryParams The query parameters included in the PUT.
+     * @param bodyParams The optional body of the PUT.
      * @param callback The callback which will be notified of the request completion.
      */
     fun putContentWithUserResponse(
         uri: String,
-        options: Map<String, String>,
-        body: Any?,
+        queryParams: Map<String, String>,
+        bodyParams: Any?,
         callback: VimeoCallback<User>
     ): VimeoRequest
 
@@ -1265,14 +1265,14 @@ interface VimeoApiClient {
      * Perform a PUT to a generic endpoint with an empty response..
      *
      * @param uri The URI of the endpoint.
-     * @param options The query parameters included in the PUT.
-     * @param body The optional body of the PUT.
+     * @param queryParams The query parameters included in the PUT.
+     * @param bodyParams The optional body of the PUT.
      * @param callback The callback which will be notified of the request completion.
      */
     fun putContent(
         uri: String,
-        options: Map<String, String>,
-        body: Any?,
+        queryParams: Map<String, String>,
+        bodyParams: Any?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -1280,12 +1280,12 @@ interface VimeoApiClient {
      * Delete content at the provided generic endpoint.
      *
      * @param uri The URI of the endpoint.
-     * @param options The query parameters to include in the DELETE.
+     * @param queryParams The query parameters to include in the DELETE.
      * @param callback The callback which will be notified of the request completion.
      */
     fun deleteContent(
         uri: String,
-        options: Map<String, String>,
+        queryParams: Map<String, String>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
