@@ -104,6 +104,7 @@ internal class VimeoApiClientImpl(
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         val body = bodyParams.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
         body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
@@ -114,7 +115,7 @@ internal class VimeoApiClientImpl(
         if (albumPrivacy.password != null) {
             body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = requireNotNull(albumPrivacy.password)
         }
-        return vimeoService.editAlbum(authHeader, uri, body).enqueue(callback)
+        return vimeoService.editAlbum(authHeader, safeUri, body).enqueue(callback)
     }
 
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest {
@@ -123,7 +124,8 @@ internal class VimeoApiClientImpl(
     }
 
     override fun deleteAlbum(uri: String, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.delete(authHeader, uri, emptyMap()).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.delete(authHeader, safeUri, emptyMap()).enqueue(callback)
     }
 
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
@@ -133,7 +135,9 @@ internal class VimeoApiClientImpl(
     }
 
     override fun addToAlbum(albumUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.addToAlbum(authHeader, albumUri, videoUri).enqueue(callback)
+        val safeAlbumUri = albumUri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val safeVideoUri = videoUri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.addToAlbum(authHeader, safeAlbumUri, safeVideoUri).enqueue(callback)
     }
 
     override fun removeFromAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
@@ -143,7 +147,9 @@ internal class VimeoApiClientImpl(
     }
 
     override fun removeFromAlbum(albumUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.removeFromAlbum(authHeader, albumUri, videoUri).enqueue(callback)
+        val safeAlbumUri = albumUri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val safeVideoUri = videoUri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.removeFromAlbum(authHeader, safeAlbumUri, safeVideoUri).enqueue(callback)
     }
 
     override fun modifyVideosInAlbum(
@@ -160,7 +166,8 @@ internal class VimeoApiClientImpl(
         modificationSpecs: ModifyVideosInAlbumSpecs,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
-        return vimeoService.modifyVideosInAlbum(authHeader, uri, modificationSpecs).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.modifyVideosInAlbum(authHeader, safeUri, modificationSpecs).enqueue(callback)
     }
 
     override fun modifyVideoInAlbums(
@@ -177,7 +184,8 @@ internal class VimeoApiClientImpl(
         modificationSpecs: ModifyVideoInAlbumsSpecs,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
-        return vimeoService.modifyVideoInAlbums(authHeader, uri, modificationSpecs).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.modifyVideoInAlbums(authHeader, safeUri, modificationSpecs).enqueue(callback)
     }
 
     @Suppress("ComplexMethod")
@@ -194,6 +202,7 @@ internal class VimeoApiClientImpl(
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         val body = bodyParams.intoMutableMap()
         if (title != null) {
             body[ApiConstants.Parameters.PARAMETER_VIDEO_NAME] = title
@@ -227,7 +236,7 @@ internal class VimeoApiClientImpl(
             body[ApiConstants.Parameters.PARAMETER_VIDEO_PRIVACY] = privacy
         }
 
-        return vimeoService.editVideo(authHeader, uri, body).enqueue(callback)
+        return vimeoService.editVideo(authHeader, safeUri, body).enqueue(callback)
     }
 
     override fun editVideo(
@@ -266,7 +275,8 @@ internal class VimeoApiClientImpl(
         bio: String?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        return vimeoService.editUser(authHeader, uri, name, location, bio).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.editUser(authHeader, safeUri, name, location, bio).enqueue(callback)
     }
 
     override fun editUser(
@@ -330,7 +340,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest {
-        return vimeoService.getPublishJob(authHeader, uri, fieldFilter, cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getPublishJob(authHeader, safeUri, fieldFilter, cacheControl)
             .enqueue(callback)
     }
 
@@ -339,7 +350,8 @@ internal class VimeoApiClientImpl(
         publishData: BatchPublishToSocialMedia,
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest {
-        return vimeoService.putPublishJob(authHeader, uri, publishData).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.putPublishJob(authHeader, safeUri, publishData).enqueue(callback)
     }
 
     override fun putPublishJob(
@@ -368,7 +380,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Document>
     ): VimeoRequest {
-        return vimeoService.getDocument(authHeader, uri).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getDocument(authHeader, safeUri).enqueue(callback)
     }
 
     override fun fetchTextTrackList(
@@ -377,7 +390,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<TextTrackList>
     ): VimeoRequest {
-        return vimeoService.getTextTrackList(authHeader, uri, fieldFilter, cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getTextTrackList(authHeader, safeUri, fieldFilter, cacheControl)
             .enqueue(callback)
     }
 
@@ -386,7 +400,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.getUnit(authHeader, uri, emptyMap(), cacheControl).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getUnit(authHeader, safeUri, emptyMap(), cacheControl).enqueue(callback)
     }
 
     @Suppress("ComplexMethod", "LongMethod")
@@ -452,13 +467,15 @@ internal class VimeoApiClientImpl(
     }
 
     override fun createPictureCollection(uri: String, callback: VimeoCallback<PictureCollection>): VimeoRequest {
-        return vimeoService.createPictureCollection(authHeader, uri).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.createPictureCollection(authHeader, safeUri).enqueue(callback)
     }
 
     override fun activatePictureCollection(uri: String, callback: VimeoCallback<PictureCollection>): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.editPictureCollection(
             authHeader,
-            uri,
+            safeUri,
             true
         ).enqueue(callback)
     }
@@ -472,10 +489,11 @@ internal class VimeoApiClientImpl(
     }
 
     override fun updateFollow(isFollowing: Boolean, uri: String, callback: VimeoCallback<Unit>): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return if (isFollowing) {
-            vimeoService.put(authHeader, uri, emptyMap()).enqueue(callback)
+            vimeoService.put(authHeader, safeUri, emptyMap()).enqueue(callback)
         } else {
-            vimeoService.delete(authHeader, uri, emptyMap()).enqueue(callback)
+            vimeoService.delete(authHeader, safeUri, emptyMap()).enqueue(callback)
         }
     }
 
@@ -495,11 +513,12 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         val optionsMap = password.asPasswordParameter()
         return if (isLiked) {
-            vimeoService.put(authHeader, uri, optionsMap).enqueue(callback)
+            vimeoService.put(authHeader, safeUri, optionsMap).enqueue(callback)
         } else {
-            vimeoService.delete(authHeader, uri, optionsMap).enqueue(callback)
+            vimeoService.delete(authHeader, safeUri, optionsMap).enqueue(callback)
         }
     }
 
@@ -519,11 +538,12 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         val optionsMap = password.asPasswordParameter()
         return if (isWatchLater) {
-            vimeoService.put(authHeader, uri, optionsMap).enqueue(callback)
+            vimeoService.put(authHeader, safeUri, optionsMap).enqueue(callback)
         } else {
-            vimeoService.delete(authHeader, uri, optionsMap).enqueue(callback)
+            vimeoService.delete(authHeader, safeUri, optionsMap).enqueue(callback)
         }
     }
 
@@ -543,7 +563,8 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
-        return vimeoService.createComment(authHeader, uri, password, comment).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.createComment(authHeader, safeUri, password, comment).enqueue(callback)
     }
 
     override fun createComment(
@@ -571,7 +592,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Product>
     ): VimeoRequest {
-        return vimeoService.getProduct(authHeader, uri, fieldFilter, cacheControl).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getProduct(authHeader, safeUri, fieldFilter, cacheControl).enqueue(callback)
     }
 
     override fun fetchCurrentUser(
@@ -588,7 +610,8 @@ internal class VimeoApiClientImpl(
     }
 
     override fun postContent(uri: String, bodyParams: List<Any>, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.post(authHeader, uri, bodyParams).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.post(authHeader, safeUri, bodyParams).enqueue(callback)
     }
 
     override fun emptyResponsePost(
@@ -596,7 +619,8 @@ internal class VimeoApiClientImpl(
         bodyParams: Map<String, String>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.emptyResponsePost(authHeader, uri, bodyParams).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.emptyResponsePost(authHeader, safeUri, bodyParams).enqueue(callback)
     }
 
     override fun emptyResponsePatch(
@@ -605,7 +629,8 @@ internal class VimeoApiClientImpl(
         bodyParams: Any,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.emptyResponsePatch(authHeader, uri, queryParams, bodyParams).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.emptyResponsePatch(authHeader, safeUri, queryParams, bodyParams).enqueue(callback)
     }
 
     override fun putContentWithUserResponse(
@@ -614,7 +639,8 @@ internal class VimeoApiClientImpl(
         bodyParams: Any?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        return vimeoService.putContentWithUserResponse(authHeader, uri, queryParams, bodyParams).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.putContentWithUserResponse(authHeader, safeUri, queryParams, bodyParams).enqueue(callback)
     }
 
     override fun putContent(
@@ -623,7 +649,8 @@ internal class VimeoApiClientImpl(
         bodyParams: Any?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.put(authHeader, uri, queryParams, bodyParams).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.put(authHeader, safeUri, queryParams, bodyParams).enqueue(callback)
     }
 
     override fun deleteContent(
@@ -631,7 +658,8 @@ internal class VimeoApiClientImpl(
         queryParams: Map<String, String>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        return vimeoService.delete(authHeader, uri, queryParams).enqueue(callback)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.delete(authHeader, safeUri, queryParams).enqueue(callback)
     }
 
     override fun fetchVideo(
@@ -641,7 +669,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
-        return vimeoService.getVideo(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getVideo(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -652,7 +681,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<LiveStats>
     ): VimeoRequest {
-        return vimeoService.getLiveStats(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getLiveStats(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -663,7 +693,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
-        return vimeoService.getVideoList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getVideoList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -674,7 +705,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<FeedList>
     ): VimeoRequest {
-        return vimeoService.getFeedList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getFeedList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -685,7 +717,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProjectItemList>
     ): VimeoRequest {
-        return vimeoService.getProjectItemList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getProjectItemList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -696,9 +729,10 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProgrammedContentItemList>
     ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.getProgramContentItemList(
             authHeader,
-            uri,
+            safeUri,
             fieldFilter,
             queryParams.orEmpty(),
             cacheControl
@@ -712,7 +746,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<RecommendationList>
     ): VimeoRequest {
-        return vimeoService.getRecommendationList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getRecommendationList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -723,7 +758,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<SearchResultList>
     ): VimeoRequest {
-        return vimeoService.getSearchResultList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getSearchResultList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -734,7 +770,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<SeasonList>
     ): VimeoRequest {
-        return vimeoService.getSeasonList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getSeasonList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -745,7 +782,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<NotificationList>
     ): VimeoRequest {
-        return vimeoService.getNotificationList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getNotificationList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -755,7 +793,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        return vimeoService.getUser(authHeader, uri, fieldFilter, cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getUser(authHeader, safeUri, fieldFilter, cacheControl)
             .enqueue(callback)
     }
 
@@ -766,7 +805,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<UserList>
     ): VimeoRequest {
-        return vimeoService.getUserList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getUserList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -777,7 +817,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Category>
     ): VimeoRequest {
-        return vimeoService.getCategory(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getCategory(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -788,7 +829,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<CategoryList>
     ): VimeoRequest {
-        return vimeoService.getCategoryList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getCategoryList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -799,7 +841,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Channel>
     ): VimeoRequest {
-        return vimeoService.getChannel(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getChannel(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -810,7 +853,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ChannelList>
     ): VimeoRequest {
-        return vimeoService.getChannelList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getChannelList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -821,7 +865,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<AppConfiguration>
     ): VimeoRequest {
-        return vimeoService.getAppConfiguration(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getAppConfiguration(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -832,7 +877,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
-        return vimeoService.getAlbum(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getAlbum(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -843,7 +889,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
-        return vimeoService.getAlbumList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getAlbumList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -854,7 +901,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItem>
     ): VimeoRequest {
-        return vimeoService.getTvodItem(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getTvodItem(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -865,7 +913,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItemList>
     ): VimeoRequest {
-        return vimeoService.getTvodItemList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getTvodItemList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -876,7 +925,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
-        return vimeoService.getComment(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getComment(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -887,7 +937,8 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<CommentList>
     ): VimeoRequest {
-        return vimeoService.getCommentList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getCommentList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
