@@ -29,6 +29,7 @@ import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
+import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
 import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
 import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.CertificatePinner
@@ -49,6 +50,7 @@ object RetrofitSetupModule {
      */
     private val moshi = Moshi.Builder()
         .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        .add(StringValueJsonAdapterFactory())
         .build()
 
     /**
