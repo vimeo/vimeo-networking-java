@@ -103,7 +103,7 @@ internal interface VimeoService {
     fun putPublishJob(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Body publishData: BatchPublishToSocialMedia?
+        @Body publishData: BatchPublishToSocialMedia
     ): VimeoCall<PublishJob>
 
     @POST("me/albums")
@@ -447,7 +447,7 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
-        @Body bodyParams: Any?
+        @Body bodyParams: Any
     ): VimeoCall<User>
 
     @PUT
@@ -469,7 +469,7 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
-        @Body bodyParams: Any?
+        @Body bodyParams: Any
     ): VimeoCall<Unit>
 
     @DELETE

@@ -640,7 +640,11 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<User>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.putContentWithUserResponse(authHeader, safeUri, queryParams, bodyParams).enqueue(callback)
+        return if (bodyParams != null) {
+            vimeoService.putContentWithUserResponse(authHeader, safeUri, queryParams, bodyParams).enqueue(callback)
+        } else {
+            vimeoService.putContentWithUserResponse(authHeader, safeUri, queryParams).enqueue(callback)
+        }
     }
 
     override fun putContent(
@@ -650,7 +654,11 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.put(authHeader, safeUri, queryParams, bodyParams).enqueue(callback)
+        return if (bodyParams != null) {
+            vimeoService.put(authHeader, safeUri, queryParams, bodyParams).enqueue(callback)
+        } else {
+            vimeoService.put(authHeader, safeUri, queryParams).enqueue(callback)
+        }
     }
 
     override fun deleteContent(
