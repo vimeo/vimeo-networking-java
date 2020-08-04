@@ -92,7 +92,7 @@ internal class VimeoApiClientImpl(
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
-        val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = album.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return editAlbum(uri, name, albumPrivacy, description, bodyParams, callback)
     }
 
@@ -118,7 +118,7 @@ internal class VimeoApiClientImpl(
     }
 
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest {
-        val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = album.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return deleteAlbum(uri, callback)
     }
 
@@ -127,8 +127,8 @@ internal class VimeoApiClientImpl(
     }
 
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
-        val albumUri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        val videoUri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val albumUri = album.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val videoUri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return addToAlbum(albumUri, videoUri, callback)
     }
 
@@ -137,8 +137,8 @@ internal class VimeoApiClientImpl(
     }
 
     override fun removeFromAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
-        val albumUri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        val videoUri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val albumUri = album.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val videoUri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return removeFromAlbum(albumUri, videoUri, callback)
     }
 
@@ -151,7 +151,7 @@ internal class VimeoApiClientImpl(
         modificationSpecs: ModifyVideosInAlbumSpecs,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest {
-        val uri = album.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = album.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return modifyVideosInAlbum(uri, modificationSpecs, callback)
     }
 
@@ -168,7 +168,7 @@ internal class VimeoApiClientImpl(
         modificationSpecs: ModifyVideoInAlbumsSpecs,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest {
-        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return modifyVideoInAlbums(uri, modificationSpecs, callback)
     }
 
@@ -243,7 +243,7 @@ internal class VimeoApiClientImpl(
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
-        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return editVideo(
             uri,
             title,
@@ -276,7 +276,7 @@ internal class VimeoApiClientImpl(
         bio: String?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        val uri = user.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = user.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return editUser(uri, name, location, bio, callback)
     }
 
@@ -347,7 +347,7 @@ internal class VimeoApiClientImpl(
         publishData: BatchPublishToSocialMedia,
         callback: VimeoCallback<PublishJob>
     ): VimeoRequest {
-        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return putPublishJob(uri, publishData, callback)
     }
 
@@ -467,7 +467,7 @@ internal class VimeoApiClientImpl(
         pictureCollection: PictureCollection,
         callback: VimeoCallback<PictureCollection>
     ): VimeoRequest {
-        val uri = pictureCollection.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = pictureCollection.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return activatePictureCollection(uri, callback)
     }
 
@@ -484,7 +484,7 @@ internal class VimeoApiClientImpl(
         followable: Followable,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        val uri = followable.metadata?.interactions?.follow?.uri
+        val uri = followable.metadata?.interactions?.follow?.uri.notEmpty()
             ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return updateFollow(isFollowing, uri, callback)
     }
@@ -509,7 +509,7 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return updateVideoLike(isLiked, uri, password, callback)
     }
 
@@ -533,7 +533,7 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        val uri = video.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return updateVideoWatchLater(isWatchLater, uri, password, callback)
     }
 
@@ -552,7 +552,8 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
-        val uri = video.metadata?.connections?.comments?.uri ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val uri = video.metadata?.connections?.comments?.uri.notEmpty()
+            ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return createComment(uri, comment, password, callback)
     }
 
@@ -897,6 +898,11 @@ internal class VimeoApiClientImpl(
             ))
         ), callback)
     }
+
+    /**
+     * @return The [String] if it is not empty or blank, otherwise returns null.
+     */
+    private fun String?.notEmpty(): String? = this?.takeIf { it.isNotBlank() }
 
     private fun <T : StringValue> T.validate(): T =
         this.takeIf { it.value?.isNotEmpty() == false } ?: error(INVALID_ENUM_MESSAGE)
