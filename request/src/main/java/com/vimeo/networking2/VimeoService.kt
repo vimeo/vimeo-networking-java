@@ -21,7 +21,18 @@
  */
 package com.vimeo.networking2
 
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_ACTIVE
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_APP_TYPE
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_AUTH_CODE
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_CLIENT_ID
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_GET_FIELD_FILTER
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PASSWORD
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
+import com.vimeo.networking2.enums.ConnectedAppType
+import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.internal.VimeoCall
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -29,6 +40,7 @@ import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
 import okhttp3.CacheControl
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -58,7 +70,7 @@ internal interface VimeoService {
     @GET("me/connected_apps/{type}")
     fun getConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: String,
+        @Path("type") type: ConnectedAppType,
         @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ConnectedApp>
@@ -66,14 +78,16 @@ internal interface VimeoService {
     @PUT("me/connected_apps/{type}")
     fun createConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: String,
-        @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
+        @Path("type") type: ConnectedAppType,
+        @Field(PARAMETER_AUTH_CODE) authorizationCode: String,
+        @Field(PARAMETER_APP_TYPE) appType: ConnectedAppType,
+        @Field(PARAMETER_CLIENT_ID) clientId: String
     ): VimeoCall<ConnectedApp>
 
     @DELETE("me/connected_apps/{type}")
     fun deleteConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: String
+        @Path("type") type: ConnectedAppType
     ): VimeoCall<Unit>
 
     @GET
@@ -144,28 +158,30 @@ internal interface VimeoService {
     fun editUser(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
+        @Field(PARAMETER_USERS_NAME) name: String?,
+        @Field(PARAMETER_USERS_LOCATION) location: String?,
+        @Field(PARAMETER_USERS_BIO) bio: String?
     ): VimeoCall<User>
 
     @PATCH
     fun editPictureCollection(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
+        @Field(PARAMETER_ACTIVE) isActive: Boolean
     ): VimeoCall<PictureCollection>
 
     @PATCH("me/notifications/subscriptions")
     fun editNotificationSubscriptions(
         @Header(AUTHORIZATION) authorization: String,
-        @Body bodyParams: Map<String, Boolean>
+        @Body subscriptionMap: Map<NotificationType, Boolean>
     ): VimeoCall<NotificationSubscriptions>
 
     @POST
     fun createComment(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
-        @Body bodyParams: Map<String, @JvmSuppressWildcards String>
+        @Query(PARAMETER_PASSWORD) password: String?,
+        @Field(PARAMETER_COMMENT_TEXT_BODY) commentBody: String
     ): VimeoCall<Comment>
 
     @POST

@@ -27,6 +27,7 @@ import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
@@ -353,7 +354,7 @@ interface VimeoApiClient {
      * @param callback The callback which will be notified of the request completion.
      */
     fun editSubscriptions(
-        subscriptionMap: Map<String, Boolean>,
+        subscriptionMap: Map<NotificationType, Boolean>,
         callback: VimeoCallback<NotificationSubscriptions>
     ): VimeoRequest
 

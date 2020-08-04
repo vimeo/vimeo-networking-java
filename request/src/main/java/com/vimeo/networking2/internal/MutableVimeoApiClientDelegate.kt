@@ -26,6 +26,7 @@ import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -187,7 +188,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     ): VimeoRequest = client.editUser(user, name, location, bio, callback)
 
     override fun editSubscriptions(
-        subscriptionMap: Map<String, Boolean>,
+        subscriptionMap: Map<NotificationType, Boolean>,
         callback: VimeoCallback<NotificationSubscriptions>
     ): VimeoRequest = client.editSubscriptions(subscriptionMap, callback)
 

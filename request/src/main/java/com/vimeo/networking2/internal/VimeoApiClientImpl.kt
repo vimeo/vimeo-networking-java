@@ -28,6 +28,8 @@ import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.ErrorCodeType
+import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.StringValue
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -264,17 +266,7 @@ internal class VimeoApiClientImpl(
         bio: String?,
         callback: VimeoCallback<User>
     ): VimeoRequest {
-        val body = mutableMapOf<String, Any>()
-        if (name != null) {
-            body[ApiConstants.Parameters.PARAMETER_USERS_NAME] = name
-        }
-        if (location != null) {
-            body[ApiConstants.Parameters.PARAMETER_USERS_LOCATION] = location
-        }
-        if (bio != null) {
-            body[ApiConstants.Parameters.PARAMETER_USERS_BIO] = bio
-        }
-        return vimeoService.editUser(authHeader, uri, body).enqueue(callback)
+        return vimeoService.editUser(authHeader, uri, name, location, bio).enqueue(callback)
     }
 
     override fun editUser(
@@ -289,7 +281,7 @@ internal class VimeoApiClientImpl(
     }
 
     override fun editSubscriptions(
-        subscriptionMap: Map<String, Boolean>,
+        subscriptionMap: Map<NotificationType, Boolean>,
         callback: VimeoCallback<NotificationSubscriptions>
     ): VimeoRequest {
         return vimeoService.editNotificationSubscriptions(authHeader, subscriptionMap).enqueue(callback)
@@ -310,9 +302,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ConnectedApp>
     ): VimeoRequest {
-        return vimeoService.getConnectedApp(authHeader, type.value
-            ?: error(INVALID_ENUM_MESSAGE), fieldFilter, cacheControl)
-            .enqueue(callback)
+        return vimeoService.getConnectedApp(authHeader, type.validate(), fieldFilter, cacheControl).enqueue(callback)
     }
 
     override fun createConnectedApp(
@@ -323,18 +313,15 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         return vimeoService.createConnectedApp(
             authHeader,
-            type.value ?: error(INVALID_ENUM_MESSAGE),
-            mapOf(
-                ApiConstants.Parameters.PARAMETER_AUTH_CODE to authorization,
-                ApiConstants.Parameters.PARAMETER_APP_TYPE to (type.value ?: error(INVALID_ENUM_MESSAGE)),
-                ApiConstants.Parameters.PARAMETER_CLIENT_ID to clientId
-            )
+            type.validate(),
+            authorization,
+            type.validate(),
+            clientId
         ).enqueue(callback)
     }
 
     override fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest {
-        return vimeoService.deleteConnectedApp(authHeader, type.value
-            ?: error(INVALID_ENUM_MESSAGE)).enqueue(callback)
+        return vimeoService.deleteConnectedApp(authHeader, type.validate()).enqueue(callback)
     }
 
     override fun fetchPublishJob(
@@ -418,7 +405,6 @@ internal class VimeoApiClientImpl(
         queryParams: Map<String, String>?,
         callback: VimeoCallback<SearchResultList>
     ): VimeoRequest {
-
         val map = mutableMapOf(
             ApiConstants.Parameters.PARAMETER_GET_QUERY to query,
             ApiConstants.Parameters.FILTER_TYPE to (searchFilterType.value
@@ -473,7 +459,7 @@ internal class VimeoApiClientImpl(
         return vimeoService.editPictureCollection(
             authHeader,
             uri,
-            mapOf(ApiConstants.Parameters.PARAMETER_ACTIVE to true)
+            true
         ).enqueue(callback)
     }
 
@@ -557,13 +543,7 @@ internal class VimeoApiClientImpl(
         password: String?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
-        val optionsMap = password.asPasswordParameter()
-        return vimeoService.createComment(
-            authHeader,
-            uri,
-            optionsMap,
-            mapOf(ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY to comment)
-        ).enqueue(callback)
+        return vimeoService.createComment(authHeader, uri, password, comment).enqueue(callback)
     }
 
     override fun createComment(
@@ -917,6 +897,9 @@ internal class VimeoApiClientImpl(
             ))
         ), callback)
     }
+
+    private fun <T : StringValue> T.validate(): T =
+        this.takeIf { it.value?.isNotEmpty() == false } ?: error(INVALID_ENUM_MESSAGE)
 
     private fun String?.asPasswordParameter(): Map<String, String> =
         this?.let { mapOf(ApiConstants.Parameters.PARAMETER_PASSWORD to it) } ?: emptyMap()
