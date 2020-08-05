@@ -24,13 +24,17 @@ package com.vimeo.networking2.internal
 import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.Scopes
+import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.VimeoAccount
+import com.vimeo.networking2.annotations.Internal
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 /**
  * All the authentication endpoints.
@@ -283,6 +287,38 @@ internal interface AuthService {
         @Field("user_code") pinCode: String,
         @Field("device_code") deviceCode: String,
         @Field(SCOPE) scopes: Scopes
+    ): VimeoCall<VimeoAccount>
+
+    /**
+     * Searches Vimeo for the presence of a supported SSO domain that matches the one provided by the [domain]
+     * parameter.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param domain A domain, also known as hostname, that might be supported for SSO by the Vimeo API.
+     */
+    @Internal
+    @GET("sso_domains")
+    fun getSsoDomain(
+        @Header(AUTHORIZATION) authorization: String,
+        @Query("domain") domain: String
+    ): VimeoCall<SsoDomain>
+
+    /**
+     * Authenticate with the server using an authorization code grant from an enterprise SSO supported domain using
+     * Auth0.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param authorizationCode The Auth0 code to verify.
+     * @param redirectUri The URI used to verify the token.
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
+     */
+    @Internal
+    @POST("oauth/authorize/auth0")
+    fun authenticateWithSsoCodeGrant(
+        @Header(AUTHORIZATION) authorization: String,
+        @Field("authorization_code") authorizationCode: String,
+        @Field("redirect_uri") redirectUri: String,
+        @Field("marketing_opt_in") marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**

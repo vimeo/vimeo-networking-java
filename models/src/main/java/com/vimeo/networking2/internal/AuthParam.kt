@@ -40,5 +40,14 @@ enum class AuthParam(
     FIELD_MARKETING_OPT_IN(developerMessage = "Marketing opt in option not provided."),
 
     @Json(name = "scope")
-    FIELD_SCOPES(developerMessage = "Scopes were not provided.");
+    FIELD_SCOPES(developerMessage = "Scopes were not provided."),
+
+    @Json(name = "domain")
+    DOMAIN(developerMessage = "An empty domain was provided"),
+
+    @Json(name = "authorization_code")
+    AUTHORIZATION_CODE(developerMessage = "An empty authorization code was provided"),
+
+    @Json(name = "redirect_uri")
+    REDIRECT_URI(developerMessage = "An empty redirect uri was provided")
 }

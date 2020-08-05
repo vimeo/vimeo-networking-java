@@ -22,8 +22,9 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.account.CachingAccountStore
-import com.vimeo.networking2.config.VimeoApiConfiguration
+import com.vimeo.networking2.annotations.Internal
 import com.vimeo.networking2.config.RetrofitSetupModule
+import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
 import com.vimeo.networking2.internal.MutableAuthenticatorDelegate
@@ -57,6 +58,7 @@ import okhttp3.Credentials
  * val instance = Authenticator.instance()
  * ```
  */
+@Suppress("ComplexInterface")
 interface Authenticator {
 
     /**
@@ -155,6 +157,38 @@ interface Authenticator {
     fun exchangeOAuthOneToken(
         token: String,
         tokenSecret: String,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest
+
+    /**
+     * Find a supported SSO domain that matches the [domain] parameter.
+     *
+     * @param domain A domain, also known as hostname, that might be supported for SSO by the Vimeo API.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    @Internal
+    fun fetchSsoDomain(
+        domain: String,
+        callback: VimeoCallback<SsoDomain>
+    ): VimeoRequest
+
+    /**
+     * Authenticate with the server using an authorization code grant from a supported enterprise SSO domain.
+     *
+     * @param authorizationCode The Auth0 code to verify.
+     * @param redirectUri The URI used to verify the token.
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    @Internal
+    fun ssoCodeGrant(
+        authorizationCode: String,
+        redirectUri: String,
+        marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 

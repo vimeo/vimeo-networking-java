@@ -208,6 +208,53 @@ internal class AuthenticatorImpl(
             .enqueue(callback)
     }
 
+    override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest {
+        val invalidAuthParams = mapOf(
+            AuthParam.DOMAIN to domain
+        ).validate()
+
+        val call = authService.getSsoDomain(basicAuthHeader, domain)
+
+        return if (invalidAuthParams.isNotEmpty()) {
+            val apiError = ApiError(
+                developerMessage = "SSO domain fetch error",
+                invalidParameters = invalidAuthParams
+            )
+            call.enqueueError(apiError, callback)
+        } else {
+            call.enqueue(callback)
+        }
+    }
+
+    override fun ssoCodeGrant(
+        authorizationCode: String,
+        redirectUri: String,
+        marketingOptIn: Boolean,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest {
+        val invalidAuthParams = mapOf(
+            AuthParam.AUTHORIZATION_CODE to authorizationCode,
+            AuthParam.REDIRECT_URI to redirectUri
+        ).validate()
+
+        val call = authService.authenticateWithSsoCodeGrant(
+            basicAuthHeader,
+            authorizationCode,
+            redirectUri,
+            marketingOptIn
+        )
+
+        return if (invalidAuthParams.isNotEmpty()) {
+            val apiError = ApiError(
+                developerMessage = "SSO code grant error",
+                invalidParameters = invalidAuthParams
+            )
+            call.enqueueError(apiError, callback)
+        } else {
+            call.enqueue(callback)
+        }
+    }
+
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest {
         val accessToken = currentAccount?.accessToken
         accountStore.removeAccount()
