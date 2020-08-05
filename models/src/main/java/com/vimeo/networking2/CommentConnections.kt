@@ -13,5 +13,5 @@ data class CommentConnections(
      * Information about this comment's replies.
      */
     @Json(name = "replies")
-    val replies: Connection? = null
+    val replies: BasicConnection? = null
 )

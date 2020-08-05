@@ -13,6 +13,6 @@ data class CinemaConnections(
      * Information about the contents of this programmed cinema item.
      */
     @Json(name = "contents")
-    val contents: Connection? = null
+    val contents: BasicConnection? = null
 
 )

@@ -13,6 +13,6 @@ data class SeasonConnections(
      * The Videos connection.
      */
     @Json(name = "videos")
-    val videos: Connection? = null
+    val videos: BasicConnection? = null
 
 )

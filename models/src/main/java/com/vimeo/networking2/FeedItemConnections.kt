@@ -13,6 +13,6 @@ data class FeedItemConnections(
      * A list of resource URIs related to the activity.
      */
     @Json(name = "related")
-    val related: Connection? = null
+    val related: BasicConnection? = null
 
 )

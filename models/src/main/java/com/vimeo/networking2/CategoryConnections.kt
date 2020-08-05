@@ -13,24 +13,24 @@ data class CategoryConnections(
      * Information about the channels related to this category.
      */
     @Json(name = "channels")
-    val channels: Connection? = null,
+    val channels: BasicConnection? = null,
 
     /**
      * Information about the groups related to this category.
      */
     @Json(name = "groups")
-    val groups: Connection? = null,
+    val groups: BasicConnection? = null,
 
     /**
      * Information about the users related to this category.
      */
     @Json(name = "users")
-    val users: Connection? = null,
+    val users: BasicConnection? = null,
 
     /**
      * Information about the videos related to this category.
      */
     @Json(name = "videos")
-    val videos: Connection? = null
+    val videos: BasicConnection? = null
 
 )
