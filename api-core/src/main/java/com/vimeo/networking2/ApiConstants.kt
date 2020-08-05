@@ -38,6 +38,8 @@ object ApiConstants {
 
     const val NOT_FOUND = -1
 
+    const val MAX_PER_PAGE = 100
+
     /**
      * Fixed endpoints.
      */
