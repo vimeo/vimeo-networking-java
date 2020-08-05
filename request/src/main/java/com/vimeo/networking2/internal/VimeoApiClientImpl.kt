@@ -964,7 +964,7 @@ internal class VimeoApiClientImpl(
     private fun String?.notEmpty(): String? = this?.takeIf { it.isNotBlank() }
 
     private fun <T : StringValue> T.validate(): T =
-        this.takeIf { it.value?.isNotEmpty() == false } ?: error(INVALID_ENUM_MESSAGE)
+        this.takeIf { it.value?.isNotEmpty() == true } ?: error(INVALID_ENUM_MESSAGE)
 
     private fun String?.asPasswordParameter(): Map<String, String> =
         this?.let { mapOf(ApiConstants.Parameters.PARAMETER_PASSWORD to it) } ?: emptyMap()
