@@ -36,6 +36,8 @@ object ApiConstants {
 
     const val SDK_VERSION = "2.0.0"
 
+    const val NOT_FOUND = -1
+
     /**
      * Fixed endpoints.
      */
