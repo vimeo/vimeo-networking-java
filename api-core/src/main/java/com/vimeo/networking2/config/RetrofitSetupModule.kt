@@ -46,9 +46,10 @@ import java.util.concurrent.TimeUnit
 object RetrofitSetupModule {
 
     /**
-     * Create Moshi object for serialization and deserialization.
+     * Create a Moshi instance used for serialization and deserialization.
      */
-    private val moshi = Moshi.Builder()
+    @JvmStatic
+    fun moshi(): Moshi = Moshi.Builder()
         .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
         .add(StringValueJsonAdapterFactory())
         .build()
@@ -69,7 +70,8 @@ object RetrofitSetupModule {
         val networkInterceptors = listOf(CacheControlHeaderInterceptor(vimeoApiConfiguration.cacheMaxAgeSeconds))
 
         val okHttpClient = okHttpClient(vimeoApiConfiguration, interceptors, networkInterceptors)
-        return createRetrofit(vimeoApiConfiguration, okHttpClient)
+        val moshi = moshi()
+        return createRetrofit(vimeoApiConfiguration, okHttpClient, moshi)
     }
 
     /**
@@ -118,7 +120,11 @@ object RetrofitSetupModule {
     /**
      * Create [Retrofit] with OkHttpClient and Moshi.
      */
-    private fun createRetrofit(vimeoApiConfiguration: VimeoApiConfiguration, okHttpClient: OkHttpClient): Retrofit =
+    private fun createRetrofit(
+        vimeoApiConfiguration: VimeoApiConfiguration,
+        okHttpClient: OkHttpClient,
+        moshi: Moshi
+    ): Retrofit =
         Retrofit.Builder()
             .baseUrl(vimeoApiConfiguration.baseUrl)
             .client(okHttpClient)
