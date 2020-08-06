@@ -51,8 +51,8 @@ interface VimeoCallback<ResponseType_T> {
  * @param onError Called when the request completes unsuccessfully.
  */
 fun <ResponseType_T> vimeoCallback(
-        onSuccess: (VimeoResponse.Success<ResponseType_T>) -> Unit,
-        onError: (VimeoResponse.Error) -> Unit
+    onSuccess: (VimeoResponse.Success<ResponseType_T>) -> Unit,
+    onError: (VimeoResponse.Error) -> Unit
 ): VimeoCallback<ResponseType_T> = object : VimeoCallback<ResponseType_T> {
     override fun onSuccess(response: VimeoResponse.Success<ResponseType_T>) = onSuccess(response)
     override fun onError(error: VimeoResponse.Error) = onError(error)

@@ -77,6 +77,13 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest = authenticator.exchangeOAuthOneToken(token, tokenSecret, callback)
 
+    override fun obtainCodeGrantAuthorizationUri(responseCode: Int): String =
+        authenticator.obtainCodeGrantAuthorizationUri(responseCode)
+
+    override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
+        return authenticator.authenticateWithCodeGrant(uri, callback)
+    }
+
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest =
         authenticator.logOut(callback)
 }

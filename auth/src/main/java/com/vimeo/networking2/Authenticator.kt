@@ -26,8 +26,10 @@ import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
+import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableAuthenticatorDelegate
 import okhttp3.Credentials
+import java.util.concurrent.Executor
 
 /**
  * An interface that provides the following ways to authenticate with the Vimeo API:
@@ -57,6 +59,7 @@ import okhttp3.Credentials
  * val instance = Authenticator.instance()
  * ```
  */
+@Suppress("ComplexInterface")
 interface Authenticator {
 
     /**
@@ -159,6 +162,31 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
+     * Obtain the URI which can be used to log in the user and receive back a URI that can be exchanged using
+     * [authenticateWithCodeGrant] for a logged in account.
+     *
+     * @param responseCode The response code that can be used to identify the origin of the redirect URI.
+     *
+     * @return The URI which can be opened in a browser.
+     */
+    fun obtainCodeGrantAuthorizationUri(responseCode: Int): String
+
+    /**
+     * Log in using an authorization code grant received from the request to made to the URI returned by
+     * [obtainCodeGrantAuthorizationUri].
+     *
+     * @param uri The URI which was redirected back to you. Must contain a `code` query parameter that contains the
+     * authorization code.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun authenticateWithCodeGrant(
+        uri: String,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest
+
+    /**
      * Log out of the currently authenticated account.
      *
      * @param callback Callback to be notified of the result of the request.
@@ -200,17 +228,21 @@ interface Authenticator {
         @JvmStatic
         @JvmName("create")
         operator fun invoke(vimeoApiConfiguration: VimeoApiConfiguration): Authenticator {
-            val authService = RetrofitSetupModule.retrofit(vimeoApiConfiguration).create(AuthService::class.java)
+            val retrofit = RetrofitSetupModule.retrofit(vimeoApiConfiguration)
+            val authService = retrofit.create(AuthService::class.java)
             val basicAuthHeader: String = Credentials.basic(
                 vimeoApiConfiguration.clientId,
                 vimeoApiConfiguration.clientSecret
             )
-
+            val synchronousExecutor = Executor { it.run() }
             return AuthenticatorImpl(
                 authService,
                 basicAuthHeader,
+                vimeoApiConfiguration.clientId,
+                vimeoApiConfiguration.codeGrantRedirectUri,
                 vimeoApiConfiguration.scope,
-                CachingAccountStore(vimeoApiConfiguration.accountStore)
+                CachingAccountStore(vimeoApiConfiguration.accountStore),
+                LocalVimeoCallAdapter(retrofit.callbackExecutor() ?: synchronousExecutor)
             )
         }
     }
