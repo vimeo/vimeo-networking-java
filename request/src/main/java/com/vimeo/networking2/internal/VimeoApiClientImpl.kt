@@ -395,6 +395,18 @@ internal class VimeoApiClientImpl(
             .enqueue(callback)
     }
 
+    override fun fetchVideoStatus(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<VideoStatus>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getVideoStatus(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
     override fun fetchEmpty(
         uri: String,
         cacheControl: CacheControl?,
@@ -964,7 +976,7 @@ internal class VimeoApiClientImpl(
     private fun String?.notEmpty(): String? = this?.takeIf { it.isNotBlank() }
 
     private fun <T : StringValue> T.validate(): T =
-        this.takeIf { it.value?.isNotEmpty() == false } ?: error(INVALID_ENUM_MESSAGE)
+        this.takeIf { it.value?.isNotEmpty() == true } ?: error(INVALID_ENUM_MESSAGE)
 
     private fun String?.asPasswordParameter(): Map<String, String> =
         this?.let { mapOf(ApiConstants.Parameters.PARAMETER_PASSWORD to it) } ?: emptyMap()

@@ -41,6 +41,7 @@ import okhttp3.CacheControl
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -57,7 +58,7 @@ import retrofit2.http.Url
  *
  * @see VimeoApiClient
  */
-@Suppress("unused", "UndocumentedPublicFunction", "ComplexInterface")
+@Suppress("UndocumentedPublicFunction", "ComplexInterface")
 internal interface VimeoService {
 
     @GET("me/connected_apps")
@@ -75,6 +76,7 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ConnectedApp>
 
+    @FormUrlEncoded
     @PUT("me/connected_apps/{type}")
     fun createConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
@@ -154,6 +156,7 @@ internal interface VimeoService {
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
     ): VimeoCall<Video>
 
+    @FormUrlEncoded
     @PATCH
     fun editUser(
         @Header(AUTHORIZATION) authorization: String,
@@ -163,6 +166,7 @@ internal interface VimeoService {
         @Field(PARAMETER_USERS_BIO) bio: String?
     ): VimeoCall<User>
 
+    @FormUrlEncoded
     @PATCH
     fun editPictureCollection(
         @Header(AUTHORIZATION) authorization: String,
@@ -176,6 +180,7 @@ internal interface VimeoService {
         @Body subscriptionMap: Map<NotificationType, Boolean>
     ): VimeoCall<NotificationSubscriptions>
 
+    @FormUrlEncoded
     @POST
     fun createComment(
         @Header(AUTHORIZATION) authorization: String,
