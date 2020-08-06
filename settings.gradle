@@ -10,7 +10,5 @@ include ':vimeo-networking',
         ':model-generator:integrations:models-output'
 
 if (!System.env.JITPACK) {
-    include ':example-java-android',
-            ':example-kotlin-android',
-            ':example-vimeo-networking2-android'
+    include ':example-vimeo-networking2-android'
 }
