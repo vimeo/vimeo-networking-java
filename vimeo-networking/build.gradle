@@ -2,12 +2,12 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 compileJava {
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 buildscript {
     repositories {
@@ -33,6 +33,7 @@ tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
     api project(path: ':api-core', configuration: 'default')
+    api project(path: ':request', configuration: 'default')
     compileOnly project(path: ':models', configuration: 'default')
 
     api "com.squareup.retrofit2:retrofit:$retrofitVersion"

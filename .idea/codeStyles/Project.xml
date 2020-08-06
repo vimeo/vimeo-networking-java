@@ -130,6 +130,9 @@
     </codeStyleSettings>
     <codeStyleSettings language="kotlin">
       <option name="RIGHT_MARGIN" value="120" />
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="4" />
+      </indentOptions>
     </codeStyleSettings>
   </code_scheme>
 </component>

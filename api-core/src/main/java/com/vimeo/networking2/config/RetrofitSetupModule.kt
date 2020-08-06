@@ -1,17 +1,43 @@
+/*
+ * Copyright (c) 2020 Vimeo (https://vimeo.com)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.vimeo.networking2.config
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.vimeo.networking2.ApiConstants
-import com.vimeo.networking2.ApiConstants.API_VERSION
-import com.vimeo.networking2.ApiConstants.SDK_VERSION
 import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
+import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
+import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
+import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
+import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
+import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
+import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
+import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.*
+import java.util.Date
 import java.util.concurrent.TimeUnit
 
 /**
@@ -19,107 +45,68 @@ import java.util.concurrent.TimeUnit
  */
 object RetrofitSetupModule {
 
-    private const val AUTHORIZATION_HEADER = "Authorization"
-    private const val USER_AGENT_HEADER = "User-Agent"
-    private const val USER_AGENT_HEADER_VALUE = "Kotlin VimeoNetworking/$SDK_VERSION"
-    private const val HEADER_ACCEPT = "Accept"
-    private const val HEADER_ACCEPT_VALUE = "application/vnd.vimeo.*+json; version=$API_VERSION"
-
     /**
      * Create Moshi object for serialization and deserialization.
      */
     private val moshi = Moshi.Builder()
         .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        .add(StringValueJsonAdapterFactory())
         .build()
-
-    /**
-     * Header for specifying which API version to use.
-     */
-    private val acceptHeaderInterceptor =
-        Interceptor { chain ->
-            chain.proceed(
-                chain
-                    .request()
-                    .newBuilder()
-                    .header(HEADER_ACCEPT, HEADER_ACCEPT_VALUE)
-                    .build()
-            )
-        }
 
     /**
      * Creates the object graph for the setup dependencies. After the graph is created, the method
      * return an instance of [Retrofit] which is root of the graph.
      */
-    fun retrofit(serverConfig: ServerConfig, userAgent: String? = null, accessToken: String? = null): Retrofit {
-        val interceptors = mutableListOf<Interceptor>()
-        if (accessToken?.isNotBlank() == true) {
-            interceptors.add(accessTokenInterceptor(accessToken))
-        }
-        interceptors.add(userAgentInterceptor(userAgent))
-        interceptors.add(acceptHeaderInterceptor)
+    @JvmStatic
+    fun retrofit(vimeoApiConfiguration: VimeoApiConfiguration): Retrofit {
+        val interceptors = mutableListOf(
+            UserAgentHeaderInterceptor(vimeoApiConfiguration.compositeUserAgent),
+            AcceptHeaderInterceptor(),
+            LanguageHeaderInterceptor(vimeoApiConfiguration.locales)
+        )
+        interceptors.addAll(vimeoApiConfiguration.applicationInterceptors)
 
-        if (serverConfig.customInterceptors?.isNotEmpty() == true) {
-            interceptors.addAll(serverConfig.customInterceptors)
-        }
+        val networkInterceptors = listOf(CacheControlHeaderInterceptor(vimeoApiConfiguration.cacheMaxAgeSeconds))
 
-        val okHttpClient = okHttpClient(serverConfig, interceptors)
-        return createRetrofit(serverConfig, okHttpClient)
+        val okHttpClient = okHttpClient(vimeoApiConfiguration, interceptors, networkInterceptors)
+        return createRetrofit(vimeoApiConfiguration, okHttpClient)
     }
 
     /**
-     * Interceptor for adding an access token.
+     * Clear the request cache associated with the [VimeoApiConfiguration] of all cache entries.
      */
-    private fun accessTokenInterceptor(accessToken: String) =
-        Interceptor { chain ->
-            val request = chain.request()
-            val builder = request.newBuilder()
-
-            if (request.header(AUTHORIZATION_HEADER).isNullOrBlank()) {
-                builder.addHeader(AUTHORIZATION_HEADER, "Bearer $accessToken")
-            }
-            chain.proceed(builder.build())
-        }
-
-    /**
-     * Create interceptor for adding a user agent.
-     */
-    private fun userAgentInterceptor(userAgent: String?) =
-        Interceptor { chain ->
-            val request = chain.request()
-            val builder = request.newBuilder()
-
-            if (request.header(USER_AGENT_HEADER).isNullOrBlank()) {
-
-                val customUserAgent = userAgent?.let {
-                    "$it $USER_AGENT_HEADER_VALUE"
-                } ?: USER_AGENT_HEADER_VALUE
-
-                builder.addHeader(USER_AGENT_HEADER, customUserAgent)
-            }
-            chain.proceed(builder.build())
-        }
+    @JvmStatic
+    fun clearRequestCache(vimeoApiConfiguration: VimeoApiConfiguration) {
+        vimeoApiConfiguration.cache?.evictAll()
+    }
 
     /**
      * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
      */
-    private fun okHttpClient(serverConfig: ServerConfig,
-                             customInterceptors: List<Interceptor>?): OkHttpClient =
-        OkHttpClient.Builder().apply {
-            serverConfig.networkInterceptors?.forEach { addNetworkInterceptor(it) }
-            serverConfig.customInterceptors?.forEach { addInterceptor(it) }
+    private fun okHttpClient(
+        vimeoApiConfiguration: VimeoApiConfiguration,
+        applicationInterceptors: List<Interceptor>,
+        networkInterceptors: List<Interceptor>
+    ): OkHttpClient = OkHttpClient.Builder().apply {
+        vimeoApiConfiguration.networkInterceptors.forEach { addNetworkInterceptor(it) }
+        vimeoApiConfiguration.applicationInterceptors.forEach { addInterceptor(it) }
 
-            connectTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
-            readTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
-            writeTimeout(serverConfig.timeoutSeconds, TimeUnit.SECONDS)
-            retryOnConnectionFailure(false)
+        connectTimeout(vimeoApiConfiguration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        readTimeout(vimeoApiConfiguration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        writeTimeout(vimeoApiConfiguration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        retryOnConnectionFailure(false)
 
-            if (!customInterceptors.isNullOrEmpty()) {
-                interceptors().addAll(customInterceptors)
-            }
-            if (serverConfig.certPinningEnabled) {
-                certificatePinner(createCertificatePinner())
-            }
-        }.build()
+        if (vimeoApiConfiguration.cache != null) {
+            cache(vimeoApiConfiguration.cache)
+        }
+
+        interceptors().addAll(applicationInterceptors)
+        networkInterceptors().addAll(networkInterceptors)
+
+        if (vimeoApiConfiguration.isCertPinningEnabled) {
+            certificatePinner(createCertificatePinner())
+        }
+    }.build()
 
     /**
      * Create certificate pinner to configure OkHttpClient.
@@ -131,17 +118,22 @@ object RetrofitSetupModule {
     /**
      * Create [Retrofit] with OkHttpClient and Moshi.
      */
-    private fun createRetrofit(serverConfig: ServerConfig, okHttpClient: OkHttpClient): Retrofit =
+    private fun createRetrofit(vimeoApiConfiguration: VimeoApiConfiguration, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(serverConfig.baseUrl)
+            .baseUrl(vimeoApiConfiguration.baseUrl)
             .client(okHttpClient)
+            .addConverterFactory(VimeoParametersConverterFactory())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory())
+            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory(VimeoLogger(
+                vimeoApiConfiguration.logDelegate,
+                vimeoApiConfiguration.logLevel
+            )))
             .build()
 
     /**
      * Creates a cache for storing Retrofit services.
      */
+    @JvmStatic
     fun retrofitCache(retrofit: Retrofit) = RetrofitServicesCache(retrofit)
 
 }

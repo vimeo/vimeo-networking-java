@@ -1,8 +1,9 @@
 includeBuild('model-generator/plugin')
 include ':vimeo-networking',
-        ':models',
         ':auth',
         ':api-core',
+        ':request',
+        ':models',
         ':models-parcelable',
         ':models-serializable',
         ':model-generator:integrations:models-input',

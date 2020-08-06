@@ -1,3 +1,5 @@
+@file:JvmName("VimeoAccountUtils")
+
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
@@ -6,17 +8,13 @@ import com.squareup.moshi.JsonClass
 import java.util.Date
 
 /**
- * This class represents an authenticated account with Vimeo. It can be through client credentials
- * or a truly authenticated [User].
+ * This class represents an authenticated user of Vimeo, either logged in or logged out.
  */
 @JsonClass(generateAdapter = true)
 data class VimeoAccount(
 
-    /**
-     * The access token string.
-     */
     @Json(name = "access_token")
-    val accessToken: String? = null,
+    override val accessToken: String,
 
     /**
      * The date and time that the token expires.
@@ -37,7 +35,7 @@ data class VimeoAccount(
     val scope: String? = null,
 
     /**
-     * The authenticated user.
+     * The authenticated and logged in user.
      */
     @Json(name = "user")
     val user: User? = null,
@@ -48,4 +46,10 @@ data class VimeoAccount(
     @Json(name = "token_type")
     val tokenType: String? = null
 
-)
+) : AccessTokenProvider
+
+/**
+ * True if the account represents a logged in user, false if it represents a logged out user.
+ */
+val VimeoAccount.isLoggedIn: Boolean
+    get() = user != null
