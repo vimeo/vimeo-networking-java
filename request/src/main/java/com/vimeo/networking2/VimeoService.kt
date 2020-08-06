@@ -58,7 +58,7 @@ import retrofit2.http.Url
  *
  * @see VimeoApiClient
  */
-@Suppress("unused", "UndocumentedPublicFunction", "ComplexInterface")
+@Suppress("UndocumentedPublicFunction", "ComplexInterface")
 internal interface VimeoService {
 
     @GET("me/connected_apps")
