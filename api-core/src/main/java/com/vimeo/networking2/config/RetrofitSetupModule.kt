@@ -124,17 +124,16 @@ object RetrofitSetupModule {
         vimeoApiConfiguration: VimeoApiConfiguration,
         okHttpClient: OkHttpClient,
         moshi: Moshi
-    ): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(vimeoApiConfiguration.baseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(VimeoParametersConverterFactory())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory(VimeoLogger(
-                vimeoApiConfiguration.logDelegate,
-                vimeoApiConfiguration.logLevel
-            )))
-            .build()
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(vimeoApiConfiguration.baseUrl)
+        .client(okHttpClient)
+        .addConverterFactory(VimeoParametersConverterFactory())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(ErrorHandlingCallAdapterFactory(VimeoLogger(
+            vimeoApiConfiguration.logDelegate,
+            vimeoApiConfiguration.logLevel
+        )))
+        .build()
 
     /**
      * Creates a cache for storing Retrofit services.
