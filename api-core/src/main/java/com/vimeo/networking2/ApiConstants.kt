@@ -107,5 +107,32 @@ object ApiConstants {
         const val FILTER_TYPE = "filter_type"
         const val FILTER_FEATURED_COUNT = "featured_clip_count"
         const val PARAMETER_GET_FACETS = "facets"
+
+        // Sorting values
+        const val SORT_DEFAULT = "default"
+        const val SORT_RELEVANCE = "relevant"
+        const val SORT_POPULAR = "popularity"
+        const val SORT_DATE = "date"
+        const val SORT_PURCHASE_TIME = "purchase_time"
+        const val SORT_FOLLOWERS = "followers"
+        const val SORT_ALPHABETICAL = "alphabetical"
+        const val SORT_MANUAL = "manual"
+        const val SORT_DURATION = "duration"
+        const val SORT_LAST_USER_ACTION_EVENT_DATE = "last_user_action_event_date"
+        const val SORT_PLAYS = "plays"
+        const val SORT_LIKES = "likes"
+        const val SORT_MODIFIED_TIME = "modified_time"
+        const val SORT_COMMENTS = "comments"
+
+        // Filter values
+        const val FILTER_RELATED = "related"
+        const val FILTER_UPLOAD = "upload_date"
+        const val FILTER_VIEWABLE = "viewable"
+        const val FILTER_PLAYABLE = "playable"
+        const val FILTER_TRENDING = "trending"
+        const val FILTER_TVOD_RENTALS = "rented"
+        const val FILTER_TVOD_SUBSCRIPTIONS = "subscription"
+        const val FILTER_TVOD_PURCHASES = "purchased"
+        const val FILTER_NOTIFICATION_TYPES = "notification_types"
     }
 }
