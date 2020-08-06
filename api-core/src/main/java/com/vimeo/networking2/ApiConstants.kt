@@ -36,7 +36,7 @@ object ApiConstants {
 
     const val SDK_VERSION = "2.0.0"
 
-    const val NOT_FOUND = -1
+    const val NONE = -1
 
     const val MAX_PER_PAGE = 100
 
