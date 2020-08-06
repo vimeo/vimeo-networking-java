@@ -18,19 +18,22 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.internal.params
 
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import com.vimeo.networking2.enums.StringValue
+import java.lang.reflect.Type
 
 /**
- * The type of token grants that can be performed.
+ * A [JsonAdapter.Factory] that knows when how to serialize a sub-type of [StringValue].
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+class StringValueJsonAdapterFactory : JsonAdapter.Factory {
+    override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? =
+        when {
+            type is Class<*> && StringValue::class.java.isAssignableFrom(type) -> StringValueJsonAdapter()
+            else -> null
+        }
 }

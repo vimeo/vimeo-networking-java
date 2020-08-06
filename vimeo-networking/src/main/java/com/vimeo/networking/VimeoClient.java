@@ -483,26 +483,26 @@ public class VimeoClient {
                         Vimeo.FIELD_NAME,
                         ErrorCodeType.INVALID_INPUT_NO_NAME,
                         "An empty or null name was provided."
-                ));
+                                                                            ));
             }
             if (email == null || email.isEmpty()) {
                 invalidParameters.add(ApiErrorFactory.createInvalidParameter(
                         Vimeo.FIELD_EMAIL,
                         ErrorCodeType.INVALID_INPUT_NO_EMAIL,
                         "An empty or null email was provided."
-                ));
+                                                                            ));
             }
             if (password == null || password.isEmpty()) {
                 invalidParameters.add(ApiErrorFactory.createInvalidParameter(
                         Vimeo.FIELD_PASSWORD,
                         ErrorCodeType.INVALID_INPUT_NO_PASSWORD,
                         "An empty or null password was provided."
-                ));
+                                                                            ));
             }
             final VimeoResponse.Error error = VimeoNetworkUtil.createLocalApiError(
                     "Name, email, and password must be set.",
                     invalidParameters.toArray(new InvalidParameter[0])
-            );
+                                                                                  );
             callback.failure(error);
 
             return null;
@@ -541,7 +541,7 @@ public class VimeoClient {
                             Vimeo.FIELD_TOKEN,
                             ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN,
                             "An empty or null Facebook access token was provided."
-                    )));
+                                                          )));
             return null;
         }
 
@@ -576,7 +576,7 @@ public class VimeoClient {
                             Vimeo.FIELD_TOKEN,
                             ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN,
                             "An empty or null Google access token was provided."
-                    )));
+                                                          )));
             return null;
         }
 
@@ -603,19 +603,19 @@ public class VimeoClient {
                         Vimeo.FIELD_USERNAME,
                         ErrorCodeType.INVALID_INPUT_NO_EMAIL,
                         "An empty or null email was provided."
-                ));
+                                                                            ));
             }
             if (password == null || password.isEmpty()) {
                 invalidParameters.add(ApiErrorFactory.createInvalidParameter(
                         Vimeo.FIELD_PASSWORD,
                         ErrorCodeType.INVALID_INPUT_NO_PASSWORD,
                         "An empty or null password was provided."
-                ));
+                                                                            ));
             }
             final VimeoResponse.Error error = VimeoNetworkUtil.createLocalApiError(
                     "Email and password must be set.",
                     invalidParameters.toArray(new InvalidParameter[0])
-            );
+                                                                                  );
             callback.failure(error);
 
             return null;
@@ -677,8 +677,8 @@ public class VimeoClient {
                             Vimeo.FIELD_TOKEN,
                             ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN,
                             "An empty or null Facebook access token was provided."
-                    )
-            );
+                                                          )
+                                                                                  );
             callback.failure(error);
             return null;
         }
@@ -710,8 +710,8 @@ public class VimeoClient {
                             Vimeo.FIELD_TOKEN,
                             ErrorCodeType.UNABLE_TO_LOGIN_NO_TOKEN,
                             "An empty or null Google access token was provided."
-                    )
-            );
+                                                          )
+                                                                                  );
             callback.failure(error);
             return null;
         }

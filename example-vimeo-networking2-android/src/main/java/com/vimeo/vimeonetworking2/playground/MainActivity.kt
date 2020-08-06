@@ -3,11 +3,8 @@ package com.vimeo.vimeonetworking2.playground
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.vimeo.moshiexampleandroid.R
-import com.vimeo.networking2.Authenticator
-import com.vimeo.networking2.BasicAccessToken
-import com.vimeo.networking2.VimeoCallback
-import com.vimeo.networking2.VimeoResponse
-import com.vimeo.networking2.config.ServerConfig
+import com.vimeo.networking2.*
+import com.vimeo.networking2.config.VimeoApiConfiguration
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -20,19 +17,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         login.setOnClickListener {
+            val authenticator = Authenticator(
+                VimeoApiConfiguration.Builder(
+                    CLIENT_ID,
+                    CLIENT_SECRET,
+                    listOf(ScopeType.PUBLIC)
+                ).build()
+            )
 
-            val serverConfig = ServerConfig(CLIENT_ID, CLIENT_SECRET)
-            val authenticator = Authenticator(serverConfig)
-
-            authenticator.clientCredentials(object : VimeoCallback<BasicAccessToken> {
-                override fun onSuccess(response: VimeoResponse.Success<BasicAccessToken>) {
-
+            authenticator.clientCredentials(vimeoCallback(
+                onSuccess = {
+                    // Use the logged out token
+                },
+                onError = {
+                    // Handle the error
                 }
-
-                override fun onError(error: VimeoResponse.Error) {
-
-                }
-            })
+            ))
         }
     }
 

@@ -19,25 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.internal
+package com.vimeo.networking2.account
 
-import com.vimeo.networking2.GrantType
-import com.vimeo.networking2.Scopes
-import retrofit2.Converter
-import retrofit2.Retrofit
-import java.lang.reflect.Type
+import com.vimeo.networking2.VimeoAccount
 
 /**
- * A [Converter.Factory] used for auth parameter conversion.
+ * Interface responsible for persistence of [VimeoAccount] instances.
  */
-class VimeoParametersConverterFactory : Converter.Factory() {
-    override fun stringConverter(
-        type: Type,
-        annotations: Array<Annotation>,
-        retrofit: Retrofit
-    ): Converter<*, String>? = when (type) {
-        GrantType::class.java -> GrantTypeConverter()
-        Scopes::class.java -> ScopesConverter()
-        else -> super.stringConverter(type, annotations, retrofit)
-    }
+interface AccountStore {
+    /**
+     * Load the account that has been stored previously. Returns `null` if no account was saved.
+     */
+    fun loadAccount(): VimeoAccount?
+
+    /**
+     * Save the provided account, overwriting any previously stored account.
+     *
+     * @param vimeoAccount The account to save.
+     */
+    fun storeAccount(vimeoAccount: VimeoAccount)
+
+    /**
+     * Delete the stored account.
+     */
+    fun removeAccount()
 }

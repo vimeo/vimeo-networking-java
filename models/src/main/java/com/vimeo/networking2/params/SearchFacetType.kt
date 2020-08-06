@@ -21,22 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.interceptors
+package com.vimeo.networking2.params
 
-import com.vimeo.networking2.ApiConstants
-import okhttp3.Interceptor
-import okhttp3.Response
+import com.vimeo.networking2.enums.StringValue
 
 /**
- * Add a custom `Accept` header to all requests.
+ * The search options for the facets requested in the result list.
  */
-class AcceptHeaderInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
-        chain.request().newBuilder().header(HEADER_ACCEPT, HEADER_ACCEPT_VALUE).build())
-
-    companion object {
-        private const val HEADER_ACCEPT = "Accept"
-        private const val HEADER_ACCEPT_VALUE: String =
-                "application/vnd.vimeo.*+json; version=${ApiConstants.API_VERSION}"
-    }
+enum class SearchFacetType(override val value: String?) : StringValue {
+    TYPE("type"),
+    CATEGORY("category"),
+    DURATION("duration"),
+    LICENSE("license"),
+    UPLOADED("uploaded"),
+    USER_TYPE("user_type")
 }

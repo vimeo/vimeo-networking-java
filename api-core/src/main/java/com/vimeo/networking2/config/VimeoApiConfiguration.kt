@@ -19,10 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.config
 
+import com.vimeo.networking2.ApiConstants
+import com.vimeo.networking2.ScopeType
+import com.vimeo.networking2.Scopes
+import com.vimeo.networking2.account.AccountStore
+import com.vimeo.networking2.account.InMemoryAccountStore
 import com.vimeo.networking2.logging.LogDelegate
 import com.vimeo.networking2.logging.DefaultLogDelegate
+import okhttp3.Cache
 import okhttp3.Interceptor
 import java.io.File
 import java.util.Locale
@@ -40,7 +46,7 @@ import java.util.Locale
  * @param accountStore The store used to remember authenticated accounts.
  * @param networkInterceptors The interceptors that should be attached to network requests. See
  * [https://square.github.io/okhttp/interceptors/].
- * @param interceptors The interceptors that should be attached to all requests. See
+ * @param applicationInterceptors The interceptors that should be attached to all requests. See
  * [https://square.github.io/okhttp/interceptors/].
  * @param userAgent The supplemental user agent string which will be added to the internal user agent, identifying the
  * client.
@@ -53,7 +59,7 @@ import java.util.Locale
  * @param cacheMaxSizeBytes The maximum size of the cache, if one was provided.
  * @param cacheMaxAgeSeconds The maximum age of items in the cache, if one was provided.
  */
-data class Configuration(
+data class VimeoApiConfiguration(
     val baseUrl: String,
 
     val clientId: String,
@@ -66,11 +72,11 @@ data class Configuration(
     val accountStore: AccountStore,
 
     val networkInterceptors: List<Interceptor>,
-    val interceptors: List<Interceptor>,
+    val applicationInterceptors: List<Interceptor>,
 
     val userAgent: String,
 
-    val requestTimeoutSeconds: Int,
+    val requestTimeoutSeconds: Long,
 
     val isCertPinningEnabled: Boolean,
 
@@ -83,14 +89,19 @@ data class Configuration(
 ) {
 
     /**
-     * The builder for the [Configuration].
+     * The OkHttp cache that should be used, if any.
+     */
+    internal val cache: Cache? = cacheDirectory?.let { Cache(it, cacheMaxSizeBytes) }
+
+    /**
+     * The builder for the [VimeoApiConfiguration].
      *
      * @param clientId The Vimeo API client ID, required to construct an instance.
      * @param clientSecret The Vimeo API client secret, required to construct an instance.
-     * @param scope The permission scopes requested by the client, required to construct an instance.
+     * @param scopes The permission scopes requested by the client, required to construct an instance.
      */
-    class Builder(private val clientId: String, private val clientSecret: String, private val scope: Scopes) {
-        private var baseUrl: String = DEFAULT_BASE_URL
+    class Builder(private val clientId: String, private val clientSecret: String, private val scopes: List<ScopeType>) {
+        private var baseUrl: String = ApiConstants.BASE_URL
 
         private var codeGrantRedirectUrl: String = "vimeo$clientId://auth"
 
@@ -99,11 +110,11 @@ data class Configuration(
         private var accountStore: AccountStore = InMemoryAccountStore()
 
         private var networkInterceptors: List<Interceptor> = emptyList()
-        private var interceptors: List<Interceptor> = emptyList()
+        private var applicationInterceptors: List<Interceptor> = emptyList()
 
         private var userAgent: String = DEFAULT_USER_AGENT
 
-        private var requestTimeoutSeconds: Int = DEFAULT_TIMEOUT
+        private var requestTimeoutSeconds: Long = DEFAULT_TIMEOUT
 
         private var isCertPinningEnabled: Boolean = true
 
@@ -115,16 +126,16 @@ data class Configuration(
         private var cacheMaxAgeSeconds: Int = DEFAULT_CACHE_MAX_AGE
 
         /**
-         * Specify a base URL. Defaults to [DEFAULT_BASE_URL].
+         * Specify a base URL. Defaults to [ApiConstants.BASE_URL].
          *
-         * @see Configuration.baseUrl
+         * @see VimeoApiConfiguration.baseUrl
          */
         fun withBaseUrl(baseUrl: String) = apply { this.baseUrl = baseUrl }
 
         /**
          * Specify a code grant redirect. Defaults to `vimeo{clientId}://auth`.
          *
-         * @see Configuration.codeGrantRedirectUri
+         * @see VimeoApiConfiguration.codeGrantRedirectUri
          */
         fun withCodeGrantRedirectUrl(codeGrantRedirectUrl: String) = apply {
             this.codeGrantRedirectUrl = codeGrantRedirectUrl
@@ -133,21 +144,21 @@ data class Configuration(
         /**
          * Specify a set of locales. Defaults to a list containing [Locale.US].
          *
-         * @see Configuration.locales
+         * @see VimeoApiConfiguration.locales
          */
         fun withLocales(locales: List<Locale>) = apply { this.locales = locales }
 
         /**
          * Specify a store. Defaults to [InMemoryAccountStore].
          *
-         * @see Configuration.locales
+         * @see VimeoApiConfiguration.locales
          */
         fun withAccountStore(accountStore: AccountStore) = apply { this.accountStore = accountStore }
 
         /**
          * Specify a set of network request interceptors. Defaults to none.
          *
-         * @see Configuration.networkInterceptors
+         * @see VimeoApiConfiguration.networkInterceptors
          */
         fun withNetworkInterceptors(networkInterceptors: List<Interceptor>) = apply {
             this.networkInterceptors = networkInterceptors
@@ -156,81 +167,83 @@ data class Configuration(
         /**
          * Specify a set of application interceptors. Defaults to none.
          *
-         * @see Configuration.interceptors
+         * @see VimeoApiConfiguration.applicationInterceptors
          */
-        fun withInterceptors(interceptors: List<Interceptor>) = apply { this.interceptors = interceptors }
+        fun withApplicationInterceptors(
+            applicationInterceptors: List<Interceptor>
+        ) = apply { this.applicationInterceptors = applicationInterceptors }
 
         /**
          * Specify a supplemental user agent. Defaults to [DEFAULT_USER_AGENT].
          *
-         * @see Configuration.userAgent
+         * @see VimeoApiConfiguration.userAgent
          */
         fun withUserAgent(userAgent: String) = apply { this.userAgent = userAgent }
 
         /**
          * Specify a request time out. Defaults to [DEFAULT_TIMEOUT].
          *
-         * @see Configuration.requestTimeoutSeconds
+         * @see VimeoApiConfiguration.requestTimeoutSeconds
          */
-        fun withRequestTimeout(requestTimeoutSeconds: Int) = apply {
+        fun withRequestTimeout(requestTimeoutSeconds: Long) = apply {
             this.requestTimeoutSeconds = requestTimeoutSeconds
         }
 
         /**
          * Enable or disable certificate pinning. Defaults to true.
          *
-         * @see Configuration.isCertPinningEnabled
+         * @see VimeoApiConfiguration.isCertPinningEnabled
          */
         fun withCertPinning(certPinningEnabled: Boolean) = apply { this.isCertPinningEnabled = certPinningEnabled }
 
         /**
          * Specify a log delegate, or none at all. Defaults to [DefaultLogDelegate] which logs to the system output.
          *
-         * @see Configuration.logDelegate
+         * @see VimeoApiConfiguration.logDelegate
          */
         fun withLogDelegate(logDelegate: LogDelegate?) = apply { this.logDelegate = logDelegate }
 
         /**
          * Specify a log level. Defaults to [LogDelegate.Level.NONE], which never logs.
          *
-         * @see Configuration.logLevel
+         * @see VimeoApiConfiguration.logLevel
          */
         fun withLogLevel(logLevel: LogDelegate.Level) = apply { this.logLevel = logLevel }
 
         /**
          * Specify a cache directory. Defaults to no cache.
          *
-         * @see Configuration.cacheDirectory
+         * @see VimeoApiConfiguration.cacheDirectory
          */
         fun withCacheDirectory(cacheDirectory: File) = apply { this.cacheDirectory = cacheDirectory }
 
         /**
          * Specify a maximum cache size. Defaults to [DEFAULT_CACHE_SIZE].
          *
-         * @see Configuration.cacheMaxSizeBytes
+         * @see VimeoApiConfiguration.cacheMaxSizeBytes
          */
         fun withCacheMaxSizeBytes(cacheMaxSizeBytes: Long) = apply { this.cacheMaxSizeBytes = cacheMaxSizeBytes }
 
         /**
          * Specify a maximum cache age. Defaults to [DEFAULT_CACHE_MAX_AGE].
          *
-         * @see Configuration.cacheMaxAgeSeconds
+         * @see VimeoApiConfiguration.cacheMaxAgeSeconds
          */
         fun withCacheMaxAgeSeconds(cacheMaxAgeSeconds: Int) = apply { this.cacheMaxAgeSeconds = cacheMaxAgeSeconds }
 
         /**
          * Build the configuration instance using the chosen modifications and unspecified default values.
          */
-        fun build(): Configuration = Configuration(
+        fun build(): VimeoApiConfiguration = VimeoApiConfiguration(
             baseUrl = baseUrl,
             clientId = clientId,
             clientSecret = clientSecret,
-            scope = scope,
+            scope = Scopes(scopes),
             codeGrantRedirectUri = codeGrantRedirectUrl,
             locales = locales,
             accountStore = accountStore,
             networkInterceptors = networkInterceptors,
-            interceptors = interceptors,
+            applicationInterceptors = applicationInterceptors,
             userAgent = userAgent,
             requestTimeoutSeconds = requestTimeoutSeconds,
             isCertPinningEnabled = isCertPinningEnabled,
@@ -256,17 +269,13 @@ data class Configuration(
         /**
          * Default response timeout, 60 seconds.
          */
-        const val DEFAULT_TIMEOUT = 60
+        const val DEFAULT_TIMEOUT = 60L
 
         /**
          * An unspecified user agent.
          */
         const val DEFAULT_USER_AGENT = "UNSPECIFIED"
 
-        /**
-         * The default base URL for the Vimeo API.
-         */
-        const val DEFAULT_BASE_URL = "https://api.vimeo.com/"
     }
 
 }

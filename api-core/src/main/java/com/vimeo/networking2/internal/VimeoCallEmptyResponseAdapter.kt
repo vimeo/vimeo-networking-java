@@ -31,34 +31,29 @@ import retrofit2.Response
 import java.util.concurrent.Executor
 
 /**
- * A custom Retrofit call adapter. This was created in order to parse an error response from the API in a background
- * thread and return the result in the calling thread.
+ * A custom Retrofit call adapter for requests with an expected empty response. This was created in order to parse an
+ * error response from the API in a background thread and return the result in the thread determined by the
+ * [callbackExecutor].
  *
- * @param call Retrofit call object.
+ * @param call Retrofit call object with empty response.
  * @param callbackExecutor Callback executor set by Retrofit to return the result. Retrofit itself sets it to the main
  * thread on Android. If the executor is null, then the callback will be executed on the thread provided by OkHttp's
  * dispatcher.
  * @param responseBodyConverter Converter to convert the error response to [ApiError].
  * @param vimeoLogger The logger used to log information about error handling.
  */
-internal class VimeoCallAdapter<T : Any>(
-    private val call: Call<T>,
+internal class VimeoCallEmptyResponseAdapter(
+    private val call: Call<Unit>,
     private val callbackExecutor: Executor,
     private val responseBodyConverter: Converter<ResponseBody, ApiError>,
     private val vimeoLogger: VimeoLogger
-) : VimeoCall<T> {
-
-    /**
-     * Determine if the response has a body.
-     */
-    private fun Response<T>.hasBody() = isSuccessful && body() != null
-
-    override fun enqueue(callback: VimeoCallback<T>): VimeoRequest {
-        call.enqueue(object : Callback<T> {
-            override fun onResponse(call: Call<T>, response: Response<T>) {
-                if (response.hasBody()) {
+) : VimeoCall<Unit> {
+    override fun enqueue(callback: VimeoCallback<Unit>): VimeoRequest {
+        call.enqueue(object : Callback<Unit> {
+            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                if (response.isSuccessful) {
                     callbackExecutor.execute {
-                        callback.onSuccess(VimeoResponse.Success(requireNotNull(response.body()), response.code()))
+                        callback.onSuccess(VimeoResponse.Success(Unit, response.code()))
                     }
                 } else {
                     val vimeoResponseError = response.parseErrorResponse(responseBodyConverter, vimeoLogger)
@@ -68,14 +63,14 @@ internal class VimeoCallAdapter<T : Any>(
                 }
             }
 
-            override fun onFailure(call: Call<T>, t: Throwable) {
+            override fun onFailure(call: Call<Unit>, t: Throwable) {
                 callbackExecutor.execute { callback.onError(VimeoResponse.Error.Exception(t)) }
             }
         })
         return CancellableVimeoRequest(call)
     }
 
-    override fun enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest {
+    override fun enqueueError(apiError: ApiError, callback: VimeoCallback<Unit>): VimeoRequest {
         callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, VimeoResponse.HTTP_NONE)) }
         return NoOpVimeoRequest
     }
@@ -84,5 +79,10 @@ internal class VimeoCallAdapter<T : Any>(
         call.cancel()
     }
 
-    override fun clone() = VimeoCallAdapter(call.clone(), callbackExecutor, responseBodyConverter, vimeoLogger)
+    override fun clone() = VimeoCallEmptyResponseAdapter(
+        call.clone(),
+        callbackExecutor,
+        responseBodyConverter,
+        vimeoLogger
+    )
 }

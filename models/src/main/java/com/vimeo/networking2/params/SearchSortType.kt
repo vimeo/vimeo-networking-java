@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2020 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2020 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,18 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.params
 
 import com.vimeo.networking2.enums.StringValue
 
 /**
- * The type of token grants that can be performed.
+ * The search options for the type of sorting that should be applied to the results. Used in conjunction with the
+ * [SearchSortDirectionType].
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+enum class SearchSortType(override val value: String?) : StringValue {
+    RELEVANCE("relevance"),
+    LATEST("latest"),
+    POPULARITY("popularity"),
+    DURATION("duration"),
+    JOIN_DATE("join_date"),
+    ALPHABETICAL("alphabetical")
 }

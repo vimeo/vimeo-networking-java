@@ -19,18 +19,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.account
 
-import com.vimeo.networking2.enums.StringValue
+import com.vimeo.networking2.VimeoAccount
 
 /**
- * The type of token grants that can be performed.
+ * An [AccountStore] that caches the stored account for fast retrieval and delegates actual storage to another
+ * [AccountStore].
+ *
+ * @param actualAccountStore The store which will be used to persist the account outside the lifecycle of this
+ * in-memory cache.
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+class CachingAccountStore(private val actualAccountStore: AccountStore) : AccountStore {
+
+    private var vimeoAccount: VimeoAccount? = null
+
+    override fun loadAccount(): VimeoAccount? {
+        return vimeoAccount ?: actualAccountStore.loadAccount().also { vimeoAccount = it }
+    }
+
+    override fun storeAccount(vimeoAccount: VimeoAccount) {
+        this.vimeoAccount = vimeoAccount
+        actualAccountStore.storeAccount(vimeoAccount)
+    }
+
+    override fun removeAccount() {
+        vimeoAccount = null
+        actualAccountStore.removeAccount()
+    }
 }

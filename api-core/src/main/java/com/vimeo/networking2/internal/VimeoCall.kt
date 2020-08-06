@@ -54,5 +54,4 @@ interface VimeoCall<T> {
      * Clone the API call.
      */
     fun clone(): VimeoCall<T>
-
 }

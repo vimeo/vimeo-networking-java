@@ -19,18 +19,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.internal.params
 
+import com.vimeo.networking2.Scopes
 import com.vimeo.networking2.enums.StringValue
+import retrofit2.Converter
+import retrofit2.Retrofit
+import java.lang.reflect.Type
 
 /**
- * The type of token grants that can be performed.
+ * A [Converter.Factory] used for auth parameter conversion.
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+class VimeoParametersConverterFactory : Converter.Factory() {
+    override fun stringConverter(
+        type: Type,
+        annotations: Array<Annotation>,
+        retrofit: Retrofit
+    ): Converter<*, String>? = when {
+        type == Scopes::class.java -> ScopesConverter()
+        type is Class<*> && StringValue::class.java.isAssignableFrom(type) -> StringValueConverter()
+        else -> super.stringConverter(type, annotations, retrofit)
+    }
 }

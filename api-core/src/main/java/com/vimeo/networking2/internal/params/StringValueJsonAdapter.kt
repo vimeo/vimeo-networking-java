@@ -19,15 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.internal
+package com.vimeo.networking2.internal.params
 
-import com.vimeo.networking2.Scopes
-import retrofit2.Converter
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.JsonWriter
+import com.vimeo.networking2.enums.StringValue
 
 /**
- * A converter for [Scopes] parameters.
+ * A [JsonAdapter] that can write convert [StringValue] implementation to its JSON value.
  */
-class ScopesConverter : Converter<Scopes, String> {
-    override fun convert(value: Scopes): String =
-            value.scopes.joinToString(separator = " ", transform = { it.name.toLowerCase() })
+class StringValueJsonAdapter : JsonAdapter<StringValue>() {
+    override fun fromJson(reader: JsonReader): StringValue? = error("Reading is unsupported by this adapter")
+
+    override fun toJson(writer: JsonWriter, value: StringValue?) {
+        writer.value(value?.value)
+    }
 }

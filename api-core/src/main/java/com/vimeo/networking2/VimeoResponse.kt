@@ -110,7 +110,6 @@ sealed class VimeoResponse<out T>(open val httpStatusCode: Int) {
             val rawResponse: String,
             override val httpStatusCode: Int
         ) : Error("Unknown error: $httpStatusCode", httpStatusCode)
-
     }
 
     companion object {

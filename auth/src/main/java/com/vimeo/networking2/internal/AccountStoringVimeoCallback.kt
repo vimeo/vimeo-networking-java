@@ -19,29 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.internal
+
+import com.vimeo.networking2.VimeoAccount
+import com.vimeo.networking2.VimeoCallback
+import com.vimeo.networking2.VimeoResponse
+import com.vimeo.networking2.account.AccountStore
 
 /**
- * Interface responsible for handling the creation, deletion, and loading of Vimeo accounts on the client.
+ * A [VimeoCallback] that stores the account received on a successful response.
+ *
+ * @param accountStore The store which will be used to save the received account.
+ * @param actualVimeoCallback The callback which we are intercepting and will eventually be notified.
  */
-interface AccountStore {
-    /**
-     * Load an account that has been saved previously. Returns `null` if no account was saved.
-     */
-    fun loadAccount(): VimeoAccount?
+internal class AccountStoringVimeoCallback(
+    private val accountStore: AccountStore,
+    private val actualVimeoCallback: VimeoCallback<VimeoAccount>
+) : VimeoCallback<VimeoAccount> {
+    override fun onSuccess(response: VimeoResponse.Success<VimeoAccount>) {
+        accountStore.storeAccount(response.data)
+        actualVimeoCallback.onSuccess(response)
+    }
 
-    /**
-     * Save the provided account associated with an email.
-     *
-     * @param vimeoAccount The account to save.
-     * @param email The email associated with the account.
-     */
-    fun saveAccount(vimeoAccount: VimeoAccount, email: String)
-
-    /**
-     * Delete the provided account from the store.
-     *
-     * @param vimeoAccount The account to delete.
-     */
-    fun deleteAccount(vimeoAccount: VimeoAccount)
+    override fun onError(error: VimeoResponse.Error) {
+        actualVimeoCallback.onError(error)
+    }
 }

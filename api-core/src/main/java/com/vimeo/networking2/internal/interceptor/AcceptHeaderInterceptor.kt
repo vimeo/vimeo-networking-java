@@ -21,30 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.interceptors
+package com.vimeo.networking2.internal.interceptor
 
+import com.vimeo.networking2.ApiConstants
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.util.Locale
 
 /**
- * Add a custom `Accept-Language` header to all requests.
- *
- * @param locales The list of locales that should be supported, shouldn't be empty as this may result in undefined
- * behavior of the API.
+ * Add a custom `Accept` header to all requests.
  */
-class LanguageHeaderInterceptor(locales: List<Locale>) : Interceptor {
-    private val validLocales: String = locales.joinToString(separator = ",", transform = Locale::getLanguage)
-
-    override fun intercept(chain: Interceptor.Chain): Response =
-            chain.proceed(
-                chain.request().newBuilder().header(
-                    HEADER_ACCEPT_LANGUAGE,
-                    validLocales
-                ).build()
-            )
+class AcceptHeaderInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
+        chain.request().newBuilder().header(
+            HEADER_ACCEPT,
+            HEADER_ACCEPT_VALUE
+        ).build()
+    )
 
     companion object {
-        private const val HEADER_ACCEPT_LANGUAGE = "Accept-Language"
+        private const val HEADER_ACCEPT = "Accept"
+        private const val HEADER_ACCEPT_VALUE: String =
+            "application/vnd.vimeo.*+json; version=${ApiConstants.API_VERSION}"
     }
 }

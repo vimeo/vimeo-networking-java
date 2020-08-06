@@ -34,8 +34,74 @@ object ApiConstants {
 
     const val SSL_PUBLIC_KEY = "sha256/5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w="
 
-    const val READ_CONNECTION_TIMEOUT_SECONDS = 60L
-
     const val SDK_VERSION = "2.0.0"
 
+    /**
+     * Fixed endpoints.
+     */
+    object Endpoints {
+        const val ENDPOINT_ME = "me"
+        const val ENDPOINT_RECOMMENDATIONS = "/recommendations"
+        const val ENDPOINT_TERMS_OF_SERVICE = "documents/termsofservice"
+        const val ENDPOINT_PRIVACY_POLICY = "documents/privacy"
+        const val ENDPOINT_PAYMENT_ADDENDUM = "documents/paymentaddendum"
+    }
+
+    /**
+     * Parameters
+     */
+    object Parameters {
+        const val PARAMETER_REDIRECT_URI = "redirect_uri"
+        const val PARAMETER_RESPONSE_TYPE = "response_type"
+        const val PARAMETER_STATE = "state"
+        const val PARAMETER_SCOPE = "scope"
+        const val PARAMETER_TOKEN = "token"
+        const val PARAMETER_ID_TOKEN = "id_token"
+        const val PARAMETER_CLIENT_ID = "client_id"
+        const val PARAMETER_USERS_NAME = "name"
+        const val PARAMETER_EMAIL = "email"
+        const val PARAMETER_PASSWORD = "password"
+        const val PARAMETER_USERS_LOCATION = "location"
+        const val PARAMETER_USERS_BIO = "bio"
+        const val PARAMETER_MARKETING_OPT_IN = "marketing_opt_in"
+        const val PARAMETER_VIDEO_VIEW = "view"
+        const val PARAMETER_VIDEO_COMMENTS = "comments"
+        const val PARAMETER_VIDEO_EMBED = "embed"
+        const val PARAMETER_VIDEO_DOWNLOAD = "download"
+        const val PARAMETER_VIDEO_ADD = "add"
+        const val PARAMETER_VIDEO_NAME = "name"
+        const val PARAMETER_VIDEO_DESCRIPTION = "description"
+        const val PARAMETER_VIDEO_PRIVACY = "privacy"
+        const val PARAMETER_VIDEO_PASSWORD = PARAMETER_PASSWORD
+        const val PARAMETER_ALBUM_NAME = "name"
+        const val PARAMETER_ALBUM_DESCRIPTION = "description"
+        const val PARAMETER_ALBUM_PRIVACY = "privacy"
+        const val PARAMETER_ALBUM_PASSWORD = PARAMETER_PASSWORD
+        const val PARAMETER_AUTH_CODE = "auth_code"
+        const val PARAMETER_APP_TYPE = "app_type"
+        const val PARAMETER_COMMENT_TEXT_BODY = "text"
+        const val PARAMETER_ACTIVE = "active"
+
+        // Generic parameters
+        const val PARAMETER_GET_PAGE_SIZE = "per_page"
+        const val PARAMETER_GET_QUERY = "query"
+        const val PARAMETER_GET_SORT = "sort"
+        const val PARAMETER_GET_DIRECTION = "direction"
+        const val PARAMETER_GET_FIELD_FILTER = "fields"
+        const val PARAMETER_GET_CONTAINER_FIELD_FILTER = "container_fields"
+        const val PARAMETER_GET_LENGTH_MIN_DURATION = "min_duration"
+        const val PARAMETER_GET_LENGTH_MAX_DURATION = "max_duration"
+        const val PARAMETER_GET_FILTER = "filter"
+        const val PARAMETER_GET_UPLOAD_DATE_FILTER = "filter_upload_date"
+        const val PARAMETER_GET_NOTIFICATION_TYPES_FILTER = "filter_notification_types"
+        const val PARAMETER_PATCH_LATEST_NOTIFICATION_URI = "latest_notification_uri"
+
+        // Search parameters
+        const val FILTER_CATEGORY = "filter_category"
+        const val FILTER_UPLOADED = "filter_uploaded"
+        const val FILTER_DURATION = "filter_duration"
+        const val FILTER_TYPE = "filter_type"
+        const val FILTER_FEATURED_COUNT = "featured_clip_count"
+        const val PARAMETER_GET_FACETS = "facets"
+    }
 }

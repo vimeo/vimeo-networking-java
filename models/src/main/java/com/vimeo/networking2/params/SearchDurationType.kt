@@ -21,21 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.interceptors
+package com.vimeo.networking2.params
 
-import okhttp3.Interceptor
-import okhttp3.Response
+import com.vimeo.networking2.enums.StringValue
 
 /**
- * Add a custom `User-Agent` header to all requests.
- *
- * @param userAgent The user agent that should be sent with every request.
+ * The search options for the rough duration of a video.
  */
-class UserAgentHeaderInterceptor(private val userAgent: String) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response =
-            chain.proceed(chain.request().newBuilder().header(HEADER_USER_AGENT, userAgent).build())
-
-    companion object {
-        private const val HEADER_USER_AGENT = "User-Agent"
-    }
+enum class SearchDurationType(override val value: String?) : StringValue {
+    SHORT("short"),
+    MEDIUM("medium"),
+    LONG("long")
 }

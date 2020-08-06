@@ -19,18 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.account
 
-import com.vimeo.networking2.enums.StringValue
+import com.vimeo.networking2.VimeoAccount
 
 /**
- * The type of token grants that can be performed.
+ * An account store that just holds the accounts in memory.
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+class InMemoryAccountStore : AccountStore {
+
+    private var vimeoAccount: VimeoAccount? = null
+
+    override fun loadAccount(): VimeoAccount? = vimeoAccount
+
+    override fun storeAccount(vimeoAccount: VimeoAccount) { this.vimeoAccount = vimeoAccount }
+
+    override fun removeAccount() { this.vimeoAccount = null }
 }

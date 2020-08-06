@@ -19,18 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+@file:JvmName("VimeoApiConfigurationUtils")
 
-import com.vimeo.networking2.enums.StringValue
+package com.vimeo.networking2.config
+
+import com.vimeo.networking2.ApiConstants
 
 /**
- * The type of token grants that can be performed.
+ * The User-Agent that identifies the consumer as a user of the library.
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
-}
+val VimeoApiConfiguration.compositeUserAgent: String
+    get() = userAgent.let { "$it $USER_AGENT_HEADER_VALUE" }
+
+private const val USER_AGENT_HEADER_VALUE = "Kotlin VimeoNetworking/${ApiConstants.SDK_VERSION}"

@@ -21,26 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.interceptors
+package com.vimeo.networking2.internal.interceptor
 
-import com.vimeo.networking2.Configuration
+import com.vimeo.networking2.config.VimeoApiConfiguration
 import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
  * Rewrite the server's cache-control header because our server sets all `Cache-Control` headers to `no-store`. To get
- * data from the cache, we set a max age to [Configuration.cacheMaxAgeSeconds]. Normally the API indicates that the
- * contents should not be cached. Since most clients want common requests to be available via cache for performance
+ * data from the cache, we set a max age to [VimeoApiConfiguration.cacheMaxAgeSeconds]. Normally the API indicates that
+ * the contents should not be cached. Since most clients want common requests to be available via cache for performance
  * reasons, we overwrite this behavior and set our own [maxAgeSeconds] expiration.
  *
  * @param maxAgeSeconds The max age of the cache before expiration in seconds.
  */
 class CacheControlHeaderInterceptor(private val maxAgeSeconds: Int) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response =
-            chain.proceed(chain.request())
-                    .newBuilder()
-                    .header(HEADER_CACHE_CONTROL, "$HEADER_CACHE_PUBLIC, max-age=$maxAgeSeconds")
-                    .build()
+        chain.proceed(chain.request())
+            .newBuilder()
+            .header(HEADER_CACHE_CONTROL, "$HEADER_CACHE_PUBLIC, max-age=$maxAgeSeconds")
+            .build()
 
     companion object {
         private const val HEADER_CACHE_CONTROL = "Cache-Control"

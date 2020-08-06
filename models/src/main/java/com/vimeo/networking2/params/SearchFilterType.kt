@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2020 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2020 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,21 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.params
+
+import com.vimeo.networking2.enums.StringValue
 
 /**
- * An account store that just holds the accounts in memory.
+ * The search options for the type of entities being searched.
  */
-class InMemoryAccountStore : AccountStore {
-    private var vimeoAccount: VimeoAccount? = null
-
-    override fun loadAccount(): VimeoAccount? = vimeoAccount
-
-    override fun saveAccount(vimeoAccount: VimeoAccount, email: String) {
-        this.vimeoAccount = vimeoAccount
-    }
-
-    override fun deleteAccount(vimeoAccount: VimeoAccount) {
-        this.vimeoAccount = null
-    }
+enum class SearchFilterType(override val value: String?) : StringValue {
+    VIDEO("clip"),
+    TVOD("ondemand"),
+    USER("people"),
+    CHANNEL("channel"),
+    GROUP("group");
 }

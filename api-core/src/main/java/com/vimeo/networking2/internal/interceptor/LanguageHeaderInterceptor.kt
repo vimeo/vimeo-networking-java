@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2020 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2020 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,18 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.internal.interceptor
 
-import com.vimeo.networking2.enums.StringValue
+import okhttp3.Interceptor
+import okhttp3.Response
+import java.util.Locale
 
 /**
- * The type of token grants that can be performed.
+ * Add a custom `Accept-Language` header to all requests.
+ *
+ * @param locales The list of locales that should be supported, shouldn't be empty as this may result in undefined
+ * behavior of the API.
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+class LanguageHeaderInterceptor(locales: List<Locale>) : Interceptor {
+    private val validLocales: String = locales.joinToString(separator = ",", transform = Locale::getLanguage)
+
+    override fun intercept(chain: Interceptor.Chain): Response =
+        chain.proceed(
+            chain.request().newBuilder().header(
+                HEADER_ACCEPT_LANGUAGE,
+                validLocales
+            ).build()
+        )
+
+    companion object {
+        private const val HEADER_ACCEPT_LANGUAGE = "Accept-Language"
+    }
 }

@@ -19,18 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.internal.params
 
-import com.vimeo.networking2.enums.StringValue
+import com.vimeo.networking2.Scopes
+import retrofit2.Converter
+import java.util.Locale
 
 /**
- * The type of token grants that can be performed.
+ * A converter for [Scopes] parameters.
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+class ScopesConverter : Converter<Scopes, String> {
+    override fun convert(value: Scopes): String =
+            value.scopes.joinToString(separator = " ", transform = { it.value.toLowerCase(Locale.ROOT) })
 }

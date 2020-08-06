@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2020 Vimeo (https://vimeo.com)
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2020 Vimeo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,14 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.internal
+package com.vimeo.networking2.internal.interceptor
 
-import com.vimeo.networking2.GrantType
-import retrofit2.Converter
+import okhttp3.Interceptor
+import okhttp3.Response
 
 /**
- * A converter for [GrantType] parameters.
+ * Add a custom `User-Agent` header to all requests.
+ *
+ * @param userAgent The user agent that should be sent with every request.
  */
-class GrantTypeConverter : Converter<GrantType, String> {
-    override fun convert(value: GrantType): String = value.value
+class UserAgentHeaderInterceptor(private val userAgent: String) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response =
+        chain.proceed(chain.request().newBuilder().header(HEADER_USER_AGENT, userAgent).build())
+
+    companion object {
+        private const val HEADER_USER_AGENT = "User-Agent"
+    }
 }

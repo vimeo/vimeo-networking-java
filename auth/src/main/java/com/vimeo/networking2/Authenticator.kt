@@ -21,15 +21,16 @@
  */
 package com.vimeo.networking2
 
+import com.vimeo.networking2.account.CachingAccountStore
+import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.config.RetrofitSetupModule
-import com.vimeo.networking2.config.ServerConfig
 import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
+import com.vimeo.networking2.internal.MutableAuthenticatorDelegate
 import okhttp3.Credentials
 
 /**
- * API that allow you to make the following authentication requests:
- *
+ * An interface that provides the following ways to authenticate with the Vimeo API:
  * - Client credentials.
  * - Google
  * - Facebook
@@ -42,38 +43,45 @@ import okhttp3.Credentials
  * Ex:
  *
  * ```
- * val authenticator = Authenticator(serverConfig)
- * authenticator.clientCredentials(object: VimeoCallback<BasicAuthToken>() {
- *
- *       override fun onSuccess(authResponse: VimeoResponse.Success<BasicAuthToken>) {
- *
- *       }
- *
- *       override fun onError(error: VimeoResponse.Error) {
- *
- *       }
- * })
+ * val authenticator = Authenticator(Configuration)
+ * authenticator.clientCredentials(vimeoCallback(
+ *      onSuccess = { authResponse: VimeoResponse.Success<VimeoAccount> -> }
+ *      onError = { error: VimeoResponse.Error -> }
+ * ))
  * ```
+ * If the consumer does not want to manage the instance of the [Authenticator] themselves, they can utilize the
+ * singleton instance.
  *
+ * ```
+ * Authenticator.initialize(Configuration)
+ * val instance = Authenticator.instance()
+ * ```
  */
 interface Authenticator {
 
     /**
-     * Authenticate client id and client secret.
+     * The currently authenticated account, if the client has successfully authenticated. May represent either a logged
+     * in or logged out user.
+     */
+    val currentAccount: VimeoAccount?
+
+    /**
+     * Authenticate using the client ID and client secret (set in the [VimeoApiConfiguration]) to obtain a logged out
+     * access token.
      *
-     * @param authCallback informs you of the result of the response.
+     * @param callback informs you of the result of the response.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun clientCredentials(authCallback: VimeoCallback<BasicAccessToken>): VimeoRequest
+    fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest
 
     /**
-     * Authenticate via Google.
+     * Authenticate via Google sign in to obtain a logged in token.
      *
-     * @param token             Google authentication token.
-     * @param email             Email addressed used to sign in to Google.
-     * @param marketingOptIn    Opt in or out on GDPR.
-     * @param authCallback      Callback to be notified of the result of the request.
+     * @param token Google authentication token.
+     * @param email Email addressed used to sign in to Google.
+     * @param marketingOptIn Opt in or out on GDPR.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -81,16 +89,16 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
-     * Authenticate via Facebook.
+     * Authenticate via Facebook sign in to obtain a logged in token.
      *
-     * @param token             Google authentication token.
-     * @param email             Email addressed used to sign in to Google.
-     * @param marketingOptIn    Opt in or out on GDPR.
-     * @param authCallback      Callback to be notified of the result of the request.
+     * @param token Google authentication token.
+     * @param email Email addressed used to sign in to Google.
+     * @param marketingOptIn Opt in or out on GDPR.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -98,17 +106,17 @@ interface Authenticator {
         token: String,
         email: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
-     * Join Vimeo by email.
+     * Join Vimeo using email and obtain a logged in token.
      *
-     * @param displayName       User name to set for your Vimeo account.
-     * @param email             Email to use to login to your Vimeo account.
-     * @param password          Password for your Vimeo account.
-     * @param marketingOptIn    Opt in or out on GDPR.
-     * @param authCallback      Callback to be notified of the result of the request.
+     * @param displayName User name to set for your Vimeo account.
+     * @param email Email to use to login to your Vimeo account.
+     * @param password Password for your Vimeo account.
+     * @param marketingOptIn Opt in or out on GDPR.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
@@ -117,50 +125,93 @@ interface Authenticator {
         email: String,
         password: String,
         marketingOptIn: Boolean,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
     /**
-     * Login via email.
+     * Login via email to obtain a logged in token.
      *
-     * @param email         Email address associated with your Vimeo account.
-     * @param password      Password for your Vimeo account.
+     * @param email Email address associated with your Vimeo account.
+     * @param password Password for your Vimeo account.
+     * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun emailLogin(
         email: String,
         password: String,
-        authCallback: VimeoCallback<VimeoAccount>
+        callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
+
+    /**
+     * Exchange an OAuth 1 token and secret for a new OAuth 2 token.
+     *
+     * @param token The old token to use in the exchange.
+     * @param tokenSecret The old token secret to use in the exchange.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun exchangeOAuthOneToken(
+        token: String,
+        tokenSecret: String,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest
+
+    /**
+     * Log out of the currently authenticated account.
+     *
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun logOut(callback: VimeoCallback<Unit>): VimeoRequest
 
     /**
      * Factory to create an instance of [Authenticator].
      */
     companion object {
 
+        private val delegate: MutableAuthenticatorDelegate = MutableAuthenticatorDelegate()
+
         /**
-         * Create an instance of Authenticator to make authentication
-         * requests.
+         * Initialize the singleton instance of the [Authenticator] with a [VimeoApiConfiguration]. If the authenticator
+         * was already initialized, this will reconfigure it. This function must be called before [instance] is used.
          *
-         * @param serverConfig All the server configuration (client id and secret, custom
-         *                     interceptors, read timeouts, base url etc...) that can be set for
-         *                     authentication and making requests.
+         * @param vimeoApiConfiguration The configuration used by the authenticator.
+         */
+        @JvmStatic
+        fun initialize(vimeoApiConfiguration: VimeoApiConfiguration) {
+            delegate.actual = Authenticator(vimeoApiConfiguration)
+        }
+
+        /**
+         * Access the singleton instance of the [Authenticator]. Always returns the same instance.
+         */
+        @JvmStatic
+        fun instance(): Authenticator = delegate
+
+        /**
+         * Create an instance of Authenticator to make authentication requests.
+         *
+         * @param vimeoApiConfiguration All the server configuration (client id and secret, custom interceptors, read
+         * timeouts, base url etc...) that can be set for authentication and making requests.
          */
         @JvmStatic
         @JvmName("create")
-        operator fun invoke(serverConfig: ServerConfig): Authenticator {
-            val authService = RetrofitSetupModule
-                    .retrofit(serverConfig)
-                    .create(AuthService::class.java)
+        operator fun invoke(vimeoApiConfiguration: VimeoApiConfiguration): Authenticator {
+            val authService = RetrofitSetupModule.retrofit(vimeoApiConfiguration).create(AuthService::class.java)
+            val basicAuthHeader: String = Credentials.basic(
+                vimeoApiConfiguration.clientId,
+                vimeoApiConfiguration.clientSecret
+            )
 
-            val authHeaders: String =
-                    Credentials.basic(
-                        serverConfig.clientId,
-                        serverConfig.clientSecret
-                    )
-
-            return AuthenticatorImpl(authService, authHeaders, Scopes(serverConfig.scopes))
+            return AuthenticatorImpl(
+                authService,
+                basicAuthHeader,
+                vimeoApiConfiguration.scope,
+                CachingAccountStore(vimeoApiConfiguration.accountStore)
+            )
         }
     }
 }

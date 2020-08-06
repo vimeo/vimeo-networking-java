@@ -19,18 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.networking2.internal
 
-import com.vimeo.networking2.enums.StringValue
+import com.vimeo.networking2.ApiError
+import com.vimeo.networking2.NoOpVimeoRequest
+import com.vimeo.networking2.VimeoCallback
+import com.vimeo.networking2.VimeoRequest
+import com.vimeo.networking2.VimeoResponse
+import java.util.concurrent.Executor
 
 /**
- * The type of token grants that can be performed.
+ * An adapter that can be used to notify a [VimeoCallback] of an error on the correct thread.
+ *
+ * @param callbackExecutor The callback executor used to notify the consumer of a response.
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+class LocalVimeoCallAdapter(private val callbackExecutor: Executor) {
+
+    /**
+     * Enqueue the [VimeoCallback] with the provided [ApiError].
+     */
+    fun <T> enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest {
+        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, VimeoResponse.HTTP_NONE)) }
+
+        return NoOpVimeoRequest
+    }
 }
