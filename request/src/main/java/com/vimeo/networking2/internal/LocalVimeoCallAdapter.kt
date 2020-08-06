@@ -21,6 +21,7 @@
  */
 package com.vimeo.networking2.internal
 
+import com.vimeo.networking2.ApiConstants
 import com.vimeo.networking2.ApiError
 import com.vimeo.networking2.NoOpVimeoRequest
 import com.vimeo.networking2.VimeoCallback
@@ -39,7 +40,7 @@ class LocalVimeoCallAdapter(private val callbackExecutor: Executor) {
      * Enqueue the [VimeoCallback] with the provided [ApiError].
      */
     fun <T> enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest {
-        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, VimeoResponse.HTTP_NONE)) }
+        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, ApiConstants.NONE)) }
 
         return NoOpVimeoRequest
     }
