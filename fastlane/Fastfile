@@ -88,7 +88,7 @@ platform :android do
     # run the tests, but dont puke everywhere until the report is printed.
     begin
       gradle(
-        task: "detekt example-java-android:build example-kotlin-android:build example-vimeo-networking2-android:build api-core:test auth:test models:test vimeo-networking:test"
+        task: "detekt example:build api-core:test auth:test models:test models-serializable:test models-parcelable:test request:test vimeo-networking:test"
       )
     rescue => error
       begin
