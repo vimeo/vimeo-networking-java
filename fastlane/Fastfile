@@ -67,24 +67,6 @@ platform :android do
     # gotta do some setup before running gradle
     sh 'touch ../local.properties'
 
-    File.open("../example-java-android/src/main/res/values/secrets.xml", "w"){
-      |file| file.write('
-    <resources>
-      <string name="access_token">SECRET</string>
-      <string name="client_id">SECRET</string>
-      <string name="client_secret">SECRET</string>
-    </resources>')
-    }
-
-    File.open("../example-kotlin-android/src/main/res/values/secrets.xml", "w"){
-      |file| file.write('
-    <resources>
-      <string name="access_token">SECRET</string>
-      <string name="client_id">SECRET</string>
-      <string name="client_secret">SECRET</string>
-    </resources>')
-    }
-
     # run the tests, but dont puke everywhere until the report is printed.
     begin
       gradle(
