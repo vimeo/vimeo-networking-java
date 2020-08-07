@@ -22,6 +22,7 @@
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.Authenticator
+import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
@@ -71,6 +72,9 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override fun emailLogin(email: String, password: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
         authenticator.emailLogin(email, password, callback)
 
+    override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
+        authenticator.exchangeAccessToken(accessToken, callback)
+
     override fun exchangeOAuthOneToken(
         token: String,
         tokenSecret: String,
@@ -80,9 +84,16 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override fun obtainCodeGrantAuthorizationUri(responseCode: Int): String =
         authenticator.obtainCodeGrantAuthorizationUri(responseCode)
 
-    override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
-        return authenticator.authenticateWithCodeGrant(uri, callback)
-    }
+    override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
+        authenticator.authenticateWithCodeGrant(uri, callback)
+
+    override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest =
+        authenticator.fetchPinCodeInfo(callback)
+
+    override fun authenticateWithPinCode(
+        pinCodeInfo: PinCodeInfo,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.authenticateWithPinCode(pinCodeInfo, callback)
 
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest =
         authenticator.logOut(callback)

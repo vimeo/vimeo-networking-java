@@ -27,7 +27,7 @@ import com.vimeo.networking2.enums.ErrorCodeType
 import okhttp3.HttpUrl
 
 /**
- * Authentication with email, google, facebook or pincode.
+ * Authentication using email, google, facebook, code grant, or pin code.
  *
  * @param authService Retrofit service for authentication.
  * @param basicAuthHeader Client id and client secret header.
@@ -199,6 +199,10 @@ internal class AuthenticatorImpl(
         }
     }
 
+    override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
+        return authService.ssoTokenExchange(basicAuthHeader, accessToken, scopes).enqueue(callback)
+    }
+
     override fun exchangeOAuthOneToken(
         token: String,
         tokenSecret: String,
@@ -244,6 +248,21 @@ internal class AuthenticatorImpl(
 
     override fun obtainCodeGrantAuthorizationUri(responseCode: Int): String {
         return authService.codeGrantRequest(clientId, redirectUri, responseCode, scopes).request().url().toString()
+    }
+
+    override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest {
+        return authService.getPinCodeInfo(basicAuthHeader, GrantType.DEVICE, scopes).enqueue(callback)
+    }
+
+    override fun authenticateWithPinCode(
+        pinCodeInfo: PinCodeInfo,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest {
+        val userCode = pinCodeInfo.userCode.orEmpty()
+        val deviceCode = pinCodeInfo.deviceCode.orEmpty()
+
+        return authService.logInWithPinCode(basicAuthHeader, GrantType.DEVICE, userCode, deviceCode, scopes)
+            .enqueue(callback)
     }
 
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest {

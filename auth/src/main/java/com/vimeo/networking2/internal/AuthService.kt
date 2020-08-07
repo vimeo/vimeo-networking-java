@@ -148,7 +148,8 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Used to log into Vimeo using a Facebook authorization token.
+     * Used to log into Vimeo using a Facebook authorization token. If an account does not exist, this request will
+     * fail. For this reason, [joinWithFacebook] is preferred since it also supports login.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -168,7 +169,8 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Used to log into Vimeo using a Google authorization token.
+     * Used to log into Vimeo using a Google authorization token. If an account does not exist, this request will fail.
+     * For this reason, [joinWithGoogle] is preferred since it also supports login.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
