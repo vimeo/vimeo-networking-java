@@ -43,10 +43,7 @@ import java.util.concurrent.Executor
  * - Pin code
  * - Logout
  *
- * Create an instance of the Authenticator by using its factory and make requests as follows.
- *
- * Ex:
- *
+ * Create an instance of the [Authenticator] by using its invoke function and make authentication requests as follows.
  * ```
  * val authenticator = Authenticator(Configuration)
  * authenticator.clientCredentials(vimeoCallback(
@@ -61,6 +58,9 @@ import java.util.concurrent.Executor
  * Authenticator.initialize(Configuration)
  * val instance = Authenticator.instance()
  * ```
+ *
+ * See [https://developer.vimeo.com/api/authentication] for more information about the different authentication
+ * approaches.
  */
 @Suppress("ComplexInterface")
 interface Authenticator {
@@ -209,7 +209,7 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Fetch the [PinCodeInfo] that can be used to authenticate with the server. The user must go to the URL specified
+     * Fetch the [PinCodeInfo] that can be used to authenticate with the server. The user must go to the URI specified
      * by [PinCodeInfo.activateLink] and enter the [PinCodeInfo.userCode]. After fetching this info, if the user has
      * entered the pin code, calling [authenticateWithPinCode] with the pin code provided by this request will succeed.
      *
