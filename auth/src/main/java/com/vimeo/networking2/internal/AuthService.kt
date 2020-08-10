@@ -315,6 +315,8 @@ internal interface AuthService {
      *
      * @param authorization Created from the client id and client secret.
      * @param domain A domain, also known as hostname, that might be supported for SSO by the Vimeo API.
+     *
+     * @return A [VimeoCall] that provides a [SsoDomain] that can be used to perform SSO.
      */
     @Internal
     @GET("sso_domains")
@@ -331,6 +333,9 @@ internal interface AuthService {
      * @param authorizationCode The Auth0 code to verify.
      * @param redirectUri The URI used to verify the token.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
      */
     @FormUrlEncoded
     @Internal
