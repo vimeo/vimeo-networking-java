@@ -47,7 +47,7 @@ internal interface AuthService {
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform unauthenticated requests.
      */
@@ -66,7 +66,7 @@ internal interface AuthService {
      * @param name The name of the account that should be created.
      * @param email The email of the account that should be created.
      * @param password The password of the account that should be created.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
@@ -89,7 +89,7 @@ internal interface AuthService {
      * @param authorization Created from the client id and client secret.
      * @param email The email the user uses to log into Facebook.
      * @param token The Facebook token used to authorize with Facebook.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
@@ -111,7 +111,7 @@ internal interface AuthService {
      * @param authorization Created from the client id and client secret.
      * @param email The email the user uses to log into Google.
      * @param idToken The Google token used to authorize with Google.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.     *
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
@@ -134,7 +134,7 @@ internal interface AuthService {
      * @param email The email the user used to create their account.
      * @param password The user's password.
      * @param grantType The type of authorization grant that is being performed.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -155,7 +155,7 @@ internal interface AuthService {
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
      * @param token The Facebook token used to authorize with Facebook.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -175,7 +175,7 @@ internal interface AuthService {
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
      * @param idToken The Google token used to authorize with Google.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -216,7 +216,7 @@ internal interface AuthService {
      * @param grantType The type of authorization grant that is being performed.
      * @param token The token being exchanged.
      * @param tokenSecret The token secret being exchanged.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -236,7 +236,7 @@ internal interface AuthService {
      *
      * @param authorization Created from the client id and client secret.
      * @param token The token obtained through SSO which will be used to authenticate the user.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
@@ -254,7 +254,7 @@ internal interface AuthService {
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [PinCodeInfo] that can be used to log in with [logInWithPinCode].
      */
@@ -274,7 +274,7 @@ internal interface AuthService {
      * @param grantType The type of authorization grant that is being performed.
      * @param pinCode The pin code that is used to log the user in.
      * @param deviceCode The device code that is used to log the user in.
-     * @param scope The permissions scope that should be granted to the client.
+     * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.

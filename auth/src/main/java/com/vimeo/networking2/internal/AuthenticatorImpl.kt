@@ -43,17 +43,16 @@ internal class AuthenticatorImpl(
         get() = accountStore.loadAccount()
 
     override fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest {
-        val params = mapOf(
+        val invalidAuthParams = mapOf(
             AuthParam.FIELD_GRANT_TYPE to GrantType.CLIENT_CREDENTIALS.value,
             AuthParam.FIELD_SCOPES to scopes
-        )
+        ).validate()
+
         val call = authService.authorizeWithClientCredentialsGrant(
             authorization = basicAuthHeader,
             grantType = GrantType.CLIENT_CREDENTIALS,
             scopes = scopes
         )
-
-        val invalidAuthParams = params.validate()
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
@@ -72,12 +71,12 @@ internal class AuthenticatorImpl(
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val params = mapOf(
+        val invalidAuthParams = mapOf(
             AuthParam.FIELD_ID_TOKEN to token,
             AuthParam.FIELD_EMAIL to email,
-            AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
             AuthParam.FIELD_SCOPES to scopes
-        )
+        ).validate()
+
         val call = authService.joinWithGoogle(
             authorization = basicAuthHeader,
             email = email,
@@ -85,8 +84,6 @@ internal class AuthenticatorImpl(
             scopes = scopes,
             marketingOptIn = marketingOptIn
         )
-
-        val invalidAuthParams = params.validate()
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
@@ -105,12 +102,12 @@ internal class AuthenticatorImpl(
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val params = mapOf(
+        val invalidAuthParams = mapOf(
             AuthParam.FIELD_TOKEN to token,
             AuthParam.FIELD_EMAIL to email,
-            AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
             AuthParam.FIELD_SCOPES to scopes
-        )
+        ).validate()
+
         val call = authService.joinWithFacebook(
             authorization = basicAuthHeader,
             email = email,
@@ -118,8 +115,6 @@ internal class AuthenticatorImpl(
             scopes = scopes,
             marketingOptIn = marketingOptIn
         )
-
-        val invalidAuthParams = params.validate()
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
@@ -139,13 +134,13 @@ internal class AuthenticatorImpl(
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val params = mapOf(
+        val invalidAuthParams = mapOf(
             AuthParam.FIELD_NAME to displayName,
             AuthParam.FIELD_EMAIL to email,
             AuthParam.FIELD_PASSWORD to password,
-            AuthParam.FIELD_MARKETING_OPT_IN to marketingOptIn.toString(),
             AuthParam.FIELD_SCOPES to scopes
-        )
+        ).validate()
+
         val call = authService.joinWithEmail(
             authorization = basicAuthHeader,
             name = displayName,
@@ -154,8 +149,6 @@ internal class AuthenticatorImpl(
             scopes = scopes,
             marketingOptIn = marketingOptIn
         )
-
-        val invalidAuthParams = params.validate()
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
@@ -173,11 +166,12 @@ internal class AuthenticatorImpl(
         password: String,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val params = mapOf(
+        val invalidAuthParams = mapOf(
             AuthParam.FIELD_USERNAME to email,
             AuthParam.FIELD_PASSWORD to password,
             AuthParam.FIELD_SCOPES to scopes
-        )
+        ).validate()
+
         val call = authService.logInWithEmail(
             authorization = basicAuthHeader,
             email = email,
@@ -185,8 +179,6 @@ internal class AuthenticatorImpl(
             grantType = GrantType.PASSWORD,
             scopes = scopes
         )
-
-        val invalidAuthParams = params.validate()
 
         return if (invalidAuthParams.isNotEmpty()) {
             val apiError = ApiError(
@@ -204,8 +196,30 @@ internal class AuthenticatorImpl(
         tokenSecret: String,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        return authService.exchangeOAuthOneToken(basicAuthHeader, GrantType.OAUTH_ONE, token, tokenSecret, scopes)
-            .enqueue(callback)
+        val invalidAuthParams = mapOf(
+            AuthParam.FIELD_TOKEN to token,
+            AuthParam.FIELD_TOKEN_SECRET to tokenSecret,
+            AuthParam.FIELD_SCOPES to scopes
+        ).validate()
+
+        val call = authService.exchangeOAuthOneToken(
+            authorization = basicAuthHeader,
+            grantType = GrantType.OAUTH_ONE,
+            token = token,
+            tokenSecret = tokenSecret,
+            scopes = scopes
+        )
+
+        return if (invalidAuthParams.isNotEmpty()) {
+            val apiError = ApiError(
+                developerMessage = "Auth token exchange error.",
+                invalidParameters = invalidAuthParams
+            )
+
+            call.enqueueError(apiError, callback)
+        } else {
+            call.enqueue(callback)
+        }
     }
 
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest {
@@ -260,6 +274,6 @@ internal class AuthenticatorImpl(
         accountStore.removeAccount()
         accessToken ?: return NoOpVimeoRequest
 
-        return authService.logOut("Bearer $accessToken").enqueue(callback)
+        return authService.logOut(authorization = "Bearer $accessToken").enqueue(callback)
     }
 }
