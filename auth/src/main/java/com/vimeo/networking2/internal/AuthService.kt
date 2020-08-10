@@ -200,8 +200,10 @@ internal interface AuthService {
      * @param redirectUri The URI which should be redirected back to.
      * @param state A random value that will be returned in the redirect to identify the origin of the request.
      * @param scopes The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that creates a request to the code grant endpoint.
      */
-    @POST("oauth/authorize?response_type=code")
+    @GET("oauth/authorize?response_type=code")
     fun codeGrantRequest(
         @Query("client_id") clientId: String,
         @Query(REDIRECT_URI) redirectUri: String,
