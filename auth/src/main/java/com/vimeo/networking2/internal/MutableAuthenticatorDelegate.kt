@@ -23,6 +23,7 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.PinCodeInfo
+import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
@@ -86,6 +87,16 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
 
     override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
         authenticator.authenticateWithCodeGrant(uri, callback)
+
+    override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest =
+        authenticator.fetchSsoDomain(domain, callback)
+
+    override fun ssoCodeGrant(
+        authorizationCode: String,
+        redirectUri: String,
+        marketingOptIn: Boolean,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.ssoCodeGrant(authorizationCode, redirectUri, marketingOptIn, callback)
 
     override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest =
         authenticator.fetchPinCodeInfo(callback)
