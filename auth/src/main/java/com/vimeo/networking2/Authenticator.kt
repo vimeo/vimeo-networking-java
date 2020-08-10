@@ -191,7 +191,7 @@ interface Authenticator {
      *
      * @return The URI which can be opened in a browser.
      */
-    fun obtainCodeGrantAuthorizationUri(responseCode: Int): String
+    fun obtainCodeGrantAuthorizationUri(responseCode: String): String
 
     /**
      * Log in using an authorization code grant received from the request to made to the URI returned by

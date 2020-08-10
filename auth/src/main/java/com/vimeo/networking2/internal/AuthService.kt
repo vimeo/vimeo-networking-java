@@ -195,14 +195,14 @@ internal interface AuthService {
      *
      * @param clientId The client id of the app.
      * @param redirectUri The URI which should be redirected back to.
-     * @param state A random number that will be returned in the redirect to identify the origin of the request.
+     * @param state A random value that will be returned in the redirect to identify the origin of the request.
      * @param scopes The permissions scope that should be granted to the client.
      */
     @POST("oauth/authorize?response_type=code")
     fun codeGrantRequest(
         @Query("client_id") clientId: String,
         @Query("redirect_uri") redirectUri: String,
-        @Query("state") state: Int,
+        @Query("state") state: String,
         @Query(SCOPE) scopes: Scopes
     ): Call<Unit>
 
