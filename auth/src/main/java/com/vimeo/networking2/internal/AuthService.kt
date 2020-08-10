@@ -27,7 +27,6 @@ import com.vimeo.networking2.Scopes
 import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.annotations.Internal
-import retrofit2.Call
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -36,6 +35,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 /**
  * All the authentication endpoints.
@@ -81,7 +81,7 @@ internal interface AuthService {
         @Field("email") email: String,
         @Field("password") password: String,
         @Field(SCOPE) scopes: Scopes,
-        @Field("marketing_opt_in") marketingOptIn: Boolean
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -103,7 +103,7 @@ internal interface AuthService {
         @Field("username") email: String,
         @Field("token") token: String,
         @Field(SCOPE) scopes: Scopes,
-        @Field("marketing_opt_in") marketingOptIn: Boolean
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -125,7 +125,7 @@ internal interface AuthService {
         @Field("username") email: String,
         @Field("id_token") idToken: String,
         @Field(SCOPE) scopes: Scopes,
-        @Field("marketing_opt_in") marketingOptIn: Boolean
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -204,10 +204,10 @@ internal interface AuthService {
     @POST("oauth/authorize?response_type=code")
     fun codeGrantRequest(
         @Query("client_id") clientId: String,
-        @Query("redirect_uri") redirectUri: String,
-        @Query("state") state: String,
+        @Query(REDIRECT_URI) redirectUri: String,
+        @Query(STATE) state: String,
         @Query(SCOPE) scopes: Scopes
-    ): Call<Unit>
+    ): VimeoCall<Unit>
 
     /**
      * Authorize with the server using a code grant from a redirect URL.
@@ -224,7 +224,7 @@ internal interface AuthService {
     @POST("oauth/access_token")
     fun authenticateWithCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("redirect_uri") redirectUri: String,
+        @Field(REDIRECT_URI) redirectUri: String,
         @Field("code") authorizationCode: String,
         @Field(GRANT_TYPE) grantType: GrantType
     ): VimeoCall<VimeoAccount>
@@ -326,6 +326,22 @@ internal interface AuthService {
     ): VimeoCall<SsoDomain>
 
     /**
+     * Creates a request to the SSO grant authorization endpoint. Used to direct the user to a URL where they can log
+     * in via SSO and then redirect back to the app.
+     *
+     * @param uri The base URI obtained from [SsoDomain.connectUrl].
+     * @param redirectUri The URI which should be redirected back to.
+     * @param state A random value that will be returned in the redirect to identify the origin of the request.
+     */
+    @Internal
+    @GET
+    fun ssoGrantRequest(
+        @Url uri: String,
+        @Query(REDIRECT_URI) redirectUri: String,
+        @Query(STATE) state: String
+    ): VimeoCall<Unit>
+
+    /**
      * Log into the server using an authorization code grant from an enterprise SSO supported domain using Auth0. If an
      * account does not already exist, this request will fail. For this reason, [joinWithSsoCodeGrant] is preferred
      * since it supports both join and login.
@@ -344,8 +360,8 @@ internal interface AuthService {
     fun logInWithSsoCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
         @Field("authorization_code") authorizationCode: String,
-        @Field("redirect_uri") redirectUri: String,
-        @Field("marketing_opt_in") marketingOptIn: Boolean
+        @Field(REDIRECT_URI) redirectUri: String,
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -366,8 +382,8 @@ internal interface AuthService {
     fun joinWithSsoCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
         @Field("authorization_code") authorizationCode: String,
-        @Field("redirect_uri") redirectUri: String,
-        @Field("marketing_opt_in") marketingOptIn: Boolean
+        @Field(REDIRECT_URI) redirectUri: String,
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -387,6 +403,9 @@ internal interface AuthService {
         private const val AUTHORIZATION = "Authorization"
         private const val SCOPE = "scope"
         private const val GRANT_TYPE = "grant_type"
+        private const val REDIRECT_URI = "redirect_uri"
+        private const val STATE = "state"
+        private const val MARKETING_OPT_IN = "marketing_opt_in"
     }
 
 }

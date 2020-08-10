@@ -223,10 +223,23 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
+     * Obtain the URI which can be used to log in the user and receive back a URI that can be exchanged using
+     * [ssoCodeGrant] for a logged in account. Obtain the [SsoDomain] required by this function first using
+     * [fetchSsoDomain].
+     *
+     * @param ssoDomain The domain info obtained from the API that specifies the [SsoDomain.connectUrl] which will be
+     * used as the base for this URI.
+     * @param responseCode The response code that can be used to identify the origin of the redirect URI.
+     *
+     * @return The URI which can be opened in a browser.
+     */
+    @Internal
+    fun obtainSsoGrantAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String
+
+    /**
      * Authenticate with the server using an authorization code grant from a supported enterprise SSO domain.
      *
      * @param authorizationCode The Auth0 code to verify.
-     * @param redirectUri The URI used to verify the token.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
      * @param callback Callback to be notified of the result of the request.
      *
@@ -235,7 +248,6 @@ interface Authenticator {
     @Internal
     fun ssoCodeGrant(
         authorizationCode: String,
-        redirectUri: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest

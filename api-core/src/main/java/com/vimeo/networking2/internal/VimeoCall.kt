@@ -24,6 +24,7 @@ package com.vimeo.networking2.internal
 import com.vimeo.networking2.ApiError
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
+import okhttp3.HttpUrl
 
 /**
  * Custom Retrofit call that allows you to enqueue a custom callback.
@@ -49,6 +50,11 @@ interface VimeoCall<T> {
      * Cancel API request.
      */
     fun cancel()
+
+    /**
+     * The [HttpUrl] to which this call will be made.
+     */
+    val url: HttpUrl
 
     /**
      * Clone the API call.
