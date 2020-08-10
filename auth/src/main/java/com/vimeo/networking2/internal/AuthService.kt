@@ -152,7 +152,7 @@ internal interface AuthService {
 
     /**
      * Used to log into Vimeo using a Facebook authorization token. If an account does not exist, this request will
-     * fail. For this reason, [joinWithFacebook] is preferred since it also supports login.
+     * fail. For this reason, [joinWithFacebook] is preferred since it supports both join and login.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -173,7 +173,7 @@ internal interface AuthService {
 
     /**
      * Used to log into Vimeo using a Google authorization token. If an account does not exist, this request will fail.
-     * For this reason, [joinWithGoogle] is preferred since it also supports login.
+     * For this reason, [joinWithGoogle] is preferred since it supports both join and login.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -326,8 +326,9 @@ internal interface AuthService {
     ): VimeoCall<SsoDomain>
 
     /**
-     * Authenticate with the server using an authorization code grant from an enterprise SSO supported domain using
-     * Auth0.
+     * Log into the server using an authorization code grant from an enterprise SSO supported domain using Auth0. If an
+     * account does not already exist, this request will fail. For this reason, [joinWithSsoCodeGrant] is preferred
+     * since it supports both join and login.
      *
      * @param authorization Created from the client id and client secret.
      * @param authorizationCode The Auth0 code to verify.
@@ -340,7 +341,29 @@ internal interface AuthService {
     @FormUrlEncoded
     @Internal
     @POST("oauth/authorize/auth0")
-    fun authenticateWithSsoCodeGrant(
+    fun logInWithSsoCodeGrant(
+        @Header(AUTHORIZATION) authorization: String,
+        @Field("authorization_code") authorizationCode: String,
+        @Field("redirect_uri") redirectUri: String,
+        @Field("marketing_opt_in") marketingOptIn: Boolean
+    ): VimeoCall<VimeoAccount>
+
+    /**
+     * Log into the server or join using an authorization code grant from an enterprise SSO supported domain using
+     * Auth0. If an account does not already exist, an account will be created for the user.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param authorizationCode The Auth0 code to verify.
+     * @param redirectUri The URI used to verify the token.
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
+    @FormUrlEncoded
+    @Internal
+    @POST("users")
+    fun joinWithSsoCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
         @Field("authorization_code") authorizationCode: String,
         @Field("redirect_uri") redirectUri: String,

@@ -279,7 +279,7 @@ internal class AuthenticatorImpl(
             AuthParam.REDIRECT_URI to redirectUri
         ).validate()
 
-        val call = authService.authenticateWithSsoCodeGrant(
+        val call = authService.joinWithSsoCodeGrant(
             basicAuthHeader,
             authorizationCode,
             redirectUri,
