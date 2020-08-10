@@ -312,6 +312,7 @@ internal interface AuthService {
      * @param redirectUri The URI used to verify the token.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
      */
+    @FormUrlEncoded
     @Internal
     @POST("oauth/authorize/auth0")
     fun authenticateWithSsoCodeGrant(
