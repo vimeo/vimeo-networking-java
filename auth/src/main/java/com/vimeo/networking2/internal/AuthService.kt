@@ -29,6 +29,7 @@ import retrofit2.Call
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -197,8 +198,10 @@ internal interface AuthService {
      * @param redirectUri The URI which should be redirected back to.
      * @param state A random value that will be returned in the redirect to identify the origin of the request.
      * @param scopes The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that creates a request to the code grant endpoint.
      */
-    @POST("oauth/authorize?response_type=code")
+    @GET("oauth/authorize?response_type=code")
     fun codeGrantRequest(
         @Query("client_id") clientId: String,
         @Query("redirect_uri") redirectUri: String,
