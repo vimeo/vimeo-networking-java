@@ -124,6 +124,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val CLIENT_ID = "CLIENT ID"
         const val CLIENT_SECRET = "CLIENT SECRET"
-        const val REQUEST_CODE = 12345
+        const val REQUEST_CODE = "12345"
     }
 }
