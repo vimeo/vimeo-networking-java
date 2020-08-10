@@ -19,41 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-@file:JvmName("VimeoCallbackUtils")
+package com.vimeo.networking2.common
 
-package com.vimeo.networking2
+import com.vimeo.networking2.enums.ApiOptionsType
+import com.vimeo.networking2.enums.asEnumList
 
 /**
- * Informs you of the result of an API request. Provides the response or any errors.
+ * Information on how to take access data related to an entity. The [options] list contains all the possible type of
+ * HTTP requests that are supported for the connection.
  */
-interface VimeoCallback<ResponseType_T> {
+interface Connection {
+    /**
+     * An array of HTTP methods permitted on this URI.
+     */
+    val options: List<String>?
 
     /**
-     * A successful API response.
-     *
-     * @param response  Data returned by the API.
+     * The API URI that resolves to the connection data.
      */
-    fun onSuccess(response: VimeoResponse.Success<ResponseType_T>)
-
-    /**
-     * An error occurred when making the request.
-     *
-     * @param error Information on the error. This error could be due to an exception thrown or
-     *              parsing response error.
-     */
-    fun onError(error: VimeoResponse.Error)
+    val uri: String?
 }
 
 /**
- * Create a lambda friendly instance of the [VimeoCallback].
- *
- * @param onSuccess Called when the request completes successfully.
- * @param onError Called when the request completes unsuccessfully.
+ * @see Connection.options
+ * @see ApiOptionsType
  */
-fun <ResponseType_T> vimeoCallback(
-    onSuccess: (VimeoResponse.Success<ResponseType_T>) -> Unit,
-    onError: (VimeoResponse.Error) -> Unit
-): VimeoCallback<ResponseType_T> = object : VimeoCallback<ResponseType_T> {
-    override fun onSuccess(response: VimeoResponse.Success<ResponseType_T>) = onSuccess(response)
-    override fun onError(error: VimeoResponse.Error) = onError(error)
-}
+val Connection.optionsTypes: List<ApiOptionsType>
+    get() = options.asEnumList(ApiOptionsType.UNKNOWN)

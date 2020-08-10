@@ -40,7 +40,9 @@ import java.util.Locale
  * @param clientId The Vimeo API ID of the client application.
  * @param clientSecret The Vimeo API secret of the client application.
  * @param scope The [Scopes] required by the client application.
- * @param codeGrantRedirectUri The code grant redirect used for OAuth.
+ * @param codeGrantRedirectUri The code grant redirect used for OAuth. This URL must be specified on the
+ * [https://developer.vimeo.com/apps] page in order for the API to accept it. This is the URL which the API will
+ * redirect back to.
  * @param locales A list of locales which the API should use to localize responses. Locales are prioritized based on
  * index.
  * @param accountStore The store used to remember authenticated accounts.
@@ -133,7 +135,9 @@ data class VimeoApiConfiguration(
         fun withBaseUrl(baseUrl: String) = apply { this.baseUrl = baseUrl }
 
         /**
-         * Specify a code grant redirect. Defaults to `vimeo{clientId}://auth`.
+         * Specify a code grant redirect. Defaults to `vimeo{clientId}://auth`. This URL must be specified on the
+         * [https://developer.vimeo.com/apps] page in order for the API to accept it. This is the URL which the API will
+         * redirect back to.
          *
          * @see VimeoApiConfiguration.codeGrantRedirectUri
          */

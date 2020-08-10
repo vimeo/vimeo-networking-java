@@ -71,7 +71,7 @@ internal class VimeoCallEmptyResponseAdapter(
     }
 
     override fun enqueueError(apiError: ApiError, callback: VimeoCallback<Unit>): VimeoRequest {
-        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, VimeoResponse.HTTP_NONE)) }
+        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, ApiConstants.NONE)) }
         return NoOpVimeoRequest
     }
 

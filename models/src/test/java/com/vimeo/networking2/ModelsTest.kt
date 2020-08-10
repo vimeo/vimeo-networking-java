@@ -35,7 +35,7 @@ class ModelsTest {
         ConnectedAppList::class,
         ConnectedAppInteraction::class,
         ConnectedScopes::class,
-        Connection::class,
+        BasicConnection::class,
         Credit::class,
         DashVideoFile::class,
         Document::class,

@@ -23,20 +23,28 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
 import com.vimeo.networking2.account.CachingAccountStore
+import com.vimeo.networking2.enums.ErrorCodeType
+import okhttp3.HttpUrl
 
 /**
- * Authentication with email, google, facebook or pincode.
+ * Authentication using email, google, facebook, code grant, or pin code.
  *
  * @param authService Retrofit service for authentication.
  * @param basicAuthHeader Client id and client secret header.
+ * @param clientId The client id used to generate the code grant URI.
+ * @param redirectUri The URI to which the code grant will redirect after successful authentication.
  * @param scopes All the scopes for authentication.
  * @param accountStore The account store used to store and retrieve credentials.
+ * @param localVimeoCallAdapter The adapter used to notify consumers of local errors.
  */
 internal class AuthenticatorImpl(
     private val authService: AuthService,
     private val basicAuthHeader: String,
+    private val clientId: String,
+    private val redirectUri: String,
     private val scopes: Scopes,
-    private val accountStore: CachingAccountStore
+    private val accountStore: CachingAccountStore,
+    private val localVimeoCallAdapter: LocalVimeoCallAdapter
 ) : Authenticator {
 
     override val currentAccount: VimeoAccount?
@@ -191,6 +199,10 @@ internal class AuthenticatorImpl(
         }
     }
 
+    override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
+        return authService.ssoTokenExchange(basicAuthHeader, accessToken, scopes).enqueue(callback)
+    }
+
     override fun exchangeOAuthOneToken(
         token: String,
         tokenSecret: String,
@@ -220,6 +232,22 @@ internal class AuthenticatorImpl(
         } else {
             call.enqueue(callback)
         }
+    }
+
+    override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
+        val httpUrl: HttpUrl = HttpUrl.parse(uri) ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val authorizationCode = httpUrl.queryParameter("code")
+            ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return authService.authenticateWithCodeGrant(
+            basicAuthHeader,
+            redirectUri,
+            authorizationCode,
+            GrantType.AUTHORIZATION_CODE
+        ).enqueue(AccountStoringVimeoCallback(accountStore, callback))
+    }
+
+    override fun obtainCodeGrantAuthorizationUri(responseCode: Int): String {
+        return authService.codeGrantRequest(clientId, redirectUri, responseCode, scopes).request().url().toString()
     }
 
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest {
@@ -269,11 +297,34 @@ internal class AuthenticatorImpl(
         }
     }
 
+    override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest {
+        return authService.getPinCodeInfo(basicAuthHeader, GrantType.DEVICE, scopes).enqueue(callback)
+    }
+
+    override fun authenticateWithPinCode(
+        pinCodeInfo: PinCodeInfo,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest {
+        val userCode = pinCodeInfo.userCode.orEmpty()
+        val deviceCode = pinCodeInfo.deviceCode.orEmpty()
+
+        return authService.logInWithPinCode(basicAuthHeader, GrantType.DEVICE, userCode, deviceCode, scopes)
+            .enqueue(callback)
+    }
+
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest {
         val accessToken = currentAccount?.accessToken
         accountStore.removeAccount()
         accessToken ?: return NoOpVimeoRequest
 
         return authService.logOut(authorization = "Bearer $accessToken").enqueue(callback)
+    }
+
+    private fun <T> LocalVimeoCallAdapter.enqueueEmptyUri(callback: VimeoCallback<T>): VimeoRequest {
+        return enqueueError(ApiError(
+            invalidParameters = listOf(InvalidParameter(
+                errorCode = ErrorCodeType.INVALID_URI.value
+            ))
+        ), callback)
     }
 }
