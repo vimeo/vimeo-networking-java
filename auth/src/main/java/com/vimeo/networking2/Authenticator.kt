@@ -183,7 +183,6 @@ interface Authenticator {
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 
-
     /**
      * Obtain the URI which can be used to log in the user and receive back a URI that can be exchanged using
      * [authenticateWithCodeGrant] for a logged in account.
