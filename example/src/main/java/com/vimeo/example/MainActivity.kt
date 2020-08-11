@@ -21,6 +21,7 @@
  */
 package com.vimeo.example
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -47,6 +48,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  * `AndroidManifest.xml` to handle the set URL instead of `https://example.com`.
  * 5. Run the app and make requests.
  */
+@SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,36 +64,11 @@ class MainActivity : AppCompatActivity() {
         val authenticator = Authenticator(configuration)
         val apiClient = VimeoApiClient(configuration, authenticator)
 
-        // If we are handling a code grant redirect, this URI will be present, otherwise it's a normal app start.
-        val redirectUri = intent?.data
-
-        if (redirectUri != null) {
-            // Optional, but for security purposes, we can verify that the code we specified is returned to us.
-            val requestCode = redirectUri.getQueryParameter("state")
-            require(requestCode == REQUEST_CODE)
-
-            // Log in using the code grant URI provided to us by the redirect.
-            authenticator.authenticateWithCodeGrant(redirectUri.toString(), vimeoCallback(
-                onSuccess = {
-                    toast("Successfully logged in.")
-                    loginStatus.text = authenticator.currentAccount.asLoginStatus()
-                },
-                onError = { toast("Unable to log in.") }
-            ))
-        }
+        // If we are handling a code grant redirect, a URI will be present in the Intent, which will be used to log in.
+        // Otherwise it's a normal app start and we will obtain client credentials.
+        authenticate(intent?.data, authenticator)
 
         loginStatus.text = authenticator.currentAccount.asLoginStatus()
-
-        clientCredentials.setOnClickListener {
-            // Obtain logged out credentials which can be used to make logged out requests.
-            authenticator.clientCredentials(vimeoCallback(
-                onSuccess = {
-                    toast("Obtained client credentials.")
-                    loginStatus.text = authenticator.currentAccount.asLoginStatus()
-                },
-                onError = { toast("Couldn't obtain client credentials") }
-            ))
-        }
 
         login.setOnClickListener {
             // Open the browser with the code grant authorization URI and let the user log in
@@ -114,13 +91,57 @@ class MainActivity : AppCompatActivity() {
 
         getMyVideos.setOnClickListener {
             // Fetch the currently logged in user's videos. Will fail if the user is not logged in.
-            val uri = authenticator.currentAccount?.user?.metadata?.connections?.videos?.uri ?: ""
-            apiClient.fetchVideoList(uri, null, null, null, vimeoCallback(
+            val uri = authenticator.currentAccount?.user?.metadata?.connections?.videos?.uri
+                ?: return@setOnClickListener run { myVideosList.text = "Cannot fetch videos until user is logged in!" }
+
+            // Fetch the list of videos, only asking for the "name" field in the response.
+            apiClient.fetchVideoList(uri, "name", null, null, vimeoCallback(
                 onSuccess = { myVideosList.text = it.data.asNameList() },
                 onError = {
                     myVideosList.text = null
                     toast("Unable to fetch user's videos.")
                 }
+            ))
+        }
+
+        getStaffPicks.setOnClickListener {
+            // Fetch the list of videos from staff picks, only asking for the "name" field in the response.
+            apiClient.fetchVideoList(STAFF_PICKS_URI, "name", null, null, vimeoCallback(
+                onSuccess = { staffPicksList.text = it.data.asNameList() },
+                onError = {
+                    staffPicksList.text = null
+                    toast("Unable to fetch staff picked videos.")
+                }
+            ))
+        }
+    }
+
+    private fun authenticate(redirectUri: Uri?, authenticator: Authenticator) {
+        if (redirectUri != null) {
+            // Optional, but for security purposes, we can verify that the code we specified is returned to us.
+            val requestCode = redirectUri.getQueryParameter("state")
+            require(requestCode == REQUEST_CODE)
+
+            // Log in using the code grant URI provided to us by the redirect.
+            authenticator.authenticateWithCodeGrant(redirectUri.toString(), vimeoCallback(
+                onSuccess = {
+                    toast("Successfully logged in.")
+                    loginStatus.text = authenticator.currentAccount.asLoginStatus()
+                },
+                onError = { toast("Unable to log in.") }
+            ))
+        } else {
+            // Obtain client credentials which can be used to make logged out requests.
+            // Obtaining client credentials is technically optional and basic auth can be used instead. However, using
+            // basic auth can result in your client secret being leaked, so it is better to use client credentials. If
+            // client credentials are not obtained or this request fails, the VimeoApiClient will fall back to basic
+            // authentication.
+            authenticator.clientCredentials(vimeoCallback(
+                onSuccess = {
+                    toast("Obtained client credentials.")
+                    loginStatus.text = authenticator.currentAccount.asLoginStatus()
+                },
+                onError = { toast("Couldn't obtain client credentials.") }
             ))
         }
     }
@@ -132,9 +153,9 @@ class MainActivity : AppCompatActivity() {
         ?: "No Videos"
 
     private fun VimeoAccount?.asLoginStatus() = when {
-        this == null -> "Logged Out - Unauthenticated"
+        this == null -> "Logged Out - Basic Authentication"
         this.isLoggedIn -> "Logged In - Authenticated"
-        else -> "Logged Out - Authenticated"
+        else -> "Logged Out - Client Credentials"
     }
 
     private fun toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -145,5 +166,7 @@ class MainActivity : AppCompatActivity() {
         const val CODE_GRANT_REDIRECT_URL = "https://example.com"
 
         const val REQUEST_CODE = "12345"
+
+        const val STAFF_PICKS_URI = "/channels/927/videos"
     }
 }
