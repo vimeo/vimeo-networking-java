@@ -55,6 +55,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (!validateClientIdAndClientSecret()) {
+            return
+        }
+
         // Construct a configuration instance.
         val configuration = VimeoApiConfiguration.Builder(CLIENT_ID, CLIENT_SECRET, listOf(ScopeType.PUBLIC))
             .withCodeGrantRedirectUrl(CODE_GRANT_REDIRECT_URL)
