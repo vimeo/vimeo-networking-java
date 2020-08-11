@@ -34,7 +34,7 @@ import java.util.concurrent.Executor
 
 /**
  * An interface that provides the following ways to authenticate with the Vimeo API:
- * - Client credentials.
+ * - Client credentials
  * - Google
  * - Facebook
  * - Code grant
@@ -43,20 +43,49 @@ import java.util.concurrent.Executor
  * - Pin code
  * - Logout
  *
- * Create an instance of the [Authenticator] by using its invoke function and make authentication requests as follows.
+ * If no authentication is performed, by default basic authentication will be used for requests made by this SDK. It is
+ * advised that client credentials are used instead of basic authentication if the consumer intends to use the API as a
+ * "logged out" user. If the consumer intends to use the API as a "logged in" user, then obtaining credentials using the
+ * code grant mechanism is the way to authenticate.
+ *
+ * Create an instance of the [Authenticator] by using its invoke function as follows.
  * ```
  * val authenticator = Authenticator(Configuration)
- * authenticator.clientCredentials(vimeoCallback(
- *      onSuccess = { authResponse: VimeoResponse.Success<VimeoAccount> -> }
- *      onError = { error: VimeoResponse.Error -> }
- * ))
  * ```
+ *
  * If the consumer does not want to manage the instance of the [Authenticator] themselves, they can utilize the
  * singleton instance.
- *
  * ```
  * Authenticator.initialize(Configuration)
  * val instance = Authenticator.instance()
+ * ```
+ *
+ * In order to obtain client credentials, make a request as follows.
+ * ```
+ * authenticator.clientCredentials(vimeoCallback(
+ *     onSuccess = { authResponse: VimeoResponse.Success<VimeoAccount> -> }
+ *     onError = { error: VimeoResponse.Error -> }
+ * ))
+ * ```
+ * Once this request succeeds, all subsequent requests with the client will use the token obtained.
+ *
+ * In order to log in using a code grant, follow this flow. Note: [VimeoApiConfiguration.codeGrantRedirectUri] must be
+ * set and must be registered at [https://developer.vimeo.com/apps].
+ * ```
+ * // Create the URI to log in.
+ * val loginUri = createCodeGrantAuthorizationUri(requestCode = "1234567")
+ *
+ * // Open the URI in a browser (Android shown here).
+ * val intent = Intent(Intent.ACTION_VIEW, Uri.parse(loginUri))
+ * startActivity(intent)
+ * ```
+ * Once the user logs in at the URI, the API will redirect back to the redirect URI mentioned above.
+ * ```
+ * // Use the URI the browser redirects back to to log in.
+ * authenticator.authenticateWithCodeGrant(redirectedUri, vimeoCallback(
+ *     onSuccess = { authResponse: VimeoResponse.Success<VimeoAccount> -> }
+ *     onError = { error: VimeoResponse.Error -> }
+ * ))
  * ```
  *
  * See [https://developer.vimeo.com/api/authentication] for more information about the different authentication
