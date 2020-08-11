@@ -187,7 +187,9 @@ interface Authenticator {
      * Create a URI which can be used to log in the user and will redirect to a URI that can be exchanged using
      * [authenticateWithCodeGrant] for a logged in account.
      *
-     * @param responseCode An arbitrary response code that can be used to verify the origin of the redirect URI.
+     * @param responseCode An arbitrary response code that can be used to verify the origin of the redirect URI. The
+     * API will return this value to later as a security measure in a query string parameter named `state` in the
+     * callback URI.
      *
      * @return The URI which can be opened in a browser.
      */
