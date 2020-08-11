@@ -31,7 +31,21 @@ import com.vimeo.networking2.config.VimeoApiConfiguration
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
- * The sample activity in which we create an [Authenticator] instance to authenticate with the server.
+ * An sample activity in which we create an [Authenticator] instance to authenticate with the server and a
+ * [VimeoApiClient] to make authenticated requests to the API.
+ *
+ * Please refer to [https://developer.vimeo.com/api/guides/start] for more information on how to get started with using
+ * the Vimeo API if you are new to using it.
+ *
+ * In order to use this example, first you need to follow these steps:
+ * 1. Go to [https://developer.vimeo.com/apps] and create an API app if you haven't created one.
+ * 2. After creating the API app, find the client ID and client secret on the app page and replace the [CLIENT_ID] and
+ * [CLIENT_SECRET] constants with those values.
+ * 3. On the same page that had the client ID and client secret, add a callback URL. Ideally this URL is one that you
+ * own and not one that another app will be handling.
+ * 4. Replace [CODE_GRANT_REDIRECT_URL] with the URL added on the app page and replace intent filter in the
+ * `AndroidManifest.xml` to handle the set URL instead of `https://example.com`.
+ * 5. Run the app and make requests.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -41,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         // Construct a configuration instance.
         val configuration = VimeoApiConfiguration.Builder(CLIENT_ID, CLIENT_SECRET, listOf(ScopeType.PUBLIC))
-            .withCodeGrantRedirectUrl("https://example.com")
+            .withCodeGrantRedirectUrl(CODE_GRANT_REDIRECT_URL)
             .build()
 
         // Initialize the authenticator instance with the configuration and the api client.
@@ -52,6 +66,10 @@ class MainActivity : AppCompatActivity() {
         val redirectUri = intent?.data
 
         if (redirectUri != null) {
+            // Optional, but for security purposes, we can verify that the code we specified is returned to us.
+            val requestCode = redirectUri.getQueryParameter("state")
+            require(requestCode == REQUEST_CODE)
+
             // Log in using the code grant URI provided to us by the redirect.
             authenticator.authenticateWithCodeGrant(redirectUri.toString(), vimeoCallback(
                 onSuccess = {
@@ -79,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             // Open the browser with the code grant authorization URI and let the user log in
             startActivity(Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(authenticator.obtainCodeGrantAuthorizationUri(REQUEST_CODE))
+                Uri.parse(authenticator.createCodeGrantAuthorizationUri(REQUEST_CODE))
             ))
         }
 
@@ -124,6 +142,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val CLIENT_ID = "CLIENT ID"
         const val CLIENT_SECRET = "CLIENT SECRET"
+        const val CODE_GRANT_REDIRECT_URL = "https://example.com"
+
         const val REQUEST_CODE = "12345"
     }
 }

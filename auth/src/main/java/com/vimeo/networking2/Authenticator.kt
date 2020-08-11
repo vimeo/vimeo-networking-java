@@ -184,18 +184,18 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Obtain the URI which can be used to log in the user and receive back a URI that can be exchanged using
+     * Create a URI which can be used to log in the user and will redirect to a URI that can be exchanged using
      * [authenticateWithCodeGrant] for a logged in account.
      *
-     * @param responseCode The response code that can be used to identify the origin of the redirect URI.
+     * @param responseCode An arbitrary response code that can be used to verify the origin of the redirect URI.
      *
      * @return The URI which can be opened in a browser.
      */
-    fun obtainCodeGrantAuthorizationUri(responseCode: String): String
+    fun createCodeGrantAuthorizationUri(responseCode: String): String
 
     /**
-     * Log in using an authorization code grant received from the request to made to the URI returned by
-     * [obtainCodeGrantAuthorizationUri].
+     * Log in using an authorization code grant received after directing the user to the URI returned by
+     * [createCodeGrantAuthorizationUri] and then being redirected to a URI.
      *
      * @param uri The URI which was redirected back to you. Must contain a `code` query parameter that contains the
      * authorization code.

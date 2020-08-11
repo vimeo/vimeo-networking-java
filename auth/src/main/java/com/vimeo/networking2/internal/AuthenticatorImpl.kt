@@ -246,7 +246,7 @@ internal class AuthenticatorImpl(
         ).enqueue(AccountStoringVimeoCallback(accountStore, callback))
     }
 
-    override fun obtainCodeGrantAuthorizationUri(responseCode: String): String {
+    override fun createCodeGrantAuthorizationUri(responseCode: String): String {
         return authService.codeGrantRequest(clientId, redirectUri, responseCode, scopes).request().url().toString()
     }
 

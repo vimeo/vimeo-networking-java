@@ -150,7 +150,8 @@ internal interface AuthService {
 
     /**
      * Used to log into Vimeo using a Facebook authorization token. If an account does not exist, this request will
-     * fail. For this reason, [joinWithFacebook] is preferred since it also supports login.
+     * fail. For this reason, [joinWithFacebook] is preferred since it supports both login and join, leaving this
+     * function intentionally unused.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -160,6 +161,7 @@ internal interface AuthService {
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
      */
+    @Suppress("unused")
     @FormUrlEncoded
     @POST("oauth/authorize/facebook")
     fun logInWithFacebook(
@@ -171,7 +173,8 @@ internal interface AuthService {
 
     /**
      * Used to log into Vimeo using a Google authorization token. If an account does not exist, this request will fail.
-     * For this reason, [joinWithGoogle] is preferred since it also supports login.
+     * For this reason, [joinWithGoogle] is preferred since it also supports both login and join, leaving this
+     * function intentionally unused.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -181,6 +184,7 @@ internal interface AuthService {
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
      */
+    @Suppress("unused")
     @FormUrlEncoded
     @POST("oauth/authorize/google")
     fun logInWithGoogle(
@@ -196,7 +200,7 @@ internal interface AuthService {
      *
      * @param clientId The client id of the app.
      * @param redirectUri The URI which should be redirected back to.
-     * @param state A random value that will be returned in the redirect to identify the origin of the request.
+     * @param state An arbitrary value that will be returned in the redirect to identify the origin of the request.
      * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that creates a request to the code grant endpoint.
