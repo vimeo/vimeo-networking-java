@@ -203,7 +203,7 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Exchange an OAuth 1 token and secret for a new OAuth 2 token.
+     * Exchange an OAuth1 token and secret for a new OAuth 2 token.
      *
      * @param token The old token to use in the exchange.
      * @param tokenSecret The old token secret to use in the exchange.
@@ -211,7 +211,7 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun exchangeOAuthOneToken(
+    fun exchangeOAuth1Token(
         token: String,
         tokenSecret: String,
         callback: VimeoCallback<VimeoAccount>

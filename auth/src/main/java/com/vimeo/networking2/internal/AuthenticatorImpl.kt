@@ -200,10 +200,10 @@ internal class AuthenticatorImpl(
     }
 
     override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
-        return authService.ssoTokenExchange(basicAuthHeader, accessToken, scopes).enqueueWithAccountStore(callback)
+        return authService.exchangeAccessToken(basicAuthHeader, accessToken, scopes).enqueueWithAccountStore(callback)
     }
 
-    override fun exchangeOAuthOneToken(
+    override fun exchangeOAuth1Token(
         token: String,
         tokenSecret: String,
         callback: VimeoCallback<VimeoAccount>
@@ -214,7 +214,7 @@ internal class AuthenticatorImpl(
             AuthParam.FIELD_SCOPES to scopes
         ).validate()
 
-        val call = authService.exchangeOAuthOneToken(
+        val call = authService.exchangeOAuth1Token(
             authorization = basicAuthHeader,
             grantType = GrantType.OAUTH_ONE,
             token = token,

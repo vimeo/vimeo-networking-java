@@ -236,7 +236,7 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Exchanges an old OAuth One token for a shiny new OAuth2 token.
+     * Exchanges an old OAuth1 token for a shiny new OAuth2 token.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -249,7 +249,7 @@ internal interface AuthService {
      */
     @FormUrlEncoded
     @POST("oauth/authorize/vimeo_oauth1")
-    fun exchangeOAuthOneToken(
+    fun exchangeOAuth1Token(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field(TOKEN) token: String,
@@ -258,10 +258,10 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Exchange a token obtained through SSO for an authenticated account.
+     * Exchange an access token obtained from another source for an authenticated account.
      *
      * @param authorization Created from the client id and client secret.
-     * @param token The token obtained through SSO which will be used to authenticate the user.
+     * @param token The token obtained from another source which will be used to authenticate the user.
      * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
@@ -269,7 +269,7 @@ internal interface AuthService {
      */
     @FormUrlEncoded
     @POST("oauth/appexchange")
-    fun ssoTokenExchange(
+    fun exchangeAccessToken(
         @Header(AUTHORIZATION) authorization: String,
         @Field(ACCESS_TOKEN) token: String,
         @Field(SCOPE) scopes: Scopes
