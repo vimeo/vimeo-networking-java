@@ -43,11 +43,11 @@ enum class AuthParam(
     FIELD_SCOPES(developerMessage = "Scopes were not provided."),
 
     @Json(name = "domain")
-    DOMAIN(developerMessage = "An empty domain was provided"),
+    DOMAIN(developerMessage = "An empty domain was provided."),
 
     @Json(name = "authorization_code")
-    AUTHORIZATION_CODE(developerMessage = "An empty authorization code was provided"),
+    AUTHORIZATION_CODE(developerMessage = "An empty authorization code was provided."),
 
     @Json(name = "redirect_uri")
-    REDIRECT_URI(developerMessage = "An empty redirect uri was provided")
+    REDIRECT_URI(developerMessage = "An empty redirect uri was provided.")
 }
