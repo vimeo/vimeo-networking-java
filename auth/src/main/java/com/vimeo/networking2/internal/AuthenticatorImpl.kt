@@ -69,7 +69,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
+            call.enqueueWithAccountStore(callback)
         }
     }
 
@@ -100,7 +100,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
+            call.enqueueWithAccountStore(callback)
         }
     }
 
@@ -131,7 +131,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
+            call.enqueueWithAccountStore(callback)
         }
     }
 
@@ -165,7 +165,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
+            call.enqueueWithAccountStore(callback)
         }
     }
 
@@ -195,12 +195,12 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
+            call.enqueueWithAccountStore(callback)
         }
     }
 
     override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
-        return authService.ssoTokenExchange(basicAuthHeader, accessToken, scopes).enqueue(callback)
+        return authService.ssoTokenExchange(basicAuthHeader, accessToken, scopes).enqueueWithAccountStore(callback)
     }
 
     override fun exchangeOAuthOneToken(
@@ -230,20 +230,20 @@ internal class AuthenticatorImpl(
 
             call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(callback)
+            call.enqueueWithAccountStore(callback)
         }
     }
 
     override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
         val httpUrl: HttpUrl = HttpUrl.parse(uri) ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        val authorizationCode = httpUrl.queryParameter("code")
+        val authorizationCode = httpUrl.queryParameter(PARAM_CODE)
             ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return authService.authenticateWithCodeGrant(
             basicAuthHeader,
             redirectUri,
             authorizationCode,
             GrantType.AUTHORIZATION_CODE
-        ).enqueue(AccountStoringVimeoCallback(accountStore, callback))
+        ).enqueueWithAccountStore(callback)
     }
 
     override fun createCodeGrantAuthorizationUri(responseCode: String): String {
@@ -274,10 +274,12 @@ internal class AuthenticatorImpl(
     }
 
     override fun ssoCodeGrant(
-        authorizationCode: String,
+        uri: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
+        val httpUrl: HttpUrl = HttpUrl.parse(uri) ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val authorizationCode = httpUrl.queryParameter(PARAM_CODE).orEmpty()
         val invalidAuthParams = mapOf(
             AuthParam.AUTHORIZATION_CODE to authorizationCode,
             AuthParam.REDIRECT_URI to redirectUri
@@ -297,7 +299,7 @@ internal class AuthenticatorImpl(
             )
             call.enqueueError(apiError, callback)
         } else {
-            call.enqueue(callback)
+            call.enqueueWithAccountStore(callback)
         }
     }
 
@@ -313,7 +315,7 @@ internal class AuthenticatorImpl(
         val deviceCode = pinCodeInfo.deviceCode.orEmpty()
 
         return authService.logInWithPinCode(basicAuthHeader, GrantType.DEVICE, userCode, deviceCode, scopes)
-            .enqueue(callback)
+            .enqueueWithAccountStore(callback)
     }
 
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest {
@@ -330,5 +332,12 @@ internal class AuthenticatorImpl(
                 errorCode = ErrorCodeType.INVALID_URI.value
             ))
         ), callback)
+    }
+
+    private fun VimeoCall<VimeoAccount>.enqueueWithAccountStore(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
+        enqueue(AccountStoringVimeoCallback(accountStore, callback))
+
+    private companion object {
+        const val PARAM_CODE = "code"
     }
 }

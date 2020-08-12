@@ -273,7 +273,8 @@ interface Authenticator {
     /**
      * Authenticate with the server using an authorization code grant from a supported enterprise SSO domain.
      *
-     * @param authorizationCode The Auth0 code to verify.
+     * @param uri The URI which was redirected back to you. Must contain a `code` query parameter that contains the
+     * authorization code.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
      * @param callback Callback to be notified of the result of the request.
      *
@@ -281,7 +282,7 @@ interface Authenticator {
      */
     @Internal
     fun ssoCodeGrant(
-        authorizationCode: String,
+        uri: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest

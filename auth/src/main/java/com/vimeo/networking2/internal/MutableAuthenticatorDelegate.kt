@@ -95,10 +95,10 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
         authenticator.createSsoGrantAuthorizationUri(ssoDomain, responseCode)
 
     override fun ssoCodeGrant(
-        authorizationCode: String,
+        uri: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.ssoCodeGrant(authorizationCode, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.ssoCodeGrant(uri, marketingOptIn, callback)
 
     override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest =
         authenticator.fetchPinCodeInfo(callback)
