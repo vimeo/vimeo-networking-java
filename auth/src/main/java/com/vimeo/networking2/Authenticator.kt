@@ -82,7 +82,9 @@ import java.util.concurrent.Executor
  * val intent = Intent(Intent.ACTION_VIEW, Uri.parse(loginUri))
  * startActivity(intent)
  * ```
- * Once the user logs in at the URI, the API will redirect back to the redirect URI mentioned above.
+ * Once the user logs in at the URI, the API will redirect back to the redirect URI mentioned above. Note: Android
+ * consumers should specify an `intent-filter` in the manifest for the redirect URI so that the app can be called back
+ * with it.
  * ```
  * // Use the URI the browser redirects back to to log in.
  * authenticator.authenticateWithCodeGrant(redirectedUri, vimeoCallback(
