@@ -19,19 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2
+package com.vimeo.example
 
-import com.vimeo.networking2.enums.StringValue
+import android.app.AlertDialog
 
 /**
- * The type of token grants that can be performed.
+ * Warn the user that they haven't set the client ID or client secret and requests won't work.
  */
-enum class GrantType(override val value: String) : StringValue {
-    CLIENT_CREDENTIALS("client_credentials"),
-    AUTHORIZATION_CODE("authorization_code"),
-    DEVICE("device_grant"),
-    PASSWORD("password"),
-    FACEBOOK("facebook"),
-    GOOGLE("google"),
-    OAUTH_ONE("vimeo_oauth1")
+@Suppress("ConstantConditionIf")
+fun MainActivity.validateClientIdAndClientSecret(): Boolean {
+    return if (MainActivity.CLIENT_ID == "CLIENT ID" || MainActivity.CLIENT_SECRET == "CLIENT SECRET") {
+        AlertDialog.Builder(this)
+            .setTitle("Warning")
+            .setMessage("Please update the CLIENT_ID and CLIENT_SECRET in MainActivity.kt in order to make requests")
+            .setCancelable(false)
+            .show()
+        false
+    } else {
+        true
+    }
 }

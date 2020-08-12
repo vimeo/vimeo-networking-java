@@ -25,17 +25,20 @@ import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.Scopes
 import com.vimeo.networking2.VimeoAccount
+import retrofit2.Call
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 /**
  * All the authentication endpoints.
  */
-@Suppress("unused", "LongParameterList", "ComplexInterface")
+@Suppress("LongParameterList", "ComplexInterface")
 internal interface AuthService {
 
     /**
@@ -146,7 +149,9 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Used to log into Vimeo using a Facebook authorization token.
+     * Used to log into Vimeo using a Facebook authorization token. If an account does not exist, this request will
+     * fail. For this reason, [joinWithFacebook] is preferred since it supports both login and join, leaving this
+     * function intentionally unused.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -156,6 +161,7 @@ internal interface AuthService {
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
      */
+    @Suppress("unused")
     @FormUrlEncoded
     @POST("oauth/authorize/facebook")
     fun logInWithFacebook(
@@ -166,7 +172,9 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Used to log into Vimeo using a Google authorization token.
+     * Used to log into Vimeo using a Google authorization token. If an account does not exist, this request will fail.
+     * For this reason, [joinWithGoogle] is preferred since it also supports both login and join, leaving this
+     * function intentionally unused.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -176,6 +184,7 @@ internal interface AuthService {
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
      * contains a user object.
      */
+    @Suppress("unused")
     @FormUrlEncoded
     @POST("oauth/authorize/google")
     fun logInWithGoogle(
@@ -186,11 +195,30 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
+     * Creates a request to the code grant authorization endpoint. Used to direct the user to a URL where they can log
+     * in and then redirect back to the app.
+     *
+     * @param clientId The client id of the app.
+     * @param redirectUri The URI which should be redirected back to.
+     * @param state An arbitrary value that will be returned in the redirect to identify the origin of the request.
+     * @param scopes The permissions scope that should be granted to the client.
+     *
+     * @return A [VimeoCall] that creates a request to the code grant endpoint.
+     */
+    @GET("oauth/authorize?response_type=code")
+    fun codeGrantRequest(
+        @Query("client_id") clientId: String,
+        @Query("redirect_uri") redirectUri: String,
+        @Query("state") state: String,
+        @Query(SCOPE) scopes: Scopes
+    ): Call<Unit>
+
+    /**
      * Authorize with the server using a code grant from a redirect URL.
      *
      * @param authorization Created from the client id and client secret.
      * @param redirectUri The URI which the user was redirected from.
-     * @param code The code obtained from the authorization grant.
+     * @param authorizationCode The code obtained from the authorization grant.
      * @param grantType The type of authorization grant that is being performed.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
@@ -201,7 +229,7 @@ internal interface AuthService {
     fun authenticateWithCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
         @Field("redirect_uri") redirectUri: String,
-        @Field("code") code: String,
+        @Field("code") authorizationCode: String,
         @Field(GRANT_TYPE) grantType: GrantType
     ): VimeoCall<VimeoAccount>
 

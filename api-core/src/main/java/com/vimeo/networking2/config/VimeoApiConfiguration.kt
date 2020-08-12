@@ -37,10 +37,14 @@ import java.util.Locale
  * The configuration for the client.
  *
  * @param baseUrl The base API URL to which all requests will be made.
- * @param clientId The Vimeo API ID of the client application.
- * @param clientSecret The Vimeo API secret of the client application.
+ * @param clientId The Vimeo API ID of the client application. Should be obtained from
+ * [https://developer.vimeo.com/apps].
+ * @param clientSecret The Vimeo API secret of the client application. Should be obtained from
+ * [https://developer.vimeo.com/apps].
  * @param scope The [Scopes] required by the client application.
- * @param codeGrantRedirectUri The code grant redirect used for OAuth.
+ * @param codeGrantRedirectUri The code grant redirect used for OAuth. This URL must be specified on the
+ * [https://developer.vimeo.com/apps] page in order for the API to accept it. This is the URL which the API will
+ * redirect back to.
  * @param locales A list of locales which the API should use to localize responses. Locales are prioritized based on
  * index.
  * @param accountStore The store used to remember authenticated accounts.
@@ -96,8 +100,10 @@ data class VimeoApiConfiguration(
     /**
      * The builder for the [VimeoApiConfiguration].
      *
-     * @param clientId The Vimeo API client ID, required to construct an instance.
-     * @param clientSecret The Vimeo API client secret, required to construct an instance.
+     * @param clientId The Vimeo API client ID, required to construct an instance. Should be obtained from
+     * [https://developer.vimeo.com/apps].
+     * @param clientSecret The Vimeo API client secret, required to construct an instance. Should be obtained from
+     * [https://developer.vimeo.com/apps].
      * @param scopes The permission scopes requested by the client, required to construct an instance.
      */
     class Builder(private val clientId: String, private val clientSecret: String, private val scopes: List<ScopeType>) {
@@ -133,7 +139,9 @@ data class VimeoApiConfiguration(
         fun withBaseUrl(baseUrl: String) = apply { this.baseUrl = baseUrl }
 
         /**
-         * Specify a code grant redirect. Defaults to `vimeo{clientId}://auth`.
+         * Specify a code grant redirect. Defaults to `vimeo{clientId}://auth`. This URL must be specified on the
+         * [https://developer.vimeo.com/apps] page in order for the API to accept it. This is the URL which the API will
+         * redirect back to.
          *
          * @see VimeoApiConfiguration.codeGrantRedirectUri
          */

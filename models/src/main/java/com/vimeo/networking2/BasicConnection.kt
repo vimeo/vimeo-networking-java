@@ -5,10 +5,10 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Connection
 
 /**
- * Information about the season the video is associated with.
+ * Connection data.
  */
 @JsonClass(generateAdapter = true)
-data class VideoSeasonConnection(
+data class BasicConnection(
 
     @Json(name = "options")
     override val options: List<String>? = null,
@@ -17,8 +17,9 @@ data class VideoSeasonConnection(
     override val uri: String? = null,
 
     /**
-     * The name of the season.
+     * The total number of albums on this connection.
      */
-    @Json(name = "name")
-    val name: String? = null
+    @Json(name = "total")
+    val total: Int? = null
+
 ) : Connection
