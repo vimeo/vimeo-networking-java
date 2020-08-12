@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         getMyVideos.setOnClickListener {
             // Fetch the currently logged in user's videos. Will fail if the user is not logged in.
             val uri = authenticator.currentAccount?.user?.metadata?.connections?.videos?.uri
-                ?: return@setOnClickListener run { myVideosList.text = "Cannot fetch videos until user is logged in!" }
+                ?: return@setOnClickListener run { toast("Cannot fetch videos until user is logged in!") }
 
             // Fetch the list of videos, only asking for the "name" field in the response.
             apiClient.fetchVideoList(uri, "name", null, null, vimeoCallback(

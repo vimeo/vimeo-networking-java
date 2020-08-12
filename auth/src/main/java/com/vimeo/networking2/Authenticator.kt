@@ -29,6 +29,7 @@ import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableAuthenticatorDelegate
+import com.vimeo.networking2.account.AccountStore
 import okhttp3.Credentials
 import java.util.concurrent.Executor
 
@@ -67,7 +68,9 @@ import java.util.concurrent.Executor
  *     onError = { error: VimeoResponse.Error -> }
  * ))
  * ```
- * Once this request succeeds, all subsequent requests with the client will use the token obtained.
+ * Once this request succeeds, all subsequent requests with the client will use the token obtained. The [Authenticator]
+ * automatically stores and manages the logged in account using the [AccountStore] which is provided during
+ * configuration.
  *
  * In order to log in using a code grant, follow this flow. Note: [VimeoApiConfiguration.codeGrantRedirectUri] must be
  * set and must be registered at [https://developer.vimeo.com/apps].
