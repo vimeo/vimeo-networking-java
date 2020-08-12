@@ -7,17 +7,6 @@
     tools:context="com.vimeo.example.MainActivity">
 
     <Button
-        android:id="@+id/clientCredentials"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Obtain Client Credentials"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginStatus"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clientCredentials"
+        app:layout_constraintTop_toBottomOf="@+id/loginStatus"
         app:layout_constraintVertical_bias="0" />
 
     <Button
@@ -50,6 +39,17 @@
         app:layout_constraintTop_toBottomOf="@+id/logOut"
         app:layout_constraintVertical_bias="0" />
 
+    <Button
+        android:id="@+id/getStaffPicks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Staff Picked Videos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getMyVideos"
+        app:layout_constraintVertical_bias="0" />
+
     <TextView
         android:id="@+id/loginStatus"
         android:layout_width="wrap_content"
@@ -63,13 +63,26 @@
 
     <TextView
         android:id="@+id/myVideosList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getMyVideos"
+        app:layout_constraintStart_toEndOf="@+id/staffPicksList"
+        app:layout_constraintTop_toBottomOf="@+id/getStaffPicks"
         app:layout_constraintVertical_bias="0.1"
         tools:text="My Videos" />
+
+    <TextView
+        android:id="@+id/staffPicksList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/myVideosList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getStaffPicks"
+        app:layout_constraintVertical_bias="0.1"
+        tools:text="Staff Picks" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
