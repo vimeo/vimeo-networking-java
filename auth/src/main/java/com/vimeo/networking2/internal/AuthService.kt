@@ -77,9 +77,9 @@ internal interface AuthService {
     @POST("users")
     fun joinWithEmail(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("password") password: String,
+        @Field(NAME) name: String,
+        @Field(EMAIL) email: String,
+        @Field(PASSWORD) password: String,
         @Field(SCOPE) scopes: Scopes,
         @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
@@ -100,8 +100,8 @@ internal interface AuthService {
     @POST("users")
     fun joinWithFacebook(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("username") email: String,
-        @Field("token") token: String,
+        @Field(USERNAME) email: String,
+        @Field(TOKEN) token: String,
         @Field(SCOPE) scopes: Scopes,
         @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
@@ -122,8 +122,8 @@ internal interface AuthService {
     @POST("users")
     fun joinWithGoogle(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("username") email: String,
-        @Field("id_token") idToken: String,
+        @Field(USERNAME) email: String,
+        @Field(ID_TOKEN) idToken: String,
         @Field(SCOPE) scopes: Scopes,
         @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
@@ -144,8 +144,8 @@ internal interface AuthService {
     @POST("oauth/authorize/password")
     fun logInWithEmail(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("username") email: String,
-        @Field("password") password: String,
+        @Field(USERNAME) email: String,
+        @Field(PASSWORD) password: String,
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
@@ -169,7 +169,7 @@ internal interface AuthService {
     fun logInWithFacebook(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field("token") token: String,
+        @Field(TOKEN) token: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
@@ -192,7 +192,7 @@ internal interface AuthService {
     fun logInWithGoogle(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field("id_token") idToken: String,
+        @Field(ID_TOKEN) idToken: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
@@ -209,7 +209,7 @@ internal interface AuthService {
      */
     @GET("oauth/authorize?response_type=code")
     fun codeGrantRequest(
-        @Query("client_id") clientId: String,
+        @Query(CLIENT_ID) clientId: String,
         @Query(REDIRECT_URI) redirectUri: String,
         @Query(STATE) state: String,
         @Query(SCOPE) scopes: Scopes
@@ -231,7 +231,7 @@ internal interface AuthService {
     fun authenticateWithCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
         @Field(REDIRECT_URI) redirectUri: String,
-        @Field("code") authorizationCode: String,
+        @Field(CODE) authorizationCode: String,
         @Field(GRANT_TYPE) grantType: GrantType
     ): VimeoCall<VimeoAccount>
 
@@ -252,8 +252,8 @@ internal interface AuthService {
     fun exchangeOAuthOneToken(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field("token") token: String,
-        @Field("token_secret") tokenSecret: String,
+        @Field(TOKEN) token: String,
+        @Field(TOKEN_SECRET) tokenSecret: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
@@ -271,7 +271,7 @@ internal interface AuthService {
     @POST("oauth/appexchange")
     fun ssoTokenExchange(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("access_token") token: String,
+        @Field(ACCESS_TOKEN) token: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
@@ -310,8 +310,8 @@ internal interface AuthService {
     fun logInWithPinCode(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field("user_code") pinCode: String,
-        @Field("device_code") deviceCode: String,
+        @Field(USER_CODE) pinCode: String,
+        @Field(DEVICE_CODE) deviceCode: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
@@ -328,7 +328,7 @@ internal interface AuthService {
     @GET("sso_domains")
     fun getSsoDomain(
         @Header(AUTHORIZATION) authorization: String,
-        @Query("domain") domain: String
+        @Query(DOMAIN) domain: String
     ): VimeoCall<SsoDomain>
 
     /**
@@ -366,7 +366,7 @@ internal interface AuthService {
     @POST("oauth/authorize/auth0")
     fun logInWithSsoCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("authorization_code") authorizationCode: String,
+        @Field(AUTHORIZATION_CODE) authorizationCode: String,
         @Field(REDIRECT_URI) redirectUri: String,
         @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
@@ -388,7 +388,7 @@ internal interface AuthService {
     @POST("users")
     fun joinWithSsoCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("authorization_code") authorizationCode: String,
+        @Field(AUTHORIZATION_CODE) authorizationCode: String,
         @Field(REDIRECT_URI) redirectUri: String,
         @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
@@ -406,13 +406,26 @@ internal interface AuthService {
         @Header(AUTHORIZATION) authorization: String
     ): VimeoCall<Unit>
 
-    companion object {
+    private companion object {
         private const val AUTHORIZATION = "Authorization"
         private const val SCOPE = "scope"
         private const val GRANT_TYPE = "grant_type"
         private const val REDIRECT_URI = "redirect_uri"
         private const val STATE = "state"
         private const val MARKETING_OPT_IN = "marketing_opt_in"
+        private const val AUTHORIZATION_CODE = "authorization_code"
+        private const val NAME = "name"
+        private const val EMAIL = "email"
+        private const val PASSWORD = "password"
+        private const val TOKEN = "token"
+        private const val TOKEN_SECRET = "token_secret"
+        private const val DOMAIN = "domain"
+        private const val USER_CODE = "user_code"
+        private const val DEVICE_CODE = "device_code"
+        private const val ACCESS_TOKEN = "access_token"
+        private const val CODE = "code"
+        private const val CLIENT_ID = "client_id"
+        private const val ID_TOKEN = "id_token"
+        private const val USERNAME = "username"
     }
-
 }
