@@ -268,7 +268,7 @@ interface Authenticator {
      * @return The URI which can be opened in a browser.
      */
     @Internal
-    fun obtainSsoGrantAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String
+    fun createSsoGrantAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String
 
     /**
      * Authenticate with the server using an authorization code grant from a supported enterprise SSO domain.
