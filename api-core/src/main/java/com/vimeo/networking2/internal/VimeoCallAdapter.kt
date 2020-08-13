@@ -23,7 +23,6 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
 import com.vimeo.networking2.logging.VimeoLogger
-import okhttp3.HttpUrl
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,8 +48,8 @@ internal class VimeoCallAdapter<T : Any>(
     private val vimeoLogger: VimeoLogger
 ) : VimeoCall<T> {
 
-    override val url: HttpUrl
-        get() = call.request().url()
+    override val url: String
+        get() = call.request().url().toString()
 
     /**
      * Determine if the response has a body.

@@ -23,7 +23,6 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
 import com.vimeo.networking2.logging.VimeoLogger
-import okhttp3.HttpUrl
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,8 +49,8 @@ internal class VimeoCallEmptyResponseAdapter(
     private val vimeoLogger: VimeoLogger
 ) : VimeoCall<Unit> {
 
-    override val url: HttpUrl
-        get() = call.request().url()
+    override val url: String
+        get() = call.request().url().toString()
 
     override fun enqueue(callback: VimeoCallback<Unit>): VimeoRequest {
         call.enqueue(object : Callback<Unit> {

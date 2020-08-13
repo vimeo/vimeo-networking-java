@@ -247,7 +247,7 @@ internal class AuthenticatorImpl(
     }
 
     override fun createCodeGrantAuthorizationUri(responseCode: String): String {
-        return authService.codeGrantRequest(clientId, redirectUri, responseCode, scopes).url.toString()
+        return authService.codeGrantRequest(clientId, redirectUri, responseCode, scopes).url
     }
 
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest {
@@ -270,7 +270,7 @@ internal class AuthenticatorImpl(
 
     override fun createSsoGrantAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String {
         val connectUrl = requireNotNull(ssoDomain.connectUrl) { "SsoDomain.connectUrl cannot be null" }
-        return authService.ssoGrantRequest(connectUrl, redirectUri, responseCode).url.toString()
+        return authService.ssoGrantRequest(connectUrl, redirectUri, responseCode).url
     }
 
     override fun ssoCodeGrant(
