@@ -45,33 +45,36 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override val currentAccount: VimeoAccount?
         get() = authenticator.currentAccount
 
-    override fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
-        authenticator.clientCredentials(callback)
+    override fun authenticateWithClientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
+        authenticator.authenticateWithClientCredentials(callback)
 
-    override fun google(
+    override fun authenticateWithGoogle(
         token: String,
         email: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.google(token, email, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithGoogle(token, email, marketingOptIn, callback)
 
-    override fun facebook(
+    override fun authenticateWithFacebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.facebook(token, email, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithFacebook(token, email, marketingOptIn, callback)
 
-    override fun emailJoin(
+    override fun authenticateWithEmailJoin(
         displayName: String,
         email: String,
         password: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.emailJoin(displayName, email, password, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithEmailJoin(displayName, email, password, marketingOptIn, callback)
 
-    override fun emailLogin(email: String, password: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
-        authenticator.emailLogin(email, password, callback)
+    override fun authenticateWithEmailLogin(
+        email: String,
+        password: String,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.authenticateWithEmailLogin(email, password, callback)
 
     override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
         authenticator.exchangeAccessToken(accessToken, callback)
@@ -91,14 +94,14 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest =
         authenticator.fetchSsoDomain(domain, callback)
 
-    override fun createSsoGrantAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String =
-        authenticator.createSsoGrantAuthorizationUri(ssoDomain, responseCode)
+    override fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String =
+        authenticator.createSsoAuthorizationUri(ssoDomain, responseCode)
 
-    override fun ssoCodeGrant(
+    override fun authenticateWithSso(
         uri: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.ssoCodeGrant(uri, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithSso(uri, marketingOptIn, callback)
 
     override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest =
         authenticator.fetchPinCodeInfo(callback)

@@ -63,7 +63,7 @@ import java.util.concurrent.Executor
  *
  * In order to obtain client credentials, make a request as follows.
  * ```
- * authenticator.clientCredentials(vimeoCallback(
+ * authenticator.authenticateWithClientCredentials(vimeoCallback(
  *     onSuccess = { authResponse: VimeoResponse.Success<VimeoAccount> -> }
  *     onError = { error: VimeoResponse.Error -> }
  * ))
@@ -113,7 +113,7 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest
+    fun authenticateWithClientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest
 
     /**
      * Authenticate via Google sign in to obtain a logged in token.
@@ -126,7 +126,7 @@ interface Authenticator {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun google(
+    fun authenticateWithGoogle(
         token: String,
         email: String,
         marketingOptIn: Boolean,
@@ -144,7 +144,7 @@ interface Authenticator {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun facebook(
+    fun authenticateWithFacebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
@@ -163,7 +163,7 @@ interface Authenticator {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun emailJoin(
+    fun authenticateWithEmailJoin(
         displayName: String,
         email: String,
         password: String,
@@ -181,7 +181,7 @@ interface Authenticator {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun emailLogin(
+    fun authenticateWithEmailLogin(
         email: String,
         password: String,
         callback: VimeoCallback<VimeoAccount>
@@ -263,7 +263,7 @@ interface Authenticator {
 
     /**
      * Obtain the URI which can be used to log in the user and receive back a URI that can be exchanged using
-     * [ssoCodeGrant] for a logged in account. Obtain the [SsoDomain] required by this function first using
+     * [authenticateWithSso] for a logged in account. Obtain the [SsoDomain] required by this function first using
      * [fetchSsoDomain].
      *
      * @param ssoDomain The domain info obtained from the API that specifies the [SsoDomain.connectUrl] which will be
@@ -273,7 +273,7 @@ interface Authenticator {
      * @return The URI which can be opened in a browser.
      */
     @Internal
-    fun createSsoGrantAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String
+    fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String
 
     /**
      * Authenticate with the server using an authorization code grant from a supported enterprise SSO domain.
@@ -286,7 +286,7 @@ interface Authenticator {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun ssoCodeGrant(
+    fun authenticateWithSso(
         uri: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>

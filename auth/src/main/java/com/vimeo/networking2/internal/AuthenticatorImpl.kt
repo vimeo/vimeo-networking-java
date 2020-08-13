@@ -50,7 +50,7 @@ internal class AuthenticatorImpl(
     override val currentAccount: VimeoAccount?
         get() = accountStore.loadAccount()
 
-    override fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest {
+    override fun authenticateWithClientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest {
         val invalidAuthParams = mapOf(
             AuthParam.FIELD_GRANT_TYPE to GrantType.CLIENT_CREDENTIALS.value,
             AuthParam.FIELD_SCOPES to scopes
@@ -73,7 +73,7 @@ internal class AuthenticatorImpl(
         }
     }
 
-    override fun google(
+    override fun authenticateWithGoogle(
         token: String,
         email: String,
         marketingOptIn: Boolean,
@@ -104,7 +104,7 @@ internal class AuthenticatorImpl(
         }
     }
 
-    override fun facebook(
+    override fun authenticateWithFacebook(
         token: String,
         email: String,
         marketingOptIn: Boolean,
@@ -135,7 +135,7 @@ internal class AuthenticatorImpl(
         }
     }
 
-    override fun emailJoin(
+    override fun authenticateWithEmailJoin(
         displayName: String,
         email: String,
         password: String,
@@ -169,7 +169,7 @@ internal class AuthenticatorImpl(
         }
     }
 
-    override fun emailLogin(
+    override fun authenticateWithEmailLogin(
         email: String,
         password: String,
         callback: VimeoCallback<VimeoAccount>
@@ -268,12 +268,12 @@ internal class AuthenticatorImpl(
         }
     }
 
-    override fun createSsoGrantAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String {
+    override fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String {
         val connectUrl = requireNotNull(ssoDomain.connectUrl) { "SsoDomain.connectUrl cannot be null" }
         return authService.ssoGrantRequest(connectUrl, redirectUri, responseCode).url
     }
 
-    override fun ssoCodeGrant(
+    override fun authenticateWithSso(
         uri: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>

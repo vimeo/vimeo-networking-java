@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the authenticator instance with the configuration and the api client.
         val authenticator = Authenticator(configuration)
+
         val apiClient = VimeoApiClient(configuration, authenticator)
 
         // If we are handling a code grant redirect, a URI will be present in the Intent, which will be used to log in.
@@ -140,7 +141,7 @@ class MainActivity : AppCompatActivity() {
             // basic auth can result in your client secret being leaked, so it is better to use client credentials. If
             // client credentials are not obtained or this request fails, the VimeoApiClient will fall back to basic
             // authentication.
-            authenticator.clientCredentials(vimeoCallback(
+            authenticator.authenticateWithClientCredentials(vimeoCallback(
                 onSuccess = {
                     toast("Obtained client credentials.")
                     loginStatus.text = authenticator.currentAccount.asLoginStatus()
