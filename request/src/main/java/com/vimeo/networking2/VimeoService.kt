@@ -71,7 +71,7 @@ internal interface VimeoService {
     @GET("me/connected_apps/{type}")
     fun getConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: ConnectedAppType,
+        @Path(TYPE) type: ConnectedAppType,
         @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ConnectedApp>
@@ -80,7 +80,7 @@ internal interface VimeoService {
     @PUT("me/connected_apps/{type}")
     fun createConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: ConnectedAppType,
+        @Path(TYPE) type: ConnectedAppType,
         @Field(PARAMETER_AUTH_CODE) authorizationCode: String,
         @Field(PARAMETER_APP_TYPE) appType: ConnectedAppType,
         @Field(PARAMETER_CLIENT_ID) clientId: String
@@ -89,7 +89,7 @@ internal interface VimeoService {
     @DELETE("me/connected_apps/{type}")
     fun deleteConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: ConnectedAppType
+        @Path(TYPE) type: ConnectedAppType
     ): VimeoCall<Unit>
 
     @GET
@@ -121,31 +121,31 @@ internal interface VimeoService {
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
     ): VimeoCall<Album>
 
-    @PUT("{albumUri}/{videoUri}")
+    @PUT("{$ALBUM_URI}/{$VIDEO_URI}")
     fun addToAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri", encoded = true) albumUri: String,
-        @Path("videoUri", encoded = true) videoUri: String
+        @Path(ALBUM_URI, encoded = true) albumUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String
     ): VimeoCall<Unit>
 
-    @DELETE("{albumUri}/{videoUri}")
+    @DELETE("{$ALBUM_URI}/{$VIDEO_URI}")
     fun removeFromAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri", encoded = true) albumUri: String,
-        @Path("videoUri", encoded = true) videoUri: String
+        @Path(ALBUM_URI, encoded = true) albumUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String
     ): VimeoCall<Unit>
 
-    @PATCH("{albumUri}/videos")
+    @PATCH("{$ALBUM_URI}/videos")
     fun modifyVideosInAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri", encoded = true) albumUri: String,
+        @Path(ALBUM_URI, encoded = true) albumUri: String,
         @Body modificationSpecs: ModifyVideosInAlbumSpecs
     ): VimeoCall<VideoList>
 
-    @PATCH("{videoUri}/albums")
+    @PATCH("{$VIDEO_URI}/albums")
     fun modifyVideoInAlbums(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("videoUri", encoded = true) videoUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String,
         @Body modificationSpecs: ModifyVideoInAlbumsSpecs
     ): VimeoCall<AlbumList>
 
@@ -517,5 +517,8 @@ internal interface VimeoService {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"
         private const val HEADER_NO_CACHE = "Cache-Control: no-cache, no-store"
+        private const val TYPE = "type"
+        private const val ALBUM_URI = "albumUri"
+        private const val VIDEO_URI = "videoUri"
     }
 }
