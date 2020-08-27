@@ -248,7 +248,9 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Find a supported SSO domain that matches the [domain] parameter.
+     * Find a supported SSO domain that matches the [domain] parameter. If this request returns a valid [SsoDomain],
+     * then SSO authentication can be initiated, starting with the creation of the SSO authorization URI via
+     * [createSsoAuthorizationUri].
      *
      * @param domain A domain, also known as hostname, that might be supported for SSO by the Vimeo API.
      * @param callback Callback to be notified of the result of the request.
