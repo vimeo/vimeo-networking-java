@@ -91,7 +91,6 @@ object ApiConstants {
         const val PARAMETER_GET_QUERY = "query"
         const val PARAMETER_GET_SORT = "sort"
         const val PARAMETER_GET_DIRECTION = "direction"
-        const val PARAMETER_GET_FIELD_FILTER = "fields"
         const val PARAMETER_GET_CONTAINER_FIELD_FILTER = "container_fields"
         const val PARAMETER_GET_LENGTH_MIN_DURATION = "min_duration"
         const val PARAMETER_GET_LENGTH_MAX_DURATION = "max_duration"
