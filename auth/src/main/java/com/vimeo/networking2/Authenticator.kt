@@ -262,13 +262,15 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Obtain the URI which can be used to log in the user and receive back a URI that can be exchanged using
-     * [authenticateWithSso] for a logged in account. Obtain the [SsoDomain] required by this function first using
+     * Create a URI which can be used to log in the user via a browser and will redirect to a URI that can be exchanged
+     * using [authenticateWithSso] for a logged in account. Obtain the [SsoDomain] required by this function first using
      * [fetchSsoDomain].
      *
      * @param ssoDomain The domain info obtained from the API that specifies the [SsoDomain.connectUrl] which will be
      * used as the base for this URI.
-     * @param responseCode The response code that can be used to identify the origin of the redirect URI.
+     * @param responseCode An arbitrary response code that can be used to verify the origin of the redirect URI. The
+     * API will return this value to later as a security measure in a query string parameter named `state` in the
+     * callback URI.
      *
      * @return The URI which can be opened in a browser.
      */
@@ -276,7 +278,11 @@ interface Authenticator {
     fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String
 
     /**
-     * Authenticate with the server using an authorization code grant from a supported enterprise SSO domain.
+     * Log in using an SSO authorization code grant. Before authenticating with this function, the user should be
+     * directed to log into SSO in a browser by navigating to the URI returned by [createSsoAuthorizationUri]. After the
+     * user logs into Vimeo, the API will redirect back to the URI specified in
+     * [VimeoApiConfiguration.codeGrantRedirectUri] along with some additional parameters. The consumer should intercept
+     * this URI and use it to authenticate by passing it to this function in the [uri] parameter.
      *
      * @param uri The URI which was redirected back to you. Must contain a `code` query parameter that contains the
      * authorization code.
