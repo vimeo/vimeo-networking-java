@@ -208,7 +208,7 @@ internal interface AuthService {
      * @return A [VimeoCall] that creates a request to the code grant endpoint.
      */
     @GET("oauth/authorize?response_type=code")
-    fun codeGrantRequest(
+    fun createCodeGrantRequest(
         @Query(CLIENT_ID) clientId: String,
         @Query(REDIRECT_URI) redirectUri: String,
         @Query(STATE) state: String,
@@ -341,7 +341,7 @@ internal interface AuthService {
      */
     @Internal
     @GET
-    fun ssoGrantRequest(
+    fun createSsoGrantRequest(
         @Url uri: String,
         @Query(REDIRECT_URI) redirectUri: String,
         @Query(STATE) state: String
