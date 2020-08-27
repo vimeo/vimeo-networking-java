@@ -94,7 +94,7 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest =
         authenticator.fetchSsoDomain(domain, callback)
 
-    override fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String =
+    override fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String? =
         authenticator.createSsoAuthorizationUri(ssoDomain, responseCode)
 
     override fun authenticateWithSso(
