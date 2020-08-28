@@ -119,7 +119,7 @@ interface Authenticator {
      * Authenticate via Google sign in to obtain a logged in token.
      *
      * @param token Google authentication token.
-     * @param email Email addressed used to sign in to Google.
+     * @param username Username, usually an email address, used to sign in to Google.
      * @param marketingOptIn Opt in or out on GDPR.
      * @param callback Callback to be notified of the result of the request.
      *
@@ -128,7 +128,7 @@ interface Authenticator {
     @Internal
     fun authenticateWithGoogle(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
@@ -137,7 +137,7 @@ interface Authenticator {
      * Authenticate via Facebook sign in to obtain a logged in token.
      *
      * @param token Google authentication token.
-     * @param email Email addressed used to sign in to Google.
+     * @param username Username, usually an email address, used to sign in to Facebook.
      * @param marketingOptIn Opt in or out on GDPR.
      * @param callback Callback to be notified of the result of the request.
      *
@@ -146,7 +146,7 @@ interface Authenticator {
     @Internal
     fun authenticateWithFacebook(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
@@ -174,7 +174,7 @@ interface Authenticator {
     /**
      * Log in via email to obtain a logged in token.
      *
-     * @param email Email address associated with your Vimeo account.
+     * @param username Username, usually an email address, associated with your Vimeo account.
      * @param password Password for your Vimeo account.
      * @param callback Callback to be notified of the result of the request.
      *
@@ -182,7 +182,7 @@ interface Authenticator {
      */
     @Internal
     fun authenticateWithEmailLogin(
-        email: String,
+        username: String,
         password: String,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest

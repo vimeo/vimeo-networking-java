@@ -88,7 +88,7 @@ internal interface AuthService {
      * Used to sign up for Vimeo using a Facebook authorization token.
      *
      * @param authorization Created from the client id and client secret.
-     * @param email The email the user uses to log into Facebook.
+     * @param username The username, usually an email address, that the user uses to log into Facebook.
      * @param token The Facebook token used to authorize with Facebook.
      * @param scopes The permissions scope that should be granted to the client.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
@@ -100,7 +100,7 @@ internal interface AuthService {
     @POST("users")
     fun joinWithFacebook(
         @Header(AUTHORIZATION) authorization: String,
-        @Field(USERNAME) email: String,
+        @Field(USERNAME) username: String,
         @Field(TOKEN) token: String,
         @Field(SCOPE) scopes: Scopes,
         @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
@@ -110,7 +110,7 @@ internal interface AuthService {
      * Used to sign up for Vimeo using a Google authorization token.
      *
      * @param authorization Created from the client id and client secret.
-     * @param email The email the user uses to log into Google.
+     * @param username The username, usually an email address, that the user uses to log into Google.
      * @param idToken The Google token used to authorize with Google.
      * @param scopes The permissions scope that should be granted to the client.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.     *
@@ -122,7 +122,7 @@ internal interface AuthService {
     @POST("users")
     fun joinWithGoogle(
         @Header(AUTHORIZATION) authorization: String,
-        @Field(USERNAME) email: String,
+        @Field(USERNAME) username: String,
         @Field(ID_TOKEN) idToken: String,
         @Field(SCOPE) scopes: Scopes,
         @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
@@ -132,7 +132,7 @@ internal interface AuthService {
      * Login with email and password.
      *
      * @param authorization Created from the client id and client secret.
-     * @param email The email the user used to create their account.
+     * @param username The username, usually an email address, that the user used to create their account.
      * @param password The user's password.
      * @param grantType The type of authorization grant that is being performed.
      * @param scopes The permissions scope that should be granted to the client.
@@ -144,7 +144,7 @@ internal interface AuthService {
     @POST("oauth/authorize/password")
     fun logInWithEmail(
         @Header(AUTHORIZATION) authorization: String,
-        @Field(USERNAME) email: String,
+        @Field(USERNAME) username: String,
         @Field(PASSWORD) password: String,
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field(SCOPE) scopes: Scopes

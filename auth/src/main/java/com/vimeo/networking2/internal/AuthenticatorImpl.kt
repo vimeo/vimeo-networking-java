@@ -78,12 +78,12 @@ internal class AuthenticatorImpl(
 
     override fun authenticateWithGoogle(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
         val tokenParameter = ApiParameter(ID_TOKEN, token)
-        val emailParameter = ApiParameter(USERNAME, email)
+        val emailParameter = ApiParameter(USERNAME, username)
 
         return localVimeoCallAdapter.validateParameters(
             callback,
@@ -92,7 +92,7 @@ internal class AuthenticatorImpl(
             emailParameter
         ) ?: authService.joinWithGoogle(
             authorization = basicAuthHeader,
-            email = emailParameter.validatedParameterValue,
+            username = emailParameter.validatedParameterValue,
             idToken = tokenParameter.validatedParameterValue,
             scopes = scopes,
             marketingOptIn = marketingOptIn
@@ -101,12 +101,12 @@ internal class AuthenticatorImpl(
 
     override fun authenticateWithFacebook(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
         val tokenParameter = ApiParameter(TOKEN, token)
-        val emailParameter = ApiParameter(USERNAME, email)
+        val emailParameter = ApiParameter(USERNAME, username)
 
         return localVimeoCallAdapter.validateParameters(
             callback,
@@ -115,7 +115,7 @@ internal class AuthenticatorImpl(
             emailParameter
         ) ?: authService.joinWithFacebook(
             authorization = basicAuthHeader,
-            email = emailParameter.validatedParameterValue,
+            username = emailParameter.validatedParameterValue,
             token = tokenParameter.validatedParameterValue,
             scopes = scopes,
             marketingOptIn = marketingOptIn
@@ -150,11 +150,11 @@ internal class AuthenticatorImpl(
     }
 
     override fun authenticateWithEmailLogin(
-        email: String,
+        username: String,
         password: String,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val emailParameter = ApiParameter(USERNAME, email)
+        val emailParameter = ApiParameter(USERNAME, username)
         val passwordParameter = ApiParameter(PASSWORD, password)
 
         return localVimeoCallAdapter.validateParameters(
@@ -164,7 +164,7 @@ internal class AuthenticatorImpl(
             passwordParameter
         ) ?: authService.logInWithEmail(
             authorization = basicAuthHeader,
-            email = emailParameter.validatedParameterValue,
+            username = emailParameter.validatedParameterValue,
             password = passwordParameter.validatedParameterValue,
             grantType = GrantType.PASSWORD,
             scopes = scopes

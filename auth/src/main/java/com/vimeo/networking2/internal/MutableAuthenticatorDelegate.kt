@@ -50,17 +50,17 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
 
     override fun authenticateWithGoogle(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.authenticateWithGoogle(token, email, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithGoogle(token, username, marketingOptIn, callback)
 
     override fun authenticateWithFacebook(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.authenticateWithFacebook(token, email, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithFacebook(token, username, marketingOptIn, callback)
 
     override fun authenticateWithEmailJoin(
         displayName: String,
@@ -71,10 +71,10 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     ): VimeoRequest = authenticator.authenticateWithEmailJoin(displayName, email, password, marketingOptIn, callback)
 
     override fun authenticateWithEmailLogin(
-        email: String,
+        username: String,
         password: String,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.authenticateWithEmailLogin(email, password, callback)
+    ): VimeoRequest = authenticator.authenticateWithEmailLogin(username, password, callback)
 
     override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
         authenticator.exchangeAccessToken(accessToken, callback)
