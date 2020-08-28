@@ -286,6 +286,6 @@ internal class AuthenticatorImpl(
         enqueue(AccountStoringVimeoCallback(accountStore, callback))
 
     private companion object {
-        const val PARAM_CODE = "code"
+        private const val PARAM_CODE = "code"
     }
 }
