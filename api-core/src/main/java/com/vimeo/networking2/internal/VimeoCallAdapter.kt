@@ -48,6 +48,9 @@ internal class VimeoCallAdapter<T : Any>(
     private val vimeoLogger: VimeoLogger
 ) : VimeoCall<T> {
 
+    override val url: String
+        get() = call.request().url().toString()
+
     /**
      * Determine if the response has a body.
      */

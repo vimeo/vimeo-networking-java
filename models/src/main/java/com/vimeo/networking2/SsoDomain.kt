@@ -19,44 +19,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.vimeo.networking2.internal
+package com.vimeo.networking2
 
-import com.vimeo.networking2.ApiError
-import com.vimeo.networking2.VimeoCallback
-import com.vimeo.networking2.VimeoRequest
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Internal
 
 /**
- * Custom Retrofit call that allows you to enqueue a custom callback.
+ * Information about a domain that is supported by SSO.
  */
-interface VimeoCall<T> {
+@Internal
+@JsonClass(generateAdapter = true)
+data class SsoDomain(
 
     /**
-     * Register a [VimeoCallback] for the API request.
-     *
-     * @param callback  A callback that gives you back the data or the error from the API.
+     * The Vimeo URI of the domain.
      */
-    fun enqueue(callback: VimeoCallback<T>): VimeoRequest
+    @Json(name = "uri")
+    val uri: String? = null,
 
     /**
-     * Inform the client of an error.
-     *
-     * @param apiError  Information on the error.
-     * @param callback  A callback to inform you of the error.
+     * The name of the domain, also known as the hostname in the URL RFC 1738.
      */
-    fun enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest
+    @Json(name = "domain_name")
+    val domainName: String? = null,
 
     /**
-     * Cancel API request.
+     * The URL to which the user can be directed to authenticate themselves.
      */
-    fun cancel()
-
-    /**
-     * The URL to which this call will be made.
-     */
-    val url: String
-
-    /**
-     * Clone the API call.
-     */
-    fun clone(): VimeoCall<T>
-}
+    @Json(name = "connect_url")
+    val connectUrl: String? = null
+)

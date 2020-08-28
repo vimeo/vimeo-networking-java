@@ -26,7 +26,6 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_APP_TYPE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_AUTH_CODE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_CLIENT_ID
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY
-import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_GET_FIELD_FILTER
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PASSWORD
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
@@ -64,15 +63,15 @@ internal interface VimeoService {
     @GET("me/connected_apps")
     fun getConnectedAppList(
         @Header(AUTHORIZATION) authorization: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ConnectedAppList>
 
     @GET("me/connected_apps/{type}")
     fun getConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: ConnectedAppType,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Path(TYPE) type: ConnectedAppType,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ConnectedApp>
 
@@ -80,7 +79,7 @@ internal interface VimeoService {
     @PUT("me/connected_apps/{type}")
     fun createConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: ConnectedAppType,
+        @Path(TYPE) type: ConnectedAppType,
         @Field(PARAMETER_AUTH_CODE) authorizationCode: String,
         @Field(PARAMETER_APP_TYPE) appType: ConnectedAppType,
         @Field(PARAMETER_CLIENT_ID) clientId: String
@@ -89,14 +88,14 @@ internal interface VimeoService {
     @DELETE("me/connected_apps/{type}")
     fun deleteConnectedApp(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("type") type: ConnectedAppType
+        @Path(TYPE) type: ConnectedAppType
     ): VimeoCall<Unit>
 
     @GET
     fun getPublishJob(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<PublishJob>
 
@@ -121,31 +120,31 @@ internal interface VimeoService {
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
     ): VimeoCall<Album>
 
-    @PUT("{albumUri}/{videoUri}")
+    @PUT("{$ALBUM_URI}/{$VIDEO_URI}")
     fun addToAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri", encoded = true) albumUri: String,
-        @Path("videoUri", encoded = true) videoUri: String
+        @Path(ALBUM_URI, encoded = true) albumUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String
     ): VimeoCall<Unit>
 
-    @DELETE("{albumUri}/{videoUri}")
+    @DELETE("{$ALBUM_URI}/{$VIDEO_URI}")
     fun removeFromAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri", encoded = true) albumUri: String,
-        @Path("videoUri", encoded = true) videoUri: String
+        @Path(ALBUM_URI, encoded = true) albumUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String
     ): VimeoCall<Unit>
 
-    @PATCH("{albumUri}/videos")
+    @PATCH("{$ALBUM_URI}/videos")
     fun modifyVideosInAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("albumUri", encoded = true) albumUri: String,
+        @Path(ALBUM_URI, encoded = true) albumUri: String,
         @Body modificationSpecs: ModifyVideosInAlbumSpecs
     ): VimeoCall<VideoList>
 
-    @PATCH("{videoUri}/albums")
+    @PATCH("{$VIDEO_URI}/albums")
     fun modifyVideoInAlbums(
         @Header(AUTHORIZATION) authorization: String,
-        @Path("videoUri", encoded = true) videoUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String,
         @Body modificationSpecs: ModifyVideoInAlbumsSpecs
     ): VimeoCall<AlbumList>
 
@@ -199,7 +198,7 @@ internal interface VimeoService {
     fun getAppConfiguration(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<AppConfiguration>
@@ -208,7 +207,7 @@ internal interface VimeoService {
     fun getCategory(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Category>
@@ -217,7 +216,7 @@ internal interface VimeoService {
     fun getChannel(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Channel>
@@ -226,7 +225,7 @@ internal interface VimeoService {
     fun getComment(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Comment>
@@ -241,7 +240,7 @@ internal interface VimeoService {
     fun getTvodItem(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TvodItem>
@@ -250,7 +249,7 @@ internal interface VimeoService {
     fun getUser(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<User>
 
@@ -258,7 +257,7 @@ internal interface VimeoService {
     fun getVideo(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Video>
@@ -267,7 +266,7 @@ internal interface VimeoService {
     fun getLiveStats(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<LiveStats>
@@ -276,7 +275,7 @@ internal interface VimeoService {
     fun getProduct(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Product>
 
@@ -284,7 +283,7 @@ internal interface VimeoService {
     fun getAlbum(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Album>
@@ -293,7 +292,7 @@ internal interface VimeoService {
     fun getCategoryList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<CategoryList>
@@ -302,7 +301,7 @@ internal interface VimeoService {
     fun getChannelList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ChannelList>
@@ -311,7 +310,7 @@ internal interface VimeoService {
     fun getCommentList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<CommentList>
@@ -320,7 +319,7 @@ internal interface VimeoService {
     fun getFeedList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<FeedList>
@@ -329,7 +328,7 @@ internal interface VimeoService {
     fun getProjectItemList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ProjectItemList>
@@ -338,7 +337,7 @@ internal interface VimeoService {
     fun getNotificationList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<NotificationList>
@@ -347,7 +346,7 @@ internal interface VimeoService {
     fun getProgramContentItemList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ProgrammedContentItemList>
@@ -356,7 +355,7 @@ internal interface VimeoService {
     fun getRecommendationList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<RecommendationList>
@@ -365,7 +364,7 @@ internal interface VimeoService {
     fun getSearchResultList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<SearchResultList>
@@ -374,7 +373,7 @@ internal interface VimeoService {
     fun getSeasonList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<SeasonList>
@@ -383,7 +382,7 @@ internal interface VimeoService {
     fun getTvodItemList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TvodItemList>
@@ -392,7 +391,7 @@ internal interface VimeoService {
     fun getUserList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<UserList>
@@ -401,7 +400,7 @@ internal interface VimeoService {
     fun getVideoList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<VideoList>
@@ -410,7 +409,7 @@ internal interface VimeoService {
     fun getAlbumList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<AlbumList>
@@ -419,14 +418,14 @@ internal interface VimeoService {
     fun getTextTrackList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TextTrackList>
 
     @GET("products")
     fun getProducts(
         @Header(AUTHORIZATION) authorization: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ProductList>
 
@@ -434,7 +433,7 @@ internal interface VimeoService {
     fun getVideoStatus(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Query(PARAMETER_GET_FIELD_FILTER) fieldFilter: String?,
+        @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<VideoStatus>
@@ -517,5 +516,9 @@ internal interface VimeoService {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"
         private const val HEADER_NO_CACHE = "Cache-Control: no-cache, no-store"
+        private const val TYPE = "type"
+        private const val ALBUM_URI = "albumUri"
+        private const val VIDEO_URI = "videoUri"
+        private const val FIELD_FILTER = "fields"
     }
 }

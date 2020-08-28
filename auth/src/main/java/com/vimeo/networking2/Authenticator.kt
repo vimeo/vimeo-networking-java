@@ -63,7 +63,7 @@ import java.util.concurrent.Executor
  *
  * In order to obtain client credentials, make a request as follows.
  * ```
- * authenticator.clientCredentials(vimeoCallback(
+ * authenticator.authenticateWithClientCredentials(vimeoCallback(
  *     onSuccess = { authResponse: VimeoResponse.Success<VimeoAccount> -> }
  *     onError = { error: VimeoResponse.Error -> }
  * ))
@@ -113,22 +113,22 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest
+    fun authenticateWithClientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest
 
     /**
      * Authenticate via Google sign in to obtain a logged in token.
      *
      * @param token Google authentication token.
-     * @param email Email addressed used to sign in to Google.
+     * @param username Username, usually an email address, used to sign in to Google.
      * @param marketingOptIn Opt in or out on GDPR.
      * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun google(
+    fun authenticateWithGoogle(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
@@ -137,16 +137,16 @@ interface Authenticator {
      * Authenticate via Facebook sign in to obtain a logged in token.
      *
      * @param token Google authentication token.
-     * @param email Email addressed used to sign in to Google.
+     * @param username Username, usually an email address, used to sign in to Facebook.
      * @param marketingOptIn Opt in or out on GDPR.
      * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun facebook(
+    fun authenticateWithFacebook(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
@@ -163,7 +163,7 @@ interface Authenticator {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun emailJoin(
+    fun authenticateWithEmailJoin(
         displayName: String,
         email: String,
         password: String,
@@ -174,15 +174,15 @@ interface Authenticator {
     /**
      * Log in via email to obtain a logged in token.
      *
-     * @param email Email address associated with your Vimeo account.
+     * @param username Username, usually an email address, associated with your Vimeo account.
      * @param password Password for your Vimeo account.
      * @param callback Callback to be notified of the result of the request.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
     @Internal
-    fun emailLogin(
-        email: String,
+    fun authenticateWithEmailLogin(
+        username: String,
         password: String,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
@@ -203,7 +203,7 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
-     * Exchange an OAuth 1 token and secret for a new OAuth 2 token.
+     * Exchange an OAuth1 token and secret for a new OAuth 2 token.
      *
      * @param token The old token to use in the exchange.
      * @param tokenSecret The old token secret to use in the exchange.
@@ -211,7 +211,7 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun exchangeOAuthOneToken(
+    fun exchangeOAuth1Token(
         token: String,
         tokenSecret: String,
         callback: VimeoCallback<VimeoAccount>
@@ -244,6 +244,60 @@ interface Authenticator {
      */
     fun authenticateWithCodeGrant(
         uri: String,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest
+
+    /**
+     * Find a supported SSO domain that matches the [domain] parameter. If this request returns a valid [SsoDomain],
+     * then SSO authentication can be initiated, starting with the creation of the SSO authorization URI via
+     * [createSsoAuthorizationUri].
+     *
+     * @param domain A domain, also known as hostname, that might be supported for SSO by the Vimeo API.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    @Internal
+    fun fetchSsoDomain(
+        domain: String,
+        callback: VimeoCallback<SsoDomain>
+    ): VimeoRequest
+
+    /**
+     * Create a URI which can be used to log in the user via a browser and will redirect to a URI that can be exchanged
+     * using [authenticateWithSso] for a logged in account. Obtain the [SsoDomain] required by this function first using
+     * [fetchSsoDomain].
+     *
+     * @param ssoDomain The domain info obtained from the API that specifies the [SsoDomain.connectUrl] which will be
+     * used as the base for this URI. NOTE: [SsoDomain.connectUrl] must not be null, if a domain is provided with a null
+     * connection, then this function will return null.
+     * @param responseCode An arbitrary response code that can be used to verify the origin of the redirect URI. The
+     * API will return this value to later as a security measure in a query string parameter named `state` in the
+     * callback URI.
+     *
+     * @return The URI which can be opened in a browser, or null if the parameters provided were invalid.
+     */
+    @Internal
+    fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String?
+
+    /**
+     * Log in using an SSO authorization code grant. Before authenticating with this function, the user should be
+     * directed to log into SSO in a browser by navigating to the URI returned by [createSsoAuthorizationUri]. After the
+     * user logs into Vimeo, the API will redirect back to the URI specified in
+     * [VimeoApiConfiguration.codeGrantRedirectUri] along with some additional parameters. The consumer should intercept
+     * this URI and use it to authenticate by passing it to this function in the [uri] parameter.
+     *
+     * @param uri The URI which was redirected back to you. Must contain a `code` query parameter that contains the
+     * authorization code.
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    @Internal
+    fun authenticateWithSso(
+        uri: String,
+        marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest
 

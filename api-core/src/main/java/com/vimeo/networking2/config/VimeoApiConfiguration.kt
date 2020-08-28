@@ -246,7 +246,7 @@ data class VimeoApiConfiguration(
             baseUrl = baseUrl,
             clientId = clientId,
             clientSecret = clientSecret,
-            scope = Scopes(scopes),
+            scope = Scopes(scopes.also { require(it.isNotEmpty()) { "You must specify at least one scope" } }),
             codeGrantRedirectUri = codeGrantRedirectUrl,
             locales = locales,
             accountStore = accountStore,

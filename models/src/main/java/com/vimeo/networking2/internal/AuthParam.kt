@@ -40,5 +40,14 @@ enum class AuthParam(
     FIELD_GRANT_TYPE(ErrorCodeType.INVALID_INPUT_GRANT_TYPE, "Grant type not provided."),
 
     @Json(name = "scope")
-    FIELD_SCOPES(developerMessage = "Scopes were not provided.");
+    FIELD_SCOPES(developerMessage = "Scopes were not provided."),
+
+    @Json(name = "domain")
+    DOMAIN(developerMessage = "An empty domain was provided."),
+
+    @Json(name = "authorization_code")
+    AUTHORIZATION_CODE(developerMessage = "An empty authorization code was provided."),
+
+    @Json(name = "redirect_uri")
+    REDIRECT_URI(developerMessage = "An empty redirect uri was provided.")
 }

@@ -23,6 +23,7 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.PinCodeInfo
+import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
@@ -44,48 +45,63 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override val currentAccount: VimeoAccount?
         get() = authenticator.currentAccount
 
-    override fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
-        authenticator.clientCredentials(callback)
+    override fun authenticateWithClientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
+        authenticator.authenticateWithClientCredentials(callback)
 
-    override fun google(
+    override fun authenticateWithGoogle(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.google(token, email, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithGoogle(token, username, marketingOptIn, callback)
 
-    override fun facebook(
+    override fun authenticateWithFacebook(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.facebook(token, email, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithFacebook(token, username, marketingOptIn, callback)
 
-    override fun emailJoin(
+    override fun authenticateWithEmailJoin(
         displayName: String,
         email: String,
         password: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.emailJoin(displayName, email, password, marketingOptIn, callback)
+    ): VimeoRequest = authenticator.authenticateWithEmailJoin(displayName, email, password, marketingOptIn, callback)
 
-    override fun emailLogin(email: String, password: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
-        authenticator.emailLogin(email, password, callback)
+    override fun authenticateWithEmailLogin(
+        username: String,
+        password: String,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.authenticateWithEmailLogin(username, password, callback)
 
     override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
         authenticator.exchangeAccessToken(accessToken, callback)
 
-    override fun exchangeOAuthOneToken(
+    override fun exchangeOAuth1Token(
         token: String,
         tokenSecret: String,
         callback: VimeoCallback<VimeoAccount>
-    ): VimeoRequest = authenticator.exchangeOAuthOneToken(token, tokenSecret, callback)
+    ): VimeoRequest = authenticator.exchangeOAuth1Token(token, tokenSecret, callback)
 
     override fun createCodeGrantAuthorizationUri(responseCode: String): String =
         authenticator.createCodeGrantAuthorizationUri(responseCode)
 
     override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest =
         authenticator.authenticateWithCodeGrant(uri, callback)
+
+    override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest =
+        authenticator.fetchSsoDomain(domain, callback)
+
+    override fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String? =
+        authenticator.createSsoAuthorizationUri(ssoDomain, responseCode)
+
+    override fun authenticateWithSso(
+        uri: String,
+        marketingOptIn: Boolean,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest = authenticator.authenticateWithSso(uri, marketingOptIn, callback)
 
     override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest =
         authenticator.fetchPinCodeInfo(callback)

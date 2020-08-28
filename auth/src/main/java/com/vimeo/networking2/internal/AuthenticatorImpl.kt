@@ -21,9 +21,30 @@
  */
 package com.vimeo.networking2.internal
 
-import com.vimeo.networking2.*
+import com.vimeo.networking2.Authenticator
+import com.vimeo.networking2.GrantType
+import com.vimeo.networking2.NoOpVimeoRequest
+import com.vimeo.networking2.PinCodeInfo
+import com.vimeo.networking2.Scopes
+import com.vimeo.networking2.SsoDomain
+import com.vimeo.networking2.VimeoAccount
+import com.vimeo.networking2.VimeoCallback
+import com.vimeo.networking2.VimeoRequest
 import com.vimeo.networking2.account.CachingAccountStore
-import com.vimeo.networking2.enums.ErrorCodeType
+import com.vimeo.networking2.internal.AuthService.Companion.AUTHORIZATION_CODE
+import com.vimeo.networking2.internal.AuthService.Companion.CODE
+import com.vimeo.networking2.internal.AuthService.Companion.DEVICE_CODE
+import com.vimeo.networking2.internal.AuthService.Companion.EMAIL
+import com.vimeo.networking2.internal.AuthService.Companion.ID_TOKEN
+import com.vimeo.networking2.internal.AuthService.Companion.NAME
+import com.vimeo.networking2.internal.AuthService.Companion.PASSWORD
+import com.vimeo.networking2.internal.AuthService.Companion.REDIRECT_URI
+import com.vimeo.networking2.internal.AuthService.Companion.TOKEN
+import com.vimeo.networking2.internal.AuthService.Companion.TOKEN_SECRET
+import com.vimeo.networking2.internal.AuthService.Companion.USERNAME
+import com.vimeo.networking2.internal.AuthService.Companion.USER_CODE
+import com.vimeo.networking2.internal.params.ApiParameter
+import com.vimeo.networking2.internal.params.validateParameters
 import okhttp3.HttpUrl
 
 /**
@@ -50,219 +71,236 @@ internal class AuthenticatorImpl(
     override val currentAccount: VimeoAccount?
         get() = accountStore.loadAccount()
 
-    override fun clientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest {
-        val invalidAuthParams = mapOf(
-            AuthParam.FIELD_GRANT_TYPE to GrantType.CLIENT_CREDENTIALS.value,
-            AuthParam.FIELD_SCOPES to scopes
-        ).validate()
-
-        val call = authService.authorizeWithClientCredentialsGrant(
+    override fun authenticateWithClientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest {
+        return authService.authorizeWithClientCredentialsGrant(
             authorization = basicAuthHeader,
             grantType = GrantType.CLIENT_CREDENTIALS,
             scopes = scopes
-        )
-
-        return if (invalidAuthParams.isNotEmpty()) {
-            val apiError = ApiError(
-                developerMessage = "Client credentials authentication error.",
-                invalidParameters = invalidAuthParams
-            )
-            call.enqueueError(apiError, callback)
-        } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
-        }
+        ).enqueueWithAccountStore(callback)
     }
 
-    override fun google(
+    override fun authenticateWithGoogle(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val invalidAuthParams = mapOf(
-            AuthParam.FIELD_ID_TOKEN to token,
-            AuthParam.FIELD_EMAIL to email,
-            AuthParam.FIELD_SCOPES to scopes
-        ).validate()
+        val tokenParameter = ApiParameter(ID_TOKEN, token)
+        val emailParameter = ApiParameter(USERNAME, username)
 
-        val call = authService.joinWithGoogle(
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "Google authentication error",
+            tokenParameter,
+            emailParameter
+        ) ?: authService.joinWithGoogle(
             authorization = basicAuthHeader,
-            email = email,
-            idToken = token,
+            username = emailParameter.validatedParameterValue,
+            idToken = tokenParameter.validatedParameterValue,
             scopes = scopes,
             marketingOptIn = marketingOptIn
-        )
-
-        return if (invalidAuthParams.isNotEmpty()) {
-            val apiError = ApiError(
-                errorMessage = "Google authentication failure",
-                invalidParameters = invalidAuthParams
-            )
-            call.enqueueError(apiError, callback)
-        } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
-        }
+        ).enqueueWithAccountStore(callback)
     }
 
-    override fun facebook(
+    override fun authenticateWithFacebook(
         token: String,
-        email: String,
+        username: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val invalidAuthParams = mapOf(
-            AuthParam.FIELD_TOKEN to token,
-            AuthParam.FIELD_EMAIL to email,
-            AuthParam.FIELD_SCOPES to scopes
-        ).validate()
+        val tokenParameter = ApiParameter(TOKEN, token)
+        val emailParameter = ApiParameter(USERNAME, username)
 
-        val call = authService.joinWithFacebook(
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "Facebook authentication error",
+            tokenParameter,
+            emailParameter
+        ) ?: authService.joinWithFacebook(
             authorization = basicAuthHeader,
-            email = email,
-            token = token,
+            username = emailParameter.validatedParameterValue,
+            token = tokenParameter.validatedParameterValue,
             scopes = scopes,
             marketingOptIn = marketingOptIn
-        )
-
-        return if (invalidAuthParams.isNotEmpty()) {
-            val apiError = ApiError(
-                errorMessage = "Facebook authentication failure",
-                invalidParameters = invalidAuthParams
-            )
-            call.enqueueError(apiError, callback)
-        } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
-        }
+        ).enqueueWithAccountStore(callback)
     }
 
-    override fun emailJoin(
+    override fun authenticateWithEmailJoin(
         displayName: String,
         email: String,
         password: String,
         marketingOptIn: Boolean,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val invalidAuthParams = mapOf(
-            AuthParam.FIELD_NAME to displayName,
-            AuthParam.FIELD_EMAIL to email,
-            AuthParam.FIELD_PASSWORD to password,
-            AuthParam.FIELD_SCOPES to scopes
-        ).validate()
+        val nameParameter = ApiParameter(NAME, displayName)
+        val emailParameter = ApiParameter(EMAIL, email)
+        val passwordParameter = ApiParameter(PASSWORD, password)
 
-        val call = authService.joinWithEmail(
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "Email join error",
+            nameParameter,
+            emailParameter,
+            passwordParameter
+        ) ?: authService.joinWithEmail(
             authorization = basicAuthHeader,
-            name = displayName,
-            email = email,
-            password = password,
+            name = nameParameter.validatedParameterValue,
+            email = emailParameter.validatedParameterValue,
+            password = passwordParameter.validatedParameterValue,
             scopes = scopes,
             marketingOptIn = marketingOptIn
-        )
-
-        return if (invalidAuthParams.isNotEmpty()) {
-            val apiError = ApiError(
-                developerMessage = "Email join error.",
-                invalidParameters = invalidAuthParams
-            )
-            call.enqueueError(apiError, callback)
-        } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
-        }
+        ).enqueueWithAccountStore(callback)
     }
 
-    override fun emailLogin(
-        email: String,
+    override fun authenticateWithEmailLogin(
+        username: String,
         password: String,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val invalidAuthParams = mapOf(
-            AuthParam.FIELD_USERNAME to email,
-            AuthParam.FIELD_PASSWORD to password,
-            AuthParam.FIELD_SCOPES to scopes
-        ).validate()
+        val emailParameter = ApiParameter(USERNAME, username)
+        val passwordParameter = ApiParameter(PASSWORD, password)
 
-        val call = authService.logInWithEmail(
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "Email login error",
+            emailParameter,
+            passwordParameter
+        ) ?: authService.logInWithEmail(
             authorization = basicAuthHeader,
-            email = email,
-            password = password,
+            username = emailParameter.validatedParameterValue,
+            password = passwordParameter.validatedParameterValue,
             grantType = GrantType.PASSWORD,
             scopes = scopes
-        )
-
-        return if (invalidAuthParams.isNotEmpty()) {
-            val apiError = ApiError(
-                developerMessage = "Email login error.",
-                invalidParameters = invalidAuthParams
-            )
-            call.enqueueError(apiError, callback)
-        } else {
-            call.enqueue(AccountStoringVimeoCallback(accountStore, callback))
-        }
+        ).enqueueWithAccountStore(callback)
     }
 
     override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
-        return authService.ssoTokenExchange(basicAuthHeader, accessToken, scopes).enqueue(callback)
+        return authService.exchangeAccessToken(basicAuthHeader, accessToken, scopes).enqueueWithAccountStore(callback)
     }
 
-    override fun exchangeOAuthOneToken(
+    override fun exchangeOAuth1Token(
         token: String,
         tokenSecret: String,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val invalidAuthParams = mapOf(
-            AuthParam.FIELD_TOKEN to token,
-            AuthParam.FIELD_TOKEN_SECRET to tokenSecret,
-            AuthParam.FIELD_SCOPES to scopes
-        ).validate()
+        val tokenParameter = ApiParameter(TOKEN, token)
+        val tokenSecretParameter = ApiParameter(TOKEN_SECRET, tokenSecret)
 
-        val call = authService.exchangeOAuthOneToken(
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "OAuth1 token exchange error",
+            tokenParameter,
+            tokenSecretParameter
+        ) ?: authService.exchangeOAuth1Token(
             authorization = basicAuthHeader,
             grantType = GrantType.OAUTH_ONE,
-            token = token,
-            tokenSecret = tokenSecret,
+            token = tokenParameter.validatedParameterValue,
+            tokenSecret = tokenSecretParameter.validatedParameterValue,
             scopes = scopes
-        )
-
-        return if (invalidAuthParams.isNotEmpty()) {
-            val apiError = ApiError(
-                developerMessage = "Auth token exchange error.",
-                invalidParameters = invalidAuthParams
-            )
-
-            call.enqueueError(apiError, callback)
-        } else {
-            call.enqueue(callback)
-        }
+        ).enqueueWithAccountStore(callback)
     }
 
     override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
-        val httpUrl: HttpUrl = HttpUrl.parse(uri) ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        val authorizationCode = httpUrl.queryParameter("code")
-            ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return authService.authenticateWithCodeGrant(
-            basicAuthHeader,
-            redirectUri,
+        val authorizationCode = ApiParameter(
+            CODE,
+            HttpUrl.parse(uri)?.queryParameter(PARAM_CODE),
+            "URI was invalid or did not contain a '$PARAM_CODE' parameter"
+        )
+        val redirectUri = ApiParameter(REDIRECT_URI, redirectUri)
+
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "Code grant authentication error",
             authorizationCode,
-            GrantType.AUTHORIZATION_CODE
-        ).enqueue(AccountStoringVimeoCallback(accountStore, callback))
+            redirectUri
+        ) ?: authService.authenticateWithCodeGrant(
+            authorization = basicAuthHeader,
+            redirectUri = redirectUri.validatedParameterValue,
+            authorizationCode = authorizationCode.validatedParameterValue,
+            grantType = GrantType.AUTHORIZATION_CODE
+        ).enqueueWithAccountStore(callback)
     }
 
     override fun createCodeGrantAuthorizationUri(responseCode: String): String {
-        return authService.codeGrantRequest(clientId, redirectUri, responseCode, scopes).request().url().toString()
+        return authService.createCodeGrantRequest(
+            clientId = clientId,
+            redirectUri = redirectUri,
+            state = responseCode,
+            scopes = scopes
+        ).url
+    }
+
+    override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest {
+        val domainParameter = ApiParameter(AuthService.DOMAIN, domain)
+
+        return localVimeoCallAdapter.validateParameters(callback, "SSO domain fetch error", domainParameter)
+            ?: authService.getSsoDomain(
+                authorization = basicAuthHeader,
+                domain = domainParameter.validatedParameterValue
+            ).enqueue(callback)
+    }
+
+    override fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String? {
+        val connectUrl = ssoDomain.connectUrl ?: return null
+        return authService.createSsoGrantRequest(
+            uri = connectUrl,
+            redirectUri = redirectUri,
+            state = responseCode
+        ).url
+    }
+
+    override fun authenticateWithSso(
+        uri: String,
+        marketingOptIn: Boolean,
+        callback: VimeoCallback<VimeoAccount>
+    ): VimeoRequest {
+        val authorizationCode = ApiParameter(
+            AUTHORIZATION_CODE,
+            HttpUrl.parse(uri)?.queryParameter(PARAM_CODE),
+            "URI was invalid or did not contain a '$PARAM_CODE' parameter"
+        )
+        val redirectUri = ApiParameter(REDIRECT_URI, redirectUri)
+
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "SSO authentication error",
+            authorizationCode,
+            redirectUri
+        ) ?: authService.joinWithSsoCodeGrant(
+            authorization = basicAuthHeader,
+            authorizationCode = authorizationCode.validatedParameterValue,
+            redirectUri = redirectUri.validatedParameterValue,
+            marketingOptIn = marketingOptIn
+        ).enqueueWithAccountStore(callback)
     }
 
     override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest {
-        return authService.getPinCodeInfo(basicAuthHeader, GrantType.DEVICE, scopes).enqueue(callback)
+        return authService.getPinCodeInfo(
+            authorization = basicAuthHeader,
+            grantType = GrantType.DEVICE,
+            scopes = scopes
+        ).enqueue(callback)
     }
 
     override fun authenticateWithPinCode(
         pinCodeInfo: PinCodeInfo,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val userCode = pinCodeInfo.userCode.orEmpty()
-        val deviceCode = pinCodeInfo.deviceCode.orEmpty()
+        val userCode = ApiParameter(USER_CODE, pinCodeInfo.userCode)
+        val deviceCode = ApiParameter(DEVICE_CODE, pinCodeInfo.deviceCode)
 
-        return authService.logInWithPinCode(basicAuthHeader, GrantType.DEVICE, userCode, deviceCode, scopes)
-            .enqueue(callback)
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "Pin code authentication error",
+            userCode,
+            deviceCode
+        ) ?: authService.logInWithPinCode(
+            authorization = basicAuthHeader,
+            grantType = GrantType.DEVICE,
+            pinCode = userCode.validatedParameterValue,
+            deviceCode = deviceCode.validatedParameterValue,
+            scopes = scopes
+        ).enqueueWithAccountStore(callback)
     }
 
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest {
@@ -273,11 +311,10 @@ internal class AuthenticatorImpl(
         return authService.logOut(authorization = "Bearer $accessToken").enqueue(callback)
     }
 
-    private fun <T> LocalVimeoCallAdapter.enqueueEmptyUri(callback: VimeoCallback<T>): VimeoRequest {
-        return enqueueError(ApiError(
-            invalidParameters = listOf(InvalidParameter(
-                errorCode = ErrorCodeType.INVALID_URI.value
-            ))
-        ), callback)
+    private fun VimeoCall<VimeoAccount>.enqueueWithAccountStore(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
+        enqueue(AccountStoringVimeoCallback(accountStore, callback))
+
+    private companion object {
+        private const val PARAM_CODE = "code"
     }
 }

@@ -24,8 +24,9 @@ package com.vimeo.networking2.internal
 import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.Scopes
+import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.VimeoAccount
-import retrofit2.Call
+import com.vimeo.networking2.annotations.Internal
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -34,6 +35,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 /**
  * All the authentication endpoints.
@@ -75,18 +77,18 @@ internal interface AuthService {
     @POST("users")
     fun joinWithEmail(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("password") password: String,
+        @Field(NAME) name: String,
+        @Field(EMAIL) email: String,
+        @Field(PASSWORD) password: String,
         @Field(SCOPE) scopes: Scopes,
-        @Field("marketing_opt_in") marketingOptIn: Boolean
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
      * Used to sign up for Vimeo using a Facebook authorization token.
      *
      * @param authorization Created from the client id and client secret.
-     * @param email The email the user uses to log into Facebook.
+     * @param username The username, usually an email address, that the user uses to log into Facebook.
      * @param token The Facebook token used to authorize with Facebook.
      * @param scopes The permissions scope that should be granted to the client.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
@@ -98,17 +100,17 @@ internal interface AuthService {
     @POST("users")
     fun joinWithFacebook(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("username") email: String,
-        @Field("token") token: String,
+        @Field(USERNAME) username: String,
+        @Field(TOKEN) token: String,
         @Field(SCOPE) scopes: Scopes,
-        @Field("marketing_opt_in") marketingOptIn: Boolean
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
      * Used to sign up for Vimeo using a Google authorization token.
      *
      * @param authorization Created from the client id and client secret.
-     * @param email The email the user uses to log into Google.
+     * @param username The username, usually an email address, that the user uses to log into Google.
      * @param idToken The Google token used to authorize with Google.
      * @param scopes The permissions scope that should be granted to the client.
      * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.     *
@@ -120,17 +122,17 @@ internal interface AuthService {
     @POST("users")
     fun joinWithGoogle(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("username") email: String,
-        @Field("id_token") idToken: String,
+        @Field(USERNAME) username: String,
+        @Field(ID_TOKEN) idToken: String,
         @Field(SCOPE) scopes: Scopes,
-        @Field("marketing_opt_in") marketingOptIn: Boolean
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
      * Login with email and password.
      *
      * @param authorization Created from the client id and client secret.
-     * @param email The email the user used to create their account.
+     * @param username The username, usually an email address, that the user used to create their account.
      * @param password The user's password.
      * @param grantType The type of authorization grant that is being performed.
      * @param scopes The permissions scope that should be granted to the client.
@@ -142,8 +144,8 @@ internal interface AuthService {
     @POST("oauth/authorize/password")
     fun logInWithEmail(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("username") email: String,
-        @Field("password") password: String,
+        @Field(USERNAME) username: String,
+        @Field(PASSWORD) password: String,
         @Field(GRANT_TYPE) grantType: GrantType,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
@@ -167,7 +169,7 @@ internal interface AuthService {
     fun logInWithFacebook(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field("token") token: String,
+        @Field(TOKEN) token: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
@@ -190,7 +192,7 @@ internal interface AuthService {
     fun logInWithGoogle(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field("id_token") idToken: String,
+        @Field(ID_TOKEN) idToken: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
@@ -206,12 +208,12 @@ internal interface AuthService {
      * @return A [VimeoCall] that creates a request to the code grant endpoint.
      */
     @GET("oauth/authorize?response_type=code")
-    fun codeGrantRequest(
-        @Query("client_id") clientId: String,
-        @Query("redirect_uri") redirectUri: String,
-        @Query("state") state: String,
+    fun createCodeGrantRequest(
+        @Query(CLIENT_ID) clientId: String,
+        @Query(REDIRECT_URI) redirectUri: String,
+        @Query(STATE) state: String,
         @Query(SCOPE) scopes: Scopes
-    ): Call<Unit>
+    ): VimeoCall<Unit>
 
     /**
      * Authorize with the server using a code grant from a redirect URL.
@@ -228,13 +230,13 @@ internal interface AuthService {
     @POST("oauth/access_token")
     fun authenticateWithCodeGrant(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("redirect_uri") redirectUri: String,
-        @Field("code") authorizationCode: String,
+        @Field(REDIRECT_URI) redirectUri: String,
+        @Field(CODE) authorizationCode: String,
         @Field(GRANT_TYPE) grantType: GrantType
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Exchanges an old OAuth One token for a shiny new OAuth2 token.
+     * Exchanges an old OAuth1 token for a shiny new OAuth2 token.
      *
      * @param authorization Created from the client id and client secret.
      * @param grantType The type of authorization grant that is being performed.
@@ -247,19 +249,19 @@ internal interface AuthService {
      */
     @FormUrlEncoded
     @POST("oauth/authorize/vimeo_oauth1")
-    fun exchangeOAuthOneToken(
+    fun exchangeOAuth1Token(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field("token") token: String,
-        @Field("token_secret") tokenSecret: String,
+        @Field(TOKEN) token: String,
+        @Field(TOKEN_SECRET) tokenSecret: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
     /**
-     * Exchange a token obtained through SSO for an authenticated account.
+     * Exchange an access token obtained from another source for an authenticated account.
      *
      * @param authorization Created from the client id and client secret.
-     * @param token The token obtained through SSO which will be used to authenticate the user.
+     * @param token The token obtained from another source which will be used to authenticate the user.
      * @param scopes The permissions scope that should be granted to the client.
      *
      * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
@@ -267,9 +269,9 @@ internal interface AuthService {
      */
     @FormUrlEncoded
     @POST("oauth/appexchange")
-    fun ssoTokenExchange(
+    fun exchangeAccessToken(
         @Header(AUTHORIZATION) authorization: String,
-        @Field("access_token") token: String,
+        @Field(ACCESS_TOKEN) token: String,
         @Field(SCOPE) scopes: Scopes
     ): VimeoCall<VimeoAccount>
 
@@ -308,9 +310,87 @@ internal interface AuthService {
     fun logInWithPinCode(
         @Header(AUTHORIZATION) authorization: String,
         @Field(GRANT_TYPE) grantType: GrantType,
-        @Field("user_code") pinCode: String,
-        @Field("device_code") deviceCode: String,
+        @Field(USER_CODE) pinCode: String,
+        @Field(DEVICE_CODE) deviceCode: String,
         @Field(SCOPE) scopes: Scopes
+    ): VimeoCall<VimeoAccount>
+
+    /**
+     * Searches Vimeo for the presence of a supported SSO domain that matches the one provided by the [domain]
+     * parameter.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param domain A domain, also known as hostname, that might be supported for SSO by the Vimeo API.
+     *
+     * @return A [VimeoCall] that provides a [SsoDomain] that can be used to perform SSO.
+     */
+    @Internal
+    @GET("sso_domains")
+    fun getSsoDomain(
+        @Header(AUTHORIZATION) authorization: String,
+        @Query(DOMAIN) domain: String
+    ): VimeoCall<SsoDomain>
+
+    /**
+     * Creates a request to the SSO grant authorization endpoint. Used to direct the user to a URL where they can log
+     * in via SSO and then redirect back to the app.
+     *
+     * @param uri The base URI obtained from [SsoDomain.connectUrl].
+     * @param redirectUri The URI which should be redirected back to.
+     * @param state A random value that will be returned in the redirect to identify the origin of the request.
+     */
+    @Internal
+    @GET
+    fun createSsoGrantRequest(
+        @Url uri: String,
+        @Query(REDIRECT_URI) redirectUri: String,
+        @Query(STATE) state: String
+    ): VimeoCall<Unit>
+
+    /**
+     * Log into the server using an authorization code grant from an enterprise SSO supported domain using Auth0. If an
+     * account does not already exist, this request will fail. For this reason, [joinWithSsoCodeGrant] is preferred
+     * since it supports both join and login, leaving this function intentionally unused.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param authorizationCode The Auth0 code to verify.
+     * @param redirectUri The URI used to verify the token.
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
+    @Suppress("unused")
+    @FormUrlEncoded
+    @Internal
+    @POST("oauth/authorize/auth0")
+    fun logInWithSsoCodeGrant(
+        @Header(AUTHORIZATION) authorization: String,
+        @Field(AUTHORIZATION_CODE) authorizationCode: String,
+        @Field(REDIRECT_URI) redirectUri: String,
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
+    ): VimeoCall<VimeoAccount>
+
+    /**
+     * Log into the server or join using an authorization code grant from an enterprise SSO supported domain using
+     * Auth0. If an account does not already exist, an account will be created for the user.
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param authorizationCode The Auth0 code to verify.
+     * @param redirectUri The URI used to verify the token.
+     * @param marketingOptIn True if the user is opting into marketing emails, false otherwise.
+     *
+     * @return A [VimeoCall] that provides a [VimeoAccount] that can be used to perform authenticated requests and also
+     * contains a user object.
+     */
+    @FormUrlEncoded
+    @Internal
+    @POST("users")
+    fun joinWithSsoCodeGrant(
+        @Header(AUTHORIZATION) authorization: String,
+        @Field(AUTHORIZATION_CODE) authorizationCode: String,
+        @Field(REDIRECT_URI) redirectUri: String,
+        @Field(MARKETING_OPT_IN) marketingOptIn: Boolean
     ): VimeoCall<VimeoAccount>
 
     /**
@@ -327,9 +407,25 @@ internal interface AuthService {
     ): VimeoCall<Unit>
 
     companion object {
-        private const val AUTHORIZATION = "Authorization"
-        private const val SCOPE = "scope"
-        private const val GRANT_TYPE = "grant_type"
+        const val AUTHORIZATION = "Authorization"
+        const val SCOPE = "scope"
+        const val GRANT_TYPE = "grant_type"
+        const val REDIRECT_URI = "redirect_uri"
+        const val STATE = "state"
+        const val MARKETING_OPT_IN = "marketing_opt_in"
+        const val AUTHORIZATION_CODE = "authorization_code"
+        const val NAME = "name"
+        const val EMAIL = "email"
+        const val PASSWORD = "password"
+        const val TOKEN = "token"
+        const val TOKEN_SECRET = "token_secret"
+        const val DOMAIN = "domain"
+        const val USER_CODE = "user_code"
+        const val DEVICE_CODE = "device_code"
+        const val ACCESS_TOKEN = "access_token"
+        const val CODE = "code"
+        const val CLIENT_ID = "client_id"
+        const val ID_TOKEN = "id_token"
+        const val USERNAME = "username"
     }
-
 }

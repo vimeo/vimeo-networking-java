@@ -48,6 +48,10 @@ internal class VimeoCallEmptyResponseAdapter(
     private val responseBodyConverter: Converter<ResponseBody, ApiError>,
     private val vimeoLogger: VimeoLogger
 ) : VimeoCall<Unit> {
+
+    override val url: String
+        get() = call.request().url().toString()
+
     override fun enqueue(callback: VimeoCallback<Unit>): VimeoRequest {
         call.enqueue(object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
