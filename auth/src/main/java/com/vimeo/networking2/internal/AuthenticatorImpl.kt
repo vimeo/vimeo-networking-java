@@ -33,6 +33,7 @@ import com.vimeo.networking2.VimeoRequest
 import com.vimeo.networking2.account.CachingAccountStore
 import com.vimeo.networking2.internal.AuthService.Companion.AUTHORIZATION_CODE
 import com.vimeo.networking2.internal.AuthService.Companion.CODE
+import com.vimeo.networking2.internal.AuthService.Companion.DEVICE_CODE
 import com.vimeo.networking2.internal.AuthService.Companion.EMAIL
 import com.vimeo.networking2.internal.AuthService.Companion.ID_TOKEN
 import com.vimeo.networking2.internal.AuthService.Companion.NAME
@@ -41,7 +42,9 @@ import com.vimeo.networking2.internal.AuthService.Companion.REDIRECT_URI
 import com.vimeo.networking2.internal.AuthService.Companion.TOKEN
 import com.vimeo.networking2.internal.AuthService.Companion.TOKEN_SECRET
 import com.vimeo.networking2.internal.AuthService.Companion.USERNAME
+import com.vimeo.networking2.internal.AuthService.Companion.USER_CODE
 import com.vimeo.networking2.internal.params.ApiParameter
+import com.vimeo.networking2.internal.params.validateParameters
 import okhttp3.HttpUrl
 
 /**
@@ -192,7 +195,7 @@ internal class AuthenticatorImpl(
             authorization = basicAuthHeader,
             grantType = GrantType.OAUTH_ONE,
             token = tokenParameter.validatedParameterValue,
-            tokenSecret = tokenParameter.validatedParameterValue,
+            tokenSecret = tokenSecretParameter.validatedParameterValue,
             scopes = scopes
         ).enqueueWithAccountStore(callback)
     }
@@ -211,27 +214,39 @@ internal class AuthenticatorImpl(
             authorizationCode,
             redirectUri
         ) ?: authService.authenticateWithCodeGrant(
-            basicAuthHeader,
-            redirectUri.validatedParameterValue,
-            authorizationCode.validatedParameterValue,
-            GrantType.AUTHORIZATION_CODE
+            authorization = basicAuthHeader,
+            redirectUri = redirectUri.validatedParameterValue,
+            authorizationCode = authorizationCode.validatedParameterValue,
+            grantType = GrantType.AUTHORIZATION_CODE
         ).enqueueWithAccountStore(callback)
     }
 
     override fun createCodeGrantAuthorizationUri(responseCode: String): String {
-        return authService.createCodeGrantRequest(clientId, redirectUri, responseCode, scopes).url
+        return authService.createCodeGrantRequest(
+            clientId = clientId,
+            redirectUri = redirectUri,
+            state = responseCode,
+            scopes = scopes
+        ).url
     }
 
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest {
         val domainParameter = ApiParameter(AuthService.DOMAIN, domain)
 
         return localVimeoCallAdapter.validateParameters(callback, "SSO domain fetch error", domainParameter)
-            ?: authService.getSsoDomain(basicAuthHeader, domainParameter.validatedParameterValue).enqueue(callback)
+            ?: authService.getSsoDomain(
+                authorization = basicAuthHeader,
+                domain = domainParameter.validatedParameterValue
+            ).enqueue(callback)
     }
 
     override fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String? {
         val connectUrl = ssoDomain.connectUrl ?: return null
-        return authService.createSsoGrantRequest(connectUrl, redirectUri, responseCode).url
+        return authService.createSsoGrantRequest(
+            uri = connectUrl,
+            redirectUri = redirectUri,
+            state = responseCode
+        ).url
     }
 
     override fun authenticateWithSso(
@@ -252,26 +267,40 @@ internal class AuthenticatorImpl(
             authorizationCode,
             redirectUri
         ) ?: authService.joinWithSsoCodeGrant(
-            basicAuthHeader,
-            authorizationCode.validatedParameterValue,
-            redirectUri.validatedParameterValue,
-            marketingOptIn
+            authorization = basicAuthHeader,
+            authorizationCode = authorizationCode.validatedParameterValue,
+            redirectUri = redirectUri.validatedParameterValue,
+            marketingOptIn = marketingOptIn
         ).enqueueWithAccountStore(callback)
     }
 
     override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest {
-        return authService.getPinCodeInfo(basicAuthHeader, GrantType.DEVICE, scopes).enqueue(callback)
+        return authService.getPinCodeInfo(
+            authorization = basicAuthHeader,
+            grantType = GrantType.DEVICE,
+            scopes = scopes
+        ).enqueue(callback)
     }
 
     override fun authenticateWithPinCode(
         pinCodeInfo: PinCodeInfo,
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest {
-        val userCode = pinCodeInfo.userCode.orEmpty()
-        val deviceCode = pinCodeInfo.deviceCode.orEmpty()
+        val userCode = ApiParameter(USER_CODE, pinCodeInfo.userCode)
+        val deviceCode = ApiParameter(DEVICE_CODE, pinCodeInfo.deviceCode)
 
-        return authService.logInWithPinCode(basicAuthHeader, GrantType.DEVICE, userCode, deviceCode, scopes)
-            .enqueueWithAccountStore(callback)
+        return localVimeoCallAdapter.validateParameters(
+            callback,
+            "Pin code authentication error",
+            userCode,
+            deviceCode
+        ) ?: authService.logInWithPinCode(
+            authorization = basicAuthHeader,
+            grantType = GrantType.DEVICE,
+            pinCode = userCode.validatedParameterValue,
+            deviceCode = deviceCode.validatedParameterValue,
+            scopes = scopes
+        ).enqueueWithAccountStore(callback)
     }
 
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest {

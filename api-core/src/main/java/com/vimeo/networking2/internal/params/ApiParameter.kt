@@ -21,12 +21,20 @@
  */
 package com.vimeo.networking2.internal.params
 
+import com.vimeo.networking2.ApiError
+import com.vimeo.networking2.InvalidParameter
+import com.vimeo.networking2.VimeoCallback
+import com.vimeo.networking2.VimeoRequest
+import com.vimeo.networking2.enums.ErrorCodeType
+import com.vimeo.networking2.internal.LocalVimeoCallAdapter
+
 /**
- * A class representing an API parameter that can be validated.
+ * A class representing an API parameter that can be validated by using [validateParameters].
  *
  * @param parameterName The name of the field being validated.
  * @param parameterValue The original pre-validation value being provided.
- * @param developerMessage The optional message to provide if the parameter is invalid.
+ * @param developerMessage The optional message to provide if the parameter is invalid. A default message will be added
+ * by [validateParameters] when the [parameterValue] is invalid if none is provided here.
  */
 data class ApiParameter(
     val parameterName: String,
@@ -38,4 +46,43 @@ data class ApiParameter(
      */
     var validatedParameterValue: String = ""
         internal set
+}
+
+/**
+ * Validate the parameters provided and enqueue an error if any of the parameters are invalid.
+ *
+ * @param callback The callback to enqueue if there are invalid parameters.
+ * @param developerMessage The developer message that describes the request that failed.
+ * @param parameters The parameters that will be validated. Upon validation, these parameters will be updated with the
+ * validated parameter value.
+ *
+ * @return A [VimeoRequest] if there were invalid parameters and the callback was enqueued, null if there were no
+ * invalid parameters.
+ */
+fun <T> LocalVimeoCallAdapter.validateParameters(
+    callback: VimeoCallback<T>,
+    developerMessage: String,
+    vararg parameters: ApiParameter
+): VimeoRequest? {
+    val invalidParameters = parameters.mapNotNull {
+        if (it.parameterValue.isNullOrBlank()) {
+            InvalidParameter(
+                field = it.parameterName,
+                errorCode = ErrorCodeType.INVALID_INPUT.value,
+                developerMessage = it.developerMessage ?: "${it.parameterName} is empty or null"
+            )
+        } else {
+            it.validatedParameterValue = it.parameterValue
+            null
+        }
+    }
+
+    return if (invalidParameters.isNotEmpty()) {
+        enqueueError(ApiError(
+            invalidParameters = invalidParameters,
+            developerMessage = developerMessage
+        ), callback)
+    } else {
+        null
+    }
 }
