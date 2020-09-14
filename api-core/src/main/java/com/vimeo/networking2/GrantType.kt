@@ -29,6 +29,7 @@ import com.vimeo.networking2.enums.StringValue
 enum class GrantType(override val value: String) : StringValue {
     CLIENT_CREDENTIALS("client_credentials"),
     AUTHORIZATION_CODE("authorization_code"),
+    DEVICE("device_grant"),
     PASSWORD("password"),
     FACEBOOK("facebook"),
     GOOGLE("google"),

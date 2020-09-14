@@ -13,31 +13,31 @@ data class TvodItemConnections(
      * Information about the comments associated with this page.
      */
     @Json(name = "comment")
-    val comments: Connection? = null,
+    val comments: BasicConnection? = null,
 
     /**
      * Information about the genres associated with this page.
      */
     @Json(name = "genres")
-    val genres: Connection? = null,
+    val genres: BasicConnection? = null,
 
     /**
      * Information about the likes associated with this page.
      */
     @Json(name = "likes")
-    val likes: Connection? = null,
+    val likes: BasicConnection? = null,
 
     /**
      * Information about the pictures associated with this page.
      */
     @Json(name = "pictures")
-    val pictures: Connection? = null,
+    val pictures: BasicConnection? = null,
 
     /**
      * Information about the seasons associated with this page.
      */
     @Json(name = "seasons")
-    val seasons: Connection? = null,
+    val seasons: BasicConnection? = null,
 
     /**
      * Information about the videos associated with this page.

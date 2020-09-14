@@ -33,12 +33,21 @@ enum class AuthParam(
     @Json(name = "token")
     FIELD_TOKEN(ErrorCodeType.INVALID_TOKEN, "An empty access token was provided."),
 
+    @Json(name = "token_secret")
+    FIELD_TOKEN_SECRET(ErrorCodeType.INVALID_TOKEN, "An empty token secret was provided."),
+
     @Json(name = "grant_type")
     FIELD_GRANT_TYPE(ErrorCodeType.INVALID_INPUT_GRANT_TYPE, "Grant type not provided."),
 
-    @Json(name = "marketing_opt_in")
-    FIELD_MARKETING_OPT_IN(developerMessage = "Marketing opt in option not provided."),
-
     @Json(name = "scope")
-    FIELD_SCOPES(developerMessage = "Scopes were not provided.");
+    FIELD_SCOPES(developerMessage = "Scopes were not provided."),
+
+    @Json(name = "domain")
+    DOMAIN(developerMessage = "An empty domain was provided."),
+
+    @Json(name = "authorization_code")
+    AUTHORIZATION_CODE(developerMessage = "An empty authorization code was provided."),
+
+    @Json(name = "redirect_uri")
+    REDIRECT_URI(developerMessage = "An empty redirect uri was provided.")
 }

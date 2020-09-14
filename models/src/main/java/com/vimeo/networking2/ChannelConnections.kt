@@ -15,18 +15,18 @@ data class ChannelConnections(
      * private scope.
      */
     @Json(name = "privacy_users")
-    val privacyUsers: Connection? = null,
+    val privacyUsers: BasicConnection? = null,
 
     /**
      * Information about the users following or moderating this channel.
      */
     @Json(name = "users")
-    val users: Connection? = null,
+    val users: BasicConnection? = null,
 
     /**
      * Information about the videos that belong to this channel.
      */
     @Json(name = "videos")
-    val videos: Connection? = null
+    val videos: BasicConnection? = null
 
 )

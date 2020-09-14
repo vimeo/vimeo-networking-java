@@ -21,7 +21,6 @@
  */
 package com.vimeo.networking2.internal.params
 
-import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.Scopes
 import com.vimeo.networking2.enums.StringValue
 import retrofit2.Converter
@@ -37,7 +36,6 @@ class VimeoParametersConverterFactory : Converter.Factory() {
         annotations: Array<Annotation>,
         retrofit: Retrofit
     ): Converter<*, String>? = when {
-        type == GrantType::class.java -> GrantTypeConverter()
         type == Scopes::class.java -> ScopesConverter()
         type is Class<*> && StringValue::class.java.isAssignableFrom(type) -> StringValueConverter()
         else -> super.stringConverter(type, annotations, retrofit)

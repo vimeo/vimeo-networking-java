@@ -23,14 +23,14 @@
  */
 package com.vimeo.networking2.internal.interceptor
 
-import com.vimeo.networking2.config.Configuration
+import com.vimeo.networking2.config.VimeoApiConfiguration
 import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
  * Rewrite the server's cache-control header because our server sets all `Cache-Control` headers to `no-store`. To get
- * data from the cache, we set a max age to [Configuration.cacheMaxAgeSeconds]. Normally the API indicates that the
- * contents should not be cached. Since most clients want common requests to be available via cache for performance
+ * data from the cache, we set a max age to [VimeoApiConfiguration.cacheMaxAgeSeconds]. Normally the API indicates that
+ * the contents should not be cached. Since most clients want common requests to be available via cache for performance
  * reasons, we overwrite this behavior and set our own [maxAgeSeconds] expiration.
  *
  * @param maxAgeSeconds The max age of the cache before expiration in seconds.

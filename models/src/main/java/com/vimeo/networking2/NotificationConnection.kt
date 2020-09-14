@@ -3,6 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
+import com.vimeo.networking2.common.Connection
 
 /**
  * All actions that can be taken on notifications.
@@ -49,11 +50,12 @@ data class NotificationConnection(
     @Json(name = "unread_total")
     val unreadTotal: Int? = null,
 
-    /**
-     * The API URI that resolves to the connection data.
-     */
     @Internal
     @Json(name = "uri")
-    val uri: String? = null
+    override val uri: String? = null,
 
-)
+    @Internal
+    @Json(name = "options")
+    override val options: List<String>? = null
+
+) : Connection

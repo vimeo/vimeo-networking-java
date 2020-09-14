@@ -48,8 +48,11 @@ internal class VimeoCallAdapter<T : Any>(
     private val vimeoLogger: VimeoLogger
 ) : VimeoCall<T> {
 
+    override val url: String
+        get() = call.request().url().toString()
+
     /**
-     * Determine is the response has a body.
+     * Determine if the response has a body.
      */
     private fun Response<T>.hasBody() = isSuccessful && body() != null
 
@@ -80,7 +83,7 @@ internal class VimeoCallAdapter<T : Any>(
     }
 
     override fun enqueueError(apiError: ApiError, callback: VimeoCallback<T>): VimeoRequest {
-        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, VimeoResponse.HTTP_NONE)) }
+        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, ApiConstants.NONE)) }
         return NoOpVimeoRequest
     }
 

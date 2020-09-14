@@ -51,8 +51,12 @@ interface VimeoCall<T> {
     fun cancel()
 
     /**
+     * The URL to which this call will be made.
+     */
+    val url: String
+
+    /**
      * Clone the API call.
      */
     fun clone(): VimeoCall<T>
-
 }

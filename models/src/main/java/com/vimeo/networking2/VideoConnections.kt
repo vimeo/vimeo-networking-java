@@ -14,57 +14,57 @@ data class VideoConnections(
      * Information about the comments on this video.
      */
     @Json(name = "comments")
-    val comments: Connection? = null,
+    val comments: BasicConnection? = null,
 
     /**
      * Information about the users credited in this video.
      */
     @Json(name = "credit")
-    val credit: Connection? = null,
+    val credit: BasicConnection? = null,
 
     /**
      * Information about the users who have liked this video.
      */
     @Json(name = "likes")
-    val likes: Connection? = null,
+    val likes: BasicConnection? = null,
 
     /**
      * Information about this video's live stream stats.
      */
     @Internal
     @Json(name = "live_stats")
-    val liveStats: Connection? = null,
+    val liveStats: BasicConnection? = null,
 
     /**
      * Information about the video's on-demand status.
      */
     @Internal
     @Json(name = "ondemand")
-    val onDemand: Connection? = null,
+    val onDemand: BasicConnection? = null,
 
     /**
      * Information about this video's thumbnails.
      */
     @Json(name = "pictures")
-    val pictures: Connection? = null,
+    val pictures: BasicConnection? = null,
 
     /**
      * The DRM playback status connection for this video.
      */
     @Json(name = "playback")
-    val playback: Connection? = null,
+    val playback: BasicConnection? = null,
 
     /**
      * The recommendations for this video.
      */
     @Json(name = "recommendations")
-    val recommendations: Connection? = null,
+    val recommendations: BasicConnection? = null,
 
     /**
      * Related content for this video.
      */
     @Json(name = "related")
-    val related: Connection? = null,
+    val related: BasicConnection? = null,
 
     /**
      * Information about the video's season.
@@ -76,31 +76,31 @@ data class VideoConnections(
      * Information about this video's text tracks.
      */
     @Json(name = "texttracks")
-    val textTracks: Connection? = null,
+    val textTracks: BasicConnection? = null,
 
     /**
      * Information about this video's VOD trailer.
      */
     @Json(name = "trailer")
-    val trailer: Connection? = null,
+    val trailer: BasicConnection? = null,
 
     /**
      * Information about the user privacy of this video, if the video privacy is users.
      */
     @Json(name = "users_with_access")
-    val usersWithAccess: Connection? = null,
+    val usersWithAccess: BasicConnection? = null,
 
     /**
      * Connection to get all the logged-in user's available albums that this video can be added to.
      */
     @Json(name = "available_albums")
-    val availableAlbums: Connection? = null,
+    val availableAlbums: BasicConnection? = null,
 
     /**
      * Connection to get all the logged-in user's available channels that this video can be added to.
      */
     @Json(name = "available_channels")
-    val availableChannels: Connection? = null,
+    val availableChannels: BasicConnection? = null,
 
     /**
      * Connection to get the Publish to Social data for this video.

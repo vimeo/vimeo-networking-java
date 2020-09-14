@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2020 Vimeo (https://vimeo.com)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
@@ -11,7 +32,8 @@ import java.util.concurrent.Executor
 
 /**
  * A custom Retrofit call adapter for requests with an expected empty response. This was created in order to parse an
- * error response from the API in a background thread and return the result in the calling thread.
+ * error response from the API in a background thread and return the result in the thread determined by the
+ * [callbackExecutor].
  *
  * @param call Retrofit call object with empty response.
  * @param callbackExecutor Callback executor set by Retrofit to return the result. Retrofit itself sets it to the main
@@ -26,6 +48,10 @@ internal class VimeoCallEmptyResponseAdapter(
     private val responseBodyConverter: Converter<ResponseBody, ApiError>,
     private val vimeoLogger: VimeoLogger
 ) : VimeoCall<Unit> {
+
+    override val url: String
+        get() = call.request().url().toString()
+
     override fun enqueue(callback: VimeoCallback<Unit>): VimeoRequest {
         call.enqueue(object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
@@ -53,7 +79,7 @@ internal class VimeoCallEmptyResponseAdapter(
     }
 
     override fun enqueueError(apiError: ApiError, callback: VimeoCallback<Unit>): VimeoRequest {
-        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, VimeoResponse.HTTP_NONE)) }
+        callbackExecutor.execute { callback.onError(VimeoResponse.Error.Api(apiError, ApiConstants.NONE)) }
         return NoOpVimeoRequest
     }
 

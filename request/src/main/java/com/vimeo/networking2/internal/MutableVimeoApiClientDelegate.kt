@@ -26,6 +26,7 @@ import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -39,7 +40,10 @@ import com.vimeo.networking2.params.SearchSortType
 import okhttp3.CacheControl
 
 /**
- * A [VimeoApiClient] that delegates its implementation to an internal mutable instance [actual].
+ * A [VimeoApiClient] that delegates its implementation to an internal mutable instance [actual]. The purpose of this
+ * class is to allow the [VimeoApiClient] instance to be re-initialized on the fly. It delegates to an underlying actual
+ * implementation that can be changed dynamically. This allows the [VimeoApiClient.initialize] function to change the
+ * implementation used without changing the reference returned by [VimeoApiClient.instance].
  *
  * @param actual The actual implementation of [VimeoApiClient], defaults to null.
  */
@@ -54,27 +58,45 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
-    ): VimeoRequest = client.createAlbum(name, albumPrivacy, description, parameters, callback)
+    ): VimeoRequest = client.createAlbum(name, albumPrivacy, description, bodyParams, callback)
 
     override fun editAlbum(
         album: Album,
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
-    ): VimeoRequest = client.editAlbum(album, name, albumPrivacy, description, parameters, callback)
+    ): VimeoRequest = client.editAlbum(album, name, albumPrivacy, description, bodyParams, callback)
+
+    override fun editAlbum(
+        uri: String,
+        name: String,
+        albumPrivacy: AlbumPrivacy,
+        description: String?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<Album>
+    ): VimeoRequest = client.editAlbum(uri, name, albumPrivacy, description, bodyParams, callback)
 
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteAlbum(album, callback)
 
+    override fun deleteAlbum(uri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.deleteAlbum(uri, callback)
+
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
         client.addToAlbum(album, video, callback)
 
+    override fun addToAlbum(albumUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.addToAlbum(albumUri, videoUri, callback)
+
     override fun removeFromAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
         client.removeFromAlbum(album, video, callback)
+
+    override fun removeFromAlbum(albumUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.removeFromAlbum(albumUri, videoUri, callback)
 
     override fun modifyVideosInAlbum(
         album: Album,
@@ -82,11 +104,23 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<VideoList>
     ): VimeoRequest = client.modifyVideosInAlbum(album, modificationSpecs, callback)
 
+    override fun modifyVideosInAlbum(
+        uri: String,
+        modificationSpecs: ModifyVideosInAlbumSpecs,
+        callback: VimeoCallback<VideoList>
+    ): VimeoRequest = client.modifyVideosInAlbum(uri, modificationSpecs, callback)
+
     override fun modifyVideoInAlbums(
         video: Video,
         modificationSpecs: ModifyVideoInAlbumsSpecs,
         callback: VimeoCallback<AlbumList>
     ): VimeoRequest = client.modifyVideoInAlbums(video, modificationSpecs, callback)
+
+    override fun modifyVideoInAlbums(
+        uri: String,
+        modificationSpecs: ModifyVideoInAlbumsSpecs,
+        callback: VimeoCallback<AlbumList>
+    ): VimeoRequest = client.modifyVideoInAlbums(uri, modificationSpecs, callback)
 
     override fun editVideo(
         uri: String,
@@ -98,7 +132,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        parameters: Map<String, Any>?,
+        bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest = client.editVideo(
         uri,
@@ -110,7 +144,33 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         allowAddToCollections,
         embedPrivacyType,
         viewPrivacyType,
-        parameters,
+        bodyParams,
+        callback
+    )
+
+    override fun editVideo(
+        video: Video,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<Video>
+    ): VimeoRequest = client.editVideo(
+        video,
+        title,
+        description,
+        password,
+        commentPrivacyType,
+        allowDownload,
+        allowAddToCollections,
+        embedPrivacyType,
+        viewPrivacyType,
+        bodyParams,
         callback
     )
 
@@ -122,8 +182,16 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<User>
     ): VimeoRequest = client.editUser(uri, name, location, bio, callback)
 
+    override fun editUser(
+        user: User,
+        name: String?,
+        location: String?,
+        bio: String?,
+        callback: VimeoCallback<User>
+    ): VimeoRequest = client.editUser(user, name, location, bio, callback)
+
     override fun editSubscriptions(
-        subscriptionMap: Map<String, Boolean>,
+        subscriptionMap: Map<NotificationType, Boolean>,
         callback: VimeoCallback<NotificationSubscriptions>
     ): VimeoRequest = client.editSubscriptions(subscriptionMap, callback)
 
@@ -158,10 +226,16 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     ): VimeoRequest = client.fetchPublishJob(uri, fieldFilter, cacheControl, callback)
 
     override fun putPublishJob(
-        publishUri: String,
+        uri: String,
         publishData: BatchPublishToSocialMedia,
         callback: VimeoCallback<PublishJob>
-    ): VimeoRequest = client.putPublishJob(publishUri, publishData, callback)
+    ): VimeoRequest = client.putPublishJob(uri, publishData, callback)
+
+    override fun putPublishJob(
+        video: Video,
+        publishData: BatchPublishToSocialMedia,
+        callback: VimeoCallback<PublishJob>
+    ): VimeoRequest = client.putPublishJob(video, publishData, callback)
 
     override fun fetchTermsOfService(cacheControl: CacheControl?, callback: VimeoCallback<Document>): VimeoRequest =
         client.fetchTermsOfService(cacheControl, callback)
@@ -184,6 +258,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<TextTrackList>
     ): VimeoRequest = client.fetchTextTrackList(uri, fieldFilter, cacheControl, callback)
+
+    override fun fetchVideoStatus(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<VideoStatus>
+    ): VimeoRequest = client.fetchVideoStatus(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchEmpty(
         uri: String,
@@ -226,6 +308,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun activatePictureCollection(uri: String, callback: VimeoCallback<PictureCollection>): VimeoRequest =
         client.activatePictureCollection(uri, callback)
+
+    override fun activatePictureCollection(
+        pictureCollection: PictureCollection,
+        callback: VimeoCallback<PictureCollection>
+    ): VimeoRequest = client.activatePictureCollection(pictureCollection, callback)
 
     override fun updateFollow(isFollowing: Boolean, uri: String, callback: VimeoCallback<Unit>): VimeoRequest =
         client.updateFollow(isFollowing, uri, callback)
@@ -293,228 +380,229 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun fetchCurrentUser(
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
-    ): VimeoRequest = client.fetchCurrentUser(fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchCurrentUser(fieldFilter, cacheControl, callback)
 
     override fun fetchVideo(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Video>
-    ): VimeoRequest = client.fetchVideo(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchVideo(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchLiveStats(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<LiveStats>
-    ): VimeoRequest = client.fetchLiveStats(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchLiveStats(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchVideoList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<VideoList>
-    ): VimeoRequest = client.fetchVideoList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchVideoList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchFeedList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<FeedList>
-    ): VimeoRequest = client.fetchFeedList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchFeedList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchProjectItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProjectItemList>
-    ): VimeoRequest = client.fetchProjectItemList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchProjectItemList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchProgrammedContentItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProgrammedContentItemList>
-    ): VimeoRequest = client.fetchProgrammedContentItemList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchProgrammedContentItemList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchRecommendationList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<RecommendationList>
-    ): VimeoRequest = client.fetchRecommendationList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchRecommendationList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchSearchResultList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<SearchResultList>
-    ): VimeoRequest = client.fetchSearchResultList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchSearchResultList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchSeasonList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<SeasonList>
-    ): VimeoRequest = client.fetchSeasonList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchSeasonList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchNotificationList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<NotificationList>
-    ): VimeoRequest = client.fetchNotificationList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchNotificationList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchUser(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
-    ): VimeoRequest = client.fetchUser(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchUser(uri, fieldFilter, cacheControl, callback)
 
     override fun fetchUserList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<UserList>
-    ): VimeoRequest = client.fetchUserList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchUserList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchCategory(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Category>
-    ): VimeoRequest = client.fetchCategory(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchCategory(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchCategoryList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<CategoryList>
-    ): VimeoRequest = client.fetchCategoryList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchCategoryList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchChannel(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Channel>
-    ): VimeoRequest = client.fetchChannel(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchChannel(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchChannelList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ChannelList>
-    ): VimeoRequest = client.fetchChannelList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchChannelList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchAppConfiguration(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<AppConfiguration>
-    ): VimeoRequest = client.fetchAppConfiguration(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchAppConfiguration(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchAlbum(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Album>
-    ): VimeoRequest = client.fetchAlbum(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchAlbum(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchAlbumList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<AlbumList>
-    ): VimeoRequest = client.fetchAlbumList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchAlbumList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchTvodItem(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItem>
-    ): VimeoRequest = client.fetchTvodItem(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchTvodItem(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchTvodItemList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TvodItemList>
-    ): VimeoRequest = client.fetchTvodItemList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchTvodItemList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchComment(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Comment>
-    ): VimeoRequest = client.fetchComment(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchComment(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchCommentList(
         uri: String,
         fieldFilter: String?,
-        refinementMap: Map<String, String>?,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<CommentList>
-    ): VimeoRequest = client.fetchCommentList(uri, fieldFilter, refinementMap, cacheControl, callback)
+    ): VimeoRequest = client.fetchCommentList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun postContent(
         uri: String,
-        postBody: List<Any>,
+        bodyParams: List<Any>,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.postContent(uri, postBody, callback)
+    ): VimeoRequest = client.postContent(uri, bodyParams, callback)
 
     override fun emptyResponsePost(
         uri: String,
-        postBody: Map<String, String>,
+        bodyParams: Map<String, String>,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.emptyResponsePost(uri, postBody, callback)
+    ): VimeoRequest = client.emptyResponsePost(uri, bodyParams, callback)
 
     override fun emptyResponsePatch(
         uri: String,
         queryParams: Map<String, String>,
-        patchBody: Any,
+        bodyParams: Any,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.emptyResponsePatch(uri, queryParams, patchBody, callback)
+    ): VimeoRequest = client.emptyResponsePatch(uri, queryParams, bodyParams, callback)
 
     override fun putContentWithUserResponse(
         uri: String,
-        options: Map<String, String>,
-        body: Any?,
+        queryParams: Map<String, String>,
+        bodyParams: Any?,
         callback: VimeoCallback<User>
-    ): VimeoRequest = client.putContentWithUserResponse(uri, options, body, callback)
+    ): VimeoRequest = client.putContentWithUserResponse(uri, queryParams, bodyParams, callback)
 
     override fun putContent(
         uri: String,
-        options: Map<String, String>,
-        body: Any?,
+        queryParams: Map<String, String>,
+        bodyParams: Any?,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.putContent(uri, options, body, callback)
+    ): VimeoRequest = client.putContent(uri, queryParams, bodyParams, callback)
 
-    override fun deleteContent(uri: String, options: Map<String, String>, callback: VimeoCallback<Unit>): VimeoRequest =
-        client.deleteContent(uri, options, callback)
+    override fun deleteContent(
+        uri: String,
+        queryParams: Map<String, String>,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.deleteContent(uri, queryParams, callback)
 }

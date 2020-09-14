@@ -29,9 +29,9 @@ import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
+import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
 import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
 import com.vimeo.networking2.logging.VimeoLogger
-import okhttp3.Cache
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -46,10 +46,12 @@ import java.util.concurrent.TimeUnit
 object RetrofitSetupModule {
 
     /**
-     * Create Moshi object for serialization and deserialization.
+     * Create a Moshi instance used for serialization and deserialization.
      */
-    private val moshi = Moshi.Builder()
+    @JvmStatic
+    fun moshi(): Moshi = Moshi.Builder()
         .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        .add(StringValueJsonAdapterFactory())
         .build()
 
     /**
@@ -57,44 +59,53 @@ object RetrofitSetupModule {
      * return an instance of [Retrofit] which is root of the graph.
      */
     @JvmStatic
-    fun retrofit(configuration: Configuration): Retrofit {
+    fun retrofit(vimeoApiConfiguration: VimeoApiConfiguration): Retrofit {
         val interceptors = mutableListOf(
-            UserAgentHeaderInterceptor(configuration.compositeUserAgent),
+            UserAgentHeaderInterceptor(vimeoApiConfiguration.compositeUserAgent),
             AcceptHeaderInterceptor(),
-            LanguageHeaderInterceptor(configuration.locales)
+            LanguageHeaderInterceptor(vimeoApiConfiguration.locales)
         )
-        interceptors.addAll(configuration.interceptors)
+        interceptors.addAll(vimeoApiConfiguration.applicationInterceptors)
 
-        val networkInterceptors = listOf(CacheControlHeaderInterceptor(configuration.cacheMaxAgeSeconds))
+        val networkInterceptors = listOf(CacheControlHeaderInterceptor(vimeoApiConfiguration.cacheMaxAgeSeconds))
 
-        val okHttpClient = okHttpClient(configuration, interceptors, networkInterceptors)
-        return createRetrofit(configuration, okHttpClient)
+        val okHttpClient = okHttpClient(vimeoApiConfiguration, interceptors, networkInterceptors)
+        val moshi = moshi()
+        return createRetrofit(vimeoApiConfiguration, okHttpClient, moshi)
+    }
+
+    /**
+     * Clear the request cache associated with the [VimeoApiConfiguration] of all cache entries.
+     */
+    @JvmStatic
+    fun clearRequestCache(vimeoApiConfiguration: VimeoApiConfiguration) {
+        vimeoApiConfiguration.cache?.evictAll()
     }
 
     /**
      * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
      */
     private fun okHttpClient(
-        configuration: Configuration,
+        vimeoApiConfiguration: VimeoApiConfiguration,
         applicationInterceptors: List<Interceptor>,
         networkInterceptors: List<Interceptor>
     ): OkHttpClient = OkHttpClient.Builder().apply {
-        configuration.networkInterceptors.forEach { addNetworkInterceptor(it) }
-        configuration.interceptors.forEach { addInterceptor(it) }
+        vimeoApiConfiguration.networkInterceptors.forEach { addNetworkInterceptor(it) }
+        vimeoApiConfiguration.applicationInterceptors.forEach { addInterceptor(it) }
 
-        connectTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
-        readTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
-        writeTimeout(configuration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        connectTimeout(vimeoApiConfiguration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        readTimeout(vimeoApiConfiguration.requestTimeoutSeconds, TimeUnit.SECONDS)
+        writeTimeout(vimeoApiConfiguration.requestTimeoutSeconds, TimeUnit.SECONDS)
         retryOnConnectionFailure(false)
 
-        if (configuration.cacheDirectory != null) {
-            cache(Cache(configuration.cacheDirectory, configuration.cacheMaxSizeBytes))
+        if (vimeoApiConfiguration.cache != null) {
+            cache(vimeoApiConfiguration.cache)
         }
 
         interceptors().addAll(applicationInterceptors)
         networkInterceptors().addAll(networkInterceptors)
 
-        if (configuration.isCertPinningEnabled) {
+        if (vimeoApiConfiguration.isCertPinningEnabled) {
             certificatePinner(createCertificatePinner())
         }
     }.build()
@@ -109,17 +120,20 @@ object RetrofitSetupModule {
     /**
      * Create [Retrofit] with OkHttpClient and Moshi.
      */
-    private fun createRetrofit(configuration: Configuration, okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(configuration.baseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(VimeoParametersConverterFactory())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory(VimeoLogger(
-                configuration.logDelegate,
-                configuration.logLevel
-            )))
-            .build()
+    private fun createRetrofit(
+        vimeoApiConfiguration: VimeoApiConfiguration,
+        okHttpClient: OkHttpClient,
+        moshi: Moshi
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(vimeoApiConfiguration.baseUrl)
+        .client(okHttpClient)
+        .addConverterFactory(VimeoParametersConverterFactory())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(ErrorHandlingCallAdapterFactory(VimeoLogger(
+            vimeoApiConfiguration.logDelegate,
+            vimeoApiConfiguration.logLevel
+        )))
+        .build()
 
     /**
      * Creates a cache for storing Retrofit services.
