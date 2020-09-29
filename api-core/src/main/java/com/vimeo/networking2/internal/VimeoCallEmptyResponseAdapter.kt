@@ -57,7 +57,11 @@ internal class VimeoCallEmptyResponseAdapter(
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
                     callbackExecutor.execute {
-                        callback.onSuccess(VimeoResponse.Success(Unit, response.code()))
+                        callback.onSuccess(VimeoResponse.Success(
+                            Unit,
+                            response.determineOrigin(),
+                            response.code()
+                        ))
                     }
                 } else {
                     val vimeoResponseError = response.parseErrorResponse(responseBodyConverter, vimeoLogger)
