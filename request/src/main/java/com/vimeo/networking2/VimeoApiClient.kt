@@ -1218,6 +1218,25 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Fetch a [Folder] from the provided endpoint.
+     *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchFolder(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
      * Fetch the [ConnectedAppList] that contains the list of connected destinations.
      *
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
