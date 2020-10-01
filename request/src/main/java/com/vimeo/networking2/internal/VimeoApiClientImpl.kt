@@ -384,6 +384,16 @@ internal class VimeoApiClientImpl(
         return vimeoService.getDocument(authHeader, safeUri).enqueue(callback)
     }
 
+    override fun fetchFolder(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getFolder(authHeader, safeUri, fieldFilter, cacheControl).enqueue(callback)
+    }
+
     override fun fetchTextTrackList(
         uri: String,
         fieldFilter: String?,

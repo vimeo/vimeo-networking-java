@@ -237,6 +237,14 @@ internal interface VimeoService {
     ): VimeoCall<Document>
 
     @GET
+    fun getFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<Folder>
+
+    @GET
     fun getTvodItem(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
