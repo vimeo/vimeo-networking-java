@@ -742,6 +742,18 @@ internal class VimeoApiClientImpl(
             .enqueue(callback)
     }
 
+    override fun fetchTeamList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamList>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getTeamList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
     override fun fetchProgrammedContentItemList(
         uri: String,
         fieldFilter: String?,

@@ -424,6 +424,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<ProjectItemList>
     ): VimeoRequest = client.fetchProjectItemList(uri, fieldFilter, queryParams, cacheControl, callback)
 
+    override fun fetchTeamList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamList>
+    ): VimeoRequest = client.fetchTeamList(uri, fieldFilter, queryParams, cacheControl, callback)
+
     override fun fetchProgrammedContentItemList(
         uri: String,
         fieldFilter: String?,
