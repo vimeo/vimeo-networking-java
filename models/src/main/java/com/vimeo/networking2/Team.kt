@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Entity
 
 /**
  * Stores information related to shared access to resources across user accounts.
@@ -45,4 +46,6 @@ data class Team(
     @Json(name = "team_data")
     val teamBranding: TeamBranding? = null
 
-)
+) : Entity {
+    override val identifier: String? = owner?.identifier
+}
