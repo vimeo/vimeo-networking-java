@@ -29,7 +29,7 @@ data class TeamOwnerConnection(
     val invitesRemaining: Int? = null,
 
     /**
-     * The total number of albums on this connection.
+     * The total number of owners on this connection.
      */
     @Json(name = "total")
     val total: Int? = null

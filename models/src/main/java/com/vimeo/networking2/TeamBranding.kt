@@ -11,7 +11,7 @@ import com.vimeo.networking2.common.Entity
 data class TeamBranding(
 
     /**
-     * The accent color of the team.
+     * The hexadecimal color code for the accent color of the team.
      */
     @Json(name = "accent_color")
     val acccentColor: String? = null,
