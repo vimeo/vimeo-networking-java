@@ -130,10 +130,16 @@ data class UserConnections(
     val shared: BasicConnection? = null,
 
     /**
-     * Information about the user's team.
+     * Information about the user's team members.
      */
     @Json(name = "team_members")
     val teamMembers: BasicConnection? = null,
+
+    /**
+     * Information about teams the user belongs to.
+     */
+    @Json(name = "teams")
+    val teams: BasicConnection? = null,
 
     /**
      * Information about the videos uploaded by this user.

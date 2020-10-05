@@ -342,6 +342,15 @@ internal interface VimeoService {
     ): VimeoCall<ProjectItemList>
 
     @GET
+    fun getTeamList(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<TeamList>
+
+    @GET
     fun getNotificationList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
