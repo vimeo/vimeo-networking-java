@@ -31,7 +31,7 @@ data class TeamBranding(
     /**
      * The name of the team.
      */
-    @Json(name = "name")
+    @Json(name = "team_name")
     val name: String? = null,
 
     /**
