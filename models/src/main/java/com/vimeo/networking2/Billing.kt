@@ -14,7 +14,7 @@ data class Billing(
      * The user's billing information status.
      */
     @Json(name = "status")
-    val status: String
+    val status: String? = null
 )
 
 /**
