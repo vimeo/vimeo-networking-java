@@ -21,6 +21,11 @@ enum class BillingStatusType(override val value: String?) : StringValue {
     EXPIRED("expired"),
 
     /**
+     * The user's billing information is in a grace period before it's put on hold.
+     */
+    GRACE_PERIOD("grace_period"),
+
+    /**
      * The user's billing information is currently on hold.
      */
     ON_HOLD("on_hold"),
