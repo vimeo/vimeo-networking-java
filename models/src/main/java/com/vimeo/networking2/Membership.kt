@@ -38,13 +38,7 @@ data class Membership(
      * Information about the user's subscription.
      */
     @Json(name = "subscription")
-    val subscription: Subscription? = null,
-
-    /**
-     * Information about the user's billing info.
-     */
-    @Json(name = "billing")
-    val billing: Billing? = null
+    val subscription: Subscription? = null
 )
 
 /**

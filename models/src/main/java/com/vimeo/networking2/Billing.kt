@@ -6,7 +6,7 @@ import com.vimeo.networking2.enums.BillingStatusType
 import com.vimeo.networking2.enums.asEnum
 
 /**
- * The Billing information for this membership.
+ * The Billing information for this subscription.
  */
 @JsonClass(generateAdapter = true)
 data class Billing(
