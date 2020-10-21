@@ -17,6 +17,7 @@ class ModelsTest {
         ApiError::class,
         AppConfiguration::class,
         BasicInteraction::class,
+        Billing::class,
         BuyInteraction::class,
         Category::class,
         CategoryConnections::class,

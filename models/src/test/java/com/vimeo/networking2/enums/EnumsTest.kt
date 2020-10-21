@@ -14,6 +14,7 @@ class EnumsTest {
             ApproachType::class.java,
             AttributionType::class.java,
             BillingPeriodType::class.java,
+            BillingStatusType::class.java,
             BlockerType::class.java,
             CommentType::class.java,
             CommentPrivacyType::class.java,
