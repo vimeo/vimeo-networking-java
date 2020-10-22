@@ -35,6 +35,12 @@ data class Team(
     val owner: User? = null,
 
     /**
+     * A translated name of the logged in user's role on the team.
+     */
+    @Json(name = "user_role")
+    val userRole: String? = null,
+
+    /**
      * Whether or not the team has content shared with any team members yet.
      */
     @Json(name = "has_content_shared")
