@@ -34,6 +34,11 @@ enum class BillingStatusType(override val value: String?) : StringValue {
     ON_HOLD("on_hold"),
 
     /**
+     * The user's billing information does not exist.
+     */
+    NONE("none"),
+
+    /**
      * Unknown billing status.
      */
     UNKNOWN(null)
