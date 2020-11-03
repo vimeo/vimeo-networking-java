@@ -19,5 +19,12 @@ data class Subscription(
      * Information about the user's trial period.
      */
     @Json(name = "trial")
-    val trial: SubscriptionTrial? = null
+    val trial: SubscriptionTrial? = null,
+
+
+    /**
+     * Information about the user's billing info.
+     */
+    @Json(name = "billing")
+    val billing: Billing? = null
 )
