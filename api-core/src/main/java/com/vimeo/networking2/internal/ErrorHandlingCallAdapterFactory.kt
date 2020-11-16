@@ -45,7 +45,7 @@ internal class ErrorHandlingCallAdapterFactory(private val vimeoLogger: VimeoLog
             return null
         }
 
-        check(returnType !is ParameterizedType) {
+        check(returnType is ParameterizedType) {
             "VimeoCall must have generic type (e.g., VimeoCall<ResponseBody>)"
         }
         val responseType = getParameterUpperBound(0, returnType)
