@@ -1,8 +1,8 @@
 detekt {
-    toolVersion = "1.0.0-RC14"
+    toolVersion = "1.14.2"
     input = files("$projectDir/src/main/java")
     config = files("$rootDir/detekt.yml")
-    filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    baseline = file("$projectDir/detekt_baseline.xml")
     failFast = true
     parallel = true
 }

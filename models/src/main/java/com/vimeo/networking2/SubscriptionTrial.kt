@@ -18,13 +18,13 @@ data class SubscriptionTrial(
      * If the value is "free_trial" the user is currently in a free trial.
      */
     @Json(name = "status")
-    var rawStatus: String? = null,
+    val rawStatus: String? = null,
 
     /**
      * Has the user been in (or is currently in) a free trial.
      */
     @Json(name = "has_been_in_free_trial")
-    var hasBeenInFreeTrial: Boolean? = null
+    val hasBeenInFreeTrial: Boolean? = null
 )
 
 /**

@@ -50,9 +50,7 @@ import okhttp3.CacheControl
 internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null) : VimeoApiClient {
 
     private val client: VimeoApiClient
-        get() = actual ?: throw IllegalStateException(
-            "Must call VimeoApiClient.initialize() before calling VimeoApiClient.instance()"
-        )
+        get() = actual ?: error("Must call VimeoApiClient.initialize() before calling VimeoApiClient.instance()")
 
     override fun createAlbum(
         name: String,

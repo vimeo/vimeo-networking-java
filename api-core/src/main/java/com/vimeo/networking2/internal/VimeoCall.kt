@@ -31,6 +31,11 @@ import com.vimeo.networking2.VimeoRequest
 interface VimeoCall<T> {
 
     /**
+     * The URL to which this call will be made.
+     */
+    val url: String
+
+    /**
      * Register a [VimeoCallback] for the API request.
      *
      * @param callback  A callback that gives you back the data or the error from the API.
@@ -49,11 +54,6 @@ interface VimeoCall<T> {
      * Cancel API request.
      */
     fun cancel()
-
-    /**
-     * The URL to which this call will be made.
-     */
-    val url: String
 
     /**
      * Clone the API call.

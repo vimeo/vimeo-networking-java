@@ -23,10 +23,15 @@ complexity:
   TooManyFunctions:
     active: false
   LongParameterList:
-    threshold: 6
+    functionThreshold: 6
+    constructorThreshold: 8
     ignoreDefaultParameters: true
   NestedBlockDepth:
     threshold: 5
+
+empty-blocks:
+  EmptyFunctionBlock:
+    ignoreOverridden: true
 
 exceptions:
   TooGenericExceptionCaught:
@@ -60,11 +65,7 @@ style:
     active: false
   ExpressionBodySyntax:
     active: false
-  MatchingDeclarationName:
-    active: false
   ReturnCount:
-    active: false
-  FunctionMaxLength:
     active: false
   WildcardImport:
     active: false
