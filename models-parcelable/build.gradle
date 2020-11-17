@@ -17,6 +17,8 @@ generated {
 
 android {
     compileSdkVersion 30
+    buildToolsVersion buildToolsVersion
+
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 30

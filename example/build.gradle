@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 30
+    buildToolsVersion buildToolsVersion
 
     defaultConfig {
         applicationId "com.vimeo.example"

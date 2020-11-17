@@ -16,12 +16,12 @@ plugins {
 }
 
 ext {
-    kotlin_version = '1.4.10'
     retrofitVersion = '2.9.0'
     okioVersion =  '2.7.0'
     moshiVersion = '1.9.3'
     stagVersion = '2.6.0'
     junitVersion = '4.13'
+    buildToolsVersion = '29.0.3'
 }
 
 subprojects {
