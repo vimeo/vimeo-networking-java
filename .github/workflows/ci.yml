@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, TECH-Github-Actions ]
   pull_request:
     branches: [ develop ]
 
