@@ -33,6 +33,7 @@ import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
 import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
 import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.CertificatePinner
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -89,9 +90,17 @@ object RetrofitSetupModule {
     fun clearRequestCacheForUri(vimeoApiConfiguration: VimeoApiConfiguration, uri: String) {
         val cache = vimeoApiConfiguration.cache ?: return
 
+        val url = requireNotNull(HttpUrl.parse(vimeoApiConfiguration.baseUrl)) {
+            "VimeoApiConfiguration.baseUrl must be valid"
+        }
+            .newBuilder()
+            .encodedPath(uri)
+            .build()
+            .toString()
+
         val urlIterator = cache.urls()
         while (urlIterator.hasNext()) {
-            if (urlIterator.next().endsWith(uri)) {
+            if (urlIterator.next().startsWith(url)) {
                 urlIterator.remove()
             }
         }
