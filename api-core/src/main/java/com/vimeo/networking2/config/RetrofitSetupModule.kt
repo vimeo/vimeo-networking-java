@@ -83,6 +83,21 @@ object RetrofitSetupModule {
     }
 
     /**
+     * Clear the request cache entry associated with the [VimeoApiConfiguration] and the provided [uri].
+     */
+    @JvmStatic
+    fun clearRequestCacheForUri(vimeoApiConfiguration: VimeoApiConfiguration, uri: String) {
+        val cache = vimeoApiConfiguration.cache ?: return
+
+        val urlIterator = cache.urls()
+        while (urlIterator.hasNext()) {
+            if (urlIterator.next().endsWith(uri)) {
+                urlIterator.remove()
+            }
+        }
+    }
+
+    /**
      * Create [OkHttpClient] with interceptors and timeoutSeconds configurations.
      */
     private fun okHttpClient(
