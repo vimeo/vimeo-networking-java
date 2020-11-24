@@ -86,8 +86,12 @@ object RetrofitSetupModule {
     /**
      * Clear the request cache entry associated with the [VimeoApiConfiguration] and the provided [uri].
      *
-     * For example, if the [VimeoApiConfiguration.baseUrl] is set to `https://api.vimeo.com`, and the [uri]
-     * provided is `/users/12345`, then the cache will be cleared for `https://api.vimeo.com/users/12345`.
+     * For example, if the [VimeoApiConfiguration.baseUrl] is set to `https://api.vimeo.com`, and the [uri] provided is
+     * `/users/12345`, then the cache will be cleared for `https://api.vimeo.com/users/12345`.
+     *
+     * @param vimeoApiConfiguration The configuration, used to initialize the library, containing the cache that will be
+     * partially cleared.
+     * @param uri The URI for which the cache response should be cleared.
      */
     @JvmStatic
     fun clearRequestCacheForUri(vimeoApiConfiguration: VimeoApiConfiguration, uri: String) {
