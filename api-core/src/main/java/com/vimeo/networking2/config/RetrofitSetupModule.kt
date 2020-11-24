@@ -33,6 +33,7 @@ import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
 import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
 import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.CertificatePinner
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -80,6 +81,36 @@ object RetrofitSetupModule {
     @JvmStatic
     fun clearRequestCache(vimeoApiConfiguration: VimeoApiConfiguration) {
         vimeoApiConfiguration.cache?.evictAll()
+    }
+
+    /**
+     * Clear the request cache entry associated with the [VimeoApiConfiguration] and the provided [uri].
+     *
+     * For example, if the [VimeoApiConfiguration.baseUrl] is set to `https://api.vimeo.com`, and the [uri] provided is
+     * `/users/12345`, then the cache will be cleared for `https://api.vimeo.com/users/12345`.
+     *
+     * @param vimeoApiConfiguration The configuration, used to initialize the library, containing the cache that will be
+     * partially cleared.
+     * @param uri The URI for which the cache response should be cleared.
+     */
+    @JvmStatic
+    fun clearRequestCacheForUri(vimeoApiConfiguration: VimeoApiConfiguration, uri: String) {
+        val cache = vimeoApiConfiguration.cache ?: return
+
+        val url = requireNotNull(HttpUrl.parse(vimeoApiConfiguration.baseUrl)) {
+            "VimeoApiConfiguration.baseUrl must be valid"
+        }
+            .newBuilder()
+            .encodedPath(uri)
+            .build()
+            .toString()
+
+        val urlIterator = cache.urls()
+        while (urlIterator.hasNext()) {
+            if (urlIterator.next().startsWith(url)) {
+                urlIterator.remove()
+            }
+        }
     }
 
     /**
