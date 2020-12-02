@@ -16,14 +16,14 @@ data class Gcs(
      */
     @Internal
     @Json(name = "end_byte")
-    val endByte: Int? = null,
+    val endByte: Long? = null,
 
     /**
      * Expected starting byte size for the current upload_link.
      */
     @Internal
     @Json(name = "start_byte")
-    val startByte: Int? = null,
+    val startByte: Long? = null,
 
     /**
      * Link for uploading file chunk to.
