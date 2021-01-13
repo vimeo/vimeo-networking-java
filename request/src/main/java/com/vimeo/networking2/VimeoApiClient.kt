@@ -423,6 +423,74 @@ interface VimeoApiClient {
     fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest
 
     /**
+     * Create a folder that will be used to organize videos.
+     *
+     * @param uri The URI of the user's projects connection.
+     * @param name The name of the folder.
+     * @param privacy The privacy of the folder.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun createFolder(
+        uri: String,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Create a folder that will be used to organize videos.
+     *
+     * @param user The user whose projects connection will be used for the request.
+     * @param name The name of the folder.
+     * @param privacy The privacy of the folder.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun createFolder(
+        user: User,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Edit a folder's information.
+     *
+     * @param uri The URI of the user's projects connection.
+     * @param name The name of the folder.
+     * @param privacy The privacy of the folder.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun editFolder(
+        uri: String,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Edit a folder's information.
+     *
+     * @param folder The folder that will be edited.
+     * @param name The name of the folder.
+     * @param privacy The privacy of the folder.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun editFolder(
+        folder: Folder,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
      * Publish a post to any of several destinations.
      *
      * @param uri The URI to which the consumer supplies the data to publish.
@@ -1255,6 +1323,27 @@ interface VimeoApiClient {
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [FolderList] from the provided endpoint.
+     *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchFolderList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<FolderList>
     ): VimeoRequest
 
     /**

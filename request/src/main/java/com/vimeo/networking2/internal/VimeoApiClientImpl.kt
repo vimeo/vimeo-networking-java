@@ -334,6 +334,47 @@ internal class VimeoApiClientImpl(
         return vimeoService.deleteConnectedApp(authHeader, type.validate()).enqueue(callback)
     }
 
+    override fun createFolder(
+        uri: String,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.createFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+    }
+
+    override fun createFolder(
+        user: User,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest {
+        val safeUri = user.metadata?.connections?.projects?.uri.notEmpty()
+            ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.createFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+    }
+
+    override fun editFolder(
+        uri: String,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.editFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+    }
+
+    override fun editFolder(
+        folder: Folder,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest {
+        val safeUri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.editFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+    }
+
     override fun fetchPublishJob(
         uri: String,
         fieldFilter: String?,
@@ -392,6 +433,23 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.getFolder(authHeader, safeUri, fieldFilter, cacheControl).enqueue(callback)
+    }
+
+    override fun fetchFolderList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<FolderList>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getFolderList(
+            authHeader,
+            safeUri,
+            fieldFilter,
+            queryParams.orEmpty(),
+            cacheControl
+        ).enqueue(callback)
     }
 
     override fun fetchTextTrackList(

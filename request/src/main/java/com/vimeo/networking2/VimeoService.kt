@@ -26,6 +26,8 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_APP_TYPE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_AUTH_CODE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_CLIENT_ID
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_FOLDER_NAME
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_FOLDER_PRIVACY
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PASSWORD
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
@@ -194,6 +196,22 @@ internal interface VimeoService {
         @Url uri: String
     ): VimeoCall<PictureCollection>
 
+    @POST
+    fun createFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Field(PARAMETER_FOLDER_NAME) name: String,
+        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderPrivacy
+    ): VimeoCall<Folder>
+
+    @PATCH
+    fun editFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Field(PARAMETER_FOLDER_NAME) name: String,
+        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderPrivacy
+    ): VimeoCall<Folder>
+
     @GET
     fun getAppConfiguration(
         @Header(AUTHORIZATION) authorization: String,
@@ -322,6 +340,15 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<CommentList>
+
+    @GET
+    fun getFolderList(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<FolderList>
 
     @GET
     fun getFeedList(
