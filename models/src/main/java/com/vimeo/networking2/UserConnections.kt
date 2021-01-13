@@ -104,6 +104,12 @@ data class UserConnections(
     val pictures: BasicConnection? = null,
 
     /**
+     * Information about this user's projects.
+     */
+    @Json(name = "projects")
+    val projects: BasicConnection? = null,
+
+    /**
      * Information about this user's portfolios.
      */
     @Json(name = "portfolios")
