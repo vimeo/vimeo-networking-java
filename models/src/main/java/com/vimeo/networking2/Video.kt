@@ -121,6 +121,12 @@ data class Video(
     val name: String? = null,
 
     /**
+     * Information about the folder that contains the video, or null if it is in the root folder.
+     */
+    @Json(name = "parent_project")
+    val parentFolder: Folder? = null,
+
+    /**
      * The privacy-enabled password to watch this video.
      * This data requires a bearer token with the private scope.
      */
