@@ -218,6 +218,34 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteConnectedApp(type, callback)
 
+    override fun createFolder(
+        uri: String,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest = client.createFolder(uri, name, privacy, callback)
+
+    override fun createFolder(
+        user: User,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest = client.createFolder(user, name, privacy, callback)
+
+    override fun editFolder(
+        uri: String,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest = client.editFolder(uri, name, privacy, callback)
+
+    override fun editFolder(
+        folder: Folder,
+        name: String,
+        privacy: FolderPrivacy,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest = client.editFolder(folder, name, privacy, callback)
+
     override fun fetchPublishJob(
         uri: String,
         fieldFilter: String?,
@@ -258,6 +286,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.fetchFolder(uri, fieldFilter, cacheControl, callback)
+
+    override fun fetchFolderList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<FolderList>
+    ): VimeoRequest = client.fetchFolderList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchTextTrackList(
         uri: String,
