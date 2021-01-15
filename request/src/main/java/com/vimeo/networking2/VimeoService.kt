@@ -33,6 +33,7 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
 import com.vimeo.networking2.enums.ConnectedAppType
+import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.internal.VimeoCall
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
@@ -196,20 +197,22 @@ internal interface VimeoService {
         @Url uri: String
     ): VimeoCall<PictureCollection>
 
+    @FormUrlEncoded
     @POST
     fun createFolder(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Field(PARAMETER_FOLDER_NAME) name: String,
-        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderPrivacy
+        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType
     ): VimeoCall<Folder>
 
+    @FormUrlEncoded
     @PATCH
     fun editFolder(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Field(PARAMETER_FOLDER_NAME) name: String,
-        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderPrivacy
+        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType
     ): VimeoCall<Folder>
 
     @PUT("{$FOLDER_URI}/{$VIDEO_URI}")

@@ -28,6 +28,7 @@ import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.ErrorCodeType
+import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.StringValue
 import com.vimeo.networking2.enums.ViewPrivacyType
@@ -337,7 +338,7 @@ internal class VimeoApiClientImpl(
     override fun createFolder(
         uri: String,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
@@ -347,7 +348,7 @@ internal class VimeoApiClientImpl(
     override fun createFolder(
         user: User,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = user.metadata?.connections?.projects?.uri.notEmpty()
@@ -358,7 +359,7 @@ internal class VimeoApiClientImpl(
     override fun editFolder(
         uri: String,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
@@ -368,7 +369,7 @@ internal class VimeoApiClientImpl(
     override fun editFolder(
         folder: Folder,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)

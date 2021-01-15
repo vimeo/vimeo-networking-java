@@ -26,6 +26,7 @@ import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
@@ -221,28 +222,28 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun createFolder(
         uri: String,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(uri, name, privacy, callback)
 
     override fun createFolder(
         user: User,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(user, name, privacy, callback)
 
     override fun editFolder(
         uri: String,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.editFolder(uri, name, privacy, callback)
 
     override fun editFolder(
         folder: Folder,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.editFolder(folder, name, privacy, callback)
 

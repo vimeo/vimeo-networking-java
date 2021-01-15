@@ -27,6 +27,7 @@ import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
@@ -435,7 +436,7 @@ interface VimeoApiClient {
     fun createFolder(
         uri: String,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest
 
@@ -452,7 +453,7 @@ interface VimeoApiClient {
     fun createFolder(
         user: User,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest
 
@@ -469,7 +470,7 @@ interface VimeoApiClient {
     fun editFolder(
         uri: String,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest
 
@@ -486,7 +487,7 @@ interface VimeoApiClient {
     fun editFolder(
         folder: Folder,
         name: String,
-        privacy: FolderPrivacy,
+        privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest
 
