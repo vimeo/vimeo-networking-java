@@ -375,6 +375,30 @@ internal class VimeoApiClientImpl(
         return vimeoService.editFolder(authHeader, safeUri, name, privacy).enqueue(callback)
     }
 
+    override fun addToFolder(folder: Folder, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
+        val folderUri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val videoUri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return addToFolder(folderUri, videoUri, callback)
+    }
+
+    override fun addToFolder(folderUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest {
+        val safeFolderUri = folderUri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val safeVideoUri = videoUri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.addToFolder(authHeader, safeFolderUri, safeVideoUri).enqueue(callback)
+    }
+
+    override fun removeFromFolder(folder: Folder, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
+        val folderUri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val videoUri = video.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return removeFromFolder(folderUri, videoUri, callback)
+    }
+
+    override fun removeFromFolder(folderUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest {
+        val safeFolderUri = folderUri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val safeVideoUri = videoUri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.removeFromFolder(authHeader, safeFolderUri, safeVideoUri).enqueue(callback)
+    }
+
     override fun fetchPublishJob(
         uri: String,
         fieldFilter: String?,

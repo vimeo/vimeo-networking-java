@@ -246,6 +246,18 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.editFolder(folder, name, privacy, callback)
 
+    override fun addToFolder(folder: Folder, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.addToFolder(folder, video, callback)
+
+    override fun addToFolder(folderUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.addToFolder(folderUri, videoUri, callback)
+
+    override fun removeFromFolder(folder: Folder, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.removeFromFolder(folder, video, callback)
+
+    override fun removeFromFolder(folderUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.removeFromFolder(folderUri, videoUri, callback)
+
     override fun fetchPublishJob(
         uri: String,
         fieldFilter: String?,

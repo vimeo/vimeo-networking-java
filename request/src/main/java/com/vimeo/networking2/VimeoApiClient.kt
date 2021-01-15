@@ -491,6 +491,66 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Add a video to a folder.
+     *
+     * @param folder The folder to which a video is being added.
+     * @param video The video which should be added to the folder.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun addToFolder(
+        folder: Folder,
+        video: Video,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Add a video to a folder.
+     *
+     * @param folderUri The URI of the folder to which a video is being added, should not be empty.
+     * @param videoUri The URI of the video which should be added to the folder, should not be empty.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun addToFolder(
+        folderUri: String,
+        videoUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Remove a video from a folder.
+     *
+     * @param folder The folder from which the video should be removed, URI should not be null or empty.
+     * @param video The video which should be removed from the folder, URI should not be null or empty.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun removeFromFolder(
+        folder: Folder,
+        video: Video,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Remove a video from a folder.
+     *
+     * @param folderUri The URI of the folder from which the video should be removed, should not be empty.
+     * @param videoUri The URI of the video which should be removed from the folder, should not be empty.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun removeFromFolder(
+        folderUri: String,
+        videoUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
      * Publish a post to any of several destinations.
      *
      * @param uri The URI to which the consumer supplies the data to publish.

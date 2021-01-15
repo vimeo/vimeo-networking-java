@@ -212,6 +212,20 @@ internal interface VimeoService {
         @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderPrivacy
     ): VimeoCall<Folder>
 
+    @PUT("{$FOLDER_URI}/{$VIDEO_URI}")
+    fun addToFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(FOLDER_URI, encoded = true) folderUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String
+    ): VimeoCall<Unit>
+
+    @DELETE("{$FOLDER_URI}/{$VIDEO_URI}")
+    fun removeFromFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(FOLDER_URI, encoded = true) folderUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String
+    ): VimeoCall<Unit>
+
     @GET
     fun getAppConfiguration(
         @Header(AUTHORIZATION) authorization: String,
@@ -563,6 +577,7 @@ internal interface VimeoService {
         private const val TYPE = "type"
         private const val ALBUM_URI = "albumUri"
         private const val VIDEO_URI = "videoUri"
+        private const val FOLDER_URI = "folderUri"
         private const val FIELD_FILTER = "fields"
     }
 }
