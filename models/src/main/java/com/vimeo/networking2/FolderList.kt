@@ -8,7 +8,7 @@ import com.vimeo.networking2.common.Pageable
  * List of [Folder]s to show in a user's feed.
  */
 @JsonClass(generateAdapter = true)
-class FolderList(
+data class FolderList(
 
     @Json(name = "total")
     override val total: Int? = null,
