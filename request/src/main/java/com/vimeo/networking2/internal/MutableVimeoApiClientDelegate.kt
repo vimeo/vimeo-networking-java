@@ -84,9 +84,6 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteAlbum(album, callback)
 
-    override fun deleteAlbum(uri: String, callback: VimeoCallback<Unit>): VimeoRequest =
-        client.deleteAlbum(uri, callback)
-
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
         client.addToAlbum(album, video, callback)
 
@@ -232,6 +229,9 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(user, name, privacy, callback)
+
+    override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.deleteFolder(folder, callback)
 
     override fun editFolder(
         uri: String,

@@ -121,12 +121,7 @@ internal class VimeoApiClientImpl(
 
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest {
         val uri = album.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return deleteAlbum(uri, callback)
-    }
-
-    override fun deleteAlbum(uri: String, callback: VimeoCallback<Unit>): VimeoRequest {
-        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.delete(authHeader, safeUri, emptyMap()).enqueue(callback)
+        return deleteContent(uri, emptyMap(), callback)
     }
 
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {
@@ -354,6 +349,11 @@ internal class VimeoApiClientImpl(
         val safeUri = user.metadata?.connections?.projects?.uri.notEmpty()
             ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.createFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+    }
+
+    override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest {
+        val uri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return deleteContent(uri, emptyMap(), callback)
     }
 
     override fun editFolder(

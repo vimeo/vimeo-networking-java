@@ -146,19 +146,6 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Delete an album.
-     *
-     * @param uri The URI of the album being deleted, should not be empty.
-     * @param callback The callback which will be notified of the request completion.
-     *
-     * @return A [VimeoRequest] object to cancel API requests.
-     */
-    fun deleteAlbum(
-        uri: String,
-        callback: VimeoCallback<Unit>
-    ): VimeoRequest
-
-    /**
      * Add a video to an album.
      *
      * @param album The album to which a video is being added.
@@ -455,6 +442,19 @@ interface VimeoApiClient {
         name: String,
         privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Delete a folder.
+     *
+     * @param folder The folder being deleted, URI should not be null or empty.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun deleteFolder(
+        folder: Folder,
+        callback: VimeoCallback<Unit>
     ): VimeoRequest
 
     /**
