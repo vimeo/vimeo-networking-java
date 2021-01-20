@@ -346,7 +346,7 @@ internal class VimeoApiClientImpl(
         privacy: FolderViewPrivacyType,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
-        val safeUri = user.metadata?.connections?.projects?.uri.notEmpty()
+        val safeUri = user.metadata?.connections?.folders?.uri.notEmpty()
             ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.createFolder(authHeader, safeUri, name, privacy).enqueue(callback)
     }
