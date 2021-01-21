@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
 
 /**
- * List of [FeedItem]s to show in a user's feed.
+ * List of [FeedItems][FeedItem] to show in a user's feed.
  */
 @JsonClass(generateAdapter = true)
 data class FeedList(

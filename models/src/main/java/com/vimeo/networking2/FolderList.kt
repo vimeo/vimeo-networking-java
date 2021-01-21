@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
 
 /**
- * List of [Folder]s to show in a user's feed.
+ * List of [Folders][Folder] to show in a user's feed.
  */
 @JsonClass(generateAdapter = true)
 data class FolderList(
