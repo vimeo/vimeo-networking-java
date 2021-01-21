@@ -54,7 +54,7 @@ data class UserConnections(
     val feed: BasicConnection? = null,
 
     /**
-     * Information about the root folder containing the user's projects (folders and videos).
+     * Information about the root directory containing the user's projects (folders and videos).
      */
     @Json(name = "folders_root")
     val projectItemsRoot: BasicConnection? = null,

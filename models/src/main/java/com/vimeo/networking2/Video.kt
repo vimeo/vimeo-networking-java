@@ -121,7 +121,7 @@ data class Video(
     val name: String? = null,
 
     /**
-     * Information about the folder that contains the video, or null if it is in the root folder.
+     * Information about the folder that contains the video, or null if it is in the root directory.
      */
     @Json(name = "parent_project")
     val parentFolder: Folder? = null,
