@@ -93,7 +93,7 @@ interface VimeoApiClient {
     /**
      * Edit an album.
      *
-     * @param album The album being edited, URI should not be null or empty.
+     * @param album The album being edited.
      * @param name The name of the album.
      * @param albumPrivacy The album's privacy.
      * @param description The optional description of the album.
@@ -135,7 +135,7 @@ interface VimeoApiClient {
     /**
      * Delete an album.
      *
-     * @param album The album being deleted, URI should not be null or empty.
+     * @param album The album being deleted.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -178,8 +178,8 @@ interface VimeoApiClient {
     /**
      * Remove a video from an album.
      *
-     * @param album The album from which the video should be removed, URI should not be null or empty.
-     * @param video The video which should be removed from the album, URI should not be null or empty.
+     * @param album The album from which the video should be removed.
+     * @param video The video which should be removed from the album.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -301,7 +301,7 @@ interface VimeoApiClient {
     /**
      * Edit a video.
      *
-     * @param video The video to be edited, URI should not be null or empty.
+     * @param video The video to be edited.
      * @param title The optional title of the video.
      * @param description The optional description of the video.
      * @param password The optional password for the video, should be supplied if the [viewPrivacyType] is set to
@@ -353,7 +353,7 @@ interface VimeoApiClient {
     /**
      * Edit a user.
      *
-     * @param user The user to be edited, URI should not be null or empty.
+     * @param user The user to be edited.
      * @param name The optional name of the user.
      * @param location The optional location description of the user.
      * @param bio The optional bio of the user.
@@ -413,7 +413,7 @@ interface VimeoApiClient {
     /**
      * Create a folder that will be used to organize videos.
      *
-     * @param uri The URI of the user's projects connection.
+     * @param uri The URI of the user's folders connection.
      * @param name The name of the folder.
      * @param privacy The privacy of the folder.
      * @param callback The callback which will be notified of the request completion.
@@ -430,7 +430,7 @@ interface VimeoApiClient {
     /**
      * Create a folder that will be used to organize videos.
      *
-     * @param user The user whose projects connection will be used for the request.
+     * @param user The user whose folders connection will be used for the request.
      * @param name The name of the folder.
      * @param privacy The privacy of the folder.
      * @param callback The callback which will be notified of the request completion.
@@ -447,7 +447,7 @@ interface VimeoApiClient {
     /**
      * Delete a folder.
      *
-     * @param folder The folder being deleted, URI should not be null or empty.
+     * @param folder The folder being deleted.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -460,7 +460,7 @@ interface VimeoApiClient {
     /**
      * Edit a folder's information.
      *
-     * @param uri The URI of the user's projects connection.
+     * @param uri The URI of the folder to be edited.
      * @param name The name of the folder.
      * @param privacy The privacy of the folder.
      * @param callback The callback which will be notified of the request completion.
@@ -524,8 +524,8 @@ interface VimeoApiClient {
     /**
      * Remove a video from a folder.
      *
-     * @param folder The folder from which the video should be removed, URI should not be null or empty.
-     * @param video The video which should be removed from the folder, URI should not be null or empty.
+     * @param folder The folder from which the video should be removed.
+     * @param video The video which should be removed from the folder.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -610,7 +610,7 @@ interface VimeoApiClient {
     /**
      * Mark picture collection created by [createPictureCollection] as active after images have been uploaded to it.
      *
-     * @param pictureCollection The collection being activated, URI should not be null or empty.
+     * @param pictureCollection The collection being activated.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
