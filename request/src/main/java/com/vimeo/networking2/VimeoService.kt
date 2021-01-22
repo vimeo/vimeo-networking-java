@@ -35,6 +35,8 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.SlackLanguagePreference
+import com.vimeo.networking2.enums.SlackUserPreference
 import com.vimeo.networking2.internal.VimeoCall
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -212,7 +214,10 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Field(PARAMETER_FOLDER_NAME) name: String,
-        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType
+        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType,
+        @Field(SLACK_WEBHOOK_ID) slackWebhookId: String?,
+        @Field(SLACK_LANGUAGE_PREF) slackLanguagePref: SlackLanguagePreference?,
+        @Field(SLACK_USER_PREF) slackUserPref: SlackUserPreference?
     ): VimeoCall<Folder>
 
     @PUT("{$FOLDER_URI}/{$VIDEO_URI}")
@@ -582,5 +587,8 @@ internal interface VimeoService {
         private const val VIDEO_URI = "videoUri"
         private const val FOLDER_URI = "folderUri"
         private const val FIELD_FILTER = "fields"
+        private const val SLACK_WEBHOOK_ID = "slack_incoming_webhooks_id"
+        private const val SLACK_LANGUAGE_PREF = "slack_language_preference"
+        private const val SLACK_USER_PREF = "slack_user_preferences"
     }
 }

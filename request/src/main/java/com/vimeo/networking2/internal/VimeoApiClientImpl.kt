@@ -30,6 +30,8 @@ import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.ErrorCodeType
 import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.SlackLanguagePreference
+import com.vimeo.networking2.enums.SlackUserPreference
 import com.vimeo.networking2.enums.StringValue
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
@@ -360,20 +362,42 @@ internal class VimeoApiClientImpl(
         uri: String,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.editFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+        return vimeoService.editFolder(
+            authHeader,
+            safeUri,
+            name,
+            privacy,
+            slackWebhookId,
+            slackLanguagePreference,
+            slackUserPreference
+        ).enqueue(callback)
     }
 
     override fun editFolder(
         folder: Folder,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.editFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+        return vimeoService.editFolder(
+            authHeader,
+            safeUri,
+            name,
+            privacy,
+            slackWebhookId,
+            slackLanguagePreference,
+            slackUserPreference
+        ).enqueue(callback)
     }
 
     override fun addToFolder(folder: Folder, video: Video, callback: VimeoCallback<Unit>): VimeoRequest {

@@ -28,6 +28,8 @@ import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.SlackLanguagePreference
+import com.vimeo.networking2.enums.SlackUserPreference
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -237,15 +239,37 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         uri: String,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
-    ): VimeoRequest = client.editFolder(uri, name, privacy, callback)
+    ): VimeoRequest = client.editFolder(
+        uri,
+        name,
+        privacy,
+        slackWebhookId,
+        slackLanguagePreference,
+        slackUserPreference,
+        callback
+    )
 
     override fun editFolder(
         folder: Folder,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
-    ): VimeoRequest = client.editFolder(folder, name, privacy, callback)
+    ): VimeoRequest = client.editFolder(
+        folder,
+        name,
+        privacy,
+        slackWebhookId,
+        slackLanguagePreference,
+        slackUserPreference,
+        callback
+    )
 
     override fun addToFolder(folder: Folder, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
         client.addToFolder(folder, video, callback)
