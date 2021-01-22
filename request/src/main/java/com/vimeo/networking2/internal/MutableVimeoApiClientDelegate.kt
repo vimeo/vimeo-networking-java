@@ -222,15 +222,37 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         uri: String,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
-    ): VimeoRequest = client.createFolder(uri, name, privacy, callback)
+    ): VimeoRequest = client.createFolder(
+        uri,
+        name,
+        privacy,
+        slackWebhookId,
+        slackLanguagePreference,
+        slackUserPreference,
+        callback
+    )
 
     override fun createFolder(
         user: User,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
-    ): VimeoRequest = client.createFolder(user, name, privacy, callback)
+    ): VimeoRequest = client.createFolder(
+        user,
+        name,
+        privacy,
+        slackWebhookId,
+        slackLanguagePreference,
+        slackUserPreference,
+        callback
+    )
 
     override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteFolder(folder, callback)

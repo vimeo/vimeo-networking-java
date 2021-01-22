@@ -199,15 +199,20 @@ internal interface VimeoService {
         @Url uri: String
     ): VimeoCall<PictureCollection>
 
+    @Suppress("LongParameterList")
     @FormUrlEncoded
     @POST
     fun createFolder(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Field(PARAMETER_FOLDER_NAME) name: String,
-        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType
+        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType,
+        @Field(SLACK_WEBHOOK_ID) slackWebhookId: String?,
+        @Field(SLACK_LANGUAGE_PREF) slackLanguagePref: SlackLanguagePreference?,
+        @Field(SLACK_USER_PREF) slackUserPref: SlackUserPreference?
     ): VimeoCall<Folder>
 
+    @Suppress("LongParameterList")
     @FormUrlEncoded
     @PATCH
     fun editFolder(

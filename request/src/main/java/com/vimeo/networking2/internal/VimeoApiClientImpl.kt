@@ -336,21 +336,43 @@ internal class VimeoApiClientImpl(
         uri: String,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.createFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+        return vimeoService.createFolder(
+            authHeader,
+            safeUri,
+            name,
+            privacy,
+            slackWebhookId,
+            slackLanguagePreference,
+            slackUserPreference
+        ).enqueue(callback)
     }
 
     override fun createFolder(
         user: User,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = user.metadata?.connections?.folders?.uri.notEmpty()
             ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.createFolder(authHeader, safeUri, name, privacy).enqueue(callback)
+        return vimeoService.createFolder(
+            authHeader,
+            safeUri,
+            name,
+            privacy,
+            slackWebhookId,
+            slackLanguagePreference,
+            slackUserPreference
+        ).enqueue(callback)
     }
 
     override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest {

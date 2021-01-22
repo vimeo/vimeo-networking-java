@@ -418,6 +418,9 @@ interface VimeoApiClient {
      * @param uri The URI of the user's folders connection.
      * @param name The name of the folder.
      * @param privacy The privacy of the folder.
+     * @param slackWebhookId The ID of the Slack webhook for notifications.
+     * @param slackLanguagePreference The language preference of the Slack channel being notified.
+     * @param slackUserPreference The preference for which events the Slack channel should be notified.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -426,6 +429,9 @@ interface VimeoApiClient {
         uri: String,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest
 
@@ -435,6 +441,9 @@ interface VimeoApiClient {
      * @param user The user whose folders connection will be used for the request.
      * @param name The name of the folder.
      * @param privacy The privacy of the folder.
+     * @param slackWebhookId The ID of the Slack webhook for notifications.
+     * @param slackLanguagePreference The language preference of the Slack channel being notified.
+     * @param slackUserPreference The preference for which events the Slack channel should be notified.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -443,6 +452,9 @@ interface VimeoApiClient {
         user: User,
         name: String,
         privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreference?,
+        slackUserPreference: SlackUserPreference?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest
 
