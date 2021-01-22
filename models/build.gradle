@@ -7,10 +7,6 @@ repositories {
 }
 
 dependencies {
-
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     // Okio used by Moshi
     implementation "com.squareup.okio:okio:$okioVersion"
 

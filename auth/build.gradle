@@ -9,10 +9,6 @@ repositories {
 dependencies {
     api project(':api-core')
     compileOnly project(':models')
-
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
 }
 
 compileKotlin {
