@@ -65,12 +65,14 @@ internal class VimeoApiClientImpl(
         get() = authenticator.currentAccount?.accessToken?.let { "Bearer $it" } ?: basicAuthHeader
 
     override fun createAlbum(
+        uri: String,
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Album>
     ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         val body = bodyParams.intoMutableMap()
         body[ApiConstants.Parameters.PARAMETER_ALBUM_NAME] = name
         body[ApiConstants.Parameters.PARAMETER_ALBUM_PRIVACY] = albumPrivacy.viewPrivacy
@@ -81,7 +83,7 @@ internal class VimeoApiClientImpl(
         if (albumPrivacy.password != null) {
             body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = requireNotNull(albumPrivacy.password)
         }
-        return vimeoService.createAlbum(authHeader, body).enqueue(callback)
+        return vimeoService.createAlbum(authHeader, safeUri, body).enqueue(callback)
     }
 
     override fun editAlbum(

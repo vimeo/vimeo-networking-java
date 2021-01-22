@@ -73,6 +73,7 @@ interface VimeoApiClient {
     /**
      * Create an album.
      *
+     * @param uri The uri of the user connection for albums, should not be empty.
      * @param name The name of the album.
      * @param albumPrivacy The album's privacy.
      * @param description The optional description of the album.
@@ -82,6 +83,7 @@ interface VimeoApiClient {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun createAlbum(
+        uri: String,
         name: String,
         albumPrivacy: AlbumPrivacy,
         description: String?,
