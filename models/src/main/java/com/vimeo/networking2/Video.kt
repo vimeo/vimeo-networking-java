@@ -241,7 +241,7 @@ data class Video(
     /**
      *  Information about the Vimeo Create session of a video.
      */
-    @Json(name="edit_session")
+    @Json(name = "edit_session")
     val editSession: EditSession? = null
 
 ) : Entity {
