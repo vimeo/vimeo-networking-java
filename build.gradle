@@ -48,6 +48,10 @@ allprojects {
     tasks.withType(JavaCompile) { options.fork = true }
 }
 
+tasks.named('wrapper') {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
