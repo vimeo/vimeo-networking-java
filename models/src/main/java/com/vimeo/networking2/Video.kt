@@ -236,7 +236,13 @@ data class Video(
      * The video's width in pixels.
      */
     @Json(name = "width")
-    val width: Int? = null
+    val width: Int? = null,
+
+    /**
+     *  Information about the Vimeo Create session of a video.
+     */
+    @Json(name="edit_session")
+    val editSession: EditSession? = null
 
 ) : Entity {
 
