@@ -10,13 +10,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.4.10'
-    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:1.4.10'
-    implementation 'org.jetbrains.kotlin:kotlin-android-extensions:1.4.10'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.10'
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.4.21'
+    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:1.4.21'
+    implementation 'org.jetbrains.kotlin:kotlin-android-extensions:1.4.21'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.21'
 
     implementation 'com.squareup:kotlinpoet:1.6.0'
-    implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
+    implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
 }
 
 sourceCompatibility = '1.8'
