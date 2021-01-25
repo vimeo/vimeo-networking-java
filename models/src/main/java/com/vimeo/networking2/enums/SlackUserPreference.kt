@@ -23,5 +23,10 @@ enum class SlackUserPreference(override val value: String?) : StringValue {
     /**
      * User preferences for video detail notifications.
      */
-    VIDEO_DETAIL("VIDEO_DETAIL")
+    VIDEO_DETAIL("VIDEO_DETAIL"),
+
+    /**
+     * Unknown user preference.
+     */
+    UNKNOWN(null)
 }

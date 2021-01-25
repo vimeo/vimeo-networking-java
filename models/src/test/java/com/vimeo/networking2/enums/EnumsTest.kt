@@ -37,6 +37,8 @@ class EnumsTest {
             RecommendationType::class.java,
             SearchType::class.java,
             SeasonType::class.java,
+            SlackUserPreference::class.java,
+            SlackLanguagePreference::class.java,
             SortType::class.java,
             SpatialProjectionType::class.java,
             StereoFormatType::class.java,

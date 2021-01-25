@@ -38,5 +38,10 @@ enum class SlackLanguagePreference(override val value: String?) : StringValue {
     /**
      * Brazilian Portuguese.
      */
-    BRAZILIAN_PORTUGUESE("pt-BR")
+    BRAZILIAN_PORTUGUESE("pt-BR"),
+
+    /**
+     * Unknown language preference.
+     */
+    UNKNOWN(null)
 }
