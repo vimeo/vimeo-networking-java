@@ -29,8 +29,8 @@ import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
-import com.vimeo.networking2.params.SlackLanguagePreference
-import com.vimeo.networking2.params.SlackUserPreference
+import com.vimeo.networking2.enums.SlackLanguagePreference
+import com.vimeo.networking2.enums.SlackUserPreference
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
