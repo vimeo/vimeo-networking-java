@@ -1,4 +1,6 @@
-package com.vimeo.networking2.enums
+package com.vimeo.networking2.params
+
+import com.vimeo.networking2.enums.StringValue
 
 /**
  * The preference for which changes a user wants the Slack channel to be notified.

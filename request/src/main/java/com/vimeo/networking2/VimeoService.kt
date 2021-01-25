@@ -35,8 +35,8 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
-import com.vimeo.networking2.enums.SlackLanguagePreference
-import com.vimeo.networking2.enums.SlackUserPreference
+import com.vimeo.networking2.params.SlackLanguagePreference
+import com.vimeo.networking2.params.SlackUserPreference
 import com.vimeo.networking2.internal.VimeoCall
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
