@@ -91,10 +91,12 @@ object RetrofitSetupModule {
      *
      * @param vimeoApiConfiguration The configuration, used to initialize the library, containing the cache that will be
      * partially cleared.
-     * @param uri The URI for which the cache response should be cleared.
+     * @param uri The URI for which the cache response should be cleared. If it is blank or empty, this function will
+     * no-op.
      */
     @JvmStatic
     fun clearRequestCacheForUri(vimeoApiConfiguration: VimeoApiConfiguration, uri: String) {
+        val safeUri = uri.takeIf { it.isNotBlank() } ?: return
         val cache = vimeoApiConfiguration.cache ?: return
 
         val url = requireNotNull(HttpUrl.parse(vimeoApiConfiguration.baseUrl)) {
