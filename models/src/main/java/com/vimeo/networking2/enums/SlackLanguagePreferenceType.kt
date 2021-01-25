@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * Language preference of the Slack channel being notified.
  */
-enum class SlackLanguagePreference(override val value: String?) : StringValue {
+enum class SlackLanguagePreferenceType(override val value: String?) : StringValue {
 
     /**
      * German.

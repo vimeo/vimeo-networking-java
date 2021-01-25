@@ -3,7 +3,7 @@ package com.vimeo.networking2.enums
 /**
  * The preference for which changes a user wants the Slack channel to be notified.
  */
-enum class SlackUserPreference(override val value: String?) : StringValue {
+enum class SlackUserPreferenceType(override val value: String?) : StringValue {
 
     /**
      * User preferences for collection change notifications.

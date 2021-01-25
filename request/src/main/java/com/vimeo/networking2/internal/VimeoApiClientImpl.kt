@@ -30,8 +30,8 @@ import com.vimeo.networking2.enums.EmbedPrivacyType
 import com.vimeo.networking2.enums.ErrorCodeType
 import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
-import com.vimeo.networking2.enums.SlackLanguagePreference
-import com.vimeo.networking2.enums.SlackUserPreference
+import com.vimeo.networking2.enums.SlackLanguagePreferenceType
+import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.StringValue
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
@@ -337,8 +337,8 @@ internal class VimeoApiClientImpl(
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
-        slackLanguagePreference: SlackLanguagePreference?,
-        slackUserPreference: SlackUserPreference?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
@@ -358,8 +358,8 @@ internal class VimeoApiClientImpl(
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
-        slackLanguagePreference: SlackLanguagePreference?,
-        slackUserPreference: SlackUserPreference?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = user.metadata?.connections?.folders?.uri.notEmpty()
@@ -385,8 +385,8 @@ internal class VimeoApiClientImpl(
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
-        slackLanguagePreference: SlackLanguagePreference?,
-        slackUserPreference: SlackUserPreference?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
@@ -406,8 +406,8 @@ internal class VimeoApiClientImpl(
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
-        slackLanguagePreference: SlackLanguagePreference?,
-        slackUserPreference: SlackUserPreference?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest {
         val safeUri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
