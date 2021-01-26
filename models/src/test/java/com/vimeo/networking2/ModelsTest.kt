@@ -51,6 +51,7 @@ class ModelsTest {
         FeedItemConnections::class,
         FeedList::class,
         Folder::class,
+        FolderList::class,
         FolderConnections::class,
         FolderPrivacy::class,
         FollowInteraction::class,
@@ -166,7 +167,8 @@ class ModelsTest {
         WatchedInteraction::class,
         WatchLaterInteraction::class,
         Website::class,
-        VideoStatus::class
+        VideoStatus::class,
+        EditSession::class
     )
 
     @Test

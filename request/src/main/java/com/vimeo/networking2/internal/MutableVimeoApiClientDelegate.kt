@@ -26,7 +26,10 @@ import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.SlackLanguagePreferenceType
+import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -83,9 +86,6 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun deleteAlbum(album: Album, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteAlbum(album, callback)
-
-    override fun deleteAlbum(uri: String, callback: VimeoCallback<Unit>): VimeoRequest =
-        client.deleteAlbum(uri, callback)
 
     override fun addToAlbum(album: Album, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
         client.addToAlbum(album, video, callback)
@@ -219,6 +219,93 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest =
         client.deleteConnectedApp(type, callback)
 
+    override fun createFolder(
+        uri: String,
+        name: String,
+        privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest = client.createFolder(
+        uri,
+        name,
+        privacy,
+        slackWebhookId,
+        slackLanguagePreference,
+        slackUserPreference,
+        callback
+    )
+
+    override fun createFolder(
+        user: User,
+        name: String,
+        privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest = client.createFolder(
+        user,
+        name,
+        privacy,
+        slackWebhookId,
+        slackLanguagePreference,
+        slackUserPreference,
+        callback
+    )
+
+    override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.deleteFolder(folder, callback)
+
+    override fun editFolder(
+        uri: String,
+        name: String,
+        privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest = client.editFolder(
+        uri,
+        name,
+        privacy,
+        slackWebhookId,
+        slackLanguagePreference,
+        slackUserPreference,
+        callback
+    )
+
+    override fun editFolder(
+        folder: Folder,
+        name: String,
+        privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest = client.editFolder(
+        folder,
+        name,
+        privacy,
+        slackWebhookId,
+        slackLanguagePreference,
+        slackUserPreference,
+        callback
+    )
+
+    override fun addToFolder(folder: Folder, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.addToFolder(folder, video, callback)
+
+    override fun addToFolder(folderUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.addToFolder(folderUri, videoUri, callback)
+
+    override fun removeFromFolder(folder: Folder, video: Video, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.removeFromFolder(folder, video, callback)
+
+    override fun removeFromFolder(folderUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.removeFromFolder(folderUri, videoUri, callback)
+
     override fun fetchPublishJob(
         uri: String,
         fieldFilter: String?,
@@ -259,6 +346,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.fetchFolder(uri, fieldFilter, cacheControl, callback)
+
+    override fun fetchFolderList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<FolderList>
+    ): VimeoRequest = client.fetchFolderList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchTextTrackList(
         uri: String,
