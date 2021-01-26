@@ -45,8 +45,8 @@ internal class ErrorHandlingCallAdapterFactory(private val vimeoLogger: VimeoLog
             return null
         }
 
-        if (returnType !is ParameterizedType) {
-            throw IllegalStateException("VimeoCall must have generic type (e.g., VimeoCall<ResponseBody>)")
+        check(returnType is ParameterizedType) {
+            "VimeoCall must have generic type (e.g., VimeoCall<ResponseBody>)"
         }
         val responseType = getParameterUpperBound(0, returnType)
         val callbackExecutor = retrofit.callbackExecutor()

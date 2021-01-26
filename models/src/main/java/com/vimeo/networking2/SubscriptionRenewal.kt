@@ -21,5 +21,5 @@ data class SubscriptionRenewal(
      * The date the user's membership renews (or expires, if they have disabled autorenew).
      */
     @Json(name = "renewal_date")
-    var renewalDate: Date? = null
+    val renewalDate: Date? = null
 )

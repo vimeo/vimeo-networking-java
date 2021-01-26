@@ -16,10 +16,12 @@ generated {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
+    buildToolsVersion buildToolsVersion
+
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -49,14 +51,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "com.squareup.moshi:moshi-kotlin:1.9.3"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.3"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
-    testImplementation "junit:junit:4.13"
-    testImplementation "org.assertj:assertj-core:3.16.1"
+    testImplementation "junit:junit:4.13.1"
+    testImplementation "org.assertj:assertj-core:3.18.1"
     testImplementation "io.github.classgraph:classgraph:4.8.87"
-    testImplementation "uk.co.jemos.podam:podam:7.2.3.RELEASE"
+    testImplementation "uk.co.jemos.podam:podam:7.2.5.RELEASE"
     testImplementation 'org.robolectric:robolectric:4.3.1'
 }

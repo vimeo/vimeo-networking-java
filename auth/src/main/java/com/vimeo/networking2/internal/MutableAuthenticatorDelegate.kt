@@ -38,9 +38,7 @@ import com.vimeo.networking2.VimeoRequest
  */
 class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenticator {
     private val authenticator: Authenticator
-        get() = actual ?: throw IllegalStateException(
-            "Must call Authenticator.initialize() before calling Authenticator.instance()"
-        )
+        get() = actual ?: error("Must call Authenticator.initialize() before calling Authenticator.instance()")
 
     override val currentAccount: VimeoAccount?
         get() = authenticator.currentAccount

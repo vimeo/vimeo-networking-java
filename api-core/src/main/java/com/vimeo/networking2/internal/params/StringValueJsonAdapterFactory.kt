@@ -32,8 +32,9 @@ import java.lang.reflect.Type
  */
 class StringValueJsonAdapterFactory : JsonAdapter.Factory {
     override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? =
-        when {
-            type is Class<*> && StringValue::class.java.isAssignableFrom(type) -> StringValueJsonAdapter()
-            else -> null
+        if (type is Class<*> && StringValue::class.java.isAssignableFrom(type)) {
+            StringValueJsonAdapter()
+        } else {
+            null
         }
 }

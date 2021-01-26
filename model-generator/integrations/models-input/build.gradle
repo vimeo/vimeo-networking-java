@@ -4,10 +4,8 @@ apply plugin: 'kotlin-kapt'
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "com.squareup.moshi:moshi-kotlin:1.9.3"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.3"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 }
 
 sourceCompatibility = "1.8"

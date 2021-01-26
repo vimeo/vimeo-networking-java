@@ -36,6 +36,7 @@ import com.vimeo.networking2.internal.LocalVimeoCallAdapter
  * @param developerMessage The optional message to provide if the parameter is invalid. A default message will be added
  * by [validateParameters] when the [parameterValue] is invalid if none is provided here.
  */
+@Suppress("DataClassShouldBeImmutable")
 data class ApiParameter(
     val parameterName: String,
     val parameterValue: String?,
