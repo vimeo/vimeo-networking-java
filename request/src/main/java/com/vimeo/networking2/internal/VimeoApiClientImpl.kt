@@ -89,6 +89,19 @@ internal class VimeoApiClientImpl(
         return vimeoService.createAlbum(authHeader, safeUri, body).enqueue(callback)
     }
 
+    override fun createAlbum(
+        user: User,
+        name: String,
+        albumPrivacy: AlbumPrivacy,
+        description: String?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<Album>
+    ): VimeoRequest {
+        val safeUri =
+            user.metadata?.connections?.albums?.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return createAlbum(safeUri, name, albumPrivacy, description, bodyParams, callback)
+    }
+
     override fun editAlbum(
         album: Album,
         name: String,

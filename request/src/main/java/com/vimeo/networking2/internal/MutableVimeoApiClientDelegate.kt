@@ -66,6 +66,15 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Album>
     ): VimeoRequest = client.createAlbum(uri, name, albumPrivacy, description, bodyParams, callback)
 
+    override fun createAlbum(
+        user: User,
+        name: String,
+        albumPrivacy: AlbumPrivacy,
+        description: String?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<Album>
+    ): VimeoRequest = client.createAlbum(user, name, albumPrivacy, description, bodyParams, callback)
+
     override fun editAlbum(
         album: Album,
         name: String,
