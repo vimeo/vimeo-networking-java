@@ -51,6 +51,7 @@ class ModelsTest {
         FeedItemConnections::class,
         FeedList::class,
         Folder::class,
+        FolderList::class,
         FolderConnections::class,
         FolderPrivacy::class,
         FollowInteraction::class,

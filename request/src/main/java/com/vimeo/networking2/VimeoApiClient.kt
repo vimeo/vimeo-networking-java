@@ -27,7 +27,10 @@ import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.SlackLanguagePreferenceType
+import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
@@ -92,7 +95,7 @@ interface VimeoApiClient {
     /**
      * Edit an album.
      *
-     * @param album The album being edited, URI should not be null or empty.
+     * @param album The album being edited.
      * @param name The name of the album.
      * @param albumPrivacy The album's privacy.
      * @param description The optional description of the album.
@@ -134,26 +137,13 @@ interface VimeoApiClient {
     /**
      * Delete an album.
      *
-     * @param album The album being deleted, URI should not be null or empty.
+     * @param album The album being deleted.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteAlbum(
         album: Album,
-        callback: VimeoCallback<Unit>
-    ): VimeoRequest
-
-    /**
-     * Delete an album.
-     *
-     * @param uri The URI of the album being deleted, should not be empty.
-     * @param callback The callback which will be notified of the request completion.
-     *
-     * @return A [VimeoRequest] object to cancel API requests.
-     */
-    fun deleteAlbum(
-        uri: String,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -190,8 +180,8 @@ interface VimeoApiClient {
     /**
      * Remove a video from an album.
      *
-     * @param album The album from which the video should be removed, URI should not be null or empty.
-     * @param video The video which should be removed from the album, URI should not be null or empty.
+     * @param album The album from which the video should be removed.
+     * @param video The video which should be removed from the album.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -313,7 +303,7 @@ interface VimeoApiClient {
     /**
      * Edit a video.
      *
-     * @param video The video to be edited, URI should not be null or empty.
+     * @param video The video to be edited.
      * @param title The optional title of the video.
      * @param description The optional description of the video.
      * @param password The optional password for the video, should be supplied if the [viewPrivacyType] is set to
@@ -365,7 +355,7 @@ interface VimeoApiClient {
     /**
      * Edit a user.
      *
-     * @param user The user to be edited, URI should not be null or empty.
+     * @param user The user to be edited.
      * @param name The optional name of the user.
      * @param location The optional location description of the user.
      * @param bio The optional bio of the user.
@@ -421,6 +411,171 @@ interface VimeoApiClient {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteConnectedApp(type: ConnectedAppType, callback: VimeoCallback<Unit>): VimeoRequest
+
+    /**
+     * Create a folder that will be used to organize videos.
+     *
+     * @param uri The URI of the user's folders connection.
+     * @param name The name of the folder.
+     * @param privacy The privacy of the folder.
+     * @param slackWebhookId The ID of the Slack webhook for notifications.
+     * @param slackLanguagePreference The language preference of the Slack channel being notified.
+     * @param slackUserPreference The preference for which events the Slack channel should be notified.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun createFolder(
+        uri: String,
+        name: String,
+        privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Create a folder that will be used to organize videos.
+     *
+     * @param user The user whose folders connection will be used for the request.
+     * @param name The name of the folder.
+     * @param privacy The privacy of the folder.
+     * @param slackWebhookId The ID of the Slack webhook for notifications.
+     * @param slackLanguagePreference The language preference of the Slack channel being notified.
+     * @param slackUserPreference The preference for which events the Slack channel should be notified.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun createFolder(
+        user: User,
+        name: String,
+        privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Delete a folder.
+     *
+     * @param folder The folder being deleted.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun deleteFolder(
+        folder: Folder,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Edit a folder's information.
+     *
+     * @param uri The URI of the folder to be edited.
+     * @param name The name of the folder.
+     * @param privacy The privacy of the folder.
+     * @param slackWebhookId The ID of the Slack webhook for notifications.
+     * @param slackLanguagePreference The language preference of the Slack channel being notified.
+     * @param slackUserPreference The preference for which events the Slack channel should be notified.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun editFolder(
+        uri: String,
+        name: String,
+        privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Edit a folder's information.
+     *
+     * @param folder The folder that will be edited.
+     * @param name The name of the folder.
+     * @param privacy The privacy of the folder.
+     * @param slackWebhookId The ID of the Slack webhook for notifications.
+     * @param slackLanguagePreference The language preference of the Slack channel being notified.
+     * @param slackUserPreference The preference for which events the Slack channel should be notified.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun editFolder(
+        folder: Folder,
+        name: String,
+        privacy: FolderViewPrivacyType,
+        slackWebhookId: String?,
+        slackLanguagePreference: SlackLanguagePreferenceType?,
+        slackUserPreference: SlackUserPreferenceType?,
+        callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Add a video to a folder.
+     *
+     * @param folder The folder to which a video is being added.
+     * @param video The video which should be added to the folder.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun addToFolder(
+        folder: Folder,
+        video: Video,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Add a video to a folder.
+     *
+     * @param folderUri The URI of the folder to which a video is being added, should not be empty.
+     * @param videoUri The URI of the video which should be added to the folder, should not be empty.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun addToFolder(
+        folderUri: String,
+        videoUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Remove a video from a folder.
+     *
+     * @param folder The folder from which the video should be removed.
+     * @param video The video which should be removed from the folder.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun removeFromFolder(
+        folder: Folder,
+        video: Video,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Remove a video from a folder.
+     *
+     * @param folderUri The URI of the folder from which the video should be removed, should not be empty.
+     * @param videoUri The URI of the video which should be removed from the folder, should not be empty.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun removeFromFolder(
+        folderUri: String,
+        videoUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
 
     /**
      * Publish a post to any of several destinations.
@@ -481,7 +636,7 @@ interface VimeoApiClient {
     /**
      * Mark picture collection created by [createPictureCollection] as active after images have been uploaded to it.
      *
-     * @param pictureCollection The collection being activated, URI should not be null or empty.
+     * @param pictureCollection The collection being activated.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -1255,6 +1410,27 @@ interface VimeoApiClient {
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Folder>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [FolderList] from the provided endpoint.
+     *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchFolderList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<FolderList>
     ): VimeoRequest
 
     /**

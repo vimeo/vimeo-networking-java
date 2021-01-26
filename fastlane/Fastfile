@@ -31,21 +31,16 @@ platform :android do
   desc "main entrypoint for CI"
   lane :shipit do
     if is_ci
-      # If the build was triggered by a Pull Request
-      if ENV['TRAVIS_PULL_REQUEST'] && ENV['TRAVIS_PULL_REQUEST'] != 'false'
-        test
-      else
-        # This build was triggered by a branch update
-        branch = git_branch
-        # If the branch is master, this means new updates were merged into master
-        # Then publish the artifacts to bintray
-        if branch == 'master'
-          publish_artifacts(
-            snapshot: false
-          )
+      # This build was triggered by a branch update
+      branch = git_branch
+      # If the branch is master, this means new updates were merged into master
+      # Then publish the artifacts to bintray
+      if branch == 'master'
+        publish_artifacts(
+          snapshot: false
+        )
 
-          # TODO: publish Snapshots with snapshot = true
-        end
+        # TODO: publish Snapshots with snapshot = true
       end
     end
   end

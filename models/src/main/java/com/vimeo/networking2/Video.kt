@@ -121,6 +121,12 @@ data class Video(
     val name: String? = null,
 
     /**
+     * Information about the folder that contains the video, or null if it is in the root directory.
+     */
+    @Json(name = "parent_project")
+    val parentFolder: Folder? = null,
+
+    /**
      * The privacy-enabled password to watch this video.
      * This data requires a bearer token with the private scope.
      */
@@ -235,7 +241,7 @@ data class Video(
     /**
      *  Information about the Vimeo Create session of a video.
      */
-    @Json(name="edit_session")
+    @Json(name = "edit_session")
     val editSession: EditSession? = null
 
 ) : Entity {
