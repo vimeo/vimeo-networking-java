@@ -5,6 +5,9 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
+import com.vimeo.networking2.enums.SlackLanguagePreferenceType
+import com.vimeo.networking2.enums.SlackUserPreferenceType
+import com.vimeo.networking2.enums.asEnum
 import java.util.Date
 
 /**
@@ -57,6 +60,32 @@ data class Folder(
     val resourceKey: String? = null,
 
     /**
+     * The Slack webhook ID for the folder.
+     */
+    @Json(name = "slack_incoming_webhooks_id")
+    val slackIncomingWebhooksId: String? = null,
+
+    /**
+     * The Slack integration channel for the folder.
+     */
+    @Json(name = "slack_integration_channel")
+    val slackIntegrationChannel: String? = null,
+
+    /**
+     * The language preference for Slack notifications about the folder.
+     * @see slackLanguagePreferenceType
+     */
+    @Json(name = "slack_language_preference")
+    val slackLanguagePreference: String? = null,
+
+    /**
+     * User preferences for Slack notifications about the folder.
+     * @see slackUserPreferenceType
+     */
+    @Json(name = "slack_user_preferences")
+    val slackUserPreference: String? = null,
+
+    /**
      * The folder's canonical relative URI.
      */
     @Json(name = "uri")
@@ -70,3 +99,17 @@ data class Folder(
 ) : Entity {
     override val identifier: String? = resourceKey
 }
+
+/**
+ * @see Folder.slackLanguagePreference
+ * @see SlackLanguagePreferenceType
+ */
+val Folder.slackLanguagePreferenceType: SlackLanguagePreferenceType
+    get() = slackLanguagePreference.asEnum(SlackLanguagePreferenceType.UNKNOWN)
+
+/**
+ * @see Folder.slackUserPreference
+ * @see SlackUserPreferenceType
+ */
+val Folder.slackUserPreferenceType: SlackUserPreferenceType
+    get() = slackUserPreference.asEnum(SlackUserPreferenceType.UNKNOWN)

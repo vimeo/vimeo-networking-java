@@ -55,6 +55,11 @@ object ApiConstants {
      * Parameters
      */
     object Parameters {
+        // Common parameters
+        private const val PRIVACY = "privacy"
+        private const val NAME = "name"
+        private const val DESCRIPTION = "description"
+
         const val PARAMETER_REDIRECT_URI = "redirect_uri"
         const val PARAMETER_RESPONSE_TYPE = "response_type"
         const val PARAMETER_STATE = "state"
@@ -62,7 +67,7 @@ object ApiConstants {
         const val PARAMETER_TOKEN = "token"
         const val PARAMETER_ID_TOKEN = "id_token"
         const val PARAMETER_CLIENT_ID = "client_id"
-        const val PARAMETER_USERS_NAME = "name"
+        const val PARAMETER_USERS_NAME = NAME
         const val PARAMETER_EMAIL = "email"
         const val PARAMETER_PASSWORD = "password"
         const val PARAMETER_USERS_LOCATION = "location"
@@ -73,18 +78,20 @@ object ApiConstants {
         const val PARAMETER_VIDEO_EMBED = "embed"
         const val PARAMETER_VIDEO_DOWNLOAD = "download"
         const val PARAMETER_VIDEO_ADD = "add"
-        const val PARAMETER_VIDEO_NAME = "name"
-        const val PARAMETER_VIDEO_DESCRIPTION = "description"
-        const val PARAMETER_VIDEO_PRIVACY = "privacy"
+        const val PARAMETER_VIDEO_NAME = NAME
+        const val PARAMETER_VIDEO_DESCRIPTION = DESCRIPTION
+        const val PARAMETER_VIDEO_PRIVACY = PRIVACY
         const val PARAMETER_VIDEO_PASSWORD = PARAMETER_PASSWORD
-        const val PARAMETER_ALBUM_NAME = "name"
-        const val PARAMETER_ALBUM_DESCRIPTION = "description"
-        const val PARAMETER_ALBUM_PRIVACY = "privacy"
+        const val PARAMETER_ALBUM_NAME = NAME
+        const val PARAMETER_ALBUM_DESCRIPTION = DESCRIPTION
+        const val PARAMETER_ALBUM_PRIVACY = PRIVACY
         const val PARAMETER_ALBUM_PASSWORD = PARAMETER_PASSWORD
         const val PARAMETER_AUTH_CODE = "auth_code"
         const val PARAMETER_APP_TYPE = "app_type"
         const val PARAMETER_COMMENT_TEXT_BODY = "text"
         const val PARAMETER_ACTIVE = "active"
+        const val PARAMETER_FOLDER_NAME = NAME
+        const val PARAMETER_FOLDER_PRIVACY = PRIVACY
 
         // Generic parameters
         const val PARAMETER_GET_PAGE_SIZE = "per_page"

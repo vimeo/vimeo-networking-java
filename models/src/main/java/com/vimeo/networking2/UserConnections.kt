@@ -54,10 +54,10 @@ data class UserConnections(
     val feed: BasicConnection? = null,
 
     /**
-     * Information about this user's folders.
+     * Information about the root directory containing the user's projects (folders and videos).
      */
     @Json(name = "folders_root")
-    val folders: BasicConnection? = null,
+    val projectItemsRoot: BasicConnection? = null,
 
     /**
      * Information about the user's followers.
@@ -102,6 +102,12 @@ data class UserConnections(
      */
     @Json(name = "pictures")
     val pictures: BasicConnection? = null,
+
+    /**
+     * Information about all the user's folders.
+     */
+    @Json(name = "projects")
+    val folders: BasicConnection? = null,
 
     /**
      * Information about this user's portfolios.

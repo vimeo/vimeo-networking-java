@@ -26,12 +26,17 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_APP_TYPE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_AUTH_CODE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_CLIENT_ID
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_FOLDER_NAME
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_FOLDER_PRIVACY
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PASSWORD
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
 import com.vimeo.networking2.enums.ConnectedAppType
+import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.SlackLanguagePreferenceType
+import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.internal.VimeoCall
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
@@ -194,6 +199,46 @@ internal interface VimeoService {
         @Url uri: String
     ): VimeoCall<PictureCollection>
 
+    @Suppress("LongParameterList")
+    @FormUrlEncoded
+    @POST
+    fun createFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Field(PARAMETER_FOLDER_NAME) name: String,
+        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType,
+        @Field(SLACK_WEBHOOK_ID) slackWebhookId: String?,
+        @Field(SLACK_LANGUAGE_PREF) slackLanguagePref: SlackLanguagePreferenceType?,
+        @Field(SLACK_USER_PREF) slackUserPref: SlackUserPreferenceType?
+    ): VimeoCall<Folder>
+
+    @Suppress("LongParameterList")
+    @FormUrlEncoded
+    @PATCH
+    fun editFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Field(PARAMETER_FOLDER_NAME) name: String,
+        @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType,
+        @Field(SLACK_WEBHOOK_ID) slackWebhookId: String?,
+        @Field(SLACK_LANGUAGE_PREF) slackLanguagePref: SlackLanguagePreferenceType?,
+        @Field(SLACK_USER_PREF) slackUserPref: SlackUserPreferenceType?
+    ): VimeoCall<Folder>
+
+    @PUT("{$FOLDER_URI}/{$VIDEO_URI}")
+    fun addToFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(FOLDER_URI, encoded = true) folderUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String
+    ): VimeoCall<Unit>
+
+    @DELETE("{$FOLDER_URI}/{$VIDEO_URI}")
+    fun removeFromFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(FOLDER_URI, encoded = true) folderUri: String,
+        @Path(VIDEO_URI, encoded = true) videoUri: String
+    ): VimeoCall<Unit>
+
     @GET
     fun getAppConfiguration(
         @Header(AUTHORIZATION) authorization: String,
@@ -322,6 +367,15 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<CommentList>
+
+    @GET
+    fun getFolderList(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<FolderList>
 
     @GET
     fun getFeedList(
@@ -536,6 +590,10 @@ internal interface VimeoService {
         private const val TYPE = "type"
         private const val ALBUM_URI = "albumUri"
         private const val VIDEO_URI = "videoUri"
+        private const val FOLDER_URI = "folderUri"
         private const val FIELD_FILTER = "fields"
+        private const val SLACK_WEBHOOK_ID = "slack_incoming_webhooks_id"
+        private const val SLACK_LANGUAGE_PREF = "slack_language_preference"
+        private const val SLACK_USER_PREF = "slack_user_preferences"
     }
 }
