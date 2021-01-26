@@ -112,9 +112,10 @@ internal interface VimeoService {
         @Body publishData: BatchPublishToSocialMedia
     ): VimeoCall<PublishJob>
 
-    @POST("me/albums")
+    @POST
     fun createAlbum(
         @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
     ): VimeoCall<Album>
 
