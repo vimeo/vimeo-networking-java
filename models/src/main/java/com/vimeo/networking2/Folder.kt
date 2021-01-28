@@ -30,6 +30,12 @@ data class Folder(
     val lastUserActionEventDate: Date? = null,
 
     /**
+     * The link to the folder on Vimeo.
+     */
+    @Json(name = "link")
+    val link: String? = null,
+
+    /**
      * The folder's metadata.
      */
     @Json(name = "metadata")
