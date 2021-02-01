@@ -1130,8 +1130,10 @@ internal class VimeoApiClientImpl(
 
     private fun <T> LocalVimeoCallAdapter.enqueueEmptyUri(callback: VimeoCallback<T>): VimeoRequest {
         return enqueueError(ApiError(
+            developerMessage = "An empty URI was provided",
             invalidParameters = listOf(InvalidParameter(
-                errorCode = ErrorCodeType.INVALID_URI.value
+                errorCode = ErrorCodeType.INVALID_URI.value,
+                developerMessage = "An empty URI was provided"
             ))
         ), callback)
     }
