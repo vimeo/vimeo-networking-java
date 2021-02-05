@@ -54,6 +54,9 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
     testImplementation "junit:junit:4.13.1"
     testImplementation "org.assertj:assertj-core:3.18.1"
     testImplementation "io.github.classgraph:classgraph:4.8.87"
