@@ -23,6 +23,9 @@ data class SeasonList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<Season>? = null
+    override val data: List<Season>? = null,
+
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 
 ) : Pageable<Season>

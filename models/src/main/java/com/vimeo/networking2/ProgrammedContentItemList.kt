@@ -23,6 +23,8 @@ data class ProgrammedContentItemList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<ProgrammedContentItem>? = null
+    override val data: List<ProgrammedContentItem>? = null,
 
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 ) : Pageable<ProgrammedContentItem>

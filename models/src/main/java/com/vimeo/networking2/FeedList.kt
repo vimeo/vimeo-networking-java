@@ -23,6 +23,8 @@ data class FeedList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<FeedItem>? = null
+    override val data: List<FeedItem>? = null,
 
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 ) : Pageable<FeedItem>

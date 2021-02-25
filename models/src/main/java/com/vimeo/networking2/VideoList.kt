@@ -23,6 +23,9 @@ data class VideoList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<Video>? = null
+    override val data: List<Video>? = null,
+
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 
 ) : Pageable<Video>

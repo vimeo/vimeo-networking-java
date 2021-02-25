@@ -23,6 +23,9 @@ data class TextTrackList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<TextTrack>? = null
+    override val data: List<TextTrack>? = null,
+
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 
 ) : Pageable<TextTrack>

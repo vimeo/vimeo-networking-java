@@ -25,6 +25,9 @@ data class ProjectItemList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<ProjectItem>? = null
+    override val data: List<ProjectItem>? = null,
+
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 
 ) : Pageable<ProjectItem>
