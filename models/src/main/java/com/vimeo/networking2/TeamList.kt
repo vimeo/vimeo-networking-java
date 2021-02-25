@@ -14,6 +14,9 @@ data class TeamList(
     override val total: Int? = null,
 
     @Json(name = "data")
-    override val data: List<Team>? = null
+    override val data: List<Team>? = null,
+
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 
 ) : Page<Team>

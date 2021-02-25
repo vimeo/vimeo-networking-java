@@ -23,6 +23,8 @@ data class FolderList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<Folder>? = null
+    override val data: List<Folder>? = null,
 
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 ) : Pageable<Folder>

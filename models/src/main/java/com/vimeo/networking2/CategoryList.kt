@@ -23,6 +23,8 @@ data class CategoryList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<Category>? = null
+    override val data: List<Category>? = null,
 
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 ) : Pageable<Category>

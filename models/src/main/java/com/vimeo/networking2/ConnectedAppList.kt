@@ -14,6 +14,8 @@ data class ConnectedAppList(
     override val total: Int? = null,
 
     @Json(name = "data")
-    override val data: List<ConnectedApp>? = null
+    override val data: List<ConnectedApp>? = null,
 
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 ) : Page<ConnectedApp>

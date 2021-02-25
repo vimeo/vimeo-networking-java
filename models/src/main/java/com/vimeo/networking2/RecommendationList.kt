@@ -23,6 +23,9 @@ data class RecommendationList(
     override val paging: Paging? = null,
 
     @Json(name = "data")
-    override val data: List<Recommendation>? = null
+    override val data: List<Recommendation>? = null,
+
+    @Json(name = "filtered_total")
+    override val filteredTotal: Int? = null
 
 ) : Pageable<Recommendation>
