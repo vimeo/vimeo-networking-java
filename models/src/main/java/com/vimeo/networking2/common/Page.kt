@@ -9,15 +9,13 @@ package com.vimeo.networking2.common
 interface Page<Data_T> {
 
     /**
-     * Total number of items returned.
+     * The total number of items for the request without taking into account any applied filters.
      */
     val total: Int?
 
 
     /**
-     * If a filter is applied in the request this will reflect
-     * the total, null if no filters applied.
-     * TODO name this better
+     * The total number of items in a request taking into account the applied filters.
      */
     val filteredTotal: Int?
 
