@@ -242,7 +242,13 @@ data class Video(
      *  Information about the Vimeo Create session of a video.
      */
     @Json(name = "edit_session")
-    val editSession: EditSession? = null
+    val editSession: EditSession? = null,
+
+    /**
+     * Whether the clip is playable.
+     */
+    @Json(name = "is_playable")
+    val isPlayable: Boolean? = null
 
 ) : Entity {
 
