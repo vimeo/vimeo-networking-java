@@ -9,9 +9,9 @@ import org.jetbrains.kotlin.psi.KtClass
 import java.io.Serializable
 
 /**
- *  [ModifyVisitor] for [Serializable] code additions.
+ * [ModifyVisitor] for [Serializable] code additions.
  *
- *  This adds [Serializable] as a class super as well as adding a companion object with a serialVersionUID.
+ * This adds [Serializable] as a class super as well as adding a companion object with a serialVersionUID.
  */
 class SerializableClassVisitor : ModifyVisitor {
 

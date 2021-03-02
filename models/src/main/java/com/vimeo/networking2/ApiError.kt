@@ -8,8 +8,8 @@ import com.vimeo.networking2.enums.ErrorCodeType
 import com.vimeo.networking2.enums.asEnum
 
 /**
- *  This class represents an error response from the Vimeo API. It holds useful getters to
- *  understand why your request might have failed.
+ * This class represents an error response from the Vimeo API. It holds useful getters to
+ * understand why your request might have failed.
  */
 @JsonClass(generateAdapter = true)
 data class ApiError(

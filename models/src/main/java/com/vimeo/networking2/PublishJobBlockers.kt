@@ -21,8 +21,8 @@ data class PublishJobBlockers(
     val facebook: List<String>? = null,
 
     /**
-     *  The list of blockers keeping this video from being uploaded to YouTube.
-     *  @see PublishJobBlockers.youTubeTypes
+     * The list of blockers keeping this video from being uploaded to YouTube.
+     * @see PublishJobBlockers.youTubeTypes
      */
 
     @Json(name = "youtube")

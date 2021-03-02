@@ -42,19 +42,19 @@ data class Folder(
     val metadata: Metadata<FolderConnections, BasicInteraction>? = null,
 
     /**
-     *  The time in ISO 8601 format when the folder was last modified.
+     * The time in ISO 8601 format when the folder was last modified.
      */
     @Json(name = "modified_time")
     val lastModifiedDate: Date? = null,
 
     /**
-     *  The name of the folder.
+     * The name of the folder.
      */
     @Json(name = "name")
     val name: String? = null,
 
     /**
-     *  The [FolderPrivacy] that defines the public visibility of the folder.
+     * The [FolderPrivacy] that defines the public visibility of the folder.
      */
     @Json(name = "privacy")
     val privacy: FolderPrivacy? = null,

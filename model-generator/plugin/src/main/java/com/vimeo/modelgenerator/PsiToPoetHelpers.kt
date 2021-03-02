@@ -22,7 +22,7 @@ private const val LAMBDA = "->"
  * like [KtProperty] or [KtNamedFunction].
  *
  * @param annotations a list of [KtAnnotationEntry] that can be pulled from most Kt
- *  prefixed objects, like [KtParameter] or [KtClass].
+ * prefixed objects, like [KtParameter] or [KtClass].
  * @param packageName the current package name of the worked on file.
  */
 internal fun createAnnotations(
@@ -248,8 +248,8 @@ internal fun createTypeName(
  * A recursive method that goes through the given list until completion and
  * creates a parameterized [TypeName] from it.
  *
- *  @param classes a list of [ClassNames][ClassName] that will be parameterized, specifically in order
- *  in which they should be parameterized.  A list of (List, Foo, Bar) will output `List<Foo<Bar>>`
+ * @param classes a list of [ClassNames][ClassName] that will be parameterized, specifically in order
+ * in which they should be parameterized.  A list of (List, Foo, Bar) will output `List<Foo<Bar>>`
  */
 private fun createNestedParameterizedTypes(classes: MutableList<ClassName>): TypeName =
     if (classes.size == 1) {
