@@ -12,5 +12,11 @@ data class EditSession(
      * Whether the video has licensed music.
      */
     @Json(name = "is_music_licensed")
-    val isMusicLicensed: Boolean? = null
+    val isMusicLicensed: Boolean? = null,
+
+    /**
+     * Whether the current version of clip is of max resolution.
+     */
+    @Json(name = "is_max_resolution")
+    val isMaxResolution: Boolean? = null
 )
