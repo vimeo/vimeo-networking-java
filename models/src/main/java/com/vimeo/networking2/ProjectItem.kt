@@ -14,19 +14,19 @@ import com.vimeo.networking2.enums.asEnum
 data class ProjectItem(
 
     /**
-     *  The type of the item.
+     * The type of the item.
      */
     @Json(name = "type")
     val rawType: String? = null,
 
     /**
-     *  The item is [Folder] if [type] == [ProjectItemType.FOLDER], `null` otherwise.
+     * The item is [Folder] if [type] == [ProjectItemType.FOLDER], `null` otherwise.
      */
     @Json(name = "folder")
     val folder: Folder? = null,
 
     /**
-     *  The item is [Video] if [type] == [ProjectItemType.VIDEO], `null` otherwise.
+     * The item is [Video] if [type] == [ProjectItemType.VIDEO], `null` otherwise.
      */
     @Json(name = "video")
     val video: Video? = null

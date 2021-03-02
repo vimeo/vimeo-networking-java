@@ -35,7 +35,7 @@ internal fun FileSpec.Builder.addProperties(properties: List<PropertySpec>): Fil
     }
 
 /**
- *  Add a list of imports to the given [FileSpec].
+ * Add a list of imports to the given [FileSpec].
  *
  * @param imports a list of Imports.
  */
@@ -60,8 +60,8 @@ internal fun FileSpec.Builder.addAnnotations(annotations: List<AnnotationSpec>):
  * This can be applied to [FileSpec.Builder], [PropertySpec.Builder], [ParameterSpec.Builder] or any class that has
  * [Taggable.Builder] as a super.
  *
- *  @param condition a condition if met will add the [addition] to the given [Taggable.Builder].
- *  @param addition a block of code that can be applied to the [Taggable.Builder] if the [condition] is met.
+ * @param condition a condition if met will add the [addition] to the given [Taggable.Builder].
+ * @param addition a block of code that can be applied to the [Taggable.Builder] if the [condition] is met.
  */
 internal fun <T : Taggable.Builder<T>> T.addIfConditionMet(
     condition: Boolean,
@@ -71,9 +71,9 @@ internal fun <T : Taggable.Builder<T>> T.addIfConditionMet(
 }
 
 /**
- *  Parses [valArgs] to create parameters for AnnotationSpec.Builders [AnnotationSpec.Builder].
+ * Parses [valArgs] to create parameters for AnnotationSpec.Builders [AnnotationSpec.Builder].
  *
- *  @param valArgs a list of [ValueArgument].
+ * @param valArgs a list of [ValueArgument].
  */
 internal fun AnnotationSpec.Builder.addMembers(valArgs: List<ValueArgument>): AnnotationSpec.Builder =
     apply { valArgs.toParams.forEach { addMember(it) } }

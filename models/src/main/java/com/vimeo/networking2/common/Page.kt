@@ -2,9 +2,9 @@ package com.vimeo.networking2.common
 
 
 /**
- *  Represents a single non-pageable list of data.
+ * Represents a single non-pageable list of data.
  *
- *  @see [Pageable] for lists of data that support pagination.
+ * @see [Pageable] for lists of data that support pagination.
  */
 interface Page<Data_T> {
 

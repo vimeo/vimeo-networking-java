@@ -3,7 +3,7 @@ package com.vimeo.modelgenerator
 import org.gradle.api.Project
 
 /**
- *  Extension object that is used to configure the [GenerateModelsPlugin].
+ * Extension object that is used to configure the [GenerateModelsPlugin].
  */
 open class GenerateModelsExtension(private val project: Project) {
 

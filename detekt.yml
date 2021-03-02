@@ -1,6 +1,6 @@
 # Fail build if any issues are found
 build:
-  maxIssues: 1
+  maxIssues: 0
 
 #
 # Configure detekt's 8 different rulesets (comments, complexity, empty-blocks, exceptions, naming, performance,

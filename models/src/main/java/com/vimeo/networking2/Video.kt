@@ -239,7 +239,7 @@ data class Video(
     val width: Int? = null,
 
     /**
-     *  Information about the Vimeo Create session of a video.
+     * Information about the Vimeo Create session of a video.
      */
     @Json(name = "edit_session")
     val editSession: EditSession? = null,

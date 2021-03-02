@@ -31,15 +31,14 @@ interface VimeoCallback<ResponseType_T> {
     /**
      * A successful API response.
      *
-     * @param response  Data returned by the API.
+     * @param response Data returned by the API.
      */
     fun onSuccess(response: VimeoResponse.Success<ResponseType_T>)
 
     /**
      * An error occurred when making the request.
      *
-     * @param error Information on the error. This error could be due to an exception thrown or
-     *              parsing response error.
+     * @param error Information on the error. This error could be due to an exception thrown or parsing response error.
      */
     fun onError(error: VimeoResponse.Error)
 }

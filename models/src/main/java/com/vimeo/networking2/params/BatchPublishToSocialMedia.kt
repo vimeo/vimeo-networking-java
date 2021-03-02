@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- *  Encapsulates publishing data for each of the supported social media platforms.
+ * Encapsulates publishing data for each of the supported social media platforms.
  */
 @JsonClass(generateAdapter = true)
 data class BatchPublishToSocialMedia(
