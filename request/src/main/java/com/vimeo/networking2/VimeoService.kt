@@ -32,30 +32,11 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PASSWORD
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
-import com.vimeo.networking2.enums.ConnectedAppType
-import com.vimeo.networking2.enums.FolderViewPrivacyType
-import com.vimeo.networking2.enums.NotificationType
-import com.vimeo.networking2.enums.SlackLanguagePreferenceType
-import com.vimeo.networking2.enums.SlackUserPreferenceType
+import com.vimeo.networking2.enums.*
 import com.vimeo.networking2.internal.VimeoCall
-import com.vimeo.networking2.params.BatchPublishToSocialMedia
-import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
-import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.*
 import okhttp3.CacheControl
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.PATCH
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.QueryMap
-import retrofit2.http.Url
+import retrofit2.http.*
 
 /**
  * Retrofit service for the Vimeo API.
@@ -509,6 +490,47 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<VideoStatus>
+
+    @GET
+    fun getTeamMembers(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<TeamMembershipList>
+
+    @POST
+    fun addUserToTeam(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body body: AddUserToTeam,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
+    ): VimeoCall<TeamMembership>
+
+    @DELETE
+    fun removeUserFromTeam(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
+    ): VimeoCall<Unit>
+
+    @FormUrlEncoded
+    @PATCH
+    fun changeUserRole(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Field("role") role: TeamRoleType,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
+    ): VimeoCall<TeamMembership>
+
+    @PUT
+    fun grantUsersAccessToFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body usersIds: List<GrantFolderPermissionForUser>,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
+    ): VimeoCall<Unit>
 
     @GET
     fun getUnit(

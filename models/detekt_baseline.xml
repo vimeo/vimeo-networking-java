@@ -2,6 +2,9 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] a URI for the Folder * they can contribute or view also needs to be added. */ @Json(name = "folder_uri") val folderUri: String? = null</ID>
+    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * The email address for the user being added. */ @Json(name = "email") val email: String</ID>
+    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * The intended [TeamRoleType] for the user being added. */ @Json(name = "permission_level") val permissionLevel: TeamRoleType</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The URI of the video. */ @Json(name = "uri") val uri: String</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The position of the video. */ @Json(name = "position") val position: Int?</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbumContainer.kt$AddVideoToAlbumContainer$/** * The video that should be added. */ @Json(name = "video") val video: AddVideoToAlbum</ID>
@@ -177,6 +180,7 @@
     <ID>UndocumentedPublicProperty:Gcs.kt$Gcs$/** * Expected ending byte range for the current upload_link. */ @Internal @Json(name = "end_byte") val endByte: Long? = null</ID>
     <ID>UndocumentedPublicProperty:Gcs.kt$Gcs$/** * Expected starting byte size for the current upload_link. */ @Internal @Json(name = "start_byte") val startByte: Long? = null</ID>
     <ID>UndocumentedPublicProperty:Gcs.kt$Gcs$/** * Link for uploading file chunk to. */ @Internal @Json(name = "upload_link") val uploadLink: String? = null</ID>
+    <ID>UndocumentedPublicProperty:GrantFolderPermissionForUser.kt$GrantFolderPermissionForUser$/** * The user URI that will be added to the given Folder. */ @Json(name = "uri") val uri: String</ID>
     <ID>UndocumentedPublicProperty:Group.kt$Group$/** * The active picture for this group. */ @Json(name = "pictures") val pictures: PictureCollection? = null</ID>
     <ID>UndocumentedPublicProperty:Group.kt$Group$/** * The canonical relative URI of this group. */ @Json(name = "uri") val uri: String? = null</ID>
     <ID>UndocumentedPublicProperty:Group.kt$Group$/** * The group's description. */ @Json(name = "description") val description: String? = null</ID>

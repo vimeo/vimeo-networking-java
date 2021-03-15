@@ -24,25 +24,8 @@ package com.vimeo.networking2.internal
 import com.vimeo.networking2.*
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.config.VimeoApiConfiguration
-import com.vimeo.networking2.enums.CommentPrivacyType
-import com.vimeo.networking2.enums.ConnectedAppType
-import com.vimeo.networking2.enums.EmbedPrivacyType
-import com.vimeo.networking2.enums.ErrorCodeType
-import com.vimeo.networking2.enums.FolderViewPrivacyType
-import com.vimeo.networking2.enums.NotificationType
-import com.vimeo.networking2.enums.SlackLanguagePreferenceType
-import com.vimeo.networking2.enums.SlackUserPreferenceType
-import com.vimeo.networking2.enums.StringValue
-import com.vimeo.networking2.enums.ViewPrivacyType
-import com.vimeo.networking2.params.BatchPublishToSocialMedia
-import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
-import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
-import com.vimeo.networking2.params.SearchDateType
-import com.vimeo.networking2.params.SearchDurationType
-import com.vimeo.networking2.params.SearchFacetType
-import com.vimeo.networking2.params.SearchFilterType
-import com.vimeo.networking2.params.SearchSortDirectionType
-import com.vimeo.networking2.params.SearchSortType
+import com.vimeo.networking2.enums.*
+import com.vimeo.networking2.params.*
 import okhttp3.CacheControl
 
 /**
@@ -559,6 +542,67 @@ internal class VimeoApiClientImpl(
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.getVideoStatus(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
+    }
+
+    override fun fetchTeamMembersList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamMembershipList>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.getTeamMembers(
+            authHeader,
+            safeUri,
+            fieldFilter,
+            queryParams,
+            cacheControl
+        ).enqueue(callback)
+    }
+
+    override fun addUserToTeam(
+        uri: String,
+        body: AddUserToTeam,
+        queryParams: Map<String, String>,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.addUserToTeam(authHeader, safeUri, body, queryParams).enqueue(callback)
+    }
+
+    override fun removeUserFromTeam(
+        uri: String,
+        queryParams: Map<String, @JvmSuppressWildcards String>,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.removeUserFromTeam(authHeader, safeUri, queryParams).enqueue(callback)
+    }
+
+    override fun changeUserRole(
+        uri: String,
+        role: TeamRoleType,
+        queryParams: Map<String, @JvmSuppressWildcards String>,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.changeUserRole(authHeader, safeUri, role, queryParams).enqueue(callback)
+    }
+
+    override fun grantUsersAccessToFolder(
+        uri: String,
+        usersIds: List<GrantFolderPermissionForUser>,
+        queryParams: Map<String, @JvmSuppressWildcards String>,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
+        val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.grantUsersAccessToFolder(
+            authHeader,
+            safeUri,
+            usersIds,
+            queryParams
+        ).enqueue(callback)
     }
 
     override fun fetchEmpty(
