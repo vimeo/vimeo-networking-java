@@ -547,7 +547,7 @@ internal class VimeoApiClientImpl(
     override fun fetchTeamMembersList(
         uri: String,
         fieldFilter: String?,
-        queryParams: Map<String, String>,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TeamMembershipList>
     ): VimeoRequest {
@@ -556,97 +556,115 @@ internal class VimeoApiClientImpl(
             authHeader,
             safeUri,
             fieldFilter,
-            queryParams,
+            queryParams.orEmpty(),
             cacheControl
         ).enqueue(callback)
     }
 
     override fun addUserToTeam(
         uri: String,
-        body: AddUserToTeam,
-        queryParams: Map<String, String>,
+        email: String,
+        permissionLevel: TeamRoleType,
+        folderUri: String?,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.addUserToTeam(authHeader, safeUri, body, queryParams).enqueue(callback)
+        return vimeoService.addUserToTeam(
+            authHeader,
+            safeUri,
+            email,
+            permissionLevel,
+            folderUri,
+            queryParams.orEmpty()
+        ).enqueue(callback)
     }
 
     override fun addUserToTeam(
         team: Team,
-        body: AddUserToTeam,
-        queryParams: Map<String, String>,
+        email: String,
+        permissionLevel: TeamRoleType,
+        folderUri: String?,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
         val safeUri = team.owner?.metadata?.connections?.teamMembers?.uri.notEmpty()
             ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.addUserToTeam(authHeader, safeUri, body, queryParams).enqueue(callback)
+        return vimeoService.addUserToTeam(
+            authHeader,
+            safeUri,
+            email,
+            permissionLevel,
+            folderUri,
+            queryParams.orEmpty()
+        ).enqueue(callback)
     }
 
     override fun removeUserFromTeam(
         uri: String,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.removeUserFromTeam(authHeader, safeUri, queryParams).enqueue(callback)
+        return vimeoService.removeUserFromTeam(authHeader, safeUri, queryParams.orEmpty()).enqueue(callback)
     }
 
     override fun removeUserFromTeam(
         membership: TeamMembership,
-        queryParams: Map<String, String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
         val safeUri = membership.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.removeUserFromTeam(authHeader, safeUri, queryParams).enqueue(callback)
+        return vimeoService.removeUserFromTeam(authHeader, safeUri, queryParams.orEmpty()).enqueue(callback)
     }
 
     override fun changeUserRole(
         uri: String,
         role: TeamRoleType,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.changeUserRole(authHeader, safeUri, role, queryParams).enqueue(callback)
+        return vimeoService.changeUserRole(authHeader, safeUri, role, queryParams.orEmpty()).enqueue(callback)
     }
 
     override fun changeUserRole(
         membership: TeamMembership,
         role: TeamRoleType,
-        queryParams: Map<String, String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
         val safeUri = membership.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.changeUserRole(authHeader, safeUri, role, queryParams).enqueue(callback)
+        return vimeoService.changeUserRole(authHeader, safeUri, role, queryParams.orEmpty()).enqueue(callback)
     }
 
     override fun grantUsersAccessToFolder(
         uri: String,
-        usersIds: List<GrantFolderPermissionForUser>,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        usersIds: List<String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.grantUsersAccessToFolder(
             authHeader,
             safeUri,
-            usersIds,
-            queryParams
+            usersIds.map(::GrantFolderPermissionForUser),
+            queryParams.orEmpty()
         ).enqueue(callback)
     }
 
     override fun grantUsersAccessToFolder(
         folder: Folder,
-        usersIds: List<GrantFolderPermissionForUser>,
-        queryParams: Map<String, String>,
+        users: List<User>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
         val safeUri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.grantUsersAccessToFolder(
             authHeader,
             safeUri,
-            usersIds,
-            queryParams
+            users.map { GrantFolderPermissionForUser(it.uri.orEmpty()) },
+            queryParams.orEmpty()
         ).enqueue(callback)
     }
 

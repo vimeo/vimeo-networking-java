@@ -134,6 +134,7 @@ class ModelsTest {
         TeamBranding::class,
         TeamList::class,
         TeamMembership::class,
+        TeamMembershipList::class,
         TeamMembershipConnections::class,
         TeamOwnerConnection::class,
         TextTrack::class,

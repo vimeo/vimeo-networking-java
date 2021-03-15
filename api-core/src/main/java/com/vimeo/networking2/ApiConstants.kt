@@ -92,6 +92,9 @@ object ApiConstants {
         const val PARAMETER_ACTIVE = "active"
         const val PARAMETER_FOLDER_NAME = NAME
         const val PARAMETER_FOLDER_PRIVACY = PRIVACY
+        const val PARAMETER_PERMISSION_LEVEL = "permission_level"
+        const val PARAMETER_FOLDER_URI = "folder_uri"
+        const val PARAMETER_ROLE = "role"
 
         // Generic parameters
         const val PARAMETER_GET_PAGE_SIZE = "per_page"

@@ -26,9 +26,13 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_APP_TYPE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_AUTH_CODE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_CLIENT_ID
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_EMAIL
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_FOLDER_NAME
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_FOLDER_PRIVACY
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_FOLDER_URI
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PASSWORD
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PERMISSION_LEVEL
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_ROLE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
@@ -500,11 +504,15 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TeamMembershipList>
 
+    @Suppress("LongParameterList")
+    @FormUrlEncoded
     @POST
     fun addUserToTeam(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Body body: AddUserToTeam,
+        @Field(PARAMETER_EMAIL) email: String,
+        @Field(PARAMETER_PERMISSION_LEVEL) permissionLevel: TeamRoleType,
+        @Field(PARAMETER_FOLDER_URI) folderUri: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<TeamMembership>
 
@@ -520,7 +528,7 @@ internal interface VimeoService {
     fun changeUserRole(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Field("role") role: TeamRoleType,
+        @Field(PARAMETER_ROLE) role: TeamRoleType,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<TeamMembership>
 

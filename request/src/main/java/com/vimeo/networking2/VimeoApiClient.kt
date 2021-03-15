@@ -1552,7 +1552,7 @@ interface VimeoApiClient {
     fun fetchTeamMembersList(
         uri: String,
         fieldFilter: String?,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<TeamMembershipList>
     ): VimeoRequest
@@ -1561,7 +1561,10 @@ interface VimeoApiClient {
      * Adds a given user to the current Team.
      *
      * @param uri the URI from which content will be sent to.
-     * @param body an [AddUserToTeam] object which contains all the details for the given request.
+     * @param email The email address for the user being added.
+     * @param permissionLevel The intended [TeamRoleType] for the user being added.
+     * @param folderUri If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] a URI for
+     * the Folder they can contribute or view also needs to be added.
      * @param queryParams Optional map used to refine the response from the API.
      * @param callback The callback which will be notified of the request completion.
      *
@@ -1569,8 +1572,10 @@ interface VimeoApiClient {
      */
     fun addUserToTeam(
         uri: String,
-        body: AddUserToTeam,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        email: String,
+        permissionLevel: TeamRoleType,
+        folderUri: String?,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest
 
@@ -1578,7 +1583,10 @@ interface VimeoApiClient {
      * Adds a given user to the current Team.
      *
      * @param team The [Team] the user is being added to.
-     * @param body an [AddUserToTeam] object which contains all the details for the given request.
+     * @param email The email address for the user being added.
+     * @param permissionLevel The intended [TeamRoleType] for the user being added.
+     * @param folderUri If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] a URI for
+     * the Folder they can contribute or view also needs to be added.
      * @param queryParams Optional map used to refine the response from the API.
      * @param callback The callback which will be notified of the request completion.
      *
@@ -1586,8 +1594,10 @@ interface VimeoApiClient {
      */
     fun addUserToTeam(
         team: Team,
-        body: AddUserToTeam,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        email: String,
+        permissionLevel: TeamRoleType,
+        folderUri: String?,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest
 
@@ -1602,7 +1612,7 @@ interface VimeoApiClient {
      */
     fun removeUserFromTeam(
         uri: String,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -1617,7 +1627,7 @@ interface VimeoApiClient {
      */
     fun removeUserFromTeam(
         membership: TeamMembership,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
@@ -1634,7 +1644,7 @@ interface VimeoApiClient {
     fun changeUserRole(
         uri: String,
         role: TeamRoleType,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest
 
@@ -1651,7 +1661,7 @@ interface VimeoApiClient {
     fun changeUserRole(
         membership: TeamMembership,
         role: TeamRoleType,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest
 
@@ -1659,7 +1669,7 @@ interface VimeoApiClient {
      * Grants permission for the given users to access the given folder.
      *
      * @param uri the URI from which content will be sent to.
-     * @param usersIds A list of [GrantFolderPermissionForUser] containing URIs for users that will have access
+     * @param usersIds A list of URIs for the users who will be granted access.
      * to the given folder, if a user who currently has access to this folder is not present in this list they will have
      * their folder permission revoked.
      * @param queryParams Optional map used to refine the response from the API.
@@ -1669,16 +1679,16 @@ interface VimeoApiClient {
      */
     fun grantUsersAccessToFolder(
         uri: String,
-        usersIds: List<GrantFolderPermissionForUser>,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        usersIds: List<String>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
     /**
      * Grants permission for the given users to access the given folder.
      *
-     * @param folder The [Folder] that [usersIds] will be granted access to.
-     * @param usersIds A list of [GrantFolderPermissionForUser] containing URIs for users that will have access
+     * @param folder The [Folder] that [users] will be granted access to.
+     * @param users A list of [Users][User]  who will be granted access.
      * to the given folder, if a user who currently has access to this folder is not present in this list they will have
      * their folder permission revoked.
      * @param queryParams Optional map used to refine the response from the API.
@@ -1688,8 +1698,8 @@ interface VimeoApiClient {
      */
     fun grantUsersAccessToFolder(
         folder: Folder,
-        usersIds: List<GrantFolderPermissionForUser>,
-        queryParams: Map<String, @JvmSuppressWildcards String>,
+        users: List<User>,
+        queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
