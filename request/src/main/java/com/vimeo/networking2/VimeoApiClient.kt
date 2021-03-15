@@ -55,7 +55,7 @@ import java.util.concurrent.Executor
  * val clientInstance = VimeoApiClient.instance()
  * ```
  */
-@Suppress("ComplexInterface", "LongParameterList")
+@Suppress("ComplexInterface", "LongParameterList", "LargeClass")
 interface VimeoApiClient {
 
     /**
@@ -1575,6 +1575,23 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Adds a given user to the current Team.
+     *
+     * @param team The [Team] the user is being added to.
+     * @param body an [AddUserToTeam] object which contains all the details for the given request.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun addUserToTeam(
+        team: Team,
+        body: AddUserToTeam,
+        queryParams: Map<String, @JvmSuppressWildcards String>,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest
+
+    /**
      * Removes the provided User from the team.
      *
      * @param uri the URI from which content will be sent to.
@@ -1585,6 +1602,21 @@ interface VimeoApiClient {
      */
     fun removeUserFromTeam(
         uri: String,
+        queryParams: Map<String, @JvmSuppressWildcards String>,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Removes the provided User from the team.
+     *
+     * @param membership The [Membership] of the User to be removed.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun removeUserFromTeam(
+        membership: TeamMembership,
         queryParams: Map<String, @JvmSuppressWildcards String>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
@@ -1607,6 +1639,23 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Changes the user role based on the given [role].
+     *
+     * @param membership The [TeamMembership] of the User that will have their [TeamRoleType] changed.
+     * @param role The [TeamRoleType] that given user will be changed to.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun changeUserRole(
+        membership: TeamMembership,
+        role: TeamRoleType,
+        queryParams: Map<String, @JvmSuppressWildcards String>,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest
+
+    /**
      * Grants permission for the given users to access the given folder.
      *
      * @param uri the URI from which content will be sent to.
@@ -1620,6 +1669,25 @@ interface VimeoApiClient {
      */
     fun grantUsersAccessToFolder(
         uri: String,
+        usersIds: List<GrantFolderPermissionForUser>,
+        queryParams: Map<String, @JvmSuppressWildcards String>,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Grants permission for the given users to access the given folder.
+     *
+     * @param folder The [Folder] that [usersIds] will be granted access to.
+     * @param usersIds A list of [GrantFolderPermissionForUser] containing URIs for users that will have access
+     * to the given folder, if a user who currently has access to this folder is not present in this list they will have
+     * their folder permission revoked.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun grantUsersAccessToFolder(
+        folder: Folder,
         usersIds: List<GrantFolderPermissionForUser>,
         queryParams: Map<String, @JvmSuppressWildcards String>,
         callback: VimeoCallback<Unit>
