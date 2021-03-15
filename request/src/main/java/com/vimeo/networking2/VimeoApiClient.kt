@@ -24,26 +24,11 @@ package com.vimeo.networking2
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.config.RetrofitSetupModule
-import com.vimeo.networking2.enums.CommentPrivacyType
-import com.vimeo.networking2.enums.ConnectedAppType
-import com.vimeo.networking2.enums.EmbedPrivacyType
-import com.vimeo.networking2.enums.FolderViewPrivacyType
-import com.vimeo.networking2.enums.NotificationType
-import com.vimeo.networking2.enums.SlackLanguagePreferenceType
-import com.vimeo.networking2.enums.SlackUserPreferenceType
-import com.vimeo.networking2.enums.ViewPrivacyType
+import com.vimeo.networking2.enums.*
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
 import com.vimeo.networking2.internal.VimeoApiClientImpl
-import com.vimeo.networking2.params.BatchPublishToSocialMedia
-import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
-import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
-import com.vimeo.networking2.params.SearchDateType
-import com.vimeo.networking2.params.SearchDurationType
-import com.vimeo.networking2.params.SearchFacetType
-import com.vimeo.networking2.params.SearchFilterType
-import com.vimeo.networking2.params.SearchSortDirectionType
-import com.vimeo.networking2.params.SearchSortType
+import com.vimeo.networking2.params.*
 import okhttp3.CacheControl
 import okhttp3.Credentials
 import java.util.concurrent.Executor
@@ -70,7 +55,7 @@ import java.util.concurrent.Executor
  * val clientInstance = VimeoApiClient.instance()
  * ```
  */
-@Suppress("ComplexInterface", "LongParameterList")
+@Suppress("ComplexInterface", "LongParameterList", "LargeClass")
 interface VimeoApiClient {
 
     /**
@@ -1549,6 +1534,173 @@ interface VimeoApiClient {
         queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<VideoStatus>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [TeamMembershipList] from the provided endpoint.
+     *
+     * @param uri the URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchTeamMembersList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamMembershipList>
+    ): VimeoRequest
+
+    /**
+     * Adds a given user to the current Team.
+     *
+     * @param uri the URI from which content will be sent to.
+     * @param email The email address for the user being added.
+     * @param permissionLevel The intended [TeamRoleType] for the user being added.
+     * @param folderUri If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] a URI for
+     * the Folder they can contribute or view also needs to be added.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun addUserToTeam(
+        uri: String,
+        email: String,
+        permissionLevel: TeamRoleType,
+        folderUri: String?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest
+
+    /**
+     * Adds a given user to the current Team.
+     *
+     * @param team The [Team] the user is being added to.
+     * @param email The email address for the user being added.
+     * @param permissionLevel The intended [TeamRoleType] for the user being added.
+     * @param folder If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] the
+     * [Folder] they can contribute or view also needs to be added.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun addUserToTeam(
+        team: Team,
+        email: String,
+        permissionLevel: TeamRoleType,
+        folder: Folder?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest
+
+    /**
+     * Removes the provided User from the team.
+     *
+     * @param uri the URI from which content will be sent to.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun removeUserFromTeam(
+        uri: String,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Removes the provided User from the team.
+     *
+     * @param membership The [Membership] of the User to be removed.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun removeUserFromTeam(
+        membership: TeamMembership,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Changes the user role based on the given [role].
+     *
+     * @param uri the URI from which content will be sent to.
+     * @param role The [TeamRoleType] that given user will be changed to.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun changeUserRole(
+        uri: String,
+        role: TeamRoleType,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest
+
+    /**
+     * Changes the user role based on the given [role].
+     *
+     * @param membership The [TeamMembership] of the User that will have their [TeamRoleType] changed.
+     * @param role The [TeamRoleType] that given user will be changed to.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun changeUserRole(
+        membership: TeamMembership,
+        role: TeamRoleType,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest
+
+    /**
+     * Grants permission for the given users to access the given folder.
+     *
+     * @param uri the URI from which content will be sent to.
+     * @param usersIds A list of URIs for the users who will be granted access.
+     * to the given folder, if a user who currently has access to this folder is not present in this list they will have
+     * their folder permission revoked.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun grantUsersAccessToFolder(
+        uri: String,
+        usersIds: List<String>,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Grants permission for the given users to access the given folder.
+     *
+     * @param folder The [Folder] that [users] will be granted access to.
+     * @param users A list of [Users][User]  who will be granted access.
+     * to the given folder, if a user who currently has access to this folder is not present in this list they will have
+     * their folder permission revoked.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun grantUsersAccessToFolder(
+        folder: Folder,
+        users: List<User>,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
     ): VimeoRequest
 
     /**

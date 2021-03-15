@@ -23,23 +23,8 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.*
 import com.vimeo.networking2.common.Followable
-import com.vimeo.networking2.enums.CommentPrivacyType
-import com.vimeo.networking2.enums.ConnectedAppType
-import com.vimeo.networking2.enums.EmbedPrivacyType
-import com.vimeo.networking2.enums.FolderViewPrivacyType
-import com.vimeo.networking2.enums.NotificationType
-import com.vimeo.networking2.enums.SlackLanguagePreferenceType
-import com.vimeo.networking2.enums.SlackUserPreferenceType
-import com.vimeo.networking2.enums.ViewPrivacyType
-import com.vimeo.networking2.params.BatchPublishToSocialMedia
-import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
-import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
-import com.vimeo.networking2.params.SearchDateType
-import com.vimeo.networking2.params.SearchDurationType
-import com.vimeo.networking2.params.SearchFacetType
-import com.vimeo.networking2.params.SearchFilterType
-import com.vimeo.networking2.params.SearchSortDirectionType
-import com.vimeo.networking2.params.SearchSortType
+import com.vimeo.networking2.enums.*
+import com.vimeo.networking2.params.*
 import okhttp3.CacheControl
 
 /**
@@ -50,6 +35,7 @@ import okhttp3.CacheControl
  *
  * @param actual The actual implementation of [VimeoApiClient], defaults to null.
  */
+@Suppress("LargeClass")
 internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null) : VimeoApiClient {
 
     private val client: VimeoApiClient
@@ -377,11 +363,78 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<VideoStatus>
     ): VimeoRequest = client.fetchVideoStatus(uri, fieldFilter, queryParams, cacheControl, callback)
 
+    override fun fetchTeamMembersList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamMembershipList>
+    ): VimeoRequest = client.fetchTeamMembersList(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun addUserToTeam(
+        uri: String,
+        email: String,
+        permissionLevel: TeamRoleType,
+        folderUri: String?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest = client.addUserToTeam(uri, email, permissionLevel, folderUri, queryParams, callback)
+
+    override fun addUserToTeam(
+        team: Team,
+        email: String,
+        permissionLevel: TeamRoleType,
+        folder: Folder?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest = client.addUserToTeam(team, email, permissionLevel, folder, queryParams, callback)
+
+    override fun removeUserFromTeam(
+        uri: String,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.removeUserFromTeam(uri, queryParams, callback)
+
+    override fun removeUserFromTeam(
+        membership: TeamMembership,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.removeUserFromTeam(membership, queryParams, callback)
+
+    override fun changeUserRole(
+        uri: String,
+        role: TeamRoleType,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest = client.changeUserRole(uri, role, queryParams, callback)
+
+    override fun changeUserRole(
+        membership: TeamMembership,
+        role: TeamRoleType,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest = client.changeUserRole(membership, role, queryParams, callback)
+
+    override fun grantUsersAccessToFolder(
+        uri: String,
+        usersIds: List<String>,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest =
+        client.grantUsersAccessToFolder(uri, usersIds, queryParams, callback)
+
     override fun fetchEmpty(
         uri: String,
         cacheControl: CacheControl?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest = client.fetchEmpty(uri, cacheControl, callback)
+
+    override fun grantUsersAccessToFolder(
+        folder: Folder,
+        users: List<User>,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.grantUsersAccessToFolder(folder, users, queryParams, callback)
 
     override fun search(
         query: String,
