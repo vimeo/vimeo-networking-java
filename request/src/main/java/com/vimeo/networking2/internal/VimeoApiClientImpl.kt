@@ -584,7 +584,7 @@ internal class VimeoApiClientImpl(
         team: Team,
         email: String,
         permissionLevel: TeamRoleType,
-        folderUri: String?,
+        folder: Folder?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
@@ -595,7 +595,7 @@ internal class VimeoApiClientImpl(
             safeUri,
             email,
             permissionLevel,
-            folderUri,
+            folder?.uri,
             queryParams.orEmpty()
         ).enqueue(callback)
     }

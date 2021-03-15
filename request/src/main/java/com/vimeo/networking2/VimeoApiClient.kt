@@ -1585,8 +1585,8 @@ interface VimeoApiClient {
      * @param team The [Team] the user is being added to.
      * @param email The email address for the user being added.
      * @param permissionLevel The intended [TeamRoleType] for the user being added.
-     * @param folderUri If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] a URI for
-     * the Folder they can contribute or view also needs to be added.
+     * @param folder If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] the
+     * [Folder] they can contribute or view also needs to be added.
      * @param queryParams Optional map used to refine the response from the API.
      * @param callback The callback which will be notified of the request completion.
      *
@@ -1596,7 +1596,7 @@ interface VimeoApiClient {
         team: Team,
         email: String,
         permissionLevel: TeamRoleType,
-        folderUri: String?,
+        folder: Folder?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest
