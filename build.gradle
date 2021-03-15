@@ -13,7 +13,7 @@ buildscript {
 
 plugins {
     id "io.gitlab.arturbosch.detekt" version "1.14.2"
-    id "com.github.ben-manes.versions" version "0.36.0"
+    id "com.github.ben-manes.versions" version "0.38.0"
 }
 
 ext {
