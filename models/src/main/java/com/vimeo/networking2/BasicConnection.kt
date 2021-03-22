@@ -17,7 +17,7 @@ data class BasicConnection(
     override val uri: String? = null,
 
     /**
-     * The total number of albums on this connection.
+     * The total number of items on this connection.
      */
     @Json(name = "total")
     val total: Int? = null
