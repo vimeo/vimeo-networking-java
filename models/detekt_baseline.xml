@@ -2,9 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] a URI for the Folder * they can contribute or view also needs to be added. */ @Json(name = "folder_uri") val folderUri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * The email address for the user being added. */ @Json(name = "email") val email: String</ID>
-    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * The intended [TeamRoleType] for the user being added. */ @Json(name = "permission_level") val permissionLevel: TeamRoleType</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The URI of the video. */ @Json(name = "uri") val uri: String</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The position of the video. */ @Json(name = "position") val position: Int?</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbumContainer.kt$AddVideoToAlbumContainer$/** * The video that should be added. */ @Json(name = "video") val video: AddVideoToAlbum</ID>
@@ -47,7 +44,6 @@
     <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Facebook API configuration data. */ @Internal @Json(name = "facebook") val facebook: FacebookConfiguration? = null</ID>
     <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Various feature configuration data. */ @Internal @Json(name = "features") val features: FeaturesConfiguration? = null</ID>
     <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Various live streaming configuration data. */ @Internal @Json(name = "live") val live: LiveConfiguration? = null</ID>
-    <ID>UndocumentedPublicProperty:BasicConnection.kt$BasicConnection$/** * The total number of albums on this connection. */ @Json(name = "total") val total: Int? = null</ID>
     <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for Facebook. */ @Json(name = "facebook") val facebook: PublishToFacebookPost? = null</ID>
     <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for LinkedIn. */ @Json(name = "linkedin") val linkedIn: PublishToLinkedInPost? = null</ID>
     <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for Twitter. */ @Json(name = "twitter") val twitter: PublishToTwitterPost? = null</ID>
