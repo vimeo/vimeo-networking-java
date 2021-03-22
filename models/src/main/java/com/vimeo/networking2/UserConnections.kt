@@ -31,6 +31,7 @@ import com.vimeo.networking2.annotations.Internal
  * @param recommendedUsers A Collection of recommended users for the current user to follow. This data requires a
  * bearer token with the private scope.
  * @param shared Information about the videos that have been shared with this user.
+ * @param teamMembers Information about the user's team members.
  * @param teams Information about teams the user belongs to.
  * @param videos Information about the videos uploaded by this user.
  * @param watchLater Information about the videos that this user wants to watch later.
@@ -100,7 +101,7 @@ data class UserConnections(
     val shared: BasicConnection? = null,
 
     @Json(name = "team_members")
-    val teamMembers: BasicConnection? = null,
+    val teamMembers: TeamMembersConnection? = null,
 
     @Json(name = "teams")
     val teams: BasicConnection? = null,
