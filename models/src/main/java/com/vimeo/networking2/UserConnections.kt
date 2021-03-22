@@ -6,156 +6,108 @@ import com.vimeo.networking2.annotations.Internal
 
 /**
  * All connections for a user.
+ *
+ * @param albums Information about the albums created by this user.
+ * @param appearances Information about the appearances of this user in other videos.
+ * @param block Information on the users that the current user has blocked. This data requires a
+ * bearer token with the private scope.
+ * @param categories Information about this user's followed categories.
+ * @param channels Information about this user's subscribed channels.
+ * @param connectedApps Information about this user's connected apps.
+ * @param feed Information about this user's feed.
+ * @param projectItemsRoot Information about the root directory containing the user's projects (folders and videos).
+ * @param followers Information about the user's followers.
+ * @param following Information about the users that the current user is following.
+ * @param groups Information about the groups created by this user.
+ * @param likes Information about the videos that this user has liked.
+ * @param moderatedChannels Information about the channels that this user moderates.
+ * @param notifications Information about this user's notifications. This data requires a bearer
+ * token with the private scope.
+ * @param pictures Information about this user's portraits.
+ * @param folders Information about all the user's folders.
+ * @param portfolios Information about this user's portfolios.
+ * @param recommendedChannels A collection of recommended channels for the current user to follow. This data requires a
+ * bearer token with the private scope.
+ * @param recommendedUsers A Collection of recommended users for the current user to follow. This data requires a
+ * bearer token with the private scope.
+ * @param shared Information about the videos that have been shared with this user.
+ * @param teams Information about teams the user belongs to.
+ * @param videos Information about the videos uploaded by this user.
+ * @param watchLater Information about the videos that this user wants to watch later.
  */
 @JsonClass(generateAdapter = true)
 data class UserConnections(
 
-    /**
-     * Information about the albums created by this user.
-     */
     @Json(name = "albums")
     val albums: BasicConnection? = null,
 
-    /**
-     * Information about the appearances of this user in other videos.
-     */
     @Json(name = "appearances")
     val appearances: BasicConnection? = null,
 
-    /**
-     * Information on the users that the current user has blocked. This data requires a
-     * bearer token with the private scope.
-     */
     @Json(name = "block")
     val block: BasicConnection? = null,
 
-    /**
-     * Information about this user's followed categories.
-     */
     @Json(name = "categories")
     val categories: BasicConnection? = null,
 
-    /**
-     * Information about this user's subscribed channels.
-     */
     @Json(name = "channels")
     val channels: BasicConnection? = null,
 
-    /**
-     * Information about this user's connected apps.
-     */
     @Json(name = "connected_apps")
     val connectedApps: BasicConnection? = null,
 
-    /**
-     * Information about this user's feed.
-     */
     @Json(name = "feed")
     val feed: BasicConnection? = null,
 
-    /**
-     * Information about the root directory containing the user's projects (folders and videos).
-     */
     @Json(name = "folders_root")
     val projectItemsRoot: BasicConnection? = null,
 
-    /**
-     * Information about the user's followers.
-     */
     @Json(name = "followers")
     val followers: BasicConnection? = null,
 
-    /**
-     * Information about the users that the current user is following.
-     */
     @Json(name = "following")
     val following: BasicConnection? = null,
 
-    /**
-     * Information about the groups created by this user.
-     */
     @Json(name = "groups")
     val groups: BasicConnection? = null,
 
-    /**
-     * Information about the videos that this user has liked.
-     */
     @Json(name = "likes")
     val likes: BasicConnection? = null,
 
-    /**
-     * Information about the channels that this user moderates.
-     */
     @Json(name = "moderated_channels")
     val moderatedChannels: BasicConnection? = null,
 
-    /**
-     * Information about this user's notifications. This data requires a bearer
-     * token with the private scope.
-     */
     @Internal
     @Json(name = "notifications")
     val notifications: NotificationConnection? = null,
 
-    /**
-     * Information about this user's portraits.
-     */
     @Json(name = "pictures")
     val pictures: BasicConnection? = null,
 
-    /**
-     * Information about all the user's folders.
-     */
     @Json(name = "projects")
     val folders: BasicConnection? = null,
 
-    /**
-     * Information about this user's portfolios.
-     */
     @Json(name = "portfolios")
     val portfolios: BasicConnection? = null,
 
-    /**
-     * A collection of recommended channels for the current user to follow. This data requires a
-     * bearer token with the private scope.
-     */
     @Json(name = "recommended_channels")
     val recommendedChannels: BasicConnection? = null,
 
-    /**
-     * A Collection of recommended users for the current user to follow. This data requires a
-     * bearer token with the private scope.
-     */
     @Json(name = "recommended_users")
     val recommendedUsers: BasicConnection? = null,
 
-    /**
-     * Information about the videos that have been shared with this user.
-     */
     @Json(name = "shared")
     val shared: BasicConnection? = null,
 
-    /**
-     * Information about the user's team members.
-     */
     @Json(name = "team_members")
     val teamMembers: BasicConnection? = null,
 
-    /**
-     * Information about teams the user belongs to.
-     */
     @Json(name = "teams")
     val teams: BasicConnection? = null,
 
-    /**
-     * Information about the videos uploaded by this user.
-     */
     @Json(name = "videos")
     val videos: BasicConnection? = null,
 
-    /**
-     * Information about the videos that this user wants to watch later.
-     */
     @Json(name = "watchlater")
     val watchLater: BasicConnection? = null
 
