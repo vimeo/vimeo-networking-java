@@ -6,6 +6,8 @@ import com.vimeo.networking2.common.Connection
 
 /**
  * Connection data.
+ *
+ * @param total The total number of items on this connection.
  */
 @JsonClass(generateAdapter = true)
 data class BasicConnection(
@@ -16,9 +18,6 @@ data class BasicConnection(
     @Json(name = "uri")
     override val uri: String? = null,
 
-    /**
-     * The total number of albums on this connection.
-     */
     @Json(name = "total")
     val total: Int? = null
 

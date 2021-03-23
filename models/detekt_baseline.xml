@@ -2,9 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] a URI for the Folder * they can contribute or view also needs to be added. */ @Json(name = "folder_uri") val folderUri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * The email address for the user being added. */ @Json(name = "email") val email: String</ID>
-    <ID>UndocumentedPublicProperty:AddUserToTeam.kt$AddUserToTeam$/** * The intended [TeamRoleType] for the user being added. */ @Json(name = "permission_level") val permissionLevel: TeamRoleType</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The URI of the video. */ @Json(name = "uri") val uri: String</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The position of the video. */ @Json(name = "position") val position: Int?</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbumContainer.kt$AddVideoToAlbumContainer$/** * The video that should be added. */ @Json(name = "video") val video: AddVideoToAlbum</ID>
@@ -47,7 +44,6 @@
     <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Facebook API configuration data. */ @Internal @Json(name = "facebook") val facebook: FacebookConfiguration? = null</ID>
     <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Various feature configuration data. */ @Internal @Json(name = "features") val features: FeaturesConfiguration? = null</ID>
     <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Various live streaming configuration data. */ @Internal @Json(name = "live") val live: LiveConfiguration? = null</ID>
-    <ID>UndocumentedPublicProperty:BasicConnection.kt$BasicConnection$/** * The total number of albums on this connection. */ @Json(name = "total") val total: Int? = null</ID>
     <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for Facebook. */ @Json(name = "facebook") val facebook: PublishToFacebookPost? = null</ID>
     <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for LinkedIn. */ @Json(name = "linkedin") val linkedIn: PublishToLinkedInPost? = null</ID>
     <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for Twitter. */ @Json(name = "twitter") val twitter: PublishToTwitterPost? = null</ID>
@@ -575,30 +571,6 @@
     <ID>UndocumentedPublicProperty:UserBadge.kt$UserBadge$/** * The badge's alternate text. */ @Internal @Json(name = "alt_text") val altText: String? = null</ID>
     <ID>UndocumentedPublicProperty:UserBadge.kt$UserBadge$/** * The text of the badge. */ @Internal @Json(name = "text") val text: String? = null</ID>
     <ID>UndocumentedPublicProperty:UserBadge.kt$UserBadge$/** * The type of the badge. * @see UserBadge.type */ @Internal @Json(name = "type") val rawType: String? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * A Collection of recommended users for the current user to follow. This data requires a * bearer token with the private scope. */ @Json(name = "recommended_users") val recommendedUsers: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * A collection of recommended channels for the current user to follow. This data requires a * bearer token with the private scope. */ @Json(name = "recommended_channels") val recommendedChannels: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about all the user's folders. */ @Json(name = "projects") val folders: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about teams the user belongs to. */ @Json(name = "teams") val teams: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the albums created by this user. */ @Json(name = "albums") val albums: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the appearances of this user in other videos. */ @Json(name = "appearances") val appearances: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the channels that this user moderates. */ @Json(name = "moderated_channels") val moderatedChannels: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the groups created by this user. */ @Json(name = "groups") val groups: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the root directory containing the user's projects (folders and videos). */ @Json(name = "folders_root") val projectItemsRoot: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the user's followers. */ @Json(name = "followers") val followers: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the user's team members. */ @Json(name = "team_members") val teamMembers: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the users that the current user is following. */ @Json(name = "following") val following: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the videos that have been shared with this user. */ @Json(name = "shared") val shared: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the videos that this user has liked. */ @Json(name = "likes") val likes: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the videos that this user wants to watch later. */ @Json(name = "watchlater") val watchLater: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about the videos uploaded by this user. */ @Json(name = "videos") val videos: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about this user's connected apps. */ @Json(name = "connected_apps") val connectedApps: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about this user's feed. */ @Json(name = "feed") val feed: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about this user's followed categories. */ @Json(name = "categories") val categories: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about this user's notifications. This data requires a bearer * token with the private scope. */ @Internal @Json(name = "notifications") val notifications: NotificationConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about this user's portfolios. */ @Json(name = "portfolios") val portfolios: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about this user's portraits. */ @Json(name = "pictures") val pictures: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information about this user's subscribed channels. */ @Json(name = "channels") val channels: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:UserConnections.kt$UserConnections$/** * Information on the users that the current user has blocked. This data requires a * bearer token with the private scope. */ @Json(name = "block") val block: BasicConnection? = null</ID>
     <ID>UndocumentedPublicProperty:UserInteractions.kt$UserInteractions$/** * Disallow a user from viewing a private channel. */ @Json(name = "add_privacy_user") val addPrivacyUser: BasicInteraction? = null</ID>
     <ID>UndocumentedPublicProperty:UserInteractions.kt$UserInteractions$/** * Information regarding where and how to report a user. */ @Json(name = "report") val report: BasicInteraction? = null</ID>
     <ID>UndocumentedPublicProperty:UserInteractions.kt$UserInteractions$/** * Information related to the Facebook connected app. */ @Json(name = "facebook_connected_app") val facebookConnectedApp: ConnectedAppInteraction? = null</ID>
