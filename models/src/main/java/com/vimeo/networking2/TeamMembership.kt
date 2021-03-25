@@ -12,7 +12,7 @@ import java.util.Date
  * Stores information related to relevant members of a team.
  */
 @JsonClass(generateAdapter = true)
-data class TeamMembership (
+data class TeamMembership(
 
     /**
      * The URI to independently request this team membership information.
@@ -80,7 +80,8 @@ data class TeamMembership (
     val teamInviteStatus: String? = null,
 
     /**
-     * The resource key that identifies team membership.
+     * The resource key that identifies team membership (this is not unique per membership instance, only unique per
+     * team).
      */
     @Json(name = "resource_key")
     val resourceKey: String? = null,
@@ -97,8 +98,8 @@ data class TeamMembership (
     @Json(name = "metadata")
     val metadata: Metadata<TeamMembershipConnections, BasicInteraction>? = null
 
-): Entity {
-    override val identifier: String? = resourceKey
+) : Entity {
+    override val identifier: String? = uri
 }
 
 /**
