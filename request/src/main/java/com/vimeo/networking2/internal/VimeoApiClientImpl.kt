@@ -659,7 +659,8 @@ internal class VimeoApiClientImpl(
         queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        val safeUri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val safeUri = folder.metadata?.connections?.teamMembers?.uri.notEmpty()
+            ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
         return vimeoService.grantUsersAccessToFolder(
             authHeader,
             safeUri,
