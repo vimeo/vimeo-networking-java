@@ -638,9 +638,9 @@ internal class VimeoApiClientImpl(
         return vimeoService.changeUserRole(authHeader, safeUri, role, queryParams.orEmpty()).enqueue(callback)
     }
 
-    override fun grantUsersAccessToFolder(
+    override fun grantTeamMembersFolderAccess(
         uri: String,
-        usersIds: List<String>,
+        teamMemberIds: List<String>,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
@@ -648,14 +648,14 @@ internal class VimeoApiClientImpl(
         return vimeoService.grantUsersAccessToFolder(
             authHeader,
             safeUri,
-            usersIds.map(::GrantFolderPermissionForUser),
+            teamMemberIds.map(::GrantFolderPermissionForUser),
             queryParams.orEmpty()
         ).enqueue(callback)
     }
 
-    override fun grantUsersAccessToFolder(
+    override fun grantTeamMembersFolderAccess(
         folder: Folder,
-        users: List<User>,
+        teamMembers: List<TeamMembership>,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
@@ -664,7 +664,7 @@ internal class VimeoApiClientImpl(
         return vimeoService.grantUsersAccessToFolder(
             authHeader,
             safeUri,
-            users.map { GrantFolderPermissionForUser(it.uri.orEmpty()) },
+            teamMembers.map { GrantFolderPermissionForUser(it.uri.orEmpty()) },
             queryParams.orEmpty()
         ).enqueue(callback)
     }

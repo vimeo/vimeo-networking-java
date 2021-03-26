@@ -1666,10 +1666,10 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Grants permission for the given users to access the given folder.
+     * Grants permission for the given team members to access the given folder.
      *
      * @param uri the URI from which content will be sent to.
-     * @param usersIds A list of URIs for the users who will be granted access.
+     * @param teamMemberIds A list of URIs for the users who will be granted access.
      * to the given folder, if a user who currently has access to this folder is not present in this list they will have
      * their folder permission revoked.
      * @param queryParams Optional map used to refine the response from the API.
@@ -1677,18 +1677,18 @@ interface VimeoApiClient {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun grantUsersAccessToFolder(
+    fun grantTeamMembersFolderAccess(
         uri: String,
-        usersIds: List<String>,
+        teamMemberIds: List<String>,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
     /**
-     * Grants permission for the given users to access the given folder.
+     * Grants permission for the given team members to access the given folder.
      *
-     * @param folder The [Folder] that [users] will be granted access to.
-     * @param users A list of [Users][User]  who will be granted access.
+     * @param folder The [Folder] that [teamMembers] will be granted access to.
+     * @param teamMembers A list of [TeamMemberships][TeamMembership]  who will be granted access.
      * to the given folder, if a user who currently has access to this folder is not present in this list they will have
      * their folder permission revoked.
      * @param queryParams Optional map used to refine the response from the API.
@@ -1696,9 +1696,9 @@ interface VimeoApiClient {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun grantUsersAccessToFolder(
+    fun grantTeamMembersFolderAccess(
         folder: Folder,
-        users: List<User>,
+        teamMembers: List<TeamMembership>,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
