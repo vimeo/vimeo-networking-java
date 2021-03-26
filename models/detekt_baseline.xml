@@ -673,23 +673,6 @@
     <ID>UndocumentedPublicProperty:VideoSourceFile.kt$VideoSourceFile$/** * The width of the video in pixels. */ @Json(name = "width") val width: Int? = null</ID>
     <ID>UndocumentedPublicProperty:VideoSourceFile.kt$VideoSourceFile$/** * Video logging information. */ @Json(name = "log") val log: VideoLog? = null</ID>
     <ID>UndocumentedPublicProperty:VideoStats.kt$VideoStats$/** * The current total number of times that the video has been played. */ @Json(name = "plays") val plays: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:VideoStatus.kt$VideoStatus$/** * The current state of the transcoding process. */ @Json(name = "state") val state: String? = null</ID>
-    <ID>UndocumentedPublicProperty:VideoStatus.kt$VideoStatus$/** * The percentage of the transcoding process that is complete. */ @Json(name = "progress") val progress: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:VideoStatus.kt$VideoStatus$/** * The remaining time in seconds before transcoding is complete. */ @Json(name = "time_left") val timeLeft: Long? = null</ID>
     <ID>UndocumentedPublicProperty:VideosPreference.kt$VideosPreference$/** * Privacy values for videos. */ @Json(name = "privacy") val privacy: Privacy? = null</ID>
-    <ID>UndocumentedPublicProperty:VideosTvodItemConnection.kt$VideosTvodItemConnection$/** * An array of HTTP methods permitted on this URI. */ @Json(name = "options") val options: List&lt;String&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:VideosTvodItemConnection.kt$VideosTvodItemConnection$/** * The API URI that resolves to the connection data. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:VideosTvodItemConnection.kt$VideosTvodItemConnection$/** * The total number of albums on this connection. */ @Json(name = "total") val total: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:VideosTvodItemConnection.kt$VideosTvodItemConnection$/** * The total number of extra videos. */ @Json(name = "extra_total") val extraTotal: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:VideosTvodItemConnection.kt$VideosTvodItemConnection$/** * The total number of main videos. */ @Json(name = "main_total") val mainTotal: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:VideosTvodItemConnection.kt$VideosTvodItemConnection$/** * The total number of viewable videos. */ @Json(name = "viewable_total") val viewableTotal: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:VimeoAccount.kt$VimeoAccount$/** * The authenticated and logged in user. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:VimeoAccount.kt$VimeoAccount$/** * The date and time that the token expires. */ @Json(name = "expires_on") val expiresOn: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:VimeoAccount.kt$VimeoAccount$/** * The refresh token string. */ @Json(name = "refresh_token") val refreshToken: String? = null</ID>
-    <ID>UndocumentedPublicProperty:VimeoAccount.kt$VimeoAccount$/** * The scope or scopes that the token supports. */ @Json(name = "scope") val scope: String? = null</ID>
-    <ID>UndocumentedPublicProperty:VimeoAccount.kt$VimeoAccount$/** * The token type. */ @Json(name = "token_type") val tokenType: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Website.kt$Website$/** * The URL of the website. */ @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Website.kt$Website$/** * The name of the website. */ @Json(name = "users_with_access") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Website.kt$Website$/** * The website's description. */ @Json(name = "description") val description: String? = null</ID>
   </CurrentIssues>
 </SmellBaseline>
