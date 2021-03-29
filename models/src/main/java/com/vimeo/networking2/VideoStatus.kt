@@ -7,24 +7,20 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * The current status of the video transcoding process.
+ *
+ * @param state The current state of the transcoding process.
+ * @param progress The percentage of the transcoding process that is complete.
+ * @param timeLeft The remaining time in seconds before transcoding is complete.
  */
 @JsonClass(generateAdapter = true)
 data class VideoStatus(
-    /**
-     * The current state of the transcoding process.
-     */
+
     @Json(name = "state")
     val state: String? = null,
 
-    /**
-     * The percentage of the transcoding process that is complete.
-     */
     @Json(name = "progress")
     val progress: Int? = null,
 
-    /**
-     * The remaining time in seconds before transcoding is complete.
-     */
     @Json(name = "time_left")
     val timeLeft: Long? = null
 )

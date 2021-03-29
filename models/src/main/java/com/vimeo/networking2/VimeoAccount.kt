@@ -9,6 +9,12 @@ import java.util.Date
 
 /**
  * This class represents an authenticated user of Vimeo, either logged in or logged out.
+ *
+ * @param expiresOn The date and time that the token expires.
+ * @param refreshToken The refresh token string.
+ * @param scope The scope or scopes that the token supports.
+ * @param user The authenticated and logged in user.
+ * @param tokenType The token type.
  */
 @JsonClass(generateAdapter = true)
 data class VimeoAccount(
@@ -16,33 +22,18 @@ data class VimeoAccount(
     @Json(name = "access_token")
     override val accessToken: String,
 
-    /**
-     * The date and time that the token expires.
-     */
     @Json(name = "expires_on")
     val expiresOn: Date? = null,
 
-    /**
-     * The refresh token string.
-     */
     @Json(name = "refresh_token")
     val refreshToken: String? = null,
 
-    /**
-     * The scope or scopes that the token supports.
-     */
     @Json(name = "scope")
     val scope: String? = null,
 
-    /**
-     * The authenticated and logged in user.
-     */
     @Json(name = "user")
     val user: User? = null,
 
-    /**
-     * The token type.
-     */
     @Json(name = "token_type")
     val tokenType: String? = null
 

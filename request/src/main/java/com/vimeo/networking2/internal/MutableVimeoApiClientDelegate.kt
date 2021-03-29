@@ -415,13 +415,13 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest = client.changeUserRole(membership, role, queryParams, callback)
 
-    override fun grantUsersAccessToFolder(
+    override fun grantTeamMembersFolderAccess(
         uri: String,
-        usersIds: List<String>,
+        teamMemberIds: List<String>,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
     ): VimeoRequest =
-        client.grantUsersAccessToFolder(uri, usersIds, queryParams, callback)
+        client.grantTeamMembersFolderAccess(uri, teamMemberIds, queryParams, callback)
 
     override fun fetchEmpty(
         uri: String,
@@ -429,12 +429,12 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Unit>
     ): VimeoRequest = client.fetchEmpty(uri, cacheControl, callback)
 
-    override fun grantUsersAccessToFolder(
+    override fun grantTeamMembersFolderAccess(
         folder: Folder,
-        users: List<User>,
+        teamMembers: List<TeamMembership>,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.grantUsersAccessToFolder(folder, users, queryParams, callback)
+    ): VimeoRequest = client.grantTeamMembersFolderAccess(folder, teamMembers, queryParams, callback)
 
     override fun search(
         query: String,
