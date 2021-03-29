@@ -13,7 +13,7 @@ import com.vimeo.networking2.common.Connection
  * @param total The total number of team members on this connection.
  */
 @JsonClass(generateAdapter = true)
-class TeamMembersConnection(
+data class TeamMembersConnection(
 
     @Json(name = "invites_remaining")
     val invitesRemaining: Int? = null,
