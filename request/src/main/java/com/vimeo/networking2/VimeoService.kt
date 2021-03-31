@@ -529,6 +529,7 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Field(PARAMETER_ROLE) role: TeamRoleType,
+        @Field(PARAMETER_FOLDER_URI) folderUri: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<TeamMembership>
 
