@@ -1636,6 +1636,8 @@ interface VimeoApiClient {
      *
      * @param uri the URI from which content will be sent to.
      * @param role The [TeamRoleType] that given user will be changed to.
+     * @param folderUri If the user is being changed to a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] a URI for
+     * the Folder they can contribute or view also needs to be added.
      * @param queryParams Optional map used to refine the response from the API.
      * @param callback The callback which will be notified of the request completion.
      *
@@ -1644,6 +1646,7 @@ interface VimeoApiClient {
     fun changeUserRole(
         uri: String,
         role: TeamRoleType,
+        folderUri: String?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest
@@ -1653,6 +1656,8 @@ interface VimeoApiClient {
      *
      * @param membership The [TeamMembership] of the User that will have their [TeamRoleType] changed.
      * @param role The [TeamRoleType] that given user will be changed to.
+     * @param folder If the user is being changed to a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] the [Folder]
+     * they can contribute or view also needs to be added.
      * @param queryParams Optional map used to refine the response from the API.
      * @param callback The callback which will be notified of the request completion.
      *
@@ -1661,6 +1666,7 @@ interface VimeoApiClient {
     fun changeUserRole(
         membership: TeamMembership,
         role: TeamRoleType,
+        folder: Folder?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest

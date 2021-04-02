@@ -621,21 +621,25 @@ internal class VimeoApiClientImpl(
     override fun changeUserRole(
         uri: String,
         role: TeamRoleType,
+        folderUri: String?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
         val safeUri = uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.changeUserRole(authHeader, safeUri, role, queryParams.orEmpty()).enqueue(callback)
+        return vimeoService.changeUserRole(authHeader, safeUri, role, folderUri, queryParams.orEmpty())
+            .enqueue(callback)
     }
 
     override fun changeUserRole(
         membership: TeamMembership,
         role: TeamRoleType,
+        folder: Folder?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
         val safeUri = membership.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return vimeoService.changeUserRole(authHeader, safeUri, role, queryParams.orEmpty()).enqueue(callback)
+        return vimeoService.changeUserRole(authHeader, safeUri, role, folder?.uri, queryParams.orEmpty())
+            .enqueue(callback)
     }
 
     override fun grantTeamMembersFolderAccess(

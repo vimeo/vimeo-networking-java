@@ -404,16 +404,18 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun changeUserRole(
         uri: String,
         role: TeamRoleType,
+        folderUri: String?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
-    ): VimeoRequest = client.changeUserRole(uri, role, queryParams, callback)
+    ): VimeoRequest = client.changeUserRole(uri, role, folderUri, queryParams, callback)
 
     override fun changeUserRole(
         membership: TeamMembership,
         role: TeamRoleType,
+        folder: Folder?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
-    ): VimeoRequest = client.changeUserRole(membership, role, queryParams, callback)
+    ): VimeoRequest = client.changeUserRole(membership, role, folder, queryParams, callback)
 
     override fun grantTeamMembersFolderAccess(
         uri: String,
