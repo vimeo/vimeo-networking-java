@@ -22,6 +22,8 @@ dependencies {
     // Okio used by Moshi
     implementation "com.squareup.okio:okio:$okioVersion"
 
+    // Test dependencies
+    testImplementation "junit:junit:$junitVersion"
 }
 
 compileKotlin {
