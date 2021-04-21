@@ -495,6 +495,12 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<VideoStatus>
 
+    @PUT("users/seat/{code}")
+    fun acceptTeamInvite(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(CODE) code: String
+    ): VimeoCall<TeamMembership>
+
     @GET
     fun getTeamMembers(
         @Header(AUTHORIZATION) authorization: String,
@@ -620,6 +626,7 @@ internal interface VimeoService {
         private const val AUTHORIZATION = "Authorization"
         private const val HEADER_NO_CACHE = "Cache-Control: no-cache, no-store"
         private const val TYPE = "type"
+        private const val CODE = "code"
         private const val ALBUM_URI = "albumUri"
         private const val VIDEO_URI = "videoUri"
         private const val FOLDER_URI = "folderUri"

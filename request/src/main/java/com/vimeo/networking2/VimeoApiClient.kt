@@ -1558,6 +1558,19 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Accept an invite for a Team with a code that is encoded in the email invite for a user account.
+     *
+     * @param code The code from an email team invite.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun acceptTeamInvite(
+        code: String,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest
+
+    /**
      * Adds a given user to the current Team.
      *
      * @param uri the URI from which content will be sent to.

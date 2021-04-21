@@ -561,6 +561,11 @@ internal class VimeoApiClientImpl(
         ).enqueue(callback)
     }
 
+    override fun acceptTeamInvite(code: String, callback: VimeoCallback<TeamMembership>): VimeoRequest {
+        val safeCode = code.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        return vimeoService.acceptTeamInvite(authHeader, safeCode).enqueue(callback)
+    }
+
     override fun addUserToTeam(
         uri: String,
         email: String,
