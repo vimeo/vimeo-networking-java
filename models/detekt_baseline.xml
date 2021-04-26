@@ -153,10 +153,6 @@
     <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * Video associated with ths feed item. */ @Json(name = "clip") val video: Video? = null</ID>
     <ID>UndocumentedPublicProperty:FeedItemConnections.kt$FeedItemConnections$/** * A list of resource URIs related to the activity. */ @Json(name = "related") val related: BasicConnection? = null</ID>
     <ID>UndocumentedPublicProperty:FileTransferPage.kt$FileTransferPage$/** * The link to the file transfer page. */ @Internal @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderConnections.kt$FolderConnections$/** * A basic connection object indicating how to return all the project items in the folder. */ @Json(name = "items") val items: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderConnections.kt$FolderConnections$/** * A basic connection object indicating how to return all the sub-folders in the folder. */ @Json(name = "folders") val folders: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderConnections.kt$FolderConnections$/** * A basic connection object indicating how to return all the videos in the folder. */ @Json(name = "videos") val videos: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderConnections.kt$FolderConnections$/** * Information about the authenticated user's team. */ @Json(name = "team_members") val teamMembers: BasicConnection? = null</ID>
     <ID>UndocumentedPublicProperty:FolderPrivacy.kt$FolderPrivacy$/** * Who can view the folder. * @see FolderPrivacy.viewPrivacyType */ @Json(name = "view") val viewPrivacy: String? = null</ID>
     <ID>UndocumentedPublicProperty:Followable.kt$Followable$val metadata: Metadata&lt;*, out FollowableInteractions&gt;?</ID>
     <ID>UndocumentedPublicProperty:Gcs.kt$Gcs$/** * Expected ending byte range for the current upload_link. */ @Internal @Json(name = "end_byte") val endByte: Long? = null</ID>
