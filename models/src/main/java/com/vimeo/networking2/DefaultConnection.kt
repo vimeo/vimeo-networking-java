@@ -9,6 +9,7 @@ import com.vimeo.networking2.common.Connection
  */
 @JsonClass(generateAdapter = true)
 data class DefaultConnection(
+
     @Json(name = "options")
     override val options: List<String>? = null,
 

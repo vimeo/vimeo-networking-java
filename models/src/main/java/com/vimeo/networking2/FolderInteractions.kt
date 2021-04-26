@@ -10,6 +10,7 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class FolderInteractions(
+
     @Json(name = "add_subfolder")
     val addSubfolder: AddSubfolderInteraction? = null
 )
