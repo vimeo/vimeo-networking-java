@@ -191,6 +191,7 @@ internal interface VimeoService {
     fun createFolder(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
+        @Field(PARENT_FOLDER_ID) parentFolderId: String?,
         @Field(PARAMETER_FOLDER_NAME) name: String,
         @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType,
         @Field(SLACK_WEBHOOK_ID) slackWebhookId: String?,
@@ -631,6 +632,7 @@ internal interface VimeoService {
         private const val VIDEO_URI = "videoUri"
         private const val FOLDER_URI = "folderUri"
         private const val FIELD_FILTER = "fields"
+        private const val PARENT_FOLDER_ID = "parent_folder_id"
         private const val SLACK_WEBHOOK_ID = "slack_incoming_webhooks_id"
         private const val SLACK_LANGUAGE_PREF = "slack_language_preference"
         private const val SLACK_USER_PREF = "slack_user_preferences"

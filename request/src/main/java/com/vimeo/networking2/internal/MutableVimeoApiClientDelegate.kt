@@ -214,6 +214,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun createFolder(
         uri: String,
+        parentFolderId: String?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -222,6 +223,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(
         uri,
+        parentFolderId,
         name,
         privacy,
         slackWebhookId,
@@ -232,6 +234,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun createFolder(
         user: User,
+        parentFolder: Folder?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -240,6 +243,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(
         user,
+        parentFolder,
         name,
         privacy,
         slackWebhookId,
