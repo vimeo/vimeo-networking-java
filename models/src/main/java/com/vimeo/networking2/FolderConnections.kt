@@ -8,6 +8,8 @@ import com.squareup.moshi.JsonClass
 /**
  * All of the connections for a folder.
  *
+ * @param ancestorPath An ordered list of connections to the parent folders of a folder. The zeroth index in the list
+ * will be the immediate parent of the folder.
  * @param folders A basic connection object indicating how to return all the sub-folders in the folder.
  * @param items A basic connection object indicating how to return all the project items in the folder.
  * @param teamMembers Information about the authenticated user's team.
@@ -16,6 +18,9 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class FolderConnections(
+
+    @Json(name = "ancestor_path")
+    val ancestorPath: List<FolderAncestorConnection>? = null,
 
     @Json(name = "folders")
     val folders: BasicConnection? = null,

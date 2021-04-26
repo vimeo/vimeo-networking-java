@@ -53,6 +53,7 @@ class ModelsTest {
         FeedItemConnections::class,
         FeedList::class,
         Folder::class,
+        FolderAncestorConnection::class,
         FolderInteractions::class,
         FolderList::class,
         FolderConnections::class,
