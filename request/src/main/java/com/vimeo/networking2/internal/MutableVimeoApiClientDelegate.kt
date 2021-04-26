@@ -252,8 +252,8 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback
     )
 
-    override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest =
-        client.deleteFolder(folder, callback)
+    override fun deleteFolder(folder: Folder, shouldDeleteClips: Boolean, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.deleteFolder(folder, shouldDeleteClips, callback)
 
     override fun editFolder(
         uri: String,

@@ -212,6 +212,14 @@ internal interface VimeoService {
         @Field(SLACK_USER_PREF) slackUserPref: SlackUserPreferenceType?
     ): VimeoCall<Folder>
 
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", hasBody = true)
+    fun deleteFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Field(SHOULD_DELETE_CLIPS) shouldDeleteClips: Boolean
+    ): VimeoCall<Unit>
+
     @PUT("{$FOLDER_URI}/{$VIDEO_URI}")
     fun addToFolder(
         @Header(AUTHORIZATION) authorization: String,
@@ -633,6 +641,7 @@ internal interface VimeoService {
         private const val FOLDER_URI = "folderUri"
         private const val FIELD_FILTER = "fields"
         private const val PARENT_FOLDER_ID = "parent_folder_id"
+        private const val SHOULD_DELETE_CLIPS = "should_delete_clips"
         private const val SLACK_WEBHOOK_ID = "slack_incoming_webhooks_id"
         private const val SLACK_LANGUAGE_PREF = "slack_language_preference"
         private const val SLACK_USER_PREF = "slack_user_preferences"

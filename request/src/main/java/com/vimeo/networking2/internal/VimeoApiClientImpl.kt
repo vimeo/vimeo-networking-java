@@ -378,9 +378,13 @@ internal class VimeoApiClientImpl(
         ).enqueue(callback)
     }
 
-    override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest {
+    override fun deleteFolder(
+        folder: Folder,
+        shouldDeleteClips: Boolean,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
         val uri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return deleteContent(uri, emptyMap(), callback)
+        return vimeoService.deleteFolder(authHeader, uri, shouldDeleteClips).enqueue(callback)
     }
 
     override fun editFolder(

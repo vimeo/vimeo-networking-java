@@ -475,12 +475,15 @@ interface VimeoApiClient {
      * Delete a folder.
      *
      * @param folder The folder being deleted.
+     * @param shouldDeleteClips True if the videos in the folder should also be deleted, false if they should not and
+     * instead should be moved to the root folder.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteFolder(
         folder: Folder,
+        shouldDeleteClips: Boolean,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
