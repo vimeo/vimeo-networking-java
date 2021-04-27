@@ -332,6 +332,7 @@ internal class VimeoApiClientImpl(
 
     override fun createFolder(
         uri: String,
+        parentFolderId: String?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -343,6 +344,7 @@ internal class VimeoApiClientImpl(
         return vimeoService.createFolder(
             authHeader,
             safeUri,
+            parentFolderId,
             name,
             privacy,
             slackWebhookId,
@@ -353,6 +355,7 @@ internal class VimeoApiClientImpl(
 
     override fun createFolder(
         user: User,
+        parentFolder: Folder?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -362,9 +365,11 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = user.metadata?.connections?.folders?.uri.notEmpty()
             ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
+        val parentFolderId = parentFolder?.uri?.lastPathSegment()
         return vimeoService.createFolder(
             authHeader,
             safeUri,
+            parentFolderId,
             name,
             privacy,
             slackWebhookId,
@@ -373,9 +378,13 @@ internal class VimeoApiClientImpl(
         ).enqueue(callback)
     }
 
-    override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest {
+    override fun deleteFolder(
+        folder: Folder,
+        shouldDeleteClips: Boolean,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
         val uri = folder.uri.notEmpty() ?: return localVimeoCallAdapter.enqueueEmptyUri(callback)
-        return deleteContent(uri, emptyMap(), callback)
+        return vimeoService.deleteFolder(authHeader, uri, shouldDeleteClips).enqueue(callback)
     }
 
     override fun editFolder(
@@ -1254,6 +1263,8 @@ internal class VimeoApiClientImpl(
             ))
         ), callback)
     }
+
+    private fun String.lastPathSegment(): String = this.substringAfterLast(delimiter = '/')
 
     /**
      * @return The [String] if it is not empty or blank, otherwise returns null.

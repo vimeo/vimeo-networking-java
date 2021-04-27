@@ -7,6 +7,7 @@ import kotlin.reflect.full.primaryConstructor
 class ModelsTest {
 
     private val models = listOf(
+        AddSubfolderInteraction::class,
         Album::class,
         AlbumConnections::class,
         AlbumEmbed::class,
@@ -39,6 +40,7 @@ class ModelsTest {
         BasicConnection::class,
         Credit::class,
         DashVideoFile::class,
+        DefaultConnection::class,
         Document::class,
         Drm::class,
         Email::class,
@@ -51,6 +53,8 @@ class ModelsTest {
         FeedItemConnections::class,
         FeedList::class,
         Folder::class,
+        FolderAncestorConnection::class,
+        FolderInteractions::class,
         FolderList::class,
         FolderConnections::class,
         FolderPrivacy::class,

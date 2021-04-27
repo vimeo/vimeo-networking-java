@@ -153,24 +153,6 @@
     <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * Video associated with ths feed item. */ @Json(name = "clip") val video: Video? = null</ID>
     <ID>UndocumentedPublicProperty:FeedItemConnections.kt$FeedItemConnections$/** * A list of resource URIs related to the activity. */ @Json(name = "related") val related: BasicConnection? = null</ID>
     <ID>UndocumentedPublicProperty:FileTransferPage.kt$FileTransferPage$/** * The link to the file transfer page. */ @Internal @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The Slack integration channel for the folder. */ @Json(name = "slack_integration_channel") val slackIntegrationChannel: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The Slack webhook ID for the folder. */ @Json(name = "slack_incoming_webhooks_id") val slackIncomingWebhooksId: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The [FolderPrivacy] that defines the public visibility of the folder. */ @Json(name = "privacy") val privacy: FolderPrivacy? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The folder's canonical relative URI. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The folder's metadata. */ @Json(name = "metadata") val metadata: Metadata&lt;FolderConnections, BasicInteraction&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The folder's owner. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The language preference for Slack notifications about the folder. * @see slackLanguagePreferenceType */ @Json(name = "slack_language_preference") val slackLanguagePreference: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The link to the folder on Vimeo. */ @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The name of the folder. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The resource key string of the folder. */ @Json(name = "resource_key") val resourceKey: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The time in ISO 8601 format when a user last performed an action on the folder. */ @Json(name = "last_user_action_event_date") val lastUserActionEventDate: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The time in ISO 8601 format when the folder was created. */ @Json(name = "created_time") val createdDate: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * The time in ISO 8601 format when the folder was last modified. */ @Json(name = "modified_time") val lastModifiedDate: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Folder.kt$Folder$/** * User preferences for Slack notifications about the folder. * @see slackUserPreferenceType */ @Json(name = "slack_user_preferences") val slackUserPreference: String? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderConnections.kt$FolderConnections$/** * A basic connection object indicating how to return all the project items in the folder. */ @Json(name = "items") val items: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderConnections.kt$FolderConnections$/** * A basic connection object indicating how to return all the sub-folders in the folder. */ @Json(name = "folders") val folders: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderConnections.kt$FolderConnections$/** * A basic connection object indicating how to return all the videos in the folder. */ @Json(name = "videos") val videos: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderConnections.kt$FolderConnections$/** * Information about the authenticated user's team. */ @Json(name = "team_members") val teamMembers: BasicConnection? = null</ID>
     <ID>UndocumentedPublicProperty:FolderPrivacy.kt$FolderPrivacy$/** * Who can view the folder. * @see FolderPrivacy.viewPrivacyType */ @Json(name = "view") val viewPrivacy: String? = null</ID>
     <ID>UndocumentedPublicProperty:Followable.kt$Followable$val metadata: Metadata&lt;*, out FollowableInteractions&gt;?</ID>
     <ID>UndocumentedPublicProperty:Gcs.kt$Gcs$/** * Expected ending byte range for the current upload_link. */ @Internal @Json(name = "end_byte") val endByte: Long? = null</ID>
@@ -494,19 +476,6 @@
     <ID>UndocumentedPublicProperty:TeamBranding.kt$TeamBranding$/** * The hexadecimal color code for the accent color of the team. */ @Json(name = "accent_color") val acccentColor: String? = null</ID>
     <ID>UndocumentedPublicProperty:TeamBranding.kt$TeamBranding$/** * The name of the team. */ @Json(name = "team_name") val name: String? = null</ID>
     <ID>UndocumentedPublicProperty:TeamBranding.kt$TeamBranding$/** * The team's URI. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * A localized string for display purposes that names the user's role on the team. * @see role */ @Json(name = "role") val localizedRole: String? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The URI to independently request this team membership information. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The URL for the invited user to join the team. * The value of this field is null if the invited user has already joined. * (e.g. https://vimeo.com/user/seat?code=e7c71ae7f4dc5d71a3bceb4d1d9e) */ @Json(name = "invite_url") val inviteUrl: String? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The resource key that identifies team membership. */ @Json(name = "resource_key") val resourceKey: String? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The status of the user's team membership. * @see TeamMembership.teamInviteStatusType */ @Json(name = "status") val teamInviteStatus: String? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The team member's email. */ @Json(name = "email") val email: String? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The team member. The value of this field is null if the user hasn't joined the team yet. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The team membership metadata. */ @Json(name = "metadata") val metadata: Metadata&lt;TeamMembershipConnections, BasicInteraction&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The time in ISO 8601 format at which the invite was accepted. */ @Json(name = "joined_time") val joinedTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The time in ISO 8601 format at which the invite was sent. */ @Json(name = "created_time") val createdTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The time in ISO 8601 format at which the team membership was last modified. */ @Json(name = "modified_time") val modifiedTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * The user's role on the team. * @see TeamMembership.roleType */ @Json(name = "permission_level") val role: String? = null</ID>
-    <ID>UndocumentedPublicProperty:TeamMembership.kt$TeamMembership$/** * Whether the team member has folder access. */ @Json(name = "has_folder_access") val hasFolderAccess: Boolean? = null</ID>
     <ID>UndocumentedPublicProperty:TeamMembershipConnections.kt$TeamMembershipConnections$/** * A connection object indicating how to get the owner of this user. */ @Json(name = "owner") val owner: TeamOwnerConnection? = null</ID>
     <ID>UndocumentedPublicProperty:TeamOwnerConnection.kt$TeamOwnerConnection$/** * The team owner's display name. */ @Json(name = "display_name") val displayName: String? = null</ID>
     <ID>UndocumentedPublicProperty:TeamOwnerConnection.kt$TeamOwnerConnection$/** * The total number of owners on this connection. */ @Json(name = "total") val total: Int? = null</ID>
