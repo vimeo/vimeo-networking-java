@@ -13,7 +13,9 @@ class GenerateModelsPlugin : Plugin<Project> {
 
         project.pluginManager.withPlugin(KOTLIN_ANDROID) {
             registerTask(project, extension)
-            project.tasks.findByName(PRE_BUILD)?.dependsOn(GENERATE_MODELS)
+            project.afterEvaluate {
+                project.tasks.findByName(PRE_BUILD)?.dependsOn(project.tasks.findByName(GENERATE_MODELS))
+            }
         }
 
         project.pluginManager.withPlugin(KOTLIN_JVM) {
