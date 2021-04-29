@@ -214,6 +214,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun createFolder(
         uri: String,
+        parentFolderId: String?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -222,6 +223,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(
         uri,
+        parentFolderId,
         name,
         privacy,
         slackWebhookId,
@@ -232,6 +234,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun createFolder(
         user: User,
+        parentFolder: Folder?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -240,6 +243,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(
         user,
+        parentFolder,
         name,
         privacy,
         slackWebhookId,
@@ -248,8 +252,8 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback
     )
 
-    override fun deleteFolder(folder: Folder, callback: VimeoCallback<Unit>): VimeoRequest =
-        client.deleteFolder(folder, callback)
+    override fun deleteFolder(folder: Folder, shouldDeleteClips: Boolean, callback: VimeoCallback<Unit>): VimeoRequest =
+        client.deleteFolder(folder, shouldDeleteClips, callback)
 
     override fun editFolder(
         uri: String,
@@ -370,6 +374,9 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<TeamMembershipList>
     ): VimeoRequest = client.fetchTeamMembersList(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun acceptTeamInvite(code: String, callback: VimeoCallback<TeamMembership>): VimeoRequest =
+        client.acceptTeamInvite(code, callback)
 
     override fun addUserToTeam(
         uri: String,
