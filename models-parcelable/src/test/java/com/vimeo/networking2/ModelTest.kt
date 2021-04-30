@@ -26,6 +26,11 @@ class ModelTest {
             .loadClasses()
 
     @Test
+    fun `models exist`() {
+        assertThat(models).isNotEmpty
+    }
+
+    @Test
     fun `models are Parcelable`() {
         models
                 .map {
