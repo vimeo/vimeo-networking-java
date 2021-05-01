@@ -22,6 +22,11 @@ class ModelTest {
             .loadClasses()
 
     @Test
+    fun `models exist`() {
+        assertThat(models).isNotEmpty
+    }
+
+    @Test
     fun `models are Serializable`() {
         models
                 .map {

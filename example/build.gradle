@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.vimeo.example"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -26,9 +26,8 @@ android {
 }
 
 dependencies {
-    implementation project(':auth')
-    implementation project(':request')
-    implementation project(':models')
+    implementation project(':models-parcelable')
+    implementation project(':vimeo-networking')
 
     implementation "androidx.appcompat:appcompat:1.2.0"
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'

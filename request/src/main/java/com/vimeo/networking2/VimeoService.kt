@@ -191,6 +191,7 @@ internal interface VimeoService {
     fun createFolder(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
+        @Field(PARENT_FOLDER_ID) parentFolderId: String?,
         @Field(PARAMETER_FOLDER_NAME) name: String,
         @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType,
         @Field(SLACK_WEBHOOK_ID) slackWebhookId: String?,
@@ -210,6 +211,14 @@ internal interface VimeoService {
         @Field(SLACK_LANGUAGE_PREF) slackLanguagePref: SlackLanguagePreferenceType?,
         @Field(SLACK_USER_PREF) slackUserPref: SlackUserPreferenceType?
     ): VimeoCall<Folder>
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", hasBody = true)
+    fun deleteFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Field(SHOULD_DELETE_CLIPS) shouldDeleteClips: Boolean
+    ): VimeoCall<Unit>
 
     @PUT("{$FOLDER_URI}/{$VIDEO_URI}")
     fun addToFolder(
@@ -495,6 +504,12 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<VideoStatus>
 
+    @PUT("users/seat/{code}")
+    fun acceptTeamInvite(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(CODE) code: String
+    ): VimeoCall<TeamMembership>
+
     @GET
     fun getTeamMembers(
         @Header(AUTHORIZATION) authorization: String,
@@ -620,10 +635,13 @@ internal interface VimeoService {
         private const val AUTHORIZATION = "Authorization"
         private const val HEADER_NO_CACHE = "Cache-Control: no-cache, no-store"
         private const val TYPE = "type"
+        private const val CODE = "code"
         private const val ALBUM_URI = "albumUri"
         private const val VIDEO_URI = "videoUri"
         private const val FOLDER_URI = "folderUri"
         private const val FIELD_FILTER = "fields"
+        private const val PARENT_FOLDER_ID = "parent_folder_id"
+        private const val SHOULD_DELETE_CLIPS = "should_delete_clips"
         private const val SLACK_WEBHOOK_ID = "slack_incoming_webhooks_id"
         private const val SLACK_LANGUAGE_PREF = "slack_language_preference"
         private const val SLACK_USER_PREF = "slack_user_preferences"
