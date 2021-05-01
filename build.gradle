@@ -50,6 +50,18 @@ allprojects {
     tasks.withType(JavaCompile) { options.fork = true }
 }
 
+def isNonStable = { String version ->
+    def unStableKeyword = ['ALPHA', 'RC', 'BETA', 'DEV', "M"].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return unStableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+    rejectVersionIf {
+        isNonStable(it.candidate.version)
+    }
+}
+
 tasks.named('wrapper') {
     distributionType = Wrapper.DistributionType.ALL
 }
