@@ -57,6 +57,6 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.assertj:assertj-core:$assertJVersion"
     testImplementation "io.github.classgraph:classgraph:$classgraphVersion"
-    testImplementation "uk.co.jemos.podam:podam:7.2.5.RELEASE"
+    testImplementation "uk.co.jemos.podam:podam:$podamVersion"
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
 }
