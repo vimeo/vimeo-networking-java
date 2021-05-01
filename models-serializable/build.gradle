@@ -21,7 +21,7 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation "junit:junit:$junitVersion"
     testImplementation 'org.assertj:assertj-core:3.18.1'
     testImplementation 'io.github.classgraph:classgraph:4.8.87'
     testImplementation 'uk.co.jemos.podam:podam:7.2.5.RELEASE'
