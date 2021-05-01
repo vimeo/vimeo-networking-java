@@ -24,6 +24,7 @@ ext {
     stagVersion = '2.6.0'
     junitVersion = '4.13.2'
     buildToolsVersion = '29.0.3'
+    classgraphVersion = '4.8.104'
 }
 
 subprojects {
