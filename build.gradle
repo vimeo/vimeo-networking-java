@@ -26,6 +26,7 @@ ext {
     buildToolsVersion = '29.0.3'
     classgraphVersion = '4.8.104'
     assertJVersion = '3.19.0'
+    robolectricVersion = "4.5.1"
 }
 
 subprojects {
