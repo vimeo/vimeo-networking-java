@@ -81,33 +81,33 @@ internal interface VimeoService {
         @Path(TYPE) type: ConnectedAppType
     ): VimeoCall<Unit>
 
-    @GET
+    @GET("{path}")
     fun getPublishJob(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<PublishJob>
 
-    @PUT
+    @PUT("{path}")
     @Headers(HEADER_NO_CACHE)
     fun putPublishJob(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Body publishData: BatchPublishToSocialMedia
     ): VimeoCall<PublishJob>
 
-    @POST
+    @POST("{path}")
     fun createAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
     ): VimeoCall<Album>
 
-    @PATCH
+    @PATCH("{path}")
     fun editAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
     ): VimeoCall<Album>
 
@@ -139,28 +139,28 @@ internal interface VimeoService {
         @Body modificationSpecs: ModifyVideoInAlbumsSpecs
     ): VimeoCall<AlbumList>
 
-    @PATCH
+    @PATCH("{path}")
     fun editVideo(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
     ): VimeoCall<Video>
 
     @FormUrlEncoded
-    @PATCH
+    @PATCH("{path}")
     fun editUser(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Field(PARAMETER_USERS_NAME) name: String?,
         @Field(PARAMETER_USERS_LOCATION) location: String?,
         @Field(PARAMETER_USERS_BIO) bio: String?
     ): VimeoCall<User>
 
     @FormUrlEncoded
-    @PATCH
+    @PATCH("{path}")
     fun editPictureCollection(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Field(PARAMETER_ACTIVE) isActive: Boolean
     ): VimeoCall<PictureCollection>
 
@@ -171,26 +171,26 @@ internal interface VimeoService {
     ): VimeoCall<NotificationSubscriptions>
 
     @FormUrlEncoded
-    @POST
+    @POST("{path}")
     fun createComment(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(PARAMETER_PASSWORD) password: String?,
         @Field(PARAMETER_COMMENT_TEXT_BODY) commentBody: String
     ): VimeoCall<Comment>
 
-    @POST
+    @POST("{path}")
     fun createPictureCollection(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String
+        @Path("path", encoded = true) uri: String
     ): VimeoCall<PictureCollection>
 
     @Suppress("LongParameterList")
     @FormUrlEncoded
-    @POST
+    @POST("{path}")
     fun createFolder(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Field(PARENT_FOLDER_ID) parentFolderId: String?,
         @Field(PARAMETER_FOLDER_NAME) name: String,
         @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType,
@@ -201,10 +201,10 @@ internal interface VimeoService {
 
     @Suppress("LongParameterList")
     @FormUrlEncoded
-    @PATCH
+    @PATCH("{path}")
     fun editFolder(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Field(PARAMETER_FOLDER_NAME) name: String,
         @Field(PARAMETER_FOLDER_PRIVACY) privacy: FolderViewPrivacyType,
         @Field(SLACK_WEBHOOK_ID) slackWebhookId: String?,
@@ -213,10 +213,10 @@ internal interface VimeoService {
     ): VimeoCall<Folder>
 
     @FormUrlEncoded
-    @HTTP(method = "DELETE", hasBody = true)
+    @HTTP(method = "DELETE", path = "{path}", hasBody = true)
     fun deleteFolder(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Field(SHOULD_DELETE_CLIPS) shouldDeleteClips: Boolean
     ): VimeoCall<Unit>
 
@@ -234,256 +234,256 @@ internal interface VimeoService {
         @Path(VIDEO_URI, encoded = true) videoUri: String
     ): VimeoCall<Unit>
 
-    @GET
+    @GET("{path}")
     fun getAppConfiguration(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<AppConfiguration>
 
-    @GET
+    @GET("{path}")
     fun getCategory(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Category>
 
-    @GET
+    @GET("{path}")
     fun getChannel(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Channel>
 
-    @GET
+    @GET("{path}")
     fun getComment(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Comment>
 
-    @GET
+    @GET("{path}")
     fun getDocument(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String
+        @Path("path", encoded = true) uri: String
     ): VimeoCall<Document>
 
-    @GET
+    @GET("{path}")
     fun getFolder(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Folder>
 
-    @GET
+    @GET("{path}")
     fun getTvodItem(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TvodItem>
 
-    @GET
+    @GET("{path}")
     fun getUser(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<User>
 
-    @GET
+    @GET("{path}")
     fun getVideo(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Video>
 
-    @GET
+    @GET("{path}")
     fun getLiveStats(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<LiveStats>
 
-    @GET
+    @GET("{path}")
     fun getProduct(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Product>
 
-    @GET
+    @GET("{path}")
     fun getAlbum(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Album>
 
-    @GET
+    @GET("{path}")
     fun getCategoryList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<CategoryList>
 
-    @GET
+    @GET("{path}")
     fun getChannelList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ChannelList>
 
-    @GET
+    @GET("{path}")
     fun getCommentList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<CommentList>
 
-    @GET
+    @GET("{path}")
     fun getFolderList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<FolderList>
 
-    @GET
+    @GET("{path}")
     fun getFeedList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<FeedList>
 
-    @GET
+    @GET("{path}")
     fun getProjectItemList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ProjectItemList>
 
-    @GET
+    @GET("{path}")
     fun getTeamList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TeamList>
 
-    @GET
+    @GET("{path}")
     fun getNotificationList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<NotificationList>
 
-    @GET
+    @GET("{path}")
     fun getProgramContentItemList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ProgrammedContentItemList>
 
-    @GET
+    @GET("{path}")
     fun getRecommendationList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<RecommendationList>
 
-    @GET
+    @GET("{path}")
     fun getSearchResultList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<SearchResultList>
 
-    @GET
+    @GET("{path}")
     fun getSeasonList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<SeasonList>
 
-    @GET
+    @GET("{path}")
     fun getTvodItemList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TvodItemList>
 
-    @GET
+    @GET("{path}")
     fun getUserList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<UserList>
 
-    @GET
+    @GET("{path}")
     fun getVideoList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<VideoList>
 
-    @GET
+    @GET("{path}")
     fun getAlbumList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<AlbumList>
 
-    @GET
+    @GET("{path}")
     fun getTextTrackList(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TextTrackList>
@@ -495,10 +495,10 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<ProductList>
 
-    @GET
+    @GET("{path}")
     fun getVideoStatus(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
@@ -510,10 +510,10 @@ internal interface VimeoService {
         @Path(CODE) code: String
     ): VimeoCall<TeamMembership>
 
-    @GET
+    @GET("{path}")
     fun getTeamMembers(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
@@ -521,105 +521,105 @@ internal interface VimeoService {
 
     @Suppress("LongParameterList")
     @FormUrlEncoded
-    @POST
+    @POST("{path}")
     fun addUserToTeam(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Field(PARAMETER_EMAIL) email: String,
         @Field(PARAMETER_PERMISSION_LEVEL) permissionLevel: TeamRoleType,
         @Field(PARAMETER_FOLDER_URI) folderUri: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<TeamMembership>
 
-    @DELETE
+    @DELETE("{path}")
     fun removeUserFromTeam(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<Unit>
 
     @FormUrlEncoded
-    @PATCH
+    @PATCH("{path}")
     fun changeUserRole(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Field(PARAMETER_ROLE) role: TeamRoleType,
         @Field(PARAMETER_FOLDER_URI) folderUri: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<TeamMembership>
 
-    @PUT
+    @PUT("{path}")
     fun grantUsersAccessToFolder(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Body usersIds: List<GrantFolderPermissionForUser>,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<Unit>
 
-    @GET
+    @GET("{path}")
     fun getUnit(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Unit>
 
-    @PUT
+    @PUT("{path}")
     fun putContentWithUserResponse(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Body bodyParams: Any
     ): VimeoCall<User>
 
-    @PUT
+    @PUT("{path}")
     fun putContentWithUserResponse(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<User>
 
-    @PUT
+    @PUT("{path}")
     fun put(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<Unit>
 
-    @PUT
+    @PUT("{path}")
     fun put(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Body bodyParams: Any
     ): VimeoCall<Unit>
 
-    @DELETE
+    @DELETE("{path}")
     fun delete(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<Unit>
 
-    @POST
+    @POST("{path}")
     fun post(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Body bodyParams: List<@JvmSuppressWildcards Any>
     ): VimeoCall<Unit>
 
-    @PATCH
+    @PATCH("{path}")
     fun emptyResponsePatch(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Body bodyParams: Any
     ): VimeoCall<Unit>
 
-    @POST
+    @POST("{path}")
     fun emptyResponsePost(
         @Header(AUTHORIZATION) authorization: String,
-        @Url uri: String,
+        @Path("path", encoded = true) uri: String,
         @Body bodyParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<Unit>
 
