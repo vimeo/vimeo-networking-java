@@ -7,6 +7,7 @@ import kotlin.reflect.full.primaryConstructor
 class ModelsTest {
 
     private val models = listOf(
+        AccessGrant::class,
         AddSubfolderInteraction::class,
         Album::class,
         AlbumConnections::class,
@@ -88,6 +89,8 @@ class ModelsTest {
         NotificationTypeCount::class,
         Paging::class,
         Periodic::class,
+        PermissionActions::class,
+        PermissionPolicy::class,
         Picture::class,
         PictureCollection::class,
         PinCodeInfo::class,
