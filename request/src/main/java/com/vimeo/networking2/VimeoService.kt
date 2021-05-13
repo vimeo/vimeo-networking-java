@@ -213,7 +213,7 @@ internal interface VimeoService {
     ): VimeoCall<Folder>
 
     @FormUrlEncoded
-    @HTTP(method = "DELETE", path = "{path}", hasBody = true)
+    @HTTP(method = "DELETE", hasBody = true)
     fun deleteFolder(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
