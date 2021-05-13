@@ -27,6 +27,7 @@ import com.vimeo.networking2.ApiConstants
 import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
 import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
+import com.vimeo.networking2.internal.interceptor.HostValidationInterceptor
 import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
 import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
@@ -62,6 +63,7 @@ object RetrofitSetupModule {
     @JvmStatic
     fun retrofit(vimeoApiConfiguration: VimeoApiConfiguration): Retrofit {
         val interceptors = mutableListOf(
+            HostValidationInterceptor(vimeoApiConfiguration),
             UserAgentHeaderInterceptor(vimeoApiConfiguration.compositeUserAgent),
             AcceptHeaderInterceptor(),
             LanguageHeaderInterceptor(vimeoApiConfiguration.locales)
