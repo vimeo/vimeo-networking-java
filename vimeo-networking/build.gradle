@@ -22,7 +22,6 @@ buildscript {
 }
 
 apply plugin: 'net.ltgt.apt'
-apply plugin: 'de.fuerstenau.buildconfig'
 apply from: '../publish.gradle'
 
 repositories {
@@ -37,13 +36,13 @@ dependencies {
     compileOnly project(path: ':models', configuration: 'default')
 }
 
-buildConfig {
-    appName = project.name
-    version = project.version
-
-    clsName = 'BuildConfig'
-    packageName = project.group
-}
+//buildConfig {
+//    appName = project.name
+//    version = project.version
+//
+//    clsName = 'BuildConfig'
+//    packageName = project.group
+//}
 
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
