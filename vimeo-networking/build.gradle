@@ -17,7 +17,6 @@ buildscript {
     }
     dependencies {
         classpath 'net.ltgt.gradle:gradle-apt-plugin:0.16'
-        classpath 'gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8'
     }
 }
 
@@ -36,13 +35,6 @@ dependencies {
     compileOnly project(path: ':models', configuration: 'default')
 }
 
-//buildConfig {
-//    appName = project.name
-//    version = project.version
-//
-//    clsName = 'BuildConfig'
-//    packageName = project.group
-//}
 
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
