@@ -10,9 +10,6 @@ dependencies {
     // Okio used by Moshi
     implementation "com.squareup.okio:okio:$okioVersion"
 
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     // Moshi
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     implementation "com.squareup.moshi:moshi:$moshiVersion"
