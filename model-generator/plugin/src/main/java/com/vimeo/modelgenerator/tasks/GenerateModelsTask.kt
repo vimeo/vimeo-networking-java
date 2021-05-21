@@ -17,6 +17,9 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.work.Incremental
 import org.gradle.work.InputChanges
+import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
+import org.jetbrains.kotlin.cli.common.messages.MessageRenderer.PLAIN_RELATIVE_PATHS
+import org.jetbrains.kotlin.cli.common.messages.PrintingMessageCollector
 import org.jetbrains.kotlin.cli.jvm.compiler.EnvironmentConfigFiles
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
 import org.jetbrains.kotlin.com.intellij.openapi.project.Project
@@ -58,7 +61,9 @@ open class GenerateModelsTask : DefaultTask() {
     private val kotlinProject: Project by lazy {
         KotlinCoreEnvironment.createForProduction(
             Disposer.newDisposable(),
-            CompilerConfiguration(),
+            CompilerConfiguration().apply {
+                put(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, PrintingMessageCollector(System.err, PLAIN_RELATIVE_PATHS, false))
+            },
             EnvironmentConfigFiles.JVM_CONFIG_FILES
         ).project
     }

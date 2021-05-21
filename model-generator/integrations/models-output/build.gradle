@@ -16,14 +16,11 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    testImplementation "junit:junit:4.13.1"
+    testImplementation "junit:junit:$junitVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "org.assertj:assertj-core:3.18.1"
-    testImplementation "io.github.classgraph:classgraph:4.8.87"
-    testImplementation "uk.co.jemos.podam:podam:7.2.5.RELEASE"
+    testImplementation "org.assertj:assertj-core:$assertJVersion"
+    testImplementation "io.github.classgraph:classgraph:$classgraphVersion"
+    testImplementation "uk.co.jemos.podam:podam:$podamVersion"
 }
 
 sourceCompatibility = "1.8"
