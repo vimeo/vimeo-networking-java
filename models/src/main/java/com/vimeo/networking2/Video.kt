@@ -54,6 +54,12 @@ data class Video(
     val description: String? = null,
 
     /**
+     * A list of downloadable files.
+     */
+    @Json(name = "download")
+    val download: List<DownloadableVideoFile>? = null,
+
+    /**
      * The video's duration in seconds.
      */
     @Json(name = "duration")
