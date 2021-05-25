@@ -11,6 +11,7 @@ import java.util.Date
 /**
  * Stores information related to relevant members of a team.
  *
+ * @param accessGrant The grant that gives the team member access to the current context.
  * @param uri The URI to independently request this team membership information.
  * @param role The user's role on the team. See [TeamMembership.roleType].
  * @param localizedRole A localized string for display purposes that names the user's role on the team. See [role].
@@ -29,6 +30,9 @@ import java.util.Date
  */
 @JsonClass(generateAdapter = true)
 data class TeamMembership(
+
+    @Json(name = "access_grant")
+    val accessGrant: AccessGrant? = null,
 
     @Json(name = "uri")
     val uri: String? = null,
