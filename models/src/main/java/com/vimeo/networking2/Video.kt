@@ -13,246 +13,169 @@ import java.util.Date
 
 /**
  * Video data.
+ *
+ * @param badge Information for the video's badge.
+ * @param categories The categories to which this video belongs.
+ * @param contentRating The content ratings of this video.
+ * @param context The context of the video's subscription, if this video is part of a subscription.
+ * @param createdTime The time in ISO 8601 format when the video was created.
+ * @param description A brief explanation of the video's content.
+ * @param download A list of downloadable files.
+ * @param duration The video's duration in seconds.
+ * @param embed Information about embedding this video.
+ * @param height The video's height in pixels.
+ * @param language The video's primary language.
+ * @param lastUserActionEventDate The time in ISO 8601 format when the user last modified the video.
+ * @param license The Creative Commons license used for the video. See [Video.licenseType].
+ * @param link The link to the video.
+ * @param live Live playback information.
+ * @param metadata The video's metadata.
+ * @param modifiedTime The time in ISO 8601 format when the video metadata was last modified.
+ * @param name The video's title.
+ * @param parentFolder Information about the folder that contains the video, or null if it is in the root directory.
+ * @param password The privacy-enabled password to watch this video. This data requires a bearer token with the private
+ * scope.
+ * @param pictures The active picture for this video.
+ * @param play The Play representation.
+ * @param privacy The video's privacy setting.
+ * @param releaseTime The time in ISO 8601 format when the video was released.
+ * @param resourceKey The resource key string of the video.
+ * @param reviewPage Information about the review page associated with this video. This data requires a bearer token
+ * with the private scope.
+ * @param fileTransferPage Information about the file transfer page associated with this video. This data requires a
+ * bearer token with the private scope.
+ * @param spatial 360 spatial data.
+ * @param stats A collection of stats associated with this video.
+ * @param status The status code for the availability of the video. This field is deprecated in favor of [upload] and
+ * [transcode]. See [Video.statusType].
+ * @param tags An array of all tags assigned to this video.
+ * @param transcode The transcode information for a video upload.
+ * @param upload The upload information for this video.
+ * @param uri The video's canonical relative URI.
+ * @param user The video owner.
+ * @param width The video's width in pixels.
+ * @param editSession Information about the Vimeo Create session of a video.
+ * @param isPlayable Whether the clip is playable.
  */
 @JsonClass(generateAdapter = true)
 data class Video(
 
-    /**
-     * Information for the video's badge.
-     */
     @Json(name = "badge")
     val badge: VideoBadge? = null,
 
-    /**
-     * The categories to which this video belongs.
-     */
     @Json(name = "categories")
     val categories: List<Category>? = null,
 
-    /**
-     * The content ratings of this video.
-     */
     @Json(name = "content_rating")
     val contentRating: List<String>? = null,
 
-    /**
-     * The context of the video's subscription, if this video is part of a subscription.
-     */
     @Json(name = "context")
     val context: VideoContext? = null,
 
-    /**
-     * The time in ISO 8601 format when the video was created.
-     */
     @Json(name = "created_time")
     val createdTime: Date? = null,
 
-    /**
-     * A brief explanation of the video's content.
-     */
     @Json(name = "description")
     val description: String? = null,
 
-    /**
-     * A list of downloadable files.
-     */
     @Json(name = "download")
     val download: List<DownloadableVideoFile>? = null,
 
-    /**
-     * The video's duration in seconds.
-     */
     @Json(name = "duration")
     val duration: Int? = null,
 
-    /**
-     * Information about embedding this video.
-     */
     @Json(name = "embed")
     val embed: VideoEmbed? = null,
 
-    /**
-     * The video's height in pixels.
-     */
     @Json(name = "height")
     val height: Int? = null,
 
-    /**
-     * The video's primary language.
-     */
     @Json(name = "language")
     val language: String? = null,
 
-    /**
-     * The time in ISO 8601 format when the user last modified the video.
-     */
     @Json(name = "last_user_action_event_date")
     val lastUserActionEventDate: Date? = null,
 
-    /**
-     * The Creative Commons license used for the video.
-     * @see Video.licenseType
-     */
     @Json(name = "license")
     val license: String? = null,
 
-    /**
-     * The link to the video.
-     */
     @Json(name = "link")
     val link: String? = null,
 
-    /**
-     * Live playback information.
-     */
     @Json(name = "live")
     val live: Live? = null,
 
-    /**
-     * The video's metadata.
-     */
     @Json(name = "metadata")
     val metadata: Metadata<VideoConnections, VideoInteractions>? = null,
 
-    /**
-     * The time in ISO 8601 format when the video metadata was last modified.
-     */
     @Json(name = "modified_time")
     val modifiedTime: Date? = null,
 
-    /**
-     * The video's title.
-     */
     @Json(name = "name")
     val name: String? = null,
 
-    /**
-     * Information about the folder that contains the video, or null if it is in the root directory.
-     */
     @Json(name = "parent_project")
     val parentFolder: Folder? = null,
 
-    /**
-     * The privacy-enabled password to watch this video.
-     * This data requires a bearer token with the private scope.
-     */
     @Internal
     @Json(name = "password")
     val password: String? = null,
 
-    /**
-     * The active picture for this video.
-     */
     @Json(name = "pictures")
     val pictures: PictureCollection? = null,
 
-    /**
-     * The Play representation.
-     */
     @Internal
     @Json(name = "play")
     val play: Play? = null,
 
-    /**
-     * The video's privacy setting.
-     */
     @Json(name = "privacy")
     val privacy: Privacy? = null,
 
-    /**
-     * The time in ISO 8601 format when the video was released.
-     */
     @Json(name = "release_time")
     val releaseTime: Date? = null,
 
-    /**
-     * The resource key string of the video.
-     */
     @Json(name = "resource_key")
     val resourceKey: String? = null,
 
-    /**
-     * Information about the review page associated with this video. This data requires a
-     * bearer token with the private scope.
-     */
     @Internal
     @Json(name = "review_page")
     val reviewPage: ReviewPage? = null,
 
-    /**
-     * Information about the file transfer page associated with this video. This data
-     * requires a bearer token with the private scope.
-     */
     @Internal
     @Json(name = "file_transfer")
     val fileTransferPage: FileTransferPage? = null,
 
-    /**
-     * 360 spatial data.
-     */
     @Json(name = "spatial")
     val spatial: Spatial? = null,
 
-    /**
-     * A collection of stats associated with this video.
-     */
     @Json(name = "stats")
     val stats: VideoStats? = null,
 
-    /**
-     * The status code for the availability of the video. This field is deprecated in favor
-     * of [upload] and [transcode].
-     * @see Video.statusType
-     */
     @Json(name = "status")
     @Deprecated("This property is deprecated in favor of upload and transcode.")
     val status: String? = null,
 
-    /**
-     * An array of all tags assigned to this video.
-     */
     @Json(name = "tags")
     val tags: List<Tag>? = null,
 
-    /**
-     * The transcode information for a video upload.
-     */
     @Json(name = "transcode")
     val transcode: Transcode? = null,
 
-    /**
-     * The upload information for this video.
-     */
     @Json(name = "upload")
     val upload: Upload? = null,
 
-    /**
-     * The video's canonical relative URI.
-     */
     @Json(name = "uri")
     val uri: String? = null,
 
-    /**
-     * The video owner.
-     */
     @Json(name = "user")
     val user: User? = null,
 
-    /**
-     * The video's width in pixels.
-     */
     @Json(name = "width")
     val width: Int? = null,
 
-    /**
-     * Information about the Vimeo Create session of a video.
-     */
     @Json(name = "edit_session")
     val editSession: EditSession? = null,
 
-    /**
-     * Whether the clip is playable.
-     */
     @Json(name = "is_playable")
     val isPlayable: Boolean? = null
 

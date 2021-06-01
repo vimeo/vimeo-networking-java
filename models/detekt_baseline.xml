@@ -547,43 +547,6 @@
     <ID>UndocumentedPublicProperty:UserInteractions.kt$UserInteractions$/** * Information related to the Twitter connected app. */ @Json(name = "twitter_connected_app") val twitterConnectedApp: ConnectedAppInteraction? = null</ID>
     <ID>UndocumentedPublicProperty:UserInteractions.kt$UserInteractions$/** * Information related to the YouTube connected app. */ @Json(name = "youtube_connected_app") val youTubeConnectedApp: ConnectedAppInteraction? = null</ID>
     <ID>UndocumentedPublicProperty:UserInteractions.kt$UserInteractions$/** * Information related to the block status of this user. */ @Json(name = "block") val block: BasicInteraction? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * 360 spatial data. */ @Json(name = "spatial") val spatial: Spatial? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * A brief explanation of the video's content. */ @Json(name = "description") val description: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * A collection of stats associated with this video. */ @Json(name = "stats") val stats: VideoStats? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * An array of all tags assigned to this video. */ @Json(name = "tags") val tags: List&lt;Tag&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * Information about embedding this video. */ @Json(name = "embed") val embed: VideoEmbed? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * Information about the Vimeo Create session of a video. */ @Json(name = "edit_session") val editSession: EditSession? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * Information about the file transfer page associated with this video. This data * requires a bearer token with the private scope. */ @Internal @Json(name = "file_transfer") val fileTransferPage: FileTransferPage? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * Information about the folder that contains the video, or null if it is in the root directory. */ @Json(name = "parent_project") val parentFolder: Folder? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * Information about the review page associated with this video. This data requires a * bearer token with the private scope. */ @Internal @Json(name = "review_page") val reviewPage: ReviewPage? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * Information for the video's badge. */ @Json(name = "badge") val badge: VideoBadge? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * Live playback information. */ @Json(name = "live") val live: Live? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The Creative Commons license used for the video. * @see Video.licenseType */ @Json(name = "license") val license: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The Play representation. */ @Internal @Json(name = "play") val play: Play? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The active picture for this video. */ @Json(name = "pictures") val pictures: PictureCollection? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The categories to which this video belongs. */ @Json(name = "categories") val categories: List&lt;Category&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The content ratings of this video. */ @Json(name = "content_rating") val contentRating: List&lt;String&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The context of the video's subscription, if this video is part of a subscription. */ @Json(name = "context") val context: VideoContext? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The link to the video. */ @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The privacy-enabled password to watch this video. * This data requires a bearer token with the private scope. */ @Internal @Json(name = "password") val password: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The resource key string of the video. */ @Json(name = "resource_key") val resourceKey: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The status code for the availability of the video. This field is deprecated in favor * of [upload] and [transcode]. * @see Video.statusType */ @Json(name = "status") @Deprecated("This property is deprecated in favor of upload and transcode.") val status: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The time in ISO 8601 format when the user last modified the video. */ @Json(name = "last_user_action_event_date") val lastUserActionEventDate: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The time in ISO 8601 format when the video metadata was last modified. */ @Json(name = "modified_time") val modifiedTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The time in ISO 8601 format when the video was created. */ @Json(name = "created_time") val createdTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The time in ISO 8601 format when the video was released. */ @Json(name = "release_time") val releaseTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The transcode information for a video upload. */ @Json(name = "transcode") val transcode: Transcode? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The upload information for this video. */ @Json(name = "upload") val upload: Upload? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video owner. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video's canonical relative URI. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video's duration in seconds. */ @Json(name = "duration") val duration: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video's height in pixels. */ @Json(name = "height") val height: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video's metadata. */ @Json(name = "metadata") val metadata: Metadata&lt;VideoConnections, VideoInteractions&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video's primary language. */ @Json(name = "language") val language: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video's privacy setting. */ @Json(name = "privacy") val privacy: Privacy? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video's title. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * The video's width in pixels. */ @Json(name = "width") val width: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:Video.kt$Video$/** * Whether the clip is playable. */ @Json(name = "is_playable") val isPlayable: Boolean? = null</ID>
     <ID>UndocumentedPublicProperty:VideoBadge.kt$VideoBadge$/** * The badge image. */ @Json(name = "pictures") val pictures: PictureCollection? = null</ID>
     <ID>UndocumentedPublicProperty:VideoBadge.kt$VideoBadge$/** * The festival that this badge represents. */ @Internal @Json(name = "festival") val festival: String? = null</ID>
     <ID>UndocumentedPublicProperty:VideoBadge.kt$VideoBadge$/** * The link for the badge */ @Json(name = "link") val link: String? = null</ID>
