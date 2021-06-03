@@ -424,7 +424,7 @@ interface VimeoApiClient {
      * Create a folder that will be used to organize videos.
      *
      * @param uri The URI of the user's folders connection.
-     * @param parentFolderId The ID of the folder in which this folder should be created, null if it should be created
+     * @param parentFolderUri The URI of the folder in which this folder should be created, null if it should be created
      * at the root.
      * @param name The name of the folder.
      * @param privacy The privacy of the folder.
@@ -437,7 +437,7 @@ interface VimeoApiClient {
      */
     fun createFolder(
         uri: String,
-        parentFolderId: String?,
+        parentFolderUri: String?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
