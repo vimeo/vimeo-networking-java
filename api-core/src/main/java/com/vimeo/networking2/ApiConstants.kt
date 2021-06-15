@@ -26,7 +26,7 @@ package com.vimeo.networking2
  */
 object ApiConstants {
 
-    const val API_VERSION = "3.4.2"
+    const val API_VERSION = "3.4.4"
 
     const val BASE_URL = "https://api.vimeo.com"
 
