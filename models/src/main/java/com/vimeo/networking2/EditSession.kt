@@ -21,8 +21,26 @@ data class EditSession(
     val isMaxResolution: Boolean? = null,
 
     /**
-     * Video session id
+     * Video session id.
      */
     @Json(name = "vsid")
-    val vsid: String? = null
+    val vsid: Int? = null,
+
+    /**
+     * The result video hash.
+     */
+    @Json(name = "result_video_hash")
+    val resultVideoHash: String? = null,
+
+    /**
+     * Whether the video has watermark.
+     */
+    @Json(name = "has_watermark")
+    val hasWatermark: Boolean? = null,
+
+    /**
+     * Whether the video is rated.
+     */
+    @Json(name = "is_rated")
+    val isRated: Boolean? = null,
 )
