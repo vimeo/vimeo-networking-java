@@ -18,5 +18,11 @@ data class EditSession(
      * Whether the current version of clip is of max resolution.
      */
     @Json(name = "is_max_resolution")
-    val isMaxResolution: Boolean? = null
+    val isMaxResolution: Boolean? = null,
+
+    /**
+     * Video session id
+     */
+    @Json(name = "vsid")
+    val vsid: String? = null
 )
