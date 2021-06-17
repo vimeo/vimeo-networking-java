@@ -2,6 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>TrailingWhitespace:EditSession.kt$com.vimeo.networking2.EditSession.kt</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The URI of the video. */ @Json(name = "uri") val uri: String</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The position of the video. */ @Json(name = "position") val position: Int?</ID>
     <ID>UndocumentedPublicProperty:AddVideoToAlbumContainer.kt$AddVideoToAlbumContainer$/** * The video that should be added. */ @Json(name = "video") val video: AddVideoToAlbum</ID>
@@ -123,8 +124,6 @@
     <ID>UndocumentedPublicProperty:DashVideoFile.kt$DashVideoFile$/** * The token used for DRM protected streams. */ @Internal @Json(name = "token") val token: String? = null</ID>
     <ID>UndocumentedPublicProperty:Document.kt$Document$/** * The partially stripped html for documents like the terms of service. */ @Json(name = "html") val html: String? = null</ID>
     <ID>UndocumentedPublicProperty:Drm.kt$Drm$/** * The video file containing the info about the DRM protected stream. */ @Json(name = "widevine") val widevine: DashVideoFile? = null</ID>
-    <ID>UndocumentedPublicProperty:EditSession.kt$EditSession$/** * Whether the current version of clip is of max resolution. */ @Json(name = "is_max_resolution") val isMaxResolution: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:EditSession.kt$EditSession$/** * Whether the video has licensed music. */ @Json(name = "is_music_licensed") val isMusicLicensed: Boolean? = null</ID>
     <ID>UndocumentedPublicProperty:Email.kt$Email$@Json(name = "email") val email: String? = null</ID>
     <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the Embed button appears in the embeddable player for this video. */ @Json(name = "embed") val embed: Boolean? = null</ID>
     <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the Fullscreen button appears in the embeddable player for this video. */ @Json(name = "fullscreen") val fullscreen: Boolean? = null</ID>

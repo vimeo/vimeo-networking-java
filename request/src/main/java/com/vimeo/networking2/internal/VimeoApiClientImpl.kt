@@ -332,7 +332,7 @@ internal class VimeoApiClientImpl(
 
     override fun createFolder(
         uri: String,
-        parentFolderId: String?,
+        parentFolderUri: String?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -344,7 +344,7 @@ internal class VimeoApiClientImpl(
         return vimeoService.createFolder(
             authHeader,
             safeUri,
-            parentFolderId,
+            parentFolderUri,
             name,
             privacy,
             slackWebhookId,
@@ -365,11 +365,10 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = user.metadata?.connections?.folders?.uri.validate()
             ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        val parentFolderId = parentFolder?.uri?.lastPathSegment()
         return vimeoService.createFolder(
             authHeader,
             safeUri,
-            parentFolderId,
+            parentFolder?.uri,
             name,
             privacy,
             slackWebhookId,
@@ -1263,8 +1262,6 @@ internal class VimeoApiClientImpl(
             ))
         ), callback)
     }
-
-    private fun String.lastPathSegment(): String = this.substringAfterLast(delimiter = '/')
 
     /**
      * @return The [String] if it is not empty or blank and does not contain a path traversal, otherwise returns null.
