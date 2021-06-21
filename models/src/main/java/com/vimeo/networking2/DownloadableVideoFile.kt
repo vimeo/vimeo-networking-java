@@ -1,4 +1,4 @@
-@file:JvmName("DownloadVideoFileUtils")
+@file:JvmName("DownloadableVideoFileUtils")
 
 package com.vimeo.networking2
 
