@@ -1,4 +1,4 @@
-@file:JvmName("CinemaUtils")
+@file:JvmName("ProgrammedContentItemUtils")
 
 package com.vimeo.networking2
 

@@ -4,7 +4,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.common.VideoFile
+import com.vimeo.networking2.common.LoggingVideoFile
 import com.vimeo.networking2.enums.VideoQualityType
 import com.vimeo.networking2.enums.VideoSourceType
 import com.vimeo.networking2.enums.asEnum
@@ -13,6 +13,7 @@ import java.util.Date
 /**
  * The representation of a video file that could be one of a number of types.
  */
+@Deprecated("Use DownloadableVideoFile instead")
 @JsonClass(generateAdapter = true)
 data class ProgressiveVideoFile(
 
@@ -81,7 +82,7 @@ data class ProgressiveVideoFile(
     @Json(name = "width")
     val width: Int? = null
 
-) : VideoFile
+) : LoggingVideoFile
 
 /**
  * @see ProgressiveVideoFile.videoQuality

@@ -16,9 +16,4 @@ interface VideoFile {
      * The time in ISO 8601 format when the link to the playable file expires.
      */
     val linkExpirationTime: Date?
-
-    /**
-     * The URL for logging events.
-     */
-    val log: String?
 }

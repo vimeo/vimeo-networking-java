@@ -10,57 +10,44 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Play information.
+ *
+ * @param dash The DASH video file.
+ * @param hls HLS video files.
+ * @param progress The play progress in seconds.
+ * @param progressive Progressive files.
+ * @param source The source file of the video.
+ * @param videoPlayStatus The play status of the video. See [Play.videoPlayStatusType].
+ * @param drm The DRM play data for a protected stream.
  */
 @Internal
 @JsonClass(generateAdapter = true)
 data class Play(
 
-    /**
-     * The DASH video file.
-     */
     @Internal
     @Json(name = "dash")
     val dash: DashVideoFile? = null,
 
-    /**
-     * HLS video files.
-     */
     @Internal
     @Json(name = "hls")
     val hls: HlsVideoFile? = null,
 
-    /**
-     * The play progress in seconds.
-     */
     @Internal
     @Json(name = "progress")
     val progress: PlayProgress? = null,
 
-    /**
-     * Progressive files.
-     */
+    @Deprecated("Use the download property on a Video instead")
     @Internal
     @Json(name = "progressive")
     val progressive: List<ProgressiveVideoFile>? = null,
 
-    /**
-     * The source file of the video.
-     */
     @Internal
     @Json(name = "source")
     val source: List<VideoSourceFile>? = null,
 
-    /**
-     * The play status of the video.
-     * @see Play.videoPlayStatusType
-     */
     @Internal
     @Json(name = "status")
     val videoPlayStatus: String? = null,
 
-    /**
-     * The DRM play data for a protected stream.
-     */
     @Internal
     @Json(name = "drm")
     val drm: Drm? = null

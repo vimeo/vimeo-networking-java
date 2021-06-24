@@ -3,7 +3,7 @@ package com.vimeo.networking2
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
-import com.vimeo.networking2.common.VideoFile
+import com.vimeo.networking2.common.LoggingVideoFile
 import java.util.Date
 
 /**
@@ -44,4 +44,4 @@ data class DashVideoFile(
     @Internal
     @Json(name = "license_link")
     val licenseLink: String? = null
-) : VideoFile
+) : LoggingVideoFile

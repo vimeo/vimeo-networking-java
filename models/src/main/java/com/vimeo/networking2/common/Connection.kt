@@ -19,6 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+@file:JvmName("ConnectionUtils")
+
 package com.vimeo.networking2.common
 
 import com.vimeo.networking2.enums.ApiOptionsType

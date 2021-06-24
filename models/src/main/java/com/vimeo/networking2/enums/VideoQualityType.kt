@@ -13,5 +13,7 @@ enum class VideoQualityType(override val value: String?) : StringValue {
 
     SD("sd"),
 
+    SOURCE("source"),
+
     UNKNOWN(null)
 }
