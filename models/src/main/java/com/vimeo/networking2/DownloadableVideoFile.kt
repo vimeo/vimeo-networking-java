@@ -54,7 +54,7 @@ data class DownloadableVideoFile(
     override val linkExpirationTime: Date? = null,
 
     @Json(name = "fps")
-    val fps: Float? = null,
+    val fps: Double? = null,
 
     @Json(name = "type")
     val rawType: String? = null
