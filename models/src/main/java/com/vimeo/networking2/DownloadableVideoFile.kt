@@ -69,7 +69,7 @@ val DownloadableVideoFile.qualityType: VideoQualityType
 
 /**
  * @see DownloadableVideoFile.rawType
- * @see VideoQualityType
+ * @see VideoSourceType
  */
 val DownloadableVideoFile.type: VideoSourceType
     get() = rawType.asEnum(VideoSourceType.UNKNOWN)
