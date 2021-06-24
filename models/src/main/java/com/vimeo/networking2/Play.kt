@@ -39,6 +39,7 @@ data class Play(
     /**
      * Progressive files.
      */
+    @Deprecated("Use the download property on a Video instead")
     @Internal
     @Json(name = "progressive")
     val progressive: List<ProgressiveVideoFile>? = null,

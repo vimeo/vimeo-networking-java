@@ -13,6 +13,7 @@ import java.util.Date
 /**
  * The representation of a video file that could be one of a number of types.
  */
+@Deprecated("Use DownloadableVideoFile instead")
 @JsonClass(generateAdapter = true)
 data class ProgressiveVideoFile(
 
