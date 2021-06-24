@@ -22,8 +22,12 @@ import java.util.Date
  * @param description A brief explanation of the video's content.
  * @param download A list of downloadable files.
  * @param duration The video's duration in seconds.
+ * @param editSession Information about the Vimeo Create session of a video.
  * @param embed Information about embedding this video.
+ * @param fileTransferPage Information about the file transfer page associated with this video. This data requires a
+ * bearer token with the private scope.
  * @param height The video's height in pixels.
+ * @param isPlayable Whether the clip is playable.
  * @param language The video's primary language.
  * @param lastUserActionEventDate The time in ISO 8601 format when the user last modified the video.
  * @param license The Creative Commons license used for the video. See [Video.licenseType].
@@ -42,8 +46,6 @@ import java.util.Date
  * @param resourceKey The resource key string of the video.
  * @param reviewPage Information about the review page associated with this video. This data requires a bearer token
  * with the private scope.
- * @param fileTransferPage Information about the file transfer page associated with this video. This data requires a
- * bearer token with the private scope.
  * @param spatial 360 spatial data.
  * @param stats A collection of stats associated with this video.
  * @param status The status code for the availability of the video. This field is deprecated in favor of [upload] and
@@ -54,8 +56,6 @@ import java.util.Date
  * @param uri The video's canonical relative URI.
  * @param user The video owner.
  * @param width The video's width in pixels.
- * @param editSession Information about the Vimeo Create session of a video.
- * @param isPlayable Whether the clip is playable.
  */
 @JsonClass(generateAdapter = true)
 data class Video(
@@ -84,11 +84,21 @@ data class Video(
     @Json(name = "duration")
     val duration: Int? = null,
 
+    @Json(name = "edit_session")
+    val editSession: EditSession? = null,
+
     @Json(name = "embed")
     val embed: VideoEmbed? = null,
 
+    @Internal
+    @Json(name = "file_transfer")
+    val fileTransferPage: FileTransferPage? = null,
+
     @Json(name = "height")
     val height: Int? = null,
+
+    @Json(name = "is_playable")
+    val isPlayable: Boolean? = null,
 
     @Json(name = "language")
     val language: String? = null,
@@ -141,10 +151,6 @@ data class Video(
     @Json(name = "review_page")
     val reviewPage: ReviewPage? = null,
 
-    @Internal
-    @Json(name = "file_transfer")
-    val fileTransferPage: FileTransferPage? = null,
-
     @Json(name = "spatial")
     val spatial: Spatial? = null,
 
@@ -171,13 +177,7 @@ data class Video(
     val user: User? = null,
 
     @Json(name = "width")
-    val width: Int? = null,
-
-    @Json(name = "edit_session")
-    val editSession: EditSession? = null,
-
-    @Json(name = "is_playable")
-    val isPlayable: Boolean? = null
+    val width: Int? = null
 
 ) : Entity {
 
