@@ -158,7 +158,7 @@ onError = {
 @Override
 public void onError(@NotNull final VimeoResponse.Error error) {
   if (error instanceof VimeoResponse.Error.Api) {
-    final Api apiError = (Api) error;
+    final VimeoResponse.Error.Api apiError = (VimeoResponse.Error.Api) error;
     final ApiError reason = apiError.getReason();
     println(reason);
   }
@@ -186,7 +186,7 @@ onError = {
 @Override
 public void onError(@NotNull final VimeoResponse.Error error) {
   if (error instanceof VimeoResponse.Error.Exception) {
-    final VimeoResponse.Error.Exception exception = (Exception) error;
+    final VimeoResponse.Error.Exception exception = (VimeoResponse.Error.Exception) error;
     println(exception.getThrowable());
   }
 }
@@ -196,7 +196,30 @@ You can then extract information from the throwable that is returned to determin
 
 ### Invalid Token Error
 
-TODO
+Invalid token errors should be rare, but can occur in a couple scenarios. The first scenario would happen if the access token you are using was revoked by the API. This could happen if the access token got flagged for spam. Another case that this would happen in is if you initialized the SDK with the wrong token or if you accidentally deleted the token on the API website before you used it.
+
+```kotlin
+// Kotlin
+onError = {
+  if (it is VimeoResponse.Error.InvalidToken) {
+    println(it.reason)
+  }
+}
+```
+
+```java
+// Java
+@Override
+public void onError(@NotNull final VimeoResponse.Error.InvalidToken error) {
+  if (error instanceof VimeoResponse.Error.InvalidToken) {
+    final VimeoResponse.Error.InvalidToken invalidToken = (VimeoResponse.Error.InvalidToken) error;
+    final ApiError reason = invalidToken.getReason();
+    println(reason);
+  }
+}
+```
+
+The reason for the invalid token can then be used to determine what the origin of the problem is.
 
 ### Unknown Error
 
