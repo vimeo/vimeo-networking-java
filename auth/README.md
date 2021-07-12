@@ -140,106 +140,89 @@ final VimeoApiClient vimeoApiClient = VimeoApiClient.create(vimeoApiConfiguratio
 
 ## Errors
 
-__API Error__
+### API Error
 
-If you provide an invalid client id and secret and attempt to make a request, the SDK will notify you on error. Error info is provided to you in the class [ApiError](../models/src/main/java/com/vimeo/networking2/ApiError.kt). Here is how you could get info on the error:
+If you provide an invalid client ID and secret and attempt to make a request, the SDK will notify you with an error. Error info is provided in the class [ApiError](../models/src/main/java/com/vimeo/networking2/ApiError.kt). If the reason for an error was a response from the API, you can obtain the reason from the response as follows within the `VimeoCallback`.
 
 ```kotlin
-
 // Kotlin
-override fun onError(error: VimeoResponse.Error) {
-    if (error is VimeoResponse.Error.Api) {
-        error.reason.errorCode
-        error.reason.errorMessage
-        error.reason.invalidParameters
-    }
+onError = {
+  if (it is VimeoResponse.Error.Api) {
+    println(it.reason)
+  }
 }
 ```
 
 ```java
-
 // Java
-authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
-    @Override
- public void onError(@NotNull Error error) {
-        if (error instanceof Error.Api) {
-            Api apiError = (Api) error;
-            ApiError reason = apiError.getReason();
-            reason.getErrorCode();
-            reason.getErrorMessage();
-            reason.getInvalidParameters();
-        }
-    }
-});
-
+@Override
+public void onError(@NotNull final VimeoResponse.Error error) {
+  if (error instanceof VimeoResponse.Error.Api) {
+    final Api apiError = (Api) error;
+    final ApiError reason = apiError.getReason();
+    println(reason);
+  }
+}
 ```
 
-The error message and code could be extracted from the `ApiError` object.
+The error message and code can then be extracted from the `ApiError` object to help you determine what went wrong.
 
 ### Exception
 
-If any exception occurs during your request, you will also be informed through the `onError` callback method. A exception may occur if you don't have a connection and you had attempted to make a request.
+If any exception occurs during your request, you will also be informed through the `onError` callback method. For example, an exception may occur if you don't have a network connection and you attempt to make a request.
 
 
 ```kotlin
-
 // Kotlin
-override fun onError(error: VimeoResponse.Error) {
-    if (error is VimeoResponse.Error.Exception) {
-        error.exception.developerMessage
-        error.exception.printStackTrace()
-    }
-}
-
-```
-
-```java
-
-// Java
-authenticator.clientCredentials(new VimeoCallback<BasicAccessToken>() {
-    @Override
- public void onError(@NotNull Error error) {
-        if (error instanceof Error.Exception) {
-            Error.Exception exception = ((Exception) error)
-            exception.getThrowable();
-            exception.getThrowable().printStackTrace();
-        }
-    }
-});
-
-```
-
-You could extract information from the throwable that is returned to you.
-
-### Generic Error
-
-A generic error could occur if the SDK failed to parse the response from the API or the API didn't return a response at all. The request returned an HTTP status code and no exceptions were thrown.
-
-```kotlin
-
-// Kotlin
-override fun onError(error: VimeoResponse.Error) {
-    if (error is Error.Generic) {
-        error.generic.httpStatusCode
-        error.generic.rawResponse
-    }
+onError = {
+  if (it is VimeoResponse.Error.Exception) {
+    println(it.throwable)
+  }
 }
 ```
 
 ```java
-
 // Java
 @Override
-public void onError(@NotNull Error error) {
-    if (error instanceof Error.Generic) {
-        Error.Generic generic = ((Generic) error);
-        generic.getHttpStatusCode();
-        generic.getRawResponse();
-    }
+public void onError(@NotNull final VimeoResponse.Error error) {
+  if (error instanceof VimeoResponse.Error.Exception) {
+    final VimeoResponse.Error.Exception exception = (Exception) error;
+    println(exception.getThrowable());
+  }
 }
 ```
 
-The HTTP status code and any possible data returned from the API can extracted from the `VimeoResponse.GenericError` class.
+You can then extract information from the throwable that is returned to determine its cause.
+
+### Invalid Token Error
+
+TODO
+
+### Unknown Error
+
+An unknown error can occur if the SDK fails to parse the response from the API or the API doesn't return a response at all. The API may have responded with an HTTP status code and no exceptions were thrown, but the SDK was unable to find a response that it expected. This sort of exception should be extremely rare, and any that you experience should be reported, as they are likely caused by a bug in the SDK or in the API itself.
+
+```kotlin
+// Kotlin
+onError = {
+  if (error is VimeoResponse.Error.Unknown) {
+    println(error.rawResponse)
+  }
+}
+```
+
+```java
+// Java
+@Override
+public void onError(@NotNull VimeoResponse.Error.Unknown error) {
+  if (error instanceof VimeoResponse.Error.Unknown) {
+    final VimeoResponse.Error.Unknown unknown = (Unknown) error;
+    println(unknown.getRawResponse());
+  }
+}
+```
+
+The HTTP status code and any possible data returned from the API can extracted from the `VimeoResponse.Error.Unknown` class.
 
 
 ## Certificate Pinning
