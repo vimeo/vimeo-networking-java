@@ -41,7 +41,7 @@ subprojects {
     apply from: "../detekt_configuration.gradle"
 
     dependencies {
-        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.0")
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
     }
 
     tasks.register("detektFormat", io.gitlab.arturbosch.detekt.Detekt) {
