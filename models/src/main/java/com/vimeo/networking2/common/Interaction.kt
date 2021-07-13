@@ -23,7 +23,6 @@ interface Interaction {
      * The API URI that resolves to the connection data.
      */
     val uri: String?
-
 }
 
 /**

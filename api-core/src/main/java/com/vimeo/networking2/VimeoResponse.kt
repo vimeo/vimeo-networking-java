@@ -121,5 +121,4 @@ sealed class VimeoResponse<out T>(open val httpStatusCode: Int) {
 
         private const val NA = "N/A"
     }
-
 }

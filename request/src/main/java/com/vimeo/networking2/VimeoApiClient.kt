@@ -22,13 +22,29 @@
 package com.vimeo.networking2
 
 import com.vimeo.networking2.common.Followable
-import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.config.RetrofitSetupModule
-import com.vimeo.networking2.enums.*
+import com.vimeo.networking2.config.VimeoApiConfiguration
+import com.vimeo.networking2.enums.CommentPrivacyType
+import com.vimeo.networking2.enums.ConnectedAppType
+import com.vimeo.networking2.enums.EmbedPrivacyType
+import com.vimeo.networking2.enums.FolderViewPrivacyType
+import com.vimeo.networking2.enums.NotificationType
+import com.vimeo.networking2.enums.SlackLanguagePreferenceType
+import com.vimeo.networking2.enums.SlackUserPreferenceType
+import com.vimeo.networking2.enums.TeamRoleType
+import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
 import com.vimeo.networking2.internal.VimeoApiClientImpl
-import com.vimeo.networking2.params.*
+import com.vimeo.networking2.params.BatchPublishToSocialMedia
+import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
+import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.SearchDateType
+import com.vimeo.networking2.params.SearchDurationType
+import com.vimeo.networking2.params.SearchFacetType
+import com.vimeo.networking2.params.SearchFilterType
+import com.vimeo.networking2.params.SearchSortDirectionType
+import com.vimeo.networking2.params.SearchSortType
 import okhttp3.CacheControl
 import java.util.concurrent.Executor
 
@@ -1925,5 +1941,4 @@ interface VimeoApiClient {
             )
         }
     }
-
 }

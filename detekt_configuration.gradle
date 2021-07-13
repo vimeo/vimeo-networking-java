@@ -1,5 +1,5 @@
 detekt {
-    toolVersion = "1.14.2"
+    toolVersion = "1.17.1"
     input = files("$projectDir/src/main/java")
     config = files("$rootDir/detekt.yml")
     baseline = file("$projectDir/detekt_baseline.xml")

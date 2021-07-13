@@ -45,5 +45,3 @@ data class SubscriptionInteraction(
  */
 val SubscriptionInteraction.streamAccessType: StreamAccessType
     get() = streamAccess.asEnum(StreamAccessType.UNKNOWN)
-
-

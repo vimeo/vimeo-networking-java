@@ -22,5 +22,4 @@ data class LiveConfiguration(
     @Json(name = "heartbeat")
     val heartbeat: LiveHeartbeatConfiguration? = null
 
-
 )

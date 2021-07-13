@@ -29,5 +29,4 @@ sealed class AuthenticationMethod(val basicAuthHeader: String) {
         clientSecret: String,
         val scopes: Scopes
     ) : AuthenticationMethod(Credentials.basic(clientId, clientSecret))
-
 }

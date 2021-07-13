@@ -39,6 +39,28 @@ subprojects {
         plugin "io.gitlab.arturbosch.detekt"
     }
     apply from: "../detekt_configuration.gradle"
+
+    dependencies {
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.0")
+    }
+
+    tasks.register("detektFormat", io.gitlab.arturbosch.detekt.Detekt) {
+        description "Reformats whole code base."
+        parallel true
+        disableDefaultRuleSets true
+        buildUponDefaultConfig true
+        autoCorrect true
+        setSource(files("$projectDir/src/main/java"))
+        include "**/*.kt"
+        include "**/*.kts"
+        exclude "**/resources/**"
+        exclude "**/build/**"
+        config.setFrom(files("$rootDir/detekt.yml"))
+        reports {
+            xml { enabled = false }
+            html { enabled = false }
+        }
+    }
 }
 
 allprojects {

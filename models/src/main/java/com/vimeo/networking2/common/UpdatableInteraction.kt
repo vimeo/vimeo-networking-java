@@ -17,5 +17,4 @@ interface UpdatableInteraction : Interaction {
      * The time when the user took the interaction on the entity.
      */
     val addedTime: Date?
-
 }

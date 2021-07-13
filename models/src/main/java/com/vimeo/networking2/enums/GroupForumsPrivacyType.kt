@@ -14,5 +14,4 @@ enum class GroupForumsPrivacyType(override val value: String?) : StringValue {
      * Unknown group forms privacy.
      */
     UNKNOWN(null)
-
 }

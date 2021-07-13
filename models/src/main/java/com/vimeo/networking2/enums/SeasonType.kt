@@ -16,5 +16,4 @@ enum class SeasonType(override val value: String?) : StringValue {
     EXTRAS("extras"),
 
     UNKNOWN(null)
-
 }

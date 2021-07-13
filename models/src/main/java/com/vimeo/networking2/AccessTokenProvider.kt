@@ -9,5 +9,4 @@ interface AccessTokenProvider {
      * Access token for making requests.
      */
     val accessToken: String
-
 }

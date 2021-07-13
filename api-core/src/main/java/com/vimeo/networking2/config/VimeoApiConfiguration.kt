@@ -26,8 +26,8 @@ import com.vimeo.networking2.ScopeType
 import com.vimeo.networking2.Scopes
 import com.vimeo.networking2.account.AccountStore
 import com.vimeo.networking2.account.InMemoryAccountStore
-import com.vimeo.networking2.logging.LogDelegate
 import com.vimeo.networking2.logging.DefaultLogDelegate
+import com.vimeo.networking2.logging.LogDelegate
 import okhttp3.Cache
 import okhttp3.Interceptor
 import java.io.File
@@ -297,7 +297,5 @@ data class VimeoApiConfiguration(
          * An unspecified user agent.
          */
         const val DEFAULT_USER_AGENT = "UNSPECIFIED"
-
     }
-
 }

@@ -13,5 +13,4 @@ interface Entity {
      * @return a [String], or null if the entity does not have an identifier.
      */
     val identifier: String?
-
 }

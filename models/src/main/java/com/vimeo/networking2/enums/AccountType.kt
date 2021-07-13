@@ -59,5 +59,4 @@ enum class AccountType(override val value: String?) : StringValue {
      * Unknown account type.
      */
     UNKNOWN(null)
-
 }

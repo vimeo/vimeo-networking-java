@@ -12,5 +12,4 @@ interface Followable {
      * The metadata for the [Entity] that contains a set of [FollowableInteractions].
      */
     val metadata: Metadata<*, out FollowableInteractions>?
-
 }

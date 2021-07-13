@@ -21,16 +21,16 @@
  */
 package com.vimeo.networking2
 
+import com.vimeo.networking2.account.AccountStore
 import com.vimeo.networking2.account.CachingAccountStore
 import com.vimeo.networking2.annotations.Internal
+import com.vimeo.networking2.config.AuthenticationMethod
 import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableAuthenticatorDelegate
-import com.vimeo.networking2.account.AccountStore
-import com.vimeo.networking2.config.AuthenticationMethod
 import com.vimeo.networking2.internal.NoOpAuthenticatorImpl
 import java.util.concurrent.Executor
 

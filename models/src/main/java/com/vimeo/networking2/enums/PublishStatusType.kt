@@ -25,5 +25,4 @@ enum class PublishStatusType(override val value: String?) : StringValue {
      * Unknown status type.
      */
     UNKNOWN(null);
-
 }
