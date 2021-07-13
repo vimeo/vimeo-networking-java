@@ -30,7 +30,6 @@ import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
 import com.vimeo.networking2.internal.VimeoApiClientImpl
 import com.vimeo.networking2.params.*
 import okhttp3.CacheControl
-import okhttp3.Credentials
 import java.util.concurrent.Executor
 
 /**
@@ -1916,13 +1915,12 @@ interface VimeoApiClient {
         ): VimeoApiClient {
             val retrofit = RetrofitSetupModule.retrofit(vimeoApiConfiguration)
             val vimeoService = retrofit.create(VimeoService::class.java)
-            val basicAuthHeader = Credentials.basic(vimeoApiConfiguration.clientId, vimeoApiConfiguration.clientSecret)
             val synchronousExecutor = Executor { it.run() }
             return VimeoApiClientImpl(
                 vimeoService,
                 authenticator,
                 vimeoApiConfiguration,
-                basicAuthHeader,
+                vimeoApiConfiguration.authenticationMethod.basicAuthHeader,
                 LocalVimeoCallAdapter(retrofit.callbackExecutor() ?: synchronousExecutor)
             )
         }

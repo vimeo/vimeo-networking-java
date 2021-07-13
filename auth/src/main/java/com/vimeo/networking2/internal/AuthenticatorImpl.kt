@@ -25,12 +25,12 @@ import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.NoOpVimeoRequest
 import com.vimeo.networking2.PinCodeInfo
-import com.vimeo.networking2.Scopes
 import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
 import com.vimeo.networking2.account.CachingAccountStore
+import com.vimeo.networking2.config.AuthenticationMethod
 import com.vimeo.networking2.internal.AuthService.Companion.AUTHORIZATION_CODE
 import com.vimeo.networking2.internal.AuthService.Companion.CODE
 import com.vimeo.networking2.internal.AuthService.Companion.DEVICE_CODE
@@ -51,19 +51,15 @@ import okhttp3.HttpUrl
  * Authentication using email, google, facebook, code grant, or pin code.
  *
  * @param authService Retrofit service for authentication.
- * @param basicAuthHeader Client id and client secret header.
- * @param clientId The client id used to generate the code grant URI.
+ * @param authenticationMethod The client credentials that will be used
  * @param redirectUri The URI to which the code grant will redirect after successful authentication.
- * @param scopes All the scopes for authentication.
  * @param accountStore The account store used to store and retrieve credentials.
  * @param localVimeoCallAdapter The adapter used to notify consumers of local errors.
  */
 internal class AuthenticatorImpl(
     private val authService: AuthService,
-    private val basicAuthHeader: String,
-    private val clientId: String,
+    private val authenticationMethod: AuthenticationMethod.ClientCredentials,
     private val redirectUri: String,
-    private val scopes: Scopes,
     private val accountStore: CachingAccountStore,
     private val localVimeoCallAdapter: LocalVimeoCallAdapter
 ) : Authenticator {
@@ -73,9 +69,9 @@ internal class AuthenticatorImpl(
 
     override fun authenticateWithClientCredentials(callback: VimeoCallback<VimeoAccount>): VimeoRequest {
         return authService.authorizeWithClientCredentialsGrant(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             grantType = GrantType.CLIENT_CREDENTIALS,
-            scopes = scopes
+            scopes = authenticationMethod.scopes
         ).enqueueWithAccountStore(callback)
     }
 
@@ -94,10 +90,10 @@ internal class AuthenticatorImpl(
             tokenParameter,
             emailParameter
         ) ?: authService.joinWithGoogle(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             username = emailParameter.validatedParameterValue,
             idToken = tokenParameter.validatedParameterValue,
-            scopes = scopes,
+            scopes = authenticationMethod.scopes,
             marketingOptIn = marketingOptIn
         ).enqueueWithAccountStore(callback)
     }
@@ -117,10 +113,10 @@ internal class AuthenticatorImpl(
             tokenParameter,
             emailParameter
         ) ?: authService.joinWithFacebook(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             username = emailParameter.validatedParameterValue,
             token = tokenParameter.validatedParameterValue,
-            scopes = scopes,
+            scopes = authenticationMethod.scopes,
             marketingOptIn = marketingOptIn
         ).enqueueWithAccountStore(callback)
     }
@@ -143,11 +139,11 @@ internal class AuthenticatorImpl(
             emailParameter,
             passwordParameter
         ) ?: authService.joinWithEmail(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             name = nameParameter.validatedParameterValue,
             email = emailParameter.validatedParameterValue,
             password = passwordParameter.validatedParameterValue,
-            scopes = scopes,
+            scopes = authenticationMethod.scopes,
             marketingOptIn = marketingOptIn
         ).enqueueWithAccountStore(callback)
     }
@@ -166,16 +162,21 @@ internal class AuthenticatorImpl(
             emailParameter,
             passwordParameter
         ) ?: authService.logInWithEmail(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             username = emailParameter.validatedParameterValue,
             password = passwordParameter.validatedParameterValue,
             grantType = GrantType.PASSWORD,
-            scopes = scopes
+            scopes = authenticationMethod.scopes
         ).enqueueWithAccountStore(callback)
     }
 
     override fun exchangeAccessToken(accessToken: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest {
-        return authService.exchangeAccessToken(basicAuthHeader, accessToken, scopes).enqueueWithAccountStore(callback)
+        return authService.exchangeAccessToken(
+            authenticationMethod.basicAuthHeader,
+            accessToken,
+            authenticationMethod.scopes
+        )
+            .enqueueWithAccountStore(callback)
     }
 
     override fun exchangeOAuth1Token(
@@ -192,11 +193,11 @@ internal class AuthenticatorImpl(
             tokenParameter,
             tokenSecretParameter
         ) ?: authService.exchangeOAuth1Token(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             grantType = GrantType.OAUTH_ONE,
             token = tokenParameter.validatedParameterValue,
             tokenSecret = tokenSecretParameter.validatedParameterValue,
-            scopes = scopes
+            scopes = authenticationMethod.scopes
         ).enqueueWithAccountStore(callback)
     }
 
@@ -214,7 +215,7 @@ internal class AuthenticatorImpl(
             authorizationCode,
             redirectUri
         ) ?: authService.authenticateWithCodeGrant(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             redirectUri = redirectUri.validatedParameterValue,
             authorizationCode = authorizationCode.validatedParameterValue,
             grantType = GrantType.AUTHORIZATION_CODE
@@ -223,10 +224,10 @@ internal class AuthenticatorImpl(
 
     override fun createCodeGrantAuthorizationUri(responseCode: String): String {
         return authService.createCodeGrantRequest(
-            clientId = clientId,
+            clientId = authenticationMethod.clientId,
             redirectUri = redirectUri,
             state = responseCode,
-            scopes = scopes
+            scopes = authenticationMethod.scopes
         ).url
     }
 
@@ -235,7 +236,7 @@ internal class AuthenticatorImpl(
 
         return localVimeoCallAdapter.validateParameters(callback, "SSO domain fetch error", domainParameter)
             ?: authService.getSsoDomain(
-                authorization = basicAuthHeader,
+                authorization = authenticationMethod.basicAuthHeader,
                 domain = domainParameter.validatedParameterValue
             ).enqueue(callback)
     }
@@ -267,7 +268,7 @@ internal class AuthenticatorImpl(
             authorizationCode,
             redirectUri
         ) ?: authService.joinWithSsoCodeGrant(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             authorizationCode = authorizationCode.validatedParameterValue,
             redirectUri = redirectUri.validatedParameterValue,
             marketingOptIn = marketingOptIn
@@ -276,9 +277,9 @@ internal class AuthenticatorImpl(
 
     override fun fetchPinCodeInfo(callback: VimeoCallback<PinCodeInfo>): VimeoRequest {
         return authService.getPinCodeInfo(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             grantType = GrantType.DEVICE,
-            scopes = scopes
+            scopes = authenticationMethod.scopes
         ).enqueue(callback)
     }
 
@@ -295,11 +296,11 @@ internal class AuthenticatorImpl(
             userCode,
             deviceCode
         ) ?: authService.logInWithPinCode(
-            authorization = basicAuthHeader,
+            authorization = authenticationMethod.basicAuthHeader,
             grantType = GrantType.DEVICE,
             pinCode = userCode.validatedParameterValue,
             deviceCode = deviceCode.validatedParameterValue,
-            scopes = scopes
+            scopes = authenticationMethod.scopes
         ).enqueueWithAccountStore(callback)
     }
 

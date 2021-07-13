@@ -37,11 +37,8 @@ import java.util.Locale
  * The configuration for the client.
  *
  * @param baseUrl The base API URL to which all requests will be made.
- * @param clientId The Vimeo API ID of the client application. Should be obtained from
- * [https://developer.vimeo.com/apps].
- * @param clientSecret The Vimeo API secret of the client application. Should be obtained from
- * [https://developer.vimeo.com/apps].
- * @param scope The [Scopes] required by the client application.
+ * @param authenticationMethod The authentication method that will be used, either fixed authentication with an access
+ * token or authentication using client credentials.
  * @param codeGrantRedirectUri The code grant redirect used for OAuth. This URL must be specified on the
  * [https://developer.vimeo.com/apps] page in order for the API to accept it. This is the URL which the API will
  * redirect back to.
@@ -66,9 +63,8 @@ import java.util.Locale
 data class VimeoApiConfiguration(
     val baseUrl: String,
 
-    val clientId: String,
-    val clientSecret: String,
-    val scope: Scopes,
+    val authenticationMethod: AuthenticationMethod,
+
     val codeGrantRedirectUri: String,
 
     val locales: List<Locale>,
@@ -98,18 +94,16 @@ data class VimeoApiConfiguration(
     internal val cache: Cache? = cacheDirectory?.let { Cache(it, cacheMaxSizeBytes) }
 
     /**
-     * The builder for the [VimeoApiConfiguration].
-     *
-     * @param clientId The Vimeo API client ID, required to construct an instance. Should be obtained from
-     * [https://developer.vimeo.com/apps].
-     * @param clientSecret The Vimeo API client secret, required to construct an instance. Should be obtained from
-     * [https://developer.vimeo.com/apps].
-     * @param scopes The permission scopes requested by the client, required to construct an instance.
+     * The builder for the [VimeoApiConfiguration], supports creation using the client credentials available to the
+     * consumer or with a fixed access token.
      */
-    class Builder(private val clientId: String, private val clientSecret: String, private val scopes: List<ScopeType>) {
+    class Builder {
+
+        private val authenticationMethod: AuthenticationMethod
+
         private var baseUrl: String = ApiConstants.BASE_URL
 
-        private var codeGrantRedirectUrl: String = "vimeo$clientId://auth"
+        private var codeGrantRedirectUrl: String = "vimeo://auth"
 
         private var locales: List<Locale> = listOf(Locale.US)
 
@@ -130,6 +124,28 @@ data class VimeoApiConfiguration(
         private var cacheDirectory: File? = null
         private var cacheMaxSizeBytes: Long = DEFAULT_CACHE_SIZE
         private var cacheMaxAgeSeconds: Int = DEFAULT_CACHE_MAX_AGE
+
+        /**
+         * @param clientId The Vimeo API client ID, required to construct an instance. Should be obtained from
+         * [https://developer.vimeo.com/apps].
+         * @param clientSecret The Vimeo API client secret, required to construct an instance. Should be obtained from
+         * [https://developer.vimeo.com/apps].
+         * @param scopes The permission scopes requested by the client, required to construct an instance.
+         */
+        constructor(clientId: String, clientSecret: String, scopes: List<ScopeType>) {
+            authenticationMethod = AuthenticationMethod.ClientCredentials(
+                clientId,
+                clientSecret,
+                Scopes(scopes.also { require(it.isNotEmpty()) { "You must specify at least one scope" } })
+            )
+        }
+
+        /**
+         * @param accessToken The access token that should be used to make requests.
+         */
+        constructor(accessToken: String) {
+            authenticationMethod = AuthenticationMethod.AccessToken(accessToken)
+        }
 
         /**
          * Specify a base URL. Defaults to [ApiConstants.BASE_URL].
@@ -244,9 +260,7 @@ data class VimeoApiConfiguration(
          */
         fun build(): VimeoApiConfiguration = VimeoApiConfiguration(
             baseUrl = baseUrl,
-            clientId = clientId,
-            clientSecret = clientSecret,
-            scope = Scopes(scopes.also { require(it.isNotEmpty()) { "You must specify at least one scope" } }),
+            authenticationMethod = authenticationMethod,
             codeGrantRedirectUri = codeGrantRedirectUrl,
             locales = locales,
             accountStore = accountStore,
