@@ -9,14 +9,12 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * The transcode information for a video upload.
+ *
+ * @param status Status code for clip availability. See [Transcode.statusType].
  */
 @JsonClass(generateAdapter = true)
 data class Transcode(
 
-    /**
-     * Status code for clip availability.
-     * @see Transcode.statusType
-     */
     @Json(name = "status")
     val status: String? = null
 

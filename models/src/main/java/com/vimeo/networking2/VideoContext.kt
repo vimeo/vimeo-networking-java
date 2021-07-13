@@ -9,20 +9,16 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Video context data.
+ *
+ * @param videoAction The contextual action. See [VideoContext.videoActionType].
+ * @param resourceType The contextual resource type.
  */
 @JsonClass(generateAdapter = true)
 data class VideoContext(
 
-    /**
-     * The contextual action.
-     * @see VideoContext.videoActionType
-     */
     @Json(name = "action")
     val videoAction: String? = null,
 
-    /**
-     * The contextual resource type.
-     */
     @Json(name = "resource_type")
     val resourceType: String? = null
 

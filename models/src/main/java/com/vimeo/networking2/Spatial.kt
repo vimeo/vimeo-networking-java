@@ -10,21 +10,16 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * The information used to properly project a 360 video in 3D space.
+ *
+ * @param spatialProjection The 360 spatial projection. See [Spatial.spatialProjectionType].
+ * @param stereoFormat The 360 stereo format. See [Spatial.stereoFormatType].
  */
 @JsonClass(generateAdapter = true)
 data class Spatial(
 
-    /**
-     * The 360 spatial projection.
-     * @see Spatial.spatialProjectionType
-     */
     @Json(name = "projection")
     val spatialProjection: String? = null,
 
-    /**
-     * The 360 stereo format.
-     * @see Spatial.stereoFormatType
-     */
     @Json(name = "stereo_format")
     val stereoFormat: String? = null
 

@@ -6,6 +6,8 @@ import com.vimeo.networking2.common.Connection
 
 /**
  * Information about the season the video is associated with.
+ *
+ * @param name The name of the season.
  */
 @JsonClass(generateAdapter = true)
 data class VideoSeasonConnection(
@@ -16,9 +18,6 @@ data class VideoSeasonConnection(
     @Json(name = "uri")
     override val uri: String? = null,
 
-    /**
-     * The name of the season.
-     */
     @Json(name = "name")
     val name: String? = null
 ) : Connection

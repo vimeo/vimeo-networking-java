@@ -5,31 +5,24 @@ import com.squareup.moshi.JsonClass
 
 /**
  * User's upload quota information.
+ *
+ * @param lifetime The number of bytes remaining in your lifetime maximum.
+ * @param periodic The number of bytes remaining in your upload quota for the current period.
+ * @param quota Quota information.
+ * @param space Space information.
  */
 @JsonClass(generateAdapter = true)
 data class UploadQuota(
 
-    /**
-     * The number of bytes remaining in your lifetime maximum.
-     */
     @Json(name = "lifetime")
     val lifetime: Lifetime? = null,
 
-    /**
-     * The number of bytes remaining in your upload quota for the current period.
-     */
     @Json(name = "periodic")
     val periodic: Periodic? = null,
 
-    /**
-     * Quota information.
-     */
     @Json(name = "quota")
     val quota: Quota? = null,
 
-    /**
-     * Space information.
-     */
     @Json(name = "space")
     val space: Space? = null
 

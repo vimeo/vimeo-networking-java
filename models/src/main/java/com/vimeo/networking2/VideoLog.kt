@@ -5,13 +5,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Video logging data.
+ *
+ * @param play The URL to record a Play logging event.
  */
 @JsonClass(generateAdapter = true)
 data class VideoLog(
 
-    /**
-     * The URL to record a Play logging event.
-     */
     @Json(name = "play")
     val play: String? = null
 

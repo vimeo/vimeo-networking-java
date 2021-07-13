@@ -11,36 +11,28 @@ import java.util.Date
 
 /**
  * Information on the subscription video action.
+ *
+ * @param drm Whether the video has DRM.
+ * @param expiresTime The time in ISO 8601 format when the subscription expires.
+ * @param purchaseTime The time in ISO 8601 format when the subscription was purchased.
+ * @param streamAccess The stream type. See [SubscriptionInteraction.streamAccessType].
  */
 @Internal
 @JsonClass(generateAdapter = true)
 data class SubscriptionInteraction(
 
-    /**
-     * Whether the video has DRM.
-     */
     @Internal
     @Json(name = "drm")
     val drm: Boolean? = null,
 
-    /**
-     * The time in ISO 8601 format when the subscription expires.
-     */
     @Internal
     @Json(name = "expires_time")
     val expiresTime: Date? = null,
 
-    /**
-     * The time in ISO 8601 format when the subscription was purchased.
-     */
     @Internal
     @Json(name = "purchase_time")
     val purchaseTime: Date? = null,
 
-    /**
-     * The stream type.
-     * @see SubscriptionInteraction.streamAccessType
-     */
     @Internal
     @Json(name = "stream")
     val streamAccess: String? = null

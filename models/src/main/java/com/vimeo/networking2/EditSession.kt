@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Information about the Vimeo Create session of a video.
- * 
+ *
  * @param isMusicLicensed Whether the video has licensed music.
  * @param isMaxResolution Whether the current version of clip is of max resolution.
  * @param vsid Video session id.
