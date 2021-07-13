@@ -5,26 +5,20 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Represents the required data for a LinkedIn post.
+ *
+ * @param pageId The LinkedIn page identifier that the video will be posted to.
+ * @param title The title of the post as it will appear on LinkedIn.
+ * @param description The description of the post as it will appear on LinkedIn.
  */
 @JsonClass(generateAdapter = true)
 data class PublishToLinkedInPost(
 
-    /**
-     * The LinkedIn page identifier that the video will be posted to.
-     */
     @Json(name = "page_id")
-    val pageID: Int,
+    val pageId: Int,
 
-    /**
-     * The title of the post as it will appear on LinkedIn.
-     */
     @Json(name = "title")
     val title: String,
 
-    /**
-     * The description of the post as it will appear on LinkedIn.
-     */
     @Json(name = "description")
     val description: String
-
 )

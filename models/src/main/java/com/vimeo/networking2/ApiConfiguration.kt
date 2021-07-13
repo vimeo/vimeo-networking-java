@@ -5,14 +5,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * API Configuration data.
+ *
+ * @param host URL to access the API.
  */
 @JsonClass(generateAdapter = true)
 data class ApiConfiguration(
 
-    /**
-     * URL to access the API.
-     */
     @Json(name = "host")
     val host: String? = null
-
 )

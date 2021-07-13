@@ -9,12 +9,12 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * The Billing information for this subscription.
+ *
+ * @param status The user's billing information status. See [Billing.statusType].
  */
 @JsonClass(generateAdapter = true)
 data class Billing(
-    /**
-     * The user's billing information status.
-     */
+
     @Json(name = "status")
     val status: String? = null
 )

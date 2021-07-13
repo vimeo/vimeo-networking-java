@@ -7,8 +7,8 @@ import com.vimeo.networking2.enums.ErrorCodeType
  * All the params that can be sent for any type of authentication. This enum contains the name
  * of the param and error information if an invalid value was given for it.
  *
- * @param errorCode         Error code in case the given value for the param is invalid.
- * @param developerMessage  Message to the client on why the param is invalid.
+ * @param errorCode Error code in case the given value for the param is invalid.
+ * @param developerMessage Message to the client on why the param is invalid.
  */
 enum class AuthParam(
     val errorCode: ErrorCodeType? = null,

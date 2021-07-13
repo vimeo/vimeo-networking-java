@@ -11,6 +11,8 @@ import java.util.Date
 
 /**
  * Follow a channel interaction.
+ *
+ * @param rawType Whether the authenticated user is a moderator or subscriber. See [ChannelFollowInteraction.rawType].
  */
 @JsonClass(generateAdapter = true)
 data class ChannelFollowInteraction(
@@ -27,10 +29,6 @@ data class ChannelFollowInteraction(
     @Json(name = "uri")
     override val uri: String? = null,
 
-    /**
-     * Whether the authenticated user is a moderator or subscriber.
-     * @see ChannelFollowInteraction.rawType
-     */
     @Json(name = "type")
     val rawType: String? = null
 

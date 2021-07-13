@@ -6,14 +6,13 @@ import com.vimeo.networking2.annotations.Internal
 
 /**
  * Various feature configuration data.
+ *
+ * @param playTracking Is play tracking enabled?
  */
 @Internal
 @JsonClass(generateAdapter = true)
 data class FeaturesConfiguration(
 
-    /**
-     * Is play tracking enabled?
-     */
     @Internal
     @Json(name = "play_tracking")
     val playTracking: Boolean? = null

@@ -5,12 +5,11 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Container for [AddVideoToAlbum].
+ *
+ * @param video The video that should be added.
  */
 @JsonClass(generateAdapter = true)
 data class AddVideoToAlbumContainer(
-    /**
-     * The video that should be added.
-     */
     @Json(name = "video")
     val video: AddVideoToAlbum
 ) {

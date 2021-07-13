@@ -3,161 +3,7 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>TrailingWhitespace:EditSession.kt$com.vimeo.networking2.EditSession.kt</ID>
-    <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The URI of the video. */ @Json(name = "uri") val uri: String</ID>
-    <ID>UndocumentedPublicProperty:AddVideoToAlbum.kt$AddVideoToAlbum$/** * The position of the video. */ @Json(name = "position") val position: Int?</ID>
-    <ID>UndocumentedPublicProperty:AddVideoToAlbumContainer.kt$AddVideoToAlbumContainer$/** * The video that should be added. */ @Json(name = "video") val video: AddVideoToAlbum</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * A brief description of the album's content. */ @Json(name = "description") val description: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * A list of 3 most recently added videos to the album. */ @Json(name = "pictures") val pictures: List&lt;PictureCollection&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * Custom logo for the album. */ @Json(name = "custom_logo") val customLogo: PictureCollection? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * Embed data for the album. */ @Json(name = "embed") val embed: AlbumEmbed? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * Hexadecimal color code for the decorative color. * For example, album videos use this color for player buttons. */ @Json(name = "brand_color") val brandColor: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * Metadata about the album. */ @Json(name = "metadata") val metadata: Metadata&lt;AlbumConnections, AlbumInteractions&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * Sort type of the album. * @see Album.sortType */ @Json(name = "sort") val sort: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The URL to access the album. */ @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The album resource key. */ @Json(name = "resource_key") val resourceKey: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The album's URI. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The album's color theme preference. * @see Album.themeType */ @Json(name = "theme") val theme: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The album's display name. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The album's layout preference. * @see Album.layoutType */ @Json(name = "layout") val layout: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The owner of the album. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The privacy settings of the album. */ @Json(name = "privacy") val privacy: AlbumPrivacy? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The time in ISO 8601 format that the album was created. */ @Json(name = "created_time") val createdTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The time in ISO 8601 format when the album was last modified. */ @Json(name = "modified_time") val modifiedTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * The total duration in seconds of all the videos in the album. */ @Json(name = "duration") val duration: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * Whether album videos should use the review mode URL. */ @Json(name = "review_mode") val reviewMode: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:Album.kt$Album$/** * Whether to hide the Vimeo navigation when viewing the album. */ @Json(name = "hide_nav") val hideNav: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:AlbumConnections.kt$AlbumConnections$/** * Connection to get all the logged-in user's available videos that can be added to an album. */ @Json(name = "available_videos") val availableVideos: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:AlbumConnections.kt$AlbumConnections$/** * Connection to get all the videos in a album. */ @Json(name = "videos") val videos: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:AlbumEmbed.kt$AlbumEmbed$/** * The responsive HTML code to embed the playlist on a website. This is present only * when privacy.view is not password and when the album has embeddable clips. */ @Json(name = "html") val html: String? = null</ID>
-    <ID>UndocumentedPublicProperty:AlbumInteractions.kt$AlbumInteractions$/** * An action indicating that the authenticated user is an admin of the album and may therefore * add custom logos. This data requires a bearer token with the private scope. */ @Json(name = "add_logos") val addLogos: BasicInteraction? = null</ID>
-    <ID>UndocumentedPublicProperty:AlbumInteractions.kt$AlbumInteractions$/** * An action indicating that the authenticated user is an admin of the album and may therefore * add videos. This data requires a bearer token with the private scope. */ @Json(name = "add_videos") val addVideos: BasicInteraction? = null</ID>
-    <ID>UndocumentedPublicProperty:AlbumInteractions.kt$AlbumInteractions$/** * An interaction that will be present in [Album] objects returned from a * request to an "available_albums" connection on a video object * (/videos/{video_id}/available_albums). The [BasicInteraction.uri] * will provide the endpoint needed to complete a subsequent add/remove * action to add/remove the related video to/from the album. In the event that * the video is not yet added to the album, [BasicInteraction.options] will * contain "PUT". In the event that the video is already added to the album, * [BasicInteraction.options] will contain "DELETE".This data requires a * bearer token with the private scope. */ @Json(name = "add_to") val addTo: BasicInteraction? = null</ID>
-    <ID>UndocumentedPublicProperty:AlbumPrivacy.kt$AlbumPrivacy$/** * The privacy-enabled password to see this album. Present only when privacy.view is password. */ @Json(name = "password") val password: String? = null</ID>
-    <ID>UndocumentedPublicProperty:AlbumPrivacy.kt$AlbumPrivacy$/** * Who can view the album. * @see AlbumPrivacy.viewPrivacyType */ @Json(name = "view") val viewPrivacy: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ApiConfiguration.kt$ApiConfiguration$/** * URL to access the API. */ @Json(name = "host") val host: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ApiError.kt$ApiError$/** * A link to more information about the error. */ @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ApiError.kt$ApiError$/** * Developer friendly error message. */ @Json(name = "developer_message") val developerMessage: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ApiError.kt$ApiError$/** * Information on invalid parameters send in the request. */ @Json(name = "invalid_parameters") val invalidParameters: List&lt;InvalidParameter&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:ApiError.kt$ApiError$/** * The error code. * @see ApiError.errorCodeType */ @Json(name = "error_code") val errorCode: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ApiError.kt$ApiError$/** * User friendly error message, can be used for displaying messages to the user. */ @Json(name = "user_message") val userMessage: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ApiError.kt$ApiError$/** * User friendly error message. */ @Json(name = "error") val errorMessage: String? = null</ID>
-    <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * API configuration data. */ @Json(name = "api") val api: ApiConfiguration? = null</ID>
-    <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Facebook API configuration data. */ @Internal @Json(name = "facebook") val facebook: FacebookConfiguration? = null</ID>
-    <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Various feature configuration data. */ @Internal @Json(name = "features") val features: FeaturesConfiguration? = null</ID>
-    <ID>UndocumentedPublicProperty:AppConfiguration.kt$AppConfiguration$/** * Various live streaming configuration data. */ @Internal @Json(name = "live") val live: LiveConfiguration? = null</ID>
-    <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for Facebook. */ @Json(name = "facebook") val facebook: PublishToFacebookPost? = null</ID>
-    <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for LinkedIn. */ @Json(name = "linkedin") val linkedIn: PublishToLinkedInPost? = null</ID>
-    <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for Twitter. */ @Json(name = "twitter") val twitter: PublishToTwitterPost? = null</ID>
-    <ID>UndocumentedPublicProperty:BatchPublishToSocialMedia.kt$BatchPublishToSocialMedia$/** * Optional publishing data for YouTube. */ @Json(name = "youtube") val youTube: PublishToYouTubePost? = null</ID>
-    <ID>UndocumentedPublicProperty:Billing.kt$Billing$/** * The user's billing information status. */ @Json(name = "status") val status: String? = null</ID>
-    <ID>UndocumentedPublicProperty:BuyInteraction.kt$BuyInteraction$/** * Formatted price to display to buy an On Demand video. */ @Internal @Json(name = "display_price") val displayPrice: String? = null</ID>
-    <ID>UndocumentedPublicProperty:BuyInteraction.kt$BuyInteraction$/** * The URL to buy the On Demand video on Vimeo. */ @Internal @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:BuyInteraction.kt$BuyInteraction$/** * The currency code for the current user's region. */ @Internal @Json(name = "currency") val currency: String? = null</ID>
-    <ID>UndocumentedPublicProperty:BuyInteraction.kt$BuyInteraction$/** * The numeric value of the price for buying the On Demand video. */ @Internal @Json(name = "price") val price: String? = null</ID>
-    <ID>UndocumentedPublicProperty:BuyInteraction.kt$BuyInteraction$/** * The time in ISO 8601 format when the On Demand video was purchased. */ @Internal @Json(name = "purchase_time") val purchaseTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:BuyInteraction.kt$BuyInteraction$/** * The user's download access to this On Demand video * @see BuyInteraction.downloadType */ @Internal @Json(name = "download") val download: String? = null</ID>
-    <ID>UndocumentedPublicProperty:BuyInteraction.kt$BuyInteraction$/** * The user's streaming access to this On Demand video. * @see BuyInteraction.streamType */ @Internal @Json(name = "stream") val stream: String? = null</ID>
-    <ID>UndocumentedPublicProperty:BuyInteraction.kt$BuyInteraction$/** * Whether the video has DRM. */ @Internal @Json(name = "drm") val drm: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * All the subcategories that belong to this category, if the current category is * a top-level parent. */ @Json(name = "subcategories") val subcategories: List&lt;Category&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * The URL to access the category in a browser. */ @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * The active icon for the category. */ @Json(name = "icon") val icon: PictureCollection? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * The active picture for this category; defaults to vertical color bars. */ @Json(name = "pictures") val pictures: PictureCollection? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * The container of this category's parent category, if the current category is * a subcategory. */ @Json(name = "parent") val parent: Category? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * The display name that identifies the category. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * The last time, in ISO 8601 format, that a video was featured. */ @Json(name = "last_video_featured_time") val lastVideoFeaturedTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * The resource key of the category. */ @Json(name = "resource_key") val resourceKey: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * The unique identifier to access the category resource. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Category.kt$Category$/** * Whether the category is not a subcategory of another category. */ @Json(name = "top_level") val topLevel: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:CategoryConnections.kt$CategoryConnections$/** * Information about the channels related to this category. */ @Json(name = "channels") val channels: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:CategoryConnections.kt$CategoryConnections$/** * Information about the groups related to this category. */ @Json(name = "groups") val groups: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:CategoryConnections.kt$CategoryConnections$/** * Information about the users related to this category. */ @Json(name = "users") val users: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:CategoryConnections.kt$CategoryConnections$/** * Information about the videos related to this category. */ @Json(name = "videos") val videos: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * A brief explanation of the channel's content. */ @Json(name = "description") val description: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * An array of all tags assigned to this channel. */ @Json(name = "tags") val tags: List&lt;Tag&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The URL to access the channel in a browser. */ @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The Vimeo user who owns the channel. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The active image for the channel; defaults to the thumbnail of the last video * added to the channel. */ @Json(name = "pictures") val pictures: PictureCollection? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The banner that appears by default at the top of the channel page. */ @Json(name = "header") val header: PictureCollection? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The categories to which this channel belongs as specified by the channel moderators. */ @Json(name = "categories") val categories: List&lt;Category&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The channel resource key. */ @Json(name = "resource_key") val resourceKey: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The display name that identifies the channel. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The privacy settings of the channel. */ @Json(name = "privacy") val privacy: Privacy? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The time in ISO 8601 format when the album was last modified. */ @Json(name = "modified_time") val modifiedTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The time in ISO 8601 format when the channel was created. */ @Json(name = "created_time") val createdTime: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Channel.kt$Channel$/** * The unique identifier to access the channel resource. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ChannelConnections.kt$ChannelConnections$/** * Information about the users following or moderating this channel. */ @Json(name = "users") val users: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:ChannelConnections.kt$ChannelConnections$/** * Information about the videos that belong to this channel. */ @Json(name = "videos") val videos: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:ChannelConnections.kt$ChannelConnections$/** * Information provided to channel moderators about which users they have specifically * permitted to access a private channel. This data requires a bearer token with the * private scope. */ @Json(name = "privacy_users") val privacyUsers: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:ChannelFollowInteraction.kt$ChannelFollowInteraction$/** * Whether the authenticated user is a moderator or subscriber. * @see ChannelFollowInteraction.rawType */ @Json(name = "type") val rawType: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ChannelInteractions.kt$ChannelInteractions$/** * An action indicating that the authenticated user is a moderator of the channel and may * therefore add or remove videos from the channel. This data requires a bearer token with * the private scope. */ @Json(name = "moderate_videos") val moderateVideos: BasicInteraction? = null</ID>
-    <ID>UndocumentedPublicProperty:ChannelInteractions.kt$ChannelInteractions$/** * An action indicating that the authenticated user is the owner of the channel and may * therefore add other users as channel moderators. This data requires a bearer token with * the private scope. */ @Json(name = "add_moderators") val addModerators: BasicInteraction? = null</ID>
-    <ID>UndocumentedPublicProperty:ChannelInteractions.kt$ChannelInteractions$/** * An interaction that will be present in [Channel] objects returned from * a request to an "available_channels"connection on a video object * (/videos/{video_id}/available_channels). The [BasicInteraction.uri] will * provide the endpoint needed to complete a subsequent add/remove action to * add/remove the related video to/from the channel.In the event that the video * is not yet added to the channel, [BasicInteraction.options] will contain "PUT". In * the event that the video is already added to the channel, [BasicInteraction.options] * will contain "DELETE". This data requires a bearer token with the private scope. */ @Json(name = "add_to") val addTo: BasicInteraction? = null</ID>
-    <ID>UndocumentedPublicProperty:CinemaConnections.kt$CinemaConnections$/** * Information about the contents of this programmed cinema item. */ @Json(name = "contents") val contents: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:Comment.kt$Comment$/** * Metadata for comments. */ @Json(name = "metadata") val metadata: MetadataConnections&lt;CommentConnections&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Comment.kt$Comment$/** * The URI of this comment. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Comment.kt$Comment$/** * The Vimeo content to which the comment relates. * @see Comment.type */ @Json(name = "type") val rawType: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Comment.kt$Comment$/** * The content of the comment. */ @Json(name = "text") val text: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Comment.kt$Comment$/** * The resource key string for the comment. */ @Json(name = "resource_key") val resourceKey: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Comment.kt$Comment$/** * The time in ISO 8601 format when the comment was posted. */ @Json(name = "created_on") val createdOn: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:Comment.kt$Comment$/** * The user who posted the comment. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:CommentConnections.kt$CommentConnections$/** * Information about this comment's replies. */ @Json(name = "replies") val replies: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * The API URI of this connected app. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * The [ConnectedAppType] of the connected app. */ @Json(name = "type") val rawType: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * The list of third party categories that can be selected for a publish to social * job (Facebook and YouTube only). */ @Json(name = "publish_categories") val publishCategories: List&lt;PublishOptionItem&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * The list of third party pages that is associated with the user's account (Facebook and LinkedIn only). */ @Json(name = "pages") val pages: List&lt;PublishOptionItem&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * The resource key string of the ConnectedApp. */ @Json(name = "resource_key") val resourceKey: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * The time in ISO 8601 format when the connected app was added. */ @Json(name = "add_date") val dateAdded: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * The unique identifier for the user on this connected app. */ @Json(name = "third_party_user_id") val userId: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * The user's display name on the connected app. */ @Json(name = "third_party_user_display_name") val userName: String? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedApp.kt$ConnectedApp$/** * Whether or not the user's data access is expired (Facebook only). */ @Json(name = "data_access_is_expired") val isDataAccessExpired: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedAppInteraction.kt$ConnectedAppInteraction$/** * Provides the lists of scopes that are required for third-party connected app features. */ @Json(name = "all_scopes") val allScopes: ConnectedScopes? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedAppInteraction.kt$ConnectedAppInteraction$/** * Whether an app is connected or not. */ @Json(name = "is_connected") val isConnected: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedScopes.kt$ConnectedScopes$/** * All scopes required for publishing to a specific social media platform. */ @Json(name = "publish_to_social") val publishToSocial: List&lt;String&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:ConnectedScopes.kt$ConnectedScopes$/** * All scopes required for simulcasting to a specific social media platform. */ @Json(name = "simulcast") val simulcast: List&lt;String&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Credit.kt$Credit$/** * The Vimeo user associated with this credit. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:Credit.kt$Credit$/** * The character that this person portrayed, or the job that this person performed. */ @Json(name = "role") val role: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Credit.kt$Credit$/** * The name of the person credited. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Credit.kt$Credit$/** * The unique identifier to access the credits resource. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Credit.kt$Credit$/** * The video associated with this credit. */ @Json(name = "video") val video: Video? = null</ID>
-    <ID>UndocumentedPublicProperty:DashVideoFile.kt$DashVideoFile$/** * The info about the live heartbeat endpoint, used if the video is a live video. */ @Internal @Json(name = "live") val live: LiveHeartbeat? = null</ID>
-    <ID>UndocumentedPublicProperty:DashVideoFile.kt$DashVideoFile$/** * The license link for DRM protected streams. */ @Internal @Json(name = "license_link") val licenseLink: String? = null</ID>
-    <ID>UndocumentedPublicProperty:DashVideoFile.kt$DashVideoFile$/** * The token used for DRM protected streams. */ @Internal @Json(name = "token") val token: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Document.kt$Document$/** * The partially stripped html for documents like the terms of service. */ @Json(name = "html") val html: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Drm.kt$Drm$/** * The video file containing the info about the DRM protected stream. */ @Json(name = "widevine") val widevine: DashVideoFile? = null</ID>
-    <ID>UndocumentedPublicProperty:Email.kt$Email$@Json(name = "email") val email: String? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the Embed button appears in the embeddable player for this video. */ @Json(name = "embed") val embed: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the Fullscreen button appears in the embeddable player for this video. */ @Json(name = "fullscreen") val fullscreen: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the HD button appears in the embeddable player for this video. */ @Json(name = "hd") val hd: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the Like button appears in the embeddable player for this video. */ @Json(name = "like") val like: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the Scaling button appears in the embeddable player for this video. */ @Json(name = "scaling") val scaling: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the Share button appears in the embeddable player for this video. */ @Json(name = "share") val share: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedButtons.kt$EmbedButtons$/** * Whether the Watch Later button appears in the embeddable player for this video. */ @Json(name = "watchlater") val watchLater: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedTitle.kt$EmbedTitle$/** * How the embeddable player handles the video owner's information. */ @Json(name = "owner") val owner: String? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedTitle.kt$EmbedTitle$/** * How the embeddable player handles the video owner's portrait. */ @Json(name = "portrait") val portrait: String? = null</ID>
-    <ID>UndocumentedPublicProperty:EmbedTitle.kt$EmbedTitle$/** * How the embeddable player handles the video title. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:FacebookConfiguration.kt$FacebookConfiguration$/** * An array of required scopes for connecting users to Facebook. */ @Internal @Json(name = "required_scopes") val requiredScopes: List&lt;String&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:FacetOption.kt$FacetOption$/** * Option name. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:FacetOption.kt$FacetOption$/** * Option text. */ @Json(name = "text") val text: String? = null</ID>
-    <ID>UndocumentedPublicProperty:FacetOption.kt$FacetOption$/** * Option total. */ @Json(name = "total") val total: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:FeaturesConfiguration.kt$FeaturesConfiguration$/** * Is play tracking enabled? */ @Internal @Json(name = "play_tracking") val playTracking: Boolean? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * Feed item type. * @see FeedItem.type */ @Json(name = "type") val rawType: String? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * The category that this event occurred for. This will be present for only * [AttributionType.CATEGORY] feed item type. */ @Json(name = "category") val category: Category? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * The channel that this event occurred for. This will be present for only * [AttributionType.CHANNEL] feed item type. */ @Json(name = "channel") val channel: Channel? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * The feed item's metadata. */ @Json(name = "metadata") val metadata: MetadataConnections&lt;FeedItemConnections&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * The group that this event occurred for. This will be present for only * [AttributionType.GROUP] feed item type. */ @Json(name = "group") val group: Group? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * The tag that this event occurred for. This will be present for only * [AttributionType.TAG] feed item type. */ @Json(name = "tag") val tag: Tag? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * The uri for the [FeedItem]. */ @Json(name = "uri") val uri: String? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * The user that this event occurred for. This will be present for [AttributionType.LIKE], * [AttributionType.APPEARANCE], and [AttributionType.SHARE] activity types. */ @Json(name = "user") val user: User? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * Time that the event occurred. */ @Json(name = "time") val time: Date? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItem.kt$FeedItem$/** * Video associated with ths feed item. */ @Json(name = "clip") val video: Video? = null</ID>
-    <ID>UndocumentedPublicProperty:FeedItemConnections.kt$FeedItemConnections$/** * A list of resource URIs related to the activity. */ @Json(name = "related") val related: BasicConnection? = null</ID>
-    <ID>UndocumentedPublicProperty:FileTransferPage.kt$FileTransferPage$/** * The link to the file transfer page. */ @Internal @Json(name = "link") val link: String? = null</ID>
-    <ID>UndocumentedPublicProperty:FolderPrivacy.kt$FolderPrivacy$/** * Who can view the folder. * @see FolderPrivacy.viewPrivacyType */ @Json(name = "view") val viewPrivacy: String? = null</ID>
     <ID>UndocumentedPublicProperty:Followable.kt$Followable$val metadata: Metadata&lt;*, out FollowableInteractions&gt;?</ID>
-    <ID>UndocumentedPublicProperty:Gcs.kt$Gcs$/** * Expected ending byte range for the current upload_link. */ @Internal @Json(name = "end_byte") val endByte: Long? = null</ID>
-    <ID>UndocumentedPublicProperty:Gcs.kt$Gcs$/** * Expected starting byte size for the current upload_link. */ @Internal @Json(name = "start_byte") val startByte: Long? = null</ID>
-    <ID>UndocumentedPublicProperty:Gcs.kt$Gcs$/** * Link for uploading file chunk to. */ @Internal @Json(name = "upload_link") val uploadLink: String? = null</ID>
-    <ID>UndocumentedPublicProperty:GrantFolderPermissionForUser.kt$GrantFolderPermissionForUser$/** * The user URI that will be added to the given Folder. */ @Json(name = "uri") val uri: String</ID>
     <ID>UndocumentedPublicProperty:Group.kt$Group$/** * The active picture for this group. */ @Json(name = "pictures") val pictures: PictureCollection? = null</ID>
     <ID>UndocumentedPublicProperty:Group.kt$Group$/** * The canonical relative URI of this group. */ @Json(name = "uri") val uri: String? = null</ID>
     <ID>UndocumentedPublicProperty:Group.kt$Group$/** * The group's description. */ @Json(name = "description") val description: String? = null</ID>
@@ -229,10 +75,6 @@
     <ID>UndocumentedPublicProperty:Metadata.kt$Metadata$/** * All interactions for an object. */ @Json(name = "interactions") val interactions: Interactions_T? = null</ID>
     <ID>UndocumentedPublicProperty:MetadataConnections.kt$MetadataConnections$/** * Connections for [Connections_T]. */ @Json(name = "connections") val connections: Connections_T? = null</ID>
     <ID>UndocumentedPublicProperty:MetadataInteractions.kt$MetadataInteractions$/** * Interactions for [Interactions_T]. */ @Json(name = "interactions") val interactions: Interactions_T? = null</ID>
-    <ID>UndocumentedPublicProperty:ModifyVideoInAlbumsSpecs.kt$ModifyVideoInAlbumsSpecs$/** * The videos which should be added. */ @Json(name = "add") val addVideoSet: Set&lt;AddVideoToAlbum&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:ModifyVideoInAlbumsSpecs.kt$ModifyVideoInAlbumsSpecs$/** * The videos which should be removed. */ @Json(name = "remove") val removeVideoSet: Set&lt;RemoveVideoFromAlbum&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:ModifyVideosInAlbumSpecs.kt$ModifyVideosInAlbumSpecs$/** * The set of videos that should be added. */ @Json(name = "set") val addVideoSet: Set&lt;AddVideoToAlbumContainer&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:ModifyVideosInAlbumSpecs.kt$ModifyVideosInAlbumSpecs$/** * The set of videos that should be removed. */ @Json(name = "remove") val removeVideoSet: Set&lt;RemoveVideoFromAlbumContainer&gt;? = null</ID>
     <ID>UndocumentedPublicProperty:Notification.kt$Notification$/** * Is the notification marked as new. */ @Json(name = "new") val new: Boolean? = null</ID>
     <ID>UndocumentedPublicProperty:Notification.kt$Notification$/** * Is the notification marked as seen. */ @Json(name = "seen") val seen: Boolean? = null</ID>
     <ID>UndocumentedPublicProperty:Notification.kt$Notification$/** * The ISODate time a notification was created. */ @Json(name = "created_time") val createdTime: Date? = null</ID>
@@ -287,13 +129,6 @@
     <ID>UndocumentedPublicProperty:PinCodeInfo.kt$PinCodeInfo$/** * The user code. */ @Json(name = "user_code") val userCode: String? = null</ID>
     <ID>UndocumentedPublicProperty:PlatformConstraint.kt$PlatformConstraint$/** * The max file size in gigabytes of a video for the corresponding platform. */ @Json(name = "size") val size: Long? = null</ID>
     <ID>UndocumentedPublicProperty:PlatformConstraint.kt$PlatformConstraint$/** * The max length in seconds of a video for the corresponding platform. */ @Json(name = "duration") val duration: Int? = null</ID>
-    <ID>UndocumentedPublicProperty:Play.kt$Play$/** * HLS video files. */ @Internal @Json(name = "hls") val hls: HlsVideoFile? = null</ID>
-    <ID>UndocumentedPublicProperty:Play.kt$Play$/** * Progressive files. */ @Internal @Json(name = "progressive") val progressive: List&lt;ProgressiveVideoFile&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:Play.kt$Play$/** * The DASH video file. */ @Internal @Json(name = "dash") val dash: DashVideoFile? = null</ID>
-    <ID>UndocumentedPublicProperty:Play.kt$Play$/** * The DRM play data for a protected stream. */ @Internal @Json(name = "drm") val drm: Drm? = null</ID>
-    <ID>UndocumentedPublicProperty:Play.kt$Play$/** * The play progress in seconds. */ @Internal @Json(name = "progress") val progress: PlayProgress? = null</ID>
-    <ID>UndocumentedPublicProperty:Play.kt$Play$/** * The play status of the video. * @see Play.videoPlayStatusType */ @Internal @Json(name = "status") val videoPlayStatus: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Play.kt$Play$/** * The source file of the video. */ @Internal @Json(name = "source") val source: List&lt;VideoSourceFile&gt;? = null</ID>
     <ID>UndocumentedPublicProperty:PlayProgress.kt$PlayProgress$/** * The play progress in seconds. */ @Internal @Json(name = "seconds") val seconds: Int? = null</ID>
     <ID>UndocumentedPublicProperty:Preferences.kt$Preferences$/** * Video preferences set by the a user. */ @Json(name = "videos") val videos: VideosPreference? = null</ID>
     <ID>UndocumentedPublicProperty:Privacy.kt$Privacy$/** * The password for viewing the authenticated user's videos. */ @Json(name = "password") val password: String? = null</ID>
@@ -361,23 +196,6 @@
     <ID>UndocumentedPublicProperty:PublishJobDestinations.kt$PublishJobDestinations$/** * Information about the upload/post on YouTube. */ @Json(name = "youtube") val youTube: PublishJobDestination? = null</ID>
     <ID>UndocumentedPublicProperty:PublishOptionItem.kt$PublishOptionItem$/** * The ID of the publish item. */ @Json(name = "id") val id: String? = null</ID>
     <ID>UndocumentedPublicProperty:PublishOptionItem.kt$PublishOptionItem$/** * The name or display name of the publish item, i.e.: "art", "family", "vacation" etc. */ @Json(name = "name") val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:PublishToFacebookPost.kt$PublishToFacebookPost$/** * An optional Facebook category of the video. */ @Json(name = "category_id") val categoryId: String? = null</ID>
-    <ID>UndocumentedPublicProperty:PublishToFacebookPost.kt$PublishToFacebookPost$/** * The description of the post as it will appear on Facebook. */ @Json(name = "description") val description: String? = null</ID>
-    <ID>UndocumentedPublicProperty:PublishToFacebookPost.kt$PublishToFacebookPost$/** * The destination identifier (page id) of the page being posted to on Facebook. */ @Json(name = "destination") val destination: Long</ID>
-    <ID>UndocumentedPublicProperty:PublishToFacebookPost.kt$PublishToFacebookPost$/** * The title of the post as it will appear on Facebook. */ @Json(name = "title") val title: String? = null</ID>
-    <ID>UndocumentedPublicProperty:PublishToFacebookPost.kt$PublishToFacebookPost$/** * Whether or not this Facebook post should be embeddable. */ @Json(name = "allow_embedding") val allowEmbedding: Boolean</ID>
-    <ID>UndocumentedPublicProperty:PublishToFacebookPost.kt$PublishToFacebookPost$/** * Whether or not this post should appear on the Facebook News Feed. */ @Json(name = "should_appear_on_news_feed") val shouldAppearOnNewsFeed: Boolean</ID>
-    <ID>UndocumentedPublicProperty:PublishToFacebookPost.kt$PublishToFacebookPost$/** * Whether or not this video should be searchable and show up * in the user's video library on Facebook. */ @Json(name = "is_secret_video") val isSecretVideo: Boolean</ID>
-    <ID>UndocumentedPublicProperty:PublishToFacebookPost.kt$PublishToFacebookPost$/** * Whether or not to allow social actions on the post on Facebook. */ @Json(name = "allow_social_actions") val allowSocialActions: Boolean</ID>
-    <ID>UndocumentedPublicProperty:PublishToLinkedInPost.kt$PublishToLinkedInPost$/** * The LinkedIn page identifier that the video will be posted to. */ @Json(name = "page_id") val pageID: Int</ID>
-    <ID>UndocumentedPublicProperty:PublishToLinkedInPost.kt$PublishToLinkedInPost$/** * The description of the post as it will appear on LinkedIn. */ @Json(name = "description") val description: String</ID>
-    <ID>UndocumentedPublicProperty:PublishToLinkedInPost.kt$PublishToLinkedInPost$/** * The title of the post as it will appear on LinkedIn. */ @Json(name = "title") val title: String</ID>
-    <ID>UndocumentedPublicProperty:PublishToTwitterPost.kt$PublishToTwitterPost$/** * The contents of the tweet as it will appear on Twitter. */ @Json(name = "tweet") val tweet: String</ID>
-    <ID>UndocumentedPublicProperty:PublishToYouTubePost.kt$PublishToYouTubePost$/** * Am optional description of the video as it will appear on YouTube. */ @Json(name = "description") val description: String? = null</ID>
-    <ID>UndocumentedPublicProperty:PublishToYouTubePost.kt$PublishToYouTubePost$/** * An optional list of tags for the video on YouTube. */ @Json(name = "tags") val tags: List&lt;String&gt;? = null</ID>
-    <ID>UndocumentedPublicProperty:PublishToYouTubePost.kt$PublishToYouTubePost$/** * The YouTube category of the video. */ @Json(name = "category_id") val categoryId: String? = null</ID>
-    <ID>UndocumentedPublicProperty:PublishToYouTubePost.kt$PublishToYouTubePost$/** * The privacy option for this video on YouTube. */ @Json(name = "privacy") val privacy: PublishToYouTubePrivacyType</ID>
-    <ID>UndocumentedPublicProperty:PublishToYouTubePost.kt$PublishToYouTubePost$/** * The title of the video as it will appear on YouTube. */ @Json(name = "title") val title: String</ID>
     <ID>UndocumentedPublicProperty:PurchaseInteraction.kt$PurchaseInteraction$/** * Purchase status. * @see PurchaseInteraction.purchaseStatusType */ @Json(name = "status") val purchaseStatus: String? = null</ID>
     <ID>UndocumentedPublicProperty:PurchaseOnDemandInteraction.kt$PurchaseOnDemandInteraction$/** * Subscribe to on demand video. */ @Internal @Json(name = "subscribe") val subscriptionInteraction: SubscriptionInteraction? = null</ID>
     <ID>UndocumentedPublicProperty:PurchaseOnDemandInteraction.kt$PurchaseOnDemandInteraction$/** * Whether the On Demand video for purchase has DRM. */ @Internal @Json(name = "buy") val buy: BuyInteraction? = null</ID>
@@ -388,8 +206,6 @@
     <ID>UndocumentedPublicProperty:Recommendation.kt$Recommendation$/** * The recommended channel. */ @Json(name = "channel") val channel: Channel? = null</ID>
     <ID>UndocumentedPublicProperty:Recommendation.kt$Recommendation$/** * The user that is being recommended. */ @Json(name = "user") val user: User? = null</ID>
     <ID>UndocumentedPublicProperty:Recommendation.kt$Recommendation$/** * Type of recommendation. * @see Recommendation.type */ @Json(name = "type") val rawType: String? = null</ID>
-    <ID>UndocumentedPublicProperty:RemoveVideoFromAlbum.kt$RemoveVideoFromAlbum$/** * The URI of the video. */ @Json(name = "uri") val uri: String</ID>
-    <ID>UndocumentedPublicProperty:RemoveVideoFromAlbumContainer.kt$RemoveVideoFromAlbumContainer$/** * The video that should be removed. */ @Json(name = "video") val video: RemoveVideoFromAlbum</ID>
     <ID>UndocumentedPublicProperty:RentInteraction.kt$RentInteraction$/** * Formatted price to display to rent an On Demand video. */ @Internal @Json(name = "display_price") val displayPrice: Long? = null</ID>
     <ID>UndocumentedPublicProperty:RentInteraction.kt$RentInteraction$/** * The URL to rent the On Demand video on Vimeo. */ @Internal @Json(name = "link") val link: String? = null</ID>
     <ID>UndocumentedPublicProperty:RentInteraction.kt$RentInteraction$/** * The currency code for the current user's region. */ @Internal @Json(name = "currency") val currency: String? = null</ID>
