@@ -1,11 +1,11 @@
-#### Issue Summary
+# Summary
 A brief but thorough description of the issue.
 
-#### Reproduction Steps
+## Reproduction Steps
 Detailed steps to reproduce the issue.
 
-#### Expected Behavior
+## Expected Behavior
 What do you expect to happen as a result of the reproduction steps?
 
-#### Actual Behavior
+## Actual Behavior
 What currently happens as a result of the reproduction steps?
