@@ -8,34 +8,25 @@ import com.vimeo.networking2.enums.ErrorCodeType
 import com.vimeo.networking2.enums.asEnum
 
 /**
- * Similar to [ApiError] object, this holds error codes/error messages relevant to a
- * specific invalid field.
+ * Similar to [ApiError] object, this holds error codes/error messages relevant to a specific invalid field.
+ *
+ * @param field Name of the invalid field.
+ * @param errorCode Error code for the invalid field. See [ApiError.errorCodeType].
+ * @param error The user readable error message detailing why the request was invalid.
+ * @param developerMessage Detailed description on why the field is invalid.
  */
 @JsonClass(generateAdapter = true)
 data class InvalidParameter(
 
-    /**
-     * Name of the invalid field.
-     */
     @Json(name = "field")
     val field: String? = null,
 
-    /**
-     * Error code for the invalid field.
-     * @see ApiError.errorCodeType
-     */
     @Json(name = "error_code")
     val errorCode: String? = null,
 
-    /**
-     * The user readable error message detailing why the request was invalid.
-     */
     @Json(name = "error")
     val error: String? = null,
 
-    /**
-     * Detailed description on why the field is invalid.
-     */
     @Json(name = "developer_message")
     val developerMessage: String? = null
 

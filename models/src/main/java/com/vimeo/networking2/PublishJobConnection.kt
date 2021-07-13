@@ -7,26 +7,22 @@ import com.vimeo.networking2.common.Entity
 
 /**
  * A Connection to provide the Publish to Social data for this video.
+ *
+ * @param publishBlockers An object representing the blockers for each platform preventing the video from being
+ * published.
+ * @param publishJobConstraints An object representing publish constraints for each social media platform.
+ * @param publishJobAttempts An object representing whether attempts have been made to publish the video to third party
+ * social platform destinations.
  */
 @JsonClass(generateAdapter = true)
 data class PublishJobConnection(
 
-    /**
-     * An object representing the blockers for each platform preventing the video from being published.
-     */
     @Json(name = "publish_blockers")
     val publishBlockers: PublishJobBlockers? = null,
 
-    /**
-     * An object representing publish constraints for each social media platform.
-     */
     @Json(name = "publish_constraints")
     val publishJobConstraints: PublishJobConstraints? = null,
 
-    /**
-     * An object representing whether attempts have been made to publish
-     * the video to third party social platform destinations.
-     */
     @Json(name = "publish_destinations")
     val publishJobAttempts: PublishJobAttempts? = null,
 

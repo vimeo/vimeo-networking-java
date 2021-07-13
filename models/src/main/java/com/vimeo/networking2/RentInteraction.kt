@@ -11,71 +11,53 @@ import java.util.Date
 
 /**
  * The Rent interaction for an On Demand video.
+ *
+ * @param currency The currency code for the current user's region.
+ * @param displayPrice Formatted price to display to rent an On Demand video.
+ * @param drm Whether the video has DRM.
+ * @param expirationDate The time in ISO 8601 format when the rental period for the video expires.
+ * @param link The URL to rent the On Demand video on Vimeo.
+ * @param price The numeric value of the price for buying the On Demand video.
+ * @param purchaseTime The time in ISO 8601 format when the On Demand video was rented.
+ * @param streamAccess The user's streaming access to this On Demand video. See [RentInteraction.streamAccessType].
+ * @param uri The product URI to rent the On Demand video.
  */
 @Internal
 @JsonClass(generateAdapter = true)
 data class RentInteraction(
 
-    /**
-     * The currency code for the current user's region.
-     */
     @Internal
     @Json(name = "currency")
     val currency: String? = null,
 
-    /**
-     * Formatted price to display to rent an On Demand video.
-     */
     @Internal
     @Json(name = "display_price")
     val displayPrice: Long? = null,
 
-    /**
-     * Whether the video has DRM.
-     */
     @Internal
     @Json(name = "drm")
     val drm: Boolean? = null,
 
-    /**
-     * The time in ISO 8601 format when the rental period for the video expires.
-     */
     @Internal
     @Json(name = "expires_time")
     val expirationDate: Date? = null,
 
-    /**
-     * The URL to rent the On Demand video on Vimeo.
-     */
     @Internal
     @Json(name = "link")
     val link: String? = null,
 
-    /**
-     * The numeric value of the price for buying the On Demand video.
-     */
     @Internal
     @Json(name = "price")
     val price: Double? = null,
 
-    /**
-     * The time in ISO 8601 format when the On Demand video was rented.
-     */
     @Internal
     @Json(name = "purchase_time")
     val purchaseTime: Date? = null,
 
-    /**
-     * The user's streaming access to this On Demand video.
-     * @see RentInteraction.streamAccessType
-     */
     @Internal
     @Json(name = "stream")
     val streamAccess: String? = null,
 
-    /**
-     * The product URI to rent the On Demand video.
-     */
     @Internal
     @Json(name = "uri")
     val uri: String? = null

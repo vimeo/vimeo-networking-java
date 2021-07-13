@@ -5,19 +5,16 @@ import com.squareup.moshi.JsonClass
 
 /**
  * All connections for groups.
+ *
+ * @param users Information about the members or moderators of this group.
+ * @param videos Information about the videos contained within this group.
  */
 @JsonClass(generateAdapter = true)
 data class GroupConnections(
 
-    /**
-     * Information about the members or moderators of this group.
-     */
     @Json(name = "users")
     val users: BasicConnection? = null,
 
-    /**
-     * Information about the videos contained within this group.
-     */
     @Json(name = "videos")
     val videos: BasicConnection? = null
 
