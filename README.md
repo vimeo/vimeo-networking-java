@@ -206,7 +206,7 @@ startActivity(intent)
 ```
 3) The web browser will open and the user will be presented with a webpage asking them to grant access based on the `scope` that you specified in your `VimeoApiClientConfiguration` above.
 
-4) Add an intent filter to your activity in the [`AndroidManifest`](example-java-android/src/main/AndroidManifest.xml) to listen for the deeplink.
+4) Add an intent filter to your activity in the `AndroidManifest` to listen for the deeplink.
 ```xml
 <intent-filter>
   <action android:name="android.intent.action.VIEW"/>
@@ -221,7 +221,7 @@ startActivity(intent)
 
 5) Then call `Authenticator.authenticateWithCodeGrant(String, VimeoCallback)` passing in the URL retrieved from `val url = intent.data.toString()` which will be supplied from the intent filter.
 
-**Note**: You can find an example of both stategies in [MainActivity.java of the example app](example/src/main/java/com/vimeo/example/MainActivity.kt). You can also find more information on authentication in the authentication [README](auth#readme) or in the class documentation for [Authenticator](auth/src/main/java/com/vimeo/networking2/Authenticator.kt).
+**Note**: You can find an example of both strategies in [MainActivity.kt of the example app](example/src/main/java/com/vimeo/example/MainActivity.kt). You can also find more information on authentication in the authentication [README](auth#readme) or in the class documentation for [Authenticator](auth/src/main/java/com/vimeo/networking2/Authenticator.kt).
 
 ## Requests
 With the SDK configured and authenticated, you’re ready to start making requests to the Vimeo API.
