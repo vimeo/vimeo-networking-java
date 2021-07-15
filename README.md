@@ -43,11 +43,20 @@ More information about this and other API questions can be found on the [API hom
 For a more in depth look at the usage, refer to the [example Android app](example). The example project includes implementations of client credential authentication, oauth authentication, and making simple requests.
 
 ### Gradle
-Specify the following two dependencies to your `build.gradle` file (make sure `maven { url 'https://jitpack.io' }` is included as a repository)
+Make sure you include JitPack as a maven repository in your `build.gradle` file.
+```groovy
+repositories {
+  maven { url 'https://jitpack.io' }
+}
+```
+
+Then add the following two dependencies to your `build.gradle` file.
 ```groovy
 implementation "com.github.vimeo.vimeo-networking-java:vimeo-networking:2.0.0"
 implementation "com.github.vimeo.vimeo-networking-java:models:2.0.0"
 ```
+
+See the [CHANGELOG](CHANGELOG.md) for the changes to each release.
 
 #### Artifacts
 There are several available artifacts for this SDK.
@@ -68,15 +77,6 @@ Two alternative `models` artifacts exist
 In order to use the SDK, you must always specify both `vimeo-networking` and one of `models`, `models-parcelable`, or `models-serializable`. Note that each `models` artifact is exclusive and cannot be used with another. You can only use one at a time. If you don't need `Parcelable` or `Serializable`, it's recommended to just use the default `models`.
 
 ### JitPack
-The library is deployed via JitPack, so to access the releases, you need to add JitPack as a maven repository in your gradle configuration.
-
-```groovy
-repositories {
-    ...
-    maven { url 'https://jitpack.io' }
- }
- ```
-
 Generally, we recommend to use the latest release or alpha version that you can find in the releases tab. However, if you prefer to point to a specific commit, you can use JitPack to specify that commit:
 ```groovy
 implementation "com.github.vimeo.vimeo-networking-java:vimeo-networking:COMMIT_HASH"
