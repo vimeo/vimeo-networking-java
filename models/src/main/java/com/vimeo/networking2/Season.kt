@@ -18,7 +18,7 @@ import com.vimeo.networking2.enums.asEnum
  * @param position The position of the season relative to other seasons in the series.
  * @param rawType The type of season. See [Season.type].
  * @param resourceKey The unique identifier for this On Demand season.
- * @param uri The season container''s relative URI.
+ * @param uri The season container's relative URI.
  * @param user The creator of this On Demand page.
  */
 @JsonClass(generateAdapter = true)
