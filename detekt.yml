@@ -15,7 +15,7 @@ comments:
   CommentOverPrivateProperty:
     active: false
   EndOfSentenceFormat:
-    active: false
+    active: true
 
 complexity:
   LabeledExpression:
