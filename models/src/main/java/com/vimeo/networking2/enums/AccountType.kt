@@ -26,7 +26,7 @@ enum class AccountType(override val value: String?) : StringValue {
     LIVE_PREMIUM("live_premium"),
 
     /**
-     * The user has a Live PRO subscription
+     * The user has a Live PRO subscription.
      */
     LIVE_PRO("live_pro"),
 
