@@ -21,7 +21,7 @@ import java.util.Date
  * @param rawType Feed item type. See [FeedItem.type].
  * @param tag The tag that this event occurred for. This will be present for only [AttributionType.TAG] feed item type.
  * @param time Time that the event occurred.
- * @param video Video associated with ths feed item.
+ * @param video Video associated with this feed item.
  * @param uri The uri for the [FeedItem].
  * @param user The user that this event occurred for. This will be present for [AttributionType.LIKE],
  * [AttributionType.APPEARANCE], and [AttributionType.SHARE] activity types.
