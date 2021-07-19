@@ -10,45 +10,33 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Collection of pictures.
+ *
+ * @param active Whether this picture is the active picture for its parent resource.
+ * @param link The upload URL for the picture. This field appears when you create the picture resource for the first
+ * time.
+ * @param rawType The type of the picture. See [PictureCollection.type].
+ * @param resourceKey The picture's resource key string.
+ * @param sizes An array containing reference information about all available image files.
+ * @param uri The picture's URI.
  */
 @JsonClass(generateAdapter = true)
 data class PictureCollection(
 
-    /**
-     * Whether this picture is the active picture for its parent resource.
-     */
     @Json(name = "active")
     val active: Boolean? = null,
 
-    /**
-     * The upload URL for the picture. This field appears when you create the
-     * picture resource for the first time.
-     */
     @Json(name = "link")
     val link: String? = null,
 
-    /**
-     * The picture's resource key string.
-     */
-    @Json(name = "resource_key")
-    val resourceKey: String? = null,
-
-    /**
-     * An array containing reference information about all available image files
-     */
-    @Json(name = "sizes")
-    val sizes: List<Picture>? = null,
-
-    /**
-     * The type of the picture.
-     * @see PictureCollection.type
-     */
     @Json(name = "type")
     val rawType: String? = null,
 
-    /**
-     * The picture's URI.
-     */
+    @Json(name = "resource_key")
+    val resourceKey: String? = null,
+
+    @Json(name = "sizes")
+    val sizes: List<Picture>? = null,
+
     @Json(name = "uri")
     val uri: String? = null
 

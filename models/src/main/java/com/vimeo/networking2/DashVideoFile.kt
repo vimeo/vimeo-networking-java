@@ -8,6 +8,10 @@ import java.util.Date
 
 /**
  * A video file that represents a DASH stream.
+ *
+ * @param live The info about the live heartbeat endpoint, used if the video is a live video.
+ * @param token The token used for DRM protected streams.
+ * @param licenseLink The license link for DRM protected streams.
  */
 @JsonClass(generateAdapter = true)
 data class DashVideoFile(
@@ -24,23 +28,14 @@ data class DashVideoFile(
     @Json(name = "log")
     override val log: String? = null,
 
-    /**
-     * The info about the live heartbeat endpoint, used if the video is a live video.
-     */
     @Internal
     @Json(name = "live")
     val live: LiveHeartbeat? = null,
 
-    /**
-     * The token used for DRM protected streams.
-     */
     @Internal
     @Json(name = "token")
     val token: String? = null,
 
-    /**
-     * The license link for DRM protected streams.
-     */
     @Internal
     @Json(name = "license_link")
     val licenseLink: String? = null

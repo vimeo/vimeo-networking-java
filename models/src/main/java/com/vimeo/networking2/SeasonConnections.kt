@@ -5,13 +5,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * All of [Season]'s connections.
+ *
+ * @param videos The Videos connection.
  */
 @JsonClass(generateAdapter = true)
 data class SeasonConnections(
 
-    /**
-     * The Videos connection.
-     */
     @Json(name = "videos")
     val videos: BasicConnection? = null
 

@@ -9,68 +9,48 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * This class represents the model for a Video On Demand (VOD) container.
+ *
+ * @param description The description of this [TvodItem].
+ * @param film This [TvodItem's][TvodItem] film, if it is a film.
+ * @param link The link to the [TvodItem] on Vimeo.
+ * @param metadata Metadata about [TvodItem].
+ * @param name A descriptive title of this [TvodItem].
+ * @param pictures The active poster for this [TvodItem].
+ * @param published Information on the time the [TvodItem] was published.
+ * @param rawType Whether this [TvodItem] is for a film or a series. See [TvodItem.type].
+ * @param trailer The trailer for this [TvodItem].
+ * @param user The user who created this [TvodItem].
  */
 @JsonClass(generateAdapter = true)
 data class TvodItem(
 
-    /**
-     * The description of this [TvodItem].
-     */
     @Json(name = "description")
     val description: String? = null,
 
-    /**
-     * This [TvodItem]'s film, if it is a film.
-     */
     @Json(name = "film")
     val film: Video? = null,
 
-    /**
-     * The link to the [TvodItem] on Vimeo.
-     */
     @Json(name = "link")
     val link: String? = null,
 
-    /**
-     * Metadata about [TvodItem].
-     */
     @Json(name = "metadata")
     val metadata: Metadata<TvodItemConnections, PurchaseOnDemandInteraction>? = null,
 
-    /**
-     * A descriptive title of this [TvodItem].
-     */
     @Json(name = "name")
     val name: String? = null,
 
-    /**
-     * The active poster for this [TvodItem].
-     */
     @Json(name = "pictures")
     val pictures: PictureCollection? = null,
 
-    /**
-     * Information on the time the [TvodItem] was published.
-     */
     @Json(name = "published")
     val published: Publish? = null,
 
-    /**
-     * Whether this [TvodItem] is for a film or a series.
-     * @see TvodItem.type
-     */
     @Json(name = "type")
     val rawType: String? = null,
 
-    /**
-     * The trailer for this [TvodItem].
-     */
     @Json(name = "trailer")
     val trailer: Video? = null,
 
-    /**
-     * The user who created this [TvodItem].
-     */
     @Json(name = "user")
     val user: User? = null
 

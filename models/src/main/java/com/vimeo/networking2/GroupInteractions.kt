@@ -10,9 +10,6 @@ import com.vimeo.networking2.common.FollowableInteractions
 @JsonClass(generateAdapter = true)
 data class GroupInteractions(
 
-    /**
-     * An action indicating that someone has joined the group.
-     */
     @Json(name = "join")
     override val follow: GroupFollowInteraction? = null
 

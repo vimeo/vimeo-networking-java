@@ -11,6 +11,9 @@ import java.util.Date
 
 /**
  * Follow a group interaction.
+ *
+ * @param rawType Whether the authenticated user is a moderator or subscriber. See [GroupFollowInteraction.type].
+ * @param title The user's title, or the null value if not applicable.
  */
 @JsonClass(generateAdapter = true)
 data class GroupFollowInteraction(
@@ -27,18 +30,11 @@ data class GroupFollowInteraction(
     @Json(name = "uri")
     override val uri: String? = null,
 
-    /**
-     * The user's title, or the null value if not applicable.
-     */
-    @Json(name = "title")
-    val title: String? = null,
-
-    /**
-     * Whether the authenticated user is a moderator or subscriber.
-     * @see GroupFollowInteraction.type
-     */
     @Json(name = "type")
-    val rawType: String? = null
+    val rawType: String? = null,
+
+    @Json(name = "title")
+    val title: String? = null
 
 ) : UpdatableInteraction
 

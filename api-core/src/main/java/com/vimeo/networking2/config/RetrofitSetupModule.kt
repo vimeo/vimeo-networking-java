@@ -164,10 +164,14 @@ object RetrofitSetupModule {
         .client(okHttpClient)
         .addConverterFactory(VimeoParametersConverterFactory())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(ErrorHandlingCallAdapterFactory(VimeoLogger(
-            vimeoApiConfiguration.logDelegate,
-            vimeoApiConfiguration.logLevel
-        )))
+        .addCallAdapterFactory(
+            ErrorHandlingCallAdapterFactory(
+                VimeoLogger(
+                    vimeoApiConfiguration.logDelegate,
+                    vimeoApiConfiguration.logLevel
+                )
+            )
+        )
         .build()
 
     /**
@@ -175,5 +179,4 @@ object RetrofitSetupModule {
      */
     @JvmStatic
     fun retrofitCache(retrofit: Retrofit) = RetrofitServicesCache(retrofit)
-
 }

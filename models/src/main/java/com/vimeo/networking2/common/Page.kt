@@ -1,6 +1,5 @@
 package com.vimeo.networking2.common
 
-
 /**
  * Represents a single non-pageable list of data.
  *
@@ -13,12 +12,10 @@ interface Page<Data_T> {
      */
     val total: Int?
 
-
     /**
      * The total number of items in a request taking into account the applied filters.
      */
     val filteredTotal: Int?
-
 
     /**
      * The data corresponding to this page.

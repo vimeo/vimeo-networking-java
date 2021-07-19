@@ -5,6 +5,8 @@ import com.squareup.moshi.JsonClass
 
 /**
  * User's email.
+ *
+ * @param email The user's email.
  */
 @JsonClass(generateAdapter = true)
 data class Email(

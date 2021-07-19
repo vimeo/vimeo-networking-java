@@ -18,5 +18,4 @@ enum class PublishToYouTubePrivacyType {
      */
     @Json(name = "private")
     PRIVATE
-
 }

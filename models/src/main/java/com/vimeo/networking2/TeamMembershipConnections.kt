@@ -7,13 +7,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * All of the connections for a team membership.
+ *
+ * @param owner A connection object indicating how to get the owner of this user.
  */
 @JsonClass(generateAdapter = true)
 data class TeamMembershipConnections(
 
-    /**
-     * A connection object indicating how to get the owner of this user.
-     */
     @Json(name = "owner")
     val owner: TeamOwnerConnection? = null
 )

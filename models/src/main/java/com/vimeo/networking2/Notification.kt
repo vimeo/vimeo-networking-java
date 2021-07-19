@@ -10,62 +10,44 @@ import java.util.Date
 
 /**
  * Notification data.
+ *
+ * @param video The video associated with a video like notification.
+ * @param comment The clip comment associated with a comment notification.
+ * @param createdTime The ISODate time a notification was created.
+ * @param credit The clip credit associated with a credit notification.
+ * @param new Is the notification marked as new.
+ * @param seen Is the notification marked as seen.
+ * @param rawType The type of notification. See [Notification.type].
+ * @param uri The notification's canonical relative URI.
+ * @param user The user associated with a user follow notification.
  */
 @JsonClass(generateAdapter = true)
 data class Notification(
 
-    /**
-     * The video associated with a video like notification.
-     */
     @Json(name = "clip")
     val video: Video? = null,
 
-    /**
-     * The clip comment associated with a comment notification.
-     */
     @Json(name = "comment")
     val comment: Comment? = null,
 
-    /**
-     * The ISODate time a notification was created.
-     */
     @Json(name = "created_time")
     val createdTime: Date? = null,
 
-    /**
-     * The clip credit associated with a credit notification.
-     */
     @Json(name = "credit")
     val credit: Credit? = null,
 
-    /**
-     * Is the notification marked as new.
-     */
     @Json(name = "new")
     val new: Boolean? = null,
 
-    /**
-     * Is the notification marked as seen.
-     */
     @Json(name = "seen")
     val seen: Boolean? = null,
 
-    /**
-     * The type of notification.
-     * @see Notification.type
-     */
     @Json(name = "type")
     val rawType: String? = null,
 
-    /**
-     * The notification's canonical relative URI.
-     */
     @Json(name = "uri")
     val uri: String? = null,
 
-    /**
-     * The user associated with a user follow notification.
-     */
     @Json(name = "user")
     val user: User? = null
 

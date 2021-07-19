@@ -6,37 +6,28 @@ import com.vimeo.networking2.common.Entity
 
 /**
  * A tag which is used to tag videos.
+ *
+ * @param canonical The normalized canonical tag name.
+ * @param metadata AlbumMetadata about the group.
+ * @param name The tag value.
+ * @param resourceKey The tag's resource key string.
+ * @param uri The canonical relative URI of the tag.
  */
 @JsonClass(generateAdapter = true)
 data class Tag(
 
-    /**
-     * The normalized canonical tag name.
-     */
     @Json(name = "canonical")
     val canonical: String? = null,
 
-    /**
-     * AlbumMetadata about the group.
-     */
     @Json(name = "metadata")
     val metadata: Metadata<AlbumConnections, AlbumInteractions>? = null,
 
-    /**
-     * The tag value.
-     */
     @Json(name = "name")
     val name: String? = null,
 
-    /**
-     * The tag's resource key string.
-     */
     @Json(name = "resource_key")
     val resourceKey: String? = null,
 
-    /**
-     * The canonical relative URI of the tag.
-     */
     @Json(name = "uri")
     val uri: String? = null
 

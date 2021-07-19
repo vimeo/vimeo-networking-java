@@ -15,7 +15,7 @@ comments:
   CommentOverPrivateProperty:
     active: false
   EndOfSentenceFormat:
-    active: false
+    active: true
 
 complexity:
   LabeledExpression:
@@ -43,6 +43,37 @@ exceptions:
       - Exception
       - Error
       - Throwable
+
+formatting:
+  active: true
+  android: false
+  autoCorrect: true
+  ArgumentListWrapping:
+    active: false
+  AnnotationSpacing:
+    active: true
+  EnumEntryNameCase:
+    active: true
+  ImportOrdering:
+    active: true
+  Indentation:
+    active: true
+  MaximumLineLength:
+    active: true
+  NoEmptyFirstLineInMethodBlock:
+    active: false
+  ParameterListWrapping:
+    active: false
+  SpacingAroundAngleBrackets:
+    active: true
+  SpacingAroundDoubleColon:
+    active: true
+  SpacingAroundUnaryOperator:
+    active: true
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: true
+  SpacingBetweenDeclarationsWithComments:
+    active: true
 
 naming:
   FunctionMaxLength:

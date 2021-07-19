@@ -10,27 +10,23 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Live Quota information.
+ *
+ * @param streams Live streams quota data.
+ * @param time Live time data.
+ * @param status Live status data.
  */
 @Internal
 @JsonClass(generateAdapter = true)
 data class LiveQuota(
-    /**
-     * Live streams quota data.
-     */
+
     @Internal
     @Json(name = "streams")
     val streams: LiveStreamsQuota? = null,
 
-    /**
-     * Live time data.
-     */
     @Internal
     @Json(name = "time")
     val time: LiveTime? = null,
 
-    /**
-     * Live status data.
-     */
     @Internal
     @Json(name = "status")
     val status: String? = null

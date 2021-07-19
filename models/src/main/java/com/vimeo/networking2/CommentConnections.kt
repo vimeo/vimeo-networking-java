@@ -5,13 +5,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * All connections for a comment.
+ *
+ * @param replies Information about this comment's replies.
  */
 @JsonClass(generateAdapter = true)
 data class CommentConnections(
 
-    /**
-     * Information about this comment's replies.
-     */
     @Json(name = "replies")
     val replies: BasicConnection? = null
 )

@@ -5,13 +5,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Default preferences that a user has for their videos.
+ *
+ * @param privacy Privacy values for videos.
  */
 @JsonClass(generateAdapter = true)
 data class VideosPreference(
 
-    /**
-     * Privacy values for videos.
-     */
     @Json(name = "privacy")
     val privacy: Privacy? = null
 

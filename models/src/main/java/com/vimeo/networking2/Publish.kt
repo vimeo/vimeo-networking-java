@@ -6,19 +6,16 @@ import java.util.Date
 
 /**
  * [TvodItem] publish information.
+ *
+ * @param enabled Whether the [TvodItem] has been published.
+ * @param time The time in ISO 8601 format when this [TvodItem] was published.
  */
 @JsonClass(generateAdapter = true)
 data class Publish(
 
-    /**
-     * Whether the [TvodItem] has been published
-     */
     @Json(name = "enabled")
     val enabled: Boolean? = null,
 
-    /**
-     * The time in IS 8601 format when this [TvodItem] was published.
-     */
     @Json(name = "time")
     val time: Date? = null
 )

@@ -5,20 +5,16 @@ import com.squareup.moshi.JsonClass
 
 /**
  * All connections for a album.
+ *
+ * @param videos Connection to get all the videos in a album.
+ * @param availableVideos Connection to get all the logged-in user's available videos that can be added to an album.
  */
 @JsonClass(generateAdapter = true)
 data class AlbumConnections(
 
-    /**
-     * Connection to get all the videos in a album.
-     */
     @Json(name = "videos")
     val videos: BasicConnection? = null,
 
-    /**
-     * Connection to get all the logged-in user's available videos that can be added to an album.
-     */
     @Json(name = "available_videos")
     val availableVideos: BasicConnection? = null
-
 )

@@ -9,14 +9,12 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * The privacy set for a folder.
+ *
+ * @param viewPrivacy Who can view the folder. See [FolderPrivacy.viewPrivacyType].
  */
 @JsonClass(generateAdapter = true)
 data class FolderPrivacy(
 
-    /**
-     * Who can view the folder.
-     * @see FolderPrivacy.viewPrivacyType
-     */
     @Json(name = "view")
     val viewPrivacy: String? = null
 )

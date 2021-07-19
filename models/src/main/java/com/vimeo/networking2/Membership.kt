@@ -10,33 +10,25 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * This object contains user membership information.
+ *
+ * @param display The user's membership level.
+ * @param rawType The user's account type. See [Membership.type].
+ * @param badge Information about the user's badge.
+ * @param subscription Information about the user's subscription.
  */
 @JsonClass(generateAdapter = true)
 data class Membership(
 
-    /**
-     * The user's membership level
-     */
     @Json(name = "display")
     val display: String? = null,
 
-    /**
-     * The user's account type.
-     * @see [Membership.type]
-     */
     @Json(name = "type")
     val rawType: String? = null,
 
-    /**
-     * Information about the user's badge.
-     */
     @Internal
     @Json(name = "badge")
     val badge: UserBadge? = null,
 
-    /**
-     * Information about the user's subscription.
-     */
     @Json(name = "subscription")
     val subscription: Subscription? = null
 )

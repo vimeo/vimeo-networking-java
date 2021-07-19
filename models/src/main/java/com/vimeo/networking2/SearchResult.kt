@@ -9,62 +9,44 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Search Result DTO.
+ *
+ * @param channel Channel data.
+ * @param blog Blog.
+ * @param group Group data.
+ * @param video Video data.
+ * @param isFeatured Is this video a featured result?
+ * @param isSpatial Is this On Demand a 360 video?
+ * @param isStaffPick Is this video a Staff Pick?
+ * @param user User data.
+ * @param rawType The type of object that this search result is representing. See [SearchResult.type].
  */
 @JsonClass(generateAdapter = true)
 data class SearchResult(
 
-    /**
-     * Channel data.
-     */
     @Json(name = "channel")
     val channel: Channel? = null,
 
-    /**
-     * Blog.
-     */
     @Json(name = "blog")
     val blog: String? = null,
 
-    /**
-     * Group data.
-     */
     @Json(name = "group")
     val group: Group? = null,
 
-    /**
-     * Video data.
-     */
     @Json(name = "clip")
     val video: Video? = null,
 
-    /**
-     * Is this video a featured result?
-     */
     @Json(name = "is_featured")
     val isFeatured: Boolean? = null,
 
-    /**
-     * Is this On Demand a 360 video?
-     */
     @Json(name = "is_spatial")
     val isSpatial: Boolean? = null,
 
-    /**
-     * Is this video a Staff Pick?
-     */
     @Json(name = "is_staffpick")
     val isStaffPick: Boolean? = null,
 
-    /**
-     * User data.
-     */
     @Json(name = "people")
     val user: User? = null,
 
-    /**
-     * The type of object that this search result is representing.
-     * @see SearchResult.type
-     */
     @Json(name = "type")
     val rawType: String? = null
 

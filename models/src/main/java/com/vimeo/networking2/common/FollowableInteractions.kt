@@ -11,5 +11,4 @@ interface FollowableInteractions {
      * to follow an entity.
      */
     val follow: UpdatableInteraction?
-
 }

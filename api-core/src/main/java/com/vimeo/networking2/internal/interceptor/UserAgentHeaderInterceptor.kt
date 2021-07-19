@@ -32,11 +32,13 @@ import okhttp3.Response
  * @param userAgent The user agent that should be sent with every request.
  */
 class UserAgentHeaderInterceptor(private val userAgent: String) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(chain.request().let { request ->
-        val updatedHeaders = request.headers().newBuilder().addUnsafeNonAscii(HEADER_USER_AGENT, userAgent).build()
+    override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
+        chain.request().let { request ->
+            val updatedHeaders = request.headers().newBuilder().addUnsafeNonAscii(HEADER_USER_AGENT, userAgent).build()
 
-        request.newBuilder().headers(updatedHeaders).build()
-    })
+            request.newBuilder().headers(updatedHeaders).build()
+        }
+    )
 
     companion object {
         private const val HEADER_USER_AGENT = "User-Agent"

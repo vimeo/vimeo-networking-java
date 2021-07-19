@@ -19,5 +19,4 @@ enum class FollowType(override val value: String?) : StringValue {
      * Unknown follow type.
      */
     UNKNOWN(null)
-
 }

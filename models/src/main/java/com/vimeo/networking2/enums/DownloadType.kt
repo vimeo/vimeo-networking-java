@@ -32,5 +32,4 @@ enum class DownloadType(override val value: String?) : StringValue {
      * Unknown download type.
      */
     UNKNOWN(null)
-
 }

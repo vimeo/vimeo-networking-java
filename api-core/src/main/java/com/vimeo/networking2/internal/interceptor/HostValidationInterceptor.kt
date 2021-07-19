@@ -17,8 +17,9 @@ class HostValidationInterceptor(private val vimeoApiConfiguration: VimeoApiConfi
 
     override fun intercept(chain: Interceptor.Chain): Response =
         if (chain.request().url().host() != httpUrl?.host()) {
-            throw IOException("Host must match specified base URL, was ${chain.request().url().host()}, " +
-                "expected ${httpUrl?.host()}")
+            throw IOException(
+                "Host must match specified base URL, was ${chain.request().url().host()}, expected ${httpUrl?.host()}"
+            )
         } else {
             chain.proceed(chain.request())
         }

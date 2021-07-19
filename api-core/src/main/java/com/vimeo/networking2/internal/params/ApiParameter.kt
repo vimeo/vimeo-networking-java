@@ -79,10 +79,13 @@ fun <T> LocalVimeoCallAdapter.validateParameters(
     }
 
     return if (invalidParameters.isNotEmpty()) {
-        enqueueError(ApiError(
-            invalidParameters = invalidParameters,
-            developerMessage = developerMessage
-        ), callback)
+        enqueueError(
+            ApiError(
+                invalidParameters = invalidParameters,
+                developerMessage = developerMessage
+            ),
+            callback
+        )
     } else {
         null
     }

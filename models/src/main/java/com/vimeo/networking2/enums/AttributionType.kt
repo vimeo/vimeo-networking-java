@@ -28,5 +28,4 @@ enum class AttributionType(override val value: String?) : StringValue {
     UPLOAD("upload"),
 
     UNKNOWN(null)
-
 }

@@ -21,16 +21,17 @@
  */
 package com.vimeo.networking2
 
+import com.vimeo.networking2.account.AccountStore
 import com.vimeo.networking2.account.CachingAccountStore
 import com.vimeo.networking2.annotations.Internal
+import com.vimeo.networking2.config.AuthenticationMethod
 import com.vimeo.networking2.config.RetrofitSetupModule
 import com.vimeo.networking2.config.VimeoApiConfiguration
 import com.vimeo.networking2.internal.AuthService
 import com.vimeo.networking2.internal.AuthenticatorImpl
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableAuthenticatorDelegate
-import com.vimeo.networking2.account.AccountStore
-import okhttp3.Credentials
+import com.vimeo.networking2.internal.NoOpAuthenticatorImpl
 import java.util.concurrent.Executor
 
 /**
@@ -365,22 +366,21 @@ interface Authenticator {
         @JvmStatic
         @JvmName("create")
         operator fun invoke(vimeoApiConfiguration: VimeoApiConfiguration): Authenticator {
-            val retrofit = RetrofitSetupModule.retrofit(vimeoApiConfiguration)
-            val authService = retrofit.create(AuthService::class.java)
-            val basicAuthHeader: String = Credentials.basic(
-                vimeoApiConfiguration.clientId,
-                vimeoApiConfiguration.clientSecret
-            )
-            val synchronousExecutor = Executor { it.run() }
-            return AuthenticatorImpl(
-                authService,
-                basicAuthHeader,
-                vimeoApiConfiguration.clientId,
-                vimeoApiConfiguration.codeGrantRedirectUri,
-                vimeoApiConfiguration.scope,
-                CachingAccountStore(vimeoApiConfiguration.accountStore),
-                LocalVimeoCallAdapter(retrofit.callbackExecutor() ?: synchronousExecutor)
-            )
+            return when (val method = vimeoApiConfiguration.authenticationMethod) {
+                is AuthenticationMethod.AccessToken -> NoOpAuthenticatorImpl(vimeoApiConfiguration.accountStore)
+                is AuthenticationMethod.ClientCredentials -> {
+                    val retrofit = RetrofitSetupModule.retrofit(vimeoApiConfiguration)
+                    val authService = retrofit.create(AuthService::class.java)
+                    val synchronousExecutor = Executor { it.run() }
+                    AuthenticatorImpl(
+                        authService,
+                        method,
+                        vimeoApiConfiguration.codeGrantRedirectUri,
+                        CachingAccountStore(vimeoApiConfiguration.accountStore),
+                        LocalVimeoCallAdapter(retrofit.callbackExecutor() ?: synchronousExecutor)
+                    )
+                }
+            }
         }
     }
 }

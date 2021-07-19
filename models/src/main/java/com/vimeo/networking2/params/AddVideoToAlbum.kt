@@ -5,18 +5,15 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Representation of a video that should be added to an album.
+ *
+ * @param uri The URI of the video.
+ * @param position The position of the video.
  */
 @JsonClass(generateAdapter = true)
 data class AddVideoToAlbum(
-    /**
-     * The URI of the video.
-     */
     @Json(name = "uri")
     val uri: String,
 
-    /**
-     * The position of the video.
-     */
     @Json(name = "position")
     val position: Int?
 )

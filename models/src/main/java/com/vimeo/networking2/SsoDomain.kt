@@ -27,26 +27,21 @@ import com.vimeo.networking2.annotations.Internal
 
 /**
  * Information about a domain that is supported by SSO.
+ *
+ * @param uri The Vimeo URI of the domain.
+ * @param domainName The name of the domain, also known as the hostname in the URL RFC 1738.
+ * @param connectUrl The URL to which the user can be directed to authenticate themselves.
  */
 @Internal
 @JsonClass(generateAdapter = true)
 data class SsoDomain(
 
-    /**
-     * The Vimeo URI of the domain.
-     */
     @Json(name = "uri")
     val uri: String? = null,
 
-    /**
-     * The name of the domain, also known as the hostname in the URL RFC 1738.
-     */
     @Json(name = "domain_name")
     val domainName: String? = null,
 
-    /**
-     * The URL to which the user can be directed to authenticate themselves.
-     */
     @Json(name = "connect_url")
     val connectUrl: String? = null
 )

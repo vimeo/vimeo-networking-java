@@ -24,7 +24,7 @@ enum class StreamAccessType(override val value: String?) : StringValue {
     RESTRICTED("restricted"),
 
     /**
-     * The video isn't available for streaming
+     * The video isn't available for streaming.
      */
     UNAVAILABLE("unavailable"),
 

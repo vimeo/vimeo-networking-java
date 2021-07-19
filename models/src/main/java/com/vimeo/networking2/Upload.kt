@@ -11,64 +11,45 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Upload data.
+ *
+ * @param approach The approach for uploading the video. See [Upload.approachType].
+ * @param completeUri The URI for completing the upload.
+ * @param form The HTML form for uploading a video through the post approach.
+ * @param gcs GCS information to perform an upload.
+ * @param link The link of the video to capture through the pull approach.
+ * @param redirectUrl The redirect URL for the upload app.
+ * @param size The file size in bytes of the uploaded video.
+ * @param status The status code for the availability of the uploaded video. See [Upload.statusType].
+ * @param uploadLink The link for sending video file data.
  */
 @JsonClass(generateAdapter = true)
 data class Upload(
 
-    /**
-     * The approach for uploading the video.
-     * @see Upload.approachType
-     */
     @Json(name = "approach")
     val approach: String? = null,
 
-    /**
-     * The URI for completing the upload.
-     */
     @Json(name = "complete_uri")
     val completeUri: String? = null,
 
-    /**
-     * The HTML form for uploading a video through the post approach.
-     */
     @Json(name = "form")
     val form: String? = null,
 
-    /**
-     * GCS information to perform an upload.
-     */
     @Internal
     @Json(name = "gcs")
     val gcs: List<Gcs>? = null,
 
-    /**
-     * The link of the video to capture through the pull approach.
-     */
     @Json(name = "link")
     val link: String? = null,
 
-    /**
-     * The redirect URL for the upload app.
-     */
     @Json(name = "redirectUrl")
     val redirectUrl: String? = null,
 
-    /**
-     * The file size in bytes of the uploaded video.
-     */
     @Json(name = "size")
     val size: Long? = null,
 
-    /**
-     * The status code for the availability of the uploaded video.
-     * @see Upload.statusType
-     */
     @Json(name = "status")
     val status: String? = null,
 
-    /**
-     * The link for sending video file data.
-     */
     @Json(name = "upload_link")
     val uploadLink: String? = null
 

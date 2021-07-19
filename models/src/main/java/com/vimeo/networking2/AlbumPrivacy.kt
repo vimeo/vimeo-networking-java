@@ -9,20 +9,16 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * The privacy set for an album.
+ *
+ * @param password The privacy-enabled password to see this album. Present only when privacy.view is password.
+ * @param viewPrivacy Who can view the album. See [AlbumPrivacy.viewPrivacyType].
  */
 @JsonClass(generateAdapter = true)
 data class AlbumPrivacy(
 
-    /**
-     * The privacy-enabled password to see this album. Present only when privacy.view is password.
-     */
     @Json(name = "password")
     val password: String? = null,
 
-    /**
-     * Who can view the album.
-     * @see AlbumPrivacy.viewPrivacyType
-     */
     @Json(name = "view")
     val viewPrivacy: String? = null
 )

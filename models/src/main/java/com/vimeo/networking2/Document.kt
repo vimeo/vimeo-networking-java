@@ -5,14 +5,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Document data.
+ *
+ * @param html The partially stripped html for documents like the terms of service.
  */
 @JsonClass(generateAdapter = true)
 data class Document(
 
-    /**
-     * The partially stripped html for documents like the terms of service.
-     */
     @Json(name = "html")
     val html: String? = null
-
 )

@@ -11,7 +11,7 @@ enum class TvodItemType(override val value: String?) : StringValue {
     FILM("film"),
 
     /**
-     * The TVOD page is for a series
+     * The TVOD page is for a series.
      */
     SERIES("series"),
 

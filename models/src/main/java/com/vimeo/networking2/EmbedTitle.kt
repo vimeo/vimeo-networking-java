@@ -5,25 +5,20 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Embed data.
+ *
+ * @param name How the embeddable player handles the video title.
+ * @param owner How the embeddable player handles the video owner's information.
+ * @param portrait How the embeddable player handles the video owner's portrait.
  */
 @JsonClass(generateAdapter = true)
 data class EmbedTitle(
 
-    /**
-     * How the embeddable player handles the video title.
-     */
     @Json(name = "name")
     val name: String? = null,
 
-    /**
-     * How the embeddable player handles the video owner's information.
-     */
     @Json(name = "owner")
     val owner: String? = null,
 
-    /**
-     * How the embeddable player handles the video owner's portrait.
-     */
     @Json(name = "portrait")
     val portrait: String? = null
 

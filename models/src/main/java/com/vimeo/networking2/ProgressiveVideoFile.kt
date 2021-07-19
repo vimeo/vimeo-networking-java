@@ -12,6 +12,17 @@ import java.util.Date
 
 /**
  * The representation of a video file that could be one of a number of types.
+ *
+ * @param createdTime The time in ISO 8601 format when the video file was created.
+ * @param fps The FPS of the video.
+ * @param height The height of the video in pixels.
+ * @param md5 The MD5 hash of the video file.
+ * @param videoQuality The video quality (as determined by height and width). See
+ * [ProgressiveVideoFile.videoQualityType].
+ * @param size The file size of the video.
+ * @param sourceLink The source link for the video file.
+ * @param rawType The type of the video file. See [ProgressiveVideoFile.type].
+ * @param width The width of the video in pixels.
  */
 @Deprecated("Use DownloadableVideoFile instead")
 @JsonClass(generateAdapter = true)
@@ -26,59 +37,30 @@ data class ProgressiveVideoFile(
     @Json(name = "log")
     override val log: String? = null,
 
-    /**
-     * The time in ISO 8601 format when the video file was created.
-     */
     @Json(name = "created_time")
     val createdTime: Date? = null,
 
-    /**
-     * The FPS of the video.
-     */
     @Json(name = "fps")
     val fps: Double? = null,
 
-    /**
-     * The height of the video in pixels.
-     */
     @Json(name = "height")
     val height: Int? = null,
 
-    /**
-     * The MD5 hash of the video file.
-     */
     @Json(name = "md5")
     val md5: String? = null,
 
-    /**
-     * The video quality (as determined by height and width).
-     * @see ProgressiveVideoFile.videoQualityType
-     */
     @Json(name = "quality")
     val videoQuality: String? = null,
 
-    /**
-     * The file size of the video.
-     */
     @Json(name = "size")
     val size: Long? = null,
 
-    /**
-     * The source link for the video file.
-     */
     @Json(name = "source_link")
     val sourceLink: String? = null,
 
-    /**
-     * The type of the video file.
-     * @see ProgressiveVideoFile.type
-     */
     @Json(name = "type")
     val rawType: String? = null,
 
-    /**
-     * The width of the video in pixels.
-     */
     @Json(name = "width")
     val width: Int? = null
 
