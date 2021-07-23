@@ -15,8 +15,8 @@ import java.util.Date
  * @param comment The clip comment associated with a comment notification.
  * @param createdTime The ISODate time a notification was created.
  * @param credit The clip credit associated with a credit notification.
- * @param new Is the notification marked as new.
- * @param seen Is the notification marked as seen.
+ * @param new Whether or not the notification is marked as new.
+ * @param seen Whether or not the notification is marked as seen.
  * @param rawType The type of notification. See [Notification.type].
  * @param uri The notification's canonical relative URI.
  * @param user The user associated with a user follow notification.

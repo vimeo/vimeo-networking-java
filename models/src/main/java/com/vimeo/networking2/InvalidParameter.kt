@@ -13,7 +13,7 @@ import com.vimeo.networking2.enums.asEnum
  * @param field Name of the invalid field.
  * @param errorCode Error code for the invalid field. See [ApiError.errorCodeType].
  * @param error The user readable error message detailing why the request was invalid.
- * @param developerMessage Detailed description on why the field is invalid.
+ * @param developerMessage Detailed description of why the field is invalid.
  */
 @JsonClass(generateAdapter = true)
 data class InvalidParameter(

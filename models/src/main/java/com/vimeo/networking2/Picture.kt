@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 
 /**
- * Pictures information such as dimensions, link to image, etc...
+ * Information about a picture (dimensions, link to image, etc.).
  *
  * @param height The height of the image.
  * @param link The direct link to the image.

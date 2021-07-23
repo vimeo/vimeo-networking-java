@@ -10,7 +10,7 @@ import com.vimeo.networking2.enums.asEnum
 /**
  * Product data.
  *
- * @param billingPeriod Distinguish between monthly and yearly products. See [Product.billingPeriodType].
+ * @param billingPeriod The monthly or yearly billing period of the product. See [Product.billingPeriodType].
  * @param description Product description.
  * @param metadata Metadata about the product.
  * @param name Product name.

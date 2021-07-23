@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Paging urls for next, previous, fist and last pages.
+ * Paging urls for next, previous, first and last pages.
  *
  * @param next Next page's url.
  * @param previous Previous page's url.

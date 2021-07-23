@@ -5,7 +5,8 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 
 /**
- * This data requires a bearer token with the private scope.
+ * The total number of unacknowledged notifications of various types. This data requires a bearer token with the private
+ * scope.
  *
  * @param accountExpirationWarningTotal The user's Plus or PRO account is about to expire.
  * @param comment There are new comments on a video.

@@ -13,7 +13,7 @@ import java.util.Date
  * @param lastVideoFeaturedTime The last time, in ISO 8601 format, that a video was featured.
  * @param link The URL to access the category in a browser.
  * @param name The display name that identifies the category.
- * @param parent The container of this category's parent category, if the current category is a subcategory.
+ * @param parent The parent category if this category is a subcategory, null otherwise.
  * @param pictures The active picture for this category; defaults to vertical color bars.
  * @param resourceKey The resource key of the category.
  * @param subcategories All the subcategories that belong to this category, if the current category is a top-level

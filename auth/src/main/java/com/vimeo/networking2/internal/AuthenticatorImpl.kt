@@ -175,8 +175,7 @@ internal class AuthenticatorImpl(
             authenticationMethod.basicAuthHeader,
             accessToken,
             authenticationMethod.scopes
-        )
-            .enqueueWithAccountStore(callback)
+        ).enqueueWithAccountStore(callback)
     }
 
     override fun exchangeOAuth1Token(

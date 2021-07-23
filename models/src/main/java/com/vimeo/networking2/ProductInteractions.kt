@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 /**
  * Purchase a product action information.
  *
- * @param purchase Purchase product.
+ * @param purchase The interaction for purchasing a product.
  */
 @JsonClass(generateAdapter = true)
 data class ProductInteractions(
