@@ -17,7 +17,6 @@ import com.vimeo.networking2.enums.asEnum
  * @param joinPrivacy Who can join the group. See [GroupPrivacy.joinPrivacyType].
  * @param videosPrivacy Who can add videos to the group. See [GroupPrivacy.videosPrivacyType].
  * @param viewPrivacy Who can view the group. See [GroupPrivacy.viewPrivacyType].
- * @param
  */
 @JsonClass(generateAdapter = true)
 data class GroupPrivacy(
