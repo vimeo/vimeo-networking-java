@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.annotations.Internal
 
 /**
- * All action that can be taken on a video.
+ * All actions that can be taken on a video.
  *
  * @param album The interaction used to add a video to multiple albums.
  * @param buy The buy interaction for a On Demand video.

@@ -7,10 +7,10 @@ import com.vimeo.networking2.annotations.Internal
 /**
  * Review page information.
  *
- * @param active Setting to check if the review page is active for this video.
+ * @param active Whether or not the review page is active for this video.
  * @param link Link to the Vimeo review page.
- * @param notes Setting to check if notes are enabled or disabled on the review page.
- * @param vimeoLogo Setting to check if the vimeo logo should be displayed on the review page.
+ * @param notes Whether or not notes are enabled on the review page.
+ * @param vimeoLogo Whether or not the vimeo logo should be displayed on the review page.
  */
 @Internal
 @JsonClass(generateAdapter = true)

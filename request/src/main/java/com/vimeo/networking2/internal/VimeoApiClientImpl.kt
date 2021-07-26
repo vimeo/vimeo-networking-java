@@ -47,7 +47,7 @@ import com.vimeo.networking2.NotificationSubscriptions
 import com.vimeo.networking2.PictureCollection
 import com.vimeo.networking2.Product
 import com.vimeo.networking2.ProductList
-import com.vimeo.networking2.ProgrammedContentItemList
+import com.vimeo.networking2.ProgrammedCinemaItemList
 import com.vimeo.networking2.ProjectItemList
 import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
@@ -1109,7 +1109,7 @@ internal class VimeoApiClientImpl(
         fieldFilter: String?,
         queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
-        callback: VimeoCallback<ProgrammedContentItemList>
+        callback: VimeoCallback<ProgrammedCinemaItemList>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getProgramContentItemList(

@@ -11,7 +11,7 @@ import com.vimeo.networking2.enums.asEnum
  * Information about the user's trial period.
  *
  * @param rawStatus The status of the user's trial. If the value is "free_trial" the user is currently in a free trial.
- * @param hasBeenInFreeTrial Has the user been in (or is currently in) a free trial.
+ * @param hasBeenInFreeTrial Whether or not the user has been in (or is currently in) a free trial.
  */
 @JsonClass(generateAdapter = true)
 data class SubscriptionTrial(

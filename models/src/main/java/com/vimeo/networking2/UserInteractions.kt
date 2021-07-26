@@ -7,7 +7,7 @@ import com.vimeo.networking2.common.FollowableInteractions
 /**
  * All actions that can be taken on a user.
  *
- * @param addPrivacyUser Disallow a user from viewing a private channel.
+ * @param addPrivacyUser Information related to disallowing a user from viewing a private channel.
  * @param block Information related to the block status of this user.
  * @param report Information regarding where and how to report a user.
  * @param facebookConnectedApp Information related to the Facebook connected app.

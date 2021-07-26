@@ -10,7 +10,7 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * This model represents a "season" of content. Seasons are logical groupings of videos set up by creators. All TVODs
- * will have a Season, even if it is  a feature film - the season would contain the film in this case.
+ * will have a Season, even if it is a feature film - the season would contain the film in this case.
  *
  * @param description The description for this season.
  * @param metadata Season metadata.

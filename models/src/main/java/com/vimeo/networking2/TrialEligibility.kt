@@ -7,7 +7,7 @@ import com.vimeo.networking2.annotations.Internal
 /**
  * Trial account eligibility.
  *
- * @param eligible `true` or `false` depending on if the user is eligible for a trial period.
+ * @param eligible Whether or not the user is eligible for a trial period.
  */
 @Internal
 @JsonClass(generateAdapter = true)

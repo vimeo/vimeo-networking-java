@@ -437,7 +437,7 @@ internal interface VimeoService {
         @Query(FIELD_FILTER) fieldFilter: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
-    ): VimeoCall<ProgrammedContentItemList>
+    ): VimeoCall<ProgrammedCinemaItemList>
 
     @GET
     fun getRecommendationList(

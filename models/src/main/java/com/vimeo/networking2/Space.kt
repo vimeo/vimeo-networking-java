@@ -11,8 +11,8 @@ import com.vimeo.networking2.enums.asEnum
 /**
  * Upload quota space data.
  *
- * @param showing Whether the values of the upload_quota.space fields are for the lifetime quota or the periodic quota.
- * See [Space.showingType].
+ * @param showing The amount of time represented by the available space quota representation (e.g. lifetime or
+ * periodic). See [Space.showingType].
  */
 @JsonClass(generateAdapter = true)
 data class Space(

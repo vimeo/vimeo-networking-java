@@ -13,17 +13,18 @@ import com.vimeo.networking2.annotations.Internal
  * @param liveStats Information about this video's live stream stats.
  * @param onDemand Information about the video's on-demand status.
  * @param pictures Information about this video's thumbnails.
- * @param playback The DRM playback status connection for this video.
- * @param recommendations The recommendations for this video.
- * @param related Related content for this video.
+ * @param playback Information about the DRM playback status connection for this video.
+ * @param recommendations Information about the recommendations for this video.
+ * @param related Information about the related content for this video.
  * @param season Information about the video's season.
  * @param textTracks Information about this video's text tracks.
  * @param trailer Information about this video's VOD trailer.
  * @param usersWithAccess Information about the user privacy of this video, if the video privacy is users.
- * @param availableAlbums Connection to get all the logged-in user's available albums that this video can be added to.
- * @param availableChannels Connection to get all the logged-in user's available channels that this video can be added
- * to.
- * @param publish Connection to get the Publish to Social data for this video.
+ * @param availableAlbums Information about how to get all the logged-in user's available albums that this video can be
+ * added to.
+ * @param availableChannels Information about how to get all the logged-in user's available channels that this video can
+ * be added to.
+ * @param publish Information about how to get the Publish to Social data for this video.
  */
 @JsonClass(generateAdapter = true)
 data class VideoConnections(

@@ -12,14 +12,14 @@ import com.vimeo.networking2.enums.asEnum
  *
  * @param category The category associated with this programmed cinema item.
  * @param channel The channel associated with this programmed cinema item.
- * @param metadata ProgrammedContentItem metadata.
+ * @param metadata The programmed cinema item's metadata.
  * @param name The name of the programmed cinema item.
- * @param rawType The type of programmed cinema item. See [ProgrammedContentItem.type].
+ * @param rawType The type of programmed cinema item. See [ProgrammedCinemaItem.type].
  * @param uri The programmed cinema items' canonical relative URI.
  * @param videoList Content for the programmed cinema item.
  */
 @JsonClass(generateAdapter = true)
-data class ProgrammedContentItem(
+data class ProgrammedCinemaItem(
 
     @Json(name = "category")
     val category: Category? = null,
@@ -44,8 +44,8 @@ data class ProgrammedContentItem(
 )
 
 /**
- * @see ProgrammedContentItem.rawType
- * @see ProgrammedContentItem
+ * @see ProgrammedCinemaItem.rawType
+ * @see ProgrammedCinemaItem
  */
-val ProgrammedContentItem.type: ProgrammedContentItemType
+val ProgrammedCinemaItem.type: ProgrammedContentItemType
     get() = rawType.asEnum(ProgrammedContentItemType.UNKNOWN)

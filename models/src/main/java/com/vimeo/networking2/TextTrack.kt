@@ -9,7 +9,7 @@ import com.vimeo.networking2.enums.asEnum
 import java.util.Date
 
 /**
- * Information on a text text.
+ * Information on a text track.
  *
  * @param active Whether this text track is active.
  * @param hlsLink The read-only URL of the text track file, intended for use with HLS playback.

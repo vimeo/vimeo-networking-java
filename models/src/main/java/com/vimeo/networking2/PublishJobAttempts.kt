@@ -7,14 +7,14 @@ import com.squareup.moshi.JsonClass
  * An object representing information on previous attempts to publish to
  * third-party social networks.
  *
- * @param facebook true or false depending on whether a previous attempt was made to publish the video to Facebook. Note
- * that if a previous attempt failed, this value will still be true.
- * @param youtube true or false depending on whether a previous attempt was made to publish the video to YouTube. Note
- * that if a previous attempt failed, this value will still be true.
- * @param linkedin true or false depending on whether a previous attempt was made to publish the video to LinkedIn. Note
- * that if a previous attempt failed, this value will still be true.
- * @param twitter true or false depending on whether a previous attempt was made to publish the video to Twitter. Note
- * that if a previous attempt failed, this value will still be true.
+ * @param facebook Whether or not a previous attempt was made to publish the video to Facebook. Note that if a previous
+ * attempt failed, this value will still be true.
+ * @param youtube Whether or not a previous attempt was made to publish the video to YouTube. Note that if a previous
+ * attempt failed, this value will still be true.
+ * @param linkedin Whether or not a previous attempt was made to publish the video to LinkedIn. Note that if a previous
+ * attempt failed, this value will still be true.
+ * @param twitter Whether or not a previous attempt was made to publish the video to Twitter. Note that if a previous
+ * attempt failed, this value will still be true.
  */
 @JsonClass(generateAdapter = true)
 data class PublishJobAttempts(

@@ -991,7 +991,7 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Fetch a [ProgrammedContentItemList] from the provided endpoint.
+     * Fetch a [ProgrammedCinemaItemList] from the provided endpoint.
      *
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
@@ -1008,7 +1008,7 @@ interface VimeoApiClient {
         fieldFilter: String?,
         queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
-        callback: VimeoCallback<ProgrammedContentItemList>
+        callback: VimeoCallback<ProgrammedCinemaItemList>
     ): VimeoRequest
 
     /**

@@ -19,7 +19,8 @@ import java.util.Date
  * @param createdTime The time in ISO 8601 format when the user account was created.
  * @param email The user's email address.
  * @param emails An array of alternate emails for the user.
- * @param isCreator Set to true for user instances embedded in a [Video] instance, otherwise will be unset.
+ * @param isCreator Whether or not this user is the creator of the parent resource (e.g. [Video]) in which it is
+ * embedded.
  * @param link The absolute URL of this user's profile page.
  * @param liveQuota Information about the user's live streaming quota.
  * @param location The user's location.
@@ -27,7 +28,8 @@ import java.util.Date
  * @param pictures The active portrait of this user.
  * @param preferences User's preferences.
  * @param resourceKey The user's resource key string.
- * @param uploadQuota Appears only when the user has upload access and is looking at their own user record.
+ * @param uploadQuota The user's upload quota. Appears only when the logged in user has upload access and is looking at
+ * their own user record.
  * @param uri The user's canonical relative URI.
  * @param websites The user's websites.
  * @param membership The user's membership.

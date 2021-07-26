@@ -43,7 +43,7 @@ import com.vimeo.networking2.NotificationSubscriptions
 import com.vimeo.networking2.PictureCollection
 import com.vimeo.networking2.Product
 import com.vimeo.networking2.ProductList
-import com.vimeo.networking2.ProgrammedContentItemList
+import com.vimeo.networking2.ProgrammedCinemaItemList
 import com.vimeo.networking2.ProjectItemList
 import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
@@ -667,7 +667,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         fieldFilter: String?,
         queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
-        callback: VimeoCallback<ProgrammedContentItemList>
+        callback: VimeoCallback<ProgrammedCinemaItemList>
     ): VimeoRequest = client.fetchProgrammedContentItemList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchRecommendationList(

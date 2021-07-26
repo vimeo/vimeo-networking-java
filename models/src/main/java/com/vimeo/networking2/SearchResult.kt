@@ -14,9 +14,9 @@ import com.vimeo.networking2.enums.asEnum
  * @param blog Blog.
  * @param group Group data.
  * @param video Video data.
- * @param isFeatured Is this video a featured result?
- * @param isSpatial Is this On Demand a 360 video?
- * @param isStaffPick Is this video a Staff Pick?
+ * @param isFeatured Whether or not the video is a featured result.
+ * @param isSpatial Whether or not this is an On Demand a 360 video.
+ * @param isStaffPick Whether or not this is a Staff Pick video.
  * @param user User data.
  * @param rawType The type of object that this search result is representing. See [SearchResult.type].
  */
