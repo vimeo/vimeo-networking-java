@@ -8,20 +8,26 @@ import com.vimeo.networking2.annotations.Internal
  * The total number of unacknowledged notifications of various types. This data requires a bearer token with the private
  * scope.
  *
- * @param accountExpirationWarningTotal The user's Plus or PRO account is about to expire.
- * @param comment There are new comments on a video.
- * @param credit The user has been added to the credits of a video.
- * @param follow A user has followed the current user.
- * @param followedUserVideoAvailable Someone who the user follows has uploaded a new video.
- * @param like There are new likes on the user's videos.
- * @param mention The user has been at-mentioned in a comment.
- * @param reply A comment by the user that has received a new reply.
- * @param share Someone has shared a video with the user.
- * @param storageWarning The user is approaching their weekly storage limit.
- * @param videoAvailable The transcode is complete for the user's uploaded video, and the video has now been posted.
- * @param vodPreorderAvailable The user's preordered VOD is now available.
- * @param vodPurchase The user has purchased VOD.
- * @param vodRentalExpirationWarning The user's VOD rental is about to expire.
+ * @param accountExpirationWarningTotal The count of unacknowledged notifications that the user's Plus or PRO account is
+ * about to expire.
+ * @param comment The count of unacknowledged notifications for new comments on a user's video.
+ * @param credit The count of unacknowledged notifications that the user has been added to the credits of a video.
+ * @param follow The count of unacknowledged notifications that a user has followed the current user.
+ * @param followedUserVideoAvailable The count of unacknowledged notifications that someone who the user follows has
+ * uploaded a new video.
+ * @param like The count of unacknowledged notifications that there are new likes on the user's videos.
+ * @param mention The count of unacknowledged notifications that the user has been mentioned in a comment.
+ * @param reply The count of unacknowledged notifications that a comment by the user that has received a new reply.
+ * @param share The count of unacknowledged notifications that someone has shared a video with the user.
+ * @param storageWarning The count of unacknowledged notifications that the user is approaching their weekly storage
+ * limit.
+ * @param videoAvailable The count of unacknowledged notifications that the transcode is complete for the user's
+ * uploaded video, and the video has now been posted.
+ * @param vodPreorderAvailable The count of unacknowledged notifications that the user's preordered VOD is now
+ * available.
+ * @param vodPurchase The count of unacknowledged notifications that the user has purchased VOD.
+ * @param vodRentalExpirationWarning The count of unacknowledged notifications that the user's VOD rental is about to
+ * expire.
  */
 @Internal
 @JsonClass(generateAdapter = true)

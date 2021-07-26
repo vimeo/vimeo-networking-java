@@ -7,7 +7,7 @@ import java.util.Date
 /**
  * A collection of push notifications the user is subscribed to.
  *
- * @param modifiedTime The ISODate time the settings were modified.
+ * @param modifiedTime The time in ISO 8601 format when settings were modified.
  * @param subscriptions The settings for each notification subscription.
  * @param uri The subscription settings' canonical relative URI.
  */
