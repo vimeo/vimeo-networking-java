@@ -68,11 +68,11 @@ authenticator.clientCredentials(new VimeoCallback<VimeoAccount>() {
 });
 ```
 
-Upon success, a [VimeoAccount](../models/src/main/java/com/vimeo/networking2/VimeoAccount.kt) is returned. It contains your basic access token that will be used to make requests. The `onError` method will inform you of three types of possible errors that can occur - API errors, invalid token errors, exceptions, and unknown errors.  The `VimeoAccount` is stored in the `AccountStore` instance that was provided to the `VimeoApiConfiguration` and will be the account used for all subsequent requests. If there was previously a different account in the `AccountStore`, authenticating will overwrite the previously stored account.
+Upon success, a [VimeoAccount](../models/src/main/java/com/vimeo/networking2/VimeoAccount.kt) is returned. It contains your basic access token that will be used to make requests. The `onError` method will inform you of four types of possible errors that can occur - API errors, invalid token errors, exceptions, and unknown errors.  The `VimeoAccount` is stored in the `AccountStore` instance that was provided to the `VimeoApiConfiguration` and will be the account used for all subsequent requests. If there was previously a different account in the `AccountStore`, authenticating will overwrite the previously stored account.
 
 ## Scopes
 
-The data that you can access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#scopes) that can be provided. Each scope maps to an enum [ScopeType](../api-core/src/main/java/com/vimeo/networking2/ScopeType.kt). Providing a list of scopes is optional, and if you don't provide one, by default `ScopeType.PUBLIC` will be used.  Beware that many properties returned by the API will be `null` if only the public scope is used.
+The data that you can access with the token is determined by a list of scopes. Here are the list of [Scopes](https://developer.vimeo.com/api/authentication#table-1) that can be provided. Each scope maps to an enum [ScopeType](../api-core/src/main/java/com/vimeo/networking2/ScopeType.kt). Providing a list of scopes is optional, and if you don't provide one, by default `ScopeType.PUBLIC` will be used.  Beware that many properties returned by the API will be `null` if only the public scope is used.
 
 ```kotlin
 // Kotlin
