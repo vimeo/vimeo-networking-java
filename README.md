@@ -52,8 +52,8 @@ repositories {
 
 Then add the following two dependencies to your `build.gradle` file.
 ```groovy
-implementation "com.github.vimeo.vimeo-networking-java:vimeo-networking:2.0.0"
-implementation "com.github.vimeo.vimeo-networking-java:models:2.0.0"
+implementation "com.github.vimeo.vimeo-networking-java:vimeo-networking:LATEST-VERSION"
+implementation "com.github.vimeo.vimeo-networking-java:models:LATEST-VERSION"
 ```
 
 See the [CHANGELOG](CHANGELOG.md) for the changes to each release.
