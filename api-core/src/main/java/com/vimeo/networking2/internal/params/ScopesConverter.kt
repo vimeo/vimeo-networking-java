@@ -30,5 +30,5 @@ import java.util.Locale
  */
 class ScopesConverter : Converter<Scopes, String> {
     override fun convert(value: Scopes): String =
-            value.scopes.joinToString(separator = " ", transform = { it.value.toLowerCase(Locale.ROOT) })
+        value.scopes.joinToString(separator = " ", transform = { it.value.lowercase(Locale.ROOT) })
 }

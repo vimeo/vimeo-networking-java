@@ -52,7 +52,7 @@ object ApiConstants {
     }
 
     /**
-     * Parameters
+     * Parameters.
      */
     object Parameters {
         // Common parameters

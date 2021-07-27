@@ -10,6 +10,8 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Purchase a video action data.
+ *
+ * @param purchaseStatus Purchase status. See [PurchaseInteraction.purchaseStatusType].
  */
 @JsonClass(generateAdapter = true)
 data class PurchaseInteraction(
@@ -20,10 +22,6 @@ data class PurchaseInteraction(
     @Json(name = "uri")
     override val uri: String? = null,
 
-    /**
-     * Purchase status.
-     * @see PurchaseInteraction.purchaseStatusType
-     */
     @Json(name = "status")
     val purchaseStatus: String? = null
 

@@ -5,12 +5,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * An object that is used to patch video addition updates to an Album.
+ *
+ * @param uri The URI of the video.
  */
 @JsonClass(generateAdapter = true)
 data class RemoveVideoFromAlbum(
-    /**
-     * The URI of the video.
-     */
+
     @Json(name = "uri")
     val uri: String
 )

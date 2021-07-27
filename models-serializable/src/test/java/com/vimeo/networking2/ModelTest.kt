@@ -56,7 +56,7 @@ class ModelTest {
                         }
                     }
 
-                    assertThat(result).isEqualToComparingFieldByField(model)
+                    assertThat(result).usingRecursiveComparison().isEqualTo(model)
                 }
     }
 

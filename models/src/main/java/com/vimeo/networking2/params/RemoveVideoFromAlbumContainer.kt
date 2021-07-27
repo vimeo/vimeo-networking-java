@@ -5,12 +5,12 @@ import com.squareup.moshi.JsonClass
 
 /**
  * Container for [RemoveVideoFromAlbum].
+ *
+ * @param video The video that should be removed.
  */
 @JsonClass(generateAdapter = true)
 data class RemoveVideoFromAlbumContainer(
-    /**
-     * The video that should be removed.
-     */
+
     @Json(name = "video")
     val video: RemoveVideoFromAlbum
 ) {

@@ -5,49 +5,38 @@ import com.squareup.moshi.JsonClass
 
 /**
  * A model that holds the type of push subscriptions a user has.
+ *
+ * @param comment Whether or not the user has a subscription for the "new comments on your video" setting.
+ * @param credit Whether or not the user has a subscription for the "you are added to the credits of a video" setting.
+ * @param like Whether or not the user has a subscription for the "new likes on your videos" setting.
+ * @param reply Whether or not the user has a subscription for the "new reply to your comment" setting.
+ * @param follow Whether or not the user has a subscription for the "a user follows you" setting.
+ * @param videoAvailable Whether or not the user has a subscription for the "new upload transcode complete (new video is
+ * posted)" setting.
+ * @param followedUserVideoAvailable Whether or not the user has a subscription for the "someone you follow uploaded a
+ * new item" setting.
  */
 @JsonClass(generateAdapter = true)
 data class Subscriptions(
 
-    /**
-     * The "new comments on your video" setting.
-     */
     @Json(name = "comment")
     val comment: Boolean = false,
 
-    /**
-     * The "you are added to the credits of a video".
-     */
     @Json(name = "credit")
     val credit: Boolean = false,
 
-    /**
-     * The "new likes on your videos" setting.
-     */
     @Json(name = "like")
     val like: Boolean = false,
 
-    /**
-     * The "new reply to your comment" setting.
-     */
     @Json(name = "reply")
     val reply: Boolean = false,
 
-    /**
-     * The "a user follows you" setting.
-     */
     @Json(name = "follow")
     val follow: Boolean = false,
 
-    /**
-     * The "new upload transcode complete (new video is posted)" setting.
-     */
     @Json(name = "video_available")
     val videoAvailable: Boolean = false,
 
-    /**
-     * The "someone you follow uploaded a new item" setting.
-     */
     @Json(name = "followed_user_video_available")
     val followedUserVideoAvailable: Boolean = false
 

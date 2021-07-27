@@ -21,7 +21,13 @@
  */
 package com.vimeo.networking2.internal
 
-import com.vimeo.networking2.*
+import com.vimeo.networking2.ApiConstants
+import com.vimeo.networking2.ApiError
+import com.vimeo.networking2.CancellableVimeoRequest
+import com.vimeo.networking2.NoOpVimeoRequest
+import com.vimeo.networking2.VimeoCallback
+import com.vimeo.networking2.VimeoRequest
+import com.vimeo.networking2.VimeoResponse
 import com.vimeo.networking2.logging.VimeoLogger
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -57,11 +63,13 @@ internal class VimeoCallEmptyResponseAdapter(
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
                     callbackExecutor.execute {
-                        callback.onSuccess(VimeoResponse.Success(
-                            Unit,
-                            response.determineOrigin(),
-                            response.code()
-                        ))
+                        callback.onSuccess(
+                            VimeoResponse.Success(
+                                Unit,
+                                response.determineOrigin(),
+                                response.code()
+                            )
+                        )
                     }
                 } else {
                     val vimeoResponseError = response.parseErrorResponse(responseBodyConverter, vimeoLogger)

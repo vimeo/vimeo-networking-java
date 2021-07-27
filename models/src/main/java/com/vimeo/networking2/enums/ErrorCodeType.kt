@@ -354,5 +354,4 @@ enum class ErrorCodeType(override val value: String?) : StringValue {
      * enumerated below.
      */
     DEFAULT(null)
-
 }

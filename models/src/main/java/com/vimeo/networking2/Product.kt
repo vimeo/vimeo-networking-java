@@ -9,44 +9,32 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Product data.
+ *
+ * @param billingPeriod The monthly or yearly billing period of the product. See [Product.billingPeriodType].
+ * @param description Product description.
+ * @param metadata Metadata about the product.
+ * @param name Product name.
+ * @param productId Product ID.
+ * @param uri The unique identifier you can use to access the product.
  */
 @JsonClass(generateAdapter = true)
 data class Product(
 
-    /**
-     * Distinguish between monthly and yearly products.
-     * @see Product.billingPeriodType
-     */
     @Json(name = "billing_period")
     val billingPeriod: String? = null,
 
-    /**
-     * Product description.
-     */
     @Json(name = "description")
     val description: String? = null,
 
-    /**
-     * Metadata about the product.
-     */
     @Json(name = "metadata")
     val metadata: MetadataInteractions<ProductInteractions>? = null,
 
-    /**
-     * Product name
-     */
     @Json(name = "name")
     val name: String? = null,
 
-    /**
-     * Product ID.
-     */
     @Json(name = "product_id")
     val productId: String? = null,
 
-    /**
-     * The unique identifier you can use to access the product.
-     */
     @Json(name = "uri")
     val uri: String? = null
 

@@ -6,13 +6,12 @@ import com.vimeo.networking2.annotations.Internal
 
 /**
  * All actions that can be taken on a [Season].
+ *
+ * @param purchase The interactions for an On Demand video.
  */
 @JsonClass(generateAdapter = true)
 data class SeasonInteractions(
 
-    /**
-     * The interactions for an On Demand video.
-     */
     @Internal
     @Json(name = "purchase")
     val purchase: PurchaseOnDemandInteraction? = null

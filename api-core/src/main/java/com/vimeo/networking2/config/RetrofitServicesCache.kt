@@ -49,5 +49,4 @@ class RetrofitServicesCache(private val retrofit: Retrofit) {
     fun clear() {
         cache.clear()
     }
-
 }

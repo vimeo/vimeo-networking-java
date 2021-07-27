@@ -1,9 +1,8 @@
-#### Issue
-(If applicable)
-- https://github.com/vimeo//vimeo-networking-java/issues/NUMBER
+# Summary
+A summary of the changes. If applicable, include a link to the issue that this closes.
 
-#### Summary
+## Description
 A brief but thorough description of the changes.
 
-#### How to Test
-Detailed list of what to test and how to test it. Include all edge cases.
+## How to Test
+Detailed list of what to test and how to test it.

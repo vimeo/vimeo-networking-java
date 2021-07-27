@@ -10,38 +10,28 @@ import com.vimeo.networking2.enums.asEnum
 
 /**
  * Recommendation DTO.
+ *
+ * @param channel The recommended channel.
+ * @param description The reason for the recommendation.
+ * @param resourceKey The recommendation's resource key string.
+ * @param rawType Type of recommendation. See [Recommendation.type].
+ * @param user The user that is being recommended.
  */
 @JsonClass(generateAdapter = true)
 data class Recommendation(
 
-    /**
-     * The recommended channel.
-     */
     @Json(name = "channel")
     val channel: Channel? = null,
 
-    /**
-     * The reason for the recommendation.
-     */
     @Json(name = "description")
     val description: String? = null,
 
-    /**
-     * The recommendation's resource key string.
-     */
     @Json(name = "resource_key")
     val resourceKey: String? = null,
 
-    /**
-     * Type of recommendation.
-     * @see Recommendation.type
-     */
     @Json(name = "type")
     val rawType: String? = null,
 
-    /**
-     * The user that is being recommended.
-     */
     @Json(name = "user")
     val user: User? = null
 

@@ -1,18 +1,17 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.5.0'
-    id 'io.gitlab.arturbosch.detekt' version '1.14.2'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.21'
+    id 'io.gitlab.arturbosch.detekt' version '1.17.1'
     id 'java-gradle-plugin'
 }
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.5.0'
-    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:1.5.0'
-    implementation 'org.jetbrains.kotlin:kotlin-android-extensions:1.5.0'
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.5.21'
+    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:1.5.21'
+    implementation 'org.jetbrains.kotlin:kotlin-android-extensions:1.5.21'
 
     implementation 'com.squareup:kotlinpoet:1.8.0'
     implementation "com.squareup.moshi:moshi-kotlin:1.12.0"

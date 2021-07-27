@@ -10,44 +10,29 @@ import com.vimeo.networking2.enums.asEnum
 /**
  * This class represents an error response from the Vimeo API. It holds useful getters to
  * understand why your request might have failed.
+ *
+ * @param developerMessage The technical reason for the error.
+ * @param errorMessage The error message, can be used for displaying messages to the user if [developerMessage] is also
+ * provided. If only [errorMessage] is provided then it may not be properly localized.
+ * @param errorCode The error code. See [ApiError.errorCodeType].
+ * @param invalidParameters Information on any invalid parameters that were sent in the request.
+ * @param link A link to more information about the error.
  */
 @JsonClass(generateAdapter = true)
 data class ApiError(
 
-    /**
-     * Developer friendly error message.
-     */
     @Json(name = "developer_message")
     val developerMessage: String? = null,
 
-    /**
-     * User friendly error message, can be used for displaying messages to the user.
-     */
-    @Json(name = "user_message")
-    val userMessage: String? = null,
-
-    /**
-     * User friendly error message.
-     */
     @Json(name = "error")
     val errorMessage: String? = null,
 
-    /**
-     * The error code.
-     * @see ApiError.errorCodeType
-     */
     @Json(name = "error_code")
     val errorCode: String? = null,
 
-    /**
-     * Information on invalid parameters send in the request.
-     */
     @Json(name = "invalid_parameters")
     val invalidParameters: List<InvalidParameter>? = null,
 
-    /**
-     * A link to more information about the error.
-     */
     @Json(name = "link")
     val link: String? = null
 )

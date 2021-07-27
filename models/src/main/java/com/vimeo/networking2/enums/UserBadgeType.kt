@@ -74,5 +74,4 @@ enum class UserBadgeType(override val value: String?) : StringValue {
      * Unknown type of badge.
      */
     UNKNOWN(null)
-
 }

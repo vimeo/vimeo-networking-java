@@ -14,5 +14,4 @@ enum class CommentType(override val value: String?) : StringValue {
      * Unknown comment type.
      */
     UNKNOWN(null)
-
 }

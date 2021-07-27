@@ -11,50 +11,36 @@ import java.util.Date
 
 /**
  * Comment data.
+ *
+ * @param uri The URI of this comment.
+ * @param createdOn The time in ISO 8601 format when the comment was posted.
+ * @param metadata Metadata for comments.
+ * @param rawType The Vimeo content to which the comment relates. See [Comment.type].
+ * @param resourceKey The resource key string for the comment.
+ * @param text The content of the comment.
+ * @param user The user who posted the comment.
  */
 @JsonClass(generateAdapter = true)
 data class Comment(
 
-    /**
-     * The URI of this comment.
-     */
     @Json(name = "uri")
     val uri: String? = null,
 
-    /**
-     * The time in ISO 8601 format when the comment was posted.
-     */
     @Json(name = "created_on")
     val createdOn: Date? = null,
 
-    /**
-     * Metadata for comments.
-     */
     @Json(name = "metadata")
     val metadata: MetadataConnections<CommentConnections>? = null,
 
-    /**
-     * The resource key string for the comment.
-     */
-    @Json(name = "resource_key")
-    val resourceKey: String? = null,
-
-    /**
-     * The content of the comment.
-     */
-    @Json(name = "text")
-    val text: String? = null,
-
-    /**
-     * The Vimeo content to which the comment relates.
-     * @see Comment.type
-     */
     @Json(name = "type")
     val rawType: String? = null,
 
-    /**
-     * The user who posted the comment.
-     */
+    @Json(name = "resource_key")
+    val resourceKey: String? = null,
+
+    @Json(name = "text")
+    val text: String? = null,
+
     @Json(name = "user")
     val user: User? = null
 
