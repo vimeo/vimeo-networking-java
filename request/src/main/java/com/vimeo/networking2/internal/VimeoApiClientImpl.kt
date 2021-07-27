@@ -53,6 +53,7 @@ import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
 import com.vimeo.networking2.SearchResultList
 import com.vimeo.networking2.SeasonList
+import com.vimeo.networking2.SurveyQuestionList
 import com.vimeo.networking2.Team
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
@@ -946,6 +947,14 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<ProductList>
     ): VimeoRequest {
         return vimeoService.getProducts(authHeader, fieldFilter, cacheControl).enqueue(callback)
+    }
+
+    override fun fetchSurveyQuestionList(
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<SurveyQuestionList>
+    ): VimeoRequest {
+        return vimeoService.getSurveyQuestions(authHeader, fieldFilter, cacheControl).enqueue(callback)
     }
 
     override fun fetchProduct(

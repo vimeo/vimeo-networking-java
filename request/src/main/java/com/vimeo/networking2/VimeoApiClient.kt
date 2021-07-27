@@ -848,6 +848,25 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Fetch the list of unanswered survey questions available for the authorized user. Note that the internal list of
+     * answers returned from the API will be randomized to prevent ordering bias and all user-facing strings will
+     * be localized.
+     *
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchSurveyQuestionList(
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<SurveyQuestionList>
+    ): VimeoRequest
+
+    /**
      * Fetch the [User] that is currently logged into the client.
      *
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be

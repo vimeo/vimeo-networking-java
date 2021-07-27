@@ -49,6 +49,7 @@ import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
 import com.vimeo.networking2.SearchResultList
 import com.vimeo.networking2.SeasonList
+import com.vimeo.networking2.SurveyQuestionList
 import com.vimeo.networking2.Team
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
@@ -613,6 +614,12 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
     ): VimeoRequest = client.fetchCurrentUser(fieldFilter, cacheControl, callback)
+
+    override fun fetchSurveyQuestionList(
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<SurveyQuestionList>
+    ): VimeoRequest = client.fetchSurveyQuestionList(fieldFilter, cacheControl, callback)
 
     override fun fetchVideo(
         uri: String,
