@@ -49,7 +49,6 @@ import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
 import com.vimeo.networking2.SearchResultList
 import com.vimeo.networking2.SeasonList
-import com.vimeo.networking2.UserSegmentSurveyList
 import com.vimeo.networking2.Team
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
@@ -59,6 +58,7 @@ import com.vimeo.networking2.TvodItem
 import com.vimeo.networking2.TvodItemList
 import com.vimeo.networking2.User
 import com.vimeo.networking2.UserList
+import com.vimeo.networking2.UserSegmentSurveyList
 import com.vimeo.networking2.Video
 import com.vimeo.networking2.VideoList
 import com.vimeo.networking2.VideoStatus
@@ -273,7 +273,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun createFolder(
         uri: String,
-        parentFolderId: String?,
+        parentFolderUri: String?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -282,7 +282,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(
         uri,
-        parentFolderId,
+        parentFolderUri,
         name,
         privacy,
         slackWebhookId,
