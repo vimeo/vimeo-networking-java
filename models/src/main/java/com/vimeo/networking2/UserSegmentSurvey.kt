@@ -31,7 +31,6 @@ data class UserSegmentSurvey(
     @Json(name = "questions")
     val questions: List<SurveyQuestion>? = null
 
-
 ) : Entity {
     override val identifier: String? = resourceKey
 }
