@@ -848,7 +848,7 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Fetch the list of unanswered survey questions available for the authorized user. Note that the internal list of
+     * Fetch the list of unanswered surveys available for the authorized user. Note that the internal list of
      * answers returned from the API will be randomized to prevent ordering bias and all user-facing strings will
      * be localized.
      *
@@ -863,7 +863,7 @@ interface VimeoApiClient {
     fun fetchSurveyQuestionList(
         fieldFilter: String?,
         cacheControl: CacheControl?,
-        callback: VimeoCallback<SurveyQuestionList>
+        callback: VimeoCallback<UserSegmentSurveyList>
     ): VimeoRequest
 
     /**

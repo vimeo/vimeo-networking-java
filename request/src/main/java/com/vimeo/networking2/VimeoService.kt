@@ -522,7 +522,7 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
-    ): VimeoCall<SurveyQuestionList>
+    ): VimeoCall<UserSegmentSurveyList>
 
     @GET
     fun getVideoStatus(
