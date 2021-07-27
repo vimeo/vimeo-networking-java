@@ -15,8 +15,8 @@ data class SurveyResponseChoice(
     val id: String? = null,
 
     @Json(name = "title")
-    val title: String? = null,
+    val title: String? = null
 
-    ) : Entity {
+) : Entity {
     override val identifier: String? = id
 }
