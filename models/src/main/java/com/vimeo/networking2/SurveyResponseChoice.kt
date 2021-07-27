@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 
 /**
@@ -9,6 +10,7 @@ import com.vimeo.networking2.common.Entity
  * @param id A unique identifier for the response choice within the context of a [SurveyQuestion].
  * @param title A user-facing display title that represents the choice. This will be localized by the API.
  */
+@JsonClass(generateAdapter = true)
 data class SurveyResponseChoice(
 
     @Json(name = "id")

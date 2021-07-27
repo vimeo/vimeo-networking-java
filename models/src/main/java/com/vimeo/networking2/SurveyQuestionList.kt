@@ -1,11 +1,13 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Page
 
 /**
  * A list of [SurveyQuestions][SurveyQuestion].
  */
+@JsonClass(generateAdapter = true)
 data class SurveyQuestionList(
 
     @Json(name = "total")
