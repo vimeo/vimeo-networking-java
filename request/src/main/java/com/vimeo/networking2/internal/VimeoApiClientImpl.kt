@@ -62,6 +62,7 @@ import com.vimeo.networking2.TvodItem
 import com.vimeo.networking2.TvodItemList
 import com.vimeo.networking2.User
 import com.vimeo.networking2.UserList
+import com.vimeo.networking2.UserSegmentSurveyList
 import com.vimeo.networking2.Video
 import com.vimeo.networking2.VideoList
 import com.vimeo.networking2.VideoStatus
@@ -946,6 +947,14 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<ProductList>
     ): VimeoRequest {
         return vimeoService.getProducts(authHeader, fieldFilter, cacheControl).enqueue(callback)
+    }
+
+    override fun fetchSurveyQuestionList(
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<UserSegmentSurveyList>
+    ): VimeoRequest {
+        return vimeoService.getSurveyQuestions(authHeader, fieldFilter, cacheControl).enqueue(callback)
     }
 
     override fun fetchProduct(

@@ -43,6 +43,7 @@ class EnumsTest {
             SpatialProjectionType::class.java,
             StereoFormatType::class.java,
             StreamAccessType::class.java,
+            SurveyQuestionType::class.java,
             TeamInviteStatusType::class.java,
             TeamRoleType::class.java,
             TextTrackType::class.java,

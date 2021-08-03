@@ -58,6 +58,7 @@ import com.vimeo.networking2.TvodItem
 import com.vimeo.networking2.TvodItemList
 import com.vimeo.networking2.User
 import com.vimeo.networking2.UserList
+import com.vimeo.networking2.UserSegmentSurveyList
 import com.vimeo.networking2.Video
 import com.vimeo.networking2.VideoList
 import com.vimeo.networking2.VideoStatus
@@ -272,7 +273,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun createFolder(
         uri: String,
-        parentFolderId: String?,
+        parentFolderUri: String?,
         name: String,
         privacy: FolderViewPrivacyType,
         slackWebhookId: String?,
@@ -281,7 +282,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Folder>
     ): VimeoRequest = client.createFolder(
         uri,
-        parentFolderId,
+        parentFolderUri,
         name,
         privacy,
         slackWebhookId,
@@ -613,6 +614,12 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<User>
     ): VimeoRequest = client.fetchCurrentUser(fieldFilter, cacheControl, callback)
+
+    override fun fetchSurveyQuestionList(
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<UserSegmentSurveyList>
+    ): VimeoRequest = client.fetchSurveyQuestionList(fieldFilter, cacheControl, callback)
 
     override fun fetchVideo(
         uri: String,
