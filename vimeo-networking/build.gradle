@@ -1,5 +1,5 @@
-apply plugin: 'java-library'
 apply plugin: 'kotlin'
+apply from: '../publish.gradle'
 
 compileJava {
     sourceCompatibility = 1.8
@@ -9,35 +9,10 @@ compileJava {
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-apply from: '../publish.gradle'
-
-repositories {
-    jcenter()
-}
-
 tasks.withType(Javadoc).all { enabled = true }
 
 dependencies {
-    api project(path: ':api-core', configuration: 'default')
-    api project(path: ':request', configuration: 'default')
-    compileOnly project(path: ':models', configuration: 'default')
-}
-
-
-gradle.projectsEvaluated {
-    tasks.withType(JavaCompile) {
-        options.compilerArgs += [ "-AstagAssumeHungarianNotation=true" ]
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3.0'
-}
-
-gradle.projectsEvaluated {
-    tasks.withType(JavaCompile) {
-        aptOptions.processorArgs = [
-                stagAssumeHungarianNotation: "true"
-        ]
-    }
+    api project(':api-core')
+    api project(':request')
+    compileOnly project(':models')
 }
