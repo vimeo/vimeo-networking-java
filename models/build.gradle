@@ -2,10 +2,6 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 apply from: '../publish.gradle'
 
-repositories {
-    jcenter()
-}
-
 dependencies {
     // Okio used by Moshi
     implementation "com.squareup.okio:okio:$okioVersion"
