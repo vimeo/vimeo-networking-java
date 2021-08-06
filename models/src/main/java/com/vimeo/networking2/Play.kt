@@ -42,7 +42,7 @@ data class Play(
 
     @Internal
     @Json(name = "source")
-    val source: List<VideoSourceFile>? = null,
+    val source: VideoSourceFile? = null,
 
     @Internal
     @Json(name = "status")
