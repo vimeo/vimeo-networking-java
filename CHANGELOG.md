@@ -3,7 +3,8 @@ Change Log
 
 Version 2.0.3 *(2021-08-10)*
 ----------------------------
-- Updated support for user survey data by adding `analytics_id` and making some minor semantic changes to models.
+- Updated support for user survey data by adding `analyticsId` and making some other minor semantic changes to survey models.
+- Added `minTierForMovie` field to `EditSession`.
 
 Version 2.0.2 *(2021-08-06)*
 ----------------------------
