@@ -8,10 +8,6 @@ plugins {
 
 apply from: '../publish.gradle'
 
-repositories {
-    jcenter()
-}
-
 generated {
     inputPath = 'models/src/main/java/com/vimeo/networking2'
     typeGenerated = ModelType.SERIALIZABLE

@@ -3,10 +3,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:7.0.0'
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -24,9 +23,9 @@ ext {
     stagVersion = '2.6.0'
     junitVersion = '4.13.2'
     buildToolsVersion = '29.0.3'
-    classgraphVersion = '4.8.110'
+    classgraphVersion = '4.8.111'
     assertJVersion = '3.20.2'
-    robolectricVersion = "4.5.1"
+    robolectricVersion = "4.6.1"
     podamVersion = "7.2.7.RELEASE"
 }
 
@@ -67,7 +66,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
     apply plugin: "com.jfrog.bintray"
 
