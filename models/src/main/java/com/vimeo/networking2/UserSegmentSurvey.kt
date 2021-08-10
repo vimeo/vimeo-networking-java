@@ -25,7 +25,7 @@ data class UserSegmentSurvey(
     @Json(name = "title")
     val title: String? = null,
 
-    @Json(name = "id")
+    @Json(name = "analytics_id")
     val analyticsId: String? = null,
 
     @Json(name = "questions")
