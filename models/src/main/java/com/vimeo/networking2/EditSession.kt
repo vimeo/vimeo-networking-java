@@ -12,7 +12,7 @@ import com.squareup.moshi.JsonClass
  * @param resultVideoHash The result video hash.
  * @param hasWatermark Whether the video has watermark.
  * @param isRated Whether the video is rated.
- * @param minTierForMovie Whether video requires paid plan.
+ * @param minTierForMovie The minimum required Vimeo membership for the user to be able to share or download the video.
  */
 @JsonClass(generateAdapter = true)
 data class EditSession(
