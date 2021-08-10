@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Version 2.0.3 *(2021-08-06)*
+Version 2.0.3 *(2021-08-10)*
 ----------------------------
 - Updated support for user survey data by adding `analytics_id` and making some minor semantic changes to models.
 
