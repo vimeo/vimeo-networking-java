@@ -12,7 +12,7 @@ import com.squareup.moshi.JsonClass
  * @param resultVideoHash The result video hash.
  * @param hasWatermark Whether the video has watermark.
  * @param isRated Whether the video is rated.
- * @param minTierForMovie Whether video requires paid plan. .
+ * @param minTierForMovie Whether video requires paid plan.
  */
 @JsonClass(generateAdapter = true)
 data class EditSession(
