@@ -10,7 +10,7 @@ import com.vimeo.networking2.common.Entity
  * @param resourceKey A globally unique identifier.
  * @param uri A uri for the survey.
  * @param title A named title.
- * @param id A named identifier.
+ * @param analyticsId The id that should be used when logging this [UserSegmentSurvey].
  * @param questions A list of [SurveyQuestions][SurveyQuestion] to display to the end user.
  */
 @JsonClass(generateAdapter = true)
@@ -25,8 +25,8 @@ data class UserSegmentSurvey(
     @Json(name = "title")
     val title: String? = null,
 
-    @Json(name = "id")
-    val id: String? = null,
+    @Json(name = "analytics_id")
+    val analyticsId: String? = null,
 
     @Json(name = "questions")
     val questions: List<SurveyQuestion>? = null

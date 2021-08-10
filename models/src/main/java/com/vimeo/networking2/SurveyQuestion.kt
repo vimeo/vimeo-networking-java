@@ -10,8 +10,9 @@ import com.vimeo.networking2.enums.asEnum
  * A representation of a user-facing survey question. Questions are expected to be presented to a user with
  * a series of multiple-choice responses to select as an answer.
  *
+ * @param analyticsId The id that should be used when logging this [SurveyQuestion].
  * @param resourceKey A globally unique identifier.
- * @param emojiTitle A unicode emoji character in “surrogate pair” representation (e.g. \uD83D\uDC4B).
+ * @param titleEmoji A unicode emoji character in “surrogate pair” representation (e.g. \uD83D\uDC4B).
  * @param question The survey question that the user should be asked. This string will be localized.
  * @param rawType The type of the survey question. See [SurveyQuestion.type].
  * @param responseChoices A list of [SurveyResponseChoices][SurveyResponseChoice] to present to a user as valid
@@ -21,11 +22,14 @@ import com.vimeo.networking2.enums.asEnum
 @JsonClass(generateAdapter = true)
 data class SurveyQuestion(
 
+    @Json(name = "analytics_id")
+    val analyticsId: String? = null,
+
     @Json(name = "resource_key")
     val resourceKey: String? = null,
 
-    @Json(name = "emoji_title")
-    val emojiTitle: String? = null,
+    @Json(name = "title_emoji")
+    val titleEmoji: String? = null,
 
     @Json(name = "title")
     val question: String? = null,
