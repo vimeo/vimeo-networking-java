@@ -3,8 +3,10 @@ Change Log
 
 Version 2.0.3 *(2021-08-10)*
 ----------------------------
-- Updated support for user survey data by adding `analyticsId` and making some other minor semantic changes to survey models.
-- Added `minTierForMovie` field to `EditSession`.
+- Improved support for user survey data by adding an `analyticsId` property to `SurveyQuestion`, `SurveyResponseChoice`, and `UserSegmentSurvey`. This property replaces any `id` properties the class originally had. 
+- Ensured that `SurveyResponseChoice` has a guid-based `resourceId` field that is tied to its `Entity.identifier`.
+- Renamed the `SurveyQuestion.emojiTitle` property to `titleEmoji`.
+- Added a `resourceKey` property to `SurveyResponseChoice`.
 
 Version 2.0.2 *(2021-08-06)*
 ----------------------------
