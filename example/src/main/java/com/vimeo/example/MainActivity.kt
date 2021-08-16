@@ -27,9 +27,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.vimeo.example.databinding.ActivityMainBinding
 import com.vimeo.networking2.*
 import com.vimeo.networking2.config.VimeoApiConfiguration
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * An sample activity in which we create an [Authenticator] instance to authenticate with the server and a
@@ -51,9 +51,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 @SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (!validateClientIdAndClientSecret()) {
             return
@@ -73,9 +76,9 @@ class MainActivity : AppCompatActivity() {
         // Otherwise it's a normal app start and we will obtain client credentials.
         authenticate(intent?.data, authenticator)
 
-        loginStatus.text = authenticator.currentAccount.asLoginStatus()
+        binding.loginStatus.text = authenticator.currentAccount.asLoginStatus()
 
-        login.setOnClickListener {
+        binding.login.setOnClickListener {
             // Open the browser with the code grant authorization URI and let the user log in
             startActivity(Intent(
                 Intent.ACTION_VIEW,
@@ -83,38 +86,38 @@ class MainActivity : AppCompatActivity() {
             ))
         }
 
-        logOut.setOnClickListener {
+        binding.logOut.setOnClickListener {
             // Log out of whatever credentials are currently being used.
             authenticator.logOut(vimeoCallback(
                 onSuccess = {
                     toast("Successfully logged out.")
-                    loginStatus.text = authenticator.currentAccount.asLoginStatus()
+                    binding.loginStatus.text = authenticator.currentAccount.asLoginStatus()
                 },
                 onError = { toast("Unable to log out.") }
             ))
         }
 
-        getMyVideos.setOnClickListener {
+        binding.getMyVideos.setOnClickListener {
             // Fetch the currently logged in user's videos. Will fail if the user is not logged in.
             val uri = authenticator.currentAccount?.user?.metadata?.connections?.videos?.uri
                 ?: return@setOnClickListener run { toast("Cannot fetch videos until user is logged in!") }
 
             // Fetch the list of videos, only asking for the "name" field in the response.
             apiClient.fetchVideoList(uri, "name", null, null, vimeoCallback(
-                onSuccess = { myVideosList.text = it.data.asNameList() },
+                onSuccess = { binding.myVideosList.text = it.data.asNameList() },
                 onError = {
-                    myVideosList.text = null
+                    binding.myVideosList.text = null
                     toast("Unable to fetch user's videos.")
                 }
             ))
         }
 
-        getStaffPicks.setOnClickListener {
+        binding.getStaffPicks.setOnClickListener {
             // Fetch the list of videos from staff picks, only asking for the "name" field in the response.
             apiClient.fetchVideoList(STAFF_PICKS_URI, "name", null, null, vimeoCallback(
-                onSuccess = { staffPicksList.text = it.data.asNameList() },
+                onSuccess = { binding.staffPicksList.text = it.data.asNameList() },
                 onError = {
-                    staffPicksList.text = null
+                    binding.staffPicksList.text = null
                     toast("Unable to fetch staff picked videos.")
                 }
             ))
@@ -131,7 +134,7 @@ class MainActivity : AppCompatActivity() {
             authenticator.authenticateWithCodeGrant(redirectUri.toString(), vimeoCallback(
                 onSuccess = {
                     toast("Successfully logged in.")
-                    loginStatus.text = authenticator.currentAccount.asLoginStatus()
+                    binding.loginStatus.text = authenticator.currentAccount.asLoginStatus()
                 },
                 onError = { toast("Unable to log in.") }
             ))
@@ -144,7 +147,7 @@ class MainActivity : AppCompatActivity() {
             authenticator.authenticateWithClientCredentials(vimeoCallback(
                 onSuccess = {
                     toast("Obtained client credentials.")
-                    loginStatus.text = authenticator.currentAccount.asLoginStatus()
+                    binding.loginStatus.text = authenticator.currentAccount.asLoginStatus()
                 },
                 onError = { toast("Couldn't obtain client credentials.") }
             ))
