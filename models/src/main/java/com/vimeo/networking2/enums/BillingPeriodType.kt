@@ -8,12 +8,12 @@ enum class BillingPeriodType(override val value: String?) : StringValue {
     /**
      * User will be charged monthly.
      */
-    MONTHLY("monthly"),
+    MONTHLY("month"),
 
     /**
      * User will be charged yearly.
      */
-    YEARLY("yearly"),
+    YEARLY("year"),
 
     /**
      * Unknown billing period.
