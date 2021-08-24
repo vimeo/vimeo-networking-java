@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.0.6 *(2021-08-24)*
+----------------------------
+- Added a `jitpack.yml` file to run Jitpack builds on JDK 11.
+
 Version 2.0.5 *(2021-08-24)*
 ----------------------------
 - Fixed incorrect values for `BillingPeriodType`.
