@@ -23,7 +23,7 @@ ext {
     stagVersion = '2.6.0'
     junitVersion = '4.13.2'
     buildToolsVersion = '29.0.3'
-    classgraphVersion = '4.8.111'
+    classgraphVersion = '4.8.115'
     assertJVersion = '3.20.2'
     robolectricVersion = "4.6.1"
     podamVersion = "7.2.7.RELEASE"
