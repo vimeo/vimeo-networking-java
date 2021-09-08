@@ -5,6 +5,7 @@ plugins {
     id "kotlin-android"
     id "kotlin-parcelize"
     id "kotlin-kapt"
+    id 'com.google.devtools.ksp'
     id "model.generator"
 }
 

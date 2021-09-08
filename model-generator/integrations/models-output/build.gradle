@@ -4,6 +4,7 @@ plugins {
     id 'java-library'
     id 'kotlin'
     id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'model.generator'
 }
 
