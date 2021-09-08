@@ -22,6 +22,7 @@ ext {
     retrofitVersion = '2.9.0'
     okioVersion =  '2.10.0'
     moshiVersion = '1.12.0'
+    moshiXVersion = '0.14.0'
     stagVersion = '2.6.0'
     junitVersion = '4.13.2'
     buildToolsVersion = '29.0.3'

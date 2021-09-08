@@ -53,6 +53,7 @@ android {
 
 dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    ksp "dev.zacsweers.moshix:moshi-ksp:$moshiXVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
     testImplementation "junit:junit:$junitVersion"

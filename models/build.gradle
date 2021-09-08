@@ -8,6 +8,7 @@ dependencies {
     implementation "com.squareup.okio:okio:$okioVersion"
 
     // Moshi
+    ksp "dev.zacsweers.moshix:moshi-ksp:$moshiXVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     implementation "com.squareup.moshi:moshi:$moshiVersion"
 
