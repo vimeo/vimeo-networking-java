@@ -3,6 +3,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.2'
@@ -14,6 +15,7 @@ buildscript {
 plugins {
     id "io.gitlab.arturbosch.detekt" version "1.18.1"
     id "com.github.ben-manes.versions" version "0.39.0"
+    id "com.google.devtools.ksp" version "1.5.30-1.0.0" apply false
 }
 
 ext {
