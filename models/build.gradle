@@ -1,5 +1,4 @@
 apply plugin: 'kotlin'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.devtools.ksp'
 apply from: '../publish.gradle'
 
@@ -9,7 +8,6 @@ dependencies {
 
     // Moshi
     ksp "dev.zacsweers.moshix:moshi-ksp:$moshiXVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     implementation "com.squareup.moshi:moshi:$moshiVersion"
 
     // Test dependencies

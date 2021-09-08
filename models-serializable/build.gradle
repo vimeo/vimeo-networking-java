@@ -2,7 +2,6 @@ import com.vimeo.modelgenerator.ModelType
 
 plugins {
     id 'kotlin'
-    id 'kotlin-kapt'
     id 'com.google.devtools.ksp'
     id 'model.generator'
 }
@@ -17,7 +16,6 @@ generated {
 dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     ksp "dev.zacsweers.moshix:moshi-ksp:$moshiXVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.assertj:assertj-core:$assertJVersion"
