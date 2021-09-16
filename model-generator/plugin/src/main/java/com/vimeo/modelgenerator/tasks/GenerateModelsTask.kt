@@ -15,8 +15,6 @@ import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
-import org.gradle.work.Incremental
-import org.gradle.work.InputChanges
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.messages.MessageRenderer.PLAIN_RELATIVE_PATHS
 import org.jetbrains.kotlin.cli.common.messages.PrintingMessageCollector
@@ -51,7 +49,6 @@ open class GenerateModelsTask : DefaultTask() {
     // A File tree of all the Files from the original model directory
     val models: ConfigurableFileTree
         @InputDirectory
-        @Incremental
         @PathSensitive(PathSensitivity.RELATIVE)
         get() = project.fileTree(modelPath)
 
@@ -69,7 +66,7 @@ open class GenerateModelsTask : DefaultTask() {
     }
 
     @TaskAction
-    fun execute(inputChanges: InputChanges) {
+    fun execute() {
         // a visitor that will be used to modify classes
         val classVisitor = when (typeToGenerate) {
             ModelType.SERIALIZABLE -> SerializableClassVisitor()
@@ -85,12 +82,7 @@ open class GenerateModelsTask : DefaultTask() {
         // A class designed to build the new models
         val modelFactory = ModelFactory(output, classVisitor, interfaceVisitor)
 
-        val files: Iterable<File> =
-            if (inputChanges.isIncremental) inputChanges.getFileChanges(models).asIterable()
-                .map { it.file } else models.files
-
-
-        files
+        models.files
             // Convert regular Java `File` to a KtFile
             .map { createKtFile(it.readText(), it.path) }
             // Generating the new models in the given directory
