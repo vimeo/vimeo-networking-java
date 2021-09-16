@@ -8,7 +8,7 @@ import com.vimeo.modelgenerator.visitor.SerializableClassVisitor
 import com.vimeo.modelgenerator.visitor.SerializableInterfaceVisitor
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileTree
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
@@ -44,7 +44,7 @@ open class GenerateModelsTask : DefaultTask() {
 
     // Output directory path for where the new models will be generated
     private val output =
-        project.convention.getPlugin(JavaPluginConvention::class.java).sourceSets.maybeCreate("main").java.srcDirs.first().path
+        project.extensions.getByType(JavaPluginExtension::class.java).sourceSets.maybeCreate("main").java.srcDirs.first().path
 
     // A File tree of all the Files from the original model directory
     val models: ConfigurableFileTree
