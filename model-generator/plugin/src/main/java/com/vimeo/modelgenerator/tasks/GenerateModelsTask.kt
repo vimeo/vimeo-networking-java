@@ -48,12 +48,15 @@ open class GenerateModelsTask : DefaultTask() {
     private val output =
         project.convention.getPlugin(JavaPluginConvention::class.java).sourceSets.maybeCreate("main").java.srcDirs.first().path
 
+
+    private var _models: ConfigurableFileTree? = null
+
     // A File tree of all the Files from the original model directory
     val models: ConfigurableFileTree
         @InputDirectory
         @Incremental
         @PathSensitive(PathSensitivity.RELATIVE)
-        get() = project.fileTree(modelPath)
+        get() = _models ?: project.fileTree(modelPath).also { _models = it }
 
     @get:OutputDirectory
     val outputDir = File(output)
