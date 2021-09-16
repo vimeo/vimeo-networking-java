@@ -659,11 +659,20 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<SearchResultList>
 
+    @GET("explore_pages/{$PAGE_ID}")
+    fun getExplorePage(
+        @Header(AUTHORIZATION) authorization: String,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?,
+        @Path(PAGE_ID) pageId: Int,
+        @Query(FIELD_FILTER) fieldFilter: String?
+    ): VimeoCall<ExplorePage>
+
     companion object {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"
         private const val HEADER_NO_CACHE = "Cache-Control: no-cache, no-store"
         private const val TYPE = "type"
+        private const val PAGE_ID = "pageId"
         private const val CODE = "code"
         private const val ALBUM_URI = "albumUri"
         private const val VIDEO_URI = "videoUri"

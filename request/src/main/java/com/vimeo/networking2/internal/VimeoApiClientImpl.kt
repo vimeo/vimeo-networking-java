@@ -37,6 +37,7 @@ import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
 import com.vimeo.networking2.Document
+import com.vimeo.networking2.ExplorePage
 import com.vimeo.networking2.FeedList
 import com.vimeo.networking2.Folder
 import com.vimeo.networking2.FolderList
@@ -1332,6 +1333,18 @@ internal class VimeoApiClientImpl(
         return vimeoService.getCommentList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
+
+    override fun fetchExplorePage(
+        pageId: Int,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ExplorePage>
+    ): VimeoRequest = vimeoService.getExplorePage(
+        authorization = authHeader,
+        cacheControl = cacheControl,
+        pageId = pageId,
+        fieldFilter = fieldFilter
+    ).enqueue(callback)
 
     private fun <T> LocalVimeoCallAdapter.enqueueInvalidUri(callback: VimeoCallback<T>): VimeoRequest {
         return enqueueError(

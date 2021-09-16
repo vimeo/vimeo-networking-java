@@ -1913,6 +1913,13 @@ interface VimeoApiClient {
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
+    fun fetchExplorePage(
+        pageId: Int = 1,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ExplorePage>
+    ): VimeoRequest
+
     companion object {
 
         private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()

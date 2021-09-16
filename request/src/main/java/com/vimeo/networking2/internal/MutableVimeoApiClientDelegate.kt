@@ -34,6 +34,7 @@ import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
 import com.vimeo.networking2.Document
+import com.vimeo.networking2.ExplorePage
 import com.vimeo.networking2.FeedList
 import com.vimeo.networking2.Folder
 import com.vimeo.networking2.FolderList
@@ -850,4 +851,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         queryParams: Map<String, String>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest = client.deleteContent(uri, queryParams, callback)
+
+    override fun fetchExplorePage(
+        pageId: Int,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ExplorePage>
+    ): VimeoRequest = client.fetchExplorePage(pageId, fieldFilter, cacheControl, callback)
 }
