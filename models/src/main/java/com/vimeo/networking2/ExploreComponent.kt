@@ -26,7 +26,7 @@ import java.util.Date
 data class ExploreComponent(
     @Json(name = "uri")
     val uri: String? = null,
-    @Json(name = "title")
+    @Json(name = "title") 
     val title: String? = null,
     @Json(name = "short_title")
     val shortTitle: String? = null,
