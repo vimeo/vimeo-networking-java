@@ -1,5 +1,6 @@
 package com.vimeo.networking2
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.enums.ExploreComponentSourceType
 import com.vimeo.networking2.enums.asEnum
@@ -17,9 +18,13 @@ import com.vimeo.networking2.enums.asEnum
  */
 @JsonClass(generateAdapter = true)
 data class ExploreComponentSource(
+    @Json(name = "video")
     val video: Video? = null,
+    @Json(name = "album")
     val album: Album? = null,
+    @Json(name = "channel")
     val channel: Channel? = null,
+    @Json(name = "type")
     val rawType: String? = null
 )
 
