@@ -28,7 +28,7 @@ enum class LiveStatusType(override val value: String?) : StringValue {
     /**
      * The RTMP URL is ready to receive video content.
      */
-    READY("read"),
+    READY("ready"),
 
     /**
      * The stream is open and receiving content.
