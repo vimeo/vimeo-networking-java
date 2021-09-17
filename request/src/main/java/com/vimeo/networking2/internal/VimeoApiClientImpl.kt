@@ -37,6 +37,8 @@ import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
 import com.vimeo.networking2.Document
+import com.vimeo.networking2.ExploreComponent
+import com.vimeo.networking2.ExploreComponentList
 import com.vimeo.networking2.ExplorePage
 import com.vimeo.networking2.FeedList
 import com.vimeo.networking2.Folder
@@ -1343,6 +1345,30 @@ internal class VimeoApiClientImpl(
         authorization = authHeader,
         cacheControl = cacheControl,
         pageId = pageId,
+        fieldFilter = fieldFilter
+    ).enqueue(callback)
+
+    override fun fetchExploreComponents(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ExploreComponentList>
+    ): VimeoRequest = vimeoService.getExploreComponents(
+        authorization = authHeader,
+        cacheControl = cacheControl,
+        uri = uri,
+        fieldFilter = fieldFilter
+    ).enqueue(callback)
+
+    override fun fetchExploreComponent(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ExploreComponent>
+    ): VimeoRequest = vimeoService.getExploreComponent(
+        authorization = authHeader,
+        cacheControl = cacheControl,
+        uri = uri,
         fieldFilter = fieldFilter
     ).enqueue(callback)
 

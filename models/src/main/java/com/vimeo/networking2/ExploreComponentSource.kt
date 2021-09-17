@@ -29,6 +29,6 @@ data class ExploreComponentSource(
 )
 
 /**
- *  Provides an enumeration of [ExploreComponentSource.rawType]
+ *  Provides an enumeration of [ExploreComponentSource.rawType].
  */
 val ExploreComponentSource.type: ExploreComponentSourceType get() = rawType.asEnum(ExploreComponentSourceType.UNKNOWN)

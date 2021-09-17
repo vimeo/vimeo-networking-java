@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Page
 
 /**
- * Class representing a non pageable singular list of explore components
+ * Class representing a non pageable singular list of explore components.
  *
  * @param total the total number of items
  * @param filteredTotal the number items after filtering

@@ -4,10 +4,10 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * The connections of an [ExplorePage]'s [MetadataConnections]\
+ * The connections of an [ExplorePage]'s [MetadataConnections].
  *
  * @param exploreComponents This provides a connection which returns all child components of the component which has
- * this connection
+ * this connection.
  */
 @JsonClass(generateAdapter = true)
 data class ExplorePageConnections(

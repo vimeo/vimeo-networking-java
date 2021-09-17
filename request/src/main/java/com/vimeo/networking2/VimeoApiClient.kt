@@ -1913,11 +1913,55 @@ interface VimeoApiClient {
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
+    /**
+     * Fetch an [ExplorePage].
+     *
+     * @param pageId Id used to query what explore page you want to fetch.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     */
     fun fetchExplorePage(
         pageId: Int = 1,
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<ExplorePage>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [ExploreComponentList] belonging to either an [ExplorePage] or another [ExploreComponent].
+     *
+     * @param uri The URI of the endpoint.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun fetchExploreComponents(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ExploreComponentList>
+    ): VimeoRequest
+
+    /**
+     * Fetch an individual [ExploreComponent].
+     *
+     * @param uri The URI of the endpoint.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     */
+    fun fetchExploreComponent(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ExploreComponent>
     ): VimeoRequest
 
     companion object {

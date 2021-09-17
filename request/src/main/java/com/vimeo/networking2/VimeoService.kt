@@ -667,6 +667,22 @@ internal interface VimeoService {
         @Query(FIELD_FILTER) fieldFilter: String?
     ): VimeoCall<ExplorePage>
 
+    @GET
+    fun getExploreComponents(
+        @Header(AUTHORIZATION) authorization: String,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?
+    ): VimeoCall<ExploreComponentList>
+
+    @GET
+    fun getExploreComponent(
+        @Header(AUTHORIZATION) authorization: String,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?
+    ): VimeoCall<ExploreComponent>
+
     companion object {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"

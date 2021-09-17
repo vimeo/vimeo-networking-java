@@ -12,11 +12,11 @@ import java.util.Date
  * section of Vimeo.com.  A page is contains an array of components. which are exposed through a connection within the
  * associated Metadata of this class.
  *
- * @param uri The uri of the explore page
- * @param title The title of the explore page
- * @param createdTime The timestamp for when the explore page was created
- * @param rawType A string value for the type of page; [type] is an enumeration of this value
- * @param isActive Is the page is active or not
+ * @param uri The uri of the explore page.
+ * @param title The title of the explore page.
+ * @param createdTime The timestamp for when the explore page was created.
+ * @param rawType A string value for the type of page; [type] is an enumeration of this value.
+ * @param isActive Is the page is active or not.
  * @param metadata metadata about the explore page;  You can find connections here for [ExploreComponent] which live
  * under this page.
  */
@@ -39,6 +39,6 @@ data class ExplorePage(
 }
 
 /**
- * Provides an enumeration of [ExplorePage.rawType]
+ * Provides an enumeration of [ExplorePage.rawType].
  */
 val ExplorePage.type: ExplorePageType get() = rawType.asEnum(ExplorePageType.UNKNOWN)
