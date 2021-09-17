@@ -31,7 +31,7 @@ data class ExplorePage(
     @Json(name = "type")
     val rawType: String? = null,
     @Json(name = "active")
-    val isActive: Boolean? = null,
+    val isActive: Int? = null,
     @Json(name = "metadata")
     val metadata: MetadataConnections<ExplorePageConnections>? = null
 ) : Entity {
