@@ -27,6 +27,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.vimeo.example.MainActivity.Companion.CLIENT_ID
+import com.vimeo.example.MainActivity.Companion.CLIENT_SECRET
+import com.vimeo.example.MainActivity.Companion.CODE_GRANT_REDIRECT_URL
 import com.vimeo.example.databinding.ActivityMainBinding
 import com.vimeo.networking2.*
 import com.vimeo.networking2.config.VimeoApiConfiguration
@@ -80,10 +83,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.login.setOnClickListener {
             // Open the browser with the code grant authorization URI and let the user log in
-            startActivity(Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(authenticator.createCodeGrantAuthorizationUri(REQUEST_CODE))
-            ))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(authenticator.createCodeGrantAuthorizationUri(REQUEST_CODE))
+                )
+            )
         }
 
         binding.logOut.setOnClickListener {
@@ -98,18 +103,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.getMyVideos.setOnClickListener {
-            // Fetch the currently logged in user's videos. Will fail if the user is not logged in.
-            val uri = authenticator.currentAccount?.user?.metadata?.connections?.videos?.uri
-                ?: return@setOnClickListener run { toast("Cannot fetch videos until user is logged in!") }
-
-            // Fetch the list of videos, only asking for the "name" field in the response.
-            apiClient.fetchVideoList(uri, "name", null, null, vimeoCallback(
-                onSuccess = { binding.myVideosList.text = it.data.asNameList() },
-                onError = {
-                    binding.myVideosList.text = null
-                    toast("Unable to fetch user's videos.")
-                }
-            ))
+            apiClient.fetchExplorePage(1, null, null, vimeoCallback(
+                onSuccess = {
+                    binding.myVideosList.text = it.data.toString()
+                }, onError = {
+                    binding.myVideosList.text = it.message
+                })
+            )
         }
 
         binding.getStaffPicks.setOnClickListener {
