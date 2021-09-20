@@ -44,6 +44,7 @@ import com.vimeo.networking2.PictureCollection
 import com.vimeo.networking2.Product
 import com.vimeo.networking2.ProductList
 import com.vimeo.networking2.ProgrammedCinemaItemList
+import com.vimeo.networking2.ProjectItem
 import com.vimeo.networking2.ProjectItemList
 import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
@@ -65,6 +66,7 @@ import com.vimeo.networking2.VideoStatus
 import com.vimeo.networking2.VimeoApiClient
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
+import com.vimeo.networking2.VimeoResponse
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.enums.CommentPrivacyType
 import com.vimeo.networking2.enums.ConnectedAppType
@@ -644,6 +646,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<VideoList>
     ): VimeoRequest = client.fetchVideoList(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun fetchVideoListAsProjectItemList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ProjectItemList>
+    ): VimeoRequest = client.fetchVideoListAsProjectItemList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchFeedList(
         uri: String,

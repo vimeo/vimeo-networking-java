@@ -48,6 +48,7 @@ import com.vimeo.networking2.PictureCollection
 import com.vimeo.networking2.Product
 import com.vimeo.networking2.ProductList
 import com.vimeo.networking2.ProgrammedCinemaItemList
+import com.vimeo.networking2.ProjectItem
 import com.vimeo.networking2.ProjectItemList
 import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
@@ -69,6 +70,7 @@ import com.vimeo.networking2.VideoStatus
 import com.vimeo.networking2.VimeoApiClient
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
+import com.vimeo.networking2.VimeoResponse
 import com.vimeo.networking2.VimeoService
 import com.vimeo.networking2.common.Followable
 import com.vimeo.networking2.config.VimeoApiConfiguration
@@ -1075,6 +1077,48 @@ internal class VimeoApiClientImpl(
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getVideoList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
+    }
+
+    override fun fetchVideoListAsProjectItemList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<ProjectItemList>
+    ): VimeoRequest {
+        val videoListCallback = object: VimeoCallback<VideoList> {
+            override fun onSuccess(response: VimeoResponse.Success<VideoList>) {
+                callback.onSuccess(
+                    VimeoResponse.Success(
+                        data = videoListToProjectItemList(response.data),
+                        responseOrigin = response.responseOrigin,
+                        httpStatusCode = response.httpStatusCode
+                    )
+                )
+            }
+
+            override fun onError(error: VimeoResponse.Error) {
+                callback.onError(error)
+            }
+        }
+        return fetchVideoList(uri, fieldFilter, queryParams, cacheControl, videoListCallback)
+    }
+
+    private fun videoListToProjectItemList(videoList: VideoList): ProjectItemList {
+        val projectItemData = videoList.data?.map {
+            ProjectItem(
+                rawType = "video",
+                video = it
+            )
+        }
+        return ProjectItemList(
+            total = videoList.total,
+            page = videoList.page,
+            perPage = videoList.perPage,
+            paging = videoList.paging,
+            data = projectItemData,
+            filteredTotal = videoList.filteredTotal
+        )
     }
 
     override fun fetchFeedList(
