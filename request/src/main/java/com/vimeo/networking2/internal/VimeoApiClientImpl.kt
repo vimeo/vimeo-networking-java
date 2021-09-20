@@ -1086,7 +1086,7 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<ProjectItemList>
     ): VimeoRequest {
-        val videoListCallback = object: VimeoCallback<VideoList> {
+        val videoListCallback = object : VimeoCallback<VideoList> {
             override fun onSuccess(response: VimeoResponse.Success<VideoList>) {
                 callback.onSuccess(
                     VimeoResponse.Success(
