@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.0.7 *(2021-09-24)*
+----------------------------
+- Fixed incorrect value for `LiveStatusType.READY`.
+
 Version 2.0.6 *(2021-08-24)*
 ----------------------------
 - Added a `jitpack.yml` file to run Jitpack builds on JDK 11.
