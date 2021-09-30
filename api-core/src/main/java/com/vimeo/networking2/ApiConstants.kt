@@ -34,7 +34,7 @@ object ApiConstants {
 
     const val SSL_PUBLIC_KEY = "sha256/5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w="
 
-    const val SDK_VERSION = "2.0.6"
+    const val SDK_VERSION = "2.0.8"
 
     const val NONE = -1
 
@@ -143,5 +143,6 @@ object ApiConstants {
         const val FILTER_TVOD_SUBSCRIPTIONS = "subscription"
         const val FILTER_TVOD_PURCHASES = "purchased"
         const val FILTER_NOTIFICATION_TYPES = "notification_types"
+        const val FILTER_NO_LIVE = "nolive"
     }
 }
