@@ -14,13 +14,14 @@ generated {
 }
 
 dependencies {
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    implementation libs.moshi
+    kapt libs.moshi.codegen
 
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.assertj:assertj-core:$assertJVersion"
-    testImplementation "io.github.classgraph:classgraph:$classgraphVersion"
-    testImplementation "uk.co.jemos.podam:podam:$podamVersion"
+    testImplementation libs.junit
+    testImplementation libs.assertj
+    testImplementation libs.classgraph
+    testImplementation libs.podam
+    testImplementation libs.robolectric
 }
 
 sourceCompatibility = '1.8'

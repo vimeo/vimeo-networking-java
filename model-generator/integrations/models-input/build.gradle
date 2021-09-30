@@ -4,8 +4,8 @@ apply plugin: 'kotlin-kapt'
 
 
 dependencies {
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    implementation libs.moshi
+    kapt libs.moshi.codegen
 }
 
 sourceCompatibility = "1.8"
