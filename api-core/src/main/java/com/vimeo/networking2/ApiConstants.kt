@@ -24,6 +24,7 @@ package com.vimeo.networking2
 /**
  * API constants.
  */
+@Suppress("UndocumentedPublicProperty")
 object ApiConstants {
 
     const val API_VERSION = "3.4.4"
