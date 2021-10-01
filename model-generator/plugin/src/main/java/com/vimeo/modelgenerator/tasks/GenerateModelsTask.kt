@@ -8,13 +8,14 @@ import com.vimeo.modelgenerator.visitor.SerializableClassVisitor
 import com.vimeo.modelgenerator.visitor.SerializableInterfaceVisitor
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileTree
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.ChangeType
 import org.gradle.work.Incremental
 import org.gradle.work.InputChanges
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
@@ -45,8 +46,8 @@ open class GenerateModelsTask : DefaultTask() {
         get() = "${project.rootDir}/${inputModelPath}"
 
     // Output directory path for where the new models will be generated
-    private val output =
-        project.convention.getPlugin(JavaPluginConvention::class.java).sourceSets.maybeCreate("main").java.srcDirs.first().path
+    private val output: String =
+        project.extensions.getByType(JavaPluginExtension::class.java).sourceSets.maybeCreate("main").java.srcDirs.first().path
 
 
     private var _models: ConfigurableFileTree? = null
@@ -65,7 +66,10 @@ open class GenerateModelsTask : DefaultTask() {
         KotlinCoreEnvironment.createForProduction(
             Disposer.newDisposable(),
             CompilerConfiguration().apply {
-                put(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, PrintingMessageCollector(System.err, PLAIN_RELATIVE_PATHS, false))
+                put(
+                    CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY,
+                    PrintingMessageCollector(System.err, PLAIN_RELATIVE_PATHS, false)
+                )
             },
             EnvironmentConfigFiles.JVM_CONFIG_FILES
         ).project
@@ -90,7 +94,9 @@ open class GenerateModelsTask : DefaultTask() {
 
         val files: Iterable<File> =
             if (inputChanges.isIncremental) inputChanges.getFileChanges(models).asIterable()
-                .map { it.file } else models.files
+                .filter { it.changeType != ChangeType.REMOVED }
+                .map { it.file }
+            else models.files
 
 
         files
