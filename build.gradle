@@ -1,18 +1,18 @@
 buildscript {
-    ext.kotlin_version = '1.5.21'
+    ext.kotlin_version = '1.5.31'
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
+        classpath 'com.android.tools.build:gradle:7.0.2'
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.17.1"
+    id "io.gitlab.arturbosch.detekt" version "1.18.1"
     id "com.github.ben-manes.versions" version "0.39.0"
 }
 
@@ -23,8 +23,8 @@ ext {
     stagVersion = '2.6.0'
     junitVersion = '4.13.2'
     buildToolsVersion = '29.0.3'
-    classgraphVersion = '4.8.111'
-    assertJVersion = '3.20.2'
+    classgraphVersion = '4.8.117'
+    assertJVersion = '3.21.0'
     robolectricVersion = "4.6.1"
     podamVersion = "7.2.7.RELEASE"
 }
@@ -40,7 +40,7 @@ subprojects {
     apply from: "../detekt_configuration.gradle"
 
     dependencies {
-        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
     }
 
     tasks.register("detektFormat", io.gitlab.arturbosch.detekt.Detekt) {
