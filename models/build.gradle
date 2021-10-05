@@ -4,15 +4,15 @@ apply from: '../publish.gradle'
 
 dependencies {
     // Okio used by Moshi
-    implementation "com.squareup.okio:okio:$okioVersion"
+    implementation libs.okio
 
     // Moshi
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
-    implementation "com.squareup.moshi:moshi:$moshiVersion"
+    kapt libs.moshi.codegen
+    implementation libs.moshi
 
     // Test dependencies
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation libs.junit
+    testImplementation libs.kotlin.reflect
 
 }
 

@@ -1,3 +1,5 @@
+enableFeaturePreview("VERSION_CATALOGS")
+
 includeBuild('model-generator/plugin')
 include ':vimeo-networking',
         ':auth',
