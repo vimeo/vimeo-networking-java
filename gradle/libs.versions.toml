@@ -29,7 +29,7 @@ moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "mosh
 moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
 
-okio = { module = "com.squareup.okio:okio", version = "2.10.0" }
+okio = { module = "com.squareup.okio:okio", version = "3.0.0" }
 kotlinpoet = { module = "com.squareup:kotlinpoet", version = "1.10.1" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
