@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.0.9 *(2021-11-02)*
+----------------------------
+- Added a few missing upload error codes to the ErrorCodeType enum. Note that the value of UPLOAD_QUOTA_COUNT_EXCEEDED has changed from 4102 to 4104. 4102 is now associated with UPLOAD_WEEKLY_QUOTA_SIZE_EXCEEDED.
+
 Version 2.0.8 *(2021-09-29)*
 ----------------------------
 - Added `ApiConstants.Parameters.FILTER_NO_LIVE` constant.
