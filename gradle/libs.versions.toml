@@ -17,7 +17,7 @@ kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 bintray-gradle = { module = "com.jfrog.bintray.gradle:gradle-bintray-plugin", version = "1.8.5" }
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.4.0" }
-androidx-constraint = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.1" }
+androidx-constraint = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.2" }
 
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-gradle-plugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin" }
