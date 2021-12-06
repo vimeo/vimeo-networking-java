@@ -6,17 +6,17 @@ dependencies {
     compileOnly project(':models')
 
     // Retrofit
-    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    api libs.retrofit
+    implementation libs.retrofit.moshi.converter
 
     // Moshi Adapters
-    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
+    implementation libs.moshi.adapters
 
     // Okio used by Moshi
-    implementation "com.squareup.okio:okio:$okioVersion"
+    implementation libs.okio
 
     // Test dependencies
-    testImplementation "junit:junit:$junitVersion"
+    testImplementation libs.junit
 }
 
 compileKotlin {

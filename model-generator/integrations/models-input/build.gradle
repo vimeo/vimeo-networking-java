@@ -4,8 +4,8 @@ apply plugin: 'com.google.devtools.ksp'
 
 
 dependencies {
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    ksp "dev.zacsweers.moshix:moshi-ksp:$moshiXVersion"
+    implementation libs.moshi
+    ksp libs.moshi.codegen
 }
 
 sourceCompatibility = "1.8"

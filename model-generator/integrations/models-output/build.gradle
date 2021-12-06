@@ -13,14 +13,14 @@ generated {
 }
 
 dependencies {
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    ksp "dev.zacsweers.moshix:moshi-ksp:$moshiXVersion"
+    implementation libs.moshi
+    ksp libs.moshi.codegen
 
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "org.assertj:assertj-core:$assertJVersion"
-    testImplementation "io.github.classgraph:classgraph:$classgraphVersion"
-    testImplementation "uk.co.jemos.podam:podam:$podamVersion"
+    testImplementation libs.junit
+    testImplementation libs.kotlin.reflect
+    testImplementation libs.assertj
+    testImplementation libs.classgraph
+    testImplementation libs.podam
 }
 
 sourceCompatibility = "1.8"

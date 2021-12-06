@@ -1,0 +1,45 @@
+[versions]
+detekt = "1.18.1"
+moshi = "1.12.0"
+kotlin = "1.5.31"
+retrofit = "2.9.0"
+
+[plugins]
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ben-manes = { id = "com.github.ben-manes.versions", version = "0.39.0" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version = "1.5.31-1.0.1" }
+
+[libraries]
+
+#Plugins
+android-gradle = { module = "com.android.tools.build:gradle", version = "7.0.3" }
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+bintray-gradle = { module = "com.jfrog.bintray.gradle:gradle-bintray-plugin", version = "1.8.5" }
+
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.3.1" }
+androidx-constraint = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.1" }
+
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-gradle-plugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin" }
+kotlin-compiler-embeddable = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
+kotlin-android-extensions = { module = "org.jetbrains.kotlin:kotlin-android-extensions", version.ref = "kotlin" }
+
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+moshi-codegen = { module = "dev.zacsweers.moshix:moshi-ksp", version = "0.14.1" }
+moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
+
+okio = { module = "com.squareup.okio:okio", version = "3.0.0" }
+kotlinpoet = { module = "com.squareup:kotlinpoet", version = "1.10.1" }
+
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
+junit = { module = "junit:junit", version = "4.13.2" }
+assertj = { module = "org.assertj:assertj-core", version = "3.21.0" }
+podam = { module = "uk.co.jemos.podam:podam", version = "7.2.7.RELEASE" }
+classgraph = { module = "io.github.classgraph:classgraph", version = "4.8.132" }
+robolectric = { module = "org.robolectric:robolectric", version = "4.7" }

@@ -17,7 +17,6 @@ generated {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion buildToolsVersion
 
     defaultConfig {
         minSdkVersion 23
@@ -51,12 +50,12 @@ android {
 }
 
 dependencies {
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    ksp "dev.zacsweers.moshix:moshi-ksp:$moshiXVersion"
+    implementation libs.moshi
+    ksp libs.moshi.codegen
 
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.assertj:assertj-core:$assertJVersion"
-    testImplementation "io.github.classgraph:classgraph:$classgraphVersion"
-    testImplementation "uk.co.jemos.podam:podam:$podamVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation libs.junit
+    testImplementation libs.assertj
+    testImplementation libs.classgraph
+    testImplementation libs.podam
+    testImplementation libs.robolectric
 }
