@@ -27,7 +27,7 @@ kotlin-android-extensions = { module = "org.jetbrains.kotlin:kotlin-android-exte
 
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
-moshi-codegen = { module = "dev.zacsweers.moshix:moshi-ksp", version = "0.14.1" }
+moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
 
 okio = { module = "com.squareup.okio:okio", version = "3.0.0" }
