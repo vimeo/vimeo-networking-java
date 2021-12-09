@@ -12,7 +12,7 @@ kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 [libraries]
 
 #Plugins
-android-gradle = { module = "com.android.tools.build:gradle", version = "7.0.3" }
+android-gradle = { module = "com.android.tools.build:gradle", version = "7.0.4" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 bintray-gradle = { module = "com.jfrog.bintray.gradle:gradle-bintray-plugin", version = "1.8.5" }
 
