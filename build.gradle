@@ -13,11 +13,12 @@ buildscript {
 plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.ben.manes)
+    alias(libs.plugins.ksp) apply false
 }
 
 subprojects {
     if (path.contains("integrations") || path.contains("models-") || path.contains("example")) {
-        return 
+        return
     }
 
     apply {

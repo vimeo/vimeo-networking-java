@@ -3,7 +3,7 @@ import com.vimeo.modelgenerator.ModelType
 plugins {
     id 'java-library'
     id 'kotlin'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'model.generator'
 }
 
@@ -14,7 +14,7 @@ generated {
 
 dependencies {
     implementation libs.moshi
-    kapt libs.moshi.codegen
+    ksp libs.moshi.codegen
 
     testImplementation libs.junit
     testImplementation libs.kotlin.reflect

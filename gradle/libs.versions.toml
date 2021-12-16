@@ -8,6 +8,7 @@ retrofit = "2.9.0"
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ben-manes = { id = "com.github.ben-manes.versions", version = "0.39.0" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version = "1.5.31-1.0.1" }
 
 [libraries]
 
