@@ -328,10 +328,11 @@ interface Authenticator {
      * Log out of the currently authenticated account.
      *
      * @param callback Callback to be notified of the result of the request.
+     * @param keepOnServer The flag if set to true, won't delete access token on server.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun logOut(callback: VimeoCallback<Unit>): VimeoRequest
+    fun logOut(callback: VimeoCallback<Unit>, keepOnServer: Boolean = false): VimeoRequest
 
     /**
      * Factory to create an instance of [Authenticator].

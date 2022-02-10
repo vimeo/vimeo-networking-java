@@ -109,6 +109,6 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest = authenticator.authenticateWithPinCode(pinCodeInfo, callback)
 
-    override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest =
-        authenticator.logOut(callback)
+    override fun logOut(callback: VimeoCallback<Unit>, keepOnServer: Boolean): VimeoRequest =
+        authenticator.logOut(callback, keepOnServer)
 }
