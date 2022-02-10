@@ -80,7 +80,9 @@ class NoOpAuthenticatorImpl(
         callback: VimeoCallback<VimeoAccount>
     ): VimeoRequest = reject()
 
-    override fun logOut(callback: VimeoCallback<Unit>, keepOnServer: Boolean): VimeoRequest = reject()
+    override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest = reject()
+
+    override fun logOutLocally() = Unit
 
     private fun reject(): Nothing = error("Authentication is not supported when using a fixed access token")
 }

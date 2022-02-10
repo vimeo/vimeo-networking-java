@@ -37,14 +37,16 @@ class AuthenticatorImplTest {
     )
 
     @Test
-    fun `log out removes access token on server`() {
+    fun `logOut removes access token on server`() {
         authenticator.logOut(callback)
         verify(authService).logOut("Bearer $accessToken")
+        verify(cachingAccountStorage).removeAccount()
     }
 
     @Test
-    fun `log out keeps access token on server given flag passed`() {
-        authenticator.logOut(callback, keepOnServer = true)
+    fun `logOutLocally keeps access token on server`() {
+        authenticator.logOutLocally()
+        verify(cachingAccountStorage).removeAccount()
         verifyNoInteractions(authService)
     }
 }

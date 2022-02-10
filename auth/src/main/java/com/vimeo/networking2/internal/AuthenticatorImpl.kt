@@ -303,16 +303,16 @@ internal class AuthenticatorImpl(
         ).enqueueWithAccountStore(callback)
     }
 
-    override fun logOut(callback: VimeoCallback<Unit>, keepOnServer: Boolean): VimeoRequest {
+    override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest {
         val accessToken = currentAccount?.accessToken
         accountStore.removeAccount()
         accessToken ?: return NoOpVimeoRequest
 
-        if (keepOnServer) {
-            return NoOpVimeoRequest
-        }
-
         return authService.logOut(authorization = "Bearer $accessToken").enqueue(callback)
+    }
+
+    override fun logOutLocally() {
+        accountStore.removeAccount()
     }
 
     private fun VimeoCall<VimeoAccount>.enqueueWithAccountStore(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
