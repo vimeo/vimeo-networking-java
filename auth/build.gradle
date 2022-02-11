@@ -5,6 +5,12 @@ apply from: '../publish.gradle'
 dependencies {
     api project(':api-core')
     compileOnly project(':models')
+
+    // Test dependencies
+    testImplementation project(':models')
+    testImplementation libs.junit
+    testImplementation libs.mockito
+    testImplementation libs.mockito.inline
 }
 
 compileKotlin {

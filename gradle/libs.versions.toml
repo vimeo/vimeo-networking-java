@@ -43,3 +43,5 @@ assertj = { module = "org.assertj:assertj-core", version = "3.21.0" }
 podam = { module = "uk.co.jemos.podam:podam", version = "7.2.7.RELEASE" }
 classgraph = { module = "io.github.classgraph:classgraph", version = "4.8.137" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.7.3" }
+mockito = { module = "org.mockito.kotlin:mockito-kotlin", version = "4.0.0" }
+mockito-inline = { module = "org.mockito:mockito-inline", version = "4.3.1" }

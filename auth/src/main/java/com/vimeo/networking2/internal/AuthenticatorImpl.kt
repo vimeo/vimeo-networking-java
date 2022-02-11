@@ -311,6 +311,10 @@ internal class AuthenticatorImpl(
         return authService.logOut(authorization = "Bearer $accessToken").enqueue(callback)
     }
 
+    override fun logOutLocally() {
+        accountStore.removeAccount()
+    }
+
     private fun VimeoCall<VimeoAccount>.enqueueWithAccountStore(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
         enqueue(AccountStoringVimeoCallback(accountStore, callback))
 

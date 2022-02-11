@@ -334,6 +334,11 @@ interface Authenticator {
     fun logOut(callback: VimeoCallback<Unit>): VimeoRequest
 
     /**
+     * Logs out of the currently authenticated account in the library, but keeps access token on server.
+     */
+    fun logOutLocally()
+
+    /**
      * Factory to create an instance of [Authenticator].
      */
     companion object {
