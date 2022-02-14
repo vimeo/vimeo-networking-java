@@ -114,8 +114,8 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
 
     override fun logOutLocally() = authenticator.logOutLocally()
 
-    override fun getTeamToken(
+    override fun getMagistoTeamToken(
         teamId: String,
         callback: VimeoCallback<TeamToken>
-    ) = authenticator.getTeamToken(teamId, callback)
+    ) = authenticator.getMagistoTeamToken(teamId, callback)
 }

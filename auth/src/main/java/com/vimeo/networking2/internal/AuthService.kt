@@ -416,7 +416,7 @@ internal interface AuthService {
      * @return A [VimeoCall] that provides a [TeamToken].
      */
     @GET("auth/teams/{team_id}/magisto_access_token")
-    fun getTeamToken(@Path(value = "team_id") teamId: String): VimeoCall<TeamToken>
+    fun getMagistoTeamToken(@Path(value = "team_id") teamId: String): VimeoCall<TeamToken>
 
     companion object {
         const val AUTHORIZATION = "Authorization"

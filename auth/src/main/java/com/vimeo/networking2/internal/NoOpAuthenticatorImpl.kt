@@ -85,7 +85,7 @@ class NoOpAuthenticatorImpl(
 
     override fun logOutLocally() = Unit
 
-    override fun getTeamToken(teamId: String, callback: VimeoCallback<TeamToken>) = reject()
+    override fun getMagistoTeamToken(teamId: String, callback: VimeoCallback<TeamToken>) = reject()
 
     private fun reject(): Nothing = error("Authentication is not supported when using a fixed access token")
 }

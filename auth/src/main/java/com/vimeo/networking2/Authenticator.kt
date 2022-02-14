@@ -346,7 +346,7 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
-    fun getTeamToken(teamId: String, callback: VimeoCallback<TeamToken>): VimeoRequest
+    fun getMagistoTeamToken(teamId: String, callback: VimeoCallback<TeamToken>): VimeoRequest
 
     /**
      * Factory to create an instance of [Authenticator].

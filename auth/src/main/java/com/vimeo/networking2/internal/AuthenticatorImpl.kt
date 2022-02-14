@@ -316,8 +316,8 @@ internal class AuthenticatorImpl(
         accountStore.removeAccount()
     }
 
-    override fun getTeamToken(teamId: String, callback: VimeoCallback<TeamToken>): VimeoRequest {
-        return authService.getTeamToken(teamId).enqueue(callback)
+    override fun getMagistoTeamToken(teamId: String, callback: VimeoCallback<TeamToken>): VimeoRequest {
+        return authService.getMagistoTeamToken(teamId).enqueue(callback)
     }
 
     private fun VimeoCall<VimeoAccount>.enqueueWithAccountStore(callback: VimeoCallback<VimeoAccount>): VimeoRequest =
