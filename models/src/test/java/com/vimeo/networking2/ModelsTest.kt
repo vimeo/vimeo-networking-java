@@ -148,6 +148,7 @@ class ModelsTest {
         TeamMembershipConnections::class,
         TeamMembersConnection::class,
         TeamOwnerConnection::class,
+        TeamToken::class,
         TextTrack::class,
         TextTrackList::class,
         Transcode::class,
