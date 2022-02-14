@@ -26,6 +26,7 @@ import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.NoOpVimeoRequest
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.SsoDomain
+import com.vimeo.networking2.TeamToken
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
@@ -313,6 +314,10 @@ internal class AuthenticatorImpl(
 
     override fun logOutLocally() {
         accountStore.removeAccount()
+    }
+
+    override fun getMagistoTeamToken(teamId: String, callback: VimeoCallback<TeamToken>): VimeoRequest {
+        return authService.getMagistoTeamToken(teamId).enqueue(callback)
     }
 
     private fun VimeoCall<VimeoAccount>.enqueueWithAccountStore(callback: VimeoCallback<VimeoAccount>): VimeoRequest =

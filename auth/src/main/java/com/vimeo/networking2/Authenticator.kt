@@ -339,6 +339,16 @@ interface Authenticator {
     fun logOutLocally()
 
     /**
+     * Provides a team's token by team's id.
+     *
+     * @param teamId The team's id which is used to find token.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun getMagistoTeamToken(teamId: String, callback: VimeoCallback<TeamToken>): VimeoRequest
+
+    /**
      * Factory to create an instance of [Authenticator].
      */
     companion object {
