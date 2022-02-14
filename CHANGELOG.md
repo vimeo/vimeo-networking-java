@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.2.0 *(2022-02-14)*
+----------------------------
+- Added `getMagistoTeamToken()` function to the `Authenticator`.
+
 Version 2.1.0 *(2022-02-11)*
 ----------------------------
 - Added `Authenticator.logOutLocally()` to log out the user locally in the library without removing their token on the server.
