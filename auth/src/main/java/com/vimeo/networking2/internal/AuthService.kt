@@ -25,6 +25,7 @@ import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.Scopes
 import com.vimeo.networking2.SsoDomain
+import com.vimeo.networking2.TeamToken
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.annotations.Internal
 import retrofit2.http.DELETE
@@ -34,6 +35,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
@@ -405,6 +407,16 @@ internal interface AuthService {
     fun logOut(
         @Header(AUTHORIZATION) authorization: String
     ): VimeoCall<Unit>
+
+    /**
+     * Provides a team's token by team's id.
+     *
+     * @param teamId The team's id which is used to find token.
+     *
+     * @return A [VimeoCall] that provides a [TeamToken].
+     */
+    @GET("auth/teams/{team_id}/magisto_access_token")
+    fun getTeamToken(@Path(value = "team_id") teamId: String): VimeoCall<TeamToken>
 
     companion object {
         const val AUTHORIZATION = "Authorization"

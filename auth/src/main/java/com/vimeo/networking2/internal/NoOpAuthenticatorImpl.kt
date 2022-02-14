@@ -3,6 +3,7 @@ package com.vimeo.networking2.internal
 import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.SsoDomain
+import com.vimeo.networking2.TeamToken
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
@@ -83,6 +84,8 @@ class NoOpAuthenticatorImpl(
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest = reject()
 
     override fun logOutLocally() = Unit
+
+    override fun getTeamToken(teamId: String, callback: VimeoCallback<TeamToken>) = reject()
 
     private fun reject(): Nothing = error("Authentication is not supported when using a fixed access token")
 }

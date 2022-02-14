@@ -24,6 +24,7 @@ package com.vimeo.networking2.internal
 import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.SsoDomain
+import com.vimeo.networking2.TeamToken
 import com.vimeo.networking2.VimeoAccount
 import com.vimeo.networking2.VimeoCallback
 import com.vimeo.networking2.VimeoRequest
@@ -112,4 +113,9 @@ class MutableAuthenticatorDelegate(var actual: Authenticator? = null) : Authenti
     override fun logOut(callback: VimeoCallback<Unit>): VimeoRequest = authenticator.logOut(callback)
 
     override fun logOutLocally() = authenticator.logOutLocally()
+
+    override fun getTeamToken(
+        teamId: String,
+        callback: VimeoCallback<TeamToken>
+    ) = authenticator.getTeamToken(teamId, callback)
 }
