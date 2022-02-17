@@ -317,9 +317,10 @@ internal class AuthenticatorImpl(
     }
 
     override fun getMagistoTeamToken(teamId: String, callback: VimeoCallback<TeamToken>): VimeoRequest {
+        val authorization = currentAccount?.accessToken?.let { "Bearer $it" } ?: authenticationMethod.basicAuthHeader
         return authService
             .getMagistoTeamToken(
-                authorization = authenticationMethod.basicAuthHeader,
+                authorization = authorization,
                 teamId = teamId
             )
             .enqueue(callback)
