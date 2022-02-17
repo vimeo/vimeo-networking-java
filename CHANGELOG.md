@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.2.1 *(2022-02-17)*
+----------------------------
+- Fixed bug where `getMagistoTeamToken()` wasn't properly authenticating with the API`.
+
 Version 2.2.0 *(2022-02-14)*
 ----------------------------
 - Added `getMagistoTeamToken()` function to the `Authenticator`.
