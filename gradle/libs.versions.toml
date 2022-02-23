@@ -1,24 +1,24 @@
 [versions]
 detekt = "1.19.0"
 moshi = "1.13.0"
-kotlin = "1.5.31"
+kotlin = "1.6.10"
 retrofit = "2.9.0"
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-ben-manes = { id = "com.github.ben-manes.versions", version = "0.39.0" }
+ben-manes = { id = "com.github.ben-manes.versions", version = "0.42.0" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version = "1.5.31-1.0.1" }
+ksp = { id = "com.google.devtools.ksp", version = "1.6.10-1.0.4" }
 
 [libraries]
 
 #Plugins
-android-gradle = { module = "com.android.tools.build:gradle", version = "7.0.4" }
+android-gradle = { module = "com.android.tools.build:gradle", version = "7.1.2" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 bintray-gradle = { module = "com.jfrog.bintray.gradle:gradle-bintray-plugin", version = "1.8.5" }
 
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.4.0" }
-androidx-constraint = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.2" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.4.1" }
+androidx-constraint = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.3" }
 
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-gradle-plugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin" }
@@ -39,9 +39,9 @@ retrofit-moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", 
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 junit = { module = "junit:junit", version = "4.13.2" }
-assertj = { module = "org.assertj:assertj-core", version = "3.21.0" }
-podam = { module = "uk.co.jemos.podam:podam", version = "7.2.7.RELEASE" }
-classgraph = { module = "io.github.classgraph:classgraph", version = "4.8.137" }
+assertj = { module = "org.assertj:assertj-core", version = "3.22.0" }
+podam = { module = "uk.co.jemos.podam:podam", version = "7.2.8.RELEASE" }
+classgraph = { module = "io.github.classgraph:classgraph", version = "4.8.139" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.7.3" }
 mockito = { module = "org.mockito.kotlin:mockito-kotlin", version = "4.0.0" }
 mockito-inline = { module = "org.mockito:mockito-inline", version = "4.3.1" }
