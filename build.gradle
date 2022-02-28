@@ -23,6 +23,7 @@ subprojects {
 
     apply {
         plugin "io.gitlab.arturbosch.detekt"
+        plugin "com.github.ben-manes.versions"
     }
     apply from: "../detekt_configuration.gradle"
 
