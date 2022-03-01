@@ -35,7 +35,7 @@ object ApiConstants {
 
     const val SSL_PUBLIC_KEY = "sha256/5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w="
 
-    const val SDK_VERSION = "2.2.1"
+    const val SDK_VERSION = "2.3.0"
 
     const val NONE = -1
 

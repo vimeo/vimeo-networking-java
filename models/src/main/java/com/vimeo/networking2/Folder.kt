@@ -20,6 +20,8 @@ import java.util.Date
  * @param metadata The folder's metadata.
  * @param lastModifiedDate The time in ISO 8601 format when the folder was last modified.
  * @param name The name of the folder.
+ * @param isPrivateToUser Whether the folder is private to the user that owns it.
+ * @param accessGrant The grant that gives the team member access to the folder.
  * @param privacy The [FolderPrivacy] that defines the public visibility of the folder.
  * @param resourceKey The resource key string of the folder.
  * @param slackIncomingWebhooksId The Slack webhook ID for the folder.
@@ -47,6 +49,12 @@ data class Folder(
 
     @Json(name = "modified_time")
     val lastModifiedDate: Date? = null,
+
+    @Json(name = "is_private_to_user")
+    val isPrivateToUser: Boolean? = null,
+
+    @Json(name = "access_grant")
+    val accessGrant: AccessGrant? = null,
 
     @Json(name = "name")
     val name: String? = null,
