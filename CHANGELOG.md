@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Version 2.2.2 *(2022-03-01)*
+Version 2.3.0 *(2022-03-01)*
 ----------------------------
 - Added `isPrivateToUser` and `accessGrant` to `Folder`.
 
