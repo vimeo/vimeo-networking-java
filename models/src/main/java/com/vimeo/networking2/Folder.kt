@@ -48,6 +48,12 @@ data class Folder(
     @Json(name = "modified_time")
     val lastModifiedDate: Date? = null,
 
+    @Json(name = "is_private_to_user")
+    val isPrivateToUser: Boolean? = null,
+
+    @Json(name = "access_grant")
+    val accessGrant: AccessGrant? = null,
+
     @Json(name = "name")
     val name: String? = null,
 

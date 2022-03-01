@@ -10,6 +10,7 @@ import com.squareup.moshi.JsonClass
  * @param folderEdit True if the user can edit the folder, false otherwise.
  * @param folderInvite True if the user can invite others to the folder, false otherwise.
  * @param folderView True if the user can view the folder, false otherwise.
+ * @param folderAddSubFolders True if the user can add a subfolder, false otherwise.
  */
 @JsonClass(generateAdapter = true)
 data class PermissionActions(
@@ -24,5 +25,9 @@ data class PermissionActions(
     val folderInvite: Boolean? = null,
 
     @Json(name = "folder.view")
-    val folderView: Boolean? = null
+    val folderView: Boolean? = null,
+
+    @Json(name = "folder.add_subfolders")
+    val folderAddSubFolders: Boolean? = null
+
 )
