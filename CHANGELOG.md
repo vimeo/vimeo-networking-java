@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.2.2 *(2022-03-01)*
+----------------------------
+- Added `isPrivateToUser` and `accessGrant` to `Folder`.
+
 Version 2.2.1 *(2022-02-17)*
 ----------------------------
 - Fixed bug where `getMagistoTeamToken()` wasn't properly authenticating with the API`.
