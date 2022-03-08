@@ -16,6 +16,7 @@ import java.util.Date
  * @param archivedTime The time in ISO 8601 format when the live stream was archived.
  * @param chat Information about the live clip's chat.
  * @param endedTime The time in ISO 8601 format when the live stream ended.
+ * @param id An identifier for the live stream.
  * @param key The streaming key string, which is used in conjunction with the RTMP [link].
  * @param link The upstream RTMP link. Send your live content to this link.
  * @param scheduledStartTime The time in ISO 8601 format when the live stream was scheduled to start.
@@ -42,6 +43,10 @@ data class Live(
     @Internal
     @Json(name = "ended_time")
     val endedTime: Date? = null,
+
+    @Internal
+    @Json(name = "id")
+    val id: Long? = null,
 
     @Internal
     @Json(name = "key")
