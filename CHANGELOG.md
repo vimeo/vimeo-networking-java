@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.4.0 *(2022-03-08)*
+----------------------------
+- Added `id` to `Live`.
+
 Version 2.3.0 *(2022-03-01)*
 ----------------------------
 - Added `isPrivateToUser` and `accessGrant` to `Folder`.
