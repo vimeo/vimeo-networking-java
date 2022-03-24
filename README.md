@@ -131,7 +131,6 @@ In the below sections, we cover examples of ways to customize the `VimeoApiClien
 
 We recommend the following for all apps when configuring the SDK with the `VimeoApiConfiguration.Builder`:
 - Provide a user agent to identify your app and the device using `withUserAgent(String)`. By default the library creates its own user agent, but supplementing it with more info provides the Vimeo API with a better picture of what devices are accessing it. Not required, and we provide a default if none is provided.
-- Decide if you need certificate pinning. If you don't care about certificate pinning, or if it's not working on the Android version you're working with, we suggest to disable it using `withCertPinning(Boolean)`. It is enabled by default.
 - Provide a cache directory with `withCacheDirectory(File)`. By default the SDK does not set the cache directory and **responses will not be cached**, so you'll have to choose one to get the best performance.
 - Provide an `AccountStore` using `withAccountStore(AccountStore)`. Unless you are accessing the API with a fixed access token, then you should probably provide a store that is disk backed. The default used by the SDK is an in-memory store that **will not remember the logged in account** after the app is restarted.
 

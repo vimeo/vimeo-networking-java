@@ -23,7 +23,6 @@ package com.vimeo.networking2.config
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import com.vimeo.networking2.ApiConstants
 import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
 import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
@@ -33,7 +32,6 @@ import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
 import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
 import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
 import com.vimeo.networking2.logging.VimeoLogger
-import okhttp3.CertificatePinner
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -139,18 +137,7 @@ object RetrofitSetupModule {
 
         interceptors().addAll(applicationInterceptors)
         networkInterceptors().addAll(networkInterceptors)
-
-        if (vimeoApiConfiguration.isCertPinningEnabled) {
-            certificatePinner(createCertificatePinner())
-        }
     }.build()
-
-    /**
-     * Create certificate pinner to configure OkHttpClient.
-     */
-    private fun createCertificatePinner() = CertificatePinner.Builder()
-        .add(ApiConstants.SSL_URL_PATTERN, ApiConstants.SSL_PUBLIC_KEY)
-        .build()
 
     /**
      * Create [Retrofit] with OkHttpClient and Moshi.

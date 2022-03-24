@@ -52,8 +52,6 @@ import java.util.Locale
  * @param userAgent The supplemental user agent string which will be added to the internal user agent, identifying the
  * client.
  * @param requestTimeoutSeconds The maximum number of seconds a request will wait to complete before timing out.
- * @param isCertPinningEnabled True if the library should pin certificates, false otherwise. Note: should be turned off
- * when debugging.
  * @param logDelegate The instance to which logging will be delegated.
  * @param logLevel The level of logging which will be performed by the library.
  * @param cacheDirectory The optional directory in which requests will be cached.
@@ -77,8 +75,6 @@ data class VimeoApiConfiguration(
     val userAgent: String,
 
     val requestTimeoutSeconds: Long,
-
-    val isCertPinningEnabled: Boolean,
 
     val logDelegate: LogDelegate?,
     val logLevel: LogDelegate.Level,
@@ -115,8 +111,6 @@ data class VimeoApiConfiguration(
         private var userAgent: String = DEFAULT_USER_AGENT
 
         private var requestTimeoutSeconds: Long = DEFAULT_TIMEOUT
-
-        private var isCertPinningEnabled: Boolean = true
 
         private var logDelegate: LogDelegate? = DefaultLogDelegate()
         private var logLevel: LogDelegate.Level = LogDelegate.Level.NONE
@@ -214,13 +208,6 @@ data class VimeoApiConfiguration(
         }
 
         /**
-         * Enable or disable certificate pinning. Defaults to true.
-         *
-         * @see VimeoApiConfiguration.isCertPinningEnabled
-         */
-        fun withCertPinning(certPinningEnabled: Boolean) = apply { this.isCertPinningEnabled = certPinningEnabled }
-
-        /**
          * Specify a log delegate, or none at all. Defaults to [DefaultLogDelegate] which logs to the system output.
          *
          * @see VimeoApiConfiguration.logDelegate
@@ -268,7 +255,6 @@ data class VimeoApiConfiguration(
             applicationInterceptors = applicationInterceptors,
             userAgent = userAgent,
             requestTimeoutSeconds = requestTimeoutSeconds,
-            isCertPinningEnabled = isCertPinningEnabled,
             logDelegate = logDelegate,
             logLevel = logLevel,
             cacheDirectory = cacheDirectory,
