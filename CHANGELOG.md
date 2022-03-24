@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 3.0.0 *(2022-03-25)*
+----------------------------
+- Disables certificate pinning by default and removes the ability to pin to Vimeo's intermediate API certificate.
+- Consumers of 2.x or 1.x versions of the library will need to upgrade to 3.x or manually disable certificate pinning before 3 March 2023, when the certificate pinned to in those versions expires. Failure to upgrade to 3.x or disable certificate pinning by that date will result in API requests failing.
+
 Version 2.4.0 *(2022-03-08)*
 ----------------------------
 - Added `id` to `Live`.

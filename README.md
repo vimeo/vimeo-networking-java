@@ -1,6 +1,8 @@
 # vimeo-networking
 vimeo-networking is a JVM (Java & Kotlin) SDK used for interacting with the Vimeo API. The example app provided in this project shows the implementation in the context of an Android app.
 
+#### WARNING: Please upgrade to version 3.x of this library by 3 March 2023 or manually disable certificate pinning on version 1.x or 2.x by this date. API requests that use certificate pinning will fail beginning on this date as the certificate that 1.x and 2.x pin to will expire and be replaced.
+
 | Branch | Build Status |
 |--------|--------------|
 | develop | [![release workflow](https://github.com/vimeo/vimeo-networking-java/actions/workflows/shipit.yml/badge.svg)](https://github.com/vimeo/vimeo-networking-java/actions/workflows/shipit.yml) | 
