@@ -33,7 +33,7 @@ object ApiConstants {
 
     const val SSL_URL_PATTERN = "*.vimeo.com"
 
-    const val SDK_VERSION = "2.4.0"
+    const val SDK_VERSION = "3.0.0"
 
     const val NONE = -1
 
