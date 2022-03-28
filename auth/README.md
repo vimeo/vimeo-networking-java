@@ -127,16 +127,3 @@ onError = {
 ```
 
 The HTTP status code and any possible data returned from the API can extracted from the `VimeoResponse.Error.Unknown` class.
-
-
-## Certificate Pinning
-
-By default certificate pinning is enabled for every request. If you would like to disable it, you may specify it when configuring the SDK.
-
-```kotlin
-val vimeoApiConfiguration = VimeoApiConfiguration.Builder(CLIENT_ID, CLIENT_SECRET, scopes)
-  .withCertPinning(certPinningEnabled = false)
-  .build()
-```
-
-When using the SDK on KitKat, you will have to turn off certificate pinning, since TLS is disabled by default.
