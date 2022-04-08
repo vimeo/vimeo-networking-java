@@ -11,6 +11,9 @@ import com.vimeo.networking2.annotations.Internal
  * @param buy The buy interaction for a On Demand video.
  * @param channel When a video is referenced by a channel URI, if the user is a moderator of the channel, include
  * information about removing the video from the channel.
+ * @param delete The interaction that shows whether the user has the ability to delete the video.
+ * @param edit The interaction that shows whether the user has the ability to edit a video or its settings.
+ * @param invite The interaction that shows whether the user has the ability to invite other users to manage the video.
  * @param like Information about whether the authenticated user has liked this video.
  * @param rent The Rent interaction for an On Demand video.
  * @param report Information about where and how to report a video.
@@ -30,6 +33,15 @@ data class VideoInteractions(
     @Internal
     @Json(name = "channel")
     val channel: BasicInteraction? = null,
+
+    @Json(name = "delete")
+    val delete: BasicInteraction? = null,
+
+    @Json(name = "edit")
+    val edit: BasicInteraction? = null,
+
+    @Json(name = "invite")
+    val invite: BasicInteraction? = null,
 
     @Json(name = "like")
     val like: LikeInteraction? = null,
