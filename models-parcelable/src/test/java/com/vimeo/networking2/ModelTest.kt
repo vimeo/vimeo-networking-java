@@ -30,6 +30,7 @@ class ModelTest {
         assertThat(models).isNotEmpty
     }
 
+    @Suppress("DEPRECATION")
     @Test
     fun `models are Parcelable`() {
         models
