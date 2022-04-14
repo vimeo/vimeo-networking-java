@@ -395,6 +395,16 @@ internal interface VimeoService {
     ): VimeoCall<FolderList>
 
     @GET
+    fun getTeamPermissions(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<TeamPermissionList>
+
+
+    @GET
     fun getFeedList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,

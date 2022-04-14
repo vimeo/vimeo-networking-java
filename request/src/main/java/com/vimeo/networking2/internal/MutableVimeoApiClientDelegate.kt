@@ -53,6 +53,7 @@ import com.vimeo.networking2.Team
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
 import com.vimeo.networking2.TeamMembershipList
+import com.vimeo.networking2.TeamPermissionList
 import com.vimeo.networking2.TextTrackList
 import com.vimeo.networking2.TvodItem
 import com.vimeo.networking2.TvodItemList
@@ -850,4 +851,12 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         queryParams: Map<String, String>,
         callback: VimeoCallback<Unit>
     ): VimeoRequest = client.deleteContent(uri, queryParams, callback)
+
+    override fun fetchTeamPermissions(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamPermissionList>
+    ): VimeoRequest = client.fetchTeamPermissions(uri, fieldFilter, queryParams, cacheControl, callback)
 }

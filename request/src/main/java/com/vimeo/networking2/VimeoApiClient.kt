@@ -1913,6 +1913,14 @@ interface VimeoApiClient {
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
+    fun fetchTeamPermissions(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamPermissionList>
+    ): VimeoRequest
+
     companion object {
 
         private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()

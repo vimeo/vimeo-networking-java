@@ -57,6 +57,7 @@ import com.vimeo.networking2.Team
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
 import com.vimeo.networking2.TeamMembershipList
+import com.vimeo.networking2.TeamPermissionList
 import com.vimeo.networking2.TextTrackList
 import com.vimeo.networking2.TvodItem
 import com.vimeo.networking2.TvodItemList
@@ -588,6 +589,24 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getFolderList(
+            authHeader,
+            safeUri,
+            fieldFilter,
+            queryParams.orEmpty(),
+            cacheControl
+        ).enqueue(callback)
+    }
+
+    override fun fetchTeamPermissions(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamPermissionList>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        return vimeoService.getTeamPermissions(
             authHeader,
             safeUri,
             fieldFilter,
