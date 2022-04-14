@@ -7,10 +7,15 @@ import com.squareup.moshi.JsonClass
 data class TeamPermission(
     @Json(name = "team_entity")
     val teamEntity: TeamEntity? = null,
+
     @Json(name = "applicable_permission_policies")
     val applicablePermissionPolicies: List<PermissionPolicy>? = null,
+
     @Json(name = "current_permissions")
-    val currentPermissions: TeamPermissionCurrentPermissions? = null
+    val currentPermissions: TeamPermissionCurrentPermissions? = null,
+
+    @Json(name = "metadata")
+    val metadata: MetadataInteractions<TeamPermissionInteraction>
 )
 
 @JsonClass(generateAdapter = true)
