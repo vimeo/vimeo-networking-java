@@ -15,7 +15,7 @@ data class TeamPermission(
     val currentPermissions: TeamPermissionCurrentPermissions? = null,
 
     @Json(name = "metadata")
-    val metadata: MetadataInteractions<TeamPermissionInteraction>
+    val metadata: MetadataInteractions<TeamPermissionInteraction>? = null
 )
 
 @JsonClass(generateAdapter = true)

@@ -6,8 +6,8 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class TeamPermissionInteraction(
     @Json(name = "edit")
-    val edit: BasicInteraction,
+    val edit: BasicInteraction? = null,
 
     @Json(name = "remove")
-    val remove: BasicInteraction
+    val remove: BasicInteraction? = null
 )
