@@ -403,7 +403,6 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<TeamPermissionList>
 
-
     @GET
     fun getFeedList(
         @Header(AUTHORIZATION) authorization: String,
