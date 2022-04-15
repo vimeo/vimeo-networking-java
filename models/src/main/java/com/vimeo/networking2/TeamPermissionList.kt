@@ -4,6 +4,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Pageable
 
+/**
+ * Represents a pageable array/list of [TeamPermission].
+ */
 @JsonClass(generateAdapter = true)
 data class TeamPermissionList(
 
