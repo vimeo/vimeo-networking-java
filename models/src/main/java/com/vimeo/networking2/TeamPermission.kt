@@ -4,11 +4,16 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Represents the current permission relationship a [teamEntity] has with a resource. This class expresses any current
- * way the [TeamEntity] is associated with the resource through [currentPermissions].  This class expresses any way the
- * [TeamEntity] can have it's permission relationship to a resource edited via the set of potential permissions listed
- * in [applicablePermissionPolicies]. Any way that the current authenticated user can interact with this [TeamEntity] in
- * respect to permission changes, is expressed within the interactions located within [metadata]
+ * Represents the current permission relationship a [teamEntity] has with a resource.
+ *
+ * @param teamEntity The entity which this class expresses a permission relationship towards for the resource passed in
+ * to the call
+ * @param applicablePermissionPolicies set of potential permissions the [teamEntity] can have its permission
+ * relationship to a the resource changed to
+ * @param currentPermissions This class expresses any current way the [TeamEntity] is associated with the resource
+ * through this.
+ * @param metadata Any way that the current authenticated user can interact with this [TeamEntity] in
+ * respect to permission changes, is expressed within the interactions located within this.
  */
 @JsonClass(generateAdapter = true)
 data class TeamPermission(

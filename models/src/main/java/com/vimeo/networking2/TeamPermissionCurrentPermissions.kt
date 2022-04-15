@@ -4,8 +4,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * Represents the current permission for a [TeamPermission]. This only contains the uri for said permission as denoted
- * by [permissionPolicyUri]
+ * Represents the current permission for a [TeamPermission].
+ *
+ * @param permissionPolicyUri The uri for the permission
  */
 @JsonClass(generateAdapter = true)
 data class TeamPermissionCurrentPermissions(
