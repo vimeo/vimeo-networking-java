@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 3.1.0 *(2022-04-11)*
+----------------------------
+- Added the following interactions to `VideoInteractions`: `delete`, `edit`, `invite`.
+- Added the following interactions to `FolderInteractions`: `deleteVideo`, `edit`, `invite`.
+
 Version 3.0.0 *(2022-03-25)*
 ----------------------------
 - Disables certificate pinning by default and removes the ability to pin to Vimeo's intermediate API certificate.
