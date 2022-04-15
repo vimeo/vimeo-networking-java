@@ -1913,6 +1913,31 @@ interface VimeoApiClient {
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
+    /**
+     * An endpoint which can either:
+     *
+     *  - fetch all [TeamEntity] with a current permission association with a resource if no 'query'
+     *  query-string parameter is present
+     *  - or if a 'query' query-string parameter is passed in, return all [TeamEntity]s related to your [Team] which
+     *  match that query value, so long as they are [TeamEntity]s which *can* have a permission action leveraged against
+     *   them.
+     *
+     * @param uri The URI of the endpoint. Typically comes from a 'team_permission' interaction within the metadata for
+     * a folder or video resource
+     * @param queryParams The query parameters to include in the request. 'query' is one potential value here, as
+     * mentioned in the method description.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchTeamPermissions(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamPermissionList>
+    ): VimeoRequest
+
     companion object {
 
         private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()
