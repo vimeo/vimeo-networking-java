@@ -76,6 +76,7 @@ import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.SlackLanguagePreferenceType
 import com.vimeo.networking2.enums.SlackUserPreferenceType
+import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
@@ -877,4 +878,38 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicy>
     ): VimeoRequest = client.fetchPermissionPolicy(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun putTeamPermission(
+        permissionPolicyUri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        uri: String,
+        callback: VimeoCallback<Unit>,
+        queryParams: Map<String, String>?,
+        bodyParams: Map<String, Any>?
+    ): VimeoRequest = client.putTeamPermission(
+        permissionPolicyUri,
+        teamEntityType,
+        teamEntityUri,
+        uri,
+        callback,
+        queryParams,
+        bodyParams
+    )
+
+    override fun deleteTeamPermission(
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        uri: String,
+        callback: VimeoCallback<Unit>,
+        queryParams: Map<String, String>?,
+        bodyParams: Map<String, Any>?
+    ): VimeoRequest = client.deleteTeamPermission(
+        teamEntityType,
+        teamEntityUri,
+        uri,
+        callback,
+        queryParams,
+        bodyParams
+    )
 }

@@ -657,6 +657,14 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<Unit>
 
+    @DELETE
+    fun delete(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Body bodyParams: Any
+    ): VimeoCall<Unit>
+
     @POST
     fun post(
         @Header(AUTHORIZATION) authorization: String,

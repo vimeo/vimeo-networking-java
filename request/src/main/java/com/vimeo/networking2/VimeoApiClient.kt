@@ -31,6 +31,7 @@ import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.SlackLanguagePreferenceType
 import com.vimeo.networking2.enums.SlackUserPreferenceType
+import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
@@ -1938,9 +1939,8 @@ interface VimeoApiClient {
         callback: VimeoCallback<TeamPermissionList>
     ): VimeoRequest
 
-
     /**
-     * Fetch a list of [PermissionPolicy]
+     * Fetch a list of [PermissionPolicy].
      *
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
@@ -1960,7 +1960,7 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Fetch a [PermissionPolicy]
+     * Fetch a [PermissionPolicy].
      *
      * @param uri The URI from which content will be requested.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
@@ -1977,6 +1977,52 @@ interface VimeoApiClient {
         queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest
+
+    /**
+     * Either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
+     * [PermissionPolicy] with a new one.
+     *
+     * @param permissionPolicyUri Uri from a [PermissionPolicy] you want to newly associate with a [TeamEntity].
+     * @param teamEntityType The type of [TeamEntity] the association is being made with.
+     * @param teamEntityUri The uri of the [TeamEntity], probably from [TeamEntity.uri].
+     * @param uri The URI used to perform the PUT, likely sourced from the edit interaction of [TeamPermission.metadata]
+     * @param callback The callback which will be notified of the request completion.
+     * @param queryParams The query parameters included in the PUT.
+     * @param bodyParams The body parameters included in the PUT.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun putTeamPermission(
+        permissionPolicyUri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        uri: String,
+        callback: VimeoCallback<Unit>,
+        queryParams: Map<String, String>? = null,
+        bodyParams: Map<String, Any>? = null
+    ): VimeoRequest
+
+    /**
+     * Removes the associated [PermissionPolicy] from a [TeamEntity].
+     *
+     * @param teamEntityType The type of [TeamEntity] the association is being removed for.
+     * @param teamEntityUri The uri of the [TeamEntity], probably from [TeamEntity.uri].
+     * @param uri The URI used to perform the PUT, likely sourced from the remove interaction of
+     * [TeamPermission.metadata]
+     * @param callback The callback which will be notified of the request completion.
+     * @param queryParams The query parameters included in the DELETE.
+     * @param bodyParams The body parameters included in the DELETE.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun deleteTeamPermission(
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        uri: String,
+        callback: VimeoCallback<Unit>,
+        queryParams: Map<String, String>? = null,
+        bodyParams: Map<String, Any>? = null
     ): VimeoRequest
 
     companion object {

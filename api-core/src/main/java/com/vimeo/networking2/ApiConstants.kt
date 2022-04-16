@@ -94,6 +94,9 @@ object ApiConstants {
         const val PARAMETER_PERMISSION_LEVEL = "permission_level"
         const val PARAMETER_FOLDER_URI = "folder_uri"
         const val PARAMETER_ROLE = "role"
+        const val PARAMETER_PERMISSION_POLICY_URI = "permission_policy_uri"
+        const val PARAMETER_TEAM_ENTITY_TYPE = "team_entity_type"
+        const val PARAMETER_TEAM_ENTITY_URI = "team_entity_uri"
 
         // Generic parameters
         const val PARAMETER_GET_PAGE_SIZE = "per_page"

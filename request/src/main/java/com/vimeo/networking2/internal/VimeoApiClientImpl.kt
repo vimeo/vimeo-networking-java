@@ -84,6 +84,7 @@ import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.SlackLanguagePreferenceType
 import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.StringValue
+import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
@@ -140,6 +141,46 @@ internal class VimeoApiClientImpl(
             body[ApiConstants.Parameters.PARAMETER_ALBUM_PASSWORD] = requireNotNull(albumPrivacy.password)
         }
         return vimeoService.createAlbum(authHeader, safeUri, body).enqueue(callback)
+    }
+
+    override fun putTeamPermission(
+        permissionPolicyUri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        uri: String,
+        callback: VimeoCallback<Unit>,
+        queryParams: Map<String, String>?,
+        bodyParams: Map<String, Any>?
+    ): VimeoRequest {
+
+        val body = bodyParams.intoMutableMap()
+
+        body[ApiConstants.Parameters.PARAMETER_PERMISSION_POLICY_URI] = permissionPolicyUri
+        body[ApiConstants.Parameters.PARAMETER_TEAM_ENTITY_TYPE] = teamEntityType.name
+        body[ApiConstants.Parameters.PARAMETER_TEAM_ENTITY_URI] = teamEntityUri
+
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        return vimeoService.put(authHeader, safeUri, queryParams.orEmpty(), body).enqueue(callback)
+    }
+
+    override fun deleteTeamPermission(
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        uri: String,
+        callback: VimeoCallback<Unit>,
+        queryParams: Map<String, String>?,
+        bodyParams: Map<String, Any>?
+    ): VimeoRequest {
+
+        val body = bodyParams.intoMutableMap()
+
+        body[ApiConstants.Parameters.PARAMETER_TEAM_ENTITY_TYPE] = teamEntityType.name
+        body[ApiConstants.Parameters.PARAMETER_TEAM_ENTITY_URI] = teamEntityUri
+
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        return vimeoService.delete(authHeader, safeUri, queryParams.orEmpty(), body).enqueue(callback)
     }
 
     override fun createAlbum(
@@ -625,7 +666,8 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<PermissionPolicyList>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        return vimeoService.getPermissionPolicyList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        return vimeoService
+            .getPermissionPolicyList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
@@ -637,7 +679,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<PermissionPolicy>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        return vimeoService.getPermissionPolicy(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+        return vimeoService.getPermissionPolicy(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
