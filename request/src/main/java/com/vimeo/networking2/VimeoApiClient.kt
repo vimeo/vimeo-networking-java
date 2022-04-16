@@ -1938,6 +1938,47 @@ interface VimeoApiClient {
         callback: VimeoCallback<TeamPermissionList>
     ): VimeoRequest
 
+
+    /**
+     * Fetch a list of [PermissionPolicy]
+     *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchPermissionPolicyList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicyList>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [PermissionPolicy]
+     *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchPermissionPolicy(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest
+
     companion object {
 
         private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()

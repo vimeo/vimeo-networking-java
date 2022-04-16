@@ -44,6 +44,8 @@ import com.vimeo.networking2.InvalidParameter
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
+import com.vimeo.networking2.PermissionPolicy
+import com.vimeo.networking2.PermissionPolicyList
 import com.vimeo.networking2.PictureCollection
 import com.vimeo.networking2.Product
 import com.vimeo.networking2.ProductList
@@ -615,6 +617,30 @@ internal class VimeoApiClientImpl(
         ).enqueue(callback)
     }
 
+    override fun fetchPermissionPolicyList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicyList>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.getPermissionPolicyList(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
+    override fun fetchPermissionPolicy(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.getPermissionPolicy(authHeader, uri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
     override fun fetchTextTrackList(
         uri: String,
         fieldFilter: String?,
@@ -622,8 +648,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<TextTrackList>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        return vimeoService.getTextTrackList(authHeader, safeUri, fieldFilter, cacheControl)
-            .enqueue(callback)
+        return vimeoService.getTextTrackList(authHeader, safeUri, fieldFilter, cacheControl).enqueue(callback)
     }
 
     override fun fetchVideoStatus(

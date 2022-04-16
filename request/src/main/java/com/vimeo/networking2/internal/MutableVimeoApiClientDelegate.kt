@@ -40,6 +40,8 @@ import com.vimeo.networking2.FolderList
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
+import com.vimeo.networking2.PermissionPolicy
+import com.vimeo.networking2.PermissionPolicyList
 import com.vimeo.networking2.PictureCollection
 import com.vimeo.networking2.Product
 import com.vimeo.networking2.ProductList
@@ -859,4 +861,20 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<TeamPermissionList>
     ): VimeoRequest = client.fetchTeamPermissions(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun fetchPermissionPolicyList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicyList>
+    ): VimeoRequest = client.fetchPermissionPolicyList(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun fetchPermissionPolicy(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest = client.fetchPermissionPolicy(uri, fieldFilter, queryParams, cacheControl, callback)
 }
