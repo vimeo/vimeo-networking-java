@@ -664,7 +664,7 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<Unit>
 
-    @DELETE
+    @HTTP(method = "DELETE", hasBody = true)
     fun deleteTeamPermission(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
