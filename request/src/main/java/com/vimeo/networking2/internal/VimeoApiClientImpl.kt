@@ -56,6 +56,7 @@ import com.vimeo.networking2.RecommendationList
 import com.vimeo.networking2.SearchResultList
 import com.vimeo.networking2.SeasonList
 import com.vimeo.networking2.Team
+import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
 import com.vimeo.networking2.TeamMembershipList
@@ -84,13 +85,14 @@ import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.SlackLanguagePreferenceType
 import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.StringValue
-import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
+import com.vimeo.networking2.params.DeleteTeamPermissionParams
 import com.vimeo.networking2.params.GrantFolderPermissionForUser
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.ReplaceTeamPermissionParams
 import com.vimeo.networking2.params.SearchDateType
 import com.vimeo.networking2.params.SearchDurationType
 import com.vimeo.networking2.params.SearchFacetType
@@ -143,44 +145,29 @@ internal class VimeoApiClientImpl(
         return vimeoService.createAlbum(authHeader, safeUri, body).enqueue(callback)
     }
 
-    override fun putTeamPermission(
-        permissionPolicyUri: String,
-        teamEntityType: TeamEntityType,
-        teamEntityUri: String,
+    override fun replaceTeamPermission(
         uri: String,
-        callback: VimeoCallback<Unit>,
-        queryParams: Map<String, String>?,
-        bodyParams: Map<String, Any>?
+        permissionPolicy: PermissionPolicy,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
     ): VimeoRequest {
-
-        val body = bodyParams.intoMutableMap()
-
-        body[ApiConstants.Parameters.PARAMETER_PERMISSION_POLICY_URI] = permissionPolicyUri
-        body[ApiConstants.Parameters.PARAMETER_TEAM_ENTITY_TYPE] = teamEntityType.name
-        body[ApiConstants.Parameters.PARAMETER_TEAM_ENTITY_URI] = teamEntityUri
-
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
-        return vimeoService.put(authHeader, safeUri, queryParams.orEmpty(), body).enqueue(callback)
+        val replaceTeamPermissionParams = ReplaceTeamPermissionParams.fromEntities(permissionPolicy, teamEntity)
+
+        return vimeoService.putTeamPermission(authHeader, safeUri, replaceTeamPermissionParams).enqueue(callback)
     }
 
     override fun deleteTeamPermission(
-        teamEntityType: TeamEntityType,
-        teamEntityUri: String,
+        teamEntity: TeamEntity,
         uri: String,
-        callback: VimeoCallback<Unit>,
-        queryParams: Map<String, String>?,
-        bodyParams: Map<String, Any>?
+        callback: VimeoCallback<Unit>
     ): VimeoRequest {
-
-        val body = bodyParams.intoMutableMap()
-
-        body[ApiConstants.Parameters.PARAMETER_TEAM_ENTITY_TYPE] = teamEntityType.name
-        body[ApiConstants.Parameters.PARAMETER_TEAM_ENTITY_URI] = teamEntityUri
-
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
-        return vimeoService.delete(authHeader, safeUri, queryParams.orEmpty(), body).enqueue(callback)
+        val deleteTeamPermissionParams = DeleteTeamPermissionParams.fromEntities(teamEntity)
+
+        return vimeoService.deleteTeamPermission(authHeader, safeUri, deleteTeamPermissionParams).enqueue(callback)
     }
 
     override fun createAlbum(
@@ -661,26 +648,51 @@ internal class VimeoApiClientImpl(
     override fun fetchPermissionPolicyList(
         uri: String,
         fieldFilter: String?,
-        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicyList>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService
-            .getPermissionPolicyList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .getPermissionPolicyList(authHeader, safeUri, fieldFilter, cacheControl)
             .enqueue(callback)
+    }
+
+    override fun fetchPermissionPolicyList(
+        user: User,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicyList>
+    ): VimeoRequest {
+        val userId = user.identifier ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        val uri = "/users/$userId/permission_policies"
+
+        return fetchPermissionPolicyList(uri, fieldFilter, cacheControl, callback)
     }
 
     override fun fetchPermissionPolicy(
         uri: String,
         fieldFilter: String?,
-        queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicy>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        return vimeoService.getPermissionPolicy(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
-            .enqueue(callback)
+
+        return vimeoService.getPermissionPolicy(authHeader, safeUri, fieldFilter, cacheControl).enqueue(callback)
+    }
+
+    override fun fetchPermissionPolicy(
+        user: User,
+        permissionPolicyId: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest {
+        val userId = user.identifier ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        val uri = "/users/$userId/permission_policies/$permissionPolicyId"
+
+        return fetchPermissionPolicy(uri, fieldFilter, cacheControl, callback)
     }
 
     override fun fetchTextTrackList(

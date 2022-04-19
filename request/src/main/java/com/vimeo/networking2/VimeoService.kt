@@ -44,9 +44,11 @@ import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.internal.VimeoCall
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
+import com.vimeo.networking2.params.DeleteTeamPermissionParams
 import com.vimeo.networking2.params.GrantFolderPermissionForUser
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.ReplaceTeamPermissionParams
 import okhttp3.CacheControl
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -408,7 +410,6 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
-        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<PermissionPolicyList>
 
@@ -417,7 +418,6 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
-        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<PermissionPolicy>
 
@@ -650,6 +650,13 @@ internal interface VimeoService {
         @Body bodyParams: Any
     ): VimeoCall<Unit>
 
+    @PUT
+    fun putTeamPermission(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body bodyParams: ReplaceTeamPermissionParams
+    ): VimeoCall<Unit>
+
     @DELETE
     fun delete(
         @Header(AUTHORIZATION) authorization: String,
@@ -658,11 +665,10 @@ internal interface VimeoService {
     ): VimeoCall<Unit>
 
     @DELETE
-    fun delete(
+    fun deleteTeamPermission(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
-        @Body bodyParams: Any
+        @Body bodyParams: DeleteTeamPermissionParams
     ): VimeoCall<Unit>
 
     @POST
