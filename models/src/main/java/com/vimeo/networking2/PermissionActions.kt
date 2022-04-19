@@ -16,18 +16,18 @@ import com.squareup.moshi.JsonClass
 data class PermissionActions(
 
     @Json(name = "folder.delete_video")
-    val folderDeleteVideo: Boolean = false,
+    val folderDeleteVideo: Boolean? = null,
 
     @Json(name = "folder.edit")
-    val folderEdit: Boolean = false,
+    val folderEdit: Boolean? = null,
 
     @Json(name = "folder.invite")
-    val folderInvite: Boolean = false,
+    val folderInvite: Boolean? = null,
 
     @Json(name = "folder.view")
-    val folderView: Boolean = false,
+    val folderView: Boolean? = null,
 
     @Json(name = "folder.add_subfolders")
-    val folderAddSubFolders: Boolean = false
+    val folderAddSubFolders: Boolean? = null
 
 )
