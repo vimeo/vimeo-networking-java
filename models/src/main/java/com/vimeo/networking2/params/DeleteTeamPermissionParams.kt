@@ -4,7 +4,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.enums.TeamEntityType
-import com.vimeo.networking2.type
 
 /**
  * Body for the request which removes a permission policy association with a resource for a specific [TeamEntity].

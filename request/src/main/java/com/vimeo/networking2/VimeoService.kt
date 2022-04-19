@@ -406,6 +406,17 @@ internal interface VimeoService {
     ): VimeoCall<TeamPermissionList>
 
     @GET
+    @Suppress("LongParameterList")
+    fun getTeamPermissions(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @Query(QUERY_STRING_PARAM_QUERY) query: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<TeamPermissionList>
+
+    @GET
     fun getPermissionPolicyList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
@@ -715,5 +726,6 @@ internal interface VimeoService {
         private const val SLACK_WEBHOOK_ID = "slack_incoming_webhooks_id"
         private const val SLACK_LANGUAGE_PREF = "slack_language_preference"
         private const val SLACK_USER_PREF = "slack_user_preferences"
+        private const val QUERY_STRING_PARAM_QUERY = "query"
     }
 }

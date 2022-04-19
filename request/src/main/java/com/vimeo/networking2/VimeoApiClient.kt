@@ -31,6 +31,7 @@ import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.SlackLanguagePreferenceType
 import com.vimeo.networking2.enums.SlackUserPreferenceType
+import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
@@ -1985,25 +1986,6 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Fetch a [PermissionPolicy].
-     *
-     * @param uri The URI from which content will be requested.
-     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
-     * returned.
-     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
-     * should be used.
-     * @param callback The callback which will be notified of the request completion.
-     *
-     * @return A [VimeoRequest] object to cancel API requests.
-     */
-    fun fetchPermissionPolicy(
-        uri: String,
-        fieldFilter: String?,
-        cacheControl: CacheControl?,
-        callback: VimeoCallback<PermissionPolicy>
-    ): VimeoRequest
-
-    /**
      * Fetch a list of [PermissionPolicy].
      *
      * @param user an instance of the authenticated user object
@@ -2025,6 +2007,25 @@ interface VimeoApiClient {
     /**
      * Fetch a [PermissionPolicy].
      *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchPermissionPolicy(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [PermissionPolicy].
+     *
      * @param user an instance of the authenticated user object
      * @param permissionPolicyId an id which uniquely identifies the policy
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
@@ -2036,8 +2037,27 @@ interface VimeoApiClient {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun fetchPermissionPolicy(
-        user: User,
-        permissionPolicyId: String,
+        permissionPolicy: PermissionPolicy,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [PermissionPolicy].
+     *
+     * @param user an instance of the authenticated user object
+     * @param permissionPolicyId an id which uniquely identifies the policy
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchPermissionPolicy(
+        permissionPolicy: TeamPermissionCurrentPermissions,
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicy>
@@ -2054,7 +2074,40 @@ interface VimeoApiClient {
      */
     fun replaceTeamPermission(
         uri: String,
+        permissionPolicyUri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
+     * [PermissionPolicy] with a new one.
+     *
+     * @param uri The URI used to perform the PUT, likely sourced from the edit interaction of [TeamPermission.metadata]
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun replaceTeamPermission(
+        folder: Folder,
         permissionPolicy: PermissionPolicy,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
+     * [PermissionPolicy] with a new one.
+     *
+     * @param uri The URI used to perform the PUT, likely sourced from the edit interaction of [TeamPermission.metadata]
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun replaceTeamPermission(
+        folder: Folder,
+        permissionPolicy: TeamPermissionCurrentPermissions,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
@@ -2070,6 +2123,21 @@ interface VimeoApiClient {
      */
     fun deleteTeamPermission(
         uri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Removes the associated [PermissionPolicy] from a [teamEntity] for a [folder].
+     *
+     * @param folder
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun deleteTeamPermission(
+        folder: Folder,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest

@@ -2,10 +2,8 @@ package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.PermissionPolicy
 import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.enums.TeamEntityType
-import com.vimeo.networking2.type
 
 /**
  * Body for the request which either newly adds or replaces a TeamPermission for a [TeamEntity].
