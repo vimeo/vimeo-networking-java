@@ -19,17 +19,4 @@ data class DeleteTeamPermissionParams(
 
     @Json(name = "team_entity_uri")
     val teamEntityUri: String? = null
-) {
-    companion object {
-        /**
-         * Convenience method which parses entities for relevant params.
-         *
-         * @param teamEntity the entity we want to parse for purposes of deleting some permission policy association
-         * @return am instance of [DeleteTeamPermissionParams] as constructed from a [teamEntity]
-         */
-        fun fromEntities(teamEntity: TeamEntity) = DeleteTeamPermissionParams(
-            teamEntityType = teamEntity.type,
-            teamEntityUri = teamEntity.uri
-        )
-    }
-}
+)

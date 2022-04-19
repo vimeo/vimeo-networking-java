@@ -24,19 +24,4 @@ data class ReplaceTeamPermissionParams(
 
     @Json(name = "team_entity_uri")
     val teamEntityUri: String? = null
-) {
-    companion object {
-        /**
-         * Convenience method which parses entities for relevant params.
-         *
-         * @param permissionPolicy the permission policy we want to newly associate with a [teamEntity]
-         * @param teamEntity the entity we want to parse for purposes of deleting some permission policy association
-         * @return am instance of [DeleteTeamPermissionParams] as constructed from a [teamEntity]
-         */
-        fun fromEntities(permissionPolicy: PermissionPolicy, teamEntity: TeamEntity) = ReplaceTeamPermissionParams(
-            permissionPolicyUri = permissionPolicy.uri,
-            teamEntityType = teamEntity.type,
-            teamEntityUri = teamEntity.uri
-        )
-    }
-}
+)

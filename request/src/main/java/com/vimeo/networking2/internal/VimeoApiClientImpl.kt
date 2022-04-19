@@ -100,6 +100,7 @@ import com.vimeo.networking2.params.SearchFilterType
 import com.vimeo.networking2.params.SearchSortDirectionType
 import com.vimeo.networking2.params.SearchSortType
 import com.vimeo.networking2.teamPermissionsUri
+import com.vimeo.networking2.type
 import okhttp3.CacheControl
 
 /**
@@ -154,7 +155,11 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
-        val replaceTeamPermissionParams = ReplaceTeamPermissionParams.fromEntities(permissionPolicy, teamEntity)
+        val replaceTeamPermissionParams = ReplaceTeamPermissionParams(
+            permissionPolicyUri = permissionPolicy.uri,
+            teamEntityType = teamEntity.type,
+            teamEntityUri = teamEntity.uri
+        )
 
         return vimeoService.putTeamPermission(authHeader, safeUri, replaceTeamPermissionParams).enqueue(callback)
     }
@@ -166,7 +171,10 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
-        val deleteTeamPermissionParams = DeleteTeamPermissionParams.fromEntities(teamEntity)
+        val deleteTeamPermissionParams = DeleteTeamPermissionParams(
+            teamEntityType = teamEntity.type,
+            teamEntityUri = teamEntity.uri
+        )
 
         return vimeoService.deleteTeamPermission(authHeader, safeUri, deleteTeamPermissionParams).enqueue(callback)
     }
