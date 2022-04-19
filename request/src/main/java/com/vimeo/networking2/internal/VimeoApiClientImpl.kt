@@ -99,6 +99,7 @@ import com.vimeo.networking2.params.SearchFacetType
 import com.vimeo.networking2.params.SearchFilterType
 import com.vimeo.networking2.params.SearchSortDirectionType
 import com.vimeo.networking2.params.SearchSortType
+import com.vimeo.networking2.teamPermissionsUri
 import okhttp3.CacheControl
 
 /**
@@ -159,8 +160,8 @@ internal class VimeoApiClientImpl(
     }
 
     override fun deleteTeamPermission(
-        teamEntity: TeamEntity,
         uri: String,
+        teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
@@ -645,6 +646,29 @@ internal class VimeoApiClientImpl(
         ).enqueue(callback)
     }
 
+    override fun fetchTeamPermissions(
+        folder: Folder,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamPermissionList>,
+        teamEntityQuery: String?
+    ): VimeoRequest {
+        val safeUri = folder.teamPermissionsUri?.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        val queryParamsMassaged = HashMap(queryParams.orEmpty())
+
+        teamEntityQuery?.let { queryParamsMassaged["query"] = it }
+
+        return vimeoService.getTeamPermissions(
+            authHeader,
+            safeUri,
+            fieldFilter,
+            queryParamsMassaged,
+            cacheControl
+        ).enqueue(callback)
+    }
+
     override fun fetchPermissionPolicyList(
         uri: String,
         fieldFilter: String?,
@@ -652,6 +676,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<PermissionPolicyList>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
         return vimeoService
             .getPermissionPolicyList(authHeader, safeUri, fieldFilter, cacheControl)
             .enqueue(callback)
@@ -663,11 +688,10 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicyList>
     ): VimeoRequest {
-        val userId = user.identifier ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val safeUri = user.metadata?.connections?.permissionPolicies?.uri
+            ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
-        val uri = "/users/$userId/permission_policies"
-
-        return fetchPermissionPolicyList(uri, fieldFilter, cacheControl, callback)
+        return fetchPermissionPolicyList(safeUri, fieldFilter, cacheControl, callback)
     }
 
     override fun fetchPermissionPolicy(
@@ -688,11 +712,10 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicy>
     ): VimeoRequest {
-        val userId = user.identifier ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val safeUri = user.metadata?.connections?.permissionPolicies?.uri
+            ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
-        val uri = "/users/$userId/permission_policies/$permissionPolicyId"
-
-        return fetchPermissionPolicy(uri, fieldFilter, cacheControl, callback)
+        return fetchPermissionPolicy("$safeUri/$permissionPolicyId", fieldFilter, cacheControl, callback)
     }
 
     override fun fetchTextTrackList(

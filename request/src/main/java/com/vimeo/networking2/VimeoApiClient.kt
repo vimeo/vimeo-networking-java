@@ -1939,6 +1939,33 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * An endpoint which can either:
+     *
+     *  - fetch all [TeamEntity] with a current permission association with a resource if no 'query'
+     *  query-string parameter is present and [teamEntityQuery] is null
+     *  - or if a 'query' query-string parameter is passed in or [teamEntityQuery] has a non null value, return all
+     *  [TeamEntity]s related to your [Team] which match that query value, so long as they are [TeamEntity]s which *can*
+     *  have a permission action leveraged against them.
+     *
+     * @param folder The folder resource you'd like to fetch the permission associations for
+     * @param queryParams The query parameters to include in the request. 'query' is one potential value here, as
+     * mentioned in the method description.
+     * @param callback The callback which will be notified of the request completion.
+     * @param teamEntityQuery if not null, we instead fetch all possible [TeamEntity] which can potentially have, or do
+     * have an association with the passed in [folder] resource
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchTeamPermissions(
+        folder: Folder,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamPermissionList>,
+        teamEntityQuery: String? = null,
+    ): VimeoRequest
+
+    /**
      * Fetch a list of [PermissionPolicy].
      *
      * @param uri The URI from which content will be requested.
@@ -2042,8 +2069,8 @@ interface VimeoApiClient {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteTeamPermission(
-        teamEntity: TeamEntity,
         uri: String,
+        teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 

@@ -863,6 +863,22 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<TeamPermissionList>
     ): VimeoRequest = client.fetchTeamPermissions(uri, fieldFilter, queryParams, cacheControl, callback)
 
+    override fun fetchTeamPermissions(
+        folder: Folder,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamPermissionList>,
+        teamEntityQuery: String?
+    ): VimeoRequest = client.fetchTeamPermissions(
+        folder,
+        fieldFilter,
+        queryParams,
+        cacheControl,
+        callback,
+        teamEntityQuery
+    )
+
     override fun fetchPermissionPolicyList(
         uri: String,
         fieldFilter: String?,
@@ -902,8 +918,8 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     ): VimeoRequest = client.replaceTeamPermission(uri, permissionPolicy, teamEntity, callback)
 
     override fun deleteTeamPermission(
-        teamEntity: TeamEntity,
         uri: String,
+        teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.deleteTeamPermission(teamEntity, uri, callback)
+    ): VimeoRequest = client.deleteTeamPermission(uri, teamEntity, callback)
 }
