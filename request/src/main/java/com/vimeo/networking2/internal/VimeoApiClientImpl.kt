@@ -60,7 +60,9 @@ import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
 import com.vimeo.networking2.TeamMembershipList
+import com.vimeo.networking2.TeamPermission
 import com.vimeo.networking2.TeamPermissionCurrentPermissions
+import com.vimeo.networking2.TeamPermissionInteraction
 import com.vimeo.networking2.TeamPermissionList
 import com.vimeo.networking2.TextTrackList
 import com.vimeo.networking2.TvodItem
@@ -722,12 +724,13 @@ internal class VimeoApiClientImpl(
     }
 
     override fun replaceTeamPermission(
-        folder: Folder,
+        teamPermission: TeamPermission,
         permissionPolicy: PermissionPolicy,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        val safeUri = folder.teamPermissionsUri ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val safeUri = teamPermission.metadata?.interactions?.edit?.uri
+            ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
         val replaceTeamPermissionParams = ReplaceTeamPermissionParams(
             permissionPolicyUri = permissionPolicy.uri,
@@ -739,12 +742,47 @@ internal class VimeoApiClientImpl(
     }
 
     override fun replaceTeamPermission(
-        folder: Folder,
+        teamPermissionInteraction: TeamPermissionInteraction,
+        permissionPolicy: PermissionPolicy,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
+        val safeUri = teamPermissionInteraction.edit?.uri ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        val replaceTeamPermissionParams = ReplaceTeamPermissionParams(
+            permissionPolicyUri = permissionPolicy.uri,
+            teamEntityType = teamEntity.type,
+            teamEntityUri = teamEntity.uri
+        )
+
+        return vimeoService.putTeamPermission(authHeader, safeUri, replaceTeamPermissionParams).enqueue(callback)    }
+
+    override fun replaceTeamPermission(
+        teamPermission: TeamPermission,
         permissionPolicy: TeamPermissionCurrentPermissions,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        val safeUri = folder.teamPermissionsUri ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val safeUri = teamPermission.metadata?.interactions?.edit?.uri
+            ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        val replaceTeamPermissionParams = ReplaceTeamPermissionParams(
+            permissionPolicyUri = permissionPolicy.permissionPolicyUri,
+            teamEntityType = teamEntity.type,
+            teamEntityUri = teamEntity.uri
+        )
+
+        return vimeoService.putTeamPermission(authHeader, safeUri, replaceTeamPermissionParams).enqueue(callback)
+    }
+
+    override fun replaceTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
+        permissionPolicy: TeamPermissionCurrentPermissions,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
+        val safeUri = teamPermissionInteraction.edit?.uri
+            ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
         val replaceTeamPermissionParams = ReplaceTeamPermissionParams(
             permissionPolicyUri = permissionPolicy.permissionPolicyUri,
@@ -769,11 +807,24 @@ internal class VimeoApiClientImpl(
     }
 
     override fun deleteTeamPermission(
-        folder: Folder,
+        teamPermission: TeamPermission,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest {
-        val safeUri = folder.teamPermissionsUri ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val safeUri = teamPermission.metadata?.interactions?.remove?.uri
+            ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        val deleteTeamPermissionParams = DeleteTeamPermissionParams(teamEntity.type, teamEntity.uri)
+
+        return vimeoService.deleteTeamPermission(authHeader, safeUri, deleteTeamPermissionParams).enqueue(callback)
+    }
+
+    override fun deleteTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
+        val safeUri = teamPermissionInteraction.remove?.uri ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
 
         val deleteTeamPermissionParams = DeleteTeamPermissionParams(teamEntity.type, teamEntity.uri)
 
@@ -1546,6 +1597,5 @@ internal class VimeoApiClientImpl(
 
     private companion object {
         private const val INVALID_ENUM_MESSAGE = "Invalid enum type provided"
-        private const val QUERY_STRING_KEY_QUERY = "query"
     }
 }

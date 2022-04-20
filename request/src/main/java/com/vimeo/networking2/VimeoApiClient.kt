@@ -2089,10 +2089,10 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * For a [folder], either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
+     * For a [teamPermission], either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
      * [PermissionPolicy] with a new one.
      *
-     * @param folder The folder we want to set up the permission relationship for.
+     * @param teamPermission The team permission we want to set up the permission relationship for.
      * @param permissionPolicy The permission policy we want to add.
      * @param teamEntity The entity the permission is for.
      * @param callback The callback which will be notified of the request completion.
@@ -2100,17 +2100,17 @@ interface VimeoApiClient {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun replaceTeamPermission(
-        folder: Folder,
+        teamPermission: TeamPermission,
         permissionPolicy: PermissionPolicy,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest
 
     /**
-     * For a [folder], either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
-     * [PermissionPolicy] with a new one.
+     * For a folder resource, either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current
+     * associated [PermissionPolicy] with a new one,
      *
-     * @param folder The folder we want to set up the permission relationship for.
+     * @param teamPermissionInteraction The interaction containing the uri for the call.
      * @param permissionPolicy The permission policy we want to add.
      * @param teamEntity The entity the permission is for.
      * @param callback The callback which will be notified of the request completion.
@@ -2118,7 +2118,43 @@ interface VimeoApiClient {
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun replaceTeamPermission(
-        folder: Folder,
+        teamPermissionInteraction: TeamPermissionInteraction,
+        permissionPolicy: PermissionPolicy,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * For a [teamPermission], either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current
+     * associated [PermissionPolicy] with a new one.
+     *
+     * @param teamPermission The team permission we want to set up the permission relationship for.
+     * @param permissionPolicy The permission policy we want to add.
+     * @param teamEntity The entity the permission is for.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun replaceTeamPermission(
+        teamPermission: TeamPermission,
+        permissionPolicy: TeamPermissionCurrentPermissions,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * For a folder resource, either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current
+     * associated [PermissionPolicy] with a new one.
+     *
+     * @param teamPermissionInteraction The interaction containing the uri for the call.
+     * @param permissionPolicy The permission policy we want to add.
+     * @param teamEntity The entity the permission is for.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun replaceTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
         permissionPolicy: TeamPermissionCurrentPermissions,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
@@ -2142,16 +2178,31 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Removes the associated [PermissionPolicy] from a [teamEntity] for a [folder].
+     * Removes the associated [PermissionPolicy] from a [teamEntity] for a [teamPermission].
      *
-     * @param folder The folder we are removing the permission association for.
+     * @param teamPermission The team permission we are removing the permission association for.
      * @param teamEntity The entity we want to remove the permission association for.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
     fun deleteTeamPermission(
-        folder: Folder,
+        teamPermission: TeamPermission,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
+     * Removes the associated [PermissionPolicy] from a [teamEntity] for a [teamPermissionInteraction].
+     *
+     * @param teamPermissionInteraction The interaction containing the uri for the call.
+     * @param teamEntity The entity we want to remove the permission association for.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun deleteTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest

@@ -56,7 +56,9 @@ import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
 import com.vimeo.networking2.TeamMembershipList
+import com.vimeo.networking2.TeamPermission
 import com.vimeo.networking2.TeamPermissionCurrentPermissions
+import com.vimeo.networking2.TeamPermissionInteraction
 import com.vimeo.networking2.TeamPermissionList
 import com.vimeo.networking2.TextTrackList
 import com.vimeo.networking2.TvodItem
@@ -925,18 +927,32 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     ): VimeoRequest = client.replaceTeamPermission(uri, permissionPolicyUri, teamEntityType, teamEntityUri, callback)
 
     override fun replaceTeamPermission(
-        folder: Folder,
+        teamPermission: TeamPermission,
         permissionPolicy: PermissionPolicy,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.replaceTeamPermission(folder, permissionPolicy, teamEntity, callback)
+    ): VimeoRequest = client.replaceTeamPermission(teamPermission, permissionPolicy, teamEntity, callback)
 
     override fun replaceTeamPermission(
-        folder: Folder,
+        teamPermissionInteraction: TeamPermissionInteraction,
+        permissionPolicy: PermissionPolicy,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.replaceTeamPermission(teamPermissionInteraction, permissionPolicy, teamEntity, callback)
+
+    override fun replaceTeamPermission(
+        teamPermission: TeamPermission,
         permissionPolicy: TeamPermissionCurrentPermissions,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.replaceTeamPermission(folder, permissionPolicy, teamEntity, callback)
+    ): VimeoRequest = replaceTeamPermission(teamPermission, permissionPolicy, teamEntity, callback)
+
+    override fun replaceTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
+        permissionPolicy: TeamPermissionCurrentPermissions,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.replaceTeamPermission(teamPermissionInteraction, permissionPolicy, teamEntity, callback)
 
     override fun deleteTeamPermission(
         uri: String,
@@ -946,8 +962,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     ): VimeoRequest = client.deleteTeamPermission(uri, teamEntityType, teamEntityUri, callback)
 
     override fun deleteTeamPermission(
-        folder: Folder,
+        teamPermission: TeamPermission,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.deleteTeamPermission(folder, teamEntity, callback)
+    ): VimeoRequest = client.deleteTeamPermission(teamPermission, teamEntity, callback)
+
+    override fun deleteTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.deleteTeamPermission(teamPermissionInteraction, teamEntity, callback)
 }
