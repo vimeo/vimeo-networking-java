@@ -56,6 +56,7 @@ import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
 import com.vimeo.networking2.TeamMembershipList
+import com.vimeo.networking2.TeamPermissionCurrentPermissions
 import com.vimeo.networking2.TeamPermissionList
 import com.vimeo.networking2.TextTrackList
 import com.vimeo.networking2.TvodItem
@@ -77,6 +78,7 @@ import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.SlackLanguagePreferenceType
 import com.vimeo.networking2.enums.SlackUserPreferenceType
+import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
@@ -898,28 +900,54 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicy>
-    ): VimeoRequest {
-        return client.fetchPermissionPolicy(uri, fieldFilter, cacheControl, callback)
-    }
+    ): VimeoRequest = client.fetchPermissionPolicy(uri, fieldFilter, cacheControl, callback)
 
     override fun fetchPermissionPolicy(
-        user: User,
-        permissionPolicyId: String,
+        permissionPolicy: PermissionPolicy,
         fieldFilter: String?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<PermissionPolicy>
-    ): VimeoRequest = client.fetchPermissionPolicy(user, permissionPolicyId, fieldFilter, cacheControl, callback)
+    ): VimeoRequest = client.fetchPermissionPolicy(permissionPolicy, fieldFilter, cacheControl, callback)
+
+    override fun fetchPermissionPolicy(
+        permissionPolicy: TeamPermissionCurrentPermissions,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest = client.fetchPermissionPolicy(permissionPolicy, fieldFilter, cacheControl, callback)
 
     override fun replaceTeamPermission(
         uri: String,
+        permissionPolicyUri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.replaceTeamPermission(uri, permissionPolicyUri, teamEntityType, teamEntityUri, callback)
+
+    override fun replaceTeamPermission(
+        folder: Folder,
         permissionPolicy: PermissionPolicy,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.replaceTeamPermission(uri, permissionPolicy, teamEntity, callback)
+    ): VimeoRequest = client.replaceTeamPermission(folder, permissionPolicy, teamEntity, callback)
+
+    override fun replaceTeamPermission(
+        folder: Folder,
+        permissionPolicy: TeamPermissionCurrentPermissions,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.replaceTeamPermission(folder, permissionPolicy, teamEntity, callback)
 
     override fun deleteTeamPermission(
         uri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.deleteTeamPermission(uri, teamEntityType, teamEntityUri, callback)
+
+    override fun deleteTeamPermission(
+        folder: Folder,
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
-    ): VimeoRequest = client.deleteTeamPermission(uri, teamEntity, callback)
+    ): VimeoRequest = client.deleteTeamPermission(folder, teamEntity, callback)
 }
