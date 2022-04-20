@@ -780,19 +780,6 @@ internal class VimeoApiClientImpl(
         return vimeoService.deleteTeamPermission(authHeader, safeUri, deleteTeamPermissionParams).enqueue(callback)
     }
 
-//    override fun fetchPermissionPolicy(
-//        user: User,
-//        permissionPolicyId: String,
-//        fieldFilter: String?,
-//        cacheControl: CacheControl?,
-//        callback: VimeoCallback<PermissionPolicy>
-//    ): VimeoRequest {
-//        val safeUri = user.metadata?.connections?.permissionPolicies?.uri
-//            ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-//
-//        return fetchPermissionPolicy("$safeUri/$permissionPolicyId", fieldFilter, cacheControl, callback)
-//    }
-
     override fun fetchTextTrackList(
         uri: String,
         fieldFilter: String?,
