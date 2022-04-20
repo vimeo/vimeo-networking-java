@@ -101,6 +101,6 @@ val Folder.slackUserPreferenceType: SlackUserPreferenceType
     get() = slackUserPreference.asEnum(SlackUserPreferenceType.UNKNOWN)
 
 /**
- * Get the teams_permission uri by using the folder's own uri.
+ * Get the teams_permissions uri by using the folder's own uri.
  */
 val Folder.teamPermissionsUri: String? get() = uri?.let { "$it/team_permissions" }
