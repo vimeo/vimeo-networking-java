@@ -23,6 +23,7 @@ import com.vimeo.networking2.annotations.Internal
  * @param moderatedChannels Information about the channels that this user moderates.
  * @param notifications Information about this user's notifications. This data requires a bearer
  * token with the private scope.
+ * @param permissionPolicies Information about available permission policies.
  * @param pictures Information about this user's portraits.
  * @param folders Information about all the user's folders.
  * @param portfolios Information about this user's portfolios.
@@ -81,6 +82,9 @@ data class UserConnections(
     @Internal
     @Json(name = "notifications")
     val notifications: NotificationConnection? = null,
+
+    @Json(name = "permission_policies")
+    val permissionPolicies: BasicConnection? = null,
 
     @Json(name = "pictures")
     val pictures: BasicConnection? = null,

@@ -40,6 +40,8 @@ import com.vimeo.networking2.FolderList
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
+import com.vimeo.networking2.PermissionPolicy
+import com.vimeo.networking2.PermissionPolicyList
 import com.vimeo.networking2.PictureCollection
 import com.vimeo.networking2.Product
 import com.vimeo.networking2.ProductList
@@ -50,9 +52,13 @@ import com.vimeo.networking2.RecommendationList
 import com.vimeo.networking2.SearchResultList
 import com.vimeo.networking2.SeasonList
 import com.vimeo.networking2.Team
+import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.TeamList
 import com.vimeo.networking2.TeamMembership
 import com.vimeo.networking2.TeamMembershipList
+import com.vimeo.networking2.TeamPermission
+import com.vimeo.networking2.TeamPermissionCurrentPermissions
+import com.vimeo.networking2.TeamPermissionInteraction
 import com.vimeo.networking2.TeamPermissionList
 import com.vimeo.networking2.TextTrackList
 import com.vimeo.networking2.TvodItem
@@ -74,6 +80,7 @@ import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
 import com.vimeo.networking2.enums.SlackLanguagePreferenceType
 import com.vimeo.networking2.enums.SlackUserPreferenceType
+import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
@@ -859,4 +866,110 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<TeamPermissionList>
     ): VimeoRequest = client.fetchTeamPermissions(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun fetchTeamPermissions(
+        folder: Folder,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<TeamPermissionList>,
+        teamEntityQuery: String?
+    ): VimeoRequest = client.fetchTeamPermissions(
+        folder,
+        fieldFilter,
+        queryParams,
+        cacheControl,
+        callback,
+        teamEntityQuery
+    )
+
+    override fun fetchPermissionPolicyList(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicyList>
+    ): VimeoRequest = client.fetchPermissionPolicyList(uri, fieldFilter, cacheControl, callback)
+
+    override fun fetchPermissionPolicyList(
+        user: User,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicyList>
+    ): VimeoRequest = client.fetchPermissionPolicyList(user, fieldFilter, cacheControl, callback)
+
+    override fun fetchPermissionPolicy(
+        uri: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest = client.fetchPermissionPolicy(uri, fieldFilter, cacheControl, callback)
+
+    override fun fetchPermissionPolicy(
+        permissionPolicy: PermissionPolicy,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest = client.fetchPermissionPolicy(permissionPolicy, fieldFilter, cacheControl, callback)
+
+    override fun fetchPermissionPolicy(
+        permissionPolicy: TeamPermissionCurrentPermissions,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<PermissionPolicy>
+    ): VimeoRequest = client.fetchPermissionPolicy(permissionPolicy, fieldFilter, cacheControl, callback)
+
+    override fun replaceTeamPermission(
+        uri: String,
+        permissionPolicyUri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.replaceTeamPermission(uri, permissionPolicyUri, teamEntityType, teamEntityUri, callback)
+
+    override fun replaceTeamPermission(
+        teamPermission: TeamPermission,
+        permissionPolicy: PermissionPolicy,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.replaceTeamPermission(teamPermission, permissionPolicy, teamEntity, callback)
+
+    override fun replaceTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
+        permissionPolicy: PermissionPolicy,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.replaceTeamPermission(teamPermissionInteraction, permissionPolicy, teamEntity, callback)
+
+    override fun replaceTeamPermission(
+        teamPermission: TeamPermission,
+        permissionPolicy: TeamPermissionCurrentPermissions,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = replaceTeamPermission(teamPermission, permissionPolicy, teamEntity, callback)
+
+    override fun replaceTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
+        permissionPolicy: TeamPermissionCurrentPermissions,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.replaceTeamPermission(teamPermissionInteraction, permissionPolicy, teamEntity, callback)
+
+    override fun deleteTeamPermission(
+        uri: String,
+        teamEntityType: TeamEntityType,
+        teamEntityUri: String,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.deleteTeamPermission(uri, teamEntityType, teamEntityUri, callback)
+
+    override fun deleteTeamPermission(
+        teamPermission: TeamPermission,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.deleteTeamPermission(teamPermission, teamEntity, callback)
+
+    override fun deleteTeamPermission(
+        teamPermissionInteraction: TeamPermissionInteraction,
+        teamEntity: TeamEntity,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.deleteTeamPermission(teamPermissionInteraction, teamEntity, callback)
 }

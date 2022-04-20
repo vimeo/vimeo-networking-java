@@ -15,6 +15,7 @@ import com.squareup.moshi.JsonClass
  * @param teamMembers Information about the authenticated user's team.
  * @param parentFolder Information about the folder's parent folder if there is one.
  * @param videos A basic connection object indicating how to return all the videos in the folder.
+ * @param teamPermissions A basic connection to team permissions associated with this folder resource
  */
 @JsonClass(generateAdapter = true)
 data class FolderConnections(
@@ -35,5 +36,8 @@ data class FolderConnections(
     val parentFolder: DefaultConnection? = null,
 
     @Json(name = "videos")
-    val videos: BasicConnection? = null
+    val videos: BasicConnection? = null,
+
+    @Json(name = "team_permissions")
+    val teamPermissions: BasicConnection? = null
 )

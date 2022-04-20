@@ -44,9 +44,11 @@ import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.internal.VimeoCall
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
+import com.vimeo.networking2.params.DeleteTeamPermissionParams
 import com.vimeo.networking2.params.GrantFolderPermissionForUser
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.ReplaceTeamPermissionParams
 import okhttp3.CacheControl
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -404,6 +406,33 @@ internal interface VimeoService {
     ): VimeoCall<TeamPermissionList>
 
     @GET
+    @Suppress("LongParameterList")
+    fun getTeamPermissions(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @Query(QUERY_STRING_PARAM_QUERY) query: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<TeamPermissionList>
+
+    @GET
+    fun getPermissionPolicyList(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<PermissionPolicyList>
+
+    @GET
+    fun getPermissionPolicy(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<PermissionPolicy>
+
+    @GET
     fun getFeedList(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
@@ -632,11 +661,25 @@ internal interface VimeoService {
         @Body bodyParams: Any
     ): VimeoCall<Unit>
 
+    @PUT
+    fun putTeamPermission(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body bodyParams: ReplaceTeamPermissionParams
+    ): VimeoCall<Unit>
+
     @DELETE
     fun delete(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
+    ): VimeoCall<Unit>
+
+    @HTTP(method = "DELETE", hasBody = true)
+    fun deleteTeamPermission(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body bodyParams: DeleteTeamPermissionParams
     ): VimeoCall<Unit>
 
     @POST
@@ -683,5 +726,6 @@ internal interface VimeoService {
         private const val SLACK_WEBHOOK_ID = "slack_incoming_webhooks_id"
         private const val SLACK_LANGUAGE_PREF = "slack_language_preference"
         private const val SLACK_USER_PREF = "slack_user_preferences"
+        private const val QUERY_STRING_PARAM_QUERY = "query"
     }
 }
