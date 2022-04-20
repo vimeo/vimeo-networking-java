@@ -1923,10 +1923,13 @@ interface VimeoApiClient {
      *  match that query value, so long as they are [TeamEntity]s which *can* have a permission action leveraged against
      *   them.
      *
-     * @param uri The URI of the endpoint. Typically comes from a 'team_permission' interaction within the metadata for
-     * a folder or video resource
+     * @param uri The uri of the endpoint.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
      * @param queryParams The query parameters to include in the request. 'query' is one potential value here, as
      * mentioned in the method description.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -1949,8 +1952,12 @@ interface VimeoApiClient {
      *  have a permission action leveraged against them.
      *
      * @param folder The folder resource you'd like to fetch the permission associations for
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
      * @param queryParams The query parameters to include in the request. 'query' is one potential value here, as
      * mentioned in the method description.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
      * @param callback The callback which will be notified of the request completion.
      * @param teamEntityQuery if not null, we instead fetch all possible [TeamEntity] which can potentially have, or do
      * have an association with the passed in [folder] resource
@@ -1969,7 +1976,7 @@ interface VimeoApiClient {
     /**
      * Fetch a list of [PermissionPolicy].
      *
-     * @param uri The URI from which content will be requested.
+     * @param uri The uri of the endpoint.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
@@ -2007,7 +2014,7 @@ interface VimeoApiClient {
     /**
      * Fetch a [PermissionPolicy].
      *
-     * @param uri The URI from which content will be requested.
+     * @param uri The uri of the endpoint.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
@@ -2026,8 +2033,7 @@ interface VimeoApiClient {
     /**
      * Fetch a [PermissionPolicy].
      *
-     * @param user an instance of the authenticated user object
-     * @param permissionPolicyId an id which uniquely identifies the policy
+     * @param permissionPolicy A permission policy we want to fetch fresh data for.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
@@ -2046,8 +2052,7 @@ interface VimeoApiClient {
     /**
      * Fetch a [PermissionPolicy].
      *
-     * @param user an instance of the authenticated user object
-     * @param permissionPolicyId an id which uniquely identifies the policy
+     * @param permissionPolicy A permission policy we want to fetch fresh data for.
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
      * returned.
      * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
@@ -2064,10 +2069,13 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
+     * For a folder, either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
      * [PermissionPolicy] with a new one.
      *
-     * @param uri The URI used to perform the PUT, likely sourced from the edit interaction of [TeamPermission.metadata]
+     * @param uri The uri of the endpoint.
+     * @param permissionPolicyUri Uri for the permission we want to add or replace another permission with.
+     * @param teamEntityType The entity type needed for the request; Typically comes from [TeamEntity].
+     * @param teamEntityUri The entity's uri needed for the request; Typically comes from [TeamEntity].
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -2081,10 +2089,12 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
+     * For a [folder], either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
      * [PermissionPolicy] with a new one.
      *
-     * @param uri The URI used to perform the PUT, likely sourced from the edit interaction of [TeamPermission.metadata]
+     * @param folder The folder we want to set up the permission relationship for.
+     * @param permissionPolicy The permission policy we want to add.
+     * @param teamEntity The entity the permission is for.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -2097,10 +2107,12 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * Either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
+     * For a [folder], either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
      * [PermissionPolicy] with a new one.
      *
-     * @param uri The URI used to perform the PUT, likely sourced from the edit interaction of [TeamPermission.metadata]
+     * @param folder The folder we want to set up the permission relationship for.
+     * @param permissionPolicy The permission policy we want to add.
+     * @param teamEntity The entity the permission is for.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -2115,8 +2127,9 @@ interface VimeoApiClient {
     /**
      * Removes the associated [PermissionPolicy] from a [TeamEntity].
      *
-     * @param uri The URI used to perform the PUT, likely sourced from the remove interaction of
-     * [TeamPermission.metadata]
+     * @param uri The uri of the endpoint.
+     * @param teamEntityType The entity type needed for the request; Typically comes from [TeamEntity].
+     * @param teamEntityUri The entity's uri needed for the request; Typically comes from [TeamEntity].
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -2131,7 +2144,8 @@ interface VimeoApiClient {
     /**
      * Removes the associated [PermissionPolicy] from a [teamEntity] for a [folder].
      *
-     * @param folder
+     * @param folder The folder we are removing the permission association for.
+     * @param teamEntity The entity we want to remove the permission association for.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
