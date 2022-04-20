@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
  * Represents a list of [PermissionPolicy].
  *
  * @param total the number of policies in the list returned in [data]
- * @param data the actual list of [PermissionPolicy]s
+ * @param data the actual list of [PermissionPolicies][PermissionPolicy]
  */
 @JsonClass(generateAdapter = true)
 data class PermissionPolicyList(
