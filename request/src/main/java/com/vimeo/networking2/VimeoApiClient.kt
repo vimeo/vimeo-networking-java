@@ -2089,8 +2089,8 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
-     * For a [teamPermission], either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current associated
-     * [PermissionPolicy] with a new one.
+     * For a [teamPermission], either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current
+     * associated [PermissionPolicy] with a new one.
      *
      * @param teamPermission The team permission we want to set up the permission relationship for.
      * @param permissionPolicy The permission policy we want to add.
@@ -2108,7 +2108,7 @@ interface VimeoApiClient {
 
     /**
      * For a folder resource, either associates a new [PermissionPolicy] to a [TeamEntity], or replaces the current
-     * associated [PermissionPolicy] with a new one,
+     * associated [PermissionPolicy] with a new one.
      *
      * @param teamPermissionInteraction The interaction containing the uri for the call.
      * @param permissionPolicy The permission policy we want to add.

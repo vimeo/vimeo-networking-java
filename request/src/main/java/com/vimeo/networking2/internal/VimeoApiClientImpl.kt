@@ -755,7 +755,8 @@ internal class VimeoApiClientImpl(
             teamEntityUri = teamEntity.uri
         )
 
-        return vimeoService.putTeamPermission(authHeader, safeUri, replaceTeamPermissionParams).enqueue(callback)    }
+        return vimeoService.putTeamPermission(authHeader, safeUri, replaceTeamPermissionParams).enqueue(callback)
+    }
 
     override fun replaceTeamPermission(
         teamPermission: TeamPermission,
