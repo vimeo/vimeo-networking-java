@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 3.2.0 *(2022-04-22)*
+----------------------------
+- Added the following functions to`VimeoApiClient` which support team permission related operations, along with their respective supporting data classes: `fetchTeamPermissions`, `replaceTeamPermission`, `deleteTeamPermission`, `fetchPermissionPolicy`, `fetchPermissionPolicyList`
+
 Version 3.1.0 *(2022-04-11)*
 ----------------------------
 - Added the following interactions to `VideoInteractions`: `delete`, `edit`, `invite`.
