@@ -249,6 +249,22 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
+     * Find a supported SSO connection that can be used by the [email] provided. If this request returns a valid
+     * [SsoConnection] then SSO authentication can be initiated, starting with the creation of the SSO authorization URI
+     * via [createSsoAuthorizationUri].
+     *
+     * @param email The email of the user that is logging in and might be supported for SSO by the Vimeo API.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    @Internal
+    fun checkSsoConnection(
+        email: String,
+        callback: VimeoCallback<SsoConnection>
+    ): VimeoRequest
+
+    /**
      * Find a supported SSO domain that matches the [domain] parameter. If this request returns a valid [SsoDomain],
      * then SSO authentication can be initiated, starting with the creation of the SSO authorization URI via
      * [createSsoAuthorizationUri].
@@ -258,6 +274,7 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
+    @Deprecated("Deprecated in favor of checkSsoConnection")
     @Internal
     fun fetchSsoDomain(
         domain: String,
