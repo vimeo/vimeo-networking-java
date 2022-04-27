@@ -243,6 +243,15 @@ internal class AuthenticatorImpl(
             ).enqueue(callback)
     }
 
+    override fun createSsoAuthorizationUri(ssoConnection: SsoConnection, responseCode: String): String? {
+        val connectUrl = ssoConnection.metadata?.interactions?.connect?.uri ?: return null
+        return authService.createSsoGrantRequest(
+            uri = connectUrl,
+            redirectUri = redirectUri,
+            state = responseCode
+        ).url
+    }
+
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest {
         val domainParameter = ApiParameter(DOMAIN, domain)
 

@@ -67,6 +67,8 @@ class NoOpAuthenticatorImpl(
 
     override fun checkSsoConnection(email: String, callback: VimeoCallback<SsoConnection>): VimeoRequest = reject()
 
+    override fun createSsoAuthorizationUri(ssoConnection: SsoConnection, responseCode: String): String = reject()
+
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest = reject()
 
     override fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String = reject()
