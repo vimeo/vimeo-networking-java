@@ -24,6 +24,7 @@ package com.vimeo.networking2.internal
 import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.PinCodeInfo
 import com.vimeo.networking2.Scopes
+import com.vimeo.networking2.SsoConnection
 import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.TeamToken
 import com.vimeo.networking2.VimeoAccount
@@ -35,6 +36,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
@@ -318,6 +320,21 @@ internal interface AuthService {
     ): VimeoCall<VimeoAccount>
 
     /**
+     * Check whether an [SsoConnection] exists for the provided [email].
+     *
+     * @param authorization Created from the client id and client secret.
+     * @param email The email used to check for the presence of an [SsoConnection].
+     *
+     * @return A [VimeoCall] that provides an [SsoConnection] that can be used to perform SSO.
+     */
+    @FormUrlEncoded
+    @PUT("sso_connections/verify")
+    fun checkSsoConnection(
+        @Header(AUTHORIZATION) authorization: String,
+        @Field(EMAIL) email: String
+    ): VimeoCall<SsoConnection>
+
+    /**
      * Searches Vimeo for the presence of a supported SSO domain that matches the one provided by the [domain]
      * parameter.
      *
@@ -326,6 +343,7 @@ internal interface AuthService {
      *
      * @return A [VimeoCall] that provides a [SsoDomain] that can be used to perform SSO.
      */
+    @Deprecated("deprecated in favor of checkSsoConnection")
     @Internal
     @GET("sso_domains")
     fun getSsoDomain(

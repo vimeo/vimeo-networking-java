@@ -2,6 +2,7 @@ package com.vimeo.networking2.internal
 
 import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.PinCodeInfo
+import com.vimeo.networking2.SsoConnection
 import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.TeamToken
 import com.vimeo.networking2.VimeoAccount
@@ -63,6 +64,10 @@ class NoOpAuthenticatorImpl(
     override fun createCodeGrantAuthorizationUri(responseCode: String): String = reject()
 
     override fun authenticateWithCodeGrant(uri: String, callback: VimeoCallback<VimeoAccount>): VimeoRequest = reject()
+
+    override fun checkSsoConnection(email: String, callback: VimeoCallback<SsoConnection>): VimeoRequest = reject()
+
+    override fun createSsoAuthorizationUri(ssoConnection: SsoConnection, responseCode: String): String = reject()
 
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest = reject()
 

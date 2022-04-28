@@ -25,6 +25,7 @@ import com.vimeo.networking2.Authenticator
 import com.vimeo.networking2.GrantType
 import com.vimeo.networking2.NoOpVimeoRequest
 import com.vimeo.networking2.PinCodeInfo
+import com.vimeo.networking2.SsoConnection
 import com.vimeo.networking2.SsoDomain
 import com.vimeo.networking2.TeamToken
 import com.vimeo.networking2.VimeoAccount
@@ -35,6 +36,7 @@ import com.vimeo.networking2.config.AuthenticationMethod
 import com.vimeo.networking2.internal.AuthService.Companion.AUTHORIZATION_CODE
 import com.vimeo.networking2.internal.AuthService.Companion.CODE
 import com.vimeo.networking2.internal.AuthService.Companion.DEVICE_CODE
+import com.vimeo.networking2.internal.AuthService.Companion.DOMAIN
 import com.vimeo.networking2.internal.AuthService.Companion.EMAIL
 import com.vimeo.networking2.internal.AuthService.Companion.ID_TOKEN
 import com.vimeo.networking2.internal.AuthService.Companion.NAME
@@ -231,8 +233,27 @@ internal class AuthenticatorImpl(
         ).url
     }
 
+    override fun checkSsoConnection(email: String, callback: VimeoCallback<SsoConnection>): VimeoRequest {
+        val emailParameter = ApiParameter(EMAIL, email)
+
+        return localVimeoCallAdapter.validateParameters(callback, "SSO connection check error", emailParameter)
+            ?: authService.checkSsoConnection(
+                authorization = authenticationMethod.basicAuthHeader,
+                email = email
+            ).enqueue(callback)
+    }
+
+    override fun createSsoAuthorizationUri(ssoConnection: SsoConnection, responseCode: String): String? {
+        val connectUrl = ssoConnection.metadata?.interactions?.connect?.uri ?: return null
+        return authService.createSsoGrantRequest(
+            uri = connectUrl,
+            redirectUri = redirectUri,
+            state = responseCode
+        ).url
+    }
+
     override fun fetchSsoDomain(domain: String, callback: VimeoCallback<SsoDomain>): VimeoRequest {
-        val domainParameter = ApiParameter(AuthService.DOMAIN, domain)
+        val domainParameter = ApiParameter(DOMAIN, domain)
 
         return localVimeoCallAdapter.validateParameters(callback, "SSO domain fetch error", domainParameter)
             ?: authService.getSsoDomain(
