@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Entity
 
 /**
  * Represents the current permission relationship a [teamEntity] has with a resource.
@@ -28,4 +29,6 @@ data class TeamPermission(
 
     @Json(name = "metadata")
     val metadata: MetadataInteractions<TeamPermissionInteraction>? = null
-)
+) : Entity {
+    override val identifier: String? = teamEntity?.identifier
+}

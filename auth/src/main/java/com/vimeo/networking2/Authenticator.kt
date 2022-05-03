@@ -249,6 +249,39 @@ interface Authenticator {
     ): VimeoRequest
 
     /**
+     * Find a supported SSO connection that can be used by the [email] provided. If this request returns a valid
+     * [SsoConnection] then SSO authentication can be initiated, starting with the creation of the SSO authorization URI
+     * via [createSsoAuthorizationUri].
+     *
+     * @param email The email of the user that is logging in and might be supported for SSO by the Vimeo API.
+     * @param callback Callback to be notified of the result of the request.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    @Internal
+    fun checkSsoConnection(
+        email: String,
+        callback: VimeoCallback<SsoConnection>
+    ): VimeoRequest
+
+    /**
+     * Create a URI which can be used to log in the user via a browser and will redirect to a URI that can be exchanged
+     * using [authenticateWithSso] for a logged in account. Obtain the [SsoConnection] required by this function first
+     * using [checkSsoConnection].
+     *
+     * @param ssoConnection The connection info obtained from the API that specifies the connection URI which will be
+     * used as the base for this URI. NOTE: The connection URI (obtained from [SsoConnectionInteractions.connect]) must
+     * not be null, if a domain is provided with a null connection, then this function will return null.
+     * @param responseCode An arbitrary response code that can be used to verify the origin of the redirect URI. The
+     * API will return this value to later as a security measure in a query string parameter named `state` in the
+     * callback URI.
+     *
+     * @return The URI which can be opened in a browser, or null if the parameters provided were invalid.
+     */
+    @Internal
+    fun createSsoAuthorizationUri(ssoConnection: SsoConnection, responseCode: String): String?
+
+    /**
      * Find a supported SSO domain that matches the [domain] parameter. If this request returns a valid [SsoDomain],
      * then SSO authentication can be initiated, starting with the creation of the SSO authorization URI via
      * [createSsoAuthorizationUri].
@@ -258,6 +291,7 @@ interface Authenticator {
      *
      * @return A [VimeoRequest] object to cancel API requests.
      */
+    @Deprecated("Deprecated in favor of checkSsoConnection")
     @Internal
     fun fetchSsoDomain(
         domain: String,
@@ -278,6 +312,7 @@ interface Authenticator {
      *
      * @return The URI which can be opened in a browser, or null if the parameters provided were invalid.
      */
+    @Deprecated("Deprecated in favor of the function by the same name that accepts an SsoConnection")
     @Internal
     fun createSsoAuthorizationUri(ssoDomain: SsoDomain, responseCode: String): String?
 

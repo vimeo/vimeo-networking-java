@@ -34,6 +34,7 @@ import com.vimeo.networking2.annotations.Internal
  */
 @Internal
 @JsonClass(generateAdapter = true)
+@Deprecated("Deprecated in favor of SsoConnection")
 data class SsoDomain(
 
     @Json(name = "uri")

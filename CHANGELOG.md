@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 3.3.0 *(2022-04-28)*
+----------------------------
+- Added `Authenticator.checkSsoConnection` to check for SSO availability for an email.
+- Added `Authenticator.createSsoAuthorizationUri(SsoConnection, String)` to check for SSO availability for an email.
+- Deprecated `Authenticator.fetchSsoDomain` in favor of `Authenticator.checkSsoConnection`.
+- Deprecated `Authenticator.createSsoAuthorizationUri(SsoDomain, String)` in favor of `Authenticator.createSsoAuthorizationUri(SsoConnection, String)`.
+- Made `TeamEntity` and `TeamPermission` implement `Entity` interface.
+
 Version 3.2.0 *(2022-04-22)*
 ----------------------------
 - Added the following functions to`VimeoApiClient` which support team permission related operations, along with their respective supporting data classes: `fetchTeamPermissions`, `replaceTeamPermission`, `deleteTeamPermission`, `fetchPermissionPolicy`, `fetchPermissionPolicyList`

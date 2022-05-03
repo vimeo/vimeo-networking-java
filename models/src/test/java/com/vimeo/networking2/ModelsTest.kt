@@ -131,6 +131,8 @@ class ModelsTest {
         SeasonList::class,
         Space::class,
         Spatial::class,
+        SsoConnection::class,
+        SsoConnectionInteractions::class,
         SsoDomain::class,
         Subscription::class,
         SubscriptionInteraction::class,

@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.asEnum
 
@@ -37,7 +38,9 @@ data class TeamEntity(
 
     @Json(name = "display_options")
     val displayOptions: TeamEntityDisplayOptions? = null
-)
+) : Entity {
+    override val identifier: String? = uri
+}
 
 /**
  * @see [TeamEntity.rawType]
