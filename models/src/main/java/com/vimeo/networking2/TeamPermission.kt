@@ -38,10 +38,9 @@ data class TeamPermission(
  * [TeamPermission.applicablePermissionPolicies] containing an item with the same uri as
  * [TeamPermission.currentPermissions], [TeamPermissionCurrentPermissions.permissionPolicyUri].
  */
-val TeamPermission.currentPermissionPolicy: PermissionPolicy? get() {
+val TeamPermission.currentPermissionPolicy: PermissionPolicy? get() =
     if (currentPermissions?.permissionPolicyUri == null) {
-        return null
+        null
+    } else {
+        applicablePermissionPolicies?.firstOrNull { it.uri == currentPermissions.permissionPolicyUri }
     }
-
-    return applicablePermissionPolicies?.firstOrNull { it.uri == currentPermissions.permissionPolicyUri }
-}
