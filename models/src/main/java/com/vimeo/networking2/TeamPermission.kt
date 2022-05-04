@@ -32,3 +32,16 @@ data class TeamPermission(
 ) : Entity {
     override val identifier: String? = teamEntity?.identifier
 }
+
+/**
+ * Get the current [PermissionPolicy] if possible; This search is predicated upon
+ * [TeamPermission.applicablePermissionPolicies] containing an item with the same uri as
+ * [TeamPermission.currentPermissions], [TeamPermissionCurrentPermissions.permissionPolicyUri].
+ */
+val TeamPermission.currentPermissionPolicy: PermissionPolicy? get() {
+    if (currentPermissions?.permissionPolicyUri == null) {
+        return null
+    }
+
+    return applicablePermissionPolicies?.firstOrNull { it.uri == currentPermissions.permissionPolicyUri }
+}
