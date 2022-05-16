@@ -1,5 +1,8 @@
 Change Log
 ==========
+Version 3.5.0 *(2022-05-16)*
+----------------------------
+- Added new account types: Free, Starter, Standard, and Advanced.
 
 Version 3.4.0 *(2022-05-03)*
 ----------------------------

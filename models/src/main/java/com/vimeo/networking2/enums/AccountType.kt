@@ -56,6 +56,26 @@ enum class AccountType(override val value: String?) : StringValue {
     ENTERPRISE("enterprise"),
 
     /**
+     * The user has a free subscription.
+     */
+    FREE("free"),
+
+    /**
+     * The user has a starter subscription.
+     */
+    STARTER("starter"),
+
+    /**
+     * The user has a standard subscription.
+     */
+    STANDARD("standard"),
+
+    /**
+     * The user has an advanced subscription.
+     */
+    ADVANCED("advanced"),
+
+    /**
      * Unknown account type.
      */
     UNKNOWN(null)
