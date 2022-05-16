@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 3.4.0 *(2022-05-03)*
+----------------------------
+- Renamed `FolderInteractions.edit` to `FolderInteractions.addRemoveVideos`.
+- Added `FolderInteractions.delete` interaction.
+- Added `FolderInteractions.editSettings` interaction.
+
 Version 3.3.0 *(2022-04-28)*
 ----------------------------
 - Added `Authenticator.checkSsoConnection` to check for SSO availability for an email.

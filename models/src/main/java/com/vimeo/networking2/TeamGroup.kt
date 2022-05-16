@@ -32,5 +32,5 @@ data class TeamGroup(
     val modifiedOn: Date? = null,
 
     @Json(name = "metadata")
-    val metadata: MetadataConnections<TeamGroupConnections>
+    val metadata: MetadataConnections<TeamGroupConnections>? = null
 )
