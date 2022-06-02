@@ -15,6 +15,11 @@ interface StorageQuota {
     val max: Long?
 
     /**
+     * The unit type of [free], [used], and [max].
+     */
+    val unit: String?
+
+    /**
      * The number of bytes that you've already uploaded against your quota in the current period.
      */
     val used: Long?
