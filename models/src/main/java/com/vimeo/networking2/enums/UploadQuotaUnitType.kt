@@ -17,7 +17,7 @@ enum class UploadQuotaUnitType(override val value: String?) : StringValue {
     /**
      * The quota is calculated using the size in bytes of the videos.
      */
-    PERIODIC("video_size"),
+    SIZE("video_size"),
 
     /**
      * The quota is calculated using an unknown approach.
