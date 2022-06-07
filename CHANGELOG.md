@@ -1,5 +1,11 @@
 Change Log
 ==========
+Version 3.6.0 *(2022-06-07)*
+----------------------------
+- Added `unit` to `StorageQuota`.
+- Added `period` to `Periodic` and `Space`.
+- Added `resetDate` to `Periodic`.
+
 Version 3.5.0 *(2022-05-16)*
 ----------------------------
 - Added new account types: Free, Starter, Standard, and Advanced.
