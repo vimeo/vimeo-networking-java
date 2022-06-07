@@ -25,7 +25,6 @@ data class Lifetime(
     override val used: Long? = null
 ) : StorageQuota
 
-
 /**
  * @see Lifetime.unit
  * @see UploadQuotaUnitType

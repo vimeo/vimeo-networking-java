@@ -1,7 +1,5 @@
 package com.vimeo.networking2.enums
 
-import com.vimeo.networking2.enums.StringValue
-
 /**
  * The unit type of the approach to calculating the upload quota (e.g. a byte size based approach or a video count
  * based approach)
@@ -23,5 +21,4 @@ enum class UploadQuotaUnitType(override val value: String?) : StringValue {
      * The quota is calculated using an unknown approach.
      */
     UNKNOWN(null)
-
 }
