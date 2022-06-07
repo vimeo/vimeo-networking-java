@@ -50,6 +50,8 @@ class EnumsTest {
             TranscodeStatusType::class.java,
             TrialStatusType::class.java,
             TvodItemType::class.java,
+            UploadQuotaPeriodType::class.java,
+            UploadQuotaUnitType::class.java,
             UploadSpaceType::class.java,
             UploadStatusType::class.java,
             UserBadgeType::class.java,
