@@ -40,6 +40,5 @@ data class PermissionPolicy(
     @Json(name = "permission_actions")
     val permissionActions: PermissionActions? = null
 ) :Entity {
-    override val identifier: String?
-        get() = uri
+    override val identifier: String? = uri
 }
