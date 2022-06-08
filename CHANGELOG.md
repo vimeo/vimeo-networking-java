@@ -1,5 +1,10 @@
 Change Log
 ==========
+Version 3.7.0 *(2022-06-08)*
+----------------------------
+- Added `displayName`, `displayDescription` to `PermissionPolicy`
+- Made `PermissionPolicy` implement `Entity`
+
 Version 3.6.0 *(2022-06-07)*
 ----------------------------
 - Added `unit` to `StorageQuota`.
