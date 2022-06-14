@@ -180,6 +180,8 @@ enum class ErrorCodeType(override val value: String?) : StringValue {
 
     ADD_VIDEO_TO_ALBUM_FORBIDDEN("3433"),
 
+    ADD_TEAM_MEMBER_FORBIDDEN_QUOTA_EXCEEDED("3448"),
+
     UNEXPECTED_ALBUM_THUMBNAIL_EXCEPTION("4016"),
 
     // Generic Auth Errors

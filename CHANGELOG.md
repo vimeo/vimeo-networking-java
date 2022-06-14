@@ -1,5 +1,9 @@
 Change Log
 ==========
+Version 3.8.0 *(2022-06-14)*
+----------------------------
+- Added `ADD_TEAM_MEMBER_FORBIDDEN_QUOTA_EXCEEDED` to `ErrorCodeType`.
+- 
 Version 3.7.0 *(2022-06-08)*
 ----------------------------
 - Added `displayName`, `displayDescription` to `PermissionPolicy`
