@@ -1,5 +1,9 @@
 Change Log
 ==========
+Version 3.9.0 *(2022-06-23)*
+----------------------------
+- Added the `ErrorCodeType.ADD_TEAM_MEMBER_FORBIDDEN` error code.
+
 Version 3.8.0 *(2022-06-14)*
 ----------------------------
 - Added `ADD_TEAM_MEMBER_FORBIDDEN_QUOTA_EXCEEDED` to `ErrorCodeType`.
