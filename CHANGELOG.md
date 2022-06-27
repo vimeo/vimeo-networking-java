@@ -1,5 +1,9 @@
 Change Log
 ==========
+Version 3.10.0 *(2022-06-27)*
+----------------------------
+- Added `customMessage` parameter to `VimeoApiClient.addUserToTeam()`.
+
 Version 3.9.0 *(2022-06-23)*
 ----------------------------
 - Added the `ErrorCodeType.ADD_TEAM_MEMBER_FORBIDDEN` error code.
