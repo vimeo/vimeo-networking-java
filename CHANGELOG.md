@@ -1,5 +1,9 @@
 Change Log
 ==========
+Version 3.11.0 *(2022-07-07)*
+----------------------------
+- Updated `UploadQuotaPeriodType` to match new values.
+
 Version 3.10.0 *(2022-06-27)*
 ----------------------------
 - Added `customMessage` parameter to `VimeoApiClient.addUserToTeam()`.
