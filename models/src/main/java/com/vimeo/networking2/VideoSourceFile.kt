@@ -35,7 +35,7 @@ data class VideoSourceFile(
     val expires: Date? = null,
 
     @Json(name = "fps")
-    val fps: Int? = null,
+    val fps: Double? = null,
 
     @Json(name = "height")
     val height: Int? = null,
