@@ -595,6 +595,7 @@ internal interface VimeoService {
         @Field(PARAMETER_EMAIL) email: String,
         @Field(PARAMETER_PERMISSION_LEVEL) permissionLevel: TeamRoleType,
         @Field(PARAMETER_FOLDER_URI) folderUri: String?,
+        @Field(CUSTOM_MESSAGE) customMessage: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<TeamMembership>
 
@@ -727,5 +728,6 @@ internal interface VimeoService {
         private const val SLACK_LANGUAGE_PREF = "slack_language_preference"
         private const val SLACK_USER_PREF = "slack_user_preferences"
         private const val QUERY_STRING_PARAM_QUERY = "query"
+        private const val CUSTOM_MESSAGE = "custom_message"
     }
 }

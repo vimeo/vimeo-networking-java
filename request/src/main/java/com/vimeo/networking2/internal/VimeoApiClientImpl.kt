@@ -881,6 +881,7 @@ internal class VimeoApiClientImpl(
         email: String,
         permissionLevel: TeamRoleType,
         folderUri: String?,
+        customMessage: String?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
@@ -891,6 +892,7 @@ internal class VimeoApiClientImpl(
             email,
             permissionLevel,
             folderUri,
+            customMessage,
             queryParams.orEmpty()
         ).enqueue(callback)
     }
@@ -900,6 +902,7 @@ internal class VimeoApiClientImpl(
         email: String,
         permissionLevel: TeamRoleType,
         folder: Folder?,
+        customMessage: String?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
     ): VimeoRequest {
@@ -911,6 +914,7 @@ internal class VimeoApiClientImpl(
             email,
             permissionLevel,
             folder?.uri,
+            customMessage,
             queryParams.orEmpty()
         ).enqueue(callback)
     }

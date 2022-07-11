@@ -450,18 +450,20 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         email: String,
         permissionLevel: TeamRoleType,
         folderUri: String?,
+        customMessage: String?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
-    ): VimeoRequest = client.addUserToTeam(uri, email, permissionLevel, folderUri, queryParams, callback)
+    ): VimeoRequest = client.addUserToTeam(uri, email, permissionLevel, folderUri, customMessage, queryParams, callback)
 
     override fun addUserToTeam(
         team: Team,
         email: String,
         permissionLevel: TeamRoleType,
         folder: Folder?,
+        customMessage: String?,
         queryParams: Map<String, String>?,
         callback: VimeoCallback<TeamMembership>
-    ): VimeoRequest = client.addUserToTeam(team, email, permissionLevel, folder, queryParams, callback)
+    ): VimeoRequest = client.addUserToTeam(team, email, permissionLevel, folder, customMessage, queryParams, callback)
 
     override fun removeUserFromTeam(
         uri: String,

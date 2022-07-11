@@ -1,5 +1,17 @@
 Change Log
 ==========
+Version 3.11.0 *(2022-07-07)*
+----------------------------
+- Updated `UploadQuotaPeriodType` to match new values.
+
+Version 3.10.0 *(2022-06-27)*
+----------------------------
+- Added `customMessage` parameter to `VimeoApiClient.addUserToTeam()`.
+
+Version 3.9.0 *(2022-06-23)*
+----------------------------
+- Added the `ErrorCodeType.ADD_TEAM_MEMBER_FORBIDDEN` error code.
+
 Version 3.8.0 *(2022-06-14)*
 ----------------------------
 - Added `ADD_TEAM_MEMBER_FORBIDDEN_QUOTA_EXCEEDED` to `ErrorCodeType`.
