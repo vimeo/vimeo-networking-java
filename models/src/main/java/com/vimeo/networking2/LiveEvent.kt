@@ -5,7 +5,6 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.PlaylistSortType
 import com.vimeo.networking2.enums.asEnum
-import java.util.Date
 
 /**
  * Live Event data.
@@ -123,8 +122,8 @@ data class LiveEvent(
 //    @Json(name = "pictures")
 //    val pictures: PictureCollection? = null,
 //
-//    @Json(name = "playlist_sort")
-//    val playlistSort: String? = null,
+    @Json(name = "playlist_sort")
+    val playlistSort: String? = null,
 //
 //    @Json(name = "rtmp_link")
 //    val rtmpLink: String? = null,
@@ -176,5 +175,5 @@ data class LiveEvent(
  * @see LiveEvent.playlistSort
  * @see PlaylistSortType
  */
-//val LiveEvent.playlistSortType: PlaylistSortType
-//    get() = playlistSort.asEnum(PlaylistSortType.UNKNOWN)
+val LiveEvent.playlistSortType: PlaylistSortType
+    get() = playlistSort.asEnum(PlaylistSortType.UNKNOWN)
