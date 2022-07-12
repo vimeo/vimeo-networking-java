@@ -1,6 +1,7 @@
 package com.vimeo.networking2
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Connection
 import com.vimeo.networking2.enums.LiveStatusType
 import com.vimeo.networking2.enums.asEnum
@@ -10,6 +11,7 @@ import com.vimeo.networking2.enums.asEnum
  *
  * @param status The current status of the live video.
  */
+@JsonClass(generateAdapter = true)
 data class LiveVideoConnection(
     @Json(name = "options")
     override val options: List<String>? = null,
