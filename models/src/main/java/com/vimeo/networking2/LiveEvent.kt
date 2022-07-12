@@ -80,10 +80,10 @@ data class LiveEvent(
 
     @Json(name = "dash_link")
     val dashLink: String? = null,
-//
-//    @Json(name = "embed")
-//    val embed: LiveEventEmbed? = null,
-//
+
+    @Json(name = "embed")
+    val embed: LiveEventEmbed? = null,
+
     @Json(name = "head_clip")
     val firstVideoInPlaylist: Video? = null,
 
@@ -110,9 +110,9 @@ data class LiveEvent(
 
     @Json(name = "live_clips")
     val liveClips: List<Video>? = null,
-
-    @Json(name = "metadata")
-    val metadata: Metadata<LiveEventConnections, LiveEventInteractions>? = null,
+//
+//    @Json(name = "metadata")
+//    val metadata: Metadata<LiveEventConnections, LiveEventInteractions>? = null,
 
     @Json(name = "next_occurrence_time")
     val nextOccurrenceTime: Date? = null,
