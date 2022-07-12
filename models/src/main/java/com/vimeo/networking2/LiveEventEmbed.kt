@@ -42,14 +42,14 @@ data class LiveEventEmbed(
     @Json(name = "embed_chat")
     val embedChat: String? = null,
 
-    @Json(name = "embed_properties")
-    val embedProperties: LiveEventEmbedProperties? = null,
+//    @Json(name = "embed_properties")
+//    val embedProperties: LiveEventEmbedProperties? = null,
 
     @Json(name = "html")
     val html: String? = null,
 
-    @Json(name = "logos")
-    val logoInfo: LiveEventLogoInfo? = null,
+//    @Json(name = "logos")
+//    val logoInfo: LiveEventLogoInfo? = null,
 
     @Json(name = "responsiveHtml")
     val responsiveHtml: String? = null,
