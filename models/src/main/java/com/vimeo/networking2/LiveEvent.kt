@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.PlaylistSortType
 import com.vimeo.networking2.enums.asEnum
+import java.util.Date
 
 /**
  * Live Event data.
@@ -62,66 +63,66 @@ import com.vimeo.networking2.enums.asEnum
 @JsonClass(generateAdapter = true)
 data class LiveEvent(
 
-//    @Json(name = "auto_cc_keywords")
-//    val autoCCKeywords: String? = null,
-//
-//    @Json(name = "auto_cc_language")
-//    val autoCCLanguage: String? = null,
-//
-//    @Json(name = "auto_cc_remaining")
-//    val autoCCRemaining: Double? = null,
-//
-//    @Json(name = "content_rating")
-//    val contentRating: List<String>? = null,
-//
-//    @Json(name = "created_time")
-//    val createdTime: Date? = null,
-//
-//    @Json(name = "dash_link")
-//    val dashLink: String? = null,
+    @Json(name = "auto_cc_keywords")
+    val autoCCKeywords: String? = null,
+
+    @Json(name = "auto_cc_language")
+    val autoCCLanguage: String? = null,
+
+    @Json(name = "auto_cc_remaining")
+    val autoCCRemaining: Double? = null,
+
+    @Json(name = "content_rating")
+    val contentRating: List<String>? = null,
+
+    @Json(name = "created_time")
+    val createdTime: Date? = null,
+
+    @Json(name = "dash_link")
+    val dashLink: String? = null,
 //
 //    @Json(name = "embed")
 //    val embed: LiveEventEmbed? = null,
 //
-//    @Json(name = "head_clip")
-//    val firstVideoInPlaylist: Video? = null,
-//
-//    @Json(name = "auto_cc_enabled")
-//    val isAutoCCEnabled: Boolean? = null,
-//
-//    @Json(name = "chat_enabled")
-//    val isChatEnabled: Boolean? = null,
-//
-//    @Json(name = "from_showcase")
-//    val isFromShowcase: Boolean? = null,
-//
-//    @Json(name = "from_webinar")
-//    val isFromWebinar: Boolean? = null,
-//
-//    @Json(name = "low_latency")
-//    val isLowLatencyEnabled: Boolean? = null,
-//
-//    @Json(name = "unlimited_duration")
-//    val isUnlimitedStreamingEnabled: Boolean? = null,
-//
-//    @Json(name = "link")
-//    val link: String? = null,
-//
-//    @Json(name = "live_clips")
-//    val liveClips: List<Video>? = null,
+    @Json(name = "head_clip")
+    val firstVideoInPlaylist: Video? = null,
+
+    @Json(name = "auto_cc_enabled")
+    val isAutoCCEnabled: Boolean? = null,
+
+    @Json(name = "chat_enabled")
+    val isChatEnabled: Boolean? = null,
+
+    @Json(name = "from_showcase")
+    val isFromShowcase: Boolean? = null,
+
+    @Json(name = "from_webinar")
+    val isFromWebinar: Boolean? = null,
+
+    @Json(name = "low_latency")
+    val isLowLatencyEnabled: Boolean? = null,
+
+    @Json(name = "unlimited_duration")
+    val isUnlimitedStreamingEnabled: Boolean? = null,
+
+    @Json(name = "link")
+    val link: String? = null,
+
+    @Json(name = "live_clips")
+    val liveClips: List<Video>? = null,
 //
 //    @Json(name = "metadata")
 //    val metadata: Metadata<LiveEventConnections, LiveEventInteractions>? = null,
-//
-//    @Json(name = "next_occurrence_time")
-//    val nextOccurrenceTime: Date? = null,
-//
-//    @Json(name = "parent_folder")
-//    val parentFolder: Folder? = null,
-//
-//    @Json(name = "pictures")
-//    val pictures: PictureCollection? = null,
-//
+
+    @Json(name = "next_occurrence_time")
+    val nextOccurrenceTime: Date? = null,
+
+    @Json(name = "parent_folder")
+    val parentFolder: Folder? = null,
+
+    @Json(name = "pictures")
+    val pictures: PictureCollection? = null,
+
     @Json(name = "playlist_sort")
     val playlistSort: String? = null,
 //
