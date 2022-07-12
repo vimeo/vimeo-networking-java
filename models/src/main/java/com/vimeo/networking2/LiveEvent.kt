@@ -110,9 +110,9 @@ data class LiveEvent(
 
     @Json(name = "live_clips")
     val liveClips: List<Video>? = null,
-//
-//    @Json(name = "metadata")
-//    val metadata: Metadata<LiveEventConnections, LiveEventInteractions>? = null,
+
+    @Json(name = "metadata")
+    val metadata: Metadata<LiveEventConnections, LiveEventInteractions>? = null,
 
     @Json(name = "next_occurrence_time")
     val nextOccurrenceTime: Date? = null,
@@ -125,33 +125,33 @@ data class LiveEvent(
 
     @Json(name = "playlist_sort")
     val playlistSort: String? = null,
-//
-//    @Json(name = "rtmp_link")
-//    val rtmpLink: String? = null,
-//
-//    @Json(name = "rtmps_link")
-//    val rtmpsLink: String? = null,
-//
-//    @Json(name = "automatically_title_stream")
-//    val shouldAutomaticallyTitleStream: Boolean? = null,
-//
-//    @Json(name = "unlimited_auto_cc")
-//    val shouldIgnoreAutoCCTimeLimit: Boolean? = null,
-//
-//    @Json(name = "stream_description")
-//    val streamDescription: String? = null,
-//
-//    @Json(name = "stream_key")
-//    val streamKey: String? = null,
-//
-//    @Json(name = "stream_password")
-//    val streamPassword: String? = null,
-//
-//    @Json(name = "stream_privacy")
-//    val streamPrivacy: StreamPrivacy? = null,
-//
-//    @Json(name = "stream_title")
-//    val streamTitle: String? = null,
+
+    @Json(name = "rtmp_link")
+    val rtmpLink: String? = null,
+
+    @Json(name = "rtmps_link")
+    val rtmpsLink: String? = null,
+
+    @Json(name = "automatically_title_stream")
+    val shouldAutomaticallyTitleStream: Boolean? = null,
+
+    @Json(name = "unlimited_auto_cc")
+    val shouldIgnoreAutoCCTimeLimit: Boolean? = null,
+
+    @Json(name = "stream_description")
+    val streamDescription: String? = null,
+
+    @Json(name = "stream_key")
+    val streamKey: String? = null,
+
+    @Json(name = "stream_password")
+    val streamPassword: String? = null,
+
+    @Json(name = "stream_privacy")
+    val streamPrivacy: StreamPrivacy? = null,
+
+    @Json(name = "stream_title")
+    val streamTitle: String? = null,
 
     @Json(name = "streamable_clip")
     val streamableVideo: Video? = null,
