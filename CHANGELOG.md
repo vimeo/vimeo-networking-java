@@ -1,5 +1,10 @@
 Change Log
 ==========
+Version 3.12.0 *(2022-07-07)*
+----------------------------
+- Added `LiveEvent` data support.
+- Added `VimeoApiClient.fetchLiveEvent`
+
 Version 3.11.0 *(2022-07-07)*
 ----------------------------
 - Updated `UploadQuotaPeriodType` to match new values.
