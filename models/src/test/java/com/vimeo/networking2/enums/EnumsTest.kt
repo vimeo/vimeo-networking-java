@@ -31,6 +31,7 @@ class EnumsTest {
             NotificationType::class.java,
             PictureType::class.java,
             ProgrammedContentItemType::class.java,
+            PlaylistSortType::class.java,
             ProjectItemType::class.java,
             PublishStatusType::class.java,
             PurchaseStatusType::class.java,

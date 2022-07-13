@@ -31,6 +31,11 @@ enum class ViewPrivacyType(override val value: String?) : StringValue {
     DISABLE("disable"),
 
     /**
+     * The videos don't appear on Vimeo, but they can be embedded elsewhere.
+     */
+    EMBED_ONLY("embed_only"),
+
+    /**
      * No one except the user can view the user's videos.
      */
     NOBODY("nobody"),
