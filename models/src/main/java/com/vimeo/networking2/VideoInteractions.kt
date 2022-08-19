@@ -19,6 +19,7 @@ import com.vimeo.networking2.annotations.Internal
  * @param report Information about where and how to report a video.
  * @param subscription Subscription information for an On Demand video.
  * @param watchLater Information about whether this video appears on the authenticated user's Watch Later list.
+ * @param legalHold Information about whether this video is subject to ongoing litigation.
  */
 @JsonClass(generateAdapter = true)
 data class VideoInteractions(
