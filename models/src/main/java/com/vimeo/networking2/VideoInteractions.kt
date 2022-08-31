@@ -20,6 +20,7 @@ import com.vimeo.networking2.annotations.Internal
  * @param subscription Subscription information for an On Demand video.
  * @param watchLater Information about whether this video appears on the authenticated user's Watch Later list.
  * @param legalHold Information about whether this video is subject to ongoing litigation.
+ * @param restrictedPrivacyOptions Information about whether this user has restricted privacy options.
  */
 @JsonClass(generateAdapter = true)
 data class VideoInteractions(
@@ -62,5 +63,8 @@ data class VideoInteractions(
     val watchLater: WatchLaterInteraction? = null,
 
     @Json(name = "legal_hold")
-    public val legalHold: BasicInteraction? = null
+    val legalHold: BasicInteraction? = null,
+
+    @Json(name = "has_restricted_privacy_options")
+    val restrictedPrivacyOptions: BasicInteraction? = null
 )

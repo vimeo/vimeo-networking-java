@@ -28,6 +28,7 @@ import com.vimeo.networking2.ApiConstants
 import com.vimeo.networking2.ApiError
 import com.vimeo.networking2.AppConfiguration
 import com.vimeo.networking2.Authenticator
+import com.vimeo.networking2.Capabilities
 import com.vimeo.networking2.Category
 import com.vimeo.networking2.CategoryList
 import com.vimeo.networking2.Channel
@@ -1583,6 +1584,15 @@ internal class VimeoApiClientImpl(
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getCommentList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
+    }
+
+    override fun fetchCapabilities(
+        teamOwnerId: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Capabilities>
+    ): VimeoRequest {
+        return vimeoService.capabilities(authHeader, teamOwnerId, fieldFilter, cacheControl).enqueue(callback)
     }
 
     private fun <T> LocalVimeoCallAdapter.enqueueInvalidUri(callback: VimeoCallback<T>): VimeoRequest {

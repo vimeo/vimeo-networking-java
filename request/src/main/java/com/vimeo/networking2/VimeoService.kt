@@ -721,6 +721,15 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<SearchResultList>
 
+    @Headers(HEADER_NO_CACHE)
+    @GET("users/{$TEAM_OWNER_ID}/capabilities")
+    fun capabilities(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(TEAM_OWNER_ID, encoded = true) teamOwnerId: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<Capabilities>
+
     companion object {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"
@@ -738,5 +747,6 @@ internal interface VimeoService {
         private const val SLACK_USER_PREF = "slack_user_preferences"
         private const val QUERY_STRING_PARAM_QUERY = "query"
         private const val CUSTOM_MESSAGE = "custom_message"
+        private const val TEAM_OWNER_ID = "teamOwnerId"
     }
 }
