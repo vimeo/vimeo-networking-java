@@ -25,6 +25,7 @@ import com.vimeo.networking2.Album
 import com.vimeo.networking2.AlbumList
 import com.vimeo.networking2.AlbumPrivacy
 import com.vimeo.networking2.AppConfiguration
+import com.vimeo.networking2.Capabilities
 import com.vimeo.networking2.Category
 import com.vimeo.networking2.CategoryList
 import com.vimeo.networking2.Channel
@@ -983,4 +984,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         teamEntity: TeamEntity,
         callback: VimeoCallback<Unit>
     ): VimeoRequest = client.deleteTeamPermission(teamPermissionInteraction, teamEntity, callback)
+
+    override fun fetchCapabilities(
+        teamOwnerId: String,
+        fieldFilter: String?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Capabilities>
+    ): VimeoRequest = client.fetchCapabilities(teamOwnerId, fieldFilter, cacheControl, callback)
 }
