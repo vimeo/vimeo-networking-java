@@ -14,4 +14,10 @@ class Capabilities {
      */
     @Json(name = "restricted_privacy_options")
     val restrictedPrivacyOptions: Boolean? = null
+
+    /**
+     * Whether the user has access to Stock Enterprise.
+     */
+    @Json(name = "enterprise")
+    val enterprise: Boolean? = null
 }
