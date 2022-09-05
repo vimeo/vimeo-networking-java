@@ -7,11 +7,11 @@ import com.squareup.moshi.JsonClass
  * User capabilities.
  */
 @JsonClass(generateAdapter = true)
-class Capabilities {
+data class Capabilities(
 
     /**
      * If user has restricted privacy options enabled.
      */
     @Json(name = "restricted_privacy_options")
     val restrictedPrivacyOptions: Boolean? = null
-}
+)
