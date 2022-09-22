@@ -39,6 +39,7 @@ import com.vimeo.networking2.FeedList
 import com.vimeo.networking2.Folder
 import com.vimeo.networking2.FolderList
 import com.vimeo.networking2.LiveEvent
+import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
@@ -648,6 +649,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<LiveEvent>
     ): VimeoRequest = client.fetchLiveEvent(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun fetchLiveEventList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<LiveEventList>
+    ): VimeoRequest = client.fetchLiveEventList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchLiveStats(
         uri: String,

@@ -43,6 +43,7 @@ import com.vimeo.networking2.Folder
 import com.vimeo.networking2.FolderList
 import com.vimeo.networking2.InvalidParameter
 import com.vimeo.networking2.LiveEvent
+import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
@@ -1303,6 +1304,18 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getLiveEvent(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
+    override fun fetchLiveEventList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<LiveEventList>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.getLiveEventList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
