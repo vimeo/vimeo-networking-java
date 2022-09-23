@@ -343,6 +343,19 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<LiveEvent>
 
+    @POST
+    fun createLiveEvent(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
+    ): VimeoCall<LiveEvent>
+
+    @POST("{$LIVE_EVENT_URI}/end")
+    fun stopLiveEvent(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(LIVE_EVENT_URI) liveEventUri: String,
+    ): VimeoCall<Video>
+
     @GET
     fun getLiveEventList(
         @Header(AUTHORIZATION) authorization: String,
@@ -757,5 +770,6 @@ internal interface VimeoService {
         private const val QUERY_STRING_PARAM_QUERY = "query"
         private const val CUSTOM_MESSAGE = "custom_message"
         private const val TEAM_OWNER_ID = "teamOwnerId"
+        private const val LIVE_EVENT_URI = "liveEventUri"
     }
 }

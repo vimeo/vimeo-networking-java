@@ -58,6 +58,7 @@ import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
 import com.vimeo.networking2.SearchResultList
 import com.vimeo.networking2.SeasonList
+import com.vimeo.networking2.StreamPrivacy
 import com.vimeo.networking2.Team
 import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.TeamList
@@ -1305,6 +1306,26 @@ internal class VimeoApiClientImpl(
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getLiveEvent(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
+    }
+
+    override fun createLiveEvent(
+        uri: String,
+        name: String,
+        privacy: StreamPrivacy,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<LiveEvent>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val body = bodyParams?.toMutableMap() ?: mutableMapOf()
+        body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_NAME] = name
+        body[ApiConstants.Parameters.PARAMETER_AUTOMATICALLY_TITLE_STREAM] = true
+        body[ApiConstants.Parameters.PARAMETER_STREAMING_PRIVACY] = privacy
+        return vimeoService.createLiveEvent(authHeader, safeUri, body).enqueue(callback)
+    }
+
+    override fun stopLiveEvent(uri: String, callback: VimeoCallback<Video>): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.stopLiveEvent(authHeader, safeUri).enqueue(callback)
     }
 
     override fun fetchLiveEventList(

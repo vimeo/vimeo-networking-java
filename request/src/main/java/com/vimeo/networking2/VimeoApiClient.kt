@@ -927,6 +927,35 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Create a [LiveEvent].
+     *
+     * @param uri The uri of the user connection for live event, should not be empty.
+     * @param name The name of the live event.
+     * @param privacy The  live event's privacy.
+     * @param bodyParams Other parameters about the live event.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun createLiveEvent(
+        uri: String,
+        name: String,
+        privacy: StreamPrivacy,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<LiveEvent>
+    ): VimeoRequest
+
+    /**
+     * Stop a [LiveEvent].
+     *
+     * @param uri The live event's canonical relative URI.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun stopLiveEvent(uri: String, callback: VimeoCallback<Video>): VimeoRequest
+
+    /**
      * Fetch a [LiveEventList] from the provided endpoint.
      *
      * @param uri The URI from which content will be requested.
