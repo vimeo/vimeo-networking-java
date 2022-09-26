@@ -1310,16 +1310,19 @@ internal class VimeoApiClientImpl(
 
     override fun createLiveEvent(
         uri: String,
-        name: String,
-        privacy: StreamPrivacy,
+        title: String,
+        privacy: StreamPrivacy?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<LiveEvent>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         val body = bodyParams?.toMutableMap() ?: mutableMapOf()
-        body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_NAME] = name
+
+        privacy?.let { body[ApiConstants.Parameters.PARAMETER_STREAMING_PRIVACY] }
+
+        body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_TITLE] = title
         body[ApiConstants.Parameters.PARAMETER_AUTOMATICALLY_TITLE_STREAM] = true
-        body[ApiConstants.Parameters.PARAMETER_STREAMING_PRIVACY] = privacy
+
         return vimeoService.createLiveEvent(authHeader, safeUri, body).enqueue(callback)
     }
 

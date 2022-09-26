@@ -939,8 +939,8 @@ interface VimeoApiClient {
      */
     fun createLiveEvent(
         uri: String,
-        name: String,
-        privacy: StreamPrivacy,
+        title: String,
+        privacy: StreamPrivacy?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<LiveEvent>
     ): VimeoRequest

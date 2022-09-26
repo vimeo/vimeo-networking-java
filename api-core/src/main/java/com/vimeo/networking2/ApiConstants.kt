@@ -97,7 +97,7 @@ object ApiConstants {
         const val PARAMETER_PERMISSION_POLICY_URI = "permission_policy_uri"
         const val PARAMETER_TEAM_ENTITY_TYPE = "team_entity_type"
         const val PARAMETER_TEAM_ENTITY_URI = "team_entity_uri"
-        const val PARAMETER_LIVE_EVENT_NAME = NAME
+        const val PARAMETER_LIVE_EVENT_TITLE = "title"
         const val PARAMETER_AUTOMATICALLY_TITLE_STREAM = "automatically_title_stream"
         const val PARAMETER_STREAMING_PRIVACY = "stream_privacy"
 

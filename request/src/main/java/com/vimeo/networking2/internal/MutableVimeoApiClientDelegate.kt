@@ -653,11 +653,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun createLiveEvent(
         uri: String,
-        name: String,
-        privacy: StreamPrivacy,
+        title: String,
+        privacy: StreamPrivacy?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<LiveEvent>
-    ): VimeoRequest = client.createLiveEvent(uri, name, privacy, bodyParams, callback)
+    ): VimeoRequest = client.createLiveEvent(uri, title, privacy, bodyParams, callback)
 
     override fun stopLiveEvent(uri: String, callback: VimeoCallback<Video>): VimeoRequest =
         client.stopLiveEvent(uri, callback)
