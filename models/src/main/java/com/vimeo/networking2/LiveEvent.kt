@@ -87,9 +87,6 @@ data class LiveEvent(
     @Json(name = "head_clip")
     val firstVideoInPlaylist: Video? = null,
 
-    @Json(name = "auto_cc_enabled")
-    val isAutoCCEnabled: Boolean? = null,
-
     @Json(name = "chat_enabled")
     val isChatEnabled: Boolean? = null,
 
