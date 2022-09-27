@@ -43,6 +43,7 @@ import com.vimeo.networking2.Folder
 import com.vimeo.networking2.FolderList
 import com.vimeo.networking2.InvalidParameter
 import com.vimeo.networking2.LiveEvent
+import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
@@ -57,6 +58,7 @@ import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
 import com.vimeo.networking2.SearchResultList
 import com.vimeo.networking2.SeasonList
+import com.vimeo.networking2.StreamPrivacy
 import com.vimeo.networking2.Team
 import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.TeamList
@@ -1303,6 +1305,41 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getLiveEvent(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
+    override fun createLiveEvent(
+        uri: String,
+        title: String,
+        privacy: StreamPrivacy?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<LiveEvent>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val body = bodyParams?.toMutableMap() ?: mutableMapOf()
+
+        privacy?.let { body[ApiConstants.Parameters.PARAMETER_STREAMING_PRIVACY] }
+
+        body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_TITLE] = title
+        body[ApiConstants.Parameters.PARAMETER_AUTOMATICALLY_TITLE_STREAM] = true
+
+        return vimeoService.createLiveEvent(authHeader, safeUri, body).enqueue(callback)
+    }
+
+    override fun stopLiveEvent(uri: String, callback: VimeoCallback<Video>): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.stopLiveEvent(authHeader, safeUri).enqueue(callback)
+    }
+
+    override fun fetchLiveEventList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<LiveEventList>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.getLiveEventList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 

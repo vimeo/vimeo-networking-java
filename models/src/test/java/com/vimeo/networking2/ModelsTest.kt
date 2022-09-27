@@ -73,6 +73,7 @@ class ModelsTest {
         LiveChatConfiguration::class,
         LiveConfiguration::class,
         LiveEvent::class,
+        LiveEventList::class,
         LiveEventConnections::class,
         LiveEventCustomLogo::class,
         LiveEventEmbed::class,

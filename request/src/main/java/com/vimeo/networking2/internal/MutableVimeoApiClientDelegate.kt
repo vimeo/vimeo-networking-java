@@ -39,6 +39,7 @@ import com.vimeo.networking2.FeedList
 import com.vimeo.networking2.Folder
 import com.vimeo.networking2.FolderList
 import com.vimeo.networking2.LiveEvent
+import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
@@ -53,6 +54,7 @@ import com.vimeo.networking2.PublishJob
 import com.vimeo.networking2.RecommendationList
 import com.vimeo.networking2.SearchResultList
 import com.vimeo.networking2.SeasonList
+import com.vimeo.networking2.StreamPrivacy
 import com.vimeo.networking2.Team
 import com.vimeo.networking2.TeamEntity
 import com.vimeo.networking2.TeamList
@@ -648,6 +650,25 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<LiveEvent>
     ): VimeoRequest = client.fetchLiveEvent(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun createLiveEvent(
+        uri: String,
+        title: String,
+        privacy: StreamPrivacy?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<LiveEvent>
+    ): VimeoRequest = client.createLiveEvent(uri, title, privacy, bodyParams, callback)
+
+    override fun stopLiveEvent(uri: String, callback: VimeoCallback<Video>): VimeoRequest =
+        client.stopLiveEvent(uri, callback)
+
+    override fun fetchLiveEventList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<LiveEventList>
+    ): VimeoRequest = client.fetchLiveEventList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun fetchLiveStats(
         uri: String,
