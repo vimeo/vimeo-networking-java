@@ -20,4 +20,10 @@ data class Capabilities(
      */
     @Json(name = "enterprise")
     val enterprise: Boolean? = null,
+
+    /**
+     * Whether the user has access to the personal team folder.
+     */
+    @Json(name = "personal_team_folder")
+    val personalTeamFolder: Boolean? = null
 )
