@@ -25,5 +25,11 @@ data class Capabilities(
      * Whether the user has access to the personal team folder.
      */
     @Json(name = "personal_team_folder")
-    val personalTeamFolder: Boolean? = null
+    val personalTeamFolder: Boolean? = null,
+
+    /**
+     * Whether the user has shared with me capability.
+     */
+    @Json(name = "shared_with_me")
+    val sharedWithMe: Boolean? = null
 )
