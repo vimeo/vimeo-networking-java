@@ -80,5 +80,5 @@ data class VideoConnections(
     val publish: PublishJobConnection? = null,
 
     @Json(name = "team_permissions")
-    val team_permissions: BasicConnection? = null
+    val teamPermissions: BasicConnection? = null
 )
