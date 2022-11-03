@@ -77,5 +77,8 @@ data class VideoConnections(
     val availableChannels: BasicConnection? = null,
 
     @Json(name = "publish_to_social")
-    val publish: PublishJobConnection? = null
+    val publish: PublishJobConnection? = null,
+
+    @Json(name = "team_permissions")
+    val team_permissions: BasicConnection? = null
 )
