@@ -25,6 +25,7 @@ import com.vimeo.networking2.annotations.Internal
  * @param availableChannels Information about how to get all the logged-in user's available channels that this video can
  * be added to.
  * @param publish Information about how to get the Publish to Social data for this video.
+ * @param teamPermissions Information about possibility sharing an individual video with team members
  */
 @JsonClass(generateAdapter = true)
 data class VideoConnections(
@@ -80,5 +81,5 @@ data class VideoConnections(
     val publish: PublishJobConnection? = null,
 
     @Json(name = "team_permissions")
-    val teamPermissions: TeamPermissionsConnection? = null
+    val teamPermissions: BasicConnection? = null
 )
