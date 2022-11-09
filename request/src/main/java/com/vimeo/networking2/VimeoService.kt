@@ -353,7 +353,7 @@ internal interface VimeoService {
     @POST("{$LIVE_EVENT_URI}/end")
     fun stopLiveEvent(
         @Header(AUTHORIZATION) authorization: String,
-        @Path(LIVE_EVENT_URI) liveEventUri: String,
+        @Path(LIVE_EVENT_URI, encoded = true) liveEventUri: String,
     ): VimeoCall<Video>
 
     @GET
