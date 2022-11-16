@@ -481,7 +481,6 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         team, email, permissionLevel, videoUri, customMessage, queryParams, callback
     )
 
-
     override fun removeUserFromTeam(
         uri: String,
         queryParams: Map<String, String>?,
