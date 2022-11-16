@@ -36,6 +36,7 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_ROLE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_VIDEO_URI
 import com.vimeo.networking2.enums.ConnectedAppType
 import com.vimeo.networking2.enums.FolderViewPrivacyType
 import com.vimeo.networking2.enums.NotificationType
@@ -626,6 +627,19 @@ internal interface VimeoService {
         @Field(PARAMETER_EMAIL) email: String,
         @Field(PARAMETER_PERMISSION_LEVEL) permissionLevel: TeamRoleType,
         @Field(PARAMETER_FOLDER_URI) folderUri: String?,
+        @Field(CUSTOM_MESSAGE) customMessage: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
+    ): VimeoCall<TeamMembership>
+
+    @Suppress("LongParameterList")
+    @FormUrlEncoded
+    @POST
+    fun addUserToVideoAsMember(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Field(PARAMETER_EMAIL) email: String,
+        @Field(PARAMETER_PERMISSION_LEVEL) permissionLevel: TeamRoleType,
+        @Field(PARAMETER_VIDEO_URI) videoUri: String?,
         @Field(CUSTOM_MESSAGE) customMessage: String?,
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>
     ): VimeoCall<TeamMembership>
