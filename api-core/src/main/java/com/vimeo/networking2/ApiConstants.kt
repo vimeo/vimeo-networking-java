@@ -93,6 +93,7 @@ object ApiConstants {
         const val PARAMETER_FOLDER_PRIVACY = PRIVACY
         const val PARAMETER_PERMISSION_LEVEL = "permission_level"
         const val PARAMETER_FOLDER_URI = "folder_uri"
+        const val PARAMETER_VIDEO_URI = "video_uri"
         const val PARAMETER_ROLE = "role"
         const val PARAMETER_PERMISSION_POLICY_URI = "permission_policy_uri"
         const val PARAMETER_TEAM_ENTITY_TYPE = "team_entity_type"

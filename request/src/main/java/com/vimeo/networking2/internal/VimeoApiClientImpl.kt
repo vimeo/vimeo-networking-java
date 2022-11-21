@@ -923,6 +923,28 @@ internal class VimeoApiClientImpl(
         ).enqueue(callback)
     }
 
+    override fun addUserToVideoAsMember(
+        team: Team,
+        email: String,
+        permissionLevel: TeamRoleType,
+        videoUri: String?,
+        customMessage: String?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest {
+        val safeUri = team.owner?.metadata?.connections?.teamMembers?.uri.validate()
+            ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.addUserToVideoAsMember(
+            authHeader,
+            safeUri,
+            email,
+            permissionLevel,
+            videoUri,
+            customMessage,
+            queryParams.orEmpty()
+        ).enqueue(callback)
+    }
+
     override fun removeUserFromTeam(
         uri: String,
         queryParams: Map<String, String>?,

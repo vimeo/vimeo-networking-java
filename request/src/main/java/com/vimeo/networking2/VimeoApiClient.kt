@@ -1733,6 +1733,30 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Adds a given user to the current Team.
+     *
+     * @param team The [Team] the user is being added to.
+     * @param email The email address for the user being added.
+     * @param permissionLevel The intended [TeamRoleType] for the user being added.
+     * @param videoUri If the user is being added as a [TeamRoleType.CONTRIBUTOR] or [TeamRoleType.VIEWER] the
+     * [Video] they can contribute or view also needs to be added.
+     * @param customMessage An optional invite message to show to the user being invited.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun addUserToVideoAsMember(
+        team: Team,
+        email: String,
+        permissionLevel: TeamRoleType,
+        videoUri: String?,
+        customMessage: String?,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<TeamMembership>
+    ): VimeoRequest
+
+    /**
      * Removes the provided User from the team.
      *
      * @param uri the URI from which content will be sent to.
