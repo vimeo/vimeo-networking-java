@@ -28,7 +28,7 @@ data class UserInteractions(
     override val follow: FollowInteraction? = null,
 
     @Json(name = "report")
-    val report: BasicInteraction? = null,
+    val report: ReportInteraction? = null,
 
     @Json(name = "facebook_connected_app")
     val facebookConnectedApp: ConnectedAppInteraction? = null,

@@ -194,7 +194,8 @@ class ModelsTest {
         WatchLaterInteraction::class,
         Website::class,
         VideoStatus::class,
-        EditSession::class
+        EditSession::class,
+        ReportInteraction::class
     )
 
     @Test
