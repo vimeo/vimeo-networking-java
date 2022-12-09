@@ -766,6 +766,13 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Capabilities>
 
+    @GET("users/{$TEAM_OWNER_ID}/team/featured_content")
+    fun getFeaturedContent(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(TEAM_OWNER_ID, encoded = true) teamOwnerId: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+    ): VimeoCall<FeaturedContent>
+
     companion object {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"
