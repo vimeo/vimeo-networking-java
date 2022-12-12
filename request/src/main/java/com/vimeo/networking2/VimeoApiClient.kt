@@ -2325,6 +2325,21 @@ interface VimeoApiClient {
         callback: VimeoCallback<Capabilities>
     ): VimeoRequest
 
+    /**
+     * Get featured content for a specified [teamOwnerId].
+     *
+     * @param teamOwnerId The team owner we are getting featured content for.
+     * @param fieldFilter The fields that should be returned by the server in the response
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun getFeaturedContent(
+        teamOwnerId: String,
+        fieldFilter: String?,
+        callback: VimeoCallback<FeaturedContent>,
+    ): VimeoRequest
+
     companion object {
 
         private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()

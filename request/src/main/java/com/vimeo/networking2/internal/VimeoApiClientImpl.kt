@@ -38,6 +38,7 @@ import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
 import com.vimeo.networking2.Document
+import com.vimeo.networking2.FeaturedContent
 import com.vimeo.networking2.FeedList
 import com.vimeo.networking2.Folder
 import com.vimeo.networking2.FolderList
@@ -1652,6 +1653,14 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Capabilities>
     ): VimeoRequest {
         return vimeoService.capabilities(authHeader, teamOwnerId, fieldFilter, cacheControl).enqueue(callback)
+    }
+
+    override fun getFeaturedContent(
+        teamOwnerId: String,
+        fieldFilter: String?,
+        callback: VimeoCallback<FeaturedContent>
+    ): VimeoRequest {
+        return vimeoService.getFeaturedContent(authHeader, teamOwnerId, fieldFilter).enqueue(callback)
     }
 
     private fun <T> LocalVimeoCallAdapter.enqueueInvalidUri(callback: VimeoCallback<T>): VimeoRequest {
