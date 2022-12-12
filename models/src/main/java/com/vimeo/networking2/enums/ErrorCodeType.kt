@@ -73,6 +73,8 @@ enum class ErrorCodeType(override val value: String?) : StringValue {
 
     INVALID_INPUT_RECEIPT_VALIDATION_UNSUCCESSFUL("3115"),
 
+    PAYMENT_REQUIRED_TO_VIEW_VOD("3410"),
+
     OPERATION_TIMED_OUT("4000"),
 
     RESOURCE_NOT_FOUND("5000"),
