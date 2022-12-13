@@ -31,5 +31,11 @@ data class Capabilities(
      * Whether the user has shared with me capability.
      */
     @Json(name = "shared_with_me")
-    val sharedWithMe: Boolean? = null
+    val sharedWithMe: Boolean? = null,
+
+    /**
+     * Whether the user has enterprise lihp capability.
+     */
+    @Json(name = "enterprise_lihp")
+    val enterpriseLihp: Boolean? = null,
 )
