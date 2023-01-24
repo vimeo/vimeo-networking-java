@@ -25,3 +25,14 @@ interface StringValue {
      */
     val value: String?
 }
+
+/**
+ * A class that has a int value.
+ */
+interface IntValue {
+
+    /**
+     * The value held by this class, may be null.
+     */
+    val value: Int?
+}
