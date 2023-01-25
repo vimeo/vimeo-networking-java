@@ -179,9 +179,15 @@ data class Video(
     @Json(name = "width")
     val width: Int? = null
 
-) : Entity {
+) : Entity, VideoContainer<Video> {
 
     override val identifier: String? = resourceKey
+
+    override val video: Video get() = this
+
+    override fun copyVideoContainer(
+        video: Video?,
+    ): Video = video ?: this
 }
 
 /**

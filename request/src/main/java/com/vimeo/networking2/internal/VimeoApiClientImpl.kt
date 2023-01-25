@@ -102,7 +102,7 @@ import com.vimeo.networking2.params.GrantFolderPermissionForUser
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
 import com.vimeo.networking2.params.ReplaceTeamPermissionParams
-import com.vimeo.networking2.params.SchedulingParam
+import com.vimeo.networking2.params.Schedule
 import com.vimeo.networking2.params.SearchDateType
 import com.vimeo.networking2.params.SearchDurationType
 import com.vimeo.networking2.params.SearchFacetType
@@ -280,7 +280,7 @@ internal class VimeoApiClientImpl(
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: SchedulingParam?,
+        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
@@ -334,7 +334,7 @@ internal class VimeoApiClientImpl(
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: SchedulingParam?,
+        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {

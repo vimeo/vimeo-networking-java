@@ -91,7 +91,7 @@ import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
-import com.vimeo.networking2.params.SchedulingParam
+import com.vimeo.networking2.params.Schedule
 import com.vimeo.networking2.params.SearchDateType
 import com.vimeo.networking2.params.SearchDurationType
 import com.vimeo.networking2.params.SearchFacetType
@@ -199,7 +199,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: SchedulingParam?,
+        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest = client.editVideo(
@@ -227,7 +227,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: SchedulingParam?,
+        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest = client.editVideo(

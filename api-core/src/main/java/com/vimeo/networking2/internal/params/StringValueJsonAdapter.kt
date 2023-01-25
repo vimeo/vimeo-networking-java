@@ -27,12 +27,28 @@ import com.squareup.moshi.JsonWriter
 import com.vimeo.networking2.enums.StringValue
 
 /**
- * A [JsonAdapter] that can write convert [StringValue] implementation to its JSON value.
+ * A [JsonAdapter] that can convert [StringValue] implementation to its JSON value.
  */
-class StringValueJsonAdapter : JsonAdapter<StringValue>() {
-    override fun fromJson(reader: JsonReader): StringValue? = error("Reading is unsupported by this adapter")
+class StringValueJsonAdapter<T : StringValue>(
+    private val creator: (String) -> T
+) : JsonAdapter<T>() {
+    override fun fromJson(reader: JsonReader): T? = if (reader.peek() == JsonReader.Token.NULL) {
+        reader.nextNull()
+    } else {
+        creator(reader.nextString())
+    }
 
-    override fun toJson(writer: JsonWriter, value: StringValue?) {
+    override fun toJson(writer: JsonWriter, value: T?) {
         writer.value(value?.value)
+    }
+
+    companion object {
+        /**
+         * Generic [StringValueJsonAdapter] that can't deserialize.
+         */
+        val NON_READING
+            get() = StringValueJsonAdapter<StringValue>() {
+                error("Reading is unsupported by this adapter")
+            }
     }
 }

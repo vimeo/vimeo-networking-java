@@ -1,10 +1,38 @@
 package com.vimeo.modelgenerator
 
-import com.squareup.kotlinpoet.*
-import com.vimeo.modelgenerator.extensions.*
-import com.vimeo.modelgenerator.visitor.*
+import com.squareup.kotlinpoet.AnnotationSpec
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
+import com.vimeo.modelgenerator.extensions.addAnnotations
+import com.vimeo.modelgenerator.extensions.addEnumConstants
+import com.vimeo.modelgenerator.extensions.addFunctions
+import com.vimeo.modelgenerator.extensions.addIfConditionMet
+import com.vimeo.modelgenerator.extensions.addImports
+import com.vimeo.modelgenerator.extensions.addKdocs
+import com.vimeo.modelgenerator.extensions.addMembers
+import com.vimeo.modelgenerator.extensions.addProperties
+import com.vimeo.modelgenerator.extensions.addSuperclassConstructorParameters
+import com.vimeo.modelgenerator.extensions.addTypes
+import com.vimeo.modelgenerator.extensions.blockTags
+import com.vimeo.modelgenerator.extensions.isInline
+import com.vimeo.modelgenerator.extensions.isOverridden
+import com.vimeo.modelgenerator.extensions.toParams
+import com.vimeo.modelgenerator.extensions.validateName
+import com.vimeo.modelgenerator.extensions.visibilityModifier
+import com.vimeo.modelgenerator.visitor.ModifyVisitor
+import com.vimeo.modelgenerator.visitor.ParcelableClassVisitor
 import org.gradle.api.GradleException
-import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.psi.KtNamedFunction
+import org.jetbrains.kotlin.psi.KtProperty
+import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry
 import org.jetbrains.kotlin.psi.psiUtil.isExtensionDeclaration
 import org.jetbrains.kotlin.util.isOrdinaryClass
 import java.io.File
@@ -113,7 +141,13 @@ internal class ModelFactory(
             )
         }
         .addIfConditionMet(function.typeReference != null) {
-            addStatement("return ${function.bodyExpression?.text.orEmpty()}")
+            val content = function.bodyExpression
+            if (content == null) {
+                addModifiers(KModifier.ABSTRACT)
+                returns(createTypeName(function.typeReference, packageName))
+            } else {
+                addStatement("return ${content.text.orEmpty()}")
+            }
         }
         .addIfConditionMet(function.typeReference == null) {
             val content = function.bodyBlockExpression?.statements
@@ -148,6 +182,9 @@ internal class ModelFactory(
         )
         .addIfConditionMet(function.visibilityModifier != null) {
             addModifiers(function.visibilityModifier!!)
+        }
+        .addIfConditionMet(function.modifierList?.isOverridden == true) {
+            addModifiers(KModifier.OVERRIDE)
         }
         .build()
 
