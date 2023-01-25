@@ -93,17 +93,21 @@ internal fun createTypeVariables(
     isParcelable: Boolean = false
 ): List<TypeVariableName> = types.map { typeParam ->
     TypeVariableName(
-        typeParam.name ?: throw GradleException("$typeParam: name can't be null"),
-        bounds = constraints.map { typeConstraint ->
-            createTypeName(
-                typeConstraint.boundTypeReference,
-                packageName
-            )
-        }.toMutableList().apply {
-            if (isParcelable) {
-                this.add(ParcelableClassVisitor.PARCELABLE)
+        name = typeParam.name ?: throw GradleException("$typeParam: name can't be null"),
+        bounds = constraints
+            .map { typeConstraint ->
+                createTypeName(
+                    typeConstraint.boundTypeReference,
+                    packageName
+                )
             }
-        },
+            .toMutableList()
+            .apply {
+                if (isParcelable) {
+                    add(ParcelableClassVisitor.PARCELABLE)
+                }
+                typeParam.extendsBound?.let { add(createTypeName(it, packageName)) }
+            },
         variance = when (typeParam.variance) {
             Variance.IN_VARIANCE -> KModifier.IN
             Variance.OUT_VARIANCE -> KModifier.OUT
