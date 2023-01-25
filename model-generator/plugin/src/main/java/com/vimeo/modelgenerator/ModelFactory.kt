@@ -394,6 +394,9 @@ internal class ModelFactory(
         .addIfConditionMet(clazz.body?.functions?.isNotEmpty() == true) {
             addFunctions(clazz.body?.functions!!.map { buildFunction(it, packageName) })
         }
+        .addIfConditionMet(clazz.isSealed()) {
+            addModifiers(KModifier.SEALED)
+        }
         .run { interfaceVisitor.modify(this, clazz, packageName) }
         .build()
 
