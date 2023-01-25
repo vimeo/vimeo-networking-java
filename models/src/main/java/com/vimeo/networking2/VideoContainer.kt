@@ -1,9 +1,11 @@
 package com.vimeo.networking2
 
+import com.vimeo.networking2.common.Entity
+
 /**
  * Represents entity that contains [Video].
  */
-sealed interface VideoContainer<T : VideoContainer<T>> {
+sealed interface VideoContainer<T : VideoContainer<T>> : Entity {
 
     /**
      * Related [Video].
