@@ -13,10 +13,11 @@ buildscript {
     repositories {
         maven {
             url 'https://plugins.gradle.org/m2/'
+            mavenCentral()
         }
     }
     dependencies {
-        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.6'
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.21'
         classpath 'gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8'
     }
 }
@@ -25,6 +26,7 @@ apply plugin: 'net.ltgt.apt'
 apply plugin: 'de.fuerstenau.buildconfig'
 
 repositories {
+    mavenCentral()
     jcenter()
 }
 
@@ -39,7 +41,7 @@ dependencies {
 
     def stagVersion = '2.2.0'
     compile "com.vimeo.stag:stag-library:$stagVersion"
-    apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
+    annotationProcessor "com.vimeo.stag:stag-library-compiler:$stagVersion"
 }
 
 group = 'com.vimeo.networking'
