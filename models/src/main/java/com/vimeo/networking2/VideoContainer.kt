@@ -8,6 +8,11 @@ import com.vimeo.networking2.common.Entity
 sealed interface VideoContainer<T : VideoContainer<T>> : Entity {
 
     /**
+     * Container URI (video or live event URI).
+     */
+    val uri: String?
+
+    /**
      * Related [Video].
      */
     val video: Video?

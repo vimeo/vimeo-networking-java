@@ -34,6 +34,7 @@ import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
+import com.vimeo.networking2.extensions.transform
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
 import com.vimeo.networking2.internal.VimeoApiClientImpl
@@ -322,7 +323,6 @@ interface VimeoApiClient {
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest
@@ -341,7 +341,6 @@ interface VimeoApiClient {
      * unchanged.
      * @param embedPrivacyType The optional embed privacy type.
      * @param viewPrivacyType The optional view privacy type.
-     * @param schedule The optional live event scheduling parameters.
      * @param bodyParams Other parameters that can be set on the video.
      * @param callback The callback which will be notified of the request completion.
      *
@@ -357,9 +356,23 @@ interface VimeoApiClient {
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
+    ): VimeoRequest
+
+    fun editLiveEvent(
+        liveEvent: LiveEvent,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        schedule: Schedule?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<in LiveEvent>,
     ): VimeoRequest
 
     /**
@@ -2393,3 +2406,47 @@ interface VimeoApiClient {
         }
     }
 }
+
+fun VimeoApiClient.editVideoContainer(
+    videoContainer: VideoContainer<*>,
+    title: String?,
+    description: String?,
+    password: String?,
+    commentPrivacyType: CommentPrivacyType?,
+    allowDownload: Boolean?,
+    allowAddToCollections: Boolean?,
+    embedPrivacyType: EmbedPrivacyType?,
+    viewPrivacyType: ViewPrivacyType?,
+    schedule: Schedule?,
+    bodyParams: Map<String, Any>?,
+    callback: VimeoCallback<VideoContainer<*>>,
+): VimeoRequest =
+    when (videoContainer) {
+        is LiveEvent -> editLiveEvent(
+            videoContainer,
+            title,
+            description,
+            password,
+            commentPrivacyType,
+            allowDownload,
+            allowAddToCollections,
+            embedPrivacyType,
+            viewPrivacyType,
+            schedule,
+            bodyParams,
+            callback,
+        )
+        is Video -> editVideo(
+            videoContainer,
+            title,
+            description,
+            password,
+            commentPrivacyType,
+            allowDownload,
+            allowAddToCollections,
+            embedPrivacyType,
+            viewPrivacyType,
+            bodyParams,
+            callback.transform { it },
+        )
+    }

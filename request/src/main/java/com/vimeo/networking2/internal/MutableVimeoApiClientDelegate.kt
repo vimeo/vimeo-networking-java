@@ -199,7 +199,6 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest = client.editVideo(
@@ -212,7 +211,6 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         allowAddToCollections,
         embedPrivacyType,
         viewPrivacyType,
-        schedule,
         bodyParams,
         callback
     )
@@ -227,11 +225,37 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest = client.editVideo(
         video,
+        title,
+        description,
+        password,
+        commentPrivacyType,
+        allowDownload,
+        allowAddToCollections,
+        embedPrivacyType,
+        viewPrivacyType,
+        bodyParams,
+        callback
+    )
+
+    override fun editLiveEvent(
+        liveEvent: LiveEvent,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        schedule: Schedule?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<in LiveEvent>
+    ): VimeoRequest = client.editLiveEvent(
+        liveEvent,
         title,
         description,
         password,

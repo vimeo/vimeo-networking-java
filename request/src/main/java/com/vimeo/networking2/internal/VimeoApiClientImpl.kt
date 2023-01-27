@@ -280,7 +280,6 @@ internal class VimeoApiClientImpl(
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
@@ -317,9 +316,6 @@ internal class VimeoApiClientImpl(
         if (privacy.isNotEmpty()) {
             body[ApiConstants.Parameters.PARAMETER_VIDEO_PRIVACY] = privacy
         }
-        if (schedule != null) {
-            body[ApiConstants.Parameters.PARAMETER_LIVE_SCHEDULE] = schedule
-        }
 
         return vimeoService.editVideo(authHeader, safeUri, body).enqueue(callback)
     }
@@ -334,7 +330,6 @@ internal class VimeoApiClientImpl(
         allowAddToCollections: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
-        schedule: Schedule?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
@@ -349,10 +344,29 @@ internal class VimeoApiClientImpl(
             allowAddToCollections,
             embedPrivacyType,
             viewPrivacyType,
-            schedule,
             bodyParams,
             callback
         )
+    }
+
+    override fun editLiveEvent(
+        liveEvent: LiveEvent,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        schedule: Schedule?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<in LiveEvent>
+    ): VimeoRequest {
+//        if (schedule != null) {
+//            body[ApiConstants.Parameters.PARAMETER_LIVE_SCHEDULE] = schedule
+//        }
+        TODO()
     }
 
     override fun editUser(

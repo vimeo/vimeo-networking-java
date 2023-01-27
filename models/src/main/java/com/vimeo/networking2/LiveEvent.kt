@@ -162,7 +162,7 @@ data class LiveEvent(
     val title: String? = null,
 
     @Json(name = "uri")
-    val uri: String? = null,
+    override val uri: String? = null,
 
     @Json(name = "user")
     val user: User? = null,

@@ -171,6 +171,13 @@ internal interface VimeoService {
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>
     ): VimeoCall<Video>
 
+    @PATCH
+    fun editLiveEvent(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body bodyParams: Map<String, @JvmSuppressWildcards Any>,
+    ): VimeoCall<in LiveEvent>
+
     @FormUrlEncoded
     @PATCH
     fun editUser(
