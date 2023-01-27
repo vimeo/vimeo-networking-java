@@ -31,16 +31,18 @@ repositories {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.intellij:annotations:12.0@jar'
+    testImplementation 'junit:junit:4.12'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'org.jetbrains:annotations:13.0'
 
     def retrofitVersion = '2.1.0'
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     def stagVersion = '2.2.0'
-    compile "com.vimeo.stag:stag-library:$stagVersion"
+    implementation("com.vimeo.stag:stag-library:$stagVersion") {
+        exclude group:'com.intellij'
+    }
     annotationProcessor "com.vimeo.stag:stag-library-compiler:$stagVersion"
 }
 
