@@ -13,7 +13,7 @@ class IntValueJsonAdapterFactory : JsonAdapter.Factory {
     override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? =
         if (type is Class<*> && IntValue::class.java.isAssignableFrom(type)) {
             if (Weekday::class.java.isAssignableFrom(type)) {
-                IntValueJsonAdapter(Weekday.Companion::parse)
+                IntValueJsonAdapter { value -> Weekday.values().first { it.value == value } }
             } else {
                 IntValueJsonAdapter.NON_READING
             }

@@ -1,6 +1,8 @@
 package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.adapters.Time
 import com.vimeo.networking2.enums.ScheduleType
 import com.vimeo.networking2.enums.Weekday
 import java.util.Date
@@ -12,6 +14,7 @@ import java.util.Date
  * @property dailyTime Schedule time.
  * @property weekdays Days of the week when event is scheduled.
  */
+@JsonClass(generateAdapter = true)
 data class Schedule(
 
     @Json(name = "type")
@@ -20,6 +23,7 @@ data class Schedule(
     @Json(name = "scheduled_time")
     val scheduledTime: Date? = null,
 
+    @Time
     @Json(name = "daily_time")
     val dailyTime: Date? = null,
 

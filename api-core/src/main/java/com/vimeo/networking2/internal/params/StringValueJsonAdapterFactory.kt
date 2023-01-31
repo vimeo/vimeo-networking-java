@@ -35,7 +35,7 @@ class StringValueJsonAdapterFactory : JsonAdapter.Factory {
     override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? =
         if (type is Class<*> && StringValue::class.java.isAssignableFrom(type)) {
             if (ScheduleType::class.java.isAssignableFrom(type)) {
-                StringValueJsonAdapter(ScheduleType.Companion::parse)
+                StringValueJsonAdapter { value -> ScheduleType.values().first { it.value == value } }
             } else {
                 StringValueJsonAdapter.NON_READING
             }
