@@ -253,7 +253,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         viewPrivacyType: ViewPrivacyType?,
         schedule: Schedule?,
         bodyParams: Map<String, Any>?,
-        callback: VimeoCallback<in LiveEvent>
+        callback: VimeoCallback<LiveEvent>
     ): VimeoRequest = client.editLiveEvent(
         liveEvent,
         title,

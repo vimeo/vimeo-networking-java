@@ -176,7 +176,7 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Body bodyParams: Map<String, @JvmSuppressWildcards Any>,
-    ): VimeoCall<in LiveEvent>
+    ): VimeoCall<LiveEvent>
 
     @FormUrlEncoded
     @PATCH

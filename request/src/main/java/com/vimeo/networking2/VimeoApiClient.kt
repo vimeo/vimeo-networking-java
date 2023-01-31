@@ -372,7 +372,7 @@ interface VimeoApiClient {
         viewPrivacyType: ViewPrivacyType?,
         schedule: Schedule?,
         bodyParams: Map<String, Any>?,
-        callback: VimeoCallback<in LiveEvent>,
+        callback: VimeoCallback<LiveEvent>,
     ): VimeoRequest
 
     /**
@@ -2434,7 +2434,7 @@ fun VimeoApiClient.editVideoContainer(
             viewPrivacyType,
             schedule,
             bodyParams,
-            callback,
+            callback.transform { it },
         )
         is Video -> editVideo(
             videoContainer,
