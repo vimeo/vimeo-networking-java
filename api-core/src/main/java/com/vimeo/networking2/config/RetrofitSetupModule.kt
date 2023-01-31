@@ -23,6 +23,7 @@ package com.vimeo.networking2.config
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.vimeo.networking2.adapters.TimeAdapter
 import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
 import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
@@ -54,6 +55,7 @@ object RetrofitSetupModule {
         .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
         .add(StringValueJsonAdapterFactory())
         .add(IntValueJsonAdapterFactory())
+        .add(TimeAdapter())
         .build()
 
     /**
