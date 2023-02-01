@@ -4,6 +4,7 @@ import java.util.Calendar
 
 /**
  * Enum class representing days of the week.
+ * @property calendarWeekday relation to weekday in [Calendar].
  */
 enum class Weekday(
     override val value: Int,

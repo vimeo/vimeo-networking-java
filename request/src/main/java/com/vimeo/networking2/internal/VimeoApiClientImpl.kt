@@ -349,6 +349,7 @@ internal class VimeoApiClientImpl(
         )
     }
 
+    @Suppress("ComplexMethod")
     override fun editLiveEvent(
         liveEvent: LiveEvent,
         title: String?,

@@ -360,6 +360,26 @@ interface VimeoApiClient {
         callback: VimeoCallback<Video>
     ): VimeoRequest
 
+    /**
+     * Edit a live event.
+     *
+     * @param liveEvent The live event to be edited.
+     * @param title The optional title of the live event.
+     * @param description The optional description of the live event.
+     * @param password The optional password for the live event, should be supplied if the [viewPrivacyType] is set to
+     * [ViewPrivacyType.PASSWORD].
+     * @param commentPrivacyType The optional comment privacy type.
+     * @param allowDownload True to allow downloads of the video, false to disallow, null to leave unchanged.
+     * @param allowAddToCollections True to allow the video to be added to collections, false to disallow, null to leave
+     * unchanged.
+     * @param embedPrivacyType The optional embed privacy type.
+     * @param viewPrivacyType The optional view privacy type.
+     * @param schedule The optional schedule for the live event.
+     * @param bodyParams Other parameters that can be set on the video.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
     fun editLiveEvent(
         liveEvent: LiveEvent,
         title: String?,
@@ -2407,6 +2427,27 @@ interface VimeoApiClient {
     }
 }
 
+/**
+ * Edit a video container (live event or video).
+ *
+ * @param videoContainer The video container to be edited.
+ * @param title The optional title of the video container.
+ * @param description The optional description of the video container.
+ * @param password The optional password for the video container, should be supplied if the [viewPrivacyType] is set to
+ * [ViewPrivacyType.PASSWORD].
+ * @param commentPrivacyType The optional comment privacy type.
+ * @param allowDownload True to allow downloads of the video, false to disallow, null to leave unchanged.
+ * @param allowAddToCollections True to allow the video to be added to collections, false to disallow, null to leave
+ * unchanged.
+ * @param embedPrivacyType The optional embed privacy type.
+ * @param viewPrivacyType The optional view privacy type.
+ * @param schedule The optional schedule for the live event.
+ * @param bodyParams Other parameters that can be set on the video.
+ * @param callback The callback which will be notified of the request completion.
+ *
+ * @return A [VimeoRequest] object to cancel API requests.
+ */
+@Suppress("LongParameterList")
 fun VimeoApiClient.editVideoContainer(
     videoContainer: VideoContainer<*>,
     title: String?,
@@ -2420,33 +2461,32 @@ fun VimeoApiClient.editVideoContainer(
     schedule: Schedule?,
     bodyParams: Map<String, Any>?,
     callback: VimeoCallback<VideoContainer<*>>,
-): VimeoRequest =
-    when (videoContainer) {
-        is LiveEvent -> editLiveEvent(
-            videoContainer,
-            title,
-            description,
-            password,
-            commentPrivacyType,
-            allowDownload,
-            allowAddToCollections,
-            embedPrivacyType,
-            viewPrivacyType,
-            schedule,
-            bodyParams,
-            callback.transform { it },
-        )
-        is Video -> editVideo(
-            videoContainer,
-            title,
-            description,
-            password,
-            commentPrivacyType,
-            allowDownload,
-            allowAddToCollections,
-            embedPrivacyType,
-            viewPrivacyType,
-            bodyParams,
-            callback.transform { it },
-        )
-    }
+): VimeoRequest = when (videoContainer) {
+    is LiveEvent -> editLiveEvent(
+        videoContainer,
+        title,
+        description,
+        password,
+        commentPrivacyType,
+        allowDownload,
+        allowAddToCollections,
+        embedPrivacyType,
+        viewPrivacyType,
+        schedule,
+        bodyParams,
+        callback.transform { it },
+    )
+    is Video -> editVideo(
+        videoContainer,
+        title,
+        description,
+        password,
+        commentPrivacyType,
+        allowDownload,
+        allowAddToCollections,
+        embedPrivacyType,
+        viewPrivacyType,
+        bodyParams,
+        callback.transform { it },
+    )
+}
