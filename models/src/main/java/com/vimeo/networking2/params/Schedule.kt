@@ -10,15 +10,19 @@ import java.util.Date
 /**
  * Represents parameters to schedule event.
  * @property type Type of schedule.
- * @property scheduledTime Schedule start [Date].
- * @property dailyTime Schedule time.
- * @property weekdays Days of the week when event is scheduled.
+ * @property startTime Scheduled start [Date] for [ScheduleType.SINGLE].
+ * @property scheduledTime Schedule start [Date] for [ScheduleType.WEEKLY].
+ * @property dailyTime Schedule time for [ScheduleType.WEEKLY].
+ * @property weekdays Days of the week when event is scheduled weekly.
  */
 @JsonClass(generateAdapter = true)
 data class Schedule(
 
     @Json(name = "type")
     val type: ScheduleType? = null,
+
+    @Json(name = "start_time")
+    val startTime: Date? = null,
 
     @Json(name = "scheduled_time")
     val scheduledTime: Date? = null,
