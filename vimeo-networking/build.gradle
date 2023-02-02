@@ -2,21 +2,22 @@ apply plugin: 'java'
 apply plugin: 'maven-publish'
 
 compileJava {
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 buildscript {
     repositories {
         maven {
             url 'https://plugins.gradle.org/m2/'
+            mavenCentral()
         }
     }
     dependencies {
-        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.6'
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.21'
         classpath 'gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8'
     }
 }
@@ -25,21 +26,24 @@ apply plugin: 'net.ltgt.apt'
 apply plugin: 'de.fuerstenau.buildconfig'
 
 repositories {
+    mavenCentral()
     jcenter()
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.intellij:annotations:12.0@jar'
+    testImplementation 'junit:junit:4.12'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'org.jetbrains:annotations:13.0'
 
-    def retrofitVersion = '2.1.0'
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    def retrofitVersion = '2.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     def stagVersion = '2.2.0'
-    compile "com.vimeo.stag:stag-library:$stagVersion"
-    apt "com.vimeo.stag:stag-library-compiler:$stagVersion"
+    implementation("com.vimeo.stag:stag-library:$stagVersion") {
+        exclude group:'com.intellij'
+    }
+    annotationProcessor "com.vimeo.stag:stag-library-compiler:$stagVersion"
 }
 
 group = 'com.vimeo.networking'
