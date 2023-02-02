@@ -9,6 +9,9 @@ import java.util.Date
 import java.util.GregorianCalendar
 import java.util.TimeZone
 
+/**
+ * Json adapter for [Date] properties annotated with [Time].
+ */
 @Suppress("SimpleDateFormat")
 class TimeAdapter {
     private val timeZone = TimeZone.getTimeZone("UTC")
@@ -17,9 +20,15 @@ class TimeAdapter {
         timeZone = this@TimeAdapter.timeZone
     }
 
+    /**
+     * Converts [Date] instance to it's JSON time representations.
+     */
     @ToJson
     fun toJson(@Time date: Date?): String? = date?.let(outputFormat::format)
 
+    /**
+     * Converts JSON time representation to [Date].
+     */
     @FromJson
     @Time
     fun fromJson(value: String?): Date? {
