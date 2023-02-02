@@ -3,7 +3,7 @@ apply plugin: 'com.google.devtools.ksp'
 apply from: '../publish.gradle'
 
 dependencies {
-    compileOnly project(':models-core')
+    implementation project(':models-annotations')
 
     // Okio used by Moshi
     implementation libs.okio

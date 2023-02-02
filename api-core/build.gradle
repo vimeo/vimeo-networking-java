@@ -3,7 +3,7 @@ apply plugin: 'kotlin'
 apply from: '../publish.gradle'
 
 dependencies {
-    compileOnly project(':models-core')
+    compileOnly project(':models-annotations')
     compileOnly project(':models')
 
     // Retrofit

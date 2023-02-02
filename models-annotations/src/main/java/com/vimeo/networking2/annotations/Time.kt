@@ -1,4 +1,4 @@
-package com.vimeo.networking2.adapters
+package com.vimeo.networking2.annotations
 
 import com.squareup.moshi.JsonQualifier
 

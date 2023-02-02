@@ -1,7 +1,8 @@
-package com.vimeo.networking2.adapters
+package com.vimeo.networking2.internal.adapters
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
+import com.vimeo.networking2.annotations.Time
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

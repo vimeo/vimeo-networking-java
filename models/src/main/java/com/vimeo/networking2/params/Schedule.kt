@@ -2,7 +2,7 @@ package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.adapters.Time
+import com.vimeo.networking2.annotations.Time
 import com.vimeo.networking2.enums.ScheduleType
 import com.vimeo.networking2.enums.Weekday
 import java.util.Date

@@ -14,7 +14,7 @@ generated {
 }
 
 dependencies {
-    implementation project(':models-core')
+    implementation project(':models-annotations')
 
     implementation libs.moshi
     ksp libs.moshi.codegen
