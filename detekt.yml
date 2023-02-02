@@ -112,3 +112,5 @@ style:
     active: false
   ForbiddenVoid:
     active: false
+  MagicNumber:
+    ignoreEnums: true

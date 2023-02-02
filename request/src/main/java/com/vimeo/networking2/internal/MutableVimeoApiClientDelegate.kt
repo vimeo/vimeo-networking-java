@@ -91,6 +91,7 @@ import com.vimeo.networking2.enums.ViewPrivacyType
 import com.vimeo.networking2.params.BatchPublishToSocialMedia
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
+import com.vimeo.networking2.params.Schedule
 import com.vimeo.networking2.params.SearchDateType
 import com.vimeo.networking2.params.SearchDurationType
 import com.vimeo.networking2.params.SearchFacetType
@@ -236,6 +237,34 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         allowAddToCollections,
         embedPrivacyType,
         viewPrivacyType,
+        bodyParams,
+        callback
+    )
+
+    override fun editLiveEvent(
+        liveEvent: LiveEvent,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        schedule: Schedule?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<LiveEvent>
+    ): VimeoRequest = client.editLiveEvent(
+        liveEvent,
+        title,
+        description,
+        password,
+        commentPrivacyType,
+        allowDownload,
+        allowAddToCollections,
+        embedPrivacyType,
+        viewPrivacyType,
+        schedule,
         bodyParams,
         callback
     )

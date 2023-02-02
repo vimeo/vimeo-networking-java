@@ -24,11 +24,13 @@ package com.vimeo.networking2.config
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
+import com.vimeo.networking2.internal.adapters.TimeAdapter
 import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.HostValidationInterceptor
 import com.vimeo.networking2.internal.interceptor.LanguageHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.UserAgentHeaderInterceptor
+import com.vimeo.networking2.internal.params.IntValueJsonAdapterFactory
 import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
 import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
 import com.vimeo.networking2.logging.VimeoLogger
@@ -52,6 +54,8 @@ object RetrofitSetupModule {
     fun moshi(): Moshi = Moshi.Builder()
         .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
         .add(StringValueJsonAdapterFactory())
+        .add(IntValueJsonAdapterFactory())
+        .add(TimeAdapter())
         .build()
 
     /**

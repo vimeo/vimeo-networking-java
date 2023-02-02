@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.PlaylistSortType
 import com.vimeo.networking2.enums.asEnum
+import com.vimeo.networking2.params.Schedule
 import java.util.Date
 
 /**
@@ -59,6 +60,7 @@ import java.util.Date
  * created by streaming to the event.
  * @param uri The live event's canonical relative URI.
  * @param user The owner of the live event.
+ * @param schedule The schedule of the live event.
  */
 @JsonClass(generateAdapter = true)
 data class LiveEvent(
@@ -160,13 +162,21 @@ data class LiveEvent(
     val title: String? = null,
 
     @Json(name = "uri")
-    val uri: String? = null,
+    override val uri: String? = null,
 
     @Json(name = "user")
-    val user: User? = null
+    val user: User? = null,
 
-) : Entity {
+    @Json(name = "schedule")
+    val schedule: Schedule? = null,
+) : Entity, VideoContainer<LiveEvent> {
     override val identifier: String? = uri
+
+    override val video: Video? get() = streamableVideo
+
+    override fun copyVideoContainer(
+        video: Video?,
+    ): LiveEvent = copy(streamableVideo = video)
 }
 
 /**

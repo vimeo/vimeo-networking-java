@@ -102,6 +102,7 @@ import com.vimeo.networking2.params.GrantFolderPermissionForUser
 import com.vimeo.networking2.params.ModifyVideoInAlbumsSpecs
 import com.vimeo.networking2.params.ModifyVideosInAlbumSpecs
 import com.vimeo.networking2.params.ReplaceTeamPermissionParams
+import com.vimeo.networking2.params.Schedule
 import com.vimeo.networking2.params.SearchDateType
 import com.vimeo.networking2.params.SearchDurationType
 import com.vimeo.networking2.params.SearchFacetType
@@ -346,6 +347,61 @@ internal class VimeoApiClientImpl(
             bodyParams,
             callback
         )
+    }
+
+    @Suppress("ComplexMethod")
+    override fun editLiveEvent(
+        liveEvent: LiveEvent,
+        title: String?,
+        description: String?,
+        password: String?,
+        commentPrivacyType: CommentPrivacyType?,
+        allowDownload: Boolean?,
+        allowAddToCollections: Boolean?,
+        embedPrivacyType: EmbedPrivacyType?,
+        viewPrivacyType: ViewPrivacyType?,
+        schedule: Schedule?,
+        bodyParams: Map<String, Any>?,
+        callback: VimeoCallback<LiveEvent>
+    ): VimeoRequest {
+        val safeUri = liveEvent.uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val body = bodyParams.intoMutableMap()
+        if (title != null) {
+            body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_TITLE] = title
+        }
+        if (description != null) {
+            body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_DESCRIPTION] = description
+        }
+        if (password != null) {
+            body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_PASSWORD] = password
+        }
+        val privacy = mutableMapOf<String, Any>()
+        if (commentPrivacyType != null) {
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_COMMENTS] = commentPrivacyType.value
+                ?: error(INVALID_ENUM_MESSAGE)
+        }
+        if (allowDownload != null) {
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_DOWNLOAD] = allowDownload
+        }
+        if (allowAddToCollections != null) {
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_ADD] = allowAddToCollections
+        }
+        if (embedPrivacyType != null) {
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_EMBED] = embedPrivacyType.value
+                ?: error(INVALID_ENUM_MESSAGE)
+        }
+        if (viewPrivacyType != null) {
+            privacy[ApiConstants.Parameters.PARAMETER_VIDEO_VIEW] = viewPrivacyType.value
+                ?: error(INVALID_ENUM_MESSAGE)
+        }
+        if (privacy.isNotEmpty()) {
+            body[ApiConstants.Parameters.PARAMETER_STREAMING_PRIVACY] = privacy
+        }
+        if (schedule != null) {
+            body[ApiConstants.Parameters.PARAMETER_LIVE_SCHEDULE] = schedule
+        }
+
+        return vimeoService.editLiveEvent(authHeader, safeUri, body).enqueue(callback)
     }
 
     override fun editUser(

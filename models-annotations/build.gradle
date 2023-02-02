@@ -3,11 +3,6 @@ apply plugin: 'com.google.devtools.ksp'
 apply from: '../publish.gradle'
 
 dependencies {
-    implementation project(':models-annotations')
-
-    // Okio used by Moshi
-    implementation libs.okio
-
     // Moshi
     ksp libs.moshi.codegen
     implementation libs.moshi

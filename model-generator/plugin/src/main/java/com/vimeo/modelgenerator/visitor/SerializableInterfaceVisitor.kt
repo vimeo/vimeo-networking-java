@@ -2,6 +2,7 @@ package com.vimeo.modelgenerator.visitor
 
 import com.squareup.kotlinpoet.TypeSpec
 import org.jetbrains.kotlin.psi.KtClass
+import java.io.Serializable
 
 /**
  * No-op visitor that doesn't modify Interfaces when [com.vimeo.modelgenerator.ModelType.SERIALIZABLE]
@@ -13,5 +14,5 @@ class SerializableInterfaceVisitor: ModifyVisitor {
         builder: TypeSpec.Builder,
         clazz: KtClass,
         packageName: String
-    ): TypeSpec.Builder = builder
+    ): TypeSpec.Builder = builder.addSuperinterface(Serializable::class)
 }
