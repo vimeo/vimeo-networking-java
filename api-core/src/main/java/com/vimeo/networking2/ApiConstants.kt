@@ -104,6 +104,7 @@ object ApiConstants {
         const val PARAMETER_AUTOMATICALLY_TITLE_STREAM = "automatically_title_stream"
         const val PARAMETER_STREAMING_PRIVACY = "stream_privacy"
         const val PARAMETER_LIVE_SCHEDULE = "schedule"
+        const val PARAMETER_LIVE_CHAT_ENABLED = "chat_enabled"
 
         // Generic parameters
         const val PARAMETER_GET_PAGE_SIZE = "per_page"
