@@ -375,6 +375,7 @@ interface VimeoApiClient {
      * @param embedPrivacyType The optional embed privacy type.
      * @param viewPrivacyType The optional view privacy type.
      * @param schedule The optional schedule for the live event.
+     * @param enableLiveChat The optional live chat enabling.
      * @param bodyParams Other parameters that can be set on the video.
      * @param callback The callback which will be notified of the request completion.
      *
@@ -391,6 +392,7 @@ interface VimeoApiClient {
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         schedule: Schedule?,
+        enableLiveChat: Boolean?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<LiveEvent>,
     ): VimeoRequest
@@ -2442,6 +2444,7 @@ interface VimeoApiClient {
  * @param embedPrivacyType The optional embed privacy type.
  * @param viewPrivacyType The optional view privacy type.
  * @param schedule The optional schedule for the live event.
+ * @param enableLiveChat The optional live chat enabling.
  * @param bodyParams Other parameters that can be set on the video.
  * @param callback The callback which will be notified of the request completion.
  *
@@ -2459,6 +2462,7 @@ fun VimeoApiClient.editVideoContainer(
     embedPrivacyType: EmbedPrivacyType?,
     viewPrivacyType: ViewPrivacyType?,
     schedule: Schedule?,
+    enableLiveChat: Boolean?,
     bodyParams: Map<String, Any>?,
     callback: VimeoCallback<VideoContainer<*>>,
 ): VimeoRequest = when (videoContainer) {
@@ -2473,6 +2477,7 @@ fun VimeoApiClient.editVideoContainer(
         embedPrivacyType,
         viewPrivacyType,
         schedule,
+        enableLiveChat,
         bodyParams,
         callback.transform { it },
     )

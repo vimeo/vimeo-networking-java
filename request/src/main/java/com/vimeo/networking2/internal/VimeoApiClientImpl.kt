@@ -361,6 +361,7 @@ internal class VimeoApiClientImpl(
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         schedule: Schedule?,
+        enableLiveChat: Boolean?,
         bodyParams: Map<String, Any>?,
         callback: VimeoCallback<LiveEvent>
     ): VimeoRequest {
@@ -399,6 +400,9 @@ internal class VimeoApiClientImpl(
         }
         if (schedule != null) {
             body[ApiConstants.Parameters.PARAMETER_LIVE_SCHEDULE] = schedule
+        }
+        if (enableLiveChat != null) {
+            body[ApiConstants.Parameters.PARAMETER_LIVE_CHAT_ENABLED] = enableLiveChat
         }
 
         return vimeoService.editLiveEvent(authHeader, safeUri, body).enqueue(callback)
