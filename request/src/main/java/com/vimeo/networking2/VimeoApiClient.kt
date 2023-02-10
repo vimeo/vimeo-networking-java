@@ -2378,6 +2378,7 @@ interface VimeoApiClient {
         teamOwnerId: String,
         fieldFilter: String?,
         callback: VimeoCallback<FeaturedContent>,
+        cacheControl: CacheControl?,
     ): VimeoRequest
 
     companion object {

@@ -778,6 +778,7 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Path(TEAM_OWNER_ID, encoded = true) teamOwnerId: String,
         @Query(FIELD_FILTER) fieldFilter: String?,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?,
     ): VimeoCall<FeaturedContent>
 
     companion object {
