@@ -1718,9 +1718,10 @@ internal class VimeoApiClientImpl(
     override fun getFeaturedContent(
         teamOwnerId: String,
         fieldFilter: String?,
-        callback: VimeoCallback<FeaturedContent>
+        callback: VimeoCallback<FeaturedContent>,
+        cacheControl: CacheControl?,
     ): VimeoRequest {
-        return vimeoService.getFeaturedContent(authHeader, teamOwnerId, fieldFilter).enqueue(callback)
+        return vimeoService.getFeaturedContent(authHeader, teamOwnerId, fieldFilter, cacheControl).enqueue(callback)
     }
 
     private fun <T> LocalVimeoCallAdapter.enqueueInvalidUri(callback: VimeoCallback<T>): VimeoRequest {

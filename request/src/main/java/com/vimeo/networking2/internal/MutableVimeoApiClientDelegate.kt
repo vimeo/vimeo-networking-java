@@ -1060,6 +1060,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun getFeaturedContent(
         teamOwnerId: String,
         fieldFilter: String?,
-        callback: VimeoCallback<FeaturedContent>
-    ): VimeoRequest = client.getFeaturedContent(teamOwnerId, fieldFilter, callback)
+        callback: VimeoCallback<FeaturedContent>,
+        cacheControl: CacheControl?,
+    ): VimeoRequest = client.getFeaturedContent(teamOwnerId, fieldFilter, callback, cacheControl)
 }
