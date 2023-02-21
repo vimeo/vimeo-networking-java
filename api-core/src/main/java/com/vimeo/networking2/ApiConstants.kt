@@ -99,6 +99,7 @@ object ApiConstants {
         const val PARAMETER_TEAM_ENTITY_TYPE = "team_entity_type"
         const val PARAMETER_TEAM_ENTITY_URI = "team_entity_uri"
         const val PARAMETER_LIVE_EVENT_TITLE = "title"
+        const val PARAMETER_LIVE_EVENT_STREAM_TITLE = "stream_title"
         const val PARAMETER_LIVE_EVENT_DESCRIPTION = "stream_description"
         const val PARAMETER_LIVE_EVENT_PASSWORD = "stream_password"
         const val PARAMETER_AUTOMATICALLY_TITLE_STREAM = "automatically_title_stream"

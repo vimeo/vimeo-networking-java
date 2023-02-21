@@ -369,6 +369,7 @@ internal class VimeoApiClientImpl(
         val body = bodyParams.intoMutableMap()
         if (title != null) {
             body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_TITLE] = title
+            body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_STREAM_TITLE] = title
         }
         if (description != null) {
             body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_DESCRIPTION] = description
