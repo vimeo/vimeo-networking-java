@@ -23,6 +23,7 @@ import java.util.Date
  * @param secondsRemaining The number of seconds before the termination of the live stream.
  * @param liveStatus The status of the RTMP [link]. See [Live.liveStatusType].
  * @param streamingError If [liveStatusType] is [LiveStatusType.STREAMING_ERROR], this is the reason for that error.
+ * @param recurringEvent Related live event.
  */
 @Internal
 @JsonClass(generateAdapter = true)
@@ -70,7 +71,11 @@ data class Live(
 
     @Internal
     @Json(name = "streaming_error")
-    val streamingError: ApiError? = null
+    val streamingError: ApiError? = null,
+
+    @Internal
+    @Json(name = "recurring_event")
+    val recurringEvent: LiveEvent? = null,
 )
 
 /**
