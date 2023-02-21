@@ -16,6 +16,11 @@ enum class ProjectItemType(override val value: String?) : StringValue {
     VIDEO("video"),
 
     /**
+     * The ProjectItem contains a live event.
+     */
+    LIVE_EVENT("live_event"),
+
+    /**
      * The ProjectItem contains an unknown type.
      */
     UNKNOWN(null)
