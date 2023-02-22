@@ -406,6 +406,12 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun removeFromFolder(folderUri: String, videoUri: String, callback: VimeoCallback<Unit>): VimeoRequest =
         client.removeFromFolder(folderUri, videoUri, callback)
 
+    override fun removeFromFolder(
+        folderUri: String,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest = client.removeFromFolder(folderUri, queryParams, callback)
+
     override fun fetchPublishJob(
         uri: String,
         fieldFilter: String?,

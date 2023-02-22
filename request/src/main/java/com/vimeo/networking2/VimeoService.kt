@@ -266,6 +266,13 @@ internal interface VimeoService {
         @Path(VIDEO_URI, encoded = true) videoUri: String
     ): VimeoCall<Unit>
 
+    @DELETE("{$FOLDER_URI}/items")
+    fun removeFromFolder(
+        @Header(AUTHORIZATION) authorization: String,
+        @Path(FOLDER_URI, encoded = true) folderUri: String,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+    ): VimeoCall<Unit>
+
     @GET
     fun getAppConfiguration(
         @Header(AUTHORIZATION) authorization: String,
