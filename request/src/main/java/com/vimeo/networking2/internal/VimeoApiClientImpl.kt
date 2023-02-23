@@ -600,7 +600,8 @@ internal class VimeoApiClientImpl(
     override fun removeFromFolder(
         folderUri: String,
         queryParams: Map<String, String>?,
-        callback: VimeoCallback<Unit>): VimeoRequest {
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest {
         val safeFolderUri = folderUri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.removeFromFolder(authHeader, safeFolderUri, queryParams.orEmpty()).enqueue(callback)
     }
