@@ -2,6 +2,7 @@ package com.vimeo.networking2.params
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.Iso8601NoMillis
 import com.vimeo.networking2.annotations.Time
 import com.vimeo.networking2.enums.ScheduleType
 import com.vimeo.networking2.enums.Weekday
@@ -21,6 +22,7 @@ data class Schedule(
     @Json(name = "type")
     val type: ScheduleType? = null,
 
+    @Iso8601NoMillis
     @Json(name = "start_time")
     val startTime: Date? = null,
 
