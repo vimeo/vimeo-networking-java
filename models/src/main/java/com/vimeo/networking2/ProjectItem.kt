@@ -13,6 +13,7 @@ import com.vimeo.networking2.enums.asEnum
  * @param rawType The type of the item. See [ProjectItem.type].
  * @param folder The item is [Folder] if [type] == [ProjectItemType.FOLDER], `null` otherwise.
  * @param video The item is [Video] if [type] == [ProjectItemType.VIDEO], `null` otherwise.
+ * @param liveEvent The item is [LiveEvent] if [type] == [ProjectItemType.LIVE_EVENT], `null` otherwise.
  */
 @JsonClass(generateAdapter = true)
 data class ProjectItem(
@@ -24,7 +25,10 @@ data class ProjectItem(
     val folder: Folder? = null,
 
     @Json(name = "video")
-    val video: Video? = null
+    val video: Video? = null,
+
+    @Json(name = "live_event")
+    val liveEvent: LiveEvent? = null
 )
 
 /**

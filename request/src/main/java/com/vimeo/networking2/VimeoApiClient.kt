@@ -650,6 +650,21 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Remove a video from a folder.
+     *
+     * @param folderUri The URI of the folder from which the video should be removed, should not be empty.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun removeFromFolder(
+        folderUri: String,
+        queryParams: Map<String, String>?,
+        callback: VimeoCallback<Unit>
+    ): VimeoRequest
+
+    /**
      * Publish a post to any of several destinations.
      *
      * @param uri The URI to which the consumer supplies the data to publish.
