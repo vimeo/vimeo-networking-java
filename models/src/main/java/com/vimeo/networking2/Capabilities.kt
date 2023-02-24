@@ -38,4 +38,10 @@ data class Capabilities(
      */
     @Json(name = "enterprise_lihp")
     val enterpriseLihp: Boolean? = null,
+
+    /**
+     * Whether the "Hide from vimeo" privacy should be removed.
+     */
+    @Json(name = "sunset_hide_from_vimeo")
+    val sunsetHideFromVimeo: Boolean? = null,
 )
