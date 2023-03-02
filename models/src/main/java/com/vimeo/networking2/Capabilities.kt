@@ -44,4 +44,10 @@ data class Capabilities(
      */
     @Json(name = "sunset_hide_from_vimeo")
     val sunsetHideFromVimeo: Boolean? = null,
+
+    /**
+     * Whether the user has a Vimeo Live subscription.
+     */
+    @Json(name = "live_subscription")
+    val liveSubscription: Boolean? = null,
 )
