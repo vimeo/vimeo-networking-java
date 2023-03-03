@@ -61,6 +61,7 @@ import java.util.Date
  * @param uri The live event's canonical relative URI.
  * @param user The owner of the live event.
  * @param schedule The schedule of the live event.
+ * @param allowShareLink Whether link sharing is allowed.
  */
 @JsonClass(generateAdapter = true)
 data class LiveEvent(
@@ -169,6 +170,9 @@ data class LiveEvent(
 
     @Json(name = "schedule")
     val schedule: Schedule? = null,
+
+    @Json(name = "allow_share_link")
+    val allowShareLink: Boolean? = null,
 ) : Entity, VideoContainer<LiveEvent> {
     override val identifier: String? = uri
 

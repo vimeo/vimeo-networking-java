@@ -278,9 +278,11 @@ internal class VimeoApiClientImpl(
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
@@ -305,6 +307,9 @@ internal class VimeoApiClientImpl(
         if (allowAddToCollections != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_ADD] = allowAddToCollections
         }
+        if (allowShareLink != null) {
+            privacy[ApiConstants.Parameters.PARAMETER_ALLOW_SHARE_LINK] = allowShareLink
+        }
         if (embedPrivacyType != null) {
             privacy[ApiConstants.Parameters.PARAMETER_VIDEO_EMBED] = embedPrivacyType.value
                 ?: error(INVALID_ENUM_MESSAGE)
@@ -317,7 +322,7 @@ internal class VimeoApiClientImpl(
             body[ApiConstants.Parameters.PARAMETER_VIDEO_PRIVACY] = privacy
         }
 
-        return vimeoService.editVideo(authHeader, safeUri, body).enqueue(callback)
+        return vimeoService.editVideo(authHeader, safeUri, body, fieldFilter).enqueue(callback)
     }
 
     override fun editVideo(
@@ -328,9 +333,11 @@ internal class VimeoApiClientImpl(
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<Video>
     ): VimeoRequest {
         val uri = video.uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
@@ -342,9 +349,11 @@ internal class VimeoApiClientImpl(
             commentPrivacyType,
             allowDownload,
             allowAddToCollections,
+            allowShareLink,
             embedPrivacyType,
             viewPrivacyType,
             bodyParams,
+            fieldFilter,
             callback
         )
     }
@@ -358,11 +367,13 @@ internal class VimeoApiClientImpl(
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         schedule: Schedule?,
         enableLiveChat: Boolean?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<LiveEvent>
     ): VimeoRequest {
         val safeUri = liveEvent.uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
@@ -405,8 +416,11 @@ internal class VimeoApiClientImpl(
         if (enableLiveChat != null) {
             body[ApiConstants.Parameters.PARAMETER_LIVE_CHAT_ENABLED] = enableLiveChat
         }
+        if (allowShareLink != null) {
+            body[ApiConstants.Parameters.PARAMETER_ALLOW_SHARE_LINK] = allowShareLink
+        }
 
-        return vimeoService.editLiveEvent(authHeader, safeUri, body).enqueue(callback)
+        return vimeoService.editLiveEvent(authHeader, safeUri, body, fieldFilter).enqueue(callback)
     }
 
     override fun editUser(

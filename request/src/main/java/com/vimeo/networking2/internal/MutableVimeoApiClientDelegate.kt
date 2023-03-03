@@ -197,9 +197,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<Video>
     ): VimeoRequest = client.editVideo(
         uri,
@@ -209,9 +211,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         commentPrivacyType,
         allowDownload,
         allowAddToCollections,
+        allowShareLink,
         embedPrivacyType,
         viewPrivacyType,
         bodyParams,
+        fieldFilter,
         callback
     )
 
@@ -223,9 +227,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<Video>
     ): VimeoRequest = client.editVideo(
         video,
@@ -235,9 +241,11 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         commentPrivacyType,
         allowDownload,
         allowAddToCollections,
+        allowShareLink,
         embedPrivacyType,
         viewPrivacyType,
         bodyParams,
+        fieldFilter,
         callback
     )
 
@@ -249,11 +257,13 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         schedule: Schedule?,
         enableLiveChat: Boolean?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<LiveEvent>
     ): VimeoRequest = client.editLiveEvent(
         liveEvent,
@@ -263,11 +273,13 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         commentPrivacyType,
         allowDownload,
         allowAddToCollections,
+        allowShareLink,
         embedPrivacyType,
         viewPrivacyType,
         schedule,
         enableLiveChat,
         bodyParams,
+        fieldFilter,
         callback
     )
 
