@@ -305,10 +305,11 @@ interface VimeoApiClient {
      * @param allowDownload True to allow downloads of the video, false to disallow, null to leave unchanged.
      * @param allowAddToCollections True to allow the video to be added to collections, false to disallow, null to leave
      * unchanged.
+     * @param allowShareLink True to allow link sharing, false to disallow, null to leave unchanged.
      * @param embedPrivacyType The optional embed privacy type.
      * @param viewPrivacyType The optional view privacy type.
-     * @param schedule The optional live event scheduling parameters.
      * @param bodyParams Other parameters that can be set on the video.
+     * @param fieldFilter The fields that should be returned by the server in the response
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -321,9 +322,11 @@ interface VimeoApiClient {
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<Video>
     ): VimeoRequest
 
@@ -339,9 +342,11 @@ interface VimeoApiClient {
      * @param allowDownload True to allow downloads of the video, false to disallow, null to leave unchanged.
      * @param allowAddToCollections True to allow the video to be added to collections, false to disallow, null to leave
      * unchanged.
+     * @param allowShareLink True to allow link sharing, false to disallow, null to leave unchanged.
      * @param embedPrivacyType The optional embed privacy type.
      * @param viewPrivacyType The optional view privacy type.
      * @param bodyParams Other parameters that can be set on the video.
+     * @param fieldFilter The fields that should be returned by the server in the response
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -354,9 +359,11 @@ interface VimeoApiClient {
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<Video>
     ): VimeoRequest
 
@@ -372,11 +379,13 @@ interface VimeoApiClient {
      * @param allowDownload True to allow downloads of the video, false to disallow, null to leave unchanged.
      * @param allowAddToCollections True to allow the video to be added to collections, false to disallow, null to leave
      * unchanged.
+     * @param allowShareLink True to allow link sharing, false to disallow, null to leave unchanged.
      * @param embedPrivacyType The optional embed privacy type.
      * @param viewPrivacyType The optional view privacy type.
      * @param schedule The optional schedule for the live event.
      * @param enableLiveChat The optional live chat enabling.
      * @param bodyParams Other parameters that can be set on the video.
+     * @param fieldFilter The fields that should be returned by the server in the response
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -389,11 +398,13 @@ interface VimeoApiClient {
         commentPrivacyType: CommentPrivacyType?,
         allowDownload: Boolean?,
         allowAddToCollections: Boolean?,
+        allowShareLink: Boolean?,
         embedPrivacyType: EmbedPrivacyType?,
         viewPrivacyType: ViewPrivacyType?,
         schedule: Schedule?,
         enableLiveChat: Boolean?,
         bodyParams: Map<String, Any>?,
+        fieldFilter: String?,
         callback: VimeoCallback<LiveEvent>,
     ): VimeoRequest
 
@@ -2457,11 +2468,13 @@ interface VimeoApiClient {
  * @param allowDownload True to allow downloads of the video, false to disallow, null to leave unchanged.
  * @param allowAddToCollections True to allow the video to be added to collections, false to disallow, null to leave
  * unchanged.
+ * @param allowShareLink True to allow link sharing, false to disallow, null to leave unchanged.
  * @param embedPrivacyType The optional embed privacy type.
  * @param viewPrivacyType The optional view privacy type.
  * @param schedule The optional schedule for the live event.
  * @param enableLiveChat The optional live chat enabling.
  * @param bodyParams Other parameters that can be set on the video.
+ * @param fieldFilter The fields that should be returned by the server in the response
  * @param callback The callback which will be notified of the request completion.
  *
  * @return A [VimeoRequest] object to cancel API requests.
@@ -2475,11 +2488,13 @@ fun VimeoApiClient.editVideoContainer(
     commentPrivacyType: CommentPrivacyType?,
     allowDownload: Boolean?,
     allowAddToCollections: Boolean?,
+    allowShareLink: Boolean?,
     embedPrivacyType: EmbedPrivacyType?,
     viewPrivacyType: ViewPrivacyType?,
     schedule: Schedule?,
     enableLiveChat: Boolean?,
     bodyParams: Map<String, Any>?,
+    fieldFilter: String?,
     callback: VimeoCallback<VideoContainer<*>>,
 ): VimeoRequest = when (videoContainer) {
     is LiveEvent -> editLiveEvent(
@@ -2490,11 +2505,13 @@ fun VimeoApiClient.editVideoContainer(
         commentPrivacyType,
         allowDownload,
         allowAddToCollections,
+        allowShareLink,
         embedPrivacyType,
         viewPrivacyType,
         schedule,
         enableLiveChat,
         bodyParams,
+        fieldFilter,
         callback.transform { it },
     )
     is Video -> editVideo(
@@ -2505,9 +2522,11 @@ fun VimeoApiClient.editVideoContainer(
         commentPrivacyType,
         allowDownload,
         allowAddToCollections,
+        allowShareLink,
         embedPrivacyType,
         viewPrivacyType,
         bodyParams,
+        fieldFilter,
         callback.transform { it },
     )
 }

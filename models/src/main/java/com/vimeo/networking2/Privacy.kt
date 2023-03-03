@@ -21,6 +21,7 @@ import com.vimeo.networking2.enums.asEnum
  * @param embedPrivacy The user's privacy preference for embeds. See [Privacy.embedPrivacyType].
  * @param password The password for viewing the authenticated user's videos.
  * @param viewPrivacy The privacy settings of the channel. See [Privacy.viewPrivacyType].
+ * @param allowShareLink Whether link sharing is allowed.
  */
 @JsonClass(generateAdapter = true)
 data class Privacy(
@@ -45,7 +46,10 @@ data class Privacy(
     val password: String? = null,
 
     @Json(name = "view")
-    val viewPrivacy: String? = null
+    val viewPrivacy: String? = null,
+
+    @Json(name = "allow_share_link")
+    val allowShareLink: Boolean? = null,
 )
 
 /**
