@@ -62,6 +62,9 @@ data class User(
     @Json(name = "live_quota")
     val liveQuota: LiveQuota? = null,
 
+    @Json(name = "available_for_hire")
+    val availableForHire: Boolean? = null,
+
     @Json(name = "location")
     val location: String? = null,
 
