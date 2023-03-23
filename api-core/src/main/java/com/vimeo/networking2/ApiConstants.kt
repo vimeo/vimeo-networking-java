@@ -156,5 +156,6 @@ object ApiConstants {
         const val FILTER_TVOD_PURCHASES = "purchased"
         const val FILTER_NOTIFICATION_TYPES = "notification_types"
         const val FILTER_NO_LIVE = "nolive"
+        const val FILTER_NOT_IN_FOLDER = "not_in_folder"
     }
 }
