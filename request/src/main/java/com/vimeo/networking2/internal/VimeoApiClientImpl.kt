@@ -362,6 +362,7 @@ internal class VimeoApiClientImpl(
     override fun editLiveEvent(
         liveEvent: LiveEvent,
         title: String?,
+        streamTitle: String?,
         description: String?,
         password: String?,
         commentPrivacyType: CommentPrivacyType?,
@@ -380,7 +381,9 @@ internal class VimeoApiClientImpl(
         val body = bodyParams.intoMutableMap()
         if (title != null) {
             body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_TITLE] = title
-            body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_STREAM_TITLE] = title
+        }
+        if (streamTitle != null) {
+            body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_STREAM_TITLE] = streamTitle
         }
         if (description != null) {
             body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_DESCRIPTION] = description

@@ -252,6 +252,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     override fun editLiveEvent(
         liveEvent: LiveEvent,
         title: String?,
+        streamTitle: String?,
         description: String?,
         password: String?,
         commentPrivacyType: CommentPrivacyType?,
@@ -268,6 +269,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
     ): VimeoRequest = client.editLiveEvent(
         liveEvent,
         title,
+        streamTitle,
         description,
         password,
         commentPrivacyType,
