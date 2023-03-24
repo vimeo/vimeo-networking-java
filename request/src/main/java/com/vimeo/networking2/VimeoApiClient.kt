@@ -34,7 +34,6 @@ import com.vimeo.networking2.enums.SlackUserPreferenceType
 import com.vimeo.networking2.enums.TeamEntityType
 import com.vimeo.networking2.enums.TeamRoleType
 import com.vimeo.networking2.enums.ViewPrivacyType
-import com.vimeo.networking2.extensions.transform
 import com.vimeo.networking2.internal.LocalVimeoCallAdapter
 import com.vimeo.networking2.internal.MutableVimeoApiClientDelegate
 import com.vimeo.networking2.internal.VimeoApiClientImpl
@@ -2458,80 +2457,4 @@ interface VimeoApiClient {
             )
         }
     }
-}
-
-/**
- * Edit a video container (live event or video).
- *
- * @param videoContainer The video container to be edited.
- * @param title The optional title of the video container.
- * @param description The optional description of the video container.
- * @param password The optional password for the video container, should be supplied if the [viewPrivacyType] is set to
- * [ViewPrivacyType.PASSWORD].
- * @param commentPrivacyType The optional comment privacy type.
- * @param allowDownload True to allow downloads of the video, false to disallow, null to leave unchanged.
- * @param allowAddToCollections True to allow the video to be added to collections, false to disallow, null to leave
- * unchanged.
- * @param allowShareLink True to allow link sharing, false to disallow, null to leave unchanged.
- * @param embedPrivacyType The optional embed privacy type.
- * @param viewPrivacyType The optional view privacy type.
- * @param schedule The optional schedule for the live event.
- * @param enableLiveChat The optional live chat enabling.
- * @param bodyParams Other parameters that can be set on the video.
- * @param fieldFilter The fields that should be returned by the server in the response
- * @param callback The callback which will be notified of the request completion.
- *
- * @return A [VimeoRequest] object to cancel API requests.
- */
-@Suppress("LongParameterList")
-fun VimeoApiClient.editVideoContainer(
-    videoContainer: VideoContainer<*>,
-    title: String?,
-    description: String?,
-    password: String?,
-    commentPrivacyType: CommentPrivacyType?,
-    allowDownload: Boolean?,
-    allowAddToCollections: Boolean?,
-    allowShareLink: Boolean?,
-    embedPrivacyType: EmbedPrivacyType?,
-    viewPrivacyType: ViewPrivacyType?,
-    schedule: Schedule?,
-    enableLiveChat: Boolean?,
-    bodyParams: Map<String, Any>?,
-    fieldFilter: String?,
-    callback: VimeoCallback<VideoContainer<*>>,
-): VimeoRequest = when (videoContainer) {
-    is LiveEvent -> editLiveEvent(
-        videoContainer,
-        title,
-        null,
-        description,
-        password,
-        commentPrivacyType,
-        allowDownload,
-        allowAddToCollections,
-        allowShareLink,
-        embedPrivacyType,
-        viewPrivacyType,
-        schedule,
-        enableLiveChat,
-        bodyParams,
-        fieldFilter,
-        callback.transform { it },
-    )
-    is Video -> editVideo(
-        videoContainer,
-        title,
-        description,
-        password,
-        commentPrivacyType,
-        allowDownload,
-        allowAddToCollections,
-        allowShareLink,
-        embedPrivacyType,
-        viewPrivacyType,
-        bodyParams,
-        fieldFilter,
-        callback.transform { it },
-    )
 }
