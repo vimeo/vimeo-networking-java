@@ -371,7 +371,10 @@ interface VimeoApiClient {
      * Edit a live event.
      *
      * @param liveEvent The live event to be edited.
-     * @param title The optional title of the live event.
+     * @param title The title of the live event. If automatically_title_stream is true,
+     * this value is the base title for videos created by streaming to this event.
+     * @param streamTitle The title of the next video to be streamed to the live event,
+     * needed in case automatically_title_stream is false.
      * @param description The optional description of the live event.
      * @param password The optional password for the live event, should be supplied if the [viewPrivacyType] is set to
      * [ViewPrivacyType.PASSWORD].
@@ -393,6 +396,7 @@ interface VimeoApiClient {
     fun editLiveEvent(
         liveEvent: LiveEvent,
         title: String?,
+        streamTitle: String?,
         description: String?,
         password: String?,
         commentPrivacyType: CommentPrivacyType?,
@@ -2500,6 +2504,7 @@ fun VimeoApiClient.editVideoContainer(
     is LiveEvent -> editLiveEvent(
         videoContainer,
         title,
+        null,
         description,
         password,
         commentPrivacyType,
