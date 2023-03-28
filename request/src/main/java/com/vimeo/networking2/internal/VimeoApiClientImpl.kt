@@ -1428,7 +1428,7 @@ internal class VimeoApiClientImpl(
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         val body = bodyParams?.toMutableMap() ?: mutableMapOf()
 
-        privacy?.let { body[ApiConstants.Parameters.PARAMETER_STREAMING_PRIVACY] }
+        privacy?.let { body[ApiConstants.Parameters.PARAMETER_STREAMING_PRIVACY] = it }
 
         body[ApiConstants.Parameters.PARAMETER_LIVE_EVENT_TITLE] = title
         body[ApiConstants.Parameters.PARAMETER_AUTOMATICALLY_TITLE_STREAM] = true
