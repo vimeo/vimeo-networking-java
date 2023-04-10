@@ -23,6 +23,7 @@ import java.util.Date
  * embedded.
  * @param link The absolute URL of this user's profile page.
  * @param liveQuota Information about the user's live streaming quota.
+ * @param availableForHire Information about the user's available for hire status.
  * @param location The user's location.
  * @param name The user's display name.
  * @param pictures The active portrait of this user.
@@ -61,6 +62,9 @@ data class User(
 
     @Json(name = "live_quota")
     val liveQuota: LiveQuota? = null,
+
+    @Json(name = "available_for_hire")
+    val availableForHire: Boolean? = null,
 
     @Json(name = "location")
     val location: String? = null,
