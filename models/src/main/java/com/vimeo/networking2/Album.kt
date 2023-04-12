@@ -35,6 +35,7 @@ import java.util.Date
  * @param theme The album's color theme preference. See [Album.themeType].
  * @param uri The album's URI.
  * @param user The owner of the album.
+ * @param hideFromVimeo Whether the showcase should be hidden from Vimeo when unlisted.
  */
 @JsonClass(generateAdapter = true)
 data class Album(
@@ -97,7 +98,10 @@ data class Album(
     val uri: String? = null,
 
     @Json(name = "user")
-    val user: User? = null
+    val user: User? = null,
+
+    @Json(name = "hide_from_vimeo")
+    val hideFromVimeo: Boolean? = null,
 
 ) : Entity {
     override val identifier: String? = resourceKey
