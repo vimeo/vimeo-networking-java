@@ -21,6 +21,11 @@ enum class AlbumViewPrivacyType(override val value: String?) : StringValue {
     PASSWORD("password"),
 
     /**
+     * The showcase can't be accessed if the URL omits its unlisted hash.
+     */
+    UNLISTED("unlisted"),
+
+    /**
      * Unknown privacy setting.
      */
     UNKNOWN(null)
