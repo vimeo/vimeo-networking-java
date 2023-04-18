@@ -116,7 +116,7 @@ data class Video(
     val live: Live? = null,
 
     @Json(name = "metadata")
-    val metadata: Metadata<VideoConnections, VideoInteractions>? = null,
+    val metadata: VideoMetadata? = null,
 
     @Json(name = "modified_time")
     val modifiedTime: Date? = null,
@@ -204,3 +204,22 @@ val Video.licenseType: LicenseType
 @Deprecated(message = "This property is deprecated in favor of upload and transcode.")
 val Video.statusType: VideoStatusType
     get() = status.asEnum(VideoStatusType.UNKNOWN)
+
+/**
+ * Video Metadata with VideoConnections, VideoInteractions and isVimeoCreate flag
+ *
+ * @param connections All VideoConnections for an Video.
+ * @param interactions All VideoInteractions for an Video.
+ * @param isVimeoCreate Denotes whether the video is a Vimeo Create video.
+ */
+@JsonClass(generateAdapter = true)
+data class VideoMetadata(
+    @Json(name = "connections")
+    val connections: VideoConnections? = null,
+
+    @Json(name = "interactions")
+    val interactions: VideoInteractions? = null,
+
+    @Json(name = "is_vimeo_create")
+    val isVimeoCreate: Boolean? = null
+)
