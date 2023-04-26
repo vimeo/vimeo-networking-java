@@ -2410,6 +2410,17 @@ interface VimeoApiClient {
         cacheControl: CacheControl?,
     ): VimeoRequest
 
+    /**
+     * Get custom domains for a enterprise user
+     *
+     * @param email The user email
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun getCustomDomains(email: String, callback: VimeoCallback<CustomDomains>): VimeoRequest
+
+
     companion object {
 
         private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()
