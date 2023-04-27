@@ -36,6 +36,7 @@ import java.util.Date
  * @param uri The album's URI.
  * @param user The owner of the album.
  * @param hideFromVimeo Whether the showcase should be hidden from Vimeo when unlisted.
+ * @param shareLink The URL for sharing the showcase.
  */
 @JsonClass(generateAdapter = true)
 data class Album(
@@ -102,6 +103,9 @@ data class Album(
 
     @Json(name = "hide_from_vimeo")
     val hideFromVimeo: Boolean? = null,
+
+    @Json(name = "share_link")
+    val shareLink: String? = null,
 
 ) : Entity {
     override val identifier: String? = resourceKey

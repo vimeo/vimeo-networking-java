@@ -206,7 +206,7 @@ val Video.statusType: VideoStatusType
     get() = status.asEnum(VideoStatusType.UNKNOWN)
 
 /**
- * Video Metadata with VideoConnections, VideoInteractions and isVimeoCreate flag
+ * Video Metadata with VideoConnections, VideoInteractions and isVimeoCreate flag.
  *
  * @param connections All VideoConnections for an Video.
  * @param interactions All VideoInteractions for an Video.
