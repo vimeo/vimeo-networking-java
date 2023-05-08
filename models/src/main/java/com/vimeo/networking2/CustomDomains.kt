@@ -6,12 +6,13 @@ import com.squareup.moshi.JsonClass
 /**
  * Custom domains data.
  *
- * @param authDomain auth domain url
- * @param apiDomain api domain url
- * @param magistoApiDomain Magisto api domain url
+ * @param authDomain auth domain url.
+ * @param apiDomain api domain url.
+ * @param magistoApiDomain Magisto api domain url.
  */
 @JsonClass(generateAdapter = true)
 data class CustomDomains(
+
     @Json(name = "auth_domain")
     val authDomain: String? = null,
 
@@ -19,5 +20,5 @@ data class CustomDomains(
     val apiDomain: String? = null,
 
     @Json(name = "magisto_api_domain")
-    val magistoApiDomain: String? = null,
+    val magistoApiDomain: String? = null
 )
