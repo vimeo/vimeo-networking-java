@@ -34,6 +34,7 @@ import com.vimeo.networking2.Comment
 import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
+import com.vimeo.networking2.CustomDomains
 import com.vimeo.networking2.Document
 import com.vimeo.networking2.FeaturedContent
 import com.vimeo.networking2.FeedList
@@ -1083,4 +1084,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<FeaturedContent>,
         cacheControl: CacheControl?,
     ): VimeoRequest = client.getFeaturedContent(teamOwnerId, fieldFilter, callback, cacheControl)
+
+    override fun getCustomDomains(email: String, callback: VimeoCallback<CustomDomains>): VimeoRequest =
+        client.getCustomDomains(email, callback)
 }

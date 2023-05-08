@@ -790,6 +790,13 @@ internal interface VimeoService {
         @Header(CACHE_CONTROL) cacheControl: CacheControl?,
     ): VimeoCall<FeaturedContent>
 
+    @FormUrlEncoded
+    @POST("/custom_domains/domains")
+    fun getCustomDomains(
+        @Header(AUTHORIZATION) authorization: String,
+        @Field(EMAIL) email: String
+    ): VimeoCall<CustomDomains>
+
     companion object {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"
@@ -809,5 +816,6 @@ internal interface VimeoService {
         private const val CUSTOM_MESSAGE = "custom_message"
         private const val TEAM_OWNER_ID = "teamOwnerId"
         private const val LIVE_EVENT_URI = "liveEventUri"
+        private const val EMAIL = "email"
     }
 }

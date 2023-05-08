@@ -37,6 +37,7 @@ import com.vimeo.networking2.Comment
 import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
+import com.vimeo.networking2.CustomDomains
 import com.vimeo.networking2.Document
 import com.vimeo.networking2.FeaturedContent
 import com.vimeo.networking2.FeedList
@@ -1749,6 +1750,10 @@ internal class VimeoApiClientImpl(
         cacheControl: CacheControl?,
     ): VimeoRequest {
         return vimeoService.getFeaturedContent(authHeader, teamOwnerId, fieldFilter, cacheControl).enqueue(callback)
+    }
+
+    override fun getCustomDomains(email: String, callback: VimeoCallback<CustomDomains>): VimeoRequest {
+        return vimeoService.getCustomDomains(authHeader, email).enqueue(callback)
     }
 
     private fun <T> LocalVimeoCallAdapter.enqueueInvalidUri(callback: VimeoCallback<T>): VimeoRequest {
