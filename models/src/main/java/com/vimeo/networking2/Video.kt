@@ -56,6 +56,7 @@ import java.util.Date
  * @param uri The video's canonical relative URI.
  * @param user The video owner.
  * @param width The video's width in pixels.
+ * @param app the video app info.
  */
 @JsonClass(generateAdapter = true)
 data class Video(
@@ -177,7 +178,10 @@ data class Video(
     val user: User? = null,
 
     @Json(name = "width")
-    val width: Int? = null
+    val width: Int? = null,
+
+    @Json(name = "app")
+    val app: App? = null
 
 ) : Entity, VideoContainer<Video> {
 
