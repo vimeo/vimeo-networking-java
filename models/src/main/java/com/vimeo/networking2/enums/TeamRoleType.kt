@@ -16,6 +16,11 @@ enum class TeamRoleType(override val value: String?) : StringValue {
     CONTRIBUTOR("Contributor"),
 
     /**
+     * The team member has contributor permissions with ability to go live.
+     */
+    CONTRIBUTOR_PLUS("Contributor Plus"),
+
+    /**
      * The team member has owner permissions.
      */
     OWNER("Owner"),
