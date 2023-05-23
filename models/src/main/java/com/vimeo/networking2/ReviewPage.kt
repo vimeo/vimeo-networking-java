@@ -26,7 +26,7 @@ data class ReviewPage(
 
     @Internal
     @Json(name = "notes")
-    val notes: String? = null,
+    val notes: Boolean? = null,
 
     @Internal
     @Json(name = "vimeo_logo")
