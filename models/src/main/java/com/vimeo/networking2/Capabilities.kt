@@ -50,4 +50,10 @@ data class Capabilities(
      */
     @Json(name = "live_subscription")
     val liveSubscription: Boolean? = null,
+
+    /**
+     * Whether the user has a Vimeo Live subscription.
+     */
+    @Json(name = "contributor_plus_enabled")
+    val contributorPlusEnabled: Boolean? = null,
 )
