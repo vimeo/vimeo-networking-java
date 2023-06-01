@@ -4,7 +4,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.CommentType
 import com.vimeo.networking2.enums.asEnum
 import java.util.Date
@@ -24,10 +23,10 @@ import java.util.Date
 data class Comment(
 
     @Json(name = "uri")
-    val uri: String? = null,
+    override val uri: String? = null,
 
     @Json(name = "created_on")
-    val createdOn: Date? = null,
+    override val createdOn: Date? = null,
 
     @Json(name = "metadata")
     val metadata: MetadataConnections<CommentConnections>? = null,
@@ -36,18 +35,15 @@ data class Comment(
     val rawType: String? = null,
 
     @Json(name = "resource_key")
-    val resourceKey: String? = null,
+    override val resourceKey: String? = null,
 
     @Json(name = "text")
-    val text: String? = null,
+    override val text: String? = null,
 
     @Json(name = "user")
-    val user: User? = null
+    override val user: User? = null
 
-) : Entity {
-
-    override val identifier: String? = resourceKey
-}
+) : AbstractComment
 
 /**
  * @see Comment.rawType
