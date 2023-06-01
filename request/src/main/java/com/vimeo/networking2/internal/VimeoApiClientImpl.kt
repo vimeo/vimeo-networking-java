@@ -50,6 +50,7 @@ import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.Note
 import com.vimeo.networking2.NoteList
+import com.vimeo.networking2.NoteStatus
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
 import com.vimeo.networking2.PermissionPolicy
@@ -1313,6 +1314,25 @@ internal class VimeoApiClientImpl(
             ApiConstants.Parameters.PARAMETER_TIME_CODE to timeCode,
         )
         return vimeoService.createNote(authHeader, safeUri, password, body).enqueue(callback)
+    }
+
+    override fun editNote(
+        uri: String,
+        text: String?,
+        coordinates: Coordinates?,
+        timeCode: Double?,
+        status: NoteStatus?,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val body = mutableMapOf<String, Any?>()
+        
+        text?.let { body[ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY] = it }
+        coordinates?.let { body[ApiConstants.Parameters.PARAMETER_COORDINATES] = it }
+        timeCode?.let { body[ApiConstants.Parameters.PARAMETER_TIME_CODE] = it }
+        status?.value?.let { body[ApiConstants.Parameters.PARAMETER_STATUS] = it }
+        
+        return vimeoService.editNote(authHeader, safeUri, body).enqueue(callback)
     }
 
     override fun fetchProductList(

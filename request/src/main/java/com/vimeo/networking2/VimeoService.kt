@@ -221,6 +221,13 @@ internal interface VimeoService {
         @Body bodyParams: Map<String, Any?>,
     ): VimeoCall<Note>
 
+    @PATCH
+    fun editNote(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body bodyParams: Map<String, Any?>,
+    ): VimeoCall<Note>
+
     @POST
     fun createPictureCollection(
         @Header(AUTHORIZATION) authorization: String,

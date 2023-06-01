@@ -903,6 +903,27 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Edit a [Note].
+     *
+     * @param uri The URI of the [Video] note endpoint or other note replies endpoint.
+     * @param text The optional content of the note.
+     * @param coordinates The optional coordinates on the video surface where this note relates to.
+     * @param timeCode The optional time code of the video this note relates to.
+     * @param status The optional status of the note.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun editNote(
+        uri: String,
+        text: String? = null,
+        coordinates: Coordinates? = null,
+        timeCode: Double? = null,
+        status: NoteStatus? = null,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest
+
+    /**
      * Fetch the products that a consumer can purchase from Vimeo.
      *
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be

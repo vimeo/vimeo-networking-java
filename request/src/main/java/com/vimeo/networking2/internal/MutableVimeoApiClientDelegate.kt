@@ -46,6 +46,7 @@ import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
 import com.vimeo.networking2.Note
 import com.vimeo.networking2.NoteList
+import com.vimeo.networking2.NoteStatus
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
 import com.vimeo.networking2.PermissionPolicy
@@ -686,6 +687,15 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         timeCode: Double,
         callback: VimeoCallback<Note>
     ): VimeoRequest = client.createNote(uri, text, password, coordinates, timeCode, callback)
+
+    override fun editNote(
+        uri: String,
+        text: String?,
+        coordinates: Coordinates?,
+        timeCode: Double?,
+        status: NoteStatus?,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest = client.editNote(uri, text, coordinates, timeCode, status, callback)
 
     override fun fetchProductList(
         fieldFilter: String?,
