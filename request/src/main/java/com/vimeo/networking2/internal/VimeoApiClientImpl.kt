@@ -47,6 +47,8 @@ import com.vimeo.networking2.InvalidParameter
 import com.vimeo.networking2.LiveEvent
 import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
+import com.vimeo.networking2.Note
+import com.vimeo.networking2.NoteList
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
 import com.vimeo.networking2.PermissionPolicy
@@ -1722,6 +1724,18 @@ internal class VimeoApiClientImpl(
             .enqueue(callback)
     }
 
+    override fun fetchNote(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.getNote(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
     override fun fetchCommentList(
         uri: String,
         fieldFilter: String?,
@@ -1731,6 +1745,18 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getCommentList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
+    override fun fetchNoteList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<NoteList>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.getNoteList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 

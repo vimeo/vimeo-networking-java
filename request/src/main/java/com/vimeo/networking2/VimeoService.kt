@@ -312,6 +312,15 @@ internal interface VimeoService {
     ): VimeoCall<Comment>
 
     @GET
+    fun getNote(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<Note>
+
+    @GET
     fun getDocument(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String
@@ -434,6 +443,15 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<CommentList>
+
+    @GET
+    fun getNoteList(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<NoteList>
 
     @GET
     fun getFolderList(

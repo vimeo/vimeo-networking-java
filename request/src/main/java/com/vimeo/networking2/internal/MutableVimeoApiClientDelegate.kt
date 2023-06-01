@@ -43,6 +43,8 @@ import com.vimeo.networking2.FolderList
 import com.vimeo.networking2.LiveEvent
 import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
+import com.vimeo.networking2.Note
+import com.vimeo.networking2.NoteList
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
 import com.vimeo.networking2.PermissionPolicy
@@ -910,6 +912,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Comment>
     ): VimeoRequest = client.fetchComment(uri, fieldFilter, queryParams, cacheControl, callback)
 
+    override fun fetchNote(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest = client.fetchNote(uri, fieldFilter, queryParams, cacheControl, callback)
+
     override fun fetchCommentList(
         uri: String,
         fieldFilter: String?,
@@ -917,6 +927,14 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         cacheControl: CacheControl?,
         callback: VimeoCallback<CommentList>
     ): VimeoRequest = client.fetchCommentList(uri, fieldFilter, queryParams, cacheControl, callback)
+
+    override fun fetchNoteList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<NoteList>
+    ): VimeoRequest = client.fetchNoteList(uri, fieldFilter, queryParams, cacheControl, callback)
 
     override fun postContent(
         uri: String,
