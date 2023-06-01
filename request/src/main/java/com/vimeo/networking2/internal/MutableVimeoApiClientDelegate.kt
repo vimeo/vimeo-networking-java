@@ -34,6 +34,7 @@ import com.vimeo.networking2.Comment
 import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
+import com.vimeo.networking2.Coordinates
 import com.vimeo.networking2.CustomDomains
 import com.vimeo.networking2.Document
 import com.vimeo.networking2.FeaturedContent
@@ -676,6 +677,15 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         password: String?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest = client.createComment(video, comment, password, callback)
+
+    override fun createNote(
+        uri: String,
+        text: String,
+        password: String?,
+        coordinates: Coordinates,
+        timeCode: Double,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest = client.createNote(uri, text, password, coordinates, timeCode, callback)
 
     override fun fetchProductList(
         fieldFilter: String?,

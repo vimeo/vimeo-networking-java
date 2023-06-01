@@ -37,6 +37,7 @@ import com.vimeo.networking2.Comment
 import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
+import com.vimeo.networking2.Coordinates
 import com.vimeo.networking2.CustomDomains
 import com.vimeo.networking2.Document
 import com.vimeo.networking2.FeaturedContent
@@ -1295,6 +1296,23 @@ internal class VimeoApiClientImpl(
         val uri = video.metadata?.connections?.comments?.uri.validate()
             ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return createComment(uri, comment, password, callback)
+    }
+
+    override fun createNote(
+        uri: String,
+        text: String,
+        password: String?,
+        coordinates: Coordinates,
+        timeCode: Double,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val body = mapOf<String, Any?>(
+            ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY to text,
+            ApiConstants.Parameters.PARAMETER_COORDINATES to coordinates,
+            ApiConstants.Parameters.PARAMETER_TIME_CODE to timeCode,
+        )
+        return vimeoService.createNote(authHeader, safeUri, password, body).enqueue(callback)
     }
 
     override fun fetchProductList(
