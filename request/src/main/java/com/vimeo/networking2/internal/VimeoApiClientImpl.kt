@@ -1326,12 +1326,12 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         val body = mutableMapOf<String, Any?>()
-        
+
         text?.let { body[ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY] = it }
         coordinates?.let { body[ApiConstants.Parameters.PARAMETER_COORDINATES] = it }
         timeCode?.let { body[ApiConstants.Parameters.PARAMETER_TIME_CODE] = it }
         status?.value?.let { body[ApiConstants.Parameters.PARAMETER_STATUS] = it }
-        
+
         return vimeoService.editNote(authHeader, safeUri, body).enqueue(callback)
     }
 

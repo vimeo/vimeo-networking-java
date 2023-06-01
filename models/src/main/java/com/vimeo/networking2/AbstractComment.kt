@@ -4,7 +4,7 @@ import com.vimeo.networking2.common.Entity
 import java.util.Date
 
 /**
- * Sealed interface for comment/note entities. 
+ * Sealed interface for comment/note entities.
  */
 sealed interface AbstractComment : Entity {
 

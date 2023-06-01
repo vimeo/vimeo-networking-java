@@ -33,7 +33,7 @@ data class VideoConnections(
 
     @Json(name = "comments")
     val comments: BasicConnection? = null,
-    
+
     @Json(name = "notes")
     val notes: BasicConnection? = null,
 

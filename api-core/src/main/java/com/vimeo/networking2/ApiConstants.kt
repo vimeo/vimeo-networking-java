@@ -109,7 +109,7 @@ object ApiConstants {
         const val PARAMETER_ALLOW_SHARE_LINK = "allow_share_link"
         const val PARAMETER_COORDINATES = "coordinates"
         const val PARAMETER_TIME_CODE = "time_code"
-        const val PARAMETER_STATUS = "status" 
+        const val PARAMETER_STATUS = "status"
 
         // Generic parameters
         const val PARAMETER_GET_PAGE_SIZE = "per_page"
