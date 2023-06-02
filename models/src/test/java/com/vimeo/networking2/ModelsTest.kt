@@ -196,7 +196,9 @@ class ModelsTest {
         VideoStatus::class,
         EditSession::class,
         ReportInteraction::class,
-        CustomDomains::class
+        CustomDomains::class,
+        Webinar::class,
+        App::class
     )
 
     @Test
