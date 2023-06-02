@@ -882,6 +882,48 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Create a note on a [Video].
+     *
+     * @param uri The URI of the [Video] note endpoint or other note replies endpoint.
+     * @param text The content of the note.
+     * @param password The optional password will be needed to note on the [Video] if it is password protected.
+     * @param coordinates The coordinates on the video surface where this note relates to.
+     * @param timeCode The time code of the video this note relates to.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun createNote(
+        uri: String,
+        text: String,
+        password: String?,
+        coordinates: Coordinates,
+        timeCode: Double,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest
+
+    /**
+     * Edit a [Note].
+     *
+     * @param uri The URI of the [Video] note endpoint or other note replies endpoint.
+     * @param text The optional content of the note.
+     * @param coordinates The optional coordinates on the video surface where this note relates to.
+     * @param timeCode The optional time code of the video this note relates to.
+     * @param status The optional status of the note.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun editNote(
+        uri: String,
+        text: String? = null,
+        coordinates: Coordinates? = null,
+        timeCode: Double? = null,
+        status: NoteStatus? = null,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest
+
+    /**
      * Fetch the products that a consumer can purchase from Vimeo.
      *
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
@@ -1506,6 +1548,27 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Fetch a [Note] from the provided endpoint.
+     *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchNote(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest
+
+    /**
      * Fetch a [CommentList] from the provided endpoint.
      *
      * @param uri The URI from which content will be requested.
@@ -1524,6 +1587,27 @@ interface VimeoApiClient {
         queryParams: Map<String, String>?,
         cacheControl: CacheControl?,
         callback: VimeoCallback<CommentList>
+    ): VimeoRequest
+
+    /**
+     * Fetch a [NoteList] from the provided endpoint.
+     *
+     * @param uri The URI from which content will be requested.
+     * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be
+     * returned.
+     * @param queryParams Optional map used to refine the response from the API.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun fetchNoteList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<NoteList>
     ): VimeoRequest
 
     /**

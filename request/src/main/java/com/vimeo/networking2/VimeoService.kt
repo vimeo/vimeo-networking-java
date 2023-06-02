@@ -214,6 +214,21 @@ internal interface VimeoService {
     ): VimeoCall<Comment>
 
     @POST
+    fun createNote(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(PARAMETER_PASSWORD) password: String?,
+        @Body bodyParams: Map<String, Any?>,
+    ): VimeoCall<Note>
+
+    @PATCH
+    fun editNote(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body bodyParams: Map<String, Any?>,
+    ): VimeoCall<Note>
+
+    @POST
     fun createPictureCollection(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String
@@ -310,6 +325,15 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<Comment>
+
+    @GET
+    fun getNote(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<Note>
 
     @GET
     fun getDocument(
@@ -434,6 +458,15 @@ internal interface VimeoService {
         @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
         @Header(CACHE_CONTROL) cacheControl: CacheControl?
     ): VimeoCall<CommentList>
+
+    @GET
+    fun getNoteList(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(FIELD_FILTER) fieldFilter: String?,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<NoteList>
 
     @GET
     fun getFolderList(

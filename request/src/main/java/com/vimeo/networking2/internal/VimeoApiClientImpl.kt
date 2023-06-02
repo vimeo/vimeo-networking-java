@@ -37,6 +37,7 @@ import com.vimeo.networking2.Comment
 import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
 import com.vimeo.networking2.ConnectedAppList
+import com.vimeo.networking2.Coordinates
 import com.vimeo.networking2.CustomDomains
 import com.vimeo.networking2.Document
 import com.vimeo.networking2.FeaturedContent
@@ -47,6 +48,9 @@ import com.vimeo.networking2.InvalidParameter
 import com.vimeo.networking2.LiveEvent
 import com.vimeo.networking2.LiveEventList
 import com.vimeo.networking2.LiveStats
+import com.vimeo.networking2.Note
+import com.vimeo.networking2.NoteList
+import com.vimeo.networking2.NoteStatus
 import com.vimeo.networking2.NotificationList
 import com.vimeo.networking2.NotificationSubscriptions
 import com.vimeo.networking2.PermissionPolicy
@@ -1295,6 +1299,42 @@ internal class VimeoApiClientImpl(
         return createComment(uri, comment, password, callback)
     }
 
+    override fun createNote(
+        uri: String,
+        text: String,
+        password: String?,
+        coordinates: Coordinates,
+        timeCode: Double,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val body = mapOf<String, Any?>(
+            ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY to text,
+            ApiConstants.Parameters.PARAMETER_COORDINATES to coordinates,
+            ApiConstants.Parameters.PARAMETER_TIME_CODE to timeCode,
+        )
+        return vimeoService.createNote(authHeader, safeUri, password, body).enqueue(callback)
+    }
+
+    override fun editNote(
+        uri: String,
+        text: String?,
+        coordinates: Coordinates?,
+        timeCode: Double?,
+        status: NoteStatus?,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        val body = mutableMapOf<String, Any?>()
+
+        text?.let { body[ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY] = it }
+        coordinates?.let { body[ApiConstants.Parameters.PARAMETER_COORDINATES] = it }
+        timeCode?.let { body[ApiConstants.Parameters.PARAMETER_TIME_CODE] = it }
+        status?.value?.let { body[ApiConstants.Parameters.PARAMETER_STATUS] = it }
+
+        return vimeoService.editNote(authHeader, safeUri, body).enqueue(callback)
+    }
+
     override fun fetchProductList(
         fieldFilter: String?,
         cacheControl: CacheControl?,
@@ -1722,6 +1762,18 @@ internal class VimeoApiClientImpl(
             .enqueue(callback)
     }
 
+    override fun fetchNote(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<Note>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.getNote(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
     override fun fetchCommentList(
         uri: String,
         fieldFilter: String?,
@@ -1731,6 +1783,18 @@ internal class VimeoApiClientImpl(
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
         return vimeoService.getCommentList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
+            .enqueue(callback)
+    }
+
+    override fun fetchNoteList(
+        uri: String,
+        fieldFilter: String?,
+        queryParams: Map<String, String>?,
+        cacheControl: CacheControl?,
+        callback: VimeoCallback<NoteList>
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.getNoteList(authHeader, safeUri, fieldFilter, queryParams.orEmpty(), cacheControl)
             .enqueue(callback)
     }
 
