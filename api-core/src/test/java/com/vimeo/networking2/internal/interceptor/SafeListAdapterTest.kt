@@ -3,7 +3,6 @@ package com.vimeo.networking2.internal.interceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.vimeo.networking2.annotations.SafeList
 import com.vimeo.networking2.internal.params.SafeListJsonAdapterFactory
 import org.junit.Assert
 import org.junit.Test
@@ -37,7 +36,31 @@ class SafeListAdapterTest {
         assert(parent?.data?.size == 0)
     }
 
-    private data class Parent(@SafeList val data: List<Child>? = null)
+    @Test
+    fun `list to json test`() {
+        val parent = Parent(listOf(Child(1), Child(2)))
+        val json = moshi.adapter<Parent>().toJson(parent)
+        assert(json.isNotEmpty())
+        assert(json.contains("{\"a\":1}"))
+    }
+
+    @Test
+    fun `empty list to json test`() {
+        val parent = Parent(listOf())
+        val json = moshi.adapter<Parent>().toJson(parent)
+        assert(json.isNotEmpty())
+        assert(json.contains("\"data\":[]"))
+    }
+
+    @Test
+    fun `one object to json test`() {
+        val parent = Parent(listOf(Child(1)))
+        val json = moshi.adapter<Parent>().toJson(parent)
+        assert(json.isNotEmpty())
+        assert(json.contains("\"data\":{\"a\":1}"))
+    }
+
+    private data class Parent(val data: List<Child>? = null)
 
     private data class Child(val a: Int? = null)
 

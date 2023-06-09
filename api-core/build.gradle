@@ -17,7 +17,6 @@ dependencies {
     implementation libs.okio
 
     // Test dependencies
-    testImplementation project(':models-annotations')
     testImplementation libs.junit
     testImplementation libs.moshi.kotlin
 }
