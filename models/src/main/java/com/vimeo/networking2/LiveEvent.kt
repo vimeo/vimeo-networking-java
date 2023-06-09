@@ -103,7 +103,7 @@ data class LiveEvent(
 
     @SafeObject
     @Json(name = "webinar")
-    val webinar: Webinar? = null,
+    val webinar: List<Webinar>? = null,
 
     @Json(name = "low_latency")
     val isLowLatencyEnabled: Boolean? = null,
