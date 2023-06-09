@@ -5,12 +5,11 @@ import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 
 /**
- * Json adapter for [List] properties annotated with [SafeList].
- * Create a [List] based on single or list of objects in JSON response.
+ * Json adapter for [List] properties.
+ * Create a [List] based on single object or list of objects in JSON response.
  * Possible json values: [], [{"a":1},{"a":2}], {"a":5}.
  */
 class SafeListAdapter<T>(
-    private val delegateAdapter: JsonAdapter<List<T>>,
     private val elementAdapter: JsonAdapter<T>
 ) : JsonAdapter<List<T>>() {
 
@@ -18,14 +17,22 @@ class SafeListAdapter<T>(
         if (reader.peek() != JsonReader.Token.BEGIN_ARRAY) {
             return elementAdapter.fromJson(reader)?.let { listOf(it) }
         }
-        return delegateAdapter.fromJson(reader)
+        val items = mutableListOf<T>()
+        reader.beginArray()
+        while (reader.hasNext()) {
+            elementAdapter.fromJson(reader)?.let(items::add)
+        }
+        reader.endArray()
+        return items
     }
 
     override fun toJson(writer: JsonWriter, value: List<T>?) {
         if (value?.size == 1) {
             elementAdapter.toJson(writer, value[0])
         } else {
-            delegateAdapter.toJson(writer, value)
+            writer.beginArray()
+            value?.forEach { elementAdapter.toJson(writer, it) }
+            writer.endArray()
         }
     }
 }

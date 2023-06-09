@@ -2,7 +2,6 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.vimeo.networking2.annotations.SafeList
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.PlaylistSortType
 import com.vimeo.networking2.enums.asEnum
@@ -102,7 +101,6 @@ data class LiveEvent(
     val isFromWebinar: Boolean? = null,
 
     @Json(name = "webinar")
-    @SafeList
     val webinar: List<Webinar>? = null,
 
     @Json(name = "low_latency")
