@@ -22,6 +22,9 @@ import com.vimeo.networking2.annotations.Internal
  * @param legalHold Information about whether this video is subject to ongoing litigation.
  * @param restrictedPrivacyOptions Information about whether this user has restricted privacy options.
  * @param trim Information about where and how to trim the video.
+ * @param createEditor Information about where and how to edit a video using the Vimeo Create editor.
+ * @param transcriptVideoEditor Information about where and how to edit a video using the Transcription-based
+ * Video Editor editor.
  */
 @JsonClass(generateAdapter = true)
 data class VideoInteractions(
@@ -70,5 +73,11 @@ data class VideoInteractions(
     val restrictedPrivacyOptions: BasicInteraction? = null,
 
     @Json(name = "trim")
-    val trim: BasicInteraction? = null
+    val trim: BasicInteraction? = null,
+
+    @Json(name = "create_editor")
+    val createEditor: BasicInteraction? = null,
+
+    @Json(name = "transcript_video_editor")
+    val transcriptVideoEditor: BasicInteraction? = null
 )
