@@ -14,6 +14,7 @@ import com.vimeo.networking2.enums.asEnum
  * @param folder The item is [Folder] if [type] == [ProjectItemType.FOLDER], `null` otherwise.
  * @param video The item is [Video] if [type] == [ProjectItemType.VIDEO], `null` otherwise.
  * @param liveEvent The item is [LiveEvent] if [type] == [ProjectItemType.LIVE_EVENT], `null` otherwise.
+ * @param meta Meta info.
  */
 @JsonClass(generateAdapter = true)
 data class ProjectItem(
@@ -28,7 +29,10 @@ data class ProjectItem(
     val video: Video? = null,
 
     @Json(name = "live_event")
-    val liveEvent: LiveEvent? = null
+    val liveEvent: LiveEvent? = null,
+
+    @Json(name = "meta")
+    val meta: ProjectItemMeta? = null,
 )
 
 /**
