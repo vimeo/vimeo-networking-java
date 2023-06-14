@@ -221,6 +221,7 @@ internal interface VimeoService {
         @Body bodyParams: Map<String, Any?>,
     ): VimeoCall<Note>
 
+    @JvmSuppressWildcards
     @PATCH
     fun editNote(
         @Header(AUTHORIZATION) authorization: String,
