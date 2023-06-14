@@ -220,6 +220,7 @@ internal interface VimeoService {
         @Query(PARAMETER_PASSWORD) password: String?,
         @Body bodyParams: Map<String, Any?>,
     ): VimeoCall<Note>
+
     @JvmSuppressWildcards
     @PATCH
     fun editNote(
