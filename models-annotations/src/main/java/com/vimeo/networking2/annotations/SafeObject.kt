@@ -4,4 +4,4 @@ import com.squareup.moshi.JsonQualifier
 
 @Retention
 @JsonQualifier
-annotation class SafeList
+annotation class SafeObject
