@@ -2,6 +2,7 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.SafeObject
 import com.vimeo.networking2.common.Entity
 import com.vimeo.networking2.enums.PlaylistSortType
 import com.vimeo.networking2.enums.asEnum
@@ -31,6 +32,7 @@ import java.util.Date
  * @param isChatEnabled Whether to display live chat on the event page on Vimeo.
  * @param isFromShowcase Whether the live event was created from a showcase.
  * @param isFromWebinar Whether the live event was created from a webinar.
+ * @param webinar Information about the associated webinar.
  * @param isLowLatencyEnabled Whether the low latency feature is enabled.
  * @param isUnlimitedStreamingEnabled Whether 24/7 streaming is enabled for the event.
  * @param link The URI to access the live event on Vimeo.
@@ -98,6 +100,10 @@ data class LiveEvent(
 
     @Json(name = "from_webinar")
     val isFromWebinar: Boolean? = null,
+
+    @SafeObject
+    @Json(name = "webinar")
+    val webinar: Webinar? = null,
 
     @Json(name = "low_latency")
     val isLowLatencyEnabled: Boolean? = null,
