@@ -21,6 +21,10 @@ import com.vimeo.networking2.annotations.Internal
  * @param watchLater Information about whether this video appears on the authenticated user's Watch Later list.
  * @param legalHold Information about whether this video is subject to ongoing litigation.
  * @param restrictedPrivacyOptions Information about whether this user has restricted privacy options.
+ * @param trim Information about where and how to trim the video.
+ * @param createEditor Information about where and how to edit a video using the Vimeo Create editor.
+ * @param transcriptVideoEditor Information about where and how to edit a video using the Transcription-based
+ * Video Editor editor.
  */
 @JsonClass(generateAdapter = true)
 data class VideoInteractions(
@@ -66,5 +70,14 @@ data class VideoInteractions(
     val legalHold: BasicInteraction? = null,
 
     @Json(name = "has_restricted_privacy_options")
-    val restrictedPrivacyOptions: BasicInteraction? = null
+    val restrictedPrivacyOptions: BasicInteraction? = null,
+
+    @Json(name = "trim")
+    val trim: BasicInteraction? = null,
+
+    @Json(name = "create_editor")
+    val createEditor: BasicInteraction? = null,
+
+    @Json(name = "transcript_video_editor")
+    val transcriptVideoEditor: BasicInteraction? = null
 )

@@ -13,6 +13,7 @@ import com.squareup.moshi.JsonClass
  * @param hasWatermark Whether the video has watermark.
  * @param isRated Whether the video is rated.
  * @param minTierForMovie The minimum required Vimeo membership for the user to be able to share or download the video.
+ * @param isEditedByTve Whether the video has been edited by Transcript Video Editing.
  */
 @JsonClass(generateAdapter = true)
 data class EditSession(
@@ -37,4 +38,7 @@ data class EditSession(
 
     @Json(name = "min_tier_for_movie")
     val minTierForMovie: String? = null,
+
+    @Json(name = "is_edited_by_tve")
+    val isEditedByTve: Boolean? = null
 )
