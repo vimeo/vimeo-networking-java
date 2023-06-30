@@ -1282,21 +1282,23 @@ internal class VimeoApiClientImpl(
         uri: String,
         comment: String,
         password: String?,
+        timeCode: Double?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        return vimeoService.createComment(authHeader, safeUri, password, comment).enqueue(callback)
+        return vimeoService.createComment(authHeader, safeUri, password, comment, timeCode).enqueue(callback)
     }
 
     override fun createComment(
         video: Video,
         comment: String,
         password: String?,
+        timeCode: Double?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
         val uri = video.metadata?.connections?.comments?.uri.validate()
             ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        return createComment(uri, comment, password, callback)
+        return createComment(uri, comment, password, timeCode, callback)
     }
 
     override fun createNote(
@@ -1308,7 +1310,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Note>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        val body = mapOf<String, Any?>(
+        val body = mapOf(
             ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY to text,
             ApiConstants.Parameters.PARAMETER_COORDINATES to coordinates,
             ApiConstants.Parameters.PARAMETER_TIME_CODE to timeCode,
@@ -1325,7 +1327,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Note>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        val body = mutableMapOf<String, Any?>()
+        val body = mutableMapOf<String, Any>()
 
         text?.let { body[ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY] = it }
         coordinates?.let { body[ApiConstants.Parameters.PARAMETER_COORDINATES] = it }
