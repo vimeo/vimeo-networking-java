@@ -1282,21 +1282,23 @@ internal class VimeoApiClientImpl(
         uri: String,
         comment: String,
         password: String?,
+        timeCode: Double?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        return vimeoService.createComment(authHeader, safeUri, password, comment).enqueue(callback)
+        return vimeoService.createComment(authHeader, safeUri, password, comment, timeCode).enqueue(callback)
     }
 
     override fun createComment(
         video: Video,
         comment: String,
         password: String?,
+        timeCode: Double?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest {
         val uri = video.metadata?.connections?.comments?.uri.validate()
             ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        return createComment(uri, comment, password, callback)
+        return createComment(uri, comment, password, timeCode, callback)
     }
 
     override fun createNote(

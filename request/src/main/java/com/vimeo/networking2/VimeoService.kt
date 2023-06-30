@@ -33,6 +33,7 @@ import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_FOLDER_URI
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PASSWORD
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_PERMISSION_LEVEL
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_ROLE
+import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_TIME_CODE
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_BIO
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_LOCATION
 import com.vimeo.networking2.ApiConstants.Parameters.PARAMETER_USERS_NAME
@@ -210,7 +211,8 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Query(PARAMETER_PASSWORD) password: String?,
-        @Field(PARAMETER_COMMENT_TEXT_BODY) commentBody: String
+        @Field(PARAMETER_COMMENT_TEXT_BODY) commentBody: String,
+        @Field(PARAMETER_TIME_CODE) timeCode: Double?,
     ): VimeoCall<Comment>
 
     @POST

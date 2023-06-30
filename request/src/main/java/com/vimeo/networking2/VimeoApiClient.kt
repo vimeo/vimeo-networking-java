@@ -853,6 +853,7 @@ interface VimeoApiClient {
      * @param uri The URI of the [Video] comment endpoint.
      * @param comment The content of the comment.
      * @param password The optional password will be needed to comment on the [Video] if it is password protected.
+     * @param timeCode The optional time code of the video this note relates to.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -861,6 +862,7 @@ interface VimeoApiClient {
         uri: String,
         comment: String,
         password: String?,
+        timeCode: Double?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest
 
@@ -870,6 +872,7 @@ interface VimeoApiClient {
      * @param video The video upon which the user is commenting.
      * @param comment The content of the comment.
      * @param password The optional password will be needed to comment on the [Video] if it is password protected.
+     * @param timeCode The optional time code of the video this note relates to.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -878,6 +881,7 @@ interface VimeoApiClient {
         video: Video,
         comment: String,
         password: String?,
+        timeCode: Double?,
         callback: VimeoCallback<Comment>
     ): VimeoRequest
 
