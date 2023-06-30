@@ -1308,7 +1308,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Note>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        val body = mapOf<String, Any?>(
+        val body = mapOf(
             ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY to text,
             ApiConstants.Parameters.PARAMETER_COORDINATES to coordinates,
             ApiConstants.Parameters.PARAMETER_TIME_CODE to timeCode,
@@ -1325,7 +1325,7 @@ internal class VimeoApiClientImpl(
         callback: VimeoCallback<Note>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        val body = mutableMapOf<String, Any?>()
+        val body = mutableMapOf<String, Any>()
 
         text?.let { body[ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY] = it }
         coordinates?.let { body[ApiConstants.Parameters.PARAMETER_COORDINATES] = it }

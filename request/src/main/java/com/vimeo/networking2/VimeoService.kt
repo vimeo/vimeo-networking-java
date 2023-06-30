@@ -218,7 +218,7 @@ internal interface VimeoService {
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
         @Query(PARAMETER_PASSWORD) password: String?,
-        @Body bodyParams: Map<String, Any?>,
+        @Body bodyParams: Map<String, @JvmSuppressWildcards Any>,
     ): VimeoCall<Note>
 
     @JvmSuppressWildcards
@@ -226,7 +226,7 @@ internal interface VimeoService {
     fun editNote(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String,
-        @Body bodyParams: Map<String, Any?>,
+        @Body bodyParams: Map<String, @JvmSuppressWildcards Any>,
     ): VimeoCall<Note>
 
     @POST
