@@ -862,8 +862,8 @@ interface VimeoApiClient {
         uri: String,
         comment: String,
         password: String?,
-        timeCode: Double?,
-        callback: VimeoCallback<Comment>
+        callback: VimeoCallback<Comment>,
+        timeCode: Double? = null,
     ): VimeoRequest
 
     /**
@@ -881,8 +881,8 @@ interface VimeoApiClient {
         video: Video,
         comment: String,
         password: String?,
-        timeCode: Double?,
-        callback: VimeoCallback<Comment>
+        callback: VimeoCallback<Comment>,
+        timeCode: Double? = null,
     ): VimeoRequest
 
     /**
