@@ -1307,14 +1307,18 @@ internal class VimeoApiClientImpl(
         password: String?,
         coordinates: Coordinates,
         timeCode: Double,
+        name: String?,
         callback: VimeoCallback<Note>
     ): VimeoRequest {
         val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
-        val body = mapOf(
+        val body = mutableMapOf(
             ApiConstants.Parameters.PARAMETER_COMMENT_TEXT_BODY to text,
             ApiConstants.Parameters.PARAMETER_COORDINATES to coordinates,
             ApiConstants.Parameters.PARAMETER_TIME_CODE to timeCode,
         )
+
+        name?.let { body[ApiConstants.Parameters.PARAMETER_USERS_NAME] = it }
+
         return vimeoService.createNote(authHeader, safeUri, password, body).enqueue(callback)
     }
 
