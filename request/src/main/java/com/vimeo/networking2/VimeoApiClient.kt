@@ -893,6 +893,7 @@ interface VimeoApiClient {
      * @param password The optional password will be needed to note on the [Video] if it is password protected.
      * @param coordinates The coordinates on the video surface where this note relates to.
      * @param timeCode The time code of the video this note relates to.
+     * @param name The optional guest name of the user who create note.
      * @param callback The callback which will be notified of the request completion.
      *
      * @return A [VimeoRequest] object to cancel API requests.
@@ -903,6 +904,7 @@ interface VimeoApiClient {
         password: String?,
         coordinates: Coordinates,
         timeCode: Double,
+        name: String?,
         callback: VimeoCallback<Note>,
     ): VimeoRequest
 

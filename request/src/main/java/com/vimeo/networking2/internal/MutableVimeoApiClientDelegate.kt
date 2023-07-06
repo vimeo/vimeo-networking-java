@@ -687,8 +687,9 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         password: String?,
         coordinates: Coordinates,
         timeCode: Double,
+        name: String?,
         callback: VimeoCallback<Note>
-    ): VimeoRequest = client.createNote(uri, text, password, coordinates, timeCode, callback)
+    ): VimeoRequest = client.createNote(uri, text, password, coordinates, timeCode, name, callback)
 
     override fun editNote(
         uri: String,
