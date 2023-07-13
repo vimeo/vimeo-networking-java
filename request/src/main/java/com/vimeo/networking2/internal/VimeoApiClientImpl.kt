@@ -1301,6 +1301,16 @@ internal class VimeoApiClientImpl(
         return createComment(uri, comment, password, callback, timeCode)
     }
 
+    override fun editComment(
+        uri: String,
+        text: String?,
+        timeCode: Double?,
+        callback: VimeoCallback<Comment>,
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+        return vimeoService.editComment(authHeader, safeUri, text, timeCode).enqueue(callback)
+    }
+
     override fun createNote(
         uri: String,
         text: String,
