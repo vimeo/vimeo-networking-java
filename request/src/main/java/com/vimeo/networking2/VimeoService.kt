@@ -215,7 +215,7 @@ internal interface VimeoService {
         @Field(PARAMETER_TIME_CODE) timeCode: Double?,
     ): VimeoCall<Comment>
 
-    @JvmSuppressWildcards
+    @FormUrlEncoded
     @PATCH
     fun editComment(
         @Header(AUTHORIZATION) authorization: String,
