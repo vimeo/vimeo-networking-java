@@ -886,6 +886,23 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Edit a [Comment].
+     *
+     * @param uri The URI of the [Comment] to edit.
+     * @param text The optional new text for the comment.
+     * @param timeCode The optional time code of the video this comment relates to.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun editComment(
+        uri: String,
+        text: String? = null,
+        timeCode: Double? = null,
+        callback: VimeoCallback<Comment>
+    ): VimeoRequest
+
+    /**
      * Create a note on a [Video].
      *
      * @param uri The URI of the [Video] note endpoint or other note replies endpoint.

@@ -671,7 +671,7 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         password: String?,
         callback: VimeoCallback<Comment>,
         timeCode: Double?
-    ): VimeoRequest = client.createComment(uri, comment, password, callback, timeCode,)
+    ): VimeoRequest = client.createComment(uri, comment, password, callback, timeCode)
 
     override fun createComment(
         video: Video,
@@ -680,6 +680,13 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Comment>,
         timeCode: Double?
     ): VimeoRequest = client.createComment(video, comment, password, callback, timeCode)
+
+    override fun editComment(
+        uri: String,
+        text: String?,
+        timeCode: Double?,
+        callback: VimeoCallback<Comment>
+    ): VimeoRequest = client.editComment(uri, text, timeCode, callback)
 
     override fun createNote(
         uri: String,
