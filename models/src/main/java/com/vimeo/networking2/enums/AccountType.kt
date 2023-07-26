@@ -76,6 +76,11 @@ enum class AccountType(override val value: String?) : StringValue {
     ADVANCED("advanced"),
 
     /**
+     * The user has a custom subscription.
+     */
+    CUSTOM("custom"),
+
+    /**
      * Unknown account type.
      */
     UNKNOWN(null)
