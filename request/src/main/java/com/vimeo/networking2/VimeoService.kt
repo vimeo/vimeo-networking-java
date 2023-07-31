@@ -842,6 +842,14 @@ internal interface VimeoService {
         @Field(EMAIL) email: String
     ): VimeoCall<CustomDomains>
 
+    @GET
+    fun getVideoChapters(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @QueryMap queryParams: Map<String, @JvmSuppressWildcards String>,
+        @Header(CACHE_CONTROL) cacheControl: CacheControl?
+    ): VimeoCall<ChapterList>
+
     companion object {
         private const val CACHE_CONTROL = "Cache-Control"
         private const val AUTHORIZATION = "Authorization"

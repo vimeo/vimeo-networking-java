@@ -48,6 +48,7 @@ object ApiConstants {
         const val ENDPOINT_TERMS_OF_SERVICE = "documents/termsofservice"
         const val ENDPOINT_PRIVACY_POLICY = "documents/privacy"
         const val ENDPOINT_PAYMENT_ADDENDUM = "documents/paymentaddendum"
+        const val ENDPOINT_CHAPTERS = "/chapters"
     }
 
     /**
