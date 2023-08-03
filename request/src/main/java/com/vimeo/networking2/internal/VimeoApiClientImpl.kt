@@ -1351,6 +1351,27 @@ internal class VimeoApiClientImpl(
         return vimeoService.editNote(authHeader, safeUri, body).enqueue(callback)
     }
 
+    override fun createNote(
+        uri: String,
+        password: String?,
+        note: Note,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        return vimeoService.createNote(authHeader, safeUri, password, note).enqueue(callback)
+    }
+
+    override fun editNote(
+        uri: String,
+        note: Note,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest {
+        val safeUri = uri.validate() ?: return localVimeoCallAdapter.enqueueInvalidUri(callback)
+
+        return vimeoService.editNote(authHeader, safeUri, note).enqueue(callback)
+    }
+
     override fun fetchProductList(
         fieldFilter: String?,
         cacheControl: CacheControl?,

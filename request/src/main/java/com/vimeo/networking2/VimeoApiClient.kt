@@ -947,6 +947,38 @@ interface VimeoApiClient {
     ): VimeoRequest
 
     /**
+     * Create a note on a [Video].
+     *
+     * @param uri The URI of the [Video] note endpoint or other note replies endpoint.
+     * @param password The optional password will be needed to note on the [Video] if it is password protected.
+     * @param note The note object with supplied note arguments.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun createNote(
+        uri: String,
+        password: String?,
+        note: Note,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest
+
+    /**
+     * Edit a [Note].
+     *
+     * @param uri The URI of the [Video] note endpoint or other note replies endpoint.
+     * @param note The note object with supplied note arguments.
+     * @param callback The callback which will be notified of the request completion.
+     *
+     * @return A [VimeoRequest] object to cancel API requests.
+     */
+    fun editNote(
+        uri: String,
+        note: Note,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest
+
+    /**
      * Fetch the products that a consumer can purchase from Vimeo.
      *
      * @param fieldFilter The fields that should be returned by the server in the response, null indicates all should be

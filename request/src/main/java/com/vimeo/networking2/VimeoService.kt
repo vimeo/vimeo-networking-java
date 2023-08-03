@@ -241,6 +241,22 @@ internal interface VimeoService {
     ): VimeoCall<Note>
 
     @POST
+    fun createNote(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Query(PARAMETER_PASSWORD) password: String?,
+        @Body body: Note,
+    ): VimeoCall<Note>
+
+    @JvmSuppressWildcards
+    @PATCH
+    fun editNote(
+        @Header(AUTHORIZATION) authorization: String,
+        @Url uri: String,
+        @Body body: Note,
+    ): VimeoCall<Note>
+
+    @POST
     fun createPictureCollection(
         @Header(AUTHORIZATION) authorization: String,
         @Url uri: String

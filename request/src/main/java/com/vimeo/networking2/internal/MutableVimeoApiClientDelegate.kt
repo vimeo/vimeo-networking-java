@@ -707,6 +707,19 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
         callback: VimeoCallback<Note>
     ): VimeoRequest = client.editNote(uri, text, coordinates, timeCode, status, callback)
 
+    override fun createNote(
+        uri: String,
+        password: String?,
+        note: Note,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest = client.createNote(uri, password, note, callback)
+
+    override fun editNote(
+        uri: String,
+        note: Note,
+        callback: VimeoCallback<Note>,
+    ): VimeoRequest = client.editNote(uri, note, callback)
+
     override fun fetchProductList(
         fieldFilter: String?,
         cacheControl: CacheControl?,
