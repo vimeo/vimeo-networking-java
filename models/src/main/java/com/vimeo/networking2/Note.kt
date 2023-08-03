@@ -2,7 +2,9 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.annotations.RichTextString
 import com.vimeo.networking2.enums.asEnum
+import com.vimeo.networking2.richtext.RichText
 import java.util.Date
 
 /**
@@ -17,6 +19,7 @@ import java.util.Date
  * @param rawStatus The status of the note.
  * @param timeCode Time code at which point in the video the note was left.
  * @param coordinates Point on the video surface which note relates to.
+ * @param richText The content of the note in rich text format.
  */
 @JsonClass(generateAdapter = true)
 data class Note(
@@ -47,6 +50,10 @@ data class Note(
 
     @Json(name = "coordinates")
     val coordinates: Coordinates? = null,
+
+    @RichTextString
+    @Json(name = "richtext")
+    val richText: RichText? = null,
 ) : AbstractComment
 
 /**

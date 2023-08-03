@@ -9,6 +9,7 @@ import com.vimeo.networking2.annotations.Internal
  *
  * @param comments Information about the comments on this video.
  * @param notes Information about the notes on this video.
+ * @param privateComments Information about the private comments on this video.
  * @param credit Information about the users credited in this video.
  * @param likes Information about the users who have liked this video.
  * @param liveStats Information about this video's live stream stats.
@@ -36,6 +37,9 @@ data class VideoConnections(
 
     @Json(name = "notes")
     val notes: BasicConnection? = null,
+
+    @Json(name = "private_comments")
+    val privateComments: BasicConnection? = null,
 
     @Json(name = "credit")
     val credit: BasicConnection? = null,

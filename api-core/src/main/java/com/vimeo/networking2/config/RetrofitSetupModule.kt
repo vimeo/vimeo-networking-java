@@ -22,9 +22,11 @@
 package com.vimeo.networking2.config
 
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.vimeo.networking2.internal.ErrorHandlingCallAdapterFactory
 import com.vimeo.networking2.internal.adapters.Iso8601NoMillisAdapter
+import com.vimeo.networking2.internal.adapters.RichTextStringJsonAdapter
 import com.vimeo.networking2.internal.adapters.TimeAdapter
 import com.vimeo.networking2.internal.interceptor.AcceptHeaderInterceptor
 import com.vimeo.networking2.internal.interceptor.CacheControlHeaderInterceptor
@@ -36,6 +38,12 @@ import com.vimeo.networking2.internal.params.SafeObjectJsonAdapterFactory
 import com.vimeo.networking2.internal.params.StringValueJsonAdapterFactory
 import com.vimeo.networking2.internal.params.VimeoParametersConverterFactory
 import com.vimeo.networking2.logging.VimeoLogger
+import com.vimeo.networking2.richtext.Mention
+import com.vimeo.networking2.richtext.RichText
+import com.vimeo.networking2.richtext.RichTextContainer
+import com.vimeo.networking2.richtext.RichTextType
+import com.vimeo.networking2.richtext.Text
+import com.vimeo.networking2.richtext.UnknownRichTextNode
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -60,6 +68,15 @@ object RetrofitSetupModule {
         .add(IntValueJsonAdapterFactory())
         .add(TimeAdapter())
         .add(Iso8601NoMillisAdapter())
+        .add(RichTextStringJsonAdapter())
+        .add(
+            PolymorphicJsonAdapterFactory.of(RichText::class.java, RichText.TYPE_FIELD)
+                .withSubtype(RichTextContainer::class.java, RichTextType.DOC.value)
+                .withSubtype(RichTextContainer::class.java, RichTextType.PARAGRAPH.value)
+                .withSubtype(Mention::class.java, RichTextType.MENTION.value)
+                .withSubtype(Text::class.java, RichTextType.TEXT.value)
+                .withDefaultValue(UnknownRichTextNode())
+        )
         .build()
 
     /**
