@@ -57,6 +57,7 @@ import java.util.Date
  * @param user The video owner.
  * @param width The video's width in pixels.
  * @param app the video app info.
+ * @param hasChapters Whether the video has chapters.
  */
 @JsonClass(generateAdapter = true)
 data class Video(
@@ -181,7 +182,10 @@ data class Video(
     val width: Int? = null,
 
     @Json(name = "app")
-    val app: App? = null
+    val app: App? = null,
+
+    @Json(name = "has_chapters")
+    val hasChapters: Boolean? = null
 
 ) : Entity, VideoContainer<Video> {
 
