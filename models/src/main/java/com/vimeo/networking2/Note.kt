@@ -20,6 +20,7 @@ import java.util.Date
  * @param timeCode Time code at which point in the video the note was left.
  * @param coordinates Point on the video surface which note relates to.
  * @param richText The content of the note in rich text format.
+ * @param guestName A guest name if the user is not logged in.
  */
 @JsonClass(generateAdapter = true)
 data class Note(
@@ -54,6 +55,9 @@ data class Note(
     @RichTextString
     @Json(name = "richtext")
     val richText: RichText? = null,
+
+    @Json(name = "name")
+    val guestName: String? = null,
 ) : AbstractComment
 
 /**
