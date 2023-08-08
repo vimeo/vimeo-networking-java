@@ -50,7 +50,6 @@ class GenerateModelsPlugin : Plugin<Project> {
             it.typeToGenerate = extension.typeGenerated!!
             it.inputModelPath = extension.inputPath!!
         }
-        project.tasks.findByName("kspKotlin")?.dependsOn("generateModels")
     }
 
     companion object {
