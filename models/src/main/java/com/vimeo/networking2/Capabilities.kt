@@ -56,4 +56,10 @@ data class Capabilities(
      */
     @Json(name = "contributor_plus_enabled")
     val contributorPlusEnabled: Boolean? = null,
+
+    /**
+     * Whether the user's team members can mention each other in private comments.
+     */
+    @Json(name = "team_mentions")
+    val teamMentions: Boolean? = null
 )
