@@ -30,6 +30,7 @@ import com.vimeo.networking2.Category
 import com.vimeo.networking2.CategoryList
 import com.vimeo.networking2.Channel
 import com.vimeo.networking2.ChannelList
+import com.vimeo.networking2.ChapterList
 import com.vimeo.networking2.Comment
 import com.vimeo.networking2.CommentList
 import com.vimeo.networking2.ConnectedApp
@@ -1148,4 +1149,10 @@ internal class MutableVimeoApiClientDelegate(var actual: VimeoApiClient? = null)
 
     override fun getCustomDomains(email: String, callback: VimeoCallback<CustomDomains>): VimeoRequest =
         client.getCustomDomains(email, callback)
+
+    override fun getVideoChapters(
+        uri: String,
+        callback: VimeoCallback<ChapterList>,
+        cacheControl: CacheControl?
+    ): VimeoRequest = client.getVideoChapters(uri, callback, cacheControl)
 }

@@ -2559,6 +2559,16 @@ interface VimeoApiClient {
      */
     fun getCustomDomains(email: String, callback: VimeoCallback<CustomDomains>): VimeoRequest
 
+    /**
+     * Get chapters for a video.
+     *
+     * @param uri The uri of the endpoint.
+     * @param callback The callback which will be notified of the request completion.
+     * @param cacheControl The optional cache behavior for the request, null indicates that the default cache behavior
+     * should be used.
+     */
+    fun getVideoChapters(uri: String, callback: VimeoCallback<ChapterList>, cacheControl: CacheControl?): VimeoRequest
+
     companion object {
 
         private val delegate: MutableVimeoApiClientDelegate = MutableVimeoApiClientDelegate()
