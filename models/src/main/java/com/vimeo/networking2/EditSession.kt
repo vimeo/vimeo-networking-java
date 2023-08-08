@@ -2,6 +2,8 @@ package com.vimeo.networking2
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.vimeo.networking2.enums.EditSessionStatusType
+import com.vimeo.networking2.enums.asEnum
 
 /**
  * Information about the Vimeo Create session of a video.
@@ -14,6 +16,7 @@ import com.squareup.moshi.JsonClass
  * @param isRated Whether the video is rated.
  * @param minTierForMovie The minimum required Vimeo membership for the user to be able to share or download the video.
  * @param isEditedByTve Whether the video has been edited by Transcript Video Editing.
+ * @param status The status of the video. See [EditSession.statusType]
  */
 @JsonClass(generateAdapter = true)
 data class EditSession(
@@ -40,5 +43,15 @@ data class EditSession(
     val minTierForMovie: String? = null,
 
     @Json(name = "is_edited_by_tve")
-    val isEditedByTve: Boolean? = null
+    val isEditedByTve: Boolean? = null,
+
+    @Json(name = "status")
+    val status: String? = null,
 )
+
+/**
+ * @see EditSession.status
+ * @see EditSessionStatusType
+ */
+val EditSession.statusType: EditSessionStatusType
+    get() = status.asEnum(EditSessionStatusType.UNKNOWN)
