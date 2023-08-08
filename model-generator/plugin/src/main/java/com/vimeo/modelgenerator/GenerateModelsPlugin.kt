@@ -21,6 +21,10 @@ class GenerateModelsPlugin : Plugin<Project> {
         project.pluginManager.withPlugin(KOTLIN_JVM) {
             registerTask(project, extension)
 
+            project.afterEvaluate {
+                project.tasks.findByName(KSP_KOTLIN)?.dependsOn(project.tasks.findByName(GENERATE_MODELS))
+            }
+
             // kaptGenerateStubsKotlin is used as the set up task instead of build
             // because kapt code generation happens before build is called and
             // we need to generate the models prior to kapt so the Moshi adapters
@@ -52,6 +56,7 @@ class GenerateModelsPlugin : Plugin<Project> {
         private const val KAPT_GENERATE_STUBS = "kaptGenerateStubsKotlin"
         private const val COMPILE_KOTLIN = "compileKotlin"
         private const val PRE_BUILD = "preBuild"
+        private const val KSP_KOTLIN = "kspKotlin"
         private const val EXTENSION_NAME = "generated"
         private const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
         private const val KOTLIN_ANDROID = "kotlin-android"
