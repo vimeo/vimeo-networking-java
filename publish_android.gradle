@@ -54,8 +54,8 @@ allprojects {
     }
 }
 
-
 task androidSourcesJar(type: Jar) {
+    dependsOn 'generateModels'
     archiveClassifier = 'sources'
     from android.sourceSets.main.java.source
 }

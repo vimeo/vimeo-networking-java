@@ -132,9 +132,6 @@ internal fun createConstructorParams(
             it.validateName,
             createTypeName(it.typeReference, packageName)
         )
-            .addIfConditionMet(it.modifierList?.isOverridden == true) {
-                addModifiers(KModifier.OVERRIDE)
-            }
             .addIfConditionMet(it.defaultValue != null) {
                 defaultValue("%L", it.defaultValue?.text)
             }
