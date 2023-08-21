@@ -26,6 +26,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.vimeo.networking2.enums.ScheduleType
 import com.vimeo.networking2.enums.StringValue
+import com.vimeo.networking2.richtext.RichTextType
 import java.lang.reflect.Type
 
 /**
@@ -34,10 +35,12 @@ import java.lang.reflect.Type
 class StringValueJsonAdapterFactory : JsonAdapter.Factory {
     override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? =
         if (type is Class<*> && StringValue::class.java.isAssignableFrom(type)) {
-            if (ScheduleType::class.java.isAssignableFrom(type)) {
-                StringValueJsonAdapter { value -> ScheduleType.values().first { it.value == value } }
-            } else {
-                StringValueJsonAdapter.NON_READING
+            when {
+                ScheduleType::class.java.isAssignableFrom(type) ->
+                    StringValueJsonAdapter(ScheduleType.values())
+                RichTextType::class.java.isAssignableFrom(type) ->
+                    StringValueJsonAdapter(RichTextType.values(), RichTextType.UNKNOWN)
+                else -> StringValueJsonAdapter.NON_READING
             }
         } else {
             null

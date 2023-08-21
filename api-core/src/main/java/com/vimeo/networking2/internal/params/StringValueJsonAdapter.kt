@@ -30,8 +30,15 @@ import com.vimeo.networking2.enums.StringValue
  * A [JsonAdapter] that can convert [StringValue] implementation to its JSON value.
  */
 class StringValueJsonAdapter<T : StringValue>(
-    private val creator: (String) -> T
+    private val creator: (String) -> T,
 ) : JsonAdapter<T>() {
+
+    constructor(values: Array<T>, fallback: T? = null) : this({ value ->
+        values.firstOrNull { it.value == value }
+            ?: fallback
+            ?: error("No value matching: \"$value\". Provide fallback.")
+    })
+
     override fun fromJson(reader: JsonReader): T? = if (reader.peek() == JsonReader.Token.NULL) {
         reader.nextNull()
     } else {
