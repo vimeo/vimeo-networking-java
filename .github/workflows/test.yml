@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
       - name: Cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # v2.1.6
         with:
           path: |
             "$HOME/.gradle/caches/"
@@ -20,12 +20,12 @@ jobs:
             "$HOME/.android/build-cache"
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
       - name: set up JDK 11
-        uses: actions/setup-java@v2.2.0
+        uses: actions/setup-java@4b1b3d4a82f726de9ba1945f8c6967b67caf5dcd # v2.2.0
         with:
           distribution: 'adopt'
           java-version: '11'
       - name: Install Ruby
-        uses: ruby/setup-ruby@v1.81.0
+        uses: ruby/setup-ruby@57d46d78b7d959dc4a248024a29bb17d4e357e5c # v1.81.0
         with:
           ruby-version: 2.6.3
           bundler-cache: true
@@ -36,7 +36,7 @@ jobs:
           rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
           rm -fr $HOME/.gradle/caches/*/plugin-resolution/
       - name: Notify Slack
-        uses: 8398a7/action-slack@v3
+        uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3
         with:
           status: ${{ job.status }}
           fields: repo,action,ref,job,took
